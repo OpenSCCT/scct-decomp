@@ -1,5 +1,7 @@
+/* sound_distance_to_volume.c -- distance to volume with the default roll-off (sndspace.c) */
 #include "sound_space.h"
 
+/* SND_fn_rDistanceToVolume */
 SndReal __stdcall SND_fn_rDistanceToVolume(SndReal _rDist)
 {
     RollOffParam rolloff;

@@ -1,5 +1,7 @@
+/* sound_doppler_pitch.c -- the Doppler pitch ratio between a source and a microphone (sndspace.c) */
 #include "sound_space.h"
 
+/* SND_fn_rDopplerPitch: Ps and Vs are the source's position and speed, Pm and Vm the microphone's */
 SndReal __stdcall SND_fn_rDopplerPitch(const SndVector *Ps, const SndVector *Vs, const SndVector *Pm,
                                        const SndVector *Vm)
 {

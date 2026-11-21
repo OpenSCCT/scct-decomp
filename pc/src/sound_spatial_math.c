@@ -1,5 +1,8 @@
+/* sound_spatial_math.c -- the squared vector length (sndvect.c) and the Dolby angle
+   (sndspace.c) */
 #include "sound_space.h"
 
+/* SND_fn_rNormeVectorSnd: the squared length, with eight fractional bits dropped per axis */
 SndReal __stdcall SND_fn_rNormeVectorSnd(const SndVector *v)
 {
     SndReal z = v->z >> 8;
@@ -8,6 +11,8 @@ SndReal __stdcall SND_fn_rNormeVectorSnd(const SndVector *v)
     return x * x + y * y + z * z;
 }
 
+/* SND_fn_lSoundAngleToDolbyAngle: keeps the phase closest to the previous angle across the
+   360-degree boundary, in a cycle of two turns */
 long __stdcall SND_fn_lSoundAngleToDolbyAngle(long lPrevious, long lCurrent)
 {
     long reference = lPrevious % 360;

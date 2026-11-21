@@ -1,6 +1,8 @@
+/* stereo_pan.c -- volume and pan to left and right volumes (sndspace.c) */
 #include "sound_space.h"
 #include "sound_volume.h"
 
+/* SND_fn_vVolPanToVolLR */
 void __stdcall SND_fn_vVolPanToVolLR(SndReal rVol_dB, unsigned char ucPan, SndReal *prVolL_dB,
                                      SndReal *prVolR_dB)
 {

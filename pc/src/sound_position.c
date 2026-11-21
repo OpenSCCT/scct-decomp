@@ -1,5 +1,9 @@
+/* sound_position.c -- panning from positions (sndspace.c) and the approximate vector length
+   (sndvect.c) */
 #include "sound_space.h"
 
+/* The pan of a source for a microphone, along one of the microphone's axes: 64 is the centre
+   and 0 and 128 are the ends. */
 static __forceinline unsigned char position_pan(const SndVector *src, const SndVector *mic,
                                                 const SndVector *axis, int reverse)
 {
@@ -31,18 +35,22 @@ static __forceinline unsigned char position_pan(const SndVector *src, const SndV
     return (unsigned char)pp;
 }
 
+/* SND_fn_ucPositionToPan: the left-right pan, along the microphone's tangent */
 unsigned char __stdcall SND_fn_ucPositionToPan(const SndVector *src, const SndVector *mic,
                                                const SndVector *mic_nor, const SndVector *mic_tan)
 {
     return position_pan(src, mic, mic_tan, 0);
 }
 
+/* SND_fn_ucPositionToDolby: the front-back pan, along the microphone's normal */
 unsigned char __stdcall SND_fn_ucPositionToDolby(const SndVector *src, const SndVector *mic,
                                                  const SndVector *mic_nor)
 {
     return position_pan(src, mic, mic_nor, 1);
 }
 
+/* calcul_pseudo_d: the length of a two-axis vector, taken as the larger magnitude plus half
+   the smaller */
 static __inline SndReal calcul_pseudo_d(SndReal a, SndReal b)
 {
     a = SND_fn_rAbsRealSnd(a);
@@ -52,6 +60,7 @@ static __inline SndReal calcul_pseudo_d(SndReal a, SndReal b)
     return a + (b >> 1);
 }
 
+/* SND_fn_rPseudoNormeVectorSnd */
 __declspec(noinline) SndReal __stdcall SND_fn_rPseudoNormeVectorSnd(const SndVector *v)
 {
     SndReal x = SND_fn_rAbsRealSnd(v->x);

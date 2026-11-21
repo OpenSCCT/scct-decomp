@@ -1,5 +1,7 @@
+/* sound_set_rolloff_defaults.c -- sets the default roll-off (sndspace.c) */
 #include "sound_space.h"
 
+/* SND_fn_vSetDefaultRollOff */
 void __stdcall SND_fn_vSetDefaultRollOff(const RollOffParam *pstRollOff)
 {
     if (pstRollOff->rDistSatur != ROLLOFF_DEFAULT)

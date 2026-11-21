@@ -1,5 +1,7 @@
+/* volume_lookup.c -- the volume along a fade curve (sndVolume.c) */
 #include "sound_volume.h"
 
+/* fn_rGetVolFadeAttenuation: the volume in decibels at rPos, from 0 to 1, along a fade curve */
 SndReal __cdecl fn_rGetVolFadeAttenuation(SndReal rPos, SND_tdeFadeType eFadeType)
 {
     long lIndice = rPos >> 9;

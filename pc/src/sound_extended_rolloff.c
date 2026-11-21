@@ -1,7 +1,9 @@
+/* sound_extended_rolloff.c -- distance to volume with a caller's roll-off (sndspace.c) */
 #include "sound_memory.h"
 #include "sound_space.h"
 #include "sound_volume.h"
 
+/* The volume in decibels at rDist under a roll-off whose defaults are already filled in. */
 static __forceinline SndReal evaluate_rolloff(SndReal rDist, RollOffParam *pstRollOff)
 {
     if (pstRollOff->rDistBackGround != ROLLOFF_NONE && rDist > pstRollOff->rDistBackGround)
@@ -26,6 +28,7 @@ static __forceinline SndReal evaluate_rolloff(SndReal rDist, RollOffParam *pstRo
     return fn_rDist2Vol(rDist, pstRollOff->rDistSatur);
 }
 
+/* SND_fn_rDistanceToVolumeEx */
 SndReal __stdcall SND_fn_rDistanceToVolumeEx(SndReal _rDist, const RollOffParam *_pstRollOff)
 {
     RollOffParam stRollOff;

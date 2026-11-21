@@ -1,7 +1,9 @@
+/* sound_distance_attenuation.c -- the attenuation curve over distance (sndspace.c) */
 #include "sound_error.h"
 #include "sound_space.h"
 #include "sound_volume.h"
 
+/* fn_rDist2Vol: the volume in decibels at rDist, for a sound at full volume up to rDistSatur */
 SndReal __cdecl fn_rDist2Vol(SndReal rDist, SndReal rDistSatur)
 {
     SndReal rDistRatio;
