@@ -1,67 +1,71 @@
-void __stdcall SND_fn_vDisplayError(int code, const char *context);
-#define SOUND_READY (*(const long *)0x1132bb4c)
-#define LOOKUP_MODE (*(const long *)0x111e43d0)
-void *__stdcall sound_bin_res_mode0(unsigned long id);
-void *__stdcall sound_bin_res_mode1(unsigned long id);
-void *__cdecl sound_bin_event_mode0(unsigned long id);
-void *__cdecl sound_bin_event_mode1(unsigned long id);
-void *__cdecl sound_handle_by_editor_id_mode0(unsigned long id);
-void *__cdecl sound_handle_by_editor_id_mode1(unsigned long id);
-void *__stdcall sound_resource_by_editor_id_mode0(unsigned long id);
-void *__stdcall sound_resource_by_editor_id_mode1(unsigned long id);
+#include "sound_bank_layout.h"
+#include "sound_error.h"
 
-void *__stdcall SND_fn_pGetBinRes(unsigned long id)
+tdstBlockResourceMem *__stdcall SND_fn_pGetBinRes(unsigned long ulBinId)
 {
-    if (!SOUND_READY) {
-        SND_fn_vDisplayError(0, (const char *)0x11172d68);
+    if (!gs_bInitProjectDone) {
+        SND_fn_vDisplayError(E_uwSndFatalErr,
+                             "ERROR: Cannot get binary resource, project has not been initialized yet.");
         return 0;
     }
-    switch (LOOKUP_MODE) {
-    case 0: return sound_bin_res_mode0(id);
-    case 1: return sound_bin_res_mode1(id);
+    switch (gs_eLoadProjectType) {
+    case SND_E_DATALOADMODE_BANK:
+        return SND_fn_pGetBinRes_Bank(ulBinId);
+    case SND_E_DATALOADMODE_MAP:
+        return SND_fn_pGetBinRes_Map(ulBinId);
     default:
-        SND_fn_vDisplayError(0, (const char *)0x11172d28);
+        SND_fn_vDisplayError(E_uwSndFatalErr, "ERROR: Cannot get binary resource, load mode is not valid.");
         return 0;
     }
 }
 
-void *__stdcall SND_fn_pGetBinEvent(unsigned long id)
+SND_tdstBlockEvent *__stdcall SND_fn_pGetBinEvent(unsigned long ulBinId)
 {
-    if (!SOUND_READY) {
-        SND_fn_vDisplayError(0, (const char *)0x11172df0);
+    if (!gs_bInitProjectDone) {
+        SND_fn_vDisplayError(E_uwSndFatalErr,
+                             "ERROR: Cannot get binary event, project has not been initialized yet.");
         return 0;
     }
-    switch (LOOKUP_MODE) {
-    case 0: return sound_bin_event_mode0(id);
-    case 1: return sound_bin_event_mode1(id);
+    switch (gs_eLoadProjectType) {
+    case SND_E_DATALOADMODE_BANK:
+        return SND_fn_pGetBinEvent_Bank(ulBinId);
+    case SND_E_DATALOADMODE_MAP:
+        return SND_fn_pGetBinEvent_Map(ulBinId);
     default:
-        SND_fn_vDisplayError(0, (const char *)0x11172db4);
+        SND_fn_vDisplayError(E_uwSndFatalErr, "ERROR: Cannot get binary event, load mode is not valid.");
         return 0;
     }
 }
 
-void *__stdcall SND_fn_hGetSoundEventHandleFromEditorId(unsigned long id)
+SND_tdstBlockEvent *__stdcall SND_fn_hGetSoundEventHandleFromEditorId(unsigned long ulEdId)
 {
-    if (!SOUND_READY) {
-        SND_fn_vDisplayError(0, (const char *)0x11173138);
+    if (!gs_bInitProjectDone) {
+        SND_fn_vDisplayError(E_uwSndFatalErr,
+                             "ERROR: Cannot resolve event pointer with editor Id, project has not been initialized yet.");
         return 0;
     }
-    switch (LOOKUP_MODE) {
-    case 0: return sound_handle_by_editor_id_mode0(id);
-    case 1: return sound_handle_by_editor_id_mode1(id);
+    switch (gs_eLoadProjectType) {
+    case SND_E_DATALOADMODE_BANK:
+        return SND_fn_hGetSoundEventHandleFromEditorId_Bank(ulEdId);
+    case SND_E_DATALOADMODE_MAP:
+        return SND_fn_hGetSoundEventHandleFromEditorId_Map(ulEdId);
     default:
-        SND_fn_vDisplayError(0, (const char *)0x111730e8);
+        SND_fn_vDisplayError(E_uwSndFatalErr,
+                             "ERROR: Cannot resolve event pointer with editor Id, load mode is not valid.");
         return 0;
     }
 }
 
-void *__stdcall SND_fn_pstGetResFromEdIdSnd(unsigned long id)
+tdstBlockResourceMem *__stdcall SND_fn_pstGetResFromEdIdSnd(unsigned long ulEdId)
 {
-    switch (LOOKUP_MODE) {
-    case 0: return sound_resource_by_editor_id_mode0(id);
-    case 1: return sound_resource_by_editor_id_mode1(id);
+    switch (gs_eLoadProjectType) {
+    case SND_E_DATALOADMODE_BANK:
+        return SND_fn_pstGetResFromEdIdSnd_Bank(ulEdId);
+    case SND_E_DATALOADMODE_MAP:
+        return SND_fn_pstGetResFromEdIdSnd_Map(ulEdId);
     default:
-        SND_fn_vDisplayError(0, (const char *)0x111730e8);
+        SND_fn_vDisplayError(E_uwSndFatalErr,
+                             "ERROR: Cannot resolve event pointer with editor Id, load mode is not valid.");
         return 0;
     }
 }

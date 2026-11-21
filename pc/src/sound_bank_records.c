@@ -1,31 +1,23 @@
-typedef struct SoundBankManager SoundBankManager;
-typedef struct SoundBank {
-    unsigned char header[0x34];
-    unsigned char *events;
-    unsigned char *resources;
-} SoundBank;
-SoundBank *__fastcall sound_current_bank(SoundBankManager *manager);
-#define BANK_MANAGER (*(SoundBankManager **)0x1132e934)
-#define RECORD_SIZE 0x68
+#include "sound_bank_layout.h"
 
-void *__stdcall sound_bin_res_mode0(unsigned long index)
+tdstBlockResourceMem *__stdcall SND_fn_pGetBinRes_Bank(unsigned long _ulBinId)
 {
-    SoundBank *bank;
-    if (BANK_MANAGER) {
-        bank = sound_current_bank(BANK_MANAGER);
-        if (bank && bank->resources)
-            return bank->resources + index * RECORD_SIZE;
+    tdstBankElement *bank;
+    if (bank_manager) {
+        bank = sound_current_bank(bank_manager);
+        if (bank && bank->pResMemList)
+            return bank->pResMemList + _ulBinId;
     }
     return 0;
 }
 
-void *__cdecl sound_bin_event_mode0(unsigned long index)
+SND_tdstBlockEvent *__cdecl SND_fn_pGetBinEvent_Bank(unsigned long _ulBinId)
 {
-    SoundBank *bank;
-    if (BANK_MANAGER) {
-        bank = sound_current_bank(BANK_MANAGER);
-        if (bank && bank->events)
-            return bank->events + index * RECORD_SIZE;
+    tdstBankElement *bank;
+    if (bank_manager) {
+        bank = sound_current_bank(bank_manager);
+        if (bank && bank->pEventList)
+            return bank->pEventList + _ulBinId;
     }
     return 0;
 }

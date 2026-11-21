@@ -2044,35 +2044,32 @@
     "id": "sound-local-event-by-editor-id",
     "offset": 7591440,
     "size": 183,
-    "rebuilt_symbol": "_sound_handle_by_editor_id_mode1",
+    "rebuilt_symbol": "_SND_fn_hGetSoundEventHandleFromEditorId_Map",
     "inputs": [
       "src/sound_find_event.c",
-      "src/sound_bank_layout.h"
+      "src/sound_bank_layout.h",
+      "src/sound_resource.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_find_event.obj src/sound_find_event.c",
-    "identification": "Direct mode-one call target of SND_fn_hGetSoundEventHandleFromEditorId at RVA 0x745e1d. Searches ordinary A/B event groups, then extra A/B groups when enabled. Matches editor IDs on 104-byte records. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only.",
+    "identification": "Direct mode-one call target of SND_fn_hGetSoundEventHandleFromEditorId at RVA 0x745e1d. Searches ordinary A/B event groups, then extra A/B groups when enabled. Matches editor IDs on 104-byte records. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "link_bindings": {
-      "_bank_a_events": {
-        "va": 288536716,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
+      "_gs_stMapFix": {
+        "va": 288536704,
+        "basis": "The fixed map, chosen by a clear bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stMapFix of sndldmap.c in the Splinter Cell PS2 demo's debug information, where it also lies before gs_stCurrentMap."
       },
-      "_bank_b_events": {
-        "va": 288536836,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
+      "_gs_stCurrentMap": {
+        "va": 288536824,
+        "basis": "The current map, chosen by a set bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stCurrentMap of sndldmap.c in the Splinter Cell PS2 demo's debug information."
       },
-      "_bank_a_extra_events": {
-        "va": 288536756,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
-      "_bank_b_extra_events": {
-        "va": 288536876,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
+      "_g_stProjectDesc": {
+        "va": 288537184,
+        "basis": "Project description whose member at +8 makes SND_fn_hGetSoundEventHandleFromEditorId_Map search the localised data. guess: g_stProjectDesc of the Splinter Cell PS2 demo's debug information, whose bLocalised is at +8; the following words are referenced one by one from the loader."
       }
     },
     "match": {
       "bytes_sha256": "5bb49e2c1d4b2221db2d82b24e6fdb64700ae1996b7ca869cdc026d8ae6c1f56",
-      "inputs_sha256": "116c72bbdce6a1391f36994237edc8f93987518aef8f8e8f70487480ea29e810"
+      "inputs_sha256": "bc27631810bef50fb20977101b3585ddda3421c64e51aa80ff972c685c38d6af"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2087,17 +2084,28 @@
     "id": "sound-local-resource-by-editor-id",
     "offset": 7591968,
     "size": 149,
-    "rebuilt_symbol": "_sound_resource_by_editor_id_mode1@4",
+    "rebuilt_symbol": "_SND_fn_pstGetResFromEdIdSnd_Map@4",
     "inputs": [
       "src/sound_find_local.c",
-      "src/sound_bank_layout.h"
+      "src/sound_bank_layout.h",
+      "src/sound_resource.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_find_local.obj src/sound_find_local.c",
-    "identification": "Direct mode-one tail target of SND_fn_pstGetResFromEdIdSnd from RVA 0x745ffe. Scans each loaded bank in B-then-A order, testing its normal and extra 104-byte resource arrays. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only.",
+    "link_bindings": {
+      "_gs_stCurrentMap": {
+        "va": 288536824,
+        "basis": "The current map, chosen by a set bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stCurrentMap of sndldmap.c in the Splinter Cell PS2 demo's debug information."
+      },
+      "_gs_stMapFix": {
+        "va": 288536704,
+        "basis": "The fixed map, chosen by a clear bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stMapFix of sndldmap.c in the Splinter Cell PS2 demo's debug information, where it also lies before gs_stCurrentMap."
+      }
+    },
+    "identification": "Direct mode-one tail target of SND_fn_pstGetResFromEdIdSnd from RVA 0x745ffe. Scans each loaded bank in B-then-A order, testing its normal and extra 104-byte resource arrays. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "match": {
       "bytes_sha256": "de292878774a5ab36a21f96a41fc2601c03b4a6e6d169e663447b6d6e6e9b8e5",
-      "inputs_sha256": "943598d9a843ec5e32d06f9d590e9914fa2440d52f223de2fc540f7de6814a8a"
+      "inputs_sha256": "5e9d0d5c1f4a1da8367a020e14bfdd8cf03e156d3abd4e195fad214a22f5ba4f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2112,31 +2120,37 @@
     "id": "sound-local-resource-at",
     "offset": 7592128,
     "size": 81,
-    "rebuilt_symbol": "_sound_bin_res_mode1@4",
+    "rebuilt_symbol": "_SND_fn_pGetBinRes_Map@4",
     "inputs": [
       "src/sound_local_record_access.c",
-      "src/sound_bank_layout.h"
+      "src/sound_bank_layout.h",
+      "src/sound_error.h",
+      "src/sound_resource.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_local_record_access.obj src/sound_local_record_access.c",
-    "identification": "Direct mode-one tail target of SND_fn_pGetBinRes at RVA 0x745578. High bits select the bank and group, the low 16 bits index the 104-byte records; -2 returns null. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only.",
+    "identification": "Direct mode-one tail target of SND_fn_pGetBinRes at RVA 0x745578. High bits select the bank and group, the low 16 bits index the 104-byte records; -2 returns null. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "link_bindings": {
-      "_bank_b": {
-        "va": 288536824,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
-      "_bank_a": {
-        "va": 288536704,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named export _SND_fn_vDisplayError@8 in the Steam campaign PE."
+      },
+      "_gs_stCurrentMap": {
+        "va": 288536824,
+        "basis": "The current map, chosen by a set bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stCurrentMap of sndldmap.c in the Splinter Cell PS2 demo's debug information."
+      },
+      "_gs_stMapFix": {
+        "va": 288536704,
+        "basis": "The fixed map, chosen by a clear bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stMapFix of sndldmap.c in the Splinter Cell PS2 demo's debug information, where it also lies before gs_stCurrentMap."
+      },
+      "??_C@_0CJ@DEMBLCKF@ERROR?3?5Cannot?5find?5block?5resourc@": {
+        "va": 286728412,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "12fdc05d47db00dd5c1b75ebe6efe9b62298ae309a5fa6d141d0f35d3ffd9573",
-      "inputs_sha256": "cf7da738e04aafc3ffb8f7fc871cd9dd7c0a6ad6602959c19dbfd069ef215e92"
+      "inputs_sha256": "a044e8fdd9c9c904dc1ba69dbe47ce9a629668da752a3f03bc14c7846e04f982"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2151,31 +2165,37 @@
     "id": "sound-local-event-at",
     "offset": 7592224,
     "size": 75,
-    "rebuilt_symbol": "_sound_bin_event_mode1",
+    "rebuilt_symbol": "_SND_fn_pGetBinEvent_Map",
     "inputs": [
       "src/sound_local_record_access.c",
-      "src/sound_bank_layout.h"
+      "src/sound_bank_layout.h",
+      "src/sound_error.h",
+      "src/sound_resource.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_local_record_access.obj src/sound_local_record_access.c",
-    "identification": "Direct mode-one call target of SND_fn_pGetBinEvent at RVA 0x7455cd. Uses the same packed bank, group and record index to select an event. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only.",
+    "identification": "Direct mode-one call target of SND_fn_pGetBinEvent at RVA 0x7455cd. Uses the same packed bank, group and record index to select an event. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "link_bindings": {
-      "_bank_b": {
-        "va": 288536824,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
-      "_bank_a": {
-        "va": 288536704,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named export _SND_fn_vDisplayError@8 in the Steam campaign PE."
+      },
+      "_gs_stCurrentMap": {
+        "va": 288536824,
+        "basis": "The current map, chosen by a set bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stCurrentMap of sndldmap.c in the Splinter Cell PS2 demo's debug information."
+      },
+      "_gs_stMapFix": {
+        "va": 288536704,
+        "basis": "The fixed map, chosen by a clear bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stMapFix of sndldmap.c in the Splinter Cell PS2 demo's debug information, where it also lies before gs_stCurrentMap."
+      },
+      "??_C@_0CA@ECDLIHEG@ERROR?3?5Cannot?5find?5block?5event?4?$AA@": {
+        "va": 286728456,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "9b2861f388c9b653068c931326f13c1bb5b811a5eec61243308030251651cfb7",
-      "inputs_sha256": "82583c0025a96fe59d1fb819855add7b5e3daec03ba060f6fc901fac8db63768"
+      "inputs_sha256": "c02a1b657d6971219fa9ab34de25591323b051ccb7847d780da092d401b4c71a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

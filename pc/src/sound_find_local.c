@@ -1,32 +1,29 @@
 #include "sound_bank_layout.h"
 
-#define BANK_A ((LocalBank *)0x1132b880)
-#define BANK_B ((LocalBank *)0x1132b8f8)
-
-static SoundRecord *find_record(RecordTable *table, unsigned long id)
+static tdstBlockResourceMem *find_resource(tdstBlockResMemList *pstBlockResMemList, unsigned long ulEdId)
 {
-    long index;
-    SoundRecord *record = table->entries;
-    for (index = 0; index < table->count; ++index, ++record)
-        if (record->editor_id == id)
-            return record;
+    long i;
+    tdstBlockResourceMem *pstBlockResMem = pstBlockResMemList->hFirstElementOpt;
+    for (i = 0; i < pstBlockResMemList->lNumberOfElementsOpt; ++i, ++pstBlockResMem)
+        if (pstBlockResMem->Id == ulEdId)
+            return pstBlockResMem;
     return 0;
 }
 
-SoundRecord *__stdcall sound_resource_by_editor_id_mode1(unsigned long id)
+tdstBlockResourceMem *__stdcall SND_fn_pstGetResFromEdIdSnd_Map(unsigned long ulEdId)
 {
-    SoundRecord *record;
-    if (BANK_B->loaded) {
-        if ((record = find_record(&BANK_B->resources, id)) != 0)
-            return record;
-        if ((record = find_record(&BANK_B->extra_resources, id)) != 0)
-            return record;
+    tdstBlockResourceMem *pstBlockResMem;
+    if (gs_stCurrentMap.bLoaded) {
+        if ((pstBlockResMem = find_resource(&gs_stCurrentMap.stNLoc.stBlockResMemList, ulEdId)) != 0)
+            return pstBlockResMem;
+        if ((pstBlockResMem = find_resource(&gs_stCurrentMap.stLoc.stBlockResMemList, ulEdId)) != 0)
+            return pstBlockResMem;
     }
-    if (BANK_A->loaded) {
-        if ((record = find_record(&BANK_A->resources, id)) != 0)
-            return record;
-        if ((record = find_record(&BANK_A->extra_resources, id)) != 0)
-            return record;
+    if (gs_stMapFix.bLoaded) {
+        if ((pstBlockResMem = find_resource(&gs_stMapFix.stNLoc.stBlockResMemList, ulEdId)) != 0)
+            return pstBlockResMem;
+        if ((pstBlockResMem = find_resource(&gs_stMapFix.stLoc.stBlockResMemList, ulEdId)) != 0)
+            return pstBlockResMem;
     }
     return 0;
 }
