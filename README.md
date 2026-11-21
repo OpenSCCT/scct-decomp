@@ -17,7 +17,7 @@ repository as `decomp/` and shows its progress on the player website.
 <!-- status:begin -->
 | Build and program | Verified bytes | Candidate bytes | Measured code |
 | --- | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 891,370 | 34,298 | 8,082,506 bytes |
+| Steam 252084 · Campaign and co-op | 892,189 | 34,298 | 8,082,506 bytes |
 | Steam 252084 · Versus | 190,875 | 22,846 | 2,991,392 bytes |
 | PAL 1.01 · Disc boot | 0 | 0 | Unmeasured |
 | PAL 1.01 · Offline program | 0 | 0 | Unmeasured |
