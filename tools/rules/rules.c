@@ -361,6 +361,8 @@ typedef struct {
 	int keyword;			/* struct, class, union or enum symbol, for types */
 	unsigned bodyHash;		/* types and globals: hash of the declaration's spelling */
 	unsigned matchMask;		/* [match] rules this node itself breaks */
+	unsigned r1Targets;		/* executables in which another declaration conflicts with this type */
+	unsigned r2Targets;		/* the same, for a global */
 	int nextSameName;
 	int stamp;				/* closure visit marker */
 	int *refs;				/* names a macro invocation builds by pasting */
@@ -2097,6 +2099,7 @@ static void CheckDuplicates( int firstNode ) {
 
 		for ( node = symbolFirstNode[symbol]; node >= 0; node = nodes[node].nextSameName ) {
 			int definitions = 0, distinct = 0, conflict = -1;
+			unsigned shared = 0, own = nodes[node].matchMask;
 
 			if ( node < firstNode ) {
 				continue;
@@ -2115,20 +2118,29 @@ static void CheckDuplicates( int firstNode ) {
 					if ( nodes[other].bodyHash != nodes[node].bodyHash ) {
 						distinct++;
 						conflict = other;
+						shared |= files[nodes[other].file].targets & files[nodes[node].file].targets;
 					}
 				} else if ( nodes[node].kind == N_FORWARD && nodes[other].kind == N_TYPE
 					&& nodes[other].keyword != sTypedef && nodes[other].keyword != sEnum
 					&& ( nodes[node].keyword == sClass ) != ( nodes[other].keyword == sClass ) ) {
 					conflict = other;
 					distinct = -1;
+					shared |= files[nodes[other].file].targets & files[nodes[node].file].targets;
 				} else if ( nodes[node].kind == N_GLOBAL && nodes[other].kind == N_GLOBAL
 					&& nodes[other].bodyHash != nodes[node].bodyHash ) {
 					distinct++;
 					conflict = other;
+					shared |= files[nodes[other].file].targets & files[nodes[node].file].targets;
 				}
 			}
 			if ( conflict < 0 ) {
 				continue;
+			}
+			/* the finding holds only in the executables where both declarations are compiled */
+			if ( nodes[node].kind == N_GLOBAL ) {
+				nodes[node].r2Targets |= shared;
+			} else {
+				nodes[node].r1Targets |= shared;
 			}
 			if ( nodes[node].kind == N_TYPE ) {
 				Report( nodes[node].file, nodes[node].line, RULE_R1, node,
@@ -2143,6 +2155,7 @@ static void CheckDuplicates( int firstNode ) {
 					Format( "global `%s` is declared with a different type in %s", symbolText[symbol],
 						files[nodes[conflict].file].path ) );
 			}
+			nodes[node].matchMask = own;
 		}
 	}
 }
@@ -2469,7 +2482,7 @@ static int NodeCondition( const node_t *node ) {
 }
 
 /* Collects the [match] rules a node breaks, with those of everything it names. */
-static unsigned Closure( int start, const unsigned char *visible, int explain ) {
+static unsigned Closure( int start, const unsigned char *visible, int explain, unsigned targetBit ) {
 	int *stack = NULL;
 	int capacity = 0, depth = 0;
 	unsigned mask = 0;
@@ -2483,10 +2496,14 @@ static unsigned Closure( int start, const unsigned char *visible, int explain ) 
 		const token_t *tokens = ( node->flags & NF_IN_MACRO ) ? file->macroTokens : file->tokens;
 		int i;
 
-		mask |= node->matchMask;
-		if ( explain && node->matchMask ) {
+		unsigned own = node->matchMask | ( ( node->r1Targets & targetBit ) ? 1u << RULE_R1 : 0 )
+			| ( ( node->r2Targets & targetBit ) ? 1u << RULE_R2 : 0 );
+
+		mask |= own;
+		if ( explain && own ) {
 			for ( i = 0; i < numFindings; i++ ) {
-				if ( findings[i].node == (int)( node - nodes ) && findings[i].rule < NUM_MATCH_RULES ) {
+				if ( findings[i].node == (int)( node - nodes ) && findings[i].rule < NUM_MATCH_RULES
+					&& ( own & ( 1u << findings[i].rule ) ) ) {
 					printf( "  %s:%d: %s [match] %s\n", files[findings[i].file].path, findings[i].line,
 						ruleNames[findings[i].rule], findings[i].message );
 				}
@@ -2527,7 +2544,7 @@ static unsigned Closure( int start, const unsigned char *visible, int explain ) 
 }
 
 /* Judges one unit: finds its function in its inputs and totals its rule status. */
-static void JudgeUnit( targetTotals_t *totals, const json_t *unit ) {
+static void JudgeUnit( targetTotals_t *totals, const json_t *unit, unsigned targetBit ) {
 	const json_t *id = JsonMember( unit, "id" );
 	const json_t *size = JsonMember( unit, "size" );
 	const json_t *inputs = JsonMember( unit, "inputs" );
@@ -2586,7 +2603,7 @@ static void JudgeUnit( targetTotals_t *totals, const json_t *unit ) {
 		printf( "%s: %s, %d bytes, source found by %s\n", id->string, verified ? "verified" : "candidate", bytes, how );
 	}
 	if ( found >= 0 ) {
-		mask = Closure( found, visible, explain );
+		mask = Closure( found, visible, explain, targetBit );
 	} else {
 		/* the function was not found by name: charge everything its source files hold */
 		for ( input = inputs->child; input; input = input->next ) {
@@ -2597,7 +2614,7 @@ static void JudgeUnit( targetTotals_t *totals, const json_t *unit ) {
 			}
 			for ( node = 0; node < numNodes; node++ ) {
 				if ( nodes[node].file == fileIndex && nodes[node].stamp != closureStamp ) {
-					mask |= Closure( node, visible, explain );
+					mask |= Closure( node, visible, explain, targetBit );
 				}
 			}
 		}
@@ -2819,11 +2836,11 @@ static void CheckEdition( const char *root, const char *edition ) {
 		snprintf( totals->id, sizeof( totals->id ), "%s", id && id->kind == J_STRING ? id->string : names[i] );
 		units = JsonMember( configs[i], "units" );
 		for ( unit = units ? units->child : NULL; unit; unit = unit->next ) {
-			JudgeUnit( totals, unit );
+			JudgeUnit( totals, unit, 1u << ( i & 31 ) );
 		}
 		for ( j = 0; shards[i][j]; j++ ) {
 			for ( unit = shards[i][j]->child; unit; unit = unit->next ) {
-				JudgeUnit( totals, unit );
+				JudgeUnit( totals, unit, 1u << ( i & 31 ) );
 			}
 		}
 	}

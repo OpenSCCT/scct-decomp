@@ -40,8 +40,8 @@ scattered declarations or a compiler-steering trick is `MATCH-PENDING`: open wor
 <!-- rules:begin -->
 | Build and program | Bytes matched | Verified | Verified under the rules | `MATCH-PENDING` |
 | --- | ---: | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 912,765 | 878,467 | 60,596 | 845,416 |
-| Steam 252084 · Versus | 213,721 | 190,875 | 16,650 | 196,098 |
+| Steam 252084 · Campaign and co-op | 953,340 | 920,729 | 53,182 | 894,732 |
+| Steam 252084 · Versus | 213,721 | 190,875 | 20,780 | 191,968 |
 | PAL 1.01 · Online program | 8 | 0 | 0 | 0 |
 <!-- rules:end -->
 
