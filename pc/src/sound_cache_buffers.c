@@ -1,9 +1,11 @@
 typedef unsigned Word;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     Word value;
 } WordArg;
 typedef struct BufferObject BufferObject;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     BufferObject *value;
@@ -24,6 +26,7 @@ typedef struct
     void *key;
     BufferObject *primary, *secondary;
 } Item;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     void *value;

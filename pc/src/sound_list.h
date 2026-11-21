@@ -24,10 +24,12 @@ typedef struct SndPtrList {
 
 /* A member function takes its arguments on the stack. A __fastcall function passes an
    argument there only when it is an aggregate, so the stand-ins wrap each argument. */
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct SndPtrListNodeArg {
     SndPtrListNode *ptr;
 } SndPtrListNodeArg;
 
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct SndPtrListCursorArg {
     SndPtrListNode **ptr;
 } SndPtrListCursorArg;

@@ -19,9 +19,11 @@
    guess: the class is the sibling builds' CAudioRenderer and the pointer their static member
    SndManager::m_pRenderer. */
 typedef struct CAudioRenderer CAudioRenderer;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct CAudioRendererResourceArg {
     tdstBlockResourceMem *value;
 } CAudioRendererResourceArg;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct CAudioRendererFlagArg {
     int value;
 } CAudioRendererFlagArg;

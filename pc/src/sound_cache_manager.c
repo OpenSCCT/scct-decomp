@@ -1,4 +1,5 @@
 typedef unsigned Word;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     Word value;
@@ -8,6 +9,7 @@ typedef struct
     Word state[2], has_spatial;
 } Buffer;
 typedef struct Item Item;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     Item *ptr;
@@ -18,6 +20,7 @@ typedef struct
     Item **items;
     Word count;
 } Resource;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     Resource *ptr;
@@ -58,6 +61,7 @@ static __forceinline void destroy(Item *item)
     }
 }
 typedef struct Work Work;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     void *ptr;
@@ -164,6 +168,7 @@ typedef struct
 {
     Word leading[9], options;
 } PlaybackOptions;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     PlaybackOptions *ptr;

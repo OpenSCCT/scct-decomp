@@ -16,6 +16,7 @@ void __cdecl sound_heap_detect_cpu(unsigned long *cpuid, unsigned long *mmx);
    argument or wrap a stack argument in a structure. This is open work that belongs in C++.
    The names of the types, the members and the pointer are invented. */
 typedef struct SoundAllocator SoundAllocator;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct SoundAllocationArg {
     void *value;
 } SoundAllocationArg;

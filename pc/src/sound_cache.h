@@ -19,6 +19,7 @@ typedef struct
 } SoundCache;
 
 /* MSVC x86 passes aggregate arguments on the stack and the fastcall receiver in ECX. */
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     SoundCacheItem *ptr;
@@ -109,6 +110,7 @@ static __forceinline SoundCacheItem *next_item(SndPtrListNode **cursor)
     return node->item;
 }
 
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     unsigned value;

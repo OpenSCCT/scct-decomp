@@ -12,6 +12,7 @@ typedef struct SoundCRC {
     unsigned long table[256];
 } SoundCRC;
 
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct SoundNameArg { const char *text; } SoundNameArg;
 typedef struct SoundNameKey {
     const void *methods;
@@ -26,6 +27,7 @@ typedef struct SoundNameNode {
 typedef struct SoundEventNames {
     SoundNameNode *root, *sentinel, *cursor;
 } SoundEventNames;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct SoundNameKeyArg { const SoundNameKey *key; } SoundNameKeyArg;
 
 /* The tree of the loaded project's event names. */
