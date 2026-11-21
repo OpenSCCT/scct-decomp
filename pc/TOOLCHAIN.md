@@ -98,6 +98,10 @@ destructors (109 bytes each). Each runs the inlined
 `DECLARE_CLASS` destructor does. Class names come from the registered
 placement constructors that install each vtable. Parent names come from the
 vtable that each parent destructor installs.
+`src/versus_member_destructors.cpp` adds 39 destructors that also destroy one
+member between `ConditionalDestroy()` and the parent destructor, either through
+the member's out-of-line destructor or through a one-argument release helper.
+Their frames have two unwind states: the member, then the parent.
 
 `tools/link_x86.py` accepts three references that only C++ frames make.
 `__except_list` is the absolute offset 0 that the C runtime defines for the
