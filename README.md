@@ -1,5 +1,7 @@
 # Splinter Cell: Chaos Theory matching decompilation
 
+[![Progress](https://bytematch.dev/OpenSCCT/scct-decomp.svg)](https://bytematch.dev/OpenSCCT/scct-decomp)
+
 Readable C and C++ that rebuilds the original *Chaos Theory* executables byte for byte.
 Each platform release is tracked per executable, so the same source can serve several
 versions of the game. The [OpenSCCT hub](https://github.com/OpenSCCT/OpenSCCT) pins this
