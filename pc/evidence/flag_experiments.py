@@ -1,4 +1,4 @@
-"""Rebuild every Campaign /O2 /Gy, /O2 /Gy /EHa and /O2 /GS /Gy source file under alternative switches
+"""Rebuild every Campaign /O2 /Gy, /O2 /Gy /EHa, /O2 /GS /Gy and /O1 /Oi /Gz /Gy source file under alternative switches
 and count the units that still link byte-identical to retail.
 
 Usage: python pc/evidence/flag_experiments.py PATH_TO_CL_13.10.3052 PATH_TO_splintercell3.exe
@@ -19,9 +19,11 @@ for u in t['units']:
     if fl==frozenset({'/O2','/Gy'}):files['O2',u['inputs'][0]].append(u)
     elif fl==frozenset({'/O2','/Gy','/EHa'}):files['EHa',u['inputs'][0]].append(u)
     elif fl==frozenset({'/O2','/Gy','/GS'}):files['GS',u['inputs'][0]].append(u)
+    elif fl==frozenset({'/O1','/Oi','/Gz','/Gy'}):files['GZ',u['inputs'][0]].append(u)
 V={'O2':[('/O2','/Gy'),('/Ox','/Gy'),('/O2','/G6','/Gy'),('/O2','/G5','/Gy'),('/O2','/GB','/Gy'),('/O1','/Gy'),('/Od','/Gy'),('/O2','/Oy-','/Gy')],
    'EHa':[('/O2','/Gy','/EHa'),('/O2','/Gy','/GX'),('/O2','/Gy','/EHs'),('/O1','/Gy','/EHa'),('/Ox','/Gy','/EHa')],
-   'GS':[('/O2','/GS','/Gy'),('/O2','/Gy'),('/Ox','/GS','/Gy'),('/O1','/GS','/Gy'),('/O2','/Oy-','/GS','/Gy')]}
+   'GS':[('/O2','/GS','/Gy'),('/O2','/Gy'),('/Ox','/GS','/Gy'),('/O1','/GS','/Gy'),('/O2','/Oy-','/GS','/Gy')],
+   'GZ':[('/O1','/Oi','/Gz','/Gy'),('/O1','/Gz','/Gy'),('/Ox','/Os','/Gz','/Gy'),('/O1','/Oi','/Oy-','/Gz','/Gy'),('/O2','/Gz','/Gy'),('/O2','/Oy-','/Gz','/Gy'),('/O1','/Oi','/Gy')]}
 tmp=Path(tempfile.mkdtemp())
 def run(job):
     (kind,src),units,flags=job
