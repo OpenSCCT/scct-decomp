@@ -54,6 +54,15 @@ def symbol_index(obj):
     return sections, symbols, functions, section_functions, handlers
 
 
+def handler_stub(obj, section, value):
+    """True when the label is the frame handler stub that ends a .text$x section."""
+    header = 20 + (section - 1) * 40
+    sec_name, = struct.unpack_from("<8s", obj, header)
+    size, raw = struct.unpack_from("<II", obj, header + 16)
+    return (sec_name.rstrip(b"\0") == b".text$x" and value + 10 == size
+            and obj[raw + value] == 0xb8 and obj[raw + value + 5] == 0xe9)
+
+
 def link_function(obj, name, length, address, bindings, *, read_constant=None):
     """Return the fully linked section. The retail function bytes are never an input."""
     sections, symbols, functions, section_functions, handlers = symbol_index(bytes(obj))
@@ -83,11 +92,15 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
         symbol, value, sym_section, kind, storage = symbols[sym_index]
         local = (storage == 3 and kind == 0 and sym_section == section
                  and symbol.startswith(b"$L") and symbol[2:].isdigit())
-        private = storage == 3 and not local
+        private = storage in (3, 6) and not local
         # C++ exception frames push this function's own frame handler, a label in the
-        # compiler's .text$x unwind section, by absolute address.
-        handler = (private and relocation == 6 and kind == 0x20 and sym_section != section
-                   and symbol == b"__ehhandler$" + name.encode("ascii"))
+        # compiler's .text$x unwind section, by absolute address. VC7.1 names it
+        # __ehhandler$<function>; VC7.0 uses an unnamed $L label (storage class 6) on the
+        # stub that ends the section: mov eax, <FuncInfo>; jmp __CxxFrameHandler.
+        handler = (private and relocation == 6 and sym_section != section
+                   and ((storage == 3 and kind == 0x20 and symbol == b"__ehhandler$" + name.encode("ascii"))
+                        or (storage == 6 and kind == 0 and symbol.startswith(b"$L") and symbol[2:].isdigit()
+                            and 1 <= sym_section <= sections and handler_stub(obj, sym_section, value))))
         # The frame handler stub loads its function's FuncInfo, a compiler label in .xdata$x;
         # the binding names the retail FuncInfo, which the audit checks structurally.
         funcinfo = False
@@ -138,7 +151,7 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
                 const_flags, = struct.unpack_from("<I", obj, const_header + 36)
                 if value != 0 or const_flags & 0xe0000040 != 0x40000040:
                     raise ValueError(f"expected a read-only virtual function table for {symbol}")
-            elif funcinfo:
+            elif funcinfo or handler:
                 pass
             elif sym_section and kind != 0x20:
                 const_header = 20 + (sym_section - 1) * 40
