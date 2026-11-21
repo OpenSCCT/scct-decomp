@@ -3,7 +3,7 @@
 #define VERSUS_WINDOW_CLASSES_H
 
 #include "versus_build.h"
-#include "versus_core_classes.h"
+#include "unreal_subsystem.h"
 
 // Window.WindowManager: 0x28 bytes, 23 virtual functions
 class UWindowManager : public USubsystem {

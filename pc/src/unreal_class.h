@@ -26,6 +26,18 @@ public:
     BYTE              unk_104[0x10];
 };
 
+#else // Campaign
+
+// Core.Class: 0x2e0 bytes, 35 virtual functions
+class UClass : public UState {
+public:
+    virtual ~UClass();
+
+    BYTE         unk_284[0x18];
+    TArray<BYTE> Defaults;      // the class's default property values
+    BYTE         unk_2a8[0x38];
+};
+
 #endif // SCCT_VERSUS
 
 #endif // UNREAL_CLASS_H

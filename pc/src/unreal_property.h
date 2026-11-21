@@ -123,6 +123,41 @@ public:
     BYTE unk_58[0x4];
 };
 
+#else // Campaign
+
+// Core.Property: 0x54 bytes, 43 virtual functions
+class UProperty : public UField {
+public:
+    virtual ~UProperty();
+    virtual void VirtualSlot28();
+    virtual void VirtualSlot29();
+    virtual void VirtualSlot30();
+    virtual void VirtualSlot31();
+    virtual void VirtualSlot32();
+    virtual void VirtualSlot33();
+    virtual void VirtualSlot34();
+    virtual void VirtualSlot35();
+    virtual void VirtualSlot36();
+    virtual void VirtualSlot37();
+    virtual void VirtualSlot38();
+    virtual void CopyCompleteValue(void *Dest, void *Src, UObject *Obj = 0) const;
+    virtual void VirtualSlot40();
+    virtual void VirtualSlot41();
+    virtual void VirtualSlot42();
+
+    BYTE  unk_34[0x10];
+    _WORD Offset;               // of the property's value in its owner
+    BYTE  unk_46[0xe];
+};
+
+// Core.BoolProperty: 0x58 bytes, 43 virtual functions
+class UBoolProperty : public UProperty {
+public:
+    virtual ~UBoolProperty();
+
+    BITFIELD BitMask;           // the property's bit in its word
+};
+
 #endif // SCCT_VERSUS
 
 #endif // UNREAL_PROPERTY_H

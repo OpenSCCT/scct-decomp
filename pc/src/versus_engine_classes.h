@@ -4,8 +4,11 @@
 
 #include "versus_build.h"
 #include "unreal_actor.h"
+#include "unreal_commandlet.h"
 #include "unreal_containers.h"
+#include "unreal_interaction.h"
 #include "unreal_object.h"
+#include "unreal_pawn.h"
 #include "versus_core_classes.h"
 #include "versus_ltcg.h"
 
@@ -95,30 +98,6 @@ public:
     TArrayLtcg<UnkType_4> unk_534;
     TArrayLtcg<UnkType_4> unk_540;
     BYTE                  unk_54c[0x10];
-};
-
-// Engine.Controller: 0x3c4 bytes, 83 virtual functions
-class AController : public AActor {
-public:
-    virtual ~AController();
-    virtual void VirtualSlot78();
-    virtual void VirtualSlot79();
-    virtual void VirtualSlot80();
-    virtual void VirtualSlot81();
-    virtual void VirtualSlot82();
-
-    BYTE    unk_2f8[0x7c];
-    FString unk_374;
-    BYTE    unk_380[0x44];
-};
-
-// Engine.PlayerController: 0x604 bytes, 84 virtual functions
-class APlayerController : public AController {
-public:
-    virtual ~APlayerController();
-    virtual void VirtualSlot83();
-
-    BYTE unk_3c4[0x240];
 };
 
 // Engine.Camera: 0x604 bytes, 84 virtual functions
@@ -489,26 +468,6 @@ public:
 
     TArrayLtcg<UnkType_E4> unk_28;
     BYTE                   unk_34[0x4];
-};
-
-// Engine.Interactions: 0x28 bytes, 22 virtual functions
-class UInteractions : public UObject {
-public:
-    virtual ~UInteractions();
-};
-
-// Engine.Interaction: 0x34 bytes, 28 virtual functions
-class UInteraction : public UInteractions {
-public:
-    virtual ~UInteraction();
-    virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
-    virtual void VirtualSlot24();
-    virtual void VirtualSlot25();
-    virtual void VirtualSlot26();
-    virtual void VirtualSlot27();
-
-    BYTE unk_28[0xc];
 };
 
 // Engine.InteractionMaster: 0x44 bytes, 22 virtual functions
@@ -935,25 +894,6 @@ public:
     virtual ~UParticleMaterial();
 
     BYTE unk_4c[0x290];
-};
-
-// Engine.Pawn: 0x4b0 bytes, 84 virtual functions
-class APawn : public AActor {
-public:
-    virtual ~APawn();
-    virtual void VirtualSlot78();
-    virtual void VirtualSlot79();
-    virtual void VirtualSlot80();
-    virtual void VirtualSlot81();
-    virtual void VirtualSlot82();
-    virtual void VirtualSlot83();
-
-    BYTE              unk_2f8[0x150];
-    TArray<UnkType_4> unk_448;
-    FString           unk_454;
-    BYTE              unk_460[0x30];
-    FString           unk_490;
-    BYTE              unk_49c[0x14];
 };
 
 // Engine.ProjectorPrimitive: 0x50 bytes, 30 virtual functions

@@ -1,184 +1,9 @@
-// Engine declarations shared by the Campaign UnrealScript natives. Layouts and
-// virtual slots are those the retail natives use; names follow Unreal Engine 2.
+// campaign_script_natives_2.cpp -- Campaign script natives: string conversions and comparisons
 #include "unreal_script.h"
+#include "unreal_math.h"
+#include "unreal_containers.h"
 
-struct FVector {
-    FLOAT X, Y, Z;
-    FVector() {}
-    FVector(FLOAT InX, FLOAT InY, FLOAT InZ) : X(InX), Y(InY), Z(InZ) {}
-    FVector operator^(const FVector &V) const { return FVector(Y * V.Z - Z * V.Y, Z * V.X - X * V.Z, X * V.Y - Y * V.X); }
-    UBOOL IsZero() const { return X == 0.0f && Y == 0.0f && Z == 0.0f; }
-    FVector SafeNormal() const;
-    struct FRotator Rotation();
-};
-
-struct FCoords;
-struct FRotator {
-    INT Pitch, Yaw, Roll;
-    FRotator() {}
-    FRotator(INT InPitch, INT InYaw, INT InRoll) : Pitch(InPitch), Yaw(InYaw), Roll(InRoll) {}
-    FVector Vector();
-};
-
-struct FCoords {
-    FVector Origin;
-    FVector XAxis;
-    FVector YAxis;
-    FVector ZAxis;
-    FCoords &operator/=(const FRotator &R);
-    FCoords operator/(const FRotator &R) const { return FCoords(*this) /= R; }
-};
-
-struct FGlobalMath {
-    FCoords UnitCoords;
-};
-extern FGlobalMath GMath;
-
-inline FVector FRotator::Vector()
-{
-    return (GMath.UnitCoords / *this).XAxis;
-}
-
-template <class T> inline T Clamp(const T X, const T Min, const T Max)
-{
-    return X < Min ? Min : X < Max ? X : Max;
-}
-
-class FMalloc {
-public:
-    virtual void *Malloc(DWORD Count, const TCHAR *Tag);
-    virtual void *Realloc(void *Original, DWORD Count, const TCHAR *Tag);
-    virtual void Free(void *Original);
-};
-extern FMalloc *GMalloc;
-
-class FArray {
-public:
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
-    ~FArray()
-    {
-        if (Data)
-            GMalloc->Free(Data);
-        Data = 0;
-        ArrayNum = ArrayMax = 0;
-    }
-    void Remove(INT Index, INT Count, INT ElementSize);
-    INT Num() const { return ArrayNum; }
-};
-
-class FString : public FArray {
-public:
-    FString() {}
-    ~FString()
-    {
-        ArrayNum = 0;
-        ArrayMax = 0;
-        Data = GMalloc->Realloc(Data, 0, (const TCHAR *)L"FArray::_WORD");
-        Remove(0, ArrayNum, sizeof(TCHAR));
-    }
-    FString &operator=(const TCHAR *Other);
-    FString &operator=(const FString &Other);
-    FString Caps() const;
-    FString(INT InCount, const TCHAR *InSrc);
-    FString(const TCHAR *In);
-    FString Left(INT Count) const { return FString(Clamp(Count, 0, Len()), **this); }
-    FString Right(INT Count) const { return FString(**this + Len() - Clamp(Count, 0, Len())); }
-    FString Mid(INT Start, INT Count = 0x7fffffff) const
-    {
-        DWORD End = Start + Count;
-        Start = Clamp((DWORD)Start, (DWORD)0, (DWORD)Len());
-        End = Clamp((DWORD)End, (DWORD)Start, (DWORD)Len());
-        return FString(End - Start, **this + Start);
-    }
-    INT InStr(const TCHAR *SubStr, UBOOL Right = 0) const;
-    const TCHAR *operator*() const { return ArrayNum ? (const TCHAR *)Data : (const TCHAR *)L""; }
-    INT Len() const { return ArrayNum ? ArrayNum - 1 : 0; }
-};
-
-INT appAtoi(const TCHAR *Str);
-FLOAT appAtof(const TCHAR *Str);
-INT appStrcmp(const TCHAR *A, const TCHAR *B);
-INT appStricmp(const TCHAR *A, const TCHAR *B);
-TCHAR *appFromAnsi(const ANSICHAR *Str);
-TCHAR *appFromUnicode(const TCHAR *Str);
-
-extern TCHAR GTrue[];
-extern TCHAR GFalse[];
-
-template <class T> struct TArray {
-    T *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    T &operator()(INT i) { return Data[i]; }
-};
-
-class UField : public UObject {
-public:
-    UField *SuperField;
-    UField *Next;
-    UField *HashNext;
-};
-
-class UProperty : public UField {
-public:
-    BYTE Pad[0x44 - 0x34];
-    _WORD Offset;
-#define SLOT(n) virtual void PropertySlot##n();
-    SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
-    SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34) SLOT(35) SLOT(36) SLOT(37) SLOT(38)
-#undef SLOT
-    virtual void CopyCompleteValue(void *Dest, void *Src, UObject *Obj = 0);
-};
-
-class UBoolProperty : public UProperty {
-public:
-    BYTE Pad2[0x54 - 0x48];
-    BITFIELD BitMask;
-};
-
-class UStruct : public UField {
-public:
-    BYTE Pad[0x50 - 0x34];
-    TArray<BYTE> Script;
-};
-
-class UClass : public UStruct {
-public:
-    BYTE Pad2[0x29c - 0x5c];
-    TArray<BYTE> Defaults;
-};
-
-class AActor : public UObject {
-public:
-    DWORD ActorField28;
-    DWORD MovementFlags;
-    BYTE ActorPad[0xc4 - 0x30];
-    FLOAT LatentFloat;
-#define SLOT(n) virtual void ActorSlot##n();
-    SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
-    SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34) SLOT(35) SLOT(36) SLOT(37) SLOT(38)
-    SLOT(39) SLOT(40) SLOT(41) SLOT(42) SLOT(43) SLOT(44) SLOT(45) SLOT(46) SLOT(47) SLOT(48)
-    SLOT(49) SLOT(50) SLOT(51) SLOT(52) SLOT(53) SLOT(54) SLOT(55) SLOT(56) SLOT(57) SLOT(58)
-    SLOT(59) SLOT(60) SLOT(61) SLOT(62) SLOT(63) SLOT(64) SLOT(65) SLOT(66) SLOT(67) SLOT(68)
-    SLOT(69) SLOT(70) SLOT(71)
-#undef SLOT
-    virtual UBOOL AnimationFinished(INT Channel);
-    UBOOL SetRotation(const FRotator &NewRotation);
-    UBOOL SetRelativeLocation(const FVector &NewLocation);
-    UBOOL SetLocation(const FVector &NewLocation, UBOOL bNoCheck);
-    void SetDrawScale3D(FVector NewScale3D);
-    UBOOL MoveSmooth(FVector Delta);
-    DECLARE_NATIVE(execSetRelativeLocation)
-    DECLARE_NATIVE(execSetLocation)
-    DECLARE_NATIVE(execSetDrawScale3D)
-    DECLARE_NATIVE(execMoveSmooth)
-    DECLARE_NATIVE(execPollFinishAnim)
-    DECLARE_NATIVE(execSetRotation)
-};
-
+// UObject::execAssert
 void UObject::execAssert(FFrame &Stack, RESULT_DECL)
 {
     INT wLine = Stack.ReadWord();
@@ -188,12 +13,14 @@ void UObject::execAssert(FFrame &Stack, RESULT_DECL)
         Stack.Logf(NAME_Critical, (const TCHAR *)L"Assertion failed, line %i", wLine);
 }
 
+// UObject::execObjectToString
 void UObject::execObjectToString(FFrame &Stack, RESULT_DECL)
 {
     P_GET_OBJECT(UObject, A);
     *(FString *)Result = A ? A->GetName() : (const TCHAR *)L"None";
 }
 
+// UObject::execVectorToBool
 void UObject::execVectorToBool(FFrame &Stack, RESULT_DECL)
 {
     FVector V(0.0f, 0.0f, 0.0f);
@@ -201,6 +28,7 @@ void UObject::execVectorToBool(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = V.IsZero() ? 0 : 1;
 }
 
+// UObject::execLen
 void UObject::execLen(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(S);
@@ -208,24 +36,28 @@ void UObject::execLen(FFrame &Stack, RESULT_DECL)
     *(INT *)Result = S.Len();
 }
 
+// UObject::execStringToInt
 void UObject::execStringToInt(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(Str);
     *(INT *)Result = appAtoi(*Str);
 }
 
+// UObject::execStringToByte
 void UObject::execStringToByte(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(Str);
     *(BYTE *)Result = appAtoi(*Str);
 }
 
+// UObject::execStringToFloat
 void UObject::execStringToFloat(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(Str);
     *(FLOAT *)Result = appAtof(*Str);
 }
 
+// UObject::execAsc
 void UObject::execAsc(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(S);
@@ -233,12 +65,14 @@ void UObject::execAsc(FFrame &Stack, RESULT_DECL)
     *(INT *)Result = **S;
 }
 
+// UObject::execEatString
 void UObject::execEatString(FFrame &Stack, RESULT_DECL)
 {
     FString String;
     Stack.Step(this, &String);
 }
 
+// UObject::execEqualEqual_StringString
 void UObject::execEqualEqual_StringString(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(A);
@@ -247,6 +81,7 @@ void UObject::execEqualEqual_StringString(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = appStrcmp(*A, *B) == 0;
 }
 
+// UObject::execNotEqual_StringString
 void UObject::execNotEqual_StringString(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(A);
@@ -255,6 +90,7 @@ void UObject::execNotEqual_StringString(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = appStrcmp(*A, *B) != 0;
 }
 
+// UObject::execLess_StringString
 void UObject::execLess_StringString(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(A);
@@ -263,6 +99,7 @@ void UObject::execLess_StringString(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = appStrcmp(*A, *B) < 0;
 }
 
+// UObject::execGreater_StringString
 void UObject::execGreater_StringString(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(A);
@@ -271,6 +108,7 @@ void UObject::execGreater_StringString(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = appStrcmp(*A, *B) > 0;
 }
 
+// UObject::execLessEqual_StringString
 void UObject::execLessEqual_StringString(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(A);
@@ -279,6 +117,7 @@ void UObject::execLessEqual_StringString(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = appStrcmp(*A, *B) <= 0;
 }
 
+// UObject::execGreaterEqual_StringString
 void UObject::execGreaterEqual_StringString(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(A);
@@ -287,6 +126,7 @@ void UObject::execGreaterEqual_StringString(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = appStrcmp(*A, *B) >= 0;
 }
 
+// UObject::execComplementEqual_StringString
 void UObject::execComplementEqual_StringString(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(A);
@@ -295,6 +135,7 @@ void UObject::execComplementEqual_StringString(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = appStricmp(*A, *B) == 0;
 }
 
+// UObject::execStringToBool
 void UObject::execStringToBool(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(Str);
@@ -306,6 +147,7 @@ void UObject::execStringToBool(FFrame &Stack, RESULT_DECL)
         *(INT *)Result = appAtoi(*Str) ? 1 : 0;
 }
 
+// UObject::execCaps
 void UObject::execCaps(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(A);
@@ -313,6 +155,7 @@ void UObject::execCaps(FFrame &Stack, RESULT_DECL)
     *(FString *)Result = A.Caps();
 }
 
+// UObject::execInStr
 void UObject::execInStr(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(S);

@@ -6,6 +6,7 @@
 #include "unreal_actor.h"
 #include "unreal_containers.h"
 #include "unreal_object.h"
+#include "unreal_pawn.h"
 #include "versus_engine_classes.h"
 #include "versus_ipdrv_classes.h"
 #include "versus_ltcg.h"

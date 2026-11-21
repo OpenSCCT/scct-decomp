@@ -4,6 +4,8 @@
 // are destroyed.
 #include "versus_build.h"
 #include "unreal_field.h"
+#include "unreal_function.h"
+#include "unreal_interaction.h"
 #include "unreal_property.h"
 #include "versus_core_classes.h"
 #include "versus_engine_classes.h"

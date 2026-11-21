@@ -3,6 +3,7 @@
 // Each destructor runs UObject::ConditionalDestroy before the members and the parent class
 // are destroyed.
 #include "versus_build.h"
+#include "unreal_pawn.h"
 #include "versus_engine_classes.h"
 #include "versus_gui_classes.h"
 #include "versus_sbase_classes.h"

@@ -4,7 +4,7 @@
 
 #include "versus_build.h"
 #include "unreal_containers.h"
-#include "versus_core_classes.h"
+#include "unreal_subsystem.h"
 
 // Engine.MatchmakingSubsystem: 0x30 bytes, 203 virtual functions. The class is abstract; the one
 // implementation is GameService.GameServiceSubsystem. A method called by a USXBoxLiveRef native

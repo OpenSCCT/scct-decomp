@@ -1,245 +1,12 @@
-// Engine declarations shared by the Campaign UnrealScript natives. Layouts and
-// virtual slots are those the retail natives use; names follow Unreal Engine 2.
+// campaign_script_natives_3.cpp -- Campaign script natives: math, sound, controller and logging
 #include "unreal_script.h"
+#include "unreal_math.h"
+#include "unreal_containers.h"
+#include "unreal_actor.h"
+#include "unreal_pawn.h"
+#include "campaign_engine_classes.h"
 
-struct FVector {
-    FLOAT X, Y, Z;
-    FVector() {}
-    FVector(FLOAT InX, FLOAT InY, FLOAT InZ) : X(InX), Y(InY), Z(InZ) {}
-    FVector operator^(const FVector &V) const { return FVector(Y * V.Z - Z * V.Y, Z * V.X - X * V.Z, X * V.Y - Y * V.X); }
-    UBOOL IsZero() const { return X == 0.0f && Y == 0.0f && Z == 0.0f; }
-    FVector SafeNormal() const;
-    struct FRotator Rotation();
-};
-
-struct FCoords;
-struct FColor {
-    BYTE B, G, R, A;
-};
-
-struct FRotator {
-    INT Pitch, Yaw, Roll;
-    FRotator() {}
-    FRotator(INT InPitch, INT InYaw, INT InRoll) : Pitch(InPitch), Yaw(InYaw), Roll(InRoll) {}
-    FVector Vector();
-    FRotator operator*(FLOAT Scale) const { return FRotator((INT)(Pitch * Scale), (INT)(Yaw * Scale), (INT)(Roll * Scale)); }
-    INT NormalizeAxis(INT Angle) const
-    {
-        Angle &= 0xFFFF;
-        if (Angle > 32767)
-            Angle -= 0x10000;
-        return Angle;
-    }
-    __forceinline FRotator Normalize() const
-    {
-        return FRotator(NormalizeAxis(Pitch), NormalizeAxis(Yaw), NormalizeAxis(Roll));
-    }
-};
-
-inline FRotator operator*(FLOAT Scale, const FRotator &R) { return FRotator((INT)(R.Pitch * Scale), (INT)(R.Yaw * Scale), (INT)(R.Roll * Scale)); }
-
-struct FCoords {
-    FVector Origin;
-    FVector XAxis;
-    FVector YAxis;
-    FVector ZAxis;
-    FCoords &operator/=(const FRotator &R);
-    FCoords operator/(const FRotator &R) const { return FCoords(*this) /= R; }
-};
-
-struct FGlobalMath {
-    FCoords UnitCoords;
-};
-extern FGlobalMath GMath;
-
-inline FVector FRotator::Vector()
-{
-    return (GMath.UnitCoords / *this).XAxis;
-}
-
-template <class T> inline T Clamp(const T X, const T Min, const T Max)
-{
-    return X < Min ? Min : X < Max ? X : Max;
-}
-
-class FMalloc {
-public:
-    virtual void *Malloc(DWORD Count, const TCHAR *Tag);
-    virtual void *Realloc(void *Original, DWORD Count, const TCHAR *Tag);
-    virtual void Free(void *Original);
-};
-extern FMalloc *GMalloc;
-
-class FArray {
-public:
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
-    ~FArray()
-    {
-        if (Data)
-            GMalloc->Free(Data);
-        Data = 0;
-        ArrayNum = ArrayMax = 0;
-    }
-    void Remove(INT Index, INT Count, INT ElementSize);
-    INT Num() const { return ArrayNum; }
-};
-
-class FString : public FArray {
-public:
-    FString() {}
-    ~FString()
-    {
-        ArrayNum = 0;
-        ArrayMax = 0;
-        Data = GMalloc->Realloc(Data, 0, (const TCHAR *)L"FArray::_WORD");
-        Remove(0, ArrayNum, sizeof(TCHAR));
-    }
-    FString &operator=(const TCHAR *Other);
-    FString &operator=(const FString &Other);
-    FString Caps() const;
-    FString(INT InCount, const TCHAR *InSrc);
-    FString(const TCHAR *In);
-    FString Left(INT Count) const { return FString(Clamp(Count, 0, Len()), **this); }
-    FString Right(INT Count) const { return FString(**this + Len() - Clamp(Count, 0, Len())); }
-    FString Mid(INT Start, INT Count = 0x7fffffff) const
-    {
-        DWORD End = Start + Count;
-        Start = Clamp((DWORD)Start, (DWORD)0, (DWORD)Len());
-        End = Clamp((DWORD)End, (DWORD)Start, (DWORD)Len());
-        return FString(End - Start, **this + Start);
-    }
-    INT InStr(const TCHAR *SubStr, UBOOL Right = 0) const;
-    const TCHAR *operator*() const { return ArrayNum ? (const TCHAR *)Data : (const TCHAR *)L""; }
-    INT Len() const { return ArrayNum ? ArrayNum - 1 : 0; }
-};
-
-INT appAtoi(const TCHAR *Str);
-FLOAT appAtof(const TCHAR *Str);
-INT appStrcmp(const TCHAR *A, const TCHAR *B);
-INT appStricmp(const TCHAR *A, const TCHAR *B);
-TCHAR *appFromAnsi(const ANSICHAR *Str);
-TCHAR *appFromUnicode(const TCHAR *Str);
-
-extern TCHAR GTrue[];
-extern TCHAR GFalse[];
-
-template <class T> struct TArray {
-    T *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    T &operator()(INT i) { return Data[i]; }
-};
-
-class UField : public UObject {
-public:
-    UField *SuperField;
-    UField *Next;
-    UField *HashNext;
-};
-
-class UProperty : public UField {
-public:
-    BYTE Pad[0x44 - 0x34];
-    _WORD Offset;
-#define SLOT(n) virtual void PropertySlot##n();
-    SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
-    SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34) SLOT(35) SLOT(36) SLOT(37) SLOT(38)
-#undef SLOT
-    virtual void CopyCompleteValue(void *Dest, void *Src, UObject *Obj = 0);
-};
-
-class UBoolProperty : public UProperty {
-public:
-    BYTE Pad2[0x54 - 0x48];
-    BITFIELD BitMask;
-};
-
-class UStruct : public UField {
-public:
-    BYTE Pad[0x50 - 0x34];
-    TArray<BYTE> Script;
-};
-
-class UClass : public UStruct {
-public:
-    BYTE Pad2[0x29c - 0x5c];
-    TArray<BYTE> Defaults;
-};
-
-class USound;
-class AActor;
-
-class UAudioSubsystem : public UObject {
-public:
-#define SLOT(n) virtual void AudioSlot##n();
-    SLOT(24) SLOT(25) SLOT(26) SLOT(27)
-    virtual UBOOL StopSound(AActor *Actor, USound *Sound, FLOAT FadeTime, INT Slot);
-    SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34) SLOT(35)
-    virtual void ChangeSoundVolume(AActor *Actor, USound *Sound, FLOAT Volume, INT Slot);
-#undef SLOT
-};
-
-class UEngine : public UObject {
-public:
-    BYTE EnginePad[0x48 - 0x28];
-    UAudioSubsystem *Audio;
-};
-
-class ULevel : public UObject {
-public:
-    BYTE LevelPad[0x38 - 0x28];
-    UEngine *Engine;
-#define SLOT(n) virtual void LevelSlot##n();
-    SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
-    SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34)
-#undef SLOT
-    virtual UBOOL DestroyActor(AActor *ThisActor, UBOOL bNetForce = 0);
-};
-
-class AActor : public UObject {
-public:
-    DWORD ActorField28;
-    DWORD MovementFlags;
-    BYTE ActorPad[0x7c - 0x30];
-    ULevel *XLevel;
-    BYTE ActorPad2[0xc4 - 0x80];
-    FLOAT LatentFloat;
-#define SLOT(n) virtual void ActorSlot##n();
-    SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
-    SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34) SLOT(35) SLOT(36) SLOT(37) SLOT(38)
-    SLOT(39) SLOT(40) SLOT(41) SLOT(42) SLOT(43) SLOT(44) SLOT(45) SLOT(46) SLOT(47) SLOT(48)
-    SLOT(49) SLOT(50) SLOT(51) SLOT(52) SLOT(53) SLOT(54) SLOT(55) SLOT(56) SLOT(57) SLOT(58)
-    SLOT(59) SLOT(60) SLOT(61) SLOT(62) SLOT(63) SLOT(64)
-    virtual void SetBase(AActor *NewBase, FVector NewFloor, INT bNotifyActor);
-    SLOT(66) SLOT(67) SLOT(68)
-    SLOT(69) SLOT(70) SLOT(71)
-#undef SLOT
-    virtual UBOOL AnimationFinished(INT Channel);
-    UBOOL SetRotation(const FRotator &NewRotation);
-    UBOOL SetRelativeLocation(const FVector &NewLocation);
-    UBOOL SetLocation(const FVector &NewLocation, UBOOL bNoCheck);
-    void SetDrawScale3D(FVector NewScale3D);
-    UBOOL MoveSmooth(FVector Delta);
-    DECLARE_NATIVE(execSetRelativeLocation)
-    DECLARE_NATIVE(execSetLocation)
-    DECLARE_NATIVE(execSetDrawScale3D)
-    DECLARE_NATIVE(execMoveSmooth)
-    DECLARE_NATIVE(execPollFinishAnim)
-    DECLARE_NATIVE(execSetBase)
-    DECLARE_NATIVE(execError)
-    DECLARE_NATIVE(execMultiply_ColorFloat)
-    DECLARE_NATIVE(execMultiply_FloatColor)
-    DECLARE_NATIVE(execInterpolateRotatorValue)
-    DECLARE_NATIVE(execStopSound)
-    DECLARE_NATIVE(execChangeSoundVolume)
-    ULevel *GetLevel() const { return XLevel; }
-    DECLARE_NATIVE(execScreenLog)
-    DECLARE_NATIVE(execSetRotation)
-};
-
+// UObject::execLog
 // The release build compiles out the log output; the native still reads its parameters.
 void UObject::execLog(FFrame &Stack, RESULT_DECL)
 {
@@ -249,6 +16,7 @@ void UObject::execLog(FFrame &Stack, RESULT_DECL)
     P_FINISH;
 }
 
+// UObject::execWarn
 void UObject::execWarn(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(S);
@@ -256,6 +24,7 @@ void UObject::execWarn(FFrame &Stack, RESULT_DECL)
     Stack.Logf((const TCHAR *)L"%s", *S);
 }
 
+// AActor::execSetBase
 void AActor::execSetBase(FFrame &Stack, RESULT_DECL)
 {
     P_GET_OBJECT(AActor, NewBase);
@@ -264,6 +33,7 @@ void AActor::execSetBase(FFrame &Stack, RESULT_DECL)
     SetBase(NewBase, NewFloor, 1);
 }
 
+// AActor::execScreenLog
 // The release build compiles out the on-screen log; the native still reads its parameter.
 void AActor::execScreenLog(FFrame &Stack, RESULT_DECL)
 {
@@ -271,6 +41,7 @@ void AActor::execScreenLog(FFrame &Stack, RESULT_DECL)
     P_FINISH;
 }
 
+// AActor::execError
 void AActor::execError(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(S);
@@ -279,6 +50,7 @@ void AActor::execError(FFrame &Stack, RESULT_DECL)
     GetLevel()->DestroyActor(this);
 }
 
+// AActor::execStopSound
 void AActor::execStopSound(FFrame &Stack, RESULT_DECL)
 {
     P_GET_OBJECT(USound, Sound);
@@ -291,6 +63,7 @@ void AActor::execStopSound(FFrame &Stack, RESULT_DECL)
         *(DWORD *)Result = 0;
 }
 
+// AActor::execChangeSoundVolume
 void AActor::execChangeSoundVolume(FFrame &Stack, RESULT_DECL)
 {
     P_GET_OBJECT(USound, Sound);
@@ -301,8 +74,7 @@ void AActor::execChangeSoundVolume(FFrame &Stack, RESULT_DECL)
         GetLevel()->Engine->Audio->ChangeSoundVolume(this, Sound, Volume, Slot);
 }
 
-INT InterpolateRotatorValue(INT Current, INT Desired, FLOAT Rate);
-
+// AActor::execInterpolateRotatorValue
 void AActor::execInterpolateRotatorValue(FFrame &Stack, RESULT_DECL)
 {
     P_GET_INT(Current);
@@ -312,22 +84,7 @@ void AActor::execInterpolateRotatorValue(FFrame &Stack, RESULT_DECL)
     *(INT *)Result = InterpolateRotatorValue(Current, Desired, Rate);
 }
 
-class APawn : public AActor {
-public:
-    UBOOL PickWallAdjust(FVector WallHitNormal);
-    UBOOL pointReachable(FVector aPoint, INT bKnowVisible, INT bExtra);
-    FLOAT findPathToward(AActor *Goal, FVector Dest, void *NodeEval, UBOOL bClearPaths, INT bExtra);
-};
-
-class AController : public AActor {
-public:
-    BYTE ControllerPad[0x2b4 - 0xc8];
-    APawn *Pawn;
-    DECLARE_NATIVE(execPickWallAdjust)
-    DECLARE_NATIVE(execpointReachable)
-    DECLARE_NATIVE(execFindPathTo)
-};
-
+// AController::execPickWallAdjust
 void AController::execPickWallAdjust(FFrame &Stack, RESULT_DECL)
 {
     P_GET_VECTOR(HitNormal);
@@ -336,6 +93,7 @@ void AController::execPickWallAdjust(FFrame &Stack, RESULT_DECL)
         *(DWORD *)Result = Pawn->PickWallAdjust(HitNormal);
 }
 
+// AController::execpointReachable
 void AController::execpointReachable(FFrame &Stack, RESULT_DECL)
 {
     P_GET_VECTOR(aPoint);
@@ -347,6 +105,7 @@ void AController::execpointReachable(FFrame &Stack, RESULT_DECL)
     *(DWORD *)Result = Pawn->pointReachable(aPoint, 0, 0);
 }
 
+// AController::execFindPathTo
 void AController::execFindPathTo(FFrame &Stack, RESULT_DECL)
 {
     P_GET_VECTOR(Point);
@@ -357,6 +116,7 @@ void AController::execFindPathTo(FFrame &Stack, RESULT_DECL)
     *(AActor **)Result = 0;
 }
 
+// UObject::execMultiply_RotatorFloat
 void UObject::execMultiply_RotatorFloat(FFrame &Stack, RESULT_DECL)
 {
     P_GET_ROTATOR(A);
@@ -365,6 +125,7 @@ void UObject::execMultiply_RotatorFloat(FFrame &Stack, RESULT_DECL)
     *(FRotator *)Result = A * B;
 }
 
+// UObject::execMultiply_FloatRotator
 void UObject::execMultiply_FloatRotator(FFrame &Stack, RESULT_DECL)
 {
     P_GET_FLOAT(A);
@@ -373,6 +134,7 @@ void UObject::execMultiply_FloatRotator(FFrame &Stack, RESULT_DECL)
     *(FRotator *)Result = A * B;
 }
 
+// UObject::execFClamp
 void UObject::execFClamp(FFrame &Stack, RESULT_DECL)
 {
     P_GET_FLOAT(V);
@@ -382,6 +144,7 @@ void UObject::execFClamp(FFrame &Stack, RESULT_DECL)
     *(FLOAT *)Result = Clamp(V, A, B);
 }
 
+// UObject::execSmerp
 void UObject::execSmerp(FFrame &Stack, RESULT_DECL)
 {
     P_GET_FLOAT(Alpha);
@@ -391,10 +154,7 @@ void UObject::execSmerp(FFrame &Stack, RESULT_DECL)
     *(FLOAT *)Result = A + (3.0f * Alpha * Alpha - 2.0f * Alpha * Alpha * Alpha) * (B - A);
 }
 
-FLOAT DampFloat(FLOAT Current, FLOAT Target, FLOAT Rate, FLOAT DeltaTime);
-INT DampInt(INT Current, INT Target, FLOAT Rate, FLOAT DeltaTime);
-FVector DampVec(const FVector &Current, const FVector &Target, FLOAT Rate, FLOAT DeltaTime);
-
+// UObject::execDampFloat
 void UObject::execDampFloat(FFrame &Stack, RESULT_DECL)
 {
     P_GET_FLOAT(Current);
@@ -405,6 +165,7 @@ void UObject::execDampFloat(FFrame &Stack, RESULT_DECL)
     *(FLOAT *)Result = DampFloat(Current, Target, Rate, DeltaTime);
 }
 
+// UObject::execDampInt
 void UObject::execDampInt(FFrame &Stack, RESULT_DECL)
 {
     P_GET_INT(Current);
@@ -415,6 +176,7 @@ void UObject::execDampInt(FFrame &Stack, RESULT_DECL)
     *(INT *)Result = DampInt(Current, Target, Rate, DeltaTime);
 }
 
+// UObject::execDampVec
 void UObject::execDampVec(FFrame &Stack, RESULT_DECL)
 {
     P_GET_VECTOR(Current);
@@ -425,6 +187,7 @@ void UObject::execDampVec(FFrame &Stack, RESULT_DECL)
     *(FVector *)Result = DampVec(Current, Target, Rate, DeltaTime);
 }
 
+// AActor::execMultiply_ColorFloat
 void AActor::execMultiply_ColorFloat(FFrame &Stack, RESULT_DECL)
 {
     FColor A;
@@ -437,6 +200,7 @@ void AActor::execMultiply_ColorFloat(FFrame &Stack, RESULT_DECL)
     *(FColor *)Result = A;
 }
 
+// AActor::execMultiply_FloatColor
 void AActor::execMultiply_FloatColor(FFrame &Stack, RESULT_DECL)
 {
     P_GET_FLOAT(A);

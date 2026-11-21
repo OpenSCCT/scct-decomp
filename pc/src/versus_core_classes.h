@@ -33,22 +33,6 @@ public:
     BYTE unk_28[0x48];
 };
 
-// Core.Subsystem: 0x28 bytes, 23 virtual functions
-class USubsystem : public UObject {
-public:
-    virtual ~USubsystem();
-    virtual void VirtualSlot22();
-};
-
-// Core.Commandlet: 0x1dc bytes, 23 virtual functions
-class UCommandlet : public UObject {
-public:
-    virtual ~UCommandlet();
-    virtual void VirtualSlot22();
-
-    BYTE unk_28[0x1b4];
-};
-
 // Core.Package: 0x34 bytes, 22 virtual functions
 class UPackage : public UObject {
 public:
