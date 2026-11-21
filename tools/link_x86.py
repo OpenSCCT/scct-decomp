@@ -25,6 +25,7 @@ def symbol_index(obj):
     symbols = {}
     functions = defaultdict(list)
     section_functions = Counter()
+    handlers = defaultdict(list)
     index = 0
     while index < entries:
         short, value, section, kind, storage, aux = struct.unpack_from("<8sIhHBB", obj, table + index * 18)
@@ -39,20 +40,31 @@ def symbol_index(obj):
         # A C++ catch block is emitted after the function's return in the same section,
         # under a private $L label; it belongs to that function rather than starting another.
         catch_block = storage == 3 and value > 0 and name.startswith(b"$L") and name[2:].isdigit()
-        if kind == 0x20 and 1 <= section <= sections and not catch_block:
+        # A function's frame handler stub ends its unwind section after the funclets.
+        frame_handler = storage == 3 and value > 0 and name.startswith(b"__ehhandler$")
+        if kind == 0x20 and 1 <= section <= sections and frame_handler:
+            handlers[name].append(section)
+        if kind == 0x20 and 1 <= section <= sections and not catch_block and not frame_handler:
             section_functions[section] += 1
             if value == 0 and storage in (2, 3):
                 functions[name].append(section)
         index += 1 + aux
     if index != entries:
         raise ValueError("invalid COFF auxiliary symbol count")
-    return sections, symbols, functions, section_functions
+    return sections, symbols, functions, section_functions, handlers
 
 
 def link_function(obj, name, length, address, bindings, *, read_constant=None):
     """Return the fully linked section. The retail function bytes are never an input."""
-    sections, symbols, functions, section_functions = symbol_index(bytes(obj))
+    sections, symbols, functions, section_functions, handlers = symbol_index(bytes(obj))
     matches = functions.get(name.encode("ascii"), ())
+    if name.startswith("__ehhandler$"):
+        # The unit is the whole unwind section: the funclets and this frame handler stub.
+        matches = handlers.get(name.encode("ascii"), ())
+        if len(matches) == 1:
+            unwind_name, = struct.unpack_from("<8s", obj, 20 + (matches[0] - 1) * 40)
+            if unwind_name.rstrip(b"\0") != b".text$x":
+                raise ValueError("a frame handler must be in the unwind code section")
     if len(matches) != 1:
         raise ValueError(f"expected one complete COFF function named {name}")
     section = matches[0]
@@ -76,6 +88,12 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
         # compiler's .text$x unwind section, by absolute address.
         handler = (private and relocation == 6 and kind == 0x20 and sym_section != section
                    and symbol == b"__ehhandler$" + name.encode("ascii"))
+        # The frame handler stub loads its function's FuncInfo, a compiler label in .xdata$x;
+        # the binding names the retail FuncInfo, which the audit checks structurally.
+        funcinfo = False
+        if private and relocation == 6 and kind == 0 and 1 <= sym_section <= sections and symbol.startswith(b"$T"):
+            info_name, = struct.unpack_from("<8s", obj, 20 + (sym_section - 1) * 40)
+            funcinfo = info_name.rstrip(b"\0") == b".xdata$x"
         if local:
             if relocation != 6 or value >= size:
                 raise ValueError("invalid section-local switch label")
@@ -88,6 +106,8 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
                 dest_flags, = struct.unpack_from("<I", obj, dest_header + 36)
                 if dest_name.rstrip(b"\0") != b".text$x" or dest_flags & 0x20000020 != 0x20000020 or value >= dest_size:
                     raise ValueError("frame handler must be a label in the unwind code section")
+            elif funcinfo:
+                pass
             elif private:
                 # MSVC may choose a register ABI for a static procedure within this translation unit.
                 if (relocation != 0x14 or sym_section == section or functions.get(symbol) != [sym_section]
@@ -118,6 +138,8 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
                 const_flags, = struct.unpack_from("<I", obj, const_header + 36)
                 if value != 0 or const_flags & 0xe0000040 != 0x40000040:
                     raise ValueError(f"expected a read-only virtual function table for {symbol}")
+            elif funcinfo:
+                pass
             elif sym_section and kind != 0x20:
                 const_header = 20 + (sym_section - 1) * 40
                 const_size, const_start = struct.unpack_from("<II", obj, const_header + 16)
@@ -135,7 +157,7 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
         addend, = struct.unpack_from("<I", body, position)
         if local and addend:
             raise ValueError("switch label relocation has a nonzero addend")
-        if private and addend:
+        if private and addend and not funcinfo:
             raise ValueError("private function relocation has a nonzero addend")
         if relocation == 0x14:  # IMAGE_REL_I386_REL32
             dest -= address + position + 4

@@ -23,7 +23,7 @@
     "identification": "The read-only pointer at RVA 0x2f1fd8 resolves to this complete deleting destructor. The receiver is cleaned unconditionally and released only when flag bit zero is set. Its class identity is unknown.",
     "match": {
       "bytes_sha256": "6af2ec6616d178dc60831bfac1053068ee84f3f03910c33b4ef27aff2c58da6a",
-      "inputs_sha256": "c742a3f39699827070c9c8f0ef5c40a93a40cb01045f3bd5e7b1ea01bd1679c8"
+      "inputs_sha256": "83e2554664a2cea9dc6a00fd64107c9be3a9a8454860f5327bfd814df20b72dc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -54,7 +54,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "7d1b7b6b1669a2a2698bea6bb742f0f3f35adbdfcbf33f10f9dc623dada8b81f",
-      "inputs_sha256": "f8d6a2034afa095ba574d3f8be954903167e1f896805c90b4e7ec06ba12e64eb"
+      "inputs_sha256": "5d44fda7039dfe06de0ee8e45a6ed617ffd52c63dab0da07677da97e00a814f4"
     }
   },
   {
@@ -81,7 +81,7 @@
     "identification": "The read-only pointer at RVA 0x2f1ffc resolves to this complete deleting destructor. The receiver is cleaned unconditionally and released only when flag bit zero is set. Its class identity is unknown.",
     "match": {
       "bytes_sha256": "b9a445e29418539961f7df45febe0e8e448904ad8fea8890ec4f347fd7224f8c",
-      "inputs_sha256": "e05f1b79a41ef1ce468c4600a997597e5169b2f5917966dec80f377f21c6248c"
+      "inputs_sha256": "57ec09da22a0868d03bc40118db8f8b70c5f61ec1dfb097cae2d2db0dbc99294"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -111,7 +111,7 @@
     "identification": "Versus unwind handler RVA 0x2cb39c loads FuncInfo RVA 0x31d148. Entry 0 in unwind map RVA 0x31d138 names this action. It clears bit 0 in the word at RVA 0x3762f4.",
     "match": {
       "bytes_sha256": "caaf554830c2677a932b5f88bcc8b09179e5900bae5202c94ddc381cc9404c44",
-      "inputs_sha256": "ff545cef7db2f68221441fc433342eb7a64ec49ec32766e0193e2c69189ba685"
+      "inputs_sha256": "72f96e59f2ba03aba6146a9b8dc470b82c1b147e615a1e686c6da869c38a18e4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -141,7 +141,7 @@
     "identification": "Versus unwind handler RVA 0x2cb39c loads FuncInfo RVA 0x31d148. Entry 1 in unwind map RVA 0x31d138 names this action. It clears bit 1 in the word at RVA 0x3762f4.",
     "match": {
       "bytes_sha256": "8919ae8f65377c2b30f1518a4bda460972e52fdc4a44e80fd6e8907fdf027375",
-      "inputs_sha256": "2106a72cf020053571914208f875ea58cddd6784cad25abf7cf324908f1a71a9"
+      "inputs_sha256": "6b549d5b14d3c8895083a1d65f1f37a4626cb8d3aa99dab528bd4be5ea4ce8d4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -150,6 +150,45 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-object-destructors-155b0-unwind",
+    "size": 18,
+    "offset": 2934784,
+    "inputs": [
+      "src/versus_object_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UPackage@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_object_destructors.obj src/versus_object_destructors.cpp",
+    "link_bindings": {
+      "??1UObject@@UAE@XZ": {
+        "va": 277962464,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T5893": {
+        "va": 281157644,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-object-destructors-155b0: its frame handler at VA 0x10bcc808 (the handler that function installs) and the 8 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "851cc64670f97fd9a1ddd17be83010476c66a34ab5df3cf8f959e57e78dece33",
+      "inputs_sha256": "3169ab4a94a8de6633f676dab0849d79111ebe09d5ee07fd1bdc3250455812cc"
     }
   },
   {
@@ -171,7 +210,7 @@
     "identification": "Versus unwind handler RVA 0x2ccf7e loads FuncInfo RVA 0x322f30. Entry 0 in unwind map RVA 0x322f28 names this action. It clears bit 1 in the word at RVA 0x450e1c.",
     "match": {
       "bytes_sha256": "fb828b63992f1cbf2f8a77a7fa8584c5b243070c3698ed2cbf8bf384f90dad78",
-      "inputs_sha256": "cd759793e7ca66b1d56698afad428b7ba1fb203109fbbb2ad92bf214fea9b01a"
+      "inputs_sha256": "9db57ebcc7a7d2fd303a3e2e6d0bf111a2815026fcf6179a4dc710ab58440fd2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -180,6 +219,785 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-multi-member-destructors-1660c0-unwind",
+    "size": 51,
+    "offset": 2938512,
+    "inputs": [
+      "src/versus_multi_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UGUIComponent@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_multi_member_destructors.obj src/versus_multi_member_destructors.cpp",
+    "link_bindings": {
+      "??1UGUI@@UAE@XZ": {
+        "va": 279339040,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member34@UGUIComponent@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member40@UGUIComponent@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member64@UGUIComponent@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T5298": {
+        "va": 281165036,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-multi-member-destructors-1660c0: its frame handler at VA 0x10bcd6b9 (the handler that function installs) and the 41 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "2eaa5a16ccc7b29058f585b18e053acc010fd12f9ef260138dec55cc6c0faee8",
+      "inputs_sha256": "74fd20aad0890852f8ad781f01811847217c3625c3d2d95fa7fb002379f91cc9"
+    }
+  },
+  {
+    "id": "versus-multi-member-destructors-acd20-unwind",
+    "size": 51,
+    "offset": 2941024,
+    "inputs": [
+      "src/versus_multi_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1ULevelSummary@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_multi_member_destructors.obj src/versus_multi_member_destructors.cpp",
+    "link_bindings": {
+      "??1UObject@@UAE@XZ": {
+        "va": 277962464,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member28@ULevelSummary@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member34@ULevelSummary@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member44@ULevelSummary@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T5122": {
+        "va": 281169348,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-multi-member-destructors-acd20: its frame handler at VA 0x10bce089 (the handler that function installs) and the 41 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "5f522dd20936adaae7f7436bc1c55c5acbe570de07ec47f663656767d3392a1b",
+      "inputs_sha256": "cc89771dd2e5b5e92276f3c45c36bd417c1fd6101cf0fb05bf5327c664312a01"
+    }
+  },
+  {
+    "id": "versus-multi-member-destructors-a7510-unwind",
+    "size": 109,
+    "offset": 2941536,
+    "inputs": [
+      "src/versus_multi_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UMatchInfo@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_multi_member_destructors.obj src/versus_multi_member_destructors.cpp",
+    "link_bindings": {
+      "??1UObject@@UAE@XZ": {
+        "va": 277962464,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member28@UMatchInfo@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member34@UMatchInfo@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member40@UMatchInfo@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member4C@UMatchInfo@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member60@UMatchInfo@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member6C@UMatchInfo@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member78@UMatchInfo@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member84@UMatchInfo@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T4980": {
+        "va": 281170224,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-multi-member-destructors-a7510: its frame handler at VA 0x10bce2c3 (the handler that function installs) and the 99 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "55da182a135e3d3d5481b1b45a2f24435bf21aa2875c61059b20556f070bbd1e",
+      "inputs_sha256": "e9e7e2e6166539349fdbb1414dd2e4c50c0267ce9726a485aa8339fdd02bb7be"
+    }
+  },
+  {
+    "id": "versus-object-destructors-a49c0-unwind",
+    "size": 18,
+    "offset": 2941920,
+    "inputs": [
+      "src/versus_object_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UAnimNotify_Scripted@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_object_destructors.obj src/versus_object_destructors.cpp",
+    "link_bindings": {
+      "??1UAnimNotify@@UAE@XZ": {
+        "va": 278546720,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T6117": {
+        "va": 281170748,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-object-destructors-a49c0: its frame handler at VA 0x10bce3e8 (the handler that function installs) and the 8 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "46db8a778b101a58b0aeb4c3ae2b8bdd88907ccb6e81e88d0f9d218affdc428f",
+      "inputs_sha256": "774d5a7e9a135f30e2e29f899b99fc9871415e7e833bb8531b1c188020ad459a"
+    }
+  },
+  {
+    "id": "versus-object-destructors-a2d00-unwind",
+    "size": 18,
+    "offset": 2942032,
+    "inputs": [
+      "src/versus_object_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UInteraction@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_object_destructors.obj src/versus_object_destructors.cpp",
+    "link_bindings": {
+      "??1UInteractions@@UAE@XZ": {
+        "va": 278539360,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T5989": {
+        "va": 281171052,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-object-destructors-a2d00: its frame handler at VA 0x10bce458 (the handler that function installs) and the 8 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "e1cbca5d1e39a7e7d526efff289793ef5463ae1db2ae8b801b56cf54d0ee1170",
+      "inputs_sha256": "639e063d8bcd8304ad4e999f83a2692e19d55a0adf3f83cd385000578d77e866"
+    }
+  },
+  {
+    "id": "versus-object-destructors-ce10-unwind",
+    "size": 18,
+    "offset": 2943392,
+    "inputs": [
+      "src/versus_object_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UState@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_object_destructors.obj src/versus_object_destructors.cpp",
+    "link_bindings": {
+      "??1UStruct@@UAE@XZ": {
+        "va": 277925152,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T5875": {
+        "va": 281173480,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-object-destructors-ce10: its frame handler at VA 0x10bce9a8 (the handler that function installs) and the 8 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "eed54137bb37ce4cd19bfd1d285423b60b53ac966a9194fe870737ce6e751d50",
+      "inputs_sha256": "9c30bcddcb0b65634dd280bd48a4001d8ed2eaf713acb0aa5b8de8337cc9db6a"
+    }
+  },
+  {
+    "id": "versus-multi-member-destructors-1f3c30-unwind",
+    "size": 74,
+    "offset": 2944544,
+    "inputs": [
+      "src/versus_multi_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1ASGoggle@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_multi_member_destructors.obj src/versus_multi_member_destructors.cpp",
+    "link_bindings": {
+      "??1AActor@@UAE@XZ": {
+        "va": 278472144,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member300@ASGoggle@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member30C@ASGoggle@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member318@ASGoggle@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member324@ASGoggle@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T5889": {
+        "va": 281175504,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-multi-member-destructors-1f3c30: its frame handler at VA 0x10bcee60 (the handler that function installs) and the 64 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "4b7e1e67d682b90cd6d40c69e6b9038130e090c18d56a64b31d92200c1acba26",
+      "inputs_sha256": "d0f059f9e8d20ff77e362d9fd5ad2a6b95925d6ba3d105daed0625b01b959902"
+    }
+  },
+  {
+    "id": "versus-member-destructors-1f2260-unwind",
+    "size": 32,
+    "offset": 2944736,
+    "inputs": [
+      "src/versus_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1ASGPOControl@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_member_destructors.obj src/versus_member_destructors.cpp",
+    "link_bindings": {
+      "??1AActor@@UAE@XZ": {
+        "va": 278472144,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member@ASGPOControl@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T3140": {
+        "va": 281175668,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-member-destructors-1f2260: its frame handler at VA 0x10bceef6 (the handler that function installs) and the 22 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "2efee3ef7fa5d8b575faf0e5864ca2c988b449e50ff87259d3c1371b280a0f2e",
+      "inputs_sha256": "c0d8e496a2ccc1506c786c050a917bbb14d41f42b334119a5d0986f7b36dfedb"
+    }
+  },
+  {
+    "id": "versus-object-destructors-1f1510-unwind",
+    "size": 18,
+    "offset": 2944768,
+    "inputs": [
+      "src/versus_object_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1USMatchInfo@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_object_destructors.obj src/versus_object_destructors.cpp",
+    "link_bindings": {
+      "??1UMatchInfo@@UAE@XZ": {
+        "va": 278557968,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T8293": {
+        "va": 281175740,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-object-destructors-1f1510: its frame handler at VA 0x10bcef08 (the handler that function installs) and the 8 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "a6785ec88bd67a9246abe407db8a73be9b0032f679667b9383c05eb5e6048a3e",
+      "inputs_sha256": "0a282dc8f884fc099450ed828d1664b177a1a8881d8cd4505aa2c91e06fd69e5"
+    }
+  },
+  {
+    "id": "versus-member-destructors-1edb90-unwind",
+    "size": 32,
+    "offset": 2945232,
+    "inputs": [
+      "src/versus_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1ASBasicGamePlayObject@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_member_destructors.obj src/versus_member_destructors.cpp",
+    "link_bindings": {
+      "??1AActor@@UAE@XZ": {
+        "va": 278472144,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member@ASBasicGamePlayObject@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T2945": {
+        "va": 281176376,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-member-destructors-1edb90: its frame handler at VA 0x10bcf0e6 (the handler that function installs) and the 22 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "853aff35e4cd2f3ab06c5b83b8029fe52dfc2893db62debeeac393d43331be2b",
+      "inputs_sha256": "c1bdf67649749fcdec2f675d5d778dbf54a7edf44b720dcdfbf08cbf06211c8c"
+    }
+  },
+  {
+    "id": "versus-member-destructors-1eda20-unwind",
+    "size": 32,
+    "offset": 2945264,
+    "inputs": [
+      "src/versus_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1ASInteractObject@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_member_destructors.obj src/versus_member_destructors.cpp",
+    "link_bindings": {
+      "??1AActor@@UAE@XZ": {
+        "va": 278472144,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member@ASInteractObject@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T2928": {
+        "va": 281176420,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-member-destructors-1eda20: its frame handler at VA 0x10bcf106 (the handler that function installs) and the 22 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "0da5b1a639138918e93e5b86297409bcda7a676dd682b0a33d6c30b72c6ed5b7",
+      "inputs_sha256": "6c522c6743428e59a45195a0a6d499a5398f8f4927ab4c4a48efdcf6ed068a3c"
+    }
+  },
+  {
+    "id": "versus-multi-member-destructors-168ff0-unwind",
+    "size": 46,
+    "offset": 2945584,
+    "inputs": [
+      "src/versus_multi_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UGUILabel@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_multi_member_destructors.obj src/versus_multi_member_destructors.cpp",
+    "link_bindings": {
+      "??1UGUIComponent@@UAE@XZ": {
+        "va": 279339200,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member190@UGUILabel@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member1AC@UGUILabel@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T5482": {
+        "va": 281177264,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-multi-member-destructors-168ff0: its frame handler at VA 0x10bcf254 (the handler that function installs) and the 36 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "d25f2225cb068348c49170b11ef52d3144256393a932ae8c91b64aabcff556a9",
+      "inputs_sha256": "02dbc8a96189a91acaefdd4d6742a1328c9a8af199b1f6c4f49e7aa454d67346"
+    }
+  },
+  {
+    "id": "versus-member-destructors-167ab0-unwind",
+    "size": 32,
+    "offset": 2945632,
+    "inputs": [
+      "src/versus_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UGUISlider@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_member_destructors.obj src/versus_member_destructors.cpp",
+    "link_bindings": {
+      "??1UGUIComponent@@UAE@XZ": {
+        "va": 279339200,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member@UGUISlider@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T2826": {
+        "va": 281177308,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-member-destructors-167ab0: its frame handler at VA 0x10bcf276 (the handler that function installs) and the 22 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "3e138337a1bf0ec3ffc0c4a9b95bf3ee35c18ee0738751da4682c8cb5f331b62",
+      "inputs_sha256": "35352bdd8e6b06850c5a6cd8e400e9ca84222100fe475a706222adb2faa79440"
+    }
+  },
+  {
+    "id": "versus-member-destructors-167f00-unwind",
+    "size": 32,
+    "offset": 2945696,
+    "inputs": [
+      "src/versus_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UGUIButton@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_member_destructors.obj src/versus_member_destructors.cpp",
+    "link_bindings": {
+      "??1UGUIComponent@@UAE@XZ": {
+        "va": 279339200,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member@UGUIButton@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T2877": {
+        "va": 281177540,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-member-destructors-167f00: its frame handler at VA 0x10bcf2b6 (the handler that function installs) and the 22 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "dd748b74dce2bc1d5ac8638131d6ac5fbff6d86526a6dc7f15b6e12dd694a5fd",
+      "inputs_sha256": "66771c288e3d11f8071087fdad8ac8192c57caa033ecdf4705e7b37d400ffc47"
+    }
+  },
+  {
+    "id": "versus-member-destructors-167cc0-unwind",
+    "size": 32,
+    "offset": 2945728,
+    "inputs": [
+      "src/versus_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UGUITitleBar@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_member_destructors.obj src/versus_member_destructors.cpp",
+    "link_bindings": {
+      "??1UGUIComponent@@UAE@XZ": {
+        "va": 279339200,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member@UGUITitleBar@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T2843": {
+        "va": 281177584,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-member-destructors-167cc0: its frame handler at VA 0x10bcf2d6 (the handler that function installs) and the 22 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "7d949efaba1208037b42ba657081b0d9cd62af29b0760027021be0e6b067d4d3",
+      "inputs_sha256": "1416ba7d80af035060f6df37b82c18cc36bf3c9159b3e2d46ae9be8765fdd27f"
+    }
+  },
+  {
+    "id": "versus-multi-member-destructors-167500-unwind",
+    "size": 60,
+    "offset": 2945760,
+    "inputs": [
+      "src/versus_multi_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UGUIProgressBar@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_multi_member_destructors.obj src/versus_multi_member_destructors.cpp",
+    "link_bindings": {
+      "??1UGUIComponent@@UAE@XZ": {
+        "va": 279339200,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member1B0@UGUIProgressBar@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member1BC@UGUIProgressBar@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member1C8@UGUIProgressBar@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T5403": {
+        "va": 281177724,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-multi-member-destructors-167500: its frame handler at VA 0x10bcf312 (the handler that function installs) and the 50 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "129bd75e83d30ef3cd90e2cc0f2b82fee778fcddbd5ecbcafcff84267556b3b0",
+      "inputs_sha256": "5a9767cc05f4122090327e5925f0ba17e35f891dd9bf0be5d93520aab87b27b4"
+    }
+  },
+  {
+    "id": "versus-object-destructors-166920-unwind",
+    "size": 18,
+    "offset": 2945824,
+    "inputs": [
+      "src/versus_object_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UGUIListBase@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_object_destructors.obj src/versus_object_destructors.cpp",
+    "link_bindings": {
+      "??1UGUIComponent@@UAE@XZ": {
+        "va": 279339200,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T7077": {
+        "va": 281177796,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-object-destructors-166920: its frame handler at VA 0x10bcf328 (the handler that function installs) and the 8 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "2698bcc3ca9a5d433be187e2946db63775fc26a082fe873ea43729c9eb40db34",
+      "inputs_sha256": "516a65dd9006a674a3b46e194b6bdd81c51caf9530ba24f076e80f5741d214dd"
     }
   },
   {
@@ -201,7 +1019,7 @@
     "identification": "Versus unwind handler RVA 0x2cf8be loads FuncInfo RVA 0x3275fc. Entry 0 in unwind map RVA 0x3275e4 names this action. It clears bit 0 in the word at RVA 0x450f1c.",
     "match": {
       "bytes_sha256": "585333331aeab14702b009a9fc818bee53eb6c54438b378b2909d73cda8d53bb",
-      "inputs_sha256": "431d98e11660ea5030b60d4fa1f706cc810bb5efeee20cba455169fc33aef1dc"
+      "inputs_sha256": "3f97af18f73d83d5f3d9d2e628b00c5909914d2858c52881a02990809d3c9666"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -210,6 +1028,182 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-member-destructors-ae1b0-unwind",
+    "size": 32,
+    "offset": 2948080,
+    "inputs": [
+      "src/versus_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1ANote@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_member_destructors.obj src/versus_member_destructors.cpp",
+    "link_bindings": {
+      "??1AActor@@UAE@XZ": {
+        "va": 278472144,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member@ANote@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T2709": {
+        "va": 281180560,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-member-destructors-ae1b0: its frame handler at VA 0x10bcfc06 (the handler that function installs) and the 22 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "1c90d097f5b7b168639cbd99411af24e0a427ad5777484823fe452f5a4daf57b",
+      "inputs_sha256": "918256721872ec74d5c1436012a7350cbd1cd5d85947af0ae4bc5ccedb2a7c69"
+    }
+  },
+  {
+    "id": "versus-member-destructors-acb40-unwind",
+    "size": 32,
+    "offset": 2948256,
+    "inputs": [
+      "src/versus_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1AController@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_member_destructors.obj src/versus_member_destructors.cpp",
+    "link_bindings": {
+      "??1AActor@@UAE@XZ": {
+        "va": 278472144,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member@AController@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T2675": {
+        "va": 281180960,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-member-destructors-acb40: its frame handler at VA 0x10bcfcb6 (the handler that function installs) and the 22 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "6830a06a5215d54e2cf9e3897970fa3fea6270c6d7e1be6a0bd505b3b2b93e65",
+      "inputs_sha256": "e3c00339945e9cfb474b9c33741b81cecb0194479ab95be49cd9e6cee40f77f2"
+    }
+  },
+  {
+    "id": "versus-object-destructors-a93b0-unwind",
+    "size": 18,
+    "offset": 2948720,
+    "inputs": [
+      "src/versus_object_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1UOpacityModifier@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_object_destructors.obj src/versus_object_destructors.cpp",
+    "link_bindings": {
+      "??1UModifier@@UAE@XZ": {
+        "va": 278565648,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T6325": {
+        "va": 281182116,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-object-destructors-a93b0: its frame handler at VA 0x10bcfe78 (the handler that function installs) and the 8 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "045756768b5e8d22be8eac814823a2f406324bef85d543d788712cbd2a82778e",
+      "inputs_sha256": "aed398d1bd38127d12ad9d04282a8398ddd2957adf11694834a274457e4e2efd"
+    }
+  },
+  {
+    "id": "versus-multi-member-destructors-a8100-unwind",
+    "size": 60,
+    "offset": 2948832,
+    "inputs": [
+      "src/versus_multi_member_destructors.cpp"
+    ],
+    "rebuilt_symbol": "__ehhandler$??1APawn@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_multi_member_destructors.obj src/versus_multi_member_destructors.cpp",
+    "link_bindings": {
+      "??1AActor@@UAE@XZ": {
+        "va": 278472144,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member448@APawn@@QAE@XZ": {
+        "va": 278715856,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member454@APawn@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "??1Member490@APawn@@QAE@XZ": {
+        "va": 279416832,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "$T4999": {
+        "va": 281182344,
+        "basis": "Retail operand of the complete unwind section."
+      },
+      "___CxxFrameHandler": {
+        "va": 280509012,
+        "basis": "Retail operand of the complete unwind section."
+      }
+    },
+    "identification": "Unwind section of versus-multi-member-destructors-a8100: its frame handler at VA 0x10bcff12 (the handler that function installs) and the 50 bytes of unwind funclets before it, which the FuncInfo the handler loads names.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2",
+        "/GX"
+      ],
+      "basis": "evidence/unwind-sections.md"
+    },
+    "match": {
+      "bytes_sha256": "310de8dc4fe38cdb7749271ee0b8b033eead150cb7a73fd83e418e66030af18e",
+      "inputs_sha256": "9a25bff4fdbc455608a7af1feb9c13e4f00b77467af32c2807710427e7edca70"
     }
   }
 ]
