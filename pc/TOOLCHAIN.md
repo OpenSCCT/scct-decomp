@@ -102,6 +102,12 @@ vtable that each parent destructor installs.
 member between `ConditionalDestroy()` and the parent destructor, either through
 the member's out-of-line destructor or through a one-argument release helper.
 Their frames have two unwind states: the member, then the parent.
+`src/versus_multi_member_destructors.cpp` adds 46 destructors with two to
+seventeen members, destroyed in descending offset order with one unwind state
+each. VC7.1 rotates `eax`, `ecx` and `edx` when consecutive inlined member
+destructors pass `this` straight to a release helper. Retail computes every
+address in `eax`, which VC7.1 reproduces only when the inlined destructor first
+copies `this` into a local (`Released *self = this; ReleaseMember(self);`).
 
 `tools/link_x86.py` accepts three references that only C++ frames make.
 `__except_list` is the absolute offset 0 that the C runtime defines for the
