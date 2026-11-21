@@ -10,6 +10,31 @@ void *__cdecl memmove(void *dest, const void *src, unsigned int count);
 /* Reports whether the processor has CPUID and MMX. */
 void __cdecl sound_heap_detect_cpu(unsigned long *cpuid, unsigned long *mmx);
 
+/* The allocator the game gives the library is a C++ object; the library calls its first
+   three virtual functions. C has no spelling for their convention (`this` in ECX, arguments
+   on the stack): the stand-ins below are __fastcall functions that fill EDX with a spare
+   argument or wrap a stack argument in a structure. This is open work that belongs in C++.
+   The names of the types, the members and the pointer are invented. */
+typedef struct SoundAllocator SoundAllocator;
+typedef struct SoundAllocationArg {
+    void *value;
+} SoundAllocationArg;
+typedef struct SoundAllocatorMethods {
+    void *(__fastcall *allocate)(SoundAllocator *self, unsigned long unused_edx, unsigned long size,
+                                 const void *tag);
+    void *(__fastcall *resize)(SoundAllocator *self, void *unused_edx, void *allocation,
+                               unsigned long size, const void *tag);
+    void (__fastcall *release)(SoundAllocator *self, SoundAllocationArg allocation);
+} SoundAllocatorMethods;
+struct SoundAllocator {
+    const SoundAllocatorMethods *methods;
+};
+extern SoundAllocator *sound_allocator;
+
+/* What the library passes with every allocation; file-static in sndmem.c of the sibling
+   build. Only its address is used, so its type is not recovered. */
+extern char StaticTag[];
+
 int __stdcall SND_fn_bInitMallocSnd(void);
 void *__stdcall SND_fn_pvMallocSnd(unsigned long ulNbBytes);
 void *__stdcall SND_fn_pvReAllocSnd(void *pvPtr, unsigned long ulNbBytes);

@@ -1721,7 +1721,7 @@
     },
     "match": {
       "bytes_sha256": "09f87ee9c972dae98e2e770dee4768eaf0a61a51f2ed43587b3971ceb330e73c",
-      "inputs_sha256": "8aadb6fe0fdc4b89bfe21542eff80a250c69f8503c5be26f0099aa33ca1f74f5"
+      "inputs_sha256": "8ad8deaad34b2d0f59c4fb6b569c5fde14fe04e3e2213247f5c821c8623b02bf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1752,7 +1752,7 @@
     },
     "match": {
       "bytes_sha256": "d884d7d5b07f0c993521829f43df93faa5e5d115038a66a90dc72ac1b826c3ce",
-      "inputs_sha256": "e753186e90249bcad66bfdf0b5291688a76ddc0d784413a66efb088857b4866d"
+      "inputs_sha256": "cdafe5458a3c5177cc31eda8282b1977483644dd3a70e50c145d12f72e54fa51"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1947,14 +1947,25 @@
     "size": 23,
     "rebuilt_symbol": "_SND_fn_pvMallocSnd@4",
     "inputs": [
-      "src/sound_allocation.c"
+      "src/sound_allocation.c",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_allocation.obj src/sound_allocation.c",
+    "link_bindings": {
+      "_sound_allocator": {
+        "va": 287082656,
+        "basis": "Pointer to the C++ allocator object whose first three virtual functions the exports SND_fn_pvMallocSnd, SND_fn_pvReAllocSnd and SND_fn_vFreeSnd call. Invented name."
+      },
+      "_StaticTag": {
+        "va": 287195848,
+        "basis": "Address passed as the last argument of every allocation by the exports SND_fn_pvMallocSnd and SND_fn_pvReAllocSnd; StaticTag, the file-static of sndmem.c in the Double Agent PS2 linker map."
+      }
+    },
     "identification": "Steam PE export _SND_fn_pvMallocSnd@4 at RVA 0x73c830. Dispatches the requested size and a constant tag to slot zero of the allocator at VA 0x111c88a0. The object is passed in ECX. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "22c72acdfe4c7380ff0f95ccb66a9c0f64c4370b6618895098fd78f93214968e",
-      "inputs_sha256": "89b9f7169323f38fd586e855a883ed977bc738d780c7b089faec1cb9a51a2de5"
+      "inputs_sha256": "3b4c85b695eb9b2608cc37139c74f110237d3cd083491a295334448431116be0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1971,14 +1982,25 @@
     "size": 29,
     "rebuilt_symbol": "_SND_fn_pvReAllocSnd@8",
     "inputs": [
-      "src/sound_allocation.c"
+      "src/sound_allocation.c",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_allocation.obj src/sound_allocation.c",
+    "link_bindings": {
+      "_sound_allocator": {
+        "va": 287082656,
+        "basis": "Pointer to the C++ allocator object whose first three virtual functions the exports SND_fn_pvMallocSnd, SND_fn_pvReAllocSnd and SND_fn_vFreeSnd call. Invented name."
+      },
+      "_StaticTag": {
+        "va": 287195848,
+        "basis": "Address passed as the last argument of every allocation by the exports SND_fn_pvMallocSnd and SND_fn_pvReAllocSnd; StaticTag, the file-static of sndmem.c in the Double Agent PS2 linker map."
+      }
+    },
     "identification": "Steam PE export _SND_fn_pvReAllocSnd@8 at RVA 0x73c850. Dispatches the existing block, new size and tag to slot one of the same allocator. The object is passed in ECX. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "3a878adb65d910ab19e76222c29734b7f5271df80f1bee83b50436453376ef68",
-      "inputs_sha256": "85db13e4cc677a8606c89b825abd6a4372b58cf5f7ce2d77d3810131e7e885f3"
+      "inputs_sha256": "ac0a050ea5c64bb781957a8d7ad12215af9fafd5fb2f4c61f85b08734676ea65"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1995,14 +2017,21 @@
     "size": 11,
     "rebuilt_symbol": "_SND_fn_vFreeSnd@4",
     "inputs": [
-      "src/sound_allocator.c"
+      "src/sound_allocator.c",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O1 /Gy /c /Folocal/sound_allocator.obj src/sound_allocator.c",
+    "link_bindings": {
+      "_sound_allocator": {
+        "va": 287082656,
+        "basis": "Pointer to the C++ allocator object whose first three virtual functions the exports SND_fn_pvMallocSnd, SND_fn_pvReAllocSnd and SND_fn_vFreeSnd call. Invented name."
+      }
+    },
     "identification": "The named stdcall export takes its allocation on the stack, loads the allocator singleton at VA 0x111c88a0 into ECX, and tail-dispatches via virtual table slot two. Alignment follows the jump.",
     "match": {
       "bytes_sha256": "d416b7f25a99b31f9c55fdae14c2329234588389dc0c4f2705fa4a85c3a9831c",
-      "inputs_sha256": "5a18ca8e55217689f4a67641617e164388358396b9a4fd1662a87e5c9d7848d0"
+      "inputs_sha256": "457afca3ec4a5ff4bbe50bff691d784899c66a698021d7353c35f12521746a45"
     }
   },
   {
