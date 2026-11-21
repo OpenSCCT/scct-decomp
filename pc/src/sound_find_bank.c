@@ -1,5 +1,7 @@
+/* sound_find_bank.c -- a resource of the loaded banks by editor identifier (sndldbnk.c) */
 #include "sound_bank_layout.h"
 
+/* SND_fn_pstGetResFromEdIdSnd_Bank */
 tdstBlockResourceMem *__stdcall SND_fn_pstGetResFromEdIdSnd_Bank(unsigned long ulEdId)
 {
     BankListNode *node = bank_list_first;

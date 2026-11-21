@@ -1,5 +1,7 @@
+/* sound_find_event.c -- an event of the loaded maps by editor identifier (sndldmap.c) */
 #include "sound_bank_layout.h"
 
+/* fn_pGetEventPointerFromEdId_Map: searches the events of one map, common or localised */
 static __forceinline SND_tdstBlockEvent *fn_pGetEventPointerFromEdId_Map(unsigned long ulEdId,
                                                                          int bMapFix,
                                                                          int bLocalised)
@@ -23,6 +25,8 @@ static __forceinline SND_tdstBlockEvent *fn_pGetEventPointerFromEdId_Map(unsigne
     return 0;
 }
 
+/* SND_fn_hGetSoundEventHandleFromEditorId_Map: the fixed map first, then the current one;
+   then the same for the current language when the project is localised */
 SND_tdstBlockEvent *__cdecl SND_fn_hGetSoundEventHandleFromEditorId_Map(unsigned long ulEdId)
 {
     SND_tdstBlockEvent *pstBlockEvent;

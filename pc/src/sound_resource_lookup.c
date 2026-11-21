@@ -1,6 +1,9 @@
+/* sound_resource_lookup.c -- resources and events from maps or banks, as the project is loaded
+   (sndldbin.c) */
 #include "sound_bank_layout.h"
 #include "sound_error.h"
 
+/* SND_fn_pGetBinRes */
 tdstBlockResourceMem *__stdcall SND_fn_pGetBinRes(unsigned long ulBinId)
 {
     if (!gs_bInitProjectDone) {
@@ -19,6 +22,7 @@ tdstBlockResourceMem *__stdcall SND_fn_pGetBinRes(unsigned long ulBinId)
     }
 }
 
+/* SND_fn_pGetBinEvent */
 SND_tdstBlockEvent *__stdcall SND_fn_pGetBinEvent(unsigned long ulBinId)
 {
     if (!gs_bInitProjectDone) {
@@ -37,6 +41,7 @@ SND_tdstBlockEvent *__stdcall SND_fn_pGetBinEvent(unsigned long ulBinId)
     }
 }
 
+/* SND_fn_hGetSoundEventHandleFromEditorId */
 SND_tdstBlockEvent *__stdcall SND_fn_hGetSoundEventHandleFromEditorId(unsigned long ulEdId)
 {
     if (!gs_bInitProjectDone) {
@@ -56,6 +61,7 @@ SND_tdstBlockEvent *__stdcall SND_fn_hGetSoundEventHandleFromEditorId(unsigned l
     }
 }
 
+/* SND_fn_pstGetResFromEdIdSnd */
 tdstBlockResourceMem *__stdcall SND_fn_pstGetResFromEdIdSnd(unsigned long ulEdId)
 {
     switch (gs_eLoadProjectType) {

@@ -1,5 +1,7 @@
+/* sound_find_local.c -- a resource of the loaded maps by editor identifier (sndldmap.c) */
 #include "sound_bank_layout.h"
 
+/* Searches one list of resources. */
 static tdstBlockResourceMem *find_resource(tdstBlockResMemList *pstBlockResMemList, unsigned long ulEdId)
 {
     long i;
@@ -10,6 +12,8 @@ static tdstBlockResourceMem *find_resource(tdstBlockResMemList *pstBlockResMemLi
     return 0;
 }
 
+/* SND_fn_pstGetResFromEdIdSnd_Map: the current map first, then the fixed one; in each, the
+   common data before the current language's */
 tdstBlockResourceMem *__stdcall SND_fn_pstGetResFromEdIdSnd_Map(unsigned long ulEdId)
 {
     tdstBlockResourceMem *pstBlockResMem;
