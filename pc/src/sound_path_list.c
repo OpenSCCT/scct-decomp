@@ -1,8 +1,10 @@
+/* sound_path_list.c -- removes partial directories (snddata.c) */
 #include "sound_data.h"
 #include "sound_memory.h"
 #include "sound_string.h"
 #include "sound_thread.h"
 
+/* Takes a directory out of its list and frees it. */
 static __forceinline void remove_data_root_directory(tdstDataRootDirectory *pstDataRootDir)
 {
     if (pstDataRootDir->hNextBrotherDyn)
@@ -22,6 +24,7 @@ static __forceinline void remove_data_root_directory(tdstDataRootDirectory *pstD
     SND_fn_vFreeSnd(pstDataRootDir);
 }
 
+/* SND_fn_vRemovePartialDirectory: removes the first directory of that name */
 void __stdcall SND_fn_vRemovePartialDirectory(const char *cszDir)
 {
     tdstDataRootDirectory *pstDataRootDir;
@@ -43,6 +46,7 @@ void __stdcall SND_fn_vRemovePartialDirectory(const char *cszDir)
     SND_fn_vQuitCriticalSectionThreadSnd();
 }
 
+/* SND_fn_vPurgeAllDirectories: forgets the master directory and every partial directory */
 void __stdcall SND_fn_vPurgeAllDirectories(void)
 {
     tdstDataRootDirectory *pstDataRootDir;

@@ -1,6 +1,8 @@
+/* sound_file_exists.c -- tells whether a file exists (sndfile.c) */
 #include "sound_file.h"
 #include "sound_win32.h"
 
+/* SND_fn_bTestFileExistSnd */
 int __stdcall SND_fn_bTestFileExistSnd(const char *szFileName)
 {
     WIN32_FIND_DATAA data;

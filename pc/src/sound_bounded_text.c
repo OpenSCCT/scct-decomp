@@ -1,6 +1,8 @@
+/* sound_bounded_text.c -- bounded string copy and concatenation (sndstr.c) */
 #include "sound_error.h"
 #include "sound_string.h"
 
+/* SND_fn_vStrncpy: size counts the terminator; a longer source is cut and reported */
 void __stdcall SND_fn_vStrncpy(char *dest, const char *src, unsigned int size)
 {
     int truncated = 0;
@@ -16,6 +18,7 @@ void __stdcall SND_fn_vStrncpy(char *dest, const char *src, unsigned int size)
     }
 }
 
+/* SND_fn_vStrncat: size counts the terminator; a longer result is cut and reported */
 void __stdcall SND_fn_vStrncat(char *dest, const char *src, unsigned int size)
 {
     if (size > 0 && size > strlen(dest) + 1) {

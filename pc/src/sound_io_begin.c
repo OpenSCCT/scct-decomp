@@ -1,7 +1,9 @@
+/* sound_io_begin.c -- starts the asynchronous stream service */
 #include "sound_async_worker.h"
 #include "sound_error.h"
 #include "sound_string.h"
 
+/* SND_fn_bInitStreamAsyncSnd: warns when the streams need more prefetch than the limit */
 int __stdcall SND_fn_bInitStreamAsyncSnd(unsigned long count, float limit)
 {
     char message[256];

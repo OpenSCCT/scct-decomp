@@ -1,8 +1,11 @@
+/* sound_directory_paths.c -- reads the master directory and the partial directories
+   (snddata.c) */
 #include "sound_data.h"
 #include "sound_error.h"
 #include "sound_string.h"
 #include "sound_thread.h"
 
+/* SND_fn_bGetMasterDirectory */
 int __stdcall SND_fn_bGetMasterDirectory(char *szDir, unsigned int size)
 {
     if (!szDir) {
@@ -16,6 +19,7 @@ int __stdcall SND_fn_bGetMasterDirectory(char *szDir, unsigned int size)
     return 1;
 }
 
+/* SND_fn_bGetOnePartialDirectory */
 int __stdcall SND_fn_bGetOnePartialDirectory(long index, char *szDir, unsigned int size)
 {
     tdstDataRootDirectory *pstDataRootDir;

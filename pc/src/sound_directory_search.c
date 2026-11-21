@@ -1,9 +1,13 @@
+/* sound_directory_search.c -- tells whether a directory is one the library reads data from
+   (snddata.c) */
 #include "sound_data.h"
 #include "sound_error.h"
 #include "sound_file.h"
 #include "sound_string.h"
 #include "sound_thread.h"
 
+/* SND_fn_bIsDataDirectory: true for the master directory, a partial directory, or the
+   current language's subdirectory of either */
 int __stdcall SND_fn_bIsDataDirectory(const char *cszDir)
 {
     char szTempDir[256];

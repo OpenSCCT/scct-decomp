@@ -1,3 +1,4 @@
+/* sound_path_insert.c -- adds a partial directory (snddata.c) */
 #include "sound_data.h"
 #include "sound_error.h"
 #include "sound_file.h"
@@ -5,6 +6,7 @@
 #include "sound_string.h"
 #include "sound_thread.h"
 
+/* SND_fn_vAddPartialDirectory: the directory must end with a separator; it is added once */
 void __stdcall SND_fn_vAddPartialDirectory(const char *cszDir)
 {
     int iStrLen, i;

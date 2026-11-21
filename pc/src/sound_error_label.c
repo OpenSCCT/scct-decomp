@@ -1,5 +1,7 @@
+/* sound_error_label.c -- the message that names an error number (snderr.c) */
 #include "sound_error.h"
 
+/* sound_error_label */
 const char *__cdecl sound_error_label(int number)
 {
     int index = 0;

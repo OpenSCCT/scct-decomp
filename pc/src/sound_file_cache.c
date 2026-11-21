@@ -1,6 +1,8 @@
+/* sound_file_cache.c -- the files kept open between asynchronous reads */
 #include "sound_async_worker.h"
 #include "sound_memory.h"
 
+/* sound_reset_file_cache: marks every entry free */
 void __cdecl sound_reset_file_cache(void)
 {
     long i;
