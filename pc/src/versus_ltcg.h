@@ -48,6 +48,7 @@ public:
     BYTE unk_0[0x18];
 };
 
+// FAKEMATCH: stands for a TArray<T> member whose destructor has a link-time calling convention.
 template<class T> class TArrayLtcg {
 public:
     T  *Data;
