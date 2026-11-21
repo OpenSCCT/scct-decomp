@@ -1,4 +1,10 @@
-# Open question: how much of Versus is VC7.0 code
+# Resolved question: how much of Versus is VC7.0 code
+
+**Resolved 2026-11-21.** The optimising VC7.0 RTM compiler, 13.00.9466, is now
+available. Tested against it, the VC7.1 attribution holds for every unit but
+one; see [versus-vc70-9466.md](versus-vc70-9466.md). Versus evidence is on
+again, and new VC7.1 units cite that note. The rest of this note is the
+original question.
 
 This note records an open question about the Versus compiler attribution in
 [versus-vc71-o2.md](versus-vc71-o2.md). It is not a `recipe_evidence` basis.
@@ -40,9 +46,12 @@ evidence.
 
 ## Link-time code generation
 
-Versus appears to have been linked with whole-program optimisation. The function at RVA
-`0xc7d0`, which removes a run of 12-byte elements from an array and which the engine lane
-identifies as `TArray<FString>::Remove`, reads its index from EDI without ever setting it:
+Versus was linked with whole-program optimisation; the
+[toolchain notes](../TOOLCHAIN.md#link-time-code-generation-versus) and
+[versus-vc70-switches.md](versus-vc70-switches.md) now establish it from the Rich records and
+rebuild such units through a link step. One function shows it without any tooling. The
+function at RVA `0xc7d0`, which removes a run of 12-byte elements from an array, reads its
+index from EDI without ever setting it:
 
 ```text
 1090c7d0  mov  eax, [esp+8]      ; count
@@ -52,22 +61,15 @@ identifies as `TArray<FString>::Remove`, reads its index from EDI without ever s
 1090c7d9  mov  ebp, [esp+8]      ; this arrives on the stack
 ```
 
-It has two callers, at RVA `0xc61c` and `0xca7b1`; the first clears EDI with `xor edi, edi`
-just before it pushes the other arguments. No calling convention a programmer can write
-passes an argument in EDI. The compiler does choose such a convention by itself, without
-any link-time step, for a `static` function whose every caller it can see in one translation
-unit ([toolchain notes](../TOOLCHAIN.md), "Versus actor placement"). That explanation does
-not fit here: the two callers lie 780 KB apart in the image, and a template member has
-external linkage. Across translation units the choice needs `/GL` and `/LTCG`, which the
-7.00 linker has. The engine lane also found many array destructors with a private
-convention, `this` on the stack and popped by the callee.
+Its two callers, at RVA `0xc61c` and `0xca7b1`, lie 780 KB apart, and the first clears EDI
+with `xor edi, edi` just before it pushes the other arguments. No calling convention a
+programmer can write passes an argument in EDI, and a compiler that sees one translation unit
+chooses such a convention only for a `static` function.
 
-If so, two things follow. A unit compiled alone can only reproduce the functions whose
-convention the link step left alone, so "compiled with `/O2`" is at most half of the Versus
-recipe; and the units that reproduce a link-time convention through a stand-in are
-fakematches (`TArrayLtcg` in `src/versus_ltcg.h`, marked as one). A unity build of the
-engine would be the other reading, and would make the same per-file rebuilds wrong for the
-same reason.
+A unit compiled alone can therefore reproduce only the functions whose convention the link
+step left alone. The units that imitate a link-time convention through a stand-in
+(`TArrayLtcg` in `src/versus_ltcg.h`) are fakematches, marked as such; with the `ltcg_link`
+recipe they can be rebuilt from a plain `TArray<T>` member instead.
 
 ## Decision needed
 

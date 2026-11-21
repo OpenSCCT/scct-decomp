@@ -39,6 +39,28 @@ $versus = Get-Content -Raw config/steam-252084-versus.json | ConvertFrom-Json
 & $ghidra local ("study-" + [guid]::NewGuid()) -import (Join-Path $game $versus.file) -noanalysis -scriptPath $PWD -postScript InspectPcFunction.java $versus.image.sha256 0x109467f0 -deleteProject
 ```
 
+## Function maps
+
+`function_maps/<target>.txt` lists the function boundaries that Ghidra's analysis finds, as
+file offsets of each entry point and body interval. The ByteMatch export
+(`tools/bytematch.py`) uses them to draw unmatched code as one tile per function; matched
+units always take precedence, and code no function covers is grouped per 64 KiB. The files
+hold addresses only.
+
+To regenerate a map, analyse the executable, add the entry points in
+`function_maps/<target>.seeds.txt` (functions that receipts, exports and class tables
+identify but auto-analysis missed), export the inventory and convert it:
+
+```powershell
+$t = Get-Content -Raw config/steam-252084-versus.json | ConvertFrom-Json
+& $ghidra local scct-map -import (Join-Path $game $t.file) -scriptPath $PWD -postScript ExportFunctionInventory.java $t.image.sha256 local/versus.tsv
+& $ghidra local scct-map -process (Split-Path $t.file -Leaf) -noanalysis -scriptPath $PWD -postScript SeedAuthenticatedEntries.java $t.image.sha256 function_maps/steam-252084-versus.seeds.txt -postScript ExportFunctionInventory.java $t.image.sha256 local/versus-seeded.tsv
+python ../tools/function_map.py config/steam-252084-versus.json local/versus-seeded.tsv function_maps/steam-252084-versus.txt
+```
+
+Ghidra's ranges are analysis estimates: a function may include a jump table or miss a
+fragment. They only shape the map; they never affect the matched byte counts.
+
 ## Compile and compare
 
 The first independent [campaign C source](src/sound_texture_count.c) implements the sound catalogue's count query. Put the Visual C++ Toolkit 2003 compiler (13.10.3052) on `PATH` and install the [objdiff 3.8.3 CLI](https://github.com/encounter/objdiff/releases/tag/v3.8.3). Supply the CLI path using `--objdiff` if your executable is outside `PATH`.
@@ -58,7 +80,7 @@ The campaign experiment reproduced three retail bytes under two different compil
 From the repository root, pass the installed game directory to the verifier.
 Pass the x86 compiler paths for Visual C++ Toolkit 2003 13.10.3052, VC6
 12.00.8804, MSVC 19.44.35229.0 and Clang 19.1.0. The Toolkit compiler alone
-rebuilds 20,142 of the 20,422 PC units; `--skip-unavailable` gates those and
+rebuilds 20,300 of the 21,037 PC units; `--skip-unavailable` gates those and
 lists the units that need another compiler. The [toolchain notes](TOOLCHAIN.md)
 identify the VC6 frontend and backend and the Clang revision used for these builds.
 

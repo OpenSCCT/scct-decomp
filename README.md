@@ -17,8 +17,8 @@ repository as `decomp/` and shows its progress on the player website.
 <!-- status:begin -->
 | Build and program | Verified bytes | Candidate bytes | Measured code |
 | --- | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 924,492 | 32,611 | 8,082,506 bytes |
-| Steam 252084 · Versus | 190,875 | 22,846 | 2,991,392 bytes |
+| Steam 252084 · Campaign and co-op | 972,947 | 32,611 | 8,082,506 bytes |
+| Steam 252084 · Versus | 208,672 | 64,626 | 2,991,392 bytes |
 | PAL 1.01 · Disc boot | 0 | 0 | Unmeasured |
 | PAL 1.01 · Offline program | 0 | 0 | Unmeasured |
 | PAL 1.01 · Online program | 0 | 8 | Unmeasured |
@@ -40,8 +40,8 @@ scattered declarations or a compiler-steering trick is `MATCH-PENDING`: open wor
 <!-- rules:begin -->
 | Build and program | Bytes matched | Verified | Verified under the rules | `MATCH-PENDING` |
 | --- | ---: | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 957,103 | 924,492 | 70,679 | 881,601 |
-| Steam 252084 · Versus | 213,721 | 190,875 | 20,780 | 191,968 |
+| Steam 252084 · Campaign and co-op | 1,005,558 | 972,947 | 77,342 | 923,393 |
+| Steam 252084 · Versus | 273,298 | 243,478 | 6,574 | 265,405 |
 | PAL 1.01 · Online program | 8 | 0 | 0 | 0 |
 <!-- rules:end -->
 
@@ -62,6 +62,7 @@ section, so a reviewed code map is needed before a percentage can be measured.
 | --- | --- |
 | `<platform>/config/` | One manifest per executable: SHA-256, executable sections and matched units. Large targets keep units in 64 KiB shards under `units/`. |
 | `<platform>/src/` | Independently written C and C++ sources |
+| `pc/function_maps/` | Function boundaries from Ghidra analysis, as file offsets (no game bytes), so ByteMatch can draw unmatched code function by function; `pc/README.md` explains how to regenerate them |
 | `tools/` | Image reader, progress tracker, x86 COFF linker, ByteMatch export, progress publisher |
 | `tools/rules/` | Code-rule checker (C): computes which matched units also pass the [match] rules |
 | `tools/evidence/` | Symbol indexer (C) for sibling builds that shipped with symbols |

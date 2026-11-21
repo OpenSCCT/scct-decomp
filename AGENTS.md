@@ -31,7 +31,7 @@ confident name, a merged variable). Review decides those; see "Review" below.
 | target | original toolchain, from the binary | rebuilt with |
 | --- | --- | --- |
 | Campaign (`System/splintercell3.exe`) | Microsoft C/C++ 13.10.3077 (Visual Studio .NET 2003), linker 7.10, static C runtime; see [pc/TOOLCHAIN.md](pc/TOOLCHAIN.md) | Visual C++ Toolkit 2003, 13.10.3052, shown code-identical in [the Campaign basis](pc/evidence/campaign-vc71-o2.md) |
-| Versus (`Versus/System/SCCT_Versus.ex`) | linker 7.00 with C and C++ producers of several builds; [open question](pc/evidence/versus-compiler-question.md) | 13.10.3052 where [the Versus basis](pc/evidence/versus-vc71-o2.md) covers the unit |
+| Versus (`Versus/System/SCCT_Versus.ex`) | linker 7.00.9466 with `/LTCG`; mostly Microsoft C/C++ 13.00.9466 (Visual Studio .NET 2002) objects, many compiled `/GL`, beside some from 13.10.3077; see [versus-vc70-9466.md](pc/evidence/versus-vc70-9466.md) and [versus-vc70-switches.md](pc/evidence/versus-vc70-switches.md) | 13.00.9466 for the units recorded with it (through a link step where the unit has `ltcg_link`), 13.10.3052 where [the Versus basis](pc/evidence/versus-vc71-o2.md) covers the unit |
 | PS2 programs | not yet established | nothing verified |
 
 Write only what Microsoft C/C++ 13.10 accepts with the unit's recorded flags:
@@ -238,11 +238,13 @@ are open:
    unit includes first). R37 keeps conditionals for build variants the original had, and
    these are two sources, not two builds of one. Headers per program would say that more
    truthfully; the split is mechanical and the checker already scopes R1 to one program.
-7. **Whole-program optimisation in Versus.** Versus appears to have been linked with link-time code generation
-   ([evidence](pc/evidence/versus-compiler-question.md)): some functions take arguments in
-   registers no per-file build chooses. A unit compiled alone cannot reproduce those, and a
-   stand-in that does (`TArrayLtcg` in `versus_ltcg.h`) is a fakematch, marked as one. Whether
-   the gate should grow a link-time step, or such functions stay open, is not decided.
+7. **Units that imitate a link-time convention.** Versus was linked with link-time code
+   generation ([toolchain notes](pc/TOOLCHAIN.md#link-time-code-generation-versus)), and the
+   verifier can now rebuild such a unit through a link step (`ltcg_link`, with the 13.00.9466
+   compiler and its linker). Forty Versus classes still reproduce a link-time destructor
+   convention through a stand-in compiled alone (`TArrayLtcg` in `versus_ltcg.h`, marked
+   `FAKEMATCH`). Their real source is a plain `TArray<T>` member built with `ltcg_link`;
+   whether to keep the per-file receipts until then is not decided.
 8. **Standard library code typed in again.** The verifier builds a unit from its listed
    inputs only, with no SDK include path, so units that instantiate the compiler's own
    containers retype them (`campaign_vector_insert.cpp`, the `container_*.cpp` units) and the

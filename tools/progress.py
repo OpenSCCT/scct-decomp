@@ -10,6 +10,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from images import coff_symbol_offset, inspect, readonly_pe_data, span
+from link_image import place_function
 from link_x86 import link_function
 from manifests import load_target, save_receipt
 
@@ -88,10 +89,10 @@ def inputs_digest(folder, unit, image_hash, file_cache=None):
         fingerprints[relative] = fingerprint
     recipe = {k: v for k, v in unit.items() if k != "match"}
     if "link_bindings" in unit:
-        linker = Path(__file__).with_name("link_x86.py")
+        linker = Path(__file__).with_name("link_image.py" if "ltcg_link" in unit else "link_x86.py")
         if linker not in file_cache:
             file_cache[linker] = hashlib.sha256(linker.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
-        fingerprints["tools/link_x86.py"] = file_cache[linker]
+        fingerprints["tools/" + linker.name] = file_cache[linker]
     payload = json.dumps([image_hash, recipe, fingerprints], sort_keys=True).encode()
     return hashlib.sha256(payload).hexdigest()
 
@@ -181,6 +182,17 @@ def verify(target, original):
 
 def built_unit_bytes(target, unit, output, original=None):
     """Obtain the complete function at its specified position in the linked image."""
+    if "ltcg_link" in unit:
+        # The rebuilt artifact is a DLL linked with link-time code generation.
+        if original is None or "link_bindings" not in unit or "coff_alignment" in unit:
+            raise ValueError("an LTCG unit needs link bindings and the retail image")
+        a, b = span(unit["offset"], unit["size"], len(original))
+        for s in target["image"]["executable_sections"]:
+            if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
+                return place_function(output, unit["size"], s["address"] + a - s["offset"], unit["ltcg_link"],
+                                      unit["link_bindings"],
+                                      read_constant=lambda va, size: readonly_pe_data(original, va, size))
+        raise ValueError("link address outside a measured code section")
     if "coff_alignment" in unit:
         alignment = unit["coff_alignment"]
         if (type(alignment) is not int or alignment != 16 or original is None
