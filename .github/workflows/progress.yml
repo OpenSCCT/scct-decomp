@@ -21,12 +21,20 @@ jobs:
         run: python tools/ci/no_game_data.py
       - name: Test executable inventory and exact-match accounting
         run: python -m unittest discover -s tools
+      - name: Test the code-rule checker and the symbol indexer with synthetic inputs
+        run: |
+          sh tools/rules/test_rules.sh
+          sh tools/evidence/test_symindex.sh
       - name: Check PS2 code ranges and function objects with synthetic inputs
         run: |
           docker build -t openscct-ps2 ps2/toolchain
           docker run --rm --network none -v "$PWD:/work:ro" openscct-ps2 python -m unittest discover -s tests
       - name: Verify source receipts and regenerate the public feed in memory
         run: python -I tools/progress.py report --check
+      - name: Recompute the units matched under the code rules
+        run: |
+          cc -std=c99 -O2 -Wall -Wextra -o "$RUNNER_TEMP/rules" tools/rules/rules.c
+          "$RUNNER_TEMP/rules" --check
 
   bytematch:
     needs: progress

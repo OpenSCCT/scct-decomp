@@ -2217,13 +2217,54 @@ typedef struct {
 	int candidateRuleFunctions, candidateRuleBytes;
 	int pendingFunctions[NUM_MATCH_RULES], pendingBytes[NUM_MATCH_RULES];
 	int byFunction, byClass, byFile;		/* how each unit's source was found */
+	int sharedFunctions, sharedUnits, sharedBytes;	/* one source function, several addresses */
 } targetTotals_t;
+
+/* A source function that several units of one target are rebuilt from. */
+typedef struct {
+	int key;				/* symbol: the source path, a space, the rebuilt symbol */
+	int target;
+	int units, bytes;
+} sharedSource_t;
 
 static targetTotals_t *targets;
 static int numTargets, targetCapacity;
+static sharedSource_t *sharedSources;
+static int numSharedSources, sharedSourceCapacity;
 static int closureStamp;
 static FILE *unitsOut;
 static const char *explainUnit;
+
+/* Counts a unit against the source function it is rebuilt from (R34). Retail keeps
+   one function per address, so a source function matched at several addresses
+   stands for several original functions. */
+static void CountSharedSource( targetTotals_t *totals, const char *source, const char *symbol, int bytes ) {
+	int key = InternString( Format( "%s %s", source, symbol ) );
+	int target = (int)( totals - targets );
+	int i;
+
+	for ( i = numSharedSources - 1; i >= 0; i-- ) {
+		if ( sharedSources[i].key == key && sharedSources[i].target == target ) {
+			break;
+		}
+	}
+	if ( i < 0 ) {
+		sharedSources = Grow( sharedSources, &sharedSourceCapacity, numSharedSources + 1, sizeof( *sharedSources ) );
+		i = numSharedSources++;
+		sharedSources[i].key = key;
+		sharedSources[i].target = target;
+	}
+	sharedSources[i].units++;
+	sharedSources[i].bytes += bytes;
+	if ( sharedSources[i].units == 2 ) {
+		totals->sharedFunctions++;
+		totals->sharedUnits += 2;
+		totals->sharedBytes += sharedSources[i].bytes;
+	} else if ( sharedSources[i].units > 2 ) {
+		totals->sharedUnits++;
+		totals->sharedBytes += bytes;
+	}
+}
 
 /* Reduces a decorated x86 symbol to the name the source spells:
    _name, _name@8, @name@8, ?name@Class@@..., ??1Class@@... */
@@ -2432,6 +2473,9 @@ static void JudgeUnit( targetTotals_t *totals, const json_t *unit ) {
 	}
 	free( visible );
 
+	if ( symbol && symbol->kind == J_STRING && inputs->child && inputs->child->kind == J_STRING ) {
+		CountSharedSource( totals, inputs->child->string, symbol->string, bytes );
+	}
 	totals->numFunctions++;
 	totals->numBytes += bytes;
 	totals->byFunction += !strcmp( how, "function" );
@@ -2633,7 +2677,9 @@ static void WriteJson( FILE *out ) {
 			fprintf( out, "%s\"%s\": {\"functions\": %d, \"bytes\": %d}", rule ? ", " : "", ruleNames[rule],
 				t->pendingFunctions[rule], t->pendingBytes[rule] );
 		}
-		fprintf( out, "},\n      \"source_found_by\": {\"function\": %d, \"class\": %d, \"file\": %d}\n    }%s\n",
+		fprintf( out, "},\n      \"one_function_several_addresses\": {\"functions\": %d, \"units\": %d, \"bytes\": %d}",
+			t->sharedFunctions, t->sharedUnits, t->sharedBytes );
+		fprintf( out, ",\n      \"source_found_by\": {\"function\": %d, \"class\": %d, \"file\": %d}\n    }%s\n",
 			t->byFunction, t->byClass, t->byFile, i + 1 < numTargets ? "," : "" );
 	}
 	fprintf( out, "  ]\n}\n" );
@@ -2683,6 +2729,10 @@ static void WriteSummary( FILE *out ) {
 				fprintf( out, "    %-4s %6d functions %9d bytes\n", ruleNames[rule], t->pendingFunctions[rule],
 					t->pendingBytes[rule] );
 			}
+		}
+		if ( t->sharedFunctions ) {
+			fprintf( out, "  R34 review: %d source functions are each matched at several addresses (%d units, %d bytes)\n",
+				t->sharedFunctions, t->sharedUnits, t->sharedBytes );
 		}
 	}
 }

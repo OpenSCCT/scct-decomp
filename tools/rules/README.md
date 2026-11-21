@@ -44,6 +44,11 @@ source files (R25), filler members that name no offset (R27), functions without 
 (R33), bodies without braces, assignments in `if` conditions and `!!` (R35), `#if 0` (R37), and
 member addresses taken by offset without a dereference cast (R4).
 
+The report also counts `one_function_several_addresses`: source functions that are the receipt
+of more than one unit of a target. Retail keeps one function per address, so such a source
+function stands for several original ones (R34). The count is informational until the
+maintainers rule on it.
+
 ## Rows not implemented yet
 
 - **R1, prefix copies:** a struct whose fields copy a prefix of another struct's and that is

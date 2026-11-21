@@ -190,7 +190,7 @@ Send a fakematch back as `MATCH-PENDING`. Never rewrite it during a merge.
 ## Rule changes
 
 None yet: the catalogue applies as written. Tightening or relaxing a rule is a maintainers'
-ruling, recorded here with its reason, and the checker changes in the same commit. Three rulings
+ruling, recorded here with its reason, and the checker changes in the same commit. Four rulings
 are open:
 
 1. **Members written as free functions.** 463 definitions are `__fastcall` functions whose
@@ -203,6 +203,12 @@ are open:
    as functions of their own.
 3. **Period compiler as a condition of a match.** Candidates that only Clang or MSVC 19.x
    reproduce are leads, not matches of 2005 source.
+4. **One source function counted at several addresses.** 159 source functions are each the
+   receipt of several retail functions: 2,034 units and 84,097 bytes, one of them at 106
+   addresses. Retail keeps a separate copy at every address, so the original had that many
+   functions (template instantiations or inline copies, most likely), and a faithful source
+   has each of them (R34). `rules` counts these as `one_function_several_addresses`; whether
+   they block a match is not decided.
 
 ## Tooling
 
