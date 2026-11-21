@@ -1698,7 +1698,9 @@
     "size": 64,
     "rebuilt_symbol": "_SND_fn_bInitMallocSnd@0",
     "inputs": [
-      "src/sound_heap_init.c"
+      "src/sound_heap_init.c",
+      "src/sound_error.h",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_heap_init.obj src/sound_heap_init.c",
@@ -1711,11 +1713,15 @@
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named export _SND_fn_vDisplayError@8 in the Steam campaign PE."
+      },
+      "??_C@_0DF@CELEKDMP@This?5game?5require?5support?5for?5In@": {
+        "va": 286725548,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "09f87ee9c972dae98e2e770dee4768eaf0a61a51f2ed43587b3971ceb330e73c",
-      "inputs_sha256": "9eb09f47c2851ed46f334f85da8ade73cb078818c40f4f748888efd7987d2bcb"
+      "inputs_sha256": "8622bd83e18bd5c75997349559b287d2acfee5917e6235b871ec8a6fc7a34a82"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1732,20 +1738,21 @@
     "size": 26,
     "rebuilt_symbol": "_SND_fn_vMemMoveSnd@12",
     "inputs": [
-      "src/sound_memmove.c"
+      "src/sound_memmove.c",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_memmove.obj src/sound_memmove.c",
     "identification": "Steam PE export _SND_fn_vMemMoveSnd@12 at RVA 0x73c630. The named export forwards the destination, source and count to the movement helper. Includes all reachable exits and excludes alignment.",
     "link_bindings": {
-      "_sound_move_bytes": {
+      "_memmove": {
         "va": 284367760,
-        "basis": "Called directly from the wrapper; its argument order and the export name identify the movement operation."
+        "basis": "C runtime function the export SND_fn_vMemMoveSnd forwards its destination, source and count to. guess: memmove, by the export's name; not compared with the runtime library."
       }
     },
     "match": {
       "bytes_sha256": "d884d7d5b07f0c993521829f43df93faa5e5d115038a66a90dc72ac1b826c3ce",
-      "inputs_sha256": "727f240fff21c8139164034490805941ec01feb9bfda5b59478ee3b793e21f57"
+      "inputs_sha256": "e4be8fd0ce261d47c314c5739d3cc544ad84e222c5a24f87e06bfb9f10c7c17d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1800,7 +1807,8 @@
     "size": 5,
     "rebuilt_symbol": "_SND_fn_vDesInitErrorSnd@0",
     "inputs": [
-      "src/sound_error_display.c"
+      "src/sound_error_display.c",
+      "src/sound_error.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_display.obj src/sound_error_display.c",
@@ -1813,7 +1821,7 @@
     },
     "match": {
       "bytes_sha256": "48d0f4e1d3ac6ff9cdbc9af0178f55d9978e4fe8b7ad9a58cd40019db9880ef2",
-      "inputs_sha256": "4fbca8d6095c0485d13a2c68e4c585a183cf44325b8faf08099f126994875b3b"
+      "inputs_sha256": "0c01d960fe33bc3681b6c022a73f80a863fd3ef1c0a5664beb26dd5637e8d1b7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1830,7 +1838,8 @@
     "size": 67,
     "rebuilt_symbol": "_sound_error_label",
     "inputs": [
-      "src/sound_error_label.c"
+      "src/sound_error_label.c",
+      "src/sound_error.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_label.obj src/sound_error_label.c",
@@ -1839,11 +1848,15 @@
       "_SOUND_ERRORS": {
         "va": 287195512,
         "basis": "The code/label table is indexed directly by the common error helper from the two named display exports."
+      },
+      "??_C@_0O@NIPGCINC@Unknown?5error?$AA@": {
+        "va": 286727068,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "d8699995640c4c6fedfea57e319535cacbaa1c50f205f93ef685ed611a44784d",
-      "inputs_sha256": "a6f4967e865b608cfaec6093412bf24ed1d392f4b3bcfa2bb45b8965a915d318"
+      "inputs_sha256": "1ffb6519729211ab834af153a78a1cd1c3c2d05acbc53ad3af1cbf1ad3f63e59"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1860,7 +1873,8 @@
     "size": 30,
     "rebuilt_symbol": "_SND_fn_vDisplayError@8",
     "inputs": [
-      "src/sound_error_display.c"
+      "src/sound_error_display.c",
+      "src/sound_error.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_display.obj src/sound_error_display.c",
@@ -1877,7 +1891,7 @@
     },
     "match": {
       "bytes_sha256": "0cb9703d8849864c85ef051edce7d6265985ddd045e8f73d2c13feaf4e70a69d",
-      "inputs_sha256": "72b9da1c16d843c696c99a1dffe67f5f410ce2ed0a9e89d4a57199a43ec552d7"
+      "inputs_sha256": "51b4b65682b86fe032174b7d060c7bff9b6def672768e079267c3786de102d63"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1894,7 +1908,8 @@
     "size": 54,
     "rebuilt_symbol": "_SND_fn_vDisplayErrorEx@12",
     "inputs": [
-      "src/sound_error_display.c"
+      "src/sound_error_display.c",
+      "src/sound_error.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_display.obj src/sound_error_display.c",
@@ -1907,11 +1922,15 @@
       "_sound_report_error": {
         "va": 285460608,
         "basis": "The two named error-display exports both pass the label and context to this routine."
+      },
+      "_SND_g_astErrorOccurArray": {
+        "va": 288536496,
+        "basis": "Per-error flags indexed by the error number in the export SND_fn_vDisplayErrorEx; SND_g_astErrorOccurArray of snderr.c in the Splinter Cell PS2 demo's debug information."
       }
     },
     "match": {
       "bytes_sha256": "a324abccdeb0eb1eae2b43e3fdaa786632277c9b1f51b09900403b53bd7fafe5",
-      "inputs_sha256": "9b99a76b260aeb13e28d6d5a34c9d543c2efa6fc4680a137317386f4d2d90e5c"
+      "inputs_sha256": "850f72a6edeee05f4ce9dfc895148a08480ccaa3dc6c5c8f7ccd5385b0572ada"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

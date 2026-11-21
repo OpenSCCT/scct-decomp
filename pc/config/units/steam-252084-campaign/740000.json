@@ -295,15 +295,15 @@
     "size": 77,
     "rebuilt_symbol": "_SND_fn_bGetMasterDirectory@8",
     "inputs": [
-      "src/sound_directory_paths.c"
+      "src/sound_directory_paths.c",
+      "src/sound_data.h",
+      "src/sound_error.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_directory_paths.obj src/sound_directory_paths.c",
     "link_bindings": {
-      "_sound_null_master_output": {
-        "va": 286733168,
-        "basis": "Read-only directory diagnostic passed to the named sound error export on this function's corresponding error branch."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Steam campaign PE named export _SND_fn_vDisplayError@8 at RVA 0x73c7d0."
@@ -312,17 +312,9 @@
         "va": 285504640,
         "basis": "Steam campaign PE named export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
       },
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
-      },
       "_SND_fn_vMouchardThreadsnd@8": {
         "va": 285504592,
         "basis": "Steam campaign PE named export _SND_fn_vMouchardThreadsnd@8 at RVA 0x747450."
-      },
-      "_sound_master_directory": {
-        "va": 288537432,
-        "basis": "Shared buffer written by the exported master-directory setter and read by the exported getter."
       },
       "_SND_fn_vStrncpy@12": {
         "va": 285512256,
@@ -331,12 +323,24 @@
       "_SND_fn_vQuitCriticalSectionThreadSnd@0": {
         "va": 285504848,
         "basis": "Steam campaign PE named export _SND_fn_vQuitCriticalSectionThreadSnd@0 at RVA 0x747550."
+      },
+      "_g_czSndMasterDirectory": {
+        "va": 288537432,
+        "basis": "256-byte master directory copied out by the export SND_fn_bGetMasterDirectory; g_czSndMasterDirectory of snddata.c in the Double Agent PS2 linker map."
+      },
+      "??_C@_0FB@MADOMDLM@Error?5in?5SND_fn_vGetMasterDirect@": {
+        "va": 286733168,
+        "basis": "String literal; the verifier compares its bytes with retail."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_bGetMasterDirectory@8 at RVA 0x746330; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "342f930c234ecf43d091090c8565c4b1c996a3c381cdcaeca00904ba2577c10f",
-      "inputs_sha256": "d0dd06ac53f065f3cd0071e89a8273191035fa1f6d5db65b8754e2b85ba111b8"
+      "inputs_sha256": "778ff9676bc0e53b536c7e086db40c3995116ea778244ce250926f7d21795826"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -353,15 +357,15 @@
     "size": 126,
     "rebuilt_symbol": "_SND_fn_bGetOnePartialDirectory@12",
     "inputs": [
-      "src/sound_directory_paths.c"
+      "src/sound_directory_paths.c",
+      "src/sound_data.h",
+      "src/sound_error.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_directory_paths.obj src/sound_directory_paths.c",
     "link_bindings": {
-      "_sound_null_partial_output": {
-        "va": 286733344,
-        "basis": "Read-only directory diagnostic passed to the named sound error export on this function's corresponding error branch."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Steam campaign PE named export _SND_fn_vDisplayError@8 at RVA 0x73c7d0."
@@ -370,21 +374,9 @@
         "va": 285504640,
         "basis": "Steam campaign PE named export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
       },
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
-      },
       "_SND_fn_vMouchardThreadsnd@8": {
         "va": 285504592,
         "basis": "Steam campaign PE named export _SND_fn_vMouchardThreadsnd@8 at RVA 0x747450."
-      },
-      "_sound_partial_directory_count": {
-        "va": 288539752,
-        "basis": "Global read under the directory lock by the exported count query, also the unsigned upper bound in the partial-directory lookup."
-      },
-      "_sound_first_directory": {
-        "va": 288539744,
-        "basis": "Exported partial-directory lookup starts its linked traversal at this pointer. The exported removal routine uses the same list."
       },
       "_SND_fn_vStrncpy@12": {
         "va": 285512256,
@@ -394,15 +386,27 @@
         "va": 285504848,
         "basis": "Steam campaign PE named export _SND_fn_vQuitCriticalSectionThreadSnd@0 at RVA 0x747550."
       },
-      "_sound_invalid_partial_index": {
+      "_gs_stDataPartialDirectoryList": {
+        "va": 288539744,
+        "basis": "List of partial directories walked by the exports SND_fn_bGetOnePartialDirectory, SND_fn_bIsDataDirectory and SND_fn_vRemovePartialDirectory; gs_stDataPartialDirectoryList of snddata.c in the Double Agent PS2 linker map (gs_stDataRootDirectoryList in the Splinter Cell PS2 demo's debug information)."
+      },
+      "??_C@_0BI@KLNHNNDL@Invalid?5string?5pointer?4?$AA@": {
+        "va": 286733344,
+        "basis": "String literal; the verifier compares its bytes with retail."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
+      },
+      "??_C@_0FH@KACKAGMN@Partial?5directory?5element?5number@": {
         "va": 286733256,
-        "basis": "Read-only directory diagnostic passed to the named sound error export on this function's corresponding error branch."
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_bGetOnePartialDirectory@12 at RVA 0x746380; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "8dde1e64b7e154e6e24543b69f39a5bfc32c85e4d71949edcd802510dd205586",
-      "inputs_sha256": "cf195e4a96c19ea50cf2deed39ade68d66c6318b33902c57e546c09ff25fda6f"
+      "inputs_sha256": "819168e70ebe6365c7c3b12daf47b154cb9dd7efed4c1b4466a7839f30d775a9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -419,7 +423,11 @@
     "size": 219,
     "rebuilt_symbol": "_SND_fn_vRemovePartialDirectory@4",
     "inputs": [
-      "src/sound_path_list.c"
+      "src/sound_path_list.c",
+      "src/sound_data.h",
+      "src/sound_memory.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_path_list.obj src/sound_path_list.c",
@@ -428,17 +436,9 @@
         "va": 285504640,
         "basis": "Steam campaign PE named export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
       },
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
-      },
       "_SND_fn_vMouchardThreadsnd@8": {
         "va": 285504592,
         "basis": "Steam campaign PE named export _SND_fn_vMouchardThreadsnd@8 at RVA 0x747450."
-      },
-      "_sound_paths": {
-        "va": 288539744,
-        "basis": "Exported partial-directory lookup starts its linked traversal at this pointer. The exported removal routine uses the same list."
       },
       "_SND_fn_lStriCmp@8": {
         "va": 285512128,
@@ -451,12 +451,20 @@
       "_SND_fn_vQuitCriticalSectionThreadSnd@0": {
         "va": 285504848,
         "basis": "Steam campaign PE named export _SND_fn_vQuitCriticalSectionThreadSnd@0 at RVA 0x747550."
+      },
+      "_gs_stDataPartialDirectoryList": {
+        "va": 288539744,
+        "basis": "List of partial directories walked by the exports SND_fn_bGetOnePartialDirectory, SND_fn_bIsDataDirectory and SND_fn_vRemovePartialDirectory; gs_stDataPartialDirectoryList of snddata.c in the Double Agent PS2 linker map (gs_stDataRootDirectoryList in the Splinter Cell PS2 demo's debug information)."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_vRemovePartialDirectory@4 at RVA 0x746400; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "2cc77460078e2a288615cca0de960b798c3912a91a8a0923bc0813f485fb7c52",
-      "inputs_sha256": "49ff4e521830b6069e8ae33d55b948934dea266c45793c759248ac2ec40935db"
+      "inputs_sha256": "d4c5bd5eb0db26004bc0f87fc241e1605c0af7fd2c198d3a44678fdb1449f2a6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -473,7 +481,11 @@
     "size": 207,
     "rebuilt_symbol": "_SND_fn_vPurgeAllDirectories@0",
     "inputs": [
-      "src/sound_path_list.c"
+      "src/sound_path_list.c",
+      "src/sound_data.h",
+      "src/sound_memory.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_path_list.obj src/sound_path_list.c",
@@ -482,25 +494,13 @@
         "va": 285504640,
         "basis": "Steam campaign PE named export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
       },
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
-      },
       "_SND_fn_vMouchardThreadsnd@8": {
         "va": 285504592,
         "basis": "Steam campaign PE named export _SND_fn_vMouchardThreadsnd@8 at RVA 0x747450."
       },
-      "_sound_master_directory": {
-        "va": 288537432,
-        "basis": "Shared buffer written by the exported master-directory setter and read by the exported getter."
-      },
       "_SND_fn_vMemsetSnd@12": {
         "va": 285460048,
         "basis": "Steam campaign PE named export _SND_fn_vMemsetSnd@12 at RVA 0x73c650."
-      },
-      "_sound_paths": {
-        "va": 288539744,
-        "basis": "Exported partial-directory lookup starts its linked traversal at this pointer. The exported removal routine uses the same list."
       },
       "_SND_fn_vFreeSnd@4": {
         "va": 285460592,
@@ -509,12 +509,24 @@
       "_SND_fn_vQuitCriticalSectionThreadSnd@0": {
         "va": 285504848,
         "basis": "Steam campaign PE named export _SND_fn_vQuitCriticalSectionThreadSnd@0 at RVA 0x747550."
+      },
+      "_g_czSndMasterDirectory": {
+        "va": 288537432,
+        "basis": "256-byte master directory copied out by the export SND_fn_bGetMasterDirectory; g_czSndMasterDirectory of snddata.c in the Double Agent PS2 linker map."
+      },
+      "_gs_stDataPartialDirectoryList": {
+        "va": 288539744,
+        "basis": "List of partial directories walked by the exports SND_fn_bGetOnePartialDirectory, SND_fn_bIsDataDirectory and SND_fn_vRemovePartialDirectory; gs_stDataPartialDirectoryList of snddata.c in the Double Agent PS2 linker map (gs_stDataRootDirectoryList in the Splinter Cell PS2 demo's debug information)."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_vPurgeAllDirectories@0 at RVA 0x7464e0; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "4288a61cf6793afce74b578e9b635be94582fab8a19e33ea31c38b590cf3b587",
-      "inputs_sha256": "805b4dd8db5a6b241c1af61aacfd313650ba88a88d4d2bacad207da8c68b2673"
+      "inputs_sha256": "0a55d6f8ef6c490f3042c98c202b9e8564d52b1fcaef299ea1f0abe3fb14b814"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -531,7 +543,10 @@
     "size": 37,
     "rebuilt_symbol": "_SND_fn_ulGetNumberOfPartialDirectory@0",
     "inputs": [
-      "src/sound_directory_updates.c"
+      "src/sound_directory_updates.c",
+      "src/sound_data.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_directory_updates.obj src/sound_directory_updates.c",
@@ -540,27 +555,27 @@
         "va": 285504640,
         "basis": "Steam campaign PE named export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
       },
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
-      },
       "_SND_fn_vMouchardThreadsnd@8": {
         "va": 285504592,
         "basis": "Steam campaign PE named export _SND_fn_vMouchardThreadsnd@8 at RVA 0x747450."
       },
-      "_sound_partial_directory_count": {
-        "va": 288539752,
-        "basis": "Global read under the directory lock by the exported count query, also the unsigned upper bound in the partial-directory lookup."
-      },
       "_SND_fn_vQuitCriticalSectionThreadSnd@0": {
         "va": 285504848,
         "basis": "Steam campaign PE named export _SND_fn_vQuitCriticalSectionThreadSnd@0 at RVA 0x747550."
+      },
+      "_gs_stDataPartialDirectoryList": {
+        "va": 288539744,
+        "basis": "List of partial directories walked by the exports SND_fn_bGetOnePartialDirectory, SND_fn_bIsDataDirectory and SND_fn_vRemovePartialDirectory; gs_stDataPartialDirectoryList of snddata.c in the Double Agent PS2 linker map (gs_stDataRootDirectoryList in the Splinter Cell PS2 demo's debug information)."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_ulGetNumberOfPartialDirectory@0 at RVA 0x7465b0; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "3401881b559ed883cbbcec2b49aff024dc645a67f9c42f8dd8de487f18c28e20",
-      "inputs_sha256": "210a4c954c3eac1c65337c3745bde2957342da44f5b836451e19b8b55db91023"
+      "inputs_sha256": "048204e2d6bec3222b08d5ff8e2e555ebbf8a8d77d8e26859ee306cef847679b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -577,14 +592,22 @@
     "size": 6,
     "rebuilt_symbol": "_SND_fn_szGetSoftDirectory@0",
     "inputs": [
-      "src/sound_directory_queries.c"
+      "src/sound_directory_queries.c",
+      "src/sound_data.h",
+      "src/sound_file.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_directory_queries.obj src/sound_directory_queries.c",
+    "link_bindings": {
+      "_g_czSoundSoftDirectory": {
+        "va": 288539760,
+        "basis": "256-byte directory returned by the export SND_fn_szGetSoftDirectory; g_czSoundSoftDirectory of snddata.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      }
+    },
     "identification": "The retail export table names _SND_fn_szGetSoftDirectory@0 at RVA 0x7465e0. Its return immediately precedes alignment.",
     "match": {
       "bytes_sha256": "45510155f749040e188c1daa655d9d3eed2a0d738ab63f7c6db7b82b53d18451",
-      "inputs_sha256": "54bffc726b67e0b8444c278fbf7826d531b2a0bd0ce0c895ff2d8dca3e109b00"
+      "inputs_sha256": "a965edccfce381b865cc374c5e41bf6f9538a7a276615e47c401ff91c3975111"
     }
   },
   {
@@ -593,7 +616,10 @@
     "size": 48,
     "rebuilt_symbol": "_SND_fn_vSetSoftDirectory@4",
     "inputs": [
-      "src/sound_directory_updates.c"
+      "src/sound_directory_updates.c",
+      "src/sound_data.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_directory_updates.obj src/sound_directory_updates.c",
@@ -602,17 +628,9 @@
         "va": 285504640,
         "basis": "Steam campaign PE named export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
       },
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
-      },
       "_SND_fn_vMouchardThreadsnd@8": {
         "va": 285504592,
         "basis": "Steam campaign PE named export _SND_fn_vMouchardThreadsnd@8 at RVA 0x747450."
-      },
-      "_sound_soft_directory": {
-        "va": 288539760,
-        "basis": "Address returned by the PE export _SND_fn_szGetSoftDirectory@0; the matching setter copies up to 256 bytes there."
       },
       "_SND_fn_vStrncpy@12": {
         "va": 285512256,
@@ -621,12 +639,20 @@
       "_SND_fn_vQuitCriticalSectionThreadSnd@0": {
         "va": 285504848,
         "basis": "Steam campaign PE named export _SND_fn_vQuitCriticalSectionThreadSnd@0 at RVA 0x747550."
+      },
+      "_g_czSoundSoftDirectory": {
+        "va": 288539760,
+        "basis": "256-byte directory returned by the export SND_fn_szGetSoftDirectory; g_czSoundSoftDirectory of snddata.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_vSetSoftDirectory@4 at RVA 0x7465f0; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "9de928107c30d019df7f53f1d13d5ae4fbd896da28ff2322def0202974f7ff5f",
-      "inputs_sha256": "89e1ee7ab2033622a74aee79e21124522104df9e12154340231c93250213b0c8"
+      "inputs_sha256": "ce28ecd076e07f75eefd84e7f9c2393d9f5700e054371d75e0f65d44f7d399f6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -643,7 +669,9 @@
     "size": 78,
     "rebuilt_symbol": "_SND_fn_bLoadDataInMem@16",
     "inputs": [
-      "src/sound_load_range.c"
+      "src/sound_load_range.c",
+      "src/sound_data.h",
+      "src/sound_file.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_load_range.obj src/sound_load_range.c",
@@ -668,7 +696,7 @@
     },
     "match": {
       "bytes_sha256": "42165a4ab0caef5b9e7329ce545fc12a11459a5d14e27a9dbbb27bb97964c82d",
-      "inputs_sha256": "e219c8915bbe196b828a72fc51a43766cde86eb4794576c5243dd21dcdb96b98"
+      "inputs_sha256": "e1d9649af3ee084614c4e324abf54ae2539ce3d004dcb5353877aa91141a4d98"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -685,24 +713,27 @@
     "size": 20,
     "rebuilt_symbol": "_SND_fn_vSetCurrentLangDirectory@4",
     "inputs": [
-      "src/sound_directory_updates.c"
+      "src/sound_directory_updates.c",
+      "src/sound_data.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_directory_updates.obj src/sound_directory_updates.c",
     "link_bindings": {
-      "_sound_current_language_directory": {
-        "va": 288540016,
-        "basis": "Address returned by the PE export _SND_fn_szGetCurrentLangDirectory@0; the matching setter copies up to nine bytes there."
-      },
       "_SND_fn_vStrncpy@12": {
         "va": 285512256,
         "basis": "Steam campaign PE named export _SND_fn_vStrncpy@12 at RVA 0x749240."
+      },
+      "_g_czCurrentLang": {
+        "va": 288540016,
+        "basis": "9-byte language name returned by the export SND_fn_szGetCurrentLangDirectory; g_czCurrentLang of snddata.c in the Splinter Cell PS2 demo's debug information."
       }
     },
     "identification": "Named retail export _SND_fn_vSetCurrentLangDirectory@4 at RVA 0x746860; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "305e3b2355848df8a5be39d9069bd783b8b61fd2ee4e402cf06e35ea70124a44",
-      "inputs_sha256": "9c224e6e9299085f218f731a5e83c02581c78bbbeb8505383358c98024564f71"
+      "inputs_sha256": "517910207782da5818acf1a6bfcf2aff4050e2672e063708f2f3ae7410f330d5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -719,14 +750,22 @@
     "size": 6,
     "rebuilt_symbol": "_SND_fn_szGetCurrentLangDirectory@0",
     "inputs": [
-      "src/sound_directory_queries.c"
+      "src/sound_directory_queries.c",
+      "src/sound_data.h",
+      "src/sound_file.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_directory_queries.obj src/sound_directory_queries.c",
+    "link_bindings": {
+      "_g_czCurrentLang": {
+        "va": 288540016,
+        "basis": "9-byte language name returned by the export SND_fn_szGetCurrentLangDirectory; g_czCurrentLang of snddata.c in the Splinter Cell PS2 demo's debug information."
+      }
+    },
     "identification": "The retail export table names _SND_fn_szGetCurrentLangDirectory@0 at RVA 0x746880. Its return immediately precedes alignment.",
     "match": {
       "bytes_sha256": "ed7a356d2182ad5931b8ad0432bfb26c575a238acb22c51e9d6755a9a184d4c5",
-      "inputs_sha256": "88c83af254ffdac6ad8bc4bff28ae7053feaa5f2a6d1e3b8829227c2b3278311"
+      "inputs_sha256": "a5cf19ea7704a9fe31cbe38a53d0c422ca1de60f7612649adde380c6248597f5"
     }
   },
   {
@@ -735,7 +774,12 @@
     "size": 657,
     "rebuilt_symbol": "_SND_fn_bIsDataDirectory@4",
     "inputs": [
-      "src/sound_directory_search.c"
+      "src/sound_directory_search.c",
+      "src/sound_data.h",
+      "src/sound_error.h",
+      "src/sound_file.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /GS /c /Folocal/sound_directory_search.obj src/sound_directory_search.c",
@@ -748,17 +792,9 @@
         "va": 285504640,
         "basis": "Steam campaign PE named export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
       },
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
-      },
       "_SND_fn_vMouchardThreadsnd@8": {
         "va": 285504592,
         "basis": "Steam campaign PE named export _SND_fn_vMouchardThreadsnd@8 at RVA 0x747450."
-      },
-      "_sound_master_directory": {
-        "va": 288537432,
-        "basis": "Shared buffer written by the exported master-directory setter and read by the exported getter."
       },
       "_SND_fn_lStriCmp@8": {
         "va": 285512128,
@@ -772,14 +808,6 @@
         "va": 284363865,
         "basis": "Direct target of the retail stack-cookie epilogues; compares the saved cookie in ECX against the security cookie global."
       },
-      "_sound_empty_text": {
-        "va": 285966691,
-        "basis": "Pointer to a zero byte in retail read-only data used for the empty-language test."
-      },
-      "_sound_current_language_directory": {
-        "va": 288540016,
-        "basis": "Address returned by the PE export _SND_fn_szGetCurrentLangDirectory@0; the matching setter copies up to nine bytes there."
-      },
       "_SND_fn_vStrncpy@12": {
         "va": 285512256,
         "basis": "Steam campaign PE named export _SND_fn_vStrncpy@12 at RVA 0x749240."
@@ -788,23 +816,39 @@
         "va": 285820496,
         "basis": "Steam campaign PE named export _SND_fn_cGetDirectorySeparator@0 at RVA 0x794650."
       },
-      "_sound_path_size_message": {
-        "va": 286733472,
-        "basis": "Read-only directory diagnostic passed to the named sound error export on this function's corresponding error branch."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Steam campaign PE named export _SND_fn_vDisplayError@8 at RVA 0x73c7d0."
       },
-      "_sound_first_directory": {
+      "_g_czSndMasterDirectory": {
+        "va": 288537432,
+        "basis": "256-byte master directory copied out by the export SND_fn_bGetMasterDirectory; g_czSndMasterDirectory of snddata.c in the Double Agent PS2 linker map."
+      },
+      "??_C@_00CNPNBAHC@?$AA@": {
+        "va": 285966691,
+        "basis": "Read-only pooled empty string passed to the inlined strcmp. Microsoft LINK independently placed the compiled literal at this VA and reproduced the entire caller."
+      },
+      "_g_czCurrentLang": {
+        "va": 288540016,
+        "basis": "9-byte language name returned by the export SND_fn_szGetCurrentLangDirectory; g_czCurrentLang of snddata.c in the Splinter Cell PS2 demo's debug information."
+      },
+      "_gs_stDataPartialDirectoryList": {
         "va": 288539744,
-        "basis": "Exported partial-directory lookup starts its linked traversal at this pointer. The exported removal routine uses the same list."
+        "basis": "List of partial directories walked by the exports SND_fn_bGetOnePartialDirectory, SND_fn_bIsDataDirectory and SND_fn_vRemovePartialDirectory; gs_stDataPartialDirectoryList of snddata.c in the Double Agent PS2 linker map (gs_stDataRootDirectoryList in the Splinter Cell PS2 demo's debug information)."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
+      },
+      "??_C@_0BG@BLIIDFJO@Invalid?5size?5of?5path?4?$AA@": {
+        "va": 286733472,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_bIsDataDirectory@4 at RVA 0x746ac0; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "a6b693c937c01cc86da430cd2075281c63a1e33bdd08ec1b19ae477419c20255",
-      "inputs_sha256": "cb13817febbe7cbe6ed6775d4e690b7e7f7639b6d2c0d8dcbbe5f3dce8d3d979"
+      "inputs_sha256": "3a2b2110f868fdce07201c1b97fd97b00e7d26b38a2ad9f262808fb017330035"
     }
   },
   {
@@ -813,20 +857,15 @@
     "size": 106,
     "rebuilt_symbol": "_SND_fn_vSetCurrentLanguage@4",
     "inputs": [
-      "src/sound_language_change.c"
+      "src/sound_language_change.c",
+      "src/sound_data.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_language_change.obj src/sound_language_change.c",
     "identification": "Named Steam campaign export at RVA 0x746d60. The two paths that update the directory differ in whether the previous language was empty. All exits occur before alignment.",
     "link_bindings": {
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
-      },
-      "_sound_current_language_directory": {
-        "va": 288540016,
-        "basis": "Address returned by the PE export _SND_fn_szGetCurrentLangDirectory@0; the matching setter copies up to nine bytes there."
-      },
       "_SND_fn_vEnterCriticalSectionThreadSnd_@0": {
         "va": 285504640,
         "basis": "Named retail PE export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
@@ -854,11 +893,19 @@
       "??_C@_00CNPNBAHC@?$AA@": {
         "va": 285966691,
         "basis": "Read-only pooled empty string passed to the inlined strcmp. Microsoft LINK independently placed the compiled literal at this VA and reproduced the entire caller."
+      },
+      "_g_czCurrentLang": {
+        "va": 288540016,
+        "basis": "9-byte language name returned by the export SND_fn_szGetCurrentLangDirectory; g_czCurrentLang of snddata.c in the Splinter Cell PS2 demo's debug information."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "5c93e06fe0f4569f57406c1e5353b7e6e5b13392786b5d8e9df7131e2f88ecee",
-      "inputs_sha256": "f3c1a473898f230bf09559ebc87a0e9ebd11316a57644ff99054635ce16dfcb1"
+      "inputs_sha256": "bc9b9db186bba3efd786e336d1a21deed0c7186268732d3d425d41b6be385bf7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -875,42 +922,28 @@
     "size": 380,
     "rebuilt_symbol": "_SND_fn_vAddPartialDirectory@4",
     "inputs": [
-      "src/sound_path_insert.c"
+      "src/sound_path_insert.c",
+      "src/sound_data.h",
+      "src/sound_error.h",
+      "src/sound_file.h",
+      "src/sound_memory.h",
+      "src/sound_string.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_path_insert.obj src/sound_path_insert.c",
     "link_bindings": {
-      "_sound_null_partial_input": {
-        "va": 286733728,
-        "basis": "Read-only directory diagnostic passed to the named sound error export on this function's corresponding error branch."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Steam campaign PE named export _SND_fn_vDisplayError@8 at RVA 0x73c7d0."
-      },
-      "_sound_master_directory": {
-        "va": 288537432,
-        "basis": "Shared buffer written by the exported master-directory setter and read by the exported getter."
-      },
-      "_sound_missing_master_path": {
-        "va": 286733640,
-        "basis": "Read-only directory diagnostic passed to the named sound error export on this function's corresponding error branch."
       },
       "_SND_fn_pvMallocSnd@4": {
         "va": 285460528,
         "basis": "Steam campaign PE named export _SND_fn_pvMallocSnd@4 at RVA 0x73c830."
       },
-      "_sound_insufficient_path_memory": {
-        "va": 286733576,
-        "basis": "Read-only directory diagnostic passed to the named sound error export on this function's corresponding error branch."
-      },
       "_SND_fn_cGetDirectorySeparator@0": {
         "va": 285820496,
         "basis": "Steam campaign PE named export _SND_fn_cGetDirectorySeparator@0 at RVA 0x794650."
-      },
-      "_sound_partial_missing_separator": {
-        "va": 286733496,
-        "basis": "Read-only directory diagnostic passed to the named sound error export on this function's corresponding error branch."
       },
       "_SND_fn_vFreeSnd@4": {
         "va": 285460592,
@@ -919,10 +952,6 @@
       "_SND_fn_vEnterCriticalSectionThreadSnd_@0": {
         "va": 285504640,
         "basis": "Steam campaign PE named export _SND_fn_vEnterCriticalSectionThreadSnd_@0 at RVA 0x747480."
-      },
-      "_sound_directory_source": {
-        "va": 286732832,
-        "basis": "Read-only diagnostic file path in this image ends in dare/private/engine/common/src/snddata.c; passed as the file argument to the exported diagnostic hook."
       },
       "_SND_fn_vMouchardThreadsnd@8": {
         "va": 285504592,
@@ -936,19 +965,43 @@
         "va": 285512256,
         "basis": "Steam campaign PE named export _SND_fn_vStrncpy@12 at RVA 0x749240."
       },
-      "_sound_paths": {
-        "va": 288539744,
-        "basis": "Exported partial-directory lookup starts its linked traversal at this pointer. The exported removal routine uses the same list."
-      },
       "_SND_fn_vQuitCriticalSectionThreadSnd@0": {
         "va": 285504848,
         "basis": "Steam campaign PE named export _SND_fn_vQuitCriticalSectionThreadSnd@0 at RVA 0x747550."
+      },
+      "_g_czSndMasterDirectory": {
+        "va": 288537432,
+        "basis": "256-byte master directory copied out by the export SND_fn_bGetMasterDirectory; g_czSndMasterDirectory of snddata.c in the Double Agent PS2 linker map."
+      },
+      "_gs_stDataPartialDirectoryList": {
+        "va": 288539744,
+        "basis": "List of partial directories walked by the exports SND_fn_bGetOnePartialDirectory, SND_fn_bIsDataDirectory and SND_fn_vRemovePartialDirectory; gs_stDataPartialDirectoryList of snddata.c in the Double Agent PS2 linker map (gs_stDataRootDirectoryList in the Splinter Cell PS2 demo's debug information)."
+      },
+      "??_C@_0FC@FJGEFFMN@Error?5in?5SndFile?3SND_fn_vAddPart@": {
+        "va": 286733728,
+        "basis": "String literal; the verifier compares its bytes with retail."
+      },
+      "??_C@_0FG@DDONCMKD@Error?5in?5SndFile?3SND_fn_vAddPart@": {
+        "va": 286733640,
+        "basis": "String literal; the verifier compares its bytes with retail."
+      },
+      "??_C@_0EA@IJBKAILO@Error?5in?5SND_fn_vAddPartialDirec@": {
+        "va": 286733576,
+        "basis": "String literal; the verifier compares its bytes with retail."
+      },
+      "??_C@_0EO@NECIDCCA@Error?5in?5SND_fn_vAddPartialDirec@": {
+        "va": 286733496,
+        "basis": "String literal; the verifier compares its bytes with retail."
+      },
+      "??_C@_0GM@OBKFDJGD@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286732832,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_vAddPartialDirectory@4 at RVA 0x747240; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "a0802ec8213529ac281fbcd7d4f3b87f1cbff83b3ae5ca827c054d8fa40c9800",
-      "inputs_sha256": "8391b8d50dace0eb6f2c2cb3cd69881137d95ec8e5116650271f6666c21262bd"
+      "inputs_sha256": "d9113fec4397b16e50381dd53d8675debe18c5371afb409642a33128301d4764"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1347,7 +1400,7 @@
       },
       "_sprintf": {
         "va": 284369247,
-        "basis": "CRT sprintf called with the local diagnostic buffer and the missing event name."
+        "basis": "C runtime sprintf, called with a stack buffer, a format and its arguments."
       },
       "_SND_fn_vDisplayErrorEx@12": {
         "va": 285460464,
@@ -1364,7 +1417,7 @@
     },
     "match": {
       "bytes_sha256": "adbe4f7e996828e475cab4971d041609f4cdb0fc316b8fec250de27fedc25e56",
-      "inputs_sha256": "0dd4d7c41a7c2c5aae3e801d53769e221988efb955e43ad01dafc94a2b1326b4"
+      "inputs_sha256": "2bf682d7a2aa0f7a133176d8fb9cc824785ae88659d64967431da976795f06b0"
     }
   },
   {
@@ -1661,15 +1714,13 @@
     "size": 85,
     "rebuilt_symbol": "_SND_fn_vStrncpy@12",
     "inputs": [
-      "src/sound_bounded_text.c"
+      "src/sound_bounded_text.c",
+      "src/sound_error.h",
+      "src/sound_string.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_bounded_text.obj src/sound_bounded_text.c",
     "link_bindings": {
-      "_sound_text_overflow_message": {
-        "va": 286734420,
-        "basis": "Shared read-only truncation diagnostic passed by the bounded copy and append exports."
-      },
       "_SND_fn_vDisplayErrorEx@12": {
         "va": 285460464,
         "basis": "Steam campaign PE named export _SND_fn_vDisplayErrorEx@12 at RVA 0x73c7f0."
@@ -1677,12 +1728,16 @@
       "_strncpy": {
         "va": 284367408,
         "basis": "Direct target of the named Steam bounded-string wrapper at VA 0x10f31a30; the callee copies at most count bytes and zero-pads the remainder."
+      },
+      "??_C@_0DI@NIBKHMAF@Could?5not?5copy?5entirely?5source?5i@": {
+        "va": 286734420,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_vStrncpy@12 at RVA 0x749240; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "22c2a0a3c68906d4f821e4fdc958301bca95ef65d3827980be6690a9403d9c3c",
-      "inputs_sha256": "918cbd935428aede20406bee5a1f1e7ef4c7b42593aa5cc2a892bee4efb77d6a"
+      "inputs_sha256": "cb85ef3a1fcbc9dee81b97e2c657fb89e8f820c8ea25db48e8aa949867f0dfdd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1699,15 +1754,13 @@
     "size": 130,
     "rebuilt_symbol": "_SND_fn_vStrncat@12",
     "inputs": [
-      "src/sound_bounded_text.c"
+      "src/sound_bounded_text.c",
+      "src/sound_error.h",
+      "src/sound_string.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_bounded_text.obj src/sound_bounded_text.c",
     "link_bindings": {
-      "_sound_text_overflow_message": {
-        "va": 286734420,
-        "basis": "Shared read-only truncation diagnostic passed by the bounded copy and append exports."
-      },
       "_SND_fn_vDisplayErrorEx@12": {
         "va": 285460464,
         "basis": "Steam campaign PE named export _SND_fn_vDisplayErrorEx@12 at RVA 0x73c7f0."
@@ -1715,12 +1768,16 @@
       "_strncat": {
         "va": 284371856,
         "basis": "Direct target of the named Steam bounded-string wrapper at VA 0x10f32b90; the callee scans the destination terminator, then appends up to count bytes."
+      },
+      "??_C@_0DI@NIBKHMAF@Could?5not?5copy?5entirely?5source?5i@": {
+        "va": 286734420,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "identification": "Named retail export _SND_fn_vStrncat@12 at RVA 0x7492a0; whole linked symbol including each return, before alignment or next entry.",
     "match": {
       "bytes_sha256": "a907ea81ed200ac3851bc71252c364722e142b3d8ab0fe1376b15ff479823f32",
-      "inputs_sha256": "7773eb10477fd8b73e8258986eeda56a86806817829a6121837c6be787c0cbbd"
+      "inputs_sha256": "f55516cf18331388bfd3b24168afe6e2d41bf52ea537c21af8c4c89fda4b215b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1754,7 +1811,7 @@
     },
     "match": {
       "bytes_sha256": "8882e0570d3ad1c408d94d635fa34d35a3b69972662d93c3cc9ed263d5a42e5c",
-      "inputs_sha256": "02d0bd99fea26c78c54b5cca6d7f5f43b9290939884298035fc9168249ddf285"
+      "inputs_sha256": "dc5ab1433118815d86507ba7078b84782480ed25bcc6587b681c796f54a42d23"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1788,7 +1845,7 @@
     "identification": "A direct retail branch at VA 0x1105cb58 identifies the entry. Full range 0x1104a700..0x1104a724 (exclusive), followed by alignment. Accepts only resource kinds 1, 6 and 9 before tail-calling the channel query; null and other kinds return zero.",
     "match": {
       "bytes_sha256": "01fd510063323d88eed7421f7836089e1cb9a83c183edb6a6f6c6e33c1280b87",
-      "inputs_sha256": "d83e7fcfe16b21d3719658c2c80ee1fb67ca9851d93f5a53c207075ae2932f5a"
+      "inputs_sha256": "43a5106049b696a96923c76e6ba239a2748213e9e0e123dadd97173422c76960"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2217,7 +2274,7 @@
     "identification": "Internal distance attenuation helper at VA 0x1104b490. The final return ends at 0x1104b53f before alignment or the next named function. The extended rolloff export directly calls the helper at 0x1104b60f and 0x1104b66f. A zero or negative near distance returns -96 in 16.16 and reports an error. The helper scales the distance, selects one of four bands and uses a 128-entry table per band; values beyond the last band continue on a straight line. Named fn_rDist2Vol from sndspace.c of the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the same export calls it there with a distance and the saturation distance, and the error text names DistSatur.",
     "match": {
       "bytes_sha256": "35573c2dfe6c7faf232d292fce5943b1020c8324521d0c589127f278142dac6a",
-      "inputs_sha256": "199136cb9fb66d55003b23e0c726b55d02da76308b2e9c93e68dce07e51c2aa6"
+      "inputs_sha256": "951ac193c79d01d07bf76ed05c86f1833805a59b59b1afb40c2988b9373fd450"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2292,7 +2349,7 @@
     "identification": "Direct retail call at 0x1105c8b5 to the full function at 0x1104b540. Its final return ends at 0x1104b67f before alignment. Resolves four default sentinels, clamps the input distance, applies the four-band attenuation curve, and interpolates the final fade in linear amplitude before converting back to fixed-point volume.",
     "match": {
       "bytes_sha256": "955f41ce50975908cd709ed695abf172ad877d95a463add2bb95bf4cf7160afd",
-      "inputs_sha256": "2525c558fde761f9bc72bb873d9a0d5f59165b05f942ac6d31b69429a677d8ac"
+      "inputs_sha256": "ca6cb0e23344f4372046e559f0a6cb3f2060706648a24238401603c2a86189c9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3605,7 +3662,7 @@
     },
     "match": {
       "bytes_sha256": "eeb2318ee6dd5db163ff0c4a26712c7c2e742cbf554dfea69df323fdc8846723",
-      "inputs_sha256": "3fcfe1dc8a5a9d185479c8ffa77d04502fca397eb7b137ceeec66288f46fc171"
+      "inputs_sha256": "6e3401c43f2765b7625c79dbe5e07a69975266501455a655d521def0a5918e50"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3639,7 +3696,7 @@
     "identification": "A direct retail branch at VA 0x1104a71f identifies the entry. Full range 0x1104fe20..0x1104fe25 (exclusive), followed by alignment. Tail jump to the locked channel query.",
     "match": {
       "bytes_sha256": "8a9d88e1850e5c22a22604cc6f2547330385a9bf291c0cd374ee2e07c2585832",
-      "inputs_sha256": "224c23f3adb98dab8c08a9e67d4dc490bb846df830eb51ac2622007d467d24d9"
+      "inputs_sha256": "01aee04648d9654c70ed358cd1b7d3845a7c403efd6d98cea10697493f83f7ec"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

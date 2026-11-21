@@ -1,9 +1,9 @@
-void __cdecl sound_heap_detect_cpu(unsigned long *cpuid, unsigned long *mmx);
-void __stdcall SND_fn_vDisplayError(int code, const char *context);
+#include "sound_error.h"
+#include "sound_memory.h"
 
 static int missing_cpu_feature(void)
 {
-    SND_fn_vDisplayError(5, (const char *)0x111715ac);
+    SND_fn_vDisplayError(E_uwSndBadHostConfiguration, "This game require support for Intel MMX instructions");
     return 0;
 }
 

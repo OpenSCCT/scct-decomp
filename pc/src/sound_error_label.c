@@ -1,18 +1,12 @@
-typedef struct ErrorEntry {
-    unsigned short code;
-    unsigned short padding;
-    const char *label;
-} ErrorEntry;
-extern const ErrorEntry SOUND_ERRORS[];
-#define UNKNOWN_ERROR ((const char *)0x11171b9c)
+#include "sound_error.h"
 
-const char *__cdecl sound_error_label(int requested)
+const char *__cdecl sound_error_label(int number)
 {
     int index = 0;
-    unsigned short code = SOUND_ERRORS[0].code;
-    while (code != requested && code != 0xffff) {
+    unsigned short current = SOUND_ERRORS[0].number;
+    while (current != number && current != 0xffff) {
         ++index;
-        code = SOUND_ERRORS[index].code;
+        current = SOUND_ERRORS[index].number;
     }
-    return SOUND_ERRORS[index].code == 0xffff ? UNKNOWN_ERROR : SOUND_ERRORS[index].label;
+    return SOUND_ERRORS[index].number == 0xffff ? "Unknown error" : SOUND_ERRORS[index].label;
 }

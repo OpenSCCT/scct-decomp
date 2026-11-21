@@ -1,57 +1,42 @@
-/* Steam campaign audio search paths. Directory nodes begin with an inline
-   path, followed by links at offsets 0x100 and 0x104 on the x86 target. */
-struct DirectoryNode {
-    char path[256];
-    struct DirectoryNode *next;
-};
+#include "sound_data.h"
+#include "sound_error.h"
+#include "sound_string.h"
+#include "sound_thread.h"
 
-extern char sound_master_directory[256];
-extern struct DirectoryNode *sound_first_directory;
-extern unsigned long sound_partial_directory_count;
-extern const char sound_directory_source[];
-extern const char sound_null_master_output[];
-extern const char sound_null_partial_output[];
-extern const char sound_invalid_partial_index[];
-
-void __stdcall SND_fn_vEnterCriticalSectionThreadSnd_(void);
-void __stdcall SND_fn_vQuitCriticalSectionThreadSnd(void);
-void __stdcall SND_fn_vMouchardThreadsnd(const char *file, unsigned line);
-void __stdcall SND_fn_vStrncpy(char *dest, const char *src, unsigned capacity);
-void __stdcall SND_fn_vDisplayError(unsigned code, const char *message);
-
-int __stdcall SND_fn_bGetMasterDirectory(char *dest, unsigned capacity)
+int __stdcall SND_fn_bGetMasterDirectory(char *szDir, unsigned int size)
 {
-    if (!dest) {
-        SND_fn_vDisplayError(47, sound_null_master_output);
+    if (!szDir) {
+        SND_fn_vDisplayError(47, "Error in SND_fn_vGetMasterDirectory : the function receive a NULL pointer string");
         return 0;
     }
     SND_fn_vEnterCriticalSectionThreadSnd_();
-    SND_fn_vMouchardThreadsnd(sound_directory_source, 146);
-    SND_fn_vStrncpy(dest, sound_master_directory, capacity);
+    SND_fn_vMouchardThreadsnd(SNDDATA_C_FILE, 146);
+    SND_fn_vStrncpy(szDir, g_czSndMasterDirectory, size);
     SND_fn_vQuitCriticalSectionThreadSnd();
     return 1;
 }
 
-int __stdcall SND_fn_bGetOnePartialDirectory(long index, char *dest, unsigned capacity)
+int __stdcall SND_fn_bGetOnePartialDirectory(long index, char *szDir, unsigned int size)
 {
-    struct DirectoryNode *node;
-    if (!dest) {
-        SND_fn_vDisplayError(8, sound_null_partial_output);
+    tdstDataRootDirectory *pstDataRootDir;
+    if (!szDir) {
+        SND_fn_vDisplayError(E_uwSndGenericWarning, "Invalid string pointer.");
         return 0;
     }
     SND_fn_vEnterCriticalSectionThreadSnd_();
-    SND_fn_vMouchardThreadsnd(sound_directory_source, 257);
-    if ((unsigned long)index < sound_partial_directory_count) {
-        node = sound_first_directory;
+    SND_fn_vMouchardThreadsnd(SNDDATA_C_FILE, 257);
+    if ((unsigned long)index < (unsigned long)gs_stDataPartialDirectoryList.lNumberOfElementsDyn) {
+        pstDataRootDir = gs_stDataPartialDirectoryList.hFirstElementDyn;
         while (index > 0) {
             --index;
-            node = node->next;
+            pstDataRootDir = pstDataRootDir->hNextBrotherDyn;
         }
-        SND_fn_vStrncpy(dest, node->path, capacity);
+        SND_fn_vStrncpy(szDir, pstDataRootDir->szDirectory, size);
         SND_fn_vQuitCriticalSectionThreadSnd();
         return 1;
     }
-    SND_fn_vDisplayError(8, sound_invalid_partial_index);
+    SND_fn_vDisplayError(E_uwSndGenericWarning,
+                         "Partial directory element number is bigger than current number of PArtial directories.");
     SND_fn_vQuitCriticalSectionThreadSnd();
     return 0;
 }

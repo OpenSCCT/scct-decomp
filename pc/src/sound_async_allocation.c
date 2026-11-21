@@ -1,10 +1,7 @@
 #include "sound_async_worker.h"
-void *__stdcall SND_fn_pvMallocSnd(Word size);
-void __stdcall SND_fn_vFreeSnd(void *allocation);
-__declspec(dllimport) Handle __stdcall CreateMutexA(void *attributes, int owned, const char *name);
-__declspec(dllimport) int __stdcall CloseHandle(Handle handle);
+#include "sound_memory.h"
 
-AsyncRequest *__cdecl sound_alloc_stream_request(Word bytes)
+AsyncRequest *__cdecl sound_alloc_stream_request(unsigned long bytes)
 {
     AsyncRequest *request = SND_fn_pvMallocSnd(sizeof(AsyncRequest));
     if (!request)

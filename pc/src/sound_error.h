@@ -51,6 +51,28 @@ typedef enum e_uwSndErrNumber_ {
     E_uwSndEventUsesUnloadedBank = 42
 } e_uwSndErrNumber;
 
+/* The message that names an error number. The names of the type, its members and the table
+   are invented. */
+typedef struct SndErrorLabel {
+    unsigned short number;
+    const char *label;
+} SndErrorLabel;
+
+/* Ends with an entry numbered 0xffff. */
+extern SndErrorLabel SOUND_ERRORS[];
+
+/* One entry per error number. The array and its element are named as in the sibling build,
+   where the member says "don't display any more"; this build's SND_fn_vDisplayErrorEx
+   reports an error only while the member is set, and sets it again. */
+typedef struct _tdstSndErrorOccurElement {
+    int bDontDisplayAnyMore;
+} tdstSndErrorOccurElement;
+extern tdstSndErrorOccurElement SND_g_astErrorOccurArray[];
+
+const char *__cdecl sound_error_label(int number);
+void __cdecl sound_report_error(const char *label, const char *message);
+void __cdecl sound_end_error_display(void);
+
 void __stdcall SND_fn_vDisplayError(e_uwSndErrNumber eErrNum, const char *message);
 /* guess: the last argument is a warning level; every recovered caller passes 3. */
 void __stdcall SND_fn_vDisplayErrorEx(e_uwSndErrNumber eErrNum, const char *message,

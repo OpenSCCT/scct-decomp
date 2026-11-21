@@ -2,6 +2,14 @@
 #ifndef SOUND_MEMORY_H
 #define SOUND_MEMORY_H
 
+/* The rebuild has no C runtime headers.
+   guess: the runtime function SND_fn_vMemMoveSnd forwards to is memmove, by the export's name
+   and the argument order; it has not been compared with the runtime library. */
+void *__cdecl memmove(void *dest, const void *src, unsigned int count);
+
+/* Reports whether the processor has CPUID and MMX. */
+void __cdecl sound_heap_detect_cpu(unsigned long *cpuid, unsigned long *mmx);
+
 int __stdcall SND_fn_bInitMallocSnd(void);
 void *__stdcall SND_fn_pvMallocSnd(unsigned long ulNbBytes);
 void *__stdcall SND_fn_pvReAllocSnd(void *pvPtr, unsigned long ulNbBytes);

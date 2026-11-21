@@ -1,6 +1,6 @@
-void *__cdecl sound_move_bytes(void *destination, const void *source, unsigned long count);
+#include "sound_memory.h"
 
-void __stdcall SND_fn_vMemMoveSnd(void *destination, const void *source, unsigned long count)
+void __stdcall SND_fn_vMemMoveSnd(void *ptr_dest, const void *ptr_source, unsigned long ulNbBytes)
 {
-    sound_move_bytes(destination, source, count);
+    memmove(ptr_dest, ptr_source, ulNbBytes);
 }
