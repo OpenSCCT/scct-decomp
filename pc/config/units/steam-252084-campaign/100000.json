@@ -984,6 +984,44 @@
     }
   },
   {
+    "id": "campaign-script-natives-8-103ab0",
+    "size": 231,
+    "offset": 1063600,
+    "inputs": [
+      "src/campaign_script_natives_8.cpp"
+    ],
+    "rebuilt_symbol": "?execEAdjustJump@AController@@QAEXAAUFFrame@@QAX@Z",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_script_natives_8.obj src/campaign_script_natives_8.cpp",
+    "link_bindings": {
+      "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA": {
+        "va": 288434104,
+        "basis": "Retail call target or global referenced by the complete native."
+      },
+      "?SuggestJumpVelocity@APawn@@QAE?AUFVector@@U2@MM@Z": {
+        "va": 278600912,
+        "basis": "Retail call target or global referenced by the complete native."
+      },
+      "?GDefaultVector@@3UFVector@@A": {
+        "va": 288451064,
+        "basis": "Retail call target or global referenced by the complete native."
+      }
+    },
+    "identification": "Complete indexed Campaign function at RVA 0x103ab0; the retail native lookup table pairs it with the name intAControllerexecEAdjustJump.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "2c738b618e25ceb690983651954e782a09f5c1276ded1d33305f6512d34bf937",
+      "inputs_sha256": "423676b8c02d46b569b4c775b417ec6f0fac4ac957421ff9f0a4f825e733f36c"
+    }
+  },
+  {
     "id": "campaign-script-natives-3-103c30",
     "size": 143,
     "offset": 1063984,
@@ -1071,6 +1109,48 @@
     "match": {
       "bytes_sha256": "6e04334e910ee700ec8d163f1397e4a607d7c8cb4f6a0d786df2e9b2dfca2c72",
       "inputs_sha256": "c819c1ae906e8c018a7146ac828fa161bd84c6bfb48983c2b14c5b4fd57bf7b2"
+    }
+  },
+  {
+    "id": "campaign-checked-class-casts-104fe0",
+    "size": 70,
+    "offset": 1069024,
+    "inputs": [
+      "src/campaign_checked_class_casts.c"
+    ],
+    "rebuilt_symbol": "_cast_UGameEngine",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_checked_class_casts.obj src/campaign_checked_class_casts.c",
+    "link_bindings": {
+      "_class_UGameEngine": {
+        "va": 287285956,
+        "basis": "Class singleton checked before allocation, stored after the constructor, and loaded for the superclass comparison."
+      },
+      "_package_Engine": {
+        "va": 285964612,
+        "basis": "Retail UTF-16 package name Engine passed to the class constructor."
+      },
+      "_create_UGameEngine": {
+        "va": 279199472,
+        "basis": "The constructor passes both the UTF-16 UGameEngine allocation tag and GameEngine class name to the engine."
+      },
+      "_register_UGameEngine": {
+        "va": 279170704,
+        "basis": "Direct registration call after initializing the singleton for UGameEngine."
+      }
+    },
+    "identification": "Typed cast at campaign RVA 0x104fe0, directly called at RVA 0x10620c. Its class constructor at RVA 0x143ef0 identifies UGameEngine; the checked cast walks the superclass chain and returns the object pointer unchanged.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "1c1658599d2a46f5ac1b14c7f0265d10cf85da4eb82db2ca72b160b65bc5e099",
+      "inputs_sha256": "be12ac83e33a6f07108d4bce9f7a261493fad5a7ee5356d74721c1b331b10e18"
     }
   },
   {
@@ -1910,6 +1990,44 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "id": "campaign-class-destructors-106eb0",
+    "size": 22,
+    "offset": 1076912,
+    "inputs": [
+      "src/campaign_class_destructors.c"
+    ],
+    "rebuilt_symbol": "@destroy_UEHkObject@4",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_class_destructors.obj src/campaign_class_destructors.c",
+    "link_bindings": {
+      "_vtable_UEHkObject": {
+        "va": 286066072,
+        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
+      },
+      "@conditional_destroy@4": {
+        "va": 281901616,
+        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
+      },
+      "@destroy_base_of_UEHkObject@4": {
+        "va": 281920608,
+        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
+      }
+    },
+    "identification": "Complete indexed Campaign function at RVA 0x106eb0. Direct call at RVA 0x106f60 in the published unit delete-uehkrigidbody. It installs the vtable at RVA 0x7d0598, which the published deleting destructor delete_UEHkObject also installs; identified as the complete UEHkObject destructor.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "eadd3a1d7824abc4dd54fac0e231525eb3c17a00575b5c5a10b32ab6fe3f13cb",
+      "inputs_sha256": "db19596241cb11ec2d32df4722fa91f0e7e511a8c0ebece88691794650e510df"
     }
   },
   {
@@ -3912,6 +4030,44 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "id": "campaign-class-destructors-10b4e0",
+    "size": 22,
+    "offset": 1094880,
+    "inputs": [
+      "src/campaign_class_destructors.c"
+    ],
+    "rebuilt_symbol": "@destroy_UInteractions@4",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_class_destructors.obj src/campaign_class_destructors.c",
+    "link_bindings": {
+      "_vtable_UInteractions": {
+        "va": 286067296,
+        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
+      },
+      "@conditional_destroy@4": {
+        "va": 281901616,
+        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
+      },
+      "@destroy_base_of_UInteractions@4": {
+        "va": 281920608,
+        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
+      }
+    },
+    "identification": "Complete indexed Campaign function at RVA 0x10b4e0. Direct call at RVA 0x10c588 in the published unit delete-uinteractionmaster. It installs the vtable at RVA 0x7d0a60, which the published deleting destructor delete_UInteractions also installs; identified as the complete UInteractions destructor.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "afd26d5b85cd3a007bcfb7741d33c33b534bf3ccf96732ae406a66ecf2b9ef26",
+      "inputs_sha256": "b6ed958472be4c82a00d488ec72e2d4e521f01bd1f64801d37f06687a4ad1853"
     }
   },
   {
