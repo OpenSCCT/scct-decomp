@@ -58,6 +58,7 @@ public:
 
 template<class T> void __stdcall LtcgArrayDestructor(TArrayLtcg<T> *Array);
 
+// TArrayLtcg::~TArrayLtcg
 template<class T> inline TArrayLtcg<T>::~TArrayLtcg()
 {
     // part of the stand-in: retail loads every such `this` through EAX, which the compiler

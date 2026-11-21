@@ -173,8 +173,8 @@ public:
     virtual void VirtualSlot100();
     virtual void VirtualSlot101();
     virtual void VirtualSlot102();
-    virtual void PlayAnim(INT Channel, FName Sequence, FLOAT Rate, FLOAT TweenTime, INT bLoop, INT A, INT B,
-                          INT C);
+    virtual void PlayAnim(INT Channel, FName Sequence, FLOAT Rate, FLOAT TweenTime, INT bLoop,
+                          INT A, INT B, INT C);
     virtual void VirtualSlot104();
     virtual void VirtualSlot105();
     virtual void VirtualSlot106();

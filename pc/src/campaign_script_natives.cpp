@@ -1,4 +1,4 @@
-// campaign_script_natives.cpp -- Campaign script natives: bytecode primitives, vector conversions and actor movement
+// campaign_script_natives.cpp -- Campaign natives: bytecode primitives, vectors, actor movement
 #include "unreal_script.h"
 #include "unreal_math.h"
 #include "unreal_containers.h"

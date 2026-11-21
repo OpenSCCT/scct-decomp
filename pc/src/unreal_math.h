@@ -72,11 +72,13 @@ struct FGlobalMath {
 
 extern FGlobalMath GMath;
 
+// FRotator::Vector: the unit vector the rotation points along
 inline FVector FRotator::Vector()
 {
     return (GMath.UnitCoords / *this).XAxis;
 }
 
+// Clamp: X limited to the range Min..Max
 template<class T> inline T Clamp(const T X, const T Min, const T Max)
 {
     return X < Min ? Min : X < Max ? X : Max;

@@ -1,4 +1,4 @@
-// versus_simple_natives.cpp -- Versus script natives that read scalar parameters and call one method
+// versus_simple_natives.cpp -- Versus natives that read scalar parameters and call one method
 //
 // The called method is named after the native; its own name is not recorded.
 #include "versus_build.h"

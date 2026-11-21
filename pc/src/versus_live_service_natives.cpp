@@ -1,4 +1,4 @@
-// versus_live_service_natives.cpp -- USXBoxLiveRef script natives that forward to the online service
+// versus_live_service_natives.cpp -- USXBoxLiveRef natives that forward to the online service
 //
 // Each native reads its parameters and calls one method of the matchmaking subsystem.
 #include "versus_build.h"
