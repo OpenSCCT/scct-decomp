@@ -1139,14 +1139,30 @@
     "size": 119,
     "rebuilt_symbol": "_SND_fn_fGetCurrentTime@4",
     "inputs": [
-      "src/sound_timer_seconds.c"
+      "src/sound_timer_seconds.c",
+      "src/sound_timer.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_timer_seconds.obj src/sound_timer_seconds.c",
+    "link_bindings": {
+      "__imp__QueryPerformanceFrequency@4": {
+        "va": 285962976,
+        "basis": "KERNEL32 import slot called by the export SND_fn_fGetCurrentTime."
+      },
+      "__imp__QueryPerformanceCounter@4": {
+        "va": 285962980,
+        "basis": "KERNEL32 import slot called by the timer exports."
+      },
+      "__real@00000000": {
+        "va": 285966880,
+        "basis": "Compiler-emitted float 0.0 at an absolute retail operand; the verifier compares its bytes with retail."
+      }
+    },
     "identification": "Steam PE export _SND_fn_fGetCurrentTime@4 at RVA 0x747810. Reads QueryPerformanceFrequency and either the saved pause counter or QueryPerformanceCounter, subtracts the origin, and divides the elapsed ticks by the frequency. Invalid or failed queries return the float at VA 0x110b8220 (zero). All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "f30fbae51c9729856e62d6ca0abd952797c20fd4f97602fe6c121dac809919b0",
-      "inputs_sha256": "e9eb2348078118b7d2968614f95156e903cef8f3fb296b8a0c4f1ee08dcd82dc"
+      "inputs_sha256": "379a4f710b5395349c7575db89924ffb27970d2f6d6bcdcdf532d34e7ef817be"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1163,14 +1179,22 @@
     "size": 38,
     "rebuilt_symbol": "_SND_fn_vResetTimer@4",
     "inputs": [
-      "src/sound_timers.c"
+      "src/sound_timers.c",
+      "src/sound_timer.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_timers.obj src/sound_timers.c",
+    "link_bindings": {
+      "__imp__QueryPerformanceCounter@4": {
+        "va": 285962980,
+        "basis": "KERNEL32 import slot called by the timer exports."
+      }
+    },
     "identification": "Named retail export at RVA 0x7478c0. The complete function ends before alignment.",
     "match": {
       "bytes_sha256": "6780b1a2acf48da7c66a5e12a1c9c4fc982d634681eb41b98c6b9bb5a255788e",
-      "inputs_sha256": "a44d17fbf3679a2bf4d89b52b5fa5c274a71b39928428daae7dc2c38e8a9fbec"
+      "inputs_sha256": "82c3a653fd99b0bd6449eab6dede12c1be49e2aa89ea298789d5b22d1af01c83"
     }
   },
   {
@@ -1179,14 +1203,22 @@
     "size": 43,
     "rebuilt_symbol": "_SND_fn_vPauseTimer@4",
     "inputs": [
-      "src/sound_timers.c"
+      "src/sound_timers.c",
+      "src/sound_timer.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O1 /Gy /c /Folocal/sound_timers.obj src/sound_timers.c",
+    "link_bindings": {
+      "__imp__QueryPerformanceCounter@4": {
+        "va": 285962980,
+        "basis": "KERNEL32 import slot called by the timer exports."
+      }
+    },
     "identification": "Named retail export at RVA 0x747900. The complete function ends before alignment.",
     "match": {
       "bytes_sha256": "d42c1c68a99f2cae7a92619c20986bec818396a042ffceaa53d2c752bd540a15",
-      "inputs_sha256": "23ddfd68bdb5dba201ec8d896a64b9da40fea357bb9b1a5d992d8b4a994e22c7"
+      "inputs_sha256": "06ac444c1a39e3d420c2aed0c5a237305271bf36ed261cef9a2be9532b9cf38f"
     }
   },
   {
@@ -1195,14 +1227,22 @@
     "size": 74,
     "rebuilt_symbol": "_SND_fn_vResumeTimer@4",
     "inputs": [
-      "src/sound_timer_resume.c"
+      "src/sound_timer_resume.c",
+      "src/sound_timer.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_timer_resume.obj src/sound_timer_resume.c",
+    "link_bindings": {
+      "__imp__QueryPerformanceCounter@4": {
+        "va": 285962980,
+        "basis": "KERNEL32 import slot called by the timer exports."
+      }
+    },
     "identification": "Steam PE export _SND_fn_vResumeTimer@4 at RVA 0x747930. Rejects null, -2 and running handles. On resume the pause flag clears; if QueryPerformanceCounter succeeds the paused interval is added to the timer origin. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "6d40b46781d525cd6852720886cb834c0534d7cb3eb490ccc0d44c999f774f10",
-      "inputs_sha256": "7788ab7ea791142de8ccc1e469671bdd9da9e935abaf84f28da5d1e4c5f06555"
+      "inputs_sha256": "103c52570bdcecc4a33dd96341b91537c544e4c7dedcd8ae1b908f4269ea6f20"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1219,7 +1259,9 @@
     "size": 25,
     "rebuilt_symbol": "_SND_fn_vDestroyTimer@4",
     "inputs": [
-      "src/sound_timer_lifetime.c"
+      "src/sound_timer_lifetime.c",
+      "src/sound_memory.h",
+      "src/sound_timer.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_timer_lifetime.obj src/sound_timer_lifetime.c",
@@ -1232,7 +1274,7 @@
     },
     "match": {
       "bytes_sha256": "b2b3aa99d41f862b9bb9e2a84ec81a4fd6fca0a0582980c3b98d697ee13003f6",
-      "inputs_sha256": "f968c51dbf8acd6f6cabf5bd6b674c4a9254e5673d933fdffd86cfe2a77f52a9"
+      "inputs_sha256": "27f6d7bc4e18eca3f9f16a3bd92a8b4e7b1d0a33e81d802cdd6f2dc38cda889e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

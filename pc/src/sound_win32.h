@@ -4,7 +4,8 @@
 
 /* The rebuild has no Windows SDK headers. Functions, structures, members and constants carry
    the SDK's names. The SDK's scalar typedefs are spelled out: DWORD is unsigned long, WORD is
-   unsigned short, UINT is unsigned int, BOOL is int and HANDLE is void *. */
+   unsigned short, UINT is unsigned int, BOOL is int, HANDLE is void * and LARGE_INTEGER
+   is __int64. */
 
 #define INVALID_HANDLE_VALUE ((void *)-1)
 #define INVALID_SET_FILE_POINTER ((unsigned long)-1)
@@ -102,6 +103,8 @@ __declspec(dllimport) void *__stdcall CreateMutexA(void *lpMutexAttributes, int 
                                                    const char *lpName);
 __declspec(dllimport) void __stdcall EnterCriticalSection(CRITICAL_SECTION *lpCriticalSection);
 __declspec(dllimport) void __stdcall LeaveCriticalSection(CRITICAL_SECTION *lpCriticalSection);
+__declspec(dllimport) int __stdcall QueryPerformanceCounter(__int64 *lpPerformanceCount);
+__declspec(dllimport) int __stdcall QueryPerformanceFrequency(__int64 *lpFrequency);
 __declspec(dllimport) int __stdcall GetVersionExA(OSVERSIONINFOA *lpVersionInformation);
 __declspec(dllimport) unsigned int __stdcall waveOutGetDevCapsA(unsigned int uDeviceID,
                                                                 WAVEOUTCAPSA *pwoc,

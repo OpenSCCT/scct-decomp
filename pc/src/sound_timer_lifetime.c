@@ -1,8 +1,9 @@
-void __stdcall SND_fn_vFreeSnd(void *allocation);
-struct SoundTimer;
+#include "sound_memory.h"
+#include "sound_timer.h"
 
-void __stdcall SND_fn_vDestroyTimer(struct SoundTimer *timer)
+void __stdcall SND_fn_vDestroyTimer(long lTimerId)
 {
-    if (timer && timer != (struct SoundTimer *)-2)
-        SND_fn_vFreeSnd(timer);
+    tdstSndTimer *pSndTimer = (tdstSndTimer *)lTimerId;
+    if (pSndTimer && pSndTimer != (tdstSndTimer *)SND_TIMER_NONE)
+        SND_fn_vFreeSnd(pSndTimer);
 }

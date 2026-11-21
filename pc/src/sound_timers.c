@@ -1,24 +1,18 @@
-/* Decoded import slot in the Steam 252084 campaign image. */
-typedef int (__stdcall *ReadCounter)(long long *);
-#define QUERY_PERFORMANCE_COUNTER (*(ReadCounter const *)0x110b72e4)
+#include "sound_timer.h"
+#include "sound_win32.h"
 
-typedef struct SoundTimer {
-    long paused;
-    long alignment;
-    long long origin;
-    long long pause_start;
-} SoundTimer;
-
-void __stdcall SND_fn_vResetTimer(SoundTimer *timer)
+void __stdcall SND_fn_vResetTimer(long lTimerId)
 {
-    if (timer && timer != (SoundTimer *)-2 &&
-        QUERY_PERFORMANCE_COUNTER(&timer->origin))
-        timer->paused = 0;
+    tdstSndTimer *pSndTimer = (tdstSndTimer *)lTimerId;
+    if (pSndTimer && pSndTimer != (tdstSndTimer *)SND_TIMER_NONE &&
+        QueryPerformanceCounter(&pSndTimer->initTick))
+        pSndTimer->bPaused = 0;
 }
 
-void __stdcall SND_fn_vPauseTimer(SoundTimer *timer)
+void __stdcall SND_fn_vPauseTimer(long lTimerId)
 {
-    if (timer && timer != (SoundTimer *)-2 && !timer->paused &&
-        QUERY_PERFORMANCE_COUNTER(&timer->pause_start))
-        timer->paused = 1;
+    tdstSndTimer *pSndTimer = (tdstSndTimer *)lTimerId;
+    if (pSndTimer && pSndTimer != (tdstSndTimer *)SND_TIMER_NONE && !pSndTimer->bPaused &&
+        QueryPerformanceCounter(&pSndTimer->pauseTick))
+        pSndTimer->bPaused = 1;
 }
