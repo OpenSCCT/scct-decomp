@@ -11,6 +11,9 @@
 #define INVALID_SET_FILE_POINTER ((unsigned long)-1)
 #define ERROR_NEGATIVE_SEEK 131
 
+#define INFINITE      0xffffffff
+#define WAIT_OBJECT_0 0
+
 #define FILE_BEGIN   0
 #define FILE_CURRENT 1
 #define FILE_END     2
@@ -95,6 +98,8 @@ __declspec(dllimport) unsigned long __stdcall SetFilePointer(void *hFile, long l
 __declspec(dllimport) unsigned long __stdcall GetFileSize(void *hFile, unsigned long *lpFileSizeHigh);
 __declspec(dllimport) unsigned long __stdcall GetLastError(void);
 __declspec(dllimport) int __stdcall CloseHandle(void *hObject);
+__declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *hHandle,
+                                                                  unsigned long dwMilliseconds);
 __declspec(dllimport) int __stdcall DeleteFileA(const char *lpFileName);
 __declspec(dllimport) void *__stdcall FindFirstFileA(const char *lpFileName,
                                                      WIN32_FIND_DATAA *lpFindFileData);
