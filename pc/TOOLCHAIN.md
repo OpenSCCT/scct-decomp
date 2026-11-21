@@ -114,7 +114,8 @@ Node allocators of the engine's `std::list` and `std::map`/`std::set` keep a
 can throw, and keep every local in the try region in memory. Only
 asynchronous exception handling (`/EHa`) reproduces that: with `/GX` the
 compiler removes the try block. `src/container_nodes.cpp` builds these with
-`/O2 /Gy /EHa`.
+`/O2 /Gy /EHa`, and `src/container_algorithms.cpp` builds the uninitialized fill
+and copy loops of `std::vector` storage the same way.
 
 MSVC places a catch block after the function's return in the same section,
 under a private `$L` label. Ghidra's function body stops at the return and
