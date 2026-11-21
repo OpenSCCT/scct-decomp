@@ -11,7 +11,7 @@ The small Versus launcher has the extension `.exe`. Select the `.ex` payload for
 
 ## Identify the installed binaries
 
-Run the examples from `decomp/pc` with Python 3. Set `$game` to your Steam game folder. The tool checks each complete SHA-256 and its code-section inventory before reading an address.
+Run the examples from `pc/` with Python 3. Set `$game` to your Steam game folder. The tool checks each complete SHA-256 and its code-section inventory before reading an address.
 
 ```powershell
 $game = 'D:\Games\Steam Games\steamapps\common\Splintercell Chaos Theory'
@@ -61,7 +61,7 @@ Pass the x86 compiler paths for MSVC 19.44.35229.0, Visual C++ Toolkit 2003
 identify the VC6 frontend and backend and the Clang revision used for these builds.
 
 ```powershell
-python decomp/pc/verify_build.py $game --cl $modernCl --cl $toolkit2003Cl --cl $vc6Cl --clang $clang
+python pc/verify_build.py $game --cl $modernCl --cl $toolkit2003Cl --cl $vc6Cl --clang $clang
 ```
 
 The verifier checks each complete retail SHA-256 and each source receipt,

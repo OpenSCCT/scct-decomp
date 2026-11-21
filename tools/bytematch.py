@@ -27,7 +27,7 @@ def build_report(folder, target):
         function = dict(name=unit.get("rebuilt_symbol", unit["id"]), size=str(size),
                         fuzzy_match_percent=100 if verified else 0)
         units.append(dict(name=f'{folder.name}/{unit["id"]}', measures=measures, functions=[function],
-                          metadata=dict(source_path=f"decomp/{folder.name}/{source}", complete=False)))
+                          metadata=dict(source_path=f"{folder.name}/{source}", complete=False)))
         described += size
     remainder = counts["total_bytes"] - described
     if remainder:

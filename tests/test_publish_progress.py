@@ -6,18 +6,18 @@ import sys
 import tempfile
 import unittest
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools" / "deploy"))
-import publish_decomp_progress as publish
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+import publish_progress as publish
 
 
 class PublishProgressTests(unittest.TestCase):
     def test_stale_source_report_fails_before_publication(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            tools = root / "decomp/tools"
+            tools = root / "tools"
             tools.mkdir(parents=True)
             for source in ("progress.py", "images.py"):
-                shutil.copyfile(publish.ROOT / "decomp/tools" / source, tools / source)
+                shutil.copyfile(publish.ROOT / "tools" / source, tools / source)
             path = root / publish.REPORT
             path.parent.mkdir(parents=True)
             path.write_text("{}\n", encoding="utf-8")

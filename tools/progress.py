@@ -83,7 +83,7 @@ def inputs_digest(folder, unit, image_hash, file_cache=None):
         linker = Path(__file__).with_name("link_x86.py")
         if linker not in file_cache:
             file_cache[linker] = hashlib.sha256(linker.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
-        fingerprints["decomp/tools/link_x86.py"] = file_cache[linker]
+        fingerprints["tools/link_x86.py"] = file_cache[linker]
     payload = json.dumps([image_hash, recipe, fingerprints], sort_keys=True).encode()
     return hashlib.sha256(payload).hexdigest()
 
@@ -138,7 +138,7 @@ def summary(folder, target):
                 sha256=image_hash, matched_bytes=matched_bytes, total_bytes=total,
                 matched_units=matched_units, candidate_bytes=candidate_bytes, candidate_units=candidate_units,
                 percent=round(100 * matched_bytes / total, 6) if total else None,
-                evidence=f"decomp/{folder.name}/config/{target['id']}.json")
+                evidence=f"{folder.name}/config/{target['id']}.json")
 
 
 def report(root):

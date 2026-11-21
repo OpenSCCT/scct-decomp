@@ -8,8 +8,8 @@ import subprocess
 import sys
 
 
-ROOT = Path(__file__).resolve().parents[2]
-REPORT = "decomp/reports/progress.json"
+ROOT = Path(__file__).resolve().parents[1]
+REPORT = "reports/progress.json"
 
 # The content lock covers all publishers to the same directory. Existing requests
 # can continue reading the prior inode until the checked replacement is ready.
@@ -45,7 +45,7 @@ def git(*args, data=None, root=ROOT):
 
 
 def checked_report(root=ROOT):
-    subprocess.run([sys.executable, "-I", "decomp/tools/progress.py", "report", "--check"], cwd=root, check=True)
+    subprocess.run([sys.executable, "-I", "tools/progress.py", "report", "--check"], cwd=root, check=True)
     data = git("show", f"HEAD:{REPORT}", root=root)
     if data.decode() != (root / REPORT).read_text(encoding="utf-8"):
         raise ValueError("Commit the generated progress report before publishing it.")

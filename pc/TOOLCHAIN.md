@@ -99,7 +99,7 @@ destructors (109 bytes each). Each runs the inlined
 placement constructors that install each vtable. Parent names come from the
 vtable that each parent destructor installs.
 
-`decomp/tools/link_x86.py` accepts three references that only C++ frames make.
+`tools/link_x86.py` accepts three references that only C++ frames make.
 `__except_list` is the absolute offset 0 that the C runtime defines for the
 thread information block. A function's own `__ehhandler$` label in its
 `.text$x` section is bound to the retail handler. A `??_7` virtual function
