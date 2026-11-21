@@ -304,6 +304,7 @@ typedef struct {
 #define LF_QUIRK			0x08	/* BUG:, NOTE: or R36 */
 #define LF_PROBE			0x10	/* marked as a probe */
 #define LF_SDK_NOTE			0x20	/* names the SDK or file format */
+#define LF_CODE				0x40	/* a code token sits on this line */
 
 typedef struct {
 	int name;				/* symbol */
@@ -330,6 +331,7 @@ typedef struct {
 	unsigned char *lineFlags;
 	int numLines;
 	unsigned char *reach;	/* reach[f]: this file sees file f through its includes */
+	unsigned targets;		/* bit per executable whose units compile this file */
 } file_t;
 
 typedef enum {
@@ -446,6 +448,7 @@ static void PushToken( file_t *file, int toMacro, int kind, const char *text, in
 	token->kind = kind;
 	token->symbol = Intern( text, length );
 	token->line = line;
+	file->lineFlags[line] |= LF_CODE;
 }
 
 /* Marks the lines a comment covers with what the comment says. */
@@ -463,7 +466,7 @@ static void NoteComment( file_t *file, const char *text, int length, int firstLi
 	if ( strstr( copy, "BUG:" ) || strstr( copy, "NOTE:" ) || strstr( copy, "R36" ) ) {
 		flags |= LF_QUIRK;
 	}
-	if ( strstr( copy, "PROBE" ) || strstr( copy, "probe:" ) ) {
+	if ( strstr( copy, "PROBE" ) || strstr( copy, "probe:" ) || strstr( copy, "FAKEMATCH" ) ) {
 		flags |= LF_PROBE;
 	}
 	if ( strstr( copy, "SDK" ) || strstr( copy, "file format" ) ) {
@@ -921,8 +924,10 @@ static void ScanCode( int fileIndex, const token_t *tokens, const int *mates, in
 				int outer = depth ? stack[depth - 1] : -1;
 				int reported = 0;
 
-				if ( close + 1 < end && tokens[close + 1].symbol == sThis ) {
-					Report( fileIndex, token->line, RULE_R4, node, "`this` cast to a byte pointer for offset arithmetic" );
+				/* a run-time offset added to `this` is reflection, not a member reached by offset */
+				if ( close + 3 < end && tokens[close + 1].symbol == sThis && tokens[close + 3].kind == T_NUM
+					&& ( tokens[close + 2].symbol == sPlus || tokens[close + 2].symbol == sMinus ) ) {
+					Report( fileIndex, token->line, RULE_R4, node, "`this` cast to a byte pointer plus a fixed offset" );
 					reported = 1;
 				} else if ( outer > begin && tokens[outer].symbol == sLParen && mates[outer] > close
 					&& tokens[outer - 1].symbol == sRParen && IsPointerCast( tokens, mates, outer - 1 ) ) {
@@ -1821,6 +1826,26 @@ static void ParseFile( int fileIndex ) {
 			i++;		/* the end of a namespace or extern "C" block, or a stray ";" */
 			continue;
 		}
+		/* a template header is not part of the declaration it introduces: in
+		   "template<class T> class TArray", the class is TArray, not T */
+		if ( tokens[i].symbol == sTemplate && i + 1 < count && tokens[i + 1].symbol == sLess ) {
+			int depth = 0;
+
+			for ( i++; i < count; i++ ) {
+				if ( tokens[i].symbol == sLess ) {
+					depth++;
+				} else if ( tokens[i].symbol == sGreater ) {
+					depth--;
+				} else if ( !strcmp( Text( &tokens[i] ), ">>" ) ) {
+					depth -= 2;
+				}
+				if ( depth <= 0 ) {
+					i++;
+					break;
+				}
+			}
+			continue;
+		}
 		/* a macro invocation that defines functions needs no ";" */
 		if ( tokens[i].kind == T_ID && i + 1 < count && tokens[i + 1].symbol == sLParen && file->mates[i + 1] > 0
 			&& FindMacro( tokens[i].symbol, fileIndex, &macro, &macroFile ) ) {
@@ -2008,6 +2033,11 @@ static void CheckDuplicates( int firstNode ) {
 			}
 			for ( other = symbolFirstNode[symbol]; other >= 0; other = nodes[other].nextSameName ) {
 				if ( other < firstNode || other == node || nodes[other].file == nodes[node].file ) {
+					continue;
+				}
+				/* two executables are two programs: a declaration conflicts only with
+				   one that some unit of the same executable can also see */
+				if ( !( files[nodes[other].file].targets & files[nodes[node].file].targets ) ) {
 					continue;
 				}
 				if ( nodes[node].kind == N_TYPE && nodes[other].kind == N_TYPE ) {
@@ -2580,6 +2610,57 @@ static int ListJson( const char *directory, char ***names ) {
 	return count;
 }
 
+/* Records which executable compiles each file: every input of its units, and
+   everything those inputs include. */
+static void MarkTargetFiles( const json_t *units, unsigned bit ) {
+	const json_t *unit, *input;
+	int i;
+
+	for ( unit = units && units->kind == J_ARRAY ? units->child : NULL; unit; unit = unit->next ) {
+		const json_t *inputs = JsonMember( unit, "inputs" );
+
+		for ( input = inputs ? inputs->child : NULL; input; input = input->next ) {
+			int fileIndex = input->kind == J_STRING ? FindFile( input->string ) : -1;
+
+			if ( fileIndex < 0 || ( files[fileIndex].targets & bit ) ) {
+				continue;
+			}
+			for ( i = currentEditionFirstFile; i < numFiles; i++ ) {
+				if ( files[fileIndex].reach[i] ) {
+					files[i].targets |= bit;
+				}
+			}
+		}
+	}
+}
+
+/* R17: a declaration or function whose own comment marks it as a probe or a
+   fakematch. The marker sits on the node's lines or in the comment just above. */
+static void CheckMarkers( int firstNode ) {
+	int node;
+
+	for ( node = firstNode; node < numNodes; node++ ) {
+		const file_t *file = &files[nodes[node].file];
+		const token_t *tokens = ( nodes[node].flags & NF_IN_MACRO ) ? file->macroTokens : file->tokens;
+		int first, last, line;
+
+		if ( ( nodes[node].flags & NF_GENERATED ) || nodes[node].end <= nodes[node].begin ) {
+			continue;
+		}
+		first = tokens[nodes[node].begin].line;
+		last = tokens[nodes[node].end - 1].line;
+		while ( first > 1 && ( file->lineFlags[first - 1] & LF_COMMENT ) && !( file->lineFlags[first - 1] & LF_CODE ) ) {
+			first--;
+		}
+		for ( line = first; line <= last && line <= file->numLines; line++ ) {
+			if ( file->lineFlags[line] & LF_PROBE ) {
+				Report( nodes[node].file, line, RULE_R17, node, "marked as a probe or a fakematch" );
+				break;
+			}
+		}
+	}
+}
+
 /* Checks one edition folder ("pc", "ps2"): its sources, then each target's units. */
 static void CheckEdition( const char *root, const char *edition ) {
 	char *editionDir = Format( "%s/%s", root, edition );
@@ -2617,8 +2698,15 @@ static void CheckEdition( const char *root, const char *edition ) {
 		ParseFile( i );
 	}
 	ComputeReach( firstFile );
+	for ( i = 0; i < count; i++ ) {
+		MarkTargetFiles( JsonMember( configs[i], "units" ), 1u << ( i & 31 ) );
+		for ( j = 0; shards[i][j]; j++ ) {
+			MarkTargetFiles( shards[i][j], 1u << ( i & 31 ) );
+		}
+	}
 	CheckDuplicates( firstNode );
 	CheckLocalPrototypes( firstNode );
+	CheckMarkers( firstNode );
 
 	for ( i = 0; i < count; i++ ) {
 		targetTotals_t *totals;
