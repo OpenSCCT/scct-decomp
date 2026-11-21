@@ -1,4 +1,10 @@
-# Open question: how much of Versus is VC7.0 code
+# Resolved question: how much of Versus is VC7.0 code
+
+**Resolved 2026-11-21.** The optimising VC7.0 RTM compiler, 13.00.9466, is now
+available. Tested against it, the VC7.1 attribution holds for every unit but
+one; see [versus-vc70-9466.md](versus-vc70-9466.md). Versus evidence is on
+again, and new VC7.1 units cite that note. The rest of this note is the
+original question.
 
 This note records an open question about the Versus compiler attribution in
 [versus-vc71-o2.md](versus-vc71-o2.md). It is not a `recipe_evidence` basis.
