@@ -6,17 +6,13 @@
 #include "campaign_engine_classes.h"
 
 // AActor::SetLocation
-// The PC build reads these console rendering natives' parameters and ignores them.
-// Parameters after Slot are named by position; the script declaration is not decoded yet.
-// Parameters after the sound are named by position; the script declaration is not decoded yet.
-// Parameters after Material are named by position; the script declaration is not decoded yet.
-// Parameters after Volume are named by position; the script declaration is not decoded yet.
 UBOOL AActor::SetLocation(const FVector &NewLocation, UBOOL bNoCheck)
 {
     return XLevel->FarMoveActor(this, NewLocation, 0, bNoCheck);
 }
 
 // AActor::PlayActorSound
+// Parameters after Volume are named by position; the script declaration is not decoded yet.
 UBOOL AActor::PlayActorSound(USound *Sound, BYTE Slot, FLOAT Volume, INT Option4, FLOAT Option5, FLOAT Option6)
 {
     UAudioSubsystem *Audio = XLevel->Engine->Audio;

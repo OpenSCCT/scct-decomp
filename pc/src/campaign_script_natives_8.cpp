@@ -8,7 +8,6 @@
 #include "campaign_mesh_classes.h"
 
 // AActor::execGetAnimParams
-// The PC build reads these console rendering natives' parameters and ignores them.
 void AActor::execGetAnimParams(FFrame &Stack, RESULT_DECL)
 {
     P_GET_INT(Channel);

@@ -9,9 +9,6 @@
 #include "campaign_level_info.h"
 
 // AActor::execTrace
-// The PC build reads these console rendering natives' parameters and ignores them.
-// Parameters after Slot are named by position; the script declaration is not decoded yet.
-// Parameters after the sound are named by position; the script declaration is not decoded yet.
 // Parameters after Material are named by position; the script declaration is not decoded yet.
 void AActor::execTrace(FFrame &Stack, RESULT_DECL)
 {

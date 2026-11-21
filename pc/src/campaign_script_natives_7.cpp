@@ -8,7 +8,6 @@
 #include "campaign_canvas.h"
 
 // UECanvas::execDrawRectangle
-// The PC build reads these console rendering natives' parameters and ignores them.
 void UECanvas::execDrawRectangle(FFrame &Stack, RESULT_DECL)
 {
     P_GET_INT(X);
