@@ -1,10 +1,9 @@
-typedef struct { int first, second; } DistancePair;
-typedef struct { DistancePair limits, fade; } SoundRollOff;
-extern SoundRollOff DefaultRollOff;
+#include "sound_space.h"
 
-#pragma code_seg(".text$B")
-void __stdcall SND_fn_vGetDefaultRollOff(SoundRollOff *out)
+void __stdcall SND_fn_vGetDefaultRollOff(RollOffParam *pstRollOff)
 {
-    out->limits = DefaultRollOff.limits;
-    out->fade = DefaultRollOff.fade;
+    pstRollOff->rDistSatur = gs_rDefaultDistSatur;
+    pstRollOff->rDistBackGround = gs_rDefaultDistBackGround;
+    pstRollOff->rDistTransitLinear = gs_rDefaultDistTransitLinear;
+    pstRollOff->rDistInaudible = gs_rDefaultDistInaudible;
 }

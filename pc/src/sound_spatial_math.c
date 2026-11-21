@@ -1,34 +1,27 @@
-typedef int SoundFixed;
-typedef struct {
-    SoundFixed x;
-    SoundFixed y;
-    SoundFixed z;
-} SoundVector;
+#include "sound_space.h"
 
-/* Reduced precision fixed-point squared length. */
-SoundFixed __stdcall SND_fn_rNormeVectorSnd(const SoundVector *v)
+SndReal __stdcall SND_fn_rNormeVectorSnd(const SndVector *v)
 {
-    SoundFixed z = v->z >> 8;
-    SoundFixed y = v->y >> 8;
-    SoundFixed x = v->x >> 8;
+    SndReal z = v->z >> 8;
+    SndReal y = v->y >> 8;
+    SndReal x = v->x >> 8;
     return x * x + y * y + z * z;
 }
 
-/* Keep the closest phase across 360-degree boundaries in a two-turn cycle. */
-int __stdcall SND_fn_lSoundAngleToDolbyAngle(int previous, int current)
+long __stdcall SND_fn_lSoundAngleToDolbyAngle(long lPrevious, long lCurrent)
 {
-    int reference = previous % 360;
-    int distance = current - reference;
+    long reference = lPrevious % 360;
+    long distance = lCurrent - reference;
     if (distance < 0)
         distance = -distance;
     if (distance > 180) {
         distance = 360 - distance;
-        if (current > reference)
+        if (lCurrent > reference)
             distance = -distance;
-    } else if (current < reference) {
+    } else if (lCurrent < reference) {
         distance = -distance;
     }
-    distance += previous;
+    distance += lPrevious;
     if (distance >= 720)
         distance -= 720;
     else if (distance < 0)

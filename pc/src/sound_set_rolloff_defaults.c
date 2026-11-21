@@ -1,27 +1,19 @@
-typedef int SoundFixed;
-typedef struct {
-    SoundFixed nearDistance, maxDistance, fadeStart, fadeEnd;
-} SoundRollOff;
-extern SoundRollOff DefaultRollOff;
+#include "sound_space.h"
 
-#pragma code_seg(".text$B")
-void __stdcall SND_fn_vSetDefaultRollOff(const SoundRollOff *value)
+void __stdcall SND_fn_vSetDefaultRollOff(const RollOffParam *pstRollOff)
 {
-    SoundFixed fadeEnd;
-
-    if (value->nearDistance != -2)
-        DefaultRollOff.nearDistance = value->nearDistance;
+    if (pstRollOff->rDistSatur != ROLLOFF_DEFAULT)
+        gs_rDefaultDistSatur = pstRollOff->rDistSatur;
     else
-        DefaultRollOff.nearDistance = 32768;
-    DefaultRollOff.maxDistance = value->maxDistance == -2 ? -1 : value->maxDistance;
-    if (DefaultRollOff.maxDistance < DefaultRollOff.nearDistance)
-        DefaultRollOff.maxDistance = -1;
-    DefaultRollOff.fadeStart = value->fadeStart;
-    if (DefaultRollOff.fadeStart == -2)
-        DefaultRollOff.fadeStart = -1;
-
-    fadeEnd = value->fadeEnd;
-    DefaultRollOff.fadeEnd = fadeEnd;
-    if (fadeEnd == -2)
-        DefaultRollOff.fadeEnd = -1;
+        gs_rDefaultDistSatur = 32768;
+    gs_rDefaultDistBackGround =
+        pstRollOff->rDistBackGround == ROLLOFF_DEFAULT ? ROLLOFF_NONE : pstRollOff->rDistBackGround;
+    if (gs_rDefaultDistBackGround < gs_rDefaultDistSatur)
+        gs_rDefaultDistBackGround = ROLLOFF_NONE;
+    gs_rDefaultDistTransitLinear = pstRollOff->rDistTransitLinear;
+    if (pstRollOff->rDistTransitLinear == ROLLOFF_DEFAULT)
+        gs_rDefaultDistTransitLinear = ROLLOFF_NONE;
+    gs_rDefaultDistInaudible = pstRollOff->rDistInaudible;
+    if (pstRollOff->rDistInaudible == ROLLOFF_DEFAULT)
+        gs_rDefaultDistInaudible = ROLLOFF_NONE;
 }

@@ -1794,22 +1794,68 @@
     "id": "linear-to-volume",
     "offset": 7646608,
     "size": 188,
-    "rebuilt_symbol": "_linear_to_volume",
+    "rebuilt_symbol": "_fn_rGetVolFadeAttenuation",
     "inputs": [
-      "src/volume_lookup.c"
+      "src/volume_lookup.c",
+      "src/sound_real.h",
+      "src/sound_volume.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/volume_lookup.obj src/volume_lookup.c",
     "link_bindings": {
-      "_VolumeCurves": {
+      "_rFade_Lin": {
         "va": 287201208,
-        "basis": "Twelve mode-specific rows of 128 signed fixed-point gain samples, identified by the indexed instructions in the twelve cases and consecutive 512-byte data ranges."
+        "basis": "128-entry curve read by case 0 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Log": {
+        "va": 287201720,
+        "basis": "128-entry curve read by case 1 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Pow_9": {
+        "va": 287202232,
+        "basis": "128-entry curve read by case 2 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Pow_12": {
+        "va": 287202744,
+        "basis": "128-entry curve read by case 3 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Pow_18": {
+        "va": 287203256,
+        "basis": "128-entry curve read by case 4 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Pow_3": {
+        "va": 287203768,
+        "basis": "128-entry curve read by case 5 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Pow_4": {
+        "va": 287204280,
+        "basis": "128-entry curve read by case 6 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Pow_5": {
+        "va": 287204792,
+        "basis": "128-entry curve read by case 7 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_scurve_1_5": {
+        "va": 287205304,
+        "basis": "128-entry curve read by case 8 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_scurve_0_75": {
+        "va": 287205816,
+        "basis": "128-entry curve read by case 9 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Inv_scurve_5": {
+        "va": 287206328,
+        "basis": "128-entry curve read by case 10 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
+      },
+      "_rFade_Inv_scurve_5_75": {
+        "va": 287206840,
+        "basis": "128-entry curve read by case 11 of the fade-type switch. The twelve curves are file-statics of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, in this order, which is also the order of the _SND_tdeFadeType enumerators."
       }
     },
-    "identification": "Direct retail branch at 0x1104b650. Complete isolated compiler contribution at 0x1104ad90 through 0x1104ae4c exclusive. Converts linear amplitude to signed 16.16 gain by selecting a 128-entry table for one of twelve modes. The complete compiler contribution includes the 12-entry local switch table.",
+    "identification": "Direct retail branch at 0x1104b650. Complete isolated compiler contribution at 0x1104ad90 through 0x1104ae4c exclusive. Converts linear amplitude to signed 16.16 gain by selecting a 128-entry table for one of twelve modes. The complete compiler contribution includes the 12-entry local switch table. Named fn_rGetVolFadeAttenuation from sndVolume.c of the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export SND_fn_rDistanceToVolumeEx calls it with a position and a fade type, and the body selects one of twelve 128-entry fade curves by that type.",
     "match": {
       "bytes_sha256": "6c3043bca8b57bb9ba257c9f7a61e69131786ab06cecd63ae2228aa6f8a9048c",
-      "inputs_sha256": "f27d76babe7f359987a1577a7bd40187ed216966a8ff54bf9b0b82261297117b"
+      "inputs_sha256": "a27c09a2ba176b1ed5b819a70e54b05f99c65d650532f5b1e7519bedc7faa14b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1937,13 +1983,22 @@
     "size": 33,
     "rebuilt_symbol": "_SND_fn_fGetDolbyLtCoef@4",
     "inputs": [
-      "src/dolby_coefficients.c"
+      "src/dolby_coefficients.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/dolby_coefficients.obj src/dolby_coefficients.c",
+    "link_bindings": {
+      "_g_fDolbyLtCoef": {
+        "va": 287209528,
+        "basis": "360-entry float table read by the export SND_fn_fGetDolbyLtCoef; g_fDolbyLtCoef of sndspace.c in the Double Agent PS2 linker map."
+      }
+    },
     "match": {
       "bytes_sha256": "fb501da0c02e7cf247e0304fe38204b0864a0eebe6a509d2b6101a9ac7a96ad8",
-      "inputs_sha256": "838ed4d6d80526e4efb7e36c0e9832a50b56f107cec08dcfe99d58d2c0562273"
+      "inputs_sha256": "c8025d6e694a6282dbd3671746e2188c70e00d23110e471a43ebc40b9175d615"
     }
   },
   {
@@ -1952,13 +2007,22 @@
     "size": 33,
     "rebuilt_symbol": "_SND_fn_fGetDolbyRtCoef@4",
     "inputs": [
-      "src/dolby_coefficients.c"
+      "src/dolby_coefficients.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/dolby_coefficients.obj src/dolby_coefficients.c",
+    "link_bindings": {
+      "_g_fDolbyRtCoef": {
+        "va": 287210968,
+        "basis": "360-entry float table read by the export SND_fn_fGetDolbyRtCoef; g_fDolbyRtCoef of sndspace.c in the Double Agent PS2 linker map."
+      }
+    },
     "match": {
       "bytes_sha256": "a8f91c024f230432349be0c814e62dbb4609aff72bd5a3a9b3e4af14d20a9dd6",
-      "inputs_sha256": "0f5b74a2b5aaa5b5f05f322d7c087af35b2c9c126d1f87d854b61ca76742af3f"
+      "inputs_sha256": "9ae727f2c4d9de86c1782845e4e499b49c1cd3c71f5c7697c38982c239215a5e"
     }
   },
   {
@@ -1967,20 +2031,35 @@
     "size": 103,
     "rebuilt_symbol": "_SND_fn_vSetDefaultRollOff@4",
     "link_bindings": {
-      "_DefaultRollOff": {
+      "_gs_rDefaultDistSatur": {
         "va": 287207404,
-        "basis": "Four contiguous fields of the global defaults are referenced by the named rolloff getter and setter."
+        "basis": "Default roll-off distance 0 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 0 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistBackGround": {
+        "va": 287207408,
+        "basis": "Default roll-off distance 1 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 1 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistTransitLinear": {
+        "va": 287207412,
+        "basis": "Default roll-off distance 2 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 2 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistInaudible": {
+        "va": 287207416,
+        "basis": "Default roll-off distance 3 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 3 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       }
     },
     "inputs": [
-      "src/sound_set_rolloff_defaults.c"
+      "src/sound_set_rolloff_defaults.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Oa /Gy /c /Folocal/sound_set_rolloff_defaults.obj src/sound_set_rolloff_defaults.c",
     "identification": "Named retail campaign export _SND_fn_vSetDefaultRollOff@4 at VA 0x1104b3b0. The final return ends at 0x1104b417 before alignment or the next named function. Decodes the -2 default sentinel into 0.5 in signed 16.16 for near distance, and -1 for the remaining fields. An invalid maximum below near distance also becomes -1.",
     "match": {
       "bytes_sha256": "86a4d26e0840d583968f157f7de866d0e4943a47f8e7957d7e8efb1f0d30d083",
-      "inputs_sha256": "d33e329588fad25dac68e863b7f6625329394b060d7a4ee175cb6e5872b9fffc"
+      "inputs_sha256": "1341f803153c5c6e163340778c2e361fd30cf86dae890e5183a3b0f790140c11"
     }
   },
   {
@@ -1989,20 +2068,35 @@
     "size": 42,
     "rebuilt_symbol": "_SND_fn_vGetDefaultRollOff@4",
     "link_bindings": {
-      "_DefaultRollOff": {
+      "_gs_rDefaultDistSatur": {
         "va": 287207404,
-        "basis": "Four contiguous fields of the global defaults are referenced by the named rolloff getter and setter."
+        "basis": "Default roll-off distance 0 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 0 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistBackGround": {
+        "va": 287207408,
+        "basis": "Default roll-off distance 1 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 1 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistTransitLinear": {
+        "va": 287207412,
+        "basis": "Default roll-off distance 2 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 2 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistInaudible": {
+        "va": 287207416,
+        "basis": "Default roll-off distance 3 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 3 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       }
     },
     "inputs": [
-      "src/sound_rolloff_defaults.c"
+      "src/sound_rolloff_defaults.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Oa /Gy /c /Folocal/sound_rolloff_defaults.obj src/sound_rolloff_defaults.c",
     "identification": "Named retail campaign export _SND_fn_vGetDefaultRollOff@4 at VA 0x1104b420. The final return ends at 0x1104b44a before alignment or the next named function. Copies the near/max distance pair and the fade-start/fade-end pair from the campaign globals.",
     "match": {
       "bytes_sha256": "66ba1051ebd140c977f7ec3cc07fd56ebf97f2cc04bd3f9ca27fa10801f7c121",
-      "inputs_sha256": "bdec357dc6ed21bbaf0ac358070431201949d45cc11f3bded2d36e4c8bf9bdea"
+      "inputs_sha256": "72bec7ca2086cd85459a866a3b8d9925c9192d5078f851dc065c2411c2ed49b8"
     }
   },
   {
@@ -2011,24 +2105,39 @@
     "size": 60,
     "rebuilt_symbol": "_SND_fn_rDistanceToVolume@4",
     "link_bindings": {
-      "_DefaultRollOff": {
-        "va": 287207404,
-        "basis": "Four contiguous fields of the global defaults are referenced by the named rolloff getter and setter."
-      },
       "_SND_fn_rDistanceToVolumeEx@8": {
         "va": 285521216,
         "basis": "Named export _SND_fn_rDistanceToVolumeEx@8 in the locked campaign PE."
+      },
+      "_gs_rDefaultDistSatur": {
+        "va": 287207404,
+        "basis": "Default roll-off distance 0 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 0 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistBackGround": {
+        "va": 287207408,
+        "basis": "Default roll-off distance 1 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 1 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistTransitLinear": {
+        "va": 287207412,
+        "basis": "Default roll-off distance 2 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 2 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistInaudible": {
+        "va": 287207416,
+        "basis": "Default roll-off distance 3 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 3 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       }
     },
     "inputs": [
-      "src/sound_distance_to_volume.c"
+      "src/sound_distance_to_volume.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_distance_to_volume.obj src/sound_distance_to_volume.c",
     "identification": "Named retail campaign export _SND_fn_rDistanceToVolume@4 at VA 0x1104b450. The final return ends at 0x1104b48c before alignment or the next named function. Copies the four global defaults to a local rolloff structure and evaluates the distance with the named extended attenuation function.",
     "match": {
       "bytes_sha256": "476283fe852e854cd1cf1f94145ef0f62720f29d08ef99cc79afa2a434de6cba",
-      "inputs_sha256": "0a69b4c40a4c8b61414b19429e0c422d11fa182ebbdb14ea876811780ab1e4e1"
+      "inputs_sha256": "fbd8c980b640200965ff23f4ac0bef871b2eef2030f11e868ebaa8d5dcb28644"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2043,12 +2152,8 @@
     "id": "sound-distance-attenuation-curve",
     "offset": 7648400,
     "size": 175,
-    "rebuilt_symbol": "_distance_attenuation",
+    "rebuilt_symbol": "_fn_rDist2Vol",
     "link_bindings": {
-      "_attenuation_error_site": {
-        "va": 286735364,
-        "basis": "Operand in the four-band attenuation helper at VA 0x1104b490, reached by two direct calls from the named extended distance-to-volume export. Address passed with code 30 and detail 3 to the named error routine."
-      },
       "_SND_fn_vDisplayErrorEx@12": {
         "va": 285460464,
         "basis": "Named export _SND_fn_vDisplayErrorEx@12 in the locked campaign PE."
@@ -2057,44 +2162,53 @@
         "va": 285520368,
         "basis": "Named export _SND_fn_rDivRealRealSnd@8 in the locked campaign PE."
       },
-      "_distance_bands": {
+      "_g_rLimitTab": {
         "va": 287209504,
-        "basis": "Operand in the four-band attenuation helper at VA 0x1104b490, reached by two direct calls from the named extended distance-to-volume export. Four 32-bit upper bounds; the last is checked before scanning the array."
+        "basis": "Upper distance ratio of each of the four bands in fn_rDist2Vol. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
-      "_slopes": {
+      "_g_rCoefA": {
         "va": 287209472,
-        "basis": "Operand in the four-band attenuation helper at VA 0x1104b490, reached by two direct calls from the named extended distance-to-volume export. Four per-band slopes in signed 16.16."
+        "basis": "Per-band slope multiplied by the distance ratio in fn_rDist2Vol. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "_SND_fn_rMulRealRealSnd@8": {
         "va": 285520496,
         "basis": "Named export _SND_fn_rMulRealRealSnd@8 in the locked campaign PE."
       },
-      "_intercepts": {
+      "_g_rCoefB": {
         "va": 287209488,
-        "basis": "Operand in the four-band attenuation helper at VA 0x1104b490, reached by two direct calls from the named extended distance-to-volume export. Four per-band intercepts in signed 16.16."
+        "basis": "Per-band offset added to the scaled distance ratio in fn_rDist2Vol. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
-      "_attenuation_table": {
+      "_LocalisedVolume_table": {
         "va": 287207424,
-        "basis": "Operand in the four-band attenuation helper at VA 0x1104b490, reached by two direct calls from the named extended distance-to-volume export. Four consecutive bands of 128 signed 16.16 attenuation values."
+        "basis": "Four 128-entry decibel tables indexed by band and position in fn_rDist2Vol. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
-      "_distant_slope": {
+      "_g_rCoefLinA": {
         "va": 287209520,
-        "basis": "Operand in the four-band attenuation helper at VA 0x1104b490, reached by two direct calls from the named extended distance-to-volume export. Slope used beyond the final band lookup."
+        "basis": "Slope of the straight line past the last table entry in fn_rDist2Vol. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
-      "_distant_intercept": {
+      "_g_rCoefLinB": {
         "va": 287209524,
-        "basis": "Operand in the four-band attenuation helper at VA 0x1104b490, reached by two direct calls from the named extended distance-to-volume export. Intercept used beyond the final band lookup."
+        "basis": "Offset of the straight line past the last table entry in fn_rDist2Vol. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "??_C@_0CF@GONHHJML@?6DistSatur?5must?5be?5greater?5than?5@": {
+        "va": 286735364,
+        "basis": "String literal passed to SND_fn_vDisplayErrorEx at 0x1104b49a; the verifier compares its bytes with retail."
       }
     },
     "inputs": [
-      "src/sound_distance_attenuation.c"
+      "src/sound_distance_attenuation.c",
+      "src/sound_error.h",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h",
+      "src/sound_volume.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_distance_attenuation.obj src/sound_distance_attenuation.c",
-    "identification": "Internal distance attenuation helper at VA 0x1104b490. The final return ends at 0x1104b53f before alignment or the next named function. The extended rolloff export directly calls the helper at 0x1104b60f and 0x1104b66f. A zero or negative near distance returns -96 in 16.16 and reports an error. The helper scales the distance, selects one of four bands and uses a 128-entry table per band; values beyond the last band continue on a straight line.",
+    "identification": "Internal distance attenuation helper at VA 0x1104b490. The final return ends at 0x1104b53f before alignment or the next named function. The extended rolloff export directly calls the helper at 0x1104b60f and 0x1104b66f. A zero or negative near distance returns -96 in 16.16 and reports an error. The helper scales the distance, selects one of four bands and uses a 128-entry table per band; values beyond the last band continue on a straight line. Named fn_rDist2Vol from sndspace.c of the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the same export calls it there with a distance and the saturation distance, and the error text names DistSatur.",
     "match": {
       "bytes_sha256": "35573c2dfe6c7faf232d292fce5943b1020c8324521d0c589127f278142dac6a",
-      "inputs_sha256": "a0aa045bf8c447573f40aea3586c3ce614de697c7e3d1e22790e1af8db796f60"
+      "inputs_sha256": "3b61c1b8bd6980f79dfa41706542c9e1e714e17e804656e38ec9673c4efb84ad"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2111,15 +2225,16 @@
     "size": 319,
     "rebuilt_symbol": "_SND_fn_rDistanceToVolumeEx@8",
     "inputs": [
-      "src/sound_extended_rolloff.c"
+      "src/sound_extended_rolloff.c",
+      "src/sound_memory.h",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h",
+      "src/sound_volume.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_extended_rolloff.obj src/sound_extended_rolloff.c",
     "link_bindings": {
-      "_DefaultRollOff": {
-        "va": 287207404,
-        "basis": "Four adjacent global rolloff values also read by the verified rolloff getter."
-      },
       "_SND_fn_rDistanceToVolumeEx@8": {
         "va": 285521216,
         "basis": "Named retail campaign export _SND_fn_rDistanceToVolumeEx@8."
@@ -2128,13 +2243,13 @@
         "va": 285459920,
         "basis": "Named retail campaign export _SND_fn_vMemCopySnd@12."
       },
-      "_distance_attenuation": {
+      "_fn_rDist2Vol": {
         "va": 285521040,
-        "basis": "Internal four-band attenuation curve reached by both calls in the extended rolloff routine."
+        "basis": "Internal four-band attenuation curve called twice by the export SND_fn_rDistanceToVolumeEx with a distance and the saturation distance; fn_rDist2Vol(rDist, rDistSatur) in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map, where the same export calls it."
       },
-      "_volume_to_linear": {
+      "_SND_fn_lConvertDb2LinearVolume": {
         "va": 285518976,
-        "basis": "Internal lookup used before the linear fade; called at 0x1104b617."
+        "basis": "Called at 0x1104b617 by the export SND_fn_rDistanceToVolumeEx with a decibel value and 8 bits. The body at 0x1104ac80 searches an interval table, applies that interval's two coefficients and shifts right by 25 minus the bit count: SND_fn_lConvertDb2LinearVolume(rValue_dB, lNbBits) of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "_SND_fn_rDivRealRealSnd@8": {
         "va": 285520368,
@@ -2144,15 +2259,31 @@
         "va": 285520496,
         "basis": "Named retail campaign export _SND_fn_rMulRealRealSnd@8."
       },
-      "_linear_to_volume": {
+      "_fn_rGetVolFadeAttenuation": {
         "va": 285519248,
-        "basis": "Internal conversion after weighting the linear amplitude; called at 0x1104b650."
+        "basis": "Called at 0x1104b650 by the export SND_fn_rDistanceToVolumeEx with a position and fade type 0. Twelve 128-entry curves selected by a fade type: fn_rGetVolFadeAttenuation(rPos, eFadeType) of sndVolume.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistSatur": {
+        "va": 287207404,
+        "basis": "Default roll-off distance 0 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 0 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistBackGround": {
+        "va": 287207408,
+        "basis": "Default roll-off distance 1 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 1 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistTransitLinear": {
+        "va": 287207412,
+        "basis": "Default roll-off distance 2 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 2 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
+      },
+      "_gs_rDefaultDistInaudible": {
+        "va": 287207416,
+        "basis": "Default roll-off distance 3 of four adjacent ones, read by the export SND_fn_vGetDefaultRollOff into member 3 of its output and written by SND_fn_vSetDefaultRollOff. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       }
     },
     "identification": "Direct retail call at 0x1105c8b5 to the full function at 0x1104b540. Its final return ends at 0x1104b67f before alignment. Resolves four default sentinels, clamps the input distance, applies the four-band attenuation curve, and interpolates the final fade in linear amplitude before converting back to fixed-point volume.",
     "match": {
       "bytes_sha256": "955f41ce50975908cd709ed695abf172ad877d95a463add2bb95bf4cf7160afd",
-      "inputs_sha256": "fc17653c1523e4b965151ee05d4d55ccecf4fb3f7bba0bad4c242a920b735c03"
+      "inputs_sha256": "cc0230b67e0912871717fff0f9a910f1e1c0bad4565dd6fa0949601c553bfb4d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2169,9 +2300,9 @@
     "size": 188,
     "rebuilt_symbol": "_SND_fn_rDopplerPitch@16",
     "link_bindings": {
-      "_DopplerPropagationSpeed": {
+      "_gs_lSoundSpeed": {
         "va": 287207400,
-        "basis": "Shared 32-bit value read by the pitch function and the two named Doppler-factor accessors."
+        "basis": "Speed of sound written by the export SND_fn_vSetDopplerFactor and read by the exports SND_fn_rGetDopplerFactor and SND_fn_rDopplerPitch. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "_SND_fn_rPseudoNormeVectorSnd@4": {
         "va": 285566816,
@@ -2187,14 +2318,17 @@
       }
     },
     "inputs": [
-      "src/sound_doppler_pitch.c"
+      "src/sound_doppler_pitch.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_doppler_pitch.obj src/sound_doppler_pitch.c",
     "identification": "Named retail campaign export _SND_fn_rDopplerPitch@16 at VA 0x1104b680. The final return ends at 0x1104b73c before alignment or the next named function. Computes the signed 16.16 pitch ratio from source and listener velocity projections. Returns unity for a disabled, zero- or over-range case or projection at or above the scaled speed.",
     "match": {
       "bytes_sha256": "282591e4428902b6fbda49c45b4cb897a1efbcff0b2871dd802c3c461111e520",
-      "inputs_sha256": "3c12682adfb61eb3426bb0201031005610a8901c466156770c1b74e8b473a5fc"
+      "inputs_sha256": "370235e4c39849c29a5c845e6d742ca723a3990a23632049749f05a683a2bf53"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2210,7 +2344,10 @@
     "offset": 7649088,
     "size": 43,
     "inputs": [
-      "src/doppler.c"
+      "src/doppler.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/doppler.obj src/doppler.c",
@@ -2220,15 +2357,15 @@
         "va": 285520368,
         "basis": "Named export _SND_fn_rDivRealRealSnd@8 in the locked Steam campaign PE."
       },
-      "_DopplerPropagationSpeed": {
+      "_gs_lSoundSpeed": {
         "va": 287207400,
-        "basis": "Both retail Doppler factor exports access this shared 32-bit value."
+        "basis": "Speed of sound written by the export SND_fn_vSetDopplerFactor and read by the exports SND_fn_rGetDopplerFactor and SND_fn_rDopplerPitch. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       }
     },
     "identification": "Retail named export _SND_fn_vSetDopplerFactor@4 at VA 0x1104b740. Both return paths end before INT3 padding at VA 0x1104b76b. Retail export _SND_fn_rDivRealRealSnd@8 at 0x1104b1f0 is a fixed-point division call target; both exports access the same data at 0x111e6fe8.",
     "match": {
       "bytes_sha256": "e28788ee9c1c2b65b2554eadfda4e34d3216ce246446369b53b38be1e2888a18",
-      "inputs_sha256": "65e9a0d8be7efaad18a0a314879e4bdc7f9bc8ed31097121b622b725b54c05ce"
+      "inputs_sha256": "29f38dbcf341c2e0da4bb43442a7ab25c74b6f0a308fdf94b80ba0093deb3a24"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2244,15 +2381,18 @@
     "offset": 7649136,
     "size": 27,
     "inputs": [
-      "src/doppler.c"
+      "src/doppler.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/doppler.obj src/doppler.c",
     "rebuilt_symbol": "_SND_fn_rGetDopplerFactor@0",
     "link_bindings": {
-      "_DopplerPropagationSpeed": {
+      "_gs_lSoundSpeed": {
         "va": 287207400,
-        "basis": "Both retail Doppler factor exports access this shared 32-bit value."
+        "basis": "Speed of sound written by the export SND_fn_vSetDopplerFactor and read by the exports SND_fn_rGetDopplerFactor and SND_fn_rDopplerPitch. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "_SND_fn_rDivRealRealSnd@8": {
         "va": 285520368,
@@ -2262,7 +2402,7 @@
     "identification": "Retail named export _SND_fn_rGetDopplerFactor@0 at VA 0x1104b770. Both return paths end before INT3 padding at VA 0x1104b78b. Retail export _SND_fn_rDivRealRealSnd@8 at 0x1104b1f0 is a fixed-point division call target; both exports access the same data at 0x111e6fe8.",
     "match": {
       "bytes_sha256": "95f11f361470ec6c5aab0e71fee7e32cb59ac97d148d0c67c72f1fd8dbabcd66",
-      "inputs_sha256": "4b487208495ea891c538dad893045ec21622f0eb0e203134e1a6be163b276aa4"
+      "inputs_sha256": "8abed36249182a0b131fe572425c96dd6f9d632243c447ecf287aa22cc7157b1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2278,7 +2418,10 @@
     "offset": 7649168,
     "size": 175,
     "inputs": [
-      "src/sound_position.c"
+      "src/sound_position.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_position.obj src/sound_position.c",
@@ -2296,7 +2439,7 @@
     "identification": "Retail named export _SND_fn_ucPositionToPan@16 begins at 0x1104b790. The last return ends at 0x1104b83f, followed by INT3 alignment. Entry VAs in the linked comparison image match retail. The layout reserves space for the absolute-value and approximate-dot-product exports; only these recovered function bodies are measured.",
     "match": {
       "bytes_sha256": "2a88a3fb6061fb2586d9cdfc70d92157455303505c79e18ecca833fad524f57a",
-      "inputs_sha256": "05c75343b231098043d99d7cdac532436dc62a23bac61a1e28951778ca24a9f0"
+      "inputs_sha256": "ca7cbef78d76e51f7ce93b16a6ead67c49721a0a7aa4b05e73de31c7b425cd0a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2312,7 +2455,10 @@
     "offset": 7649344,
     "size": 190,
     "inputs": [
-      "src/sound_position.c"
+      "src/sound_position.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_position.obj src/sound_position.c",
@@ -2330,7 +2476,7 @@
     "identification": "Retail named export _SND_fn_ucPositionToDolby@12 begins at 0x1104b840. The last return ends at 0x1104b8fe, followed by INT3 alignment. Entry VAs in the linked comparison image match retail. The layout reserves space for the absolute-value and approximate-dot-product exports; only these recovered function bodies are measured.",
     "match": {
       "bytes_sha256": "b72e79e162b521ace95455abd598fd2a97ba000a2287b4af3174449f52a0dfca",
-      "inputs_sha256": "2741f158c719dc587d76ac9b3dba083ac62adf2ac745240b49580c733e31ca32"
+      "inputs_sha256": "98cafbd625d17c5dc10b3b6ced5855b2efd2e6c710cd3289561a72936e798362"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2346,21 +2492,25 @@
     "offset": 7649536,
     "size": 86,
     "inputs": [
-      "src/stereo_pan.c"
+      "src/stereo_pan.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h",
+      "src/sound_volume.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/stereo_pan.obj src/stereo_pan.c",
     "rebuilt_symbol": "_SND_fn_vVolPanToVolLR@16",
     "link_bindings": {
-      "_PanAttenuation": {
+      "_gs_arPanToRVol_dB": {
         "va": 287212408,
-        "basis": "Retail stereo pan export indexes the attenuation table at this VA using pan and 128 minus pan."
+        "basis": "129-entry pan attenuation table indexed by pan and by 128 minus pan in the export SND_fn_vVolPanToVolLR. Named as the file-static of sndspace.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       }
     },
     "identification": "Retail export _SND_fn_vVolPanToVolLR@16 at 0x1104b900, last return ends at 0x1104b956 before INT3 alignment. The constant table at VA 0x111e8378 is indexed by pan and 128 minus pan, then both outputs are clamped to -96 in signed 16.16 units. The absolute linker symbol locates the table; its data is outside the measured function.",
     "match": {
       "bytes_sha256": "6bcb2c2d00cd991073b73a6f7392593ac83b790d3033f23f71ef3a08bdafebda",
-      "inputs_sha256": "17ef5b1fc0e9983cc2c4d0cba497321366815983d870b9c559ddcaede2c71ead"
+      "inputs_sha256": "f08b164952d77e067201fb0baec960fcb4dd141077c8b2abb964078f4ddde0a9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2377,7 +2527,10 @@
     "size": 87,
     "rebuilt_symbol": "_SND_fn_lSoundAngleToDolbyAngle@8",
     "inputs": [
-      "src/sound_spatial_math.c"
+      "src/sound_spatial_math.c",
+      "src/sound_real.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_spatial_math.obj src/sound_spatial_math.c",
@@ -2385,7 +2538,7 @@
     "identification": "Named retail export at RVA 0x74b960. The complete function ends before alignment.",
     "match": {
       "bytes_sha256": "2874e0594337890b4c4d2d2e65d4b2e2458815b51da8cdb8798c9a94644a63bd",
-      "inputs_sha256": "51635a13f1ce1c6d0c79ddfdbf78e24eac5fbefa432152a1025f3a41b1a73999"
+      "inputs_sha256": "e8e3226d33e3574b6ccb7ca3a3c87ad46bb3f877eed4f14ea519c3e046b71eeb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

@@ -1,30 +1,24 @@
-typedef int SoundFixed;
-typedef struct { SoundFixed x, y, z; } SoundVector;
+#include "sound_space.h"
 
-extern int DopplerPropagationSpeed;
-extern SoundFixed __stdcall SND_fn_rPseudoNormeVectorSnd(const SoundVector *vector);
-extern SoundFixed __stdcall SND_fn_rScalaireVectorSnd(const SoundVector *a, const SoundVector *b);
-extern SoundFixed __stdcall SND_fn_rDivRealRealSnd(SoundFixed numerator, SoundFixed denominator);
-#pragma code_seg(".text$B")
-SoundFixed __stdcall SND_fn_rDopplerPitch(const SoundVector *source, const SoundVector *source_velocity,
-                                          const SoundVector *listener, const SoundVector *listener_velocity)
+SndReal __stdcall SND_fn_rDopplerPitch(const SndVector *Ps, const SndVector *Vs, const SndVector *Pm,
+                                       const SndVector *Vm)
 {
-    SoundVector delta;
-    SoundFixed distance, speed, source_component, listener_component;
-    if (!DopplerPropagationSpeed)
+    SndVector MS;
+    SndReal rDistanceMS, rC, rVs_Projected, rVm_Projected;
+    if (!gs_lSoundSpeed)
         return 65536;
-    delta.x = (source->x - listener->x) >> 8;
-    delta.y = (source->y - listener->y) >> 8;
-    delta.z = (source->z - listener->z) >> 8;
-    distance = SND_fn_rPseudoNormeVectorSnd(&delta);
-    if (!distance)
+    MS.x = (Ps->x - Pm->x) >> 8;
+    MS.y = (Ps->y - Pm->y) >> 8;
+    MS.z = (Ps->z - Pm->z) >> 8;
+    rDistanceMS = SND_fn_rPseudoNormeVectorSnd(&MS);
+    if (!rDistanceMS)
         return 65536;
-    if (distance > 64 * 65536)
+    if (rDistanceMS > 64 * 65536)
         return 65536;
-    speed = DopplerPropagationSpeed * distance;
-    source_component = SND_fn_rScalaireVectorSnd(source_velocity, &delta);
-    listener_component = SND_fn_rScalaireVectorSnd(listener_velocity, &delta);
-    if (source_component >= speed || listener_component >= speed)
+    rC = gs_lSoundSpeed * rDistanceMS;
+    rVs_Projected = SND_fn_rScalaireVectorSnd(Vs, &MS);
+    rVm_Projected = SND_fn_rScalaireVectorSnd(Vm, &MS);
+    if (rVs_Projected >= rC || rVm_Projected >= rC)
         return 65536;
-    return SND_fn_rDivRealRealSnd(speed - source_component, speed - listener_component);
+    return SND_fn_rDivRealRealSnd(rC - rVs_Projected, rC - rVm_Projected);
 }
