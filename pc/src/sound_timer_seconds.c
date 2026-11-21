@@ -1,6 +1,8 @@
+/* sound_timer_seconds.c -- reads a timer */
 #include "sound_timer.h"
 #include "sound_win32.h"
 
+/* SND_fn_fGetCurrentTime: the seconds since the timer was reset, pauses left out */
 float __stdcall SND_fn_fGetCurrentTime(long lTimerId)
 {
     const tdstSndTimer *pSndTimer = (const tdstSndTimer *)lTimerId;

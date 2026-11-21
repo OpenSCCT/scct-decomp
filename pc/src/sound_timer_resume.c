@@ -1,6 +1,8 @@
+/* sound_timer_resume.c -- resumes a paused timer */
 #include "sound_timer.h"
 #include "sound_win32.h"
 
+/* SND_fn_vResumeTimer: moves the timer's start forward by the time it was paused */
 void __stdcall SND_fn_vResumeTimer(long lTimerId)
 {
     tdstSndTimer *pSndTimer = (tdstSndTimer *)lTimerId;
