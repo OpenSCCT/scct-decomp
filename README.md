@@ -41,6 +41,7 @@ section, so a reviewed code map is needed before a percentage can be measured.
 | --- | --- |
 | `<platform>/config/` | One manifest per executable: SHA-256, executable sections and matched units. Large targets keep units in 64 KiB shards under `units/`. |
 | `<platform>/src/` | Independently written C and C++ sources |
+| `pc/function_maps/` | Function boundaries from Ghidra analysis, as file offsets (no game bytes), so ByteMatch can draw unmatched code function by function; `pc/README.md` explains how to regenerate them |
 | `tools/` | Image reader, progress tracker, x86 COFF linker, ByteMatch export, progress publisher |
 | `reports/progress.json` | Generated feed used by the website and ByteMatch |
 

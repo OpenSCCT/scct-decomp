@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 import re
 
+from function_map import load as load_function_map, unmatched_functions
 from progress import EDITIONS, ROOT, summary, write
 from manifests import load_target
 
@@ -57,8 +58,39 @@ def build_report(folder, target):
                                         progress_categories=[category])))
         described += size
     remainder = counts["total_bytes"] - described
+    function_map = folder / "function_maps" / f'{target["id"]}.txt'
+    if remainder and function_map.is_file():
+        # Unmatched code is drawn function by function, from the analysis map.
+        code = [(s["offset"], s["offset"] + s["size"]) for s in target["image"]["executable_sections"] if s["code"]]
+        spans = [(u["offset"], u["offset"] + u["size"]) for u in target["units"]]
+        pending, leftover = unmatched_functions(target["image"]["size"], code, spans,
+                                                load_function_map(function_map, target["image"]["sha256"]),
+                                                address=lambda offset: virtual_address(target, offset))
+        for entry, size in pending:
+            address = virtual_address(target, entry)
+            function = dict(name=f"fun_{address:08x}", size=str(size), fuzzy_match_percent=0,
+                            metadata=dict(virtual_address=str(address)))
+            measures = byte_measures(size, 0)
+            measures.update(total_functions=1, matched_functions=0)
+            units.append(dict(name=f"{folder.name}/not-started/{address & ~0xFFFF:08x}/fun_{address:08x}",
+                              measures=measures, functions=[function],
+                              metadata=dict(complete=False, progress_categories=["game"])))
+            totals["game"][0] += size
+            remainder -= size
+        # Code that neither a unit nor a mapped function covers (alignment, unanalysed code)
+        # is drawn as one tile per 64 KB of address space.
+        for start, _, size in leftover:
+            address = virtual_address(target, start)
+            measures = byte_measures(size, 0)
+            measures.update(total_functions=0, matched_functions=0)
+            units.append(dict(name=f"{folder.name}/not-started/{address & ~0xFFFF:08x}/unassigned",
+                              measures=measures, metadata=dict(complete=False, progress_categories=["game"])))
+            totals["game"][0] += size
+            remainder -= size
+        if remainder:
+            raise ValueError("function map accounting differs from the measured code")
     if remainder:
-        # Code not yet assigned to a unit is counted as game code until it is identified.
+        # Code no unit or mapped function covers is counted as game code until it is identified.
         units.append(dict(name=f"{folder.name}/unmapped-code", measures=byte_measures(remainder, 0),
                           metadata=dict(progress_categories=["game"])))
         totals["game"][0] += remainder
