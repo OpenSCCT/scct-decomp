@@ -20,7 +20,9 @@ LINK_OPTIONS = ("/nologo", "/LTCG", "/DLL", "/NOENTRY", "/NODEFAULTLIB", "/BASE:
 
 
 def stub_object(names):
-    """A COFF object with one 1-byte int3 code section per external symbol."""
+    """A COFF object with one 1-byte int3 code section per external symbol.
+
+    __except_list is absolute 0, as the C runtime defines it; its section stays unused."""
     names = list(names)
     if len(set(names)) != len(names) or not all(isinstance(n, str) and n for n in names):
         raise ValueError("stub names must be distinct non-empty strings")
@@ -37,7 +39,11 @@ def stub_object(names):
         else:
             field = struct.pack("<II", 0, len(strtab))
             strtab += encoded + b"\0"
-        symbols += field + struct.pack("<IhHBB", 0, i + 1, 0x20, 2, 0)
+        if name == "__except_list":
+            # The C runtime defines this as the absolute offset 0 of the thread information block.
+            symbols += field + struct.pack("<IhHBB", 0, -1, 0, 2, 0)
+        else:
+            symbols += field + struct.pack("<IhHBB", 0, i + 1, 0x20, 2, 0)
     struct.pack_into("<I", strtab, 0, len(strtab))
     header = struct.pack("<HHIIIHH", 0x14C, len(names), 0, raw + len(names), len(names), 0, 0)
     return header + bytes(sections) + b"\xcc" * len(names) + bytes(symbols) + bytes(strtab)
