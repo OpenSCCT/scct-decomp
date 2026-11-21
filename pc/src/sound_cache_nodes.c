@@ -88,6 +88,8 @@ void **__fastcall next_cache_item_ref(SndPtrList *list, SndPtrListCursorArg curs
 
 #pragma code_seg()
 
+/* Additional stock list instantiations. The node operations copy or discard
+   the payload without interpreting it. */
 
 SoundCacheItem * __fastcall list_pop_first_pointer_r467eb0(SndPtrList *list)
 {

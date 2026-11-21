@@ -84,6 +84,8 @@ void __cdecl run_mixer_callbacks(void)
 
 #pragma code_seg()
 
+/* Additional stock list instantiations. The node operations copy or discard
+   the payload without interpreting it. */
 
 void __fastcall list_remove_node_r467f80(SndCallBackList *q, int unused, SndCallBackNode *item)
 {
