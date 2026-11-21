@@ -77,6 +77,9 @@ public:
     virtual ~ASGadget();
 
     BYTE unk_338[0x18];
+
+    DECLARE_NATIVE(execGetUniqueIDByClass)
+    INT GetUniqueIDByClass();
 };
 
 // SBase.SGadHeartBeatSensor: 0x370 bytes, 78 virtual functions
@@ -147,6 +150,9 @@ public:
     FString unk_3c8;
     FString unk_3d4;
     BYTE    unk_3e0[0x58];
+
+    DECLARE_NATIVE(execGetAccuracy)
+    FLOAT GetAccuracy();
 };
 
 // SBase.SWeaponDefense_Uzi: 0x43c bytes, 78 virtual functions
@@ -451,6 +457,9 @@ public:
     BYTE                  unk_4b0[0x214];
     TArrayLtcg<UnkType_4> unk_6c4;
     BYTE                  unk_6d0[0x490];
+
+    DECLARE_NATIVE(execExecuteAction)
+    void ExecuteAction(INT A0);
 };
 
 // SBase.SBloodSplat: 0x488 bytes, 83 virtual functions
@@ -971,6 +980,50 @@ public:
     FString                    unk_50;
     TArrayLtcg<UnkType_179000> unk_5c;
     BYTE                       unk_68[0x50];
+
+    DECLARE_NATIVE(execGetUserName)
+    DECLARE_NATIVE(execGetLobbyName)
+    DECLARE_NATIVE(execMatchQueryGetMapAmateur)
+    DECLARE_NATIVE(execMatchQueryGetGameMode)
+    DECLARE_NATIVE(execMatchQueryIsLadderGame)
+    DECLARE_NATIVE(execMatchQueryGetGameLevel)
+    DECLARE_NATIVE(execMatchQueryGetGameState)
+    DECLARE_NATIVE(execMatchQueryGetTimeRemaining)
+    DECLARE_NATIVE(execMatchQueryIsSpyAvailable)
+    DECLARE_NATIVE(execMatchQueryIsSentryAvailable)
+    DECLARE_NATIVE(execMatchQueryGetNumSlotsUsed)
+    DECLARE_NATIVE(execMatchQueryGetMaxPlayers)
+    DECLARE_NATIVE(execMatchQueryGetNbrPlayers)
+    DECLARE_NATIVE(execMatchQueryGetbGamesInARowPlaying)
+    DECLARE_NATIVE(execMatchQueryGetNumSlotsFree)
+    DECLARE_NATIVE(execMatchQueryGetPrivateSlotsFree)
+    DECLARE_NATIVE(execMatchQueryGetPublicSlotsFree)
+    DECLARE_NATIVE(execMatchQueryGetPrivateSlotsUsed)
+    DECLARE_NATIVE(execMatchQueryGetPublicSlotsUsed)
+    DECLARE_NATIVE(execMatchQueryIsPunkBusterEnabled)
+    DECLARE_NATIVE(execMatchQueryIsLocked)
+    DECLARE_NATIVE(execMatchQueryGetCompatibilityVersion)
+    DECLARE_NATIVE(execActivateCdKey)
+    DECLARE_NATIVE(execGetResultPlayerName)
+    DECLARE_NATIVE(execMatchSetServerName)
+    DECLARE_NATIVE(execMatchSetServerPassword)
+    DECLARE_NATIVE(execMatchSetMapName)
+    DECLARE_NATIVE(execMatchSetMapPublicName)
+    DECLARE_NATIVE(execBlackListGetName)
+    DECLARE_NATIVE(execBLIgnorePlayer)
+    DECLARE_NATIVE(execBLUnIgnorePlayer)
+    DECLARE_NATIVE(execAddFriend)
+    DECLARE_NATIVE(execGetFriendName)
+    DECLARE_NATIVE(execGetInvitePassword)
+    DECLARE_NATIVE(execGetFriendGameTitle)
+    DECLARE_NATIVE(execGetInviteSenderName)
+    DECLARE_NATIVE(execRecentPlayerGetName)
+    DECLARE_NATIVE(execDownloadContent)
+    DECLARE_NATIVE(execLadderDyn_GetPlayerScore)
+    DECLARE_NATIVE(execLadderDyn_GetPlayerLevel)
+    DECLARE_NATIVE(execMatchQueryIsTutoratMode)
+    DECLARE_NATIVE(execMatchQueryIsAlternateMode)
+    DECLARE_NATIVE(execMatchQueryIsDedicatedServerMode)
 };
 
 // SBase.STeamInfo: 0x378 bytes, 78 virtual functions

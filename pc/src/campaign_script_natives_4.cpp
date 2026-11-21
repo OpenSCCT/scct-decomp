@@ -1,27 +1,6 @@
 // Engine declarations shared by the Campaign UnrealScript natives. Layouts and
 // virtual slots are those the retail natives use; names follow Unreal Engine 2.
-typedef int INT;
-typedef unsigned int DWORD;
-typedef unsigned short _WORD;
-typedef unsigned char BYTE;
-typedef float FLOAT;
-typedef int UBOOL;
-typedef unsigned short TCHAR;
-typedef char ANSICHAR;
-typedef DWORD BITFIELD;
-enum EName { NAME_Critical = 761, NAME_ScriptLog = 770 };
-
-class UObject;
-class UClass;
-class UFunction;
-class UProperty;
-struct FFrame;
-
-struct FName {
-    INT Index;
-    FName() {}
-    FName(EName N) : Index(N) {}
-};
+#include "unreal_script.h"
 
 struct FVector {
     FLOAT X, Y, Z;
@@ -149,14 +128,6 @@ TCHAR *appFromUnicode(const TCHAR *Str);
 extern TCHAR GTrue[];
 extern TCHAR GFalse[];
 
-class __declspec(novtable) FOutputDevice {
-public:
-    virtual void Serialize(const TCHAR *V, EName Event) = 0;
-    void Logf(EName Event, const TCHAR *Fmt, ...);
-    void Logf(const TCHAR *Fmt, ...);
-    void Log(const TCHAR *S);
-};
-
 class FExec {
 public:
     virtual UBOOL Exec(const TCHAR *Cmd, FOutputDevice &Ar) = 0;
@@ -167,50 +138,6 @@ public:
     FStringOutputDevice(const TCHAR *InStr = (const TCHAR *)L"") : FString(InStr) {}
     void Serialize(const TCHAR *Data, EName Event);
 };
-
-struct FStateFrame;
-
-class UObject {
-public:
-    INT Index;
-    UObject *HashNext;
-    FStateFrame *StateFrame;
-    void *_Linker;
-    INT _LinkerIndex;
-    UObject *Outer;
-    DWORD ObjectFlags;
-    FName Name;
-    UClass *Class;
-
-    virtual void VirtualSlot0();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
-    virtual void VirtualSlot7();
-    virtual void VirtualSlot8();
-    virtual void VirtualSlot9();
-    virtual void VirtualSlot10();
-    virtual void VirtualSlot11();
-    virtual void VirtualSlot12();
-    virtual void VirtualSlot13();
-    virtual void VirtualSlot14();
-    virtual void VirtualSlot15();
-    virtual void VirtualSlot16();
-    virtual void VirtualSlot17();
-    virtual void CallFunction(FFrame &Stack, void *const Result, UFunction *Function);
-
-    const TCHAR *GetName() const;
-    UClass *GetClass() const { return Class; }
-    UFunction *FindFunctionChecked(FName InName, UBOOL Global);
-
-#define DECLARE_NATIVE(Name) void Name(FFrame &Stack, void *const Result);
-};
-
-typedef void (UObject::*Native)(FFrame &Stack, void *const Result);
-extern Native GNatives[];
 
 template <class T> struct TArray {
     T *Data;
@@ -231,7 +158,7 @@ public:
     BYTE Pad[0x44 - 0x34];
     _WORD Offset;
 #define SLOT(n) virtual void PropertySlot##n();
-    SLOT(19) SLOT(20) SLOT(21) SLOT(22) SLOT(23) SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
+    SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
     SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34) SLOT(35) SLOT(36) SLOT(37) SLOT(38)
 #undef SLOT
     virtual void CopyCompleteValue(void *Dest, void *Src, UObject *Obj = 0);
@@ -255,68 +182,13 @@ public:
     TArray<BYTE> Defaults;
 };
 
-struct FFrame : public FOutputDevice {
-    UStruct *Node;
-    UObject *Object;
-    BYTE *Code;
-    BYTE *Locals;
-    void Step(UObject *Context, void *const Result)
-    {
-        INT B = *Code++;
-        (Context->*GNatives[B])(*this, Result);
-    }
-    INT ReadWord()
-    {
-        INT Result = *(_WORD *)Code;
-        Code += sizeof(_WORD);
-        return Result;
-    }
-    UObject *ReadObject()
-    {
-        UObject *Result = *(UObject **)Code;
-        Code += sizeof(INT);
-        return Result;
-    }
-    FName ReadName()
-    {
-        FName Result = *(FName *)Code;
-        Code += sizeof(FName);
-        return Result;
-    }
-};
-
-struct FStateFrame : public FFrame {
-    BYTE Pad[0x28 - 0x14];
-    INT LatentAction;
-};
-
-extern BYTE *GPropAddr;
-extern UObject *GPropObject;
-extern UProperty *GProperty;
-
-#define RESULT_DECL void *const Result
-#define EX_DebugInfo 0x42
-#define P_GET_UBOOL(Var) DWORD Var = 0; Stack.Step(Stack.Object, &Var)
-#define P_GET_BYTE(Var) BYTE Var = 0; Stack.Step(Stack.Object, &Var)
-#define P_GET_INT(Var) INT Var = 0; Stack.Step(Stack.Object, &Var)
-#define P_GET_FLOAT(Var) FLOAT Var = 0.0f; Stack.Step(Stack.Object, &Var)
-#define P_GET_OBJECT(Cls, Var) Cls *Var = 0; Stack.Step(Stack.Object, &Var)
-#define P_GET_NAME(Var) FName Var; Var.Index = 0; Stack.Step(Stack.Object, &Var)
-#define P_GET_NAME_OPTX(Var, Def) FName Var = Def; Stack.Step(Stack.Object, &Var)
-#define P_GET_UBOOL_OPTX(Var, Def) DWORD Var = Def; Stack.Step(Stack.Object, &Var)
-#define P_GET_VECTOR_OPTX(Var, Def) FVector Var = Def; Stack.Step(Stack.Object, &Var)
-#define P_GET_VECTOR(Var) FVector Var; Stack.Step(Stack.Object, &Var)
-#define P_GET_STR(Var) FString Var; Stack.Step(Stack.Object, &Var)
-#define P_GET_ROTATOR(Var) FRotator Var; Stack.Step(Stack.Object, &Var)
-#define P_FINISH Stack.Code++; if (*Stack.Code == EX_DebugInfo) Stack.Step(Stack.Object, 0)
-
 class USound;
 class AActor;
 
 class UAudioSubsystem : public UObject {
 public:
 #define SLOT(n) virtual void AudioSlot##n();
-    SLOT(19) SLOT(20) SLOT(21) SLOT(22) SLOT(23) SLOT(24) SLOT(25) SLOT(26) SLOT(27)
+    SLOT(24) SLOT(25) SLOT(26) SLOT(27)
     virtual UBOOL StopSound(AActor *Actor, USound *Sound, FLOAT FadeTime, INT Slot);
     SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34) SLOT(35)
     virtual void ChangeSoundVolume(AActor *Actor, USound *Sound, FLOAT Volume, INT Slot);
@@ -334,7 +206,7 @@ public:
     BYTE LevelPad[0x38 - 0x28];
     UEngine *Engine;
 #define SLOT(n) virtual void LevelSlot##n();
-    SLOT(19) SLOT(20) SLOT(21) SLOT(22) SLOT(23) SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
+    SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
     SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34)
 #undef SLOT
     virtual UBOOL DestroyActor(AActor *ThisActor, UBOOL bNetForce = 0);
@@ -349,7 +221,7 @@ public:
     BYTE ActorPad2[0xc4 - 0x80];
     FLOAT LatentFloat;
 #define SLOT(n) virtual void ActorSlot##n();
-    SLOT(19) SLOT(20) SLOT(21) SLOT(22) SLOT(23) SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
+    SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
     SLOT(29) SLOT(30) SLOT(31) SLOT(32) SLOT(33) SLOT(34) SLOT(35) SLOT(36) SLOT(37) SLOT(38)
     SLOT(39) SLOT(40) SLOT(41) SLOT(42) SLOT(43) SLOT(44) SLOT(45) SLOT(46) SLOT(47) SLOT(48)
     SLOT(49) SLOT(50) SLOT(51) SLOT(52) SLOT(53) SLOT(54) SLOT(55) SLOT(56) SLOT(57) SLOT(58)
@@ -464,8 +336,6 @@ void AActor::execTweenAnim(FFrame &Stack, RESULT_DECL)
     PlayAnim(Channel, Sequence, 0.0f, Time, 0, 0, 0, 0);
 }
 
-#define P_GET_FLOAT_OPTX(Var, Def) FLOAT Var = Def; Stack.Step(Stack.Object, &Var)
-
 void AActor::execPlayAnim(FFrame &Stack, RESULT_DECL)
 {
     P_GET_NAME(Sequence);
@@ -523,7 +393,6 @@ void UInteraction::execConsoleCommand(FFrame &Stack, RESULT_DECL)
 class UCommandlet : public UObject {
 public:
 #define SLOT(n) virtual void CommandletSlot##n();
-    SLOT(19) SLOT(20) SLOT(21) SLOT(22) SLOT(23)
 #undef SLOT
     virtual INT Main(const TCHAR *Parms);
     DECLARE_NATIVE(execMain)

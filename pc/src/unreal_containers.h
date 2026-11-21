@@ -10,9 +10,12 @@ public:
     void *Data;
     INT   ArrayNum;
     INT   ArrayMax;
+
+    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
 };
 
-// A dynamic array of T. Its destructor removes the elements, then frees the storage.
+// A dynamic array of T. Its destructor removes the elements, then frees the storage. The
+// Versus executable keeps the destructors out of line.
 template<class T> class TArray : public FArray {
 public:
     ~TArray();
@@ -21,7 +24,10 @@ public:
 // A dynamic string: an array of TCHAR that includes the terminating zero.
 class FString : public TArray<TCHAR> {
 public:
+    FString() {}
+    FString(const FString &Other);
     ~FString();
+    FString &operator=(const FString &Other);
 };
 
 #endif // UNREAL_CONTAINERS_H

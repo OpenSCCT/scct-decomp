@@ -435,6 +435,9 @@ public:
     virtual ~UCanvas();
 
     BYTE unk_28[0x58];
+
+    DECLARE_NATIVE(execRenderMotionTracking)
+    void RenderMotionTracking(INT A0, INT A1, INT A2);
 };
 
 // Engine.Channel: 0x58 bytes, 28 virtual functions

@@ -3,14 +3,21 @@
 #define UNREAL_OBJECT_H
 
 #include "unreal_types.h"
+#include "unreal_name.h"
 
 struct FGuid;
+struct FFrame;
+struct FStateFrame;
 
 // UObject::ObjectFlags bits. The names are open: no symbol evidence names these bits.
 enum {
     ObjectFlag_00800000 = 0x00800000,   // ConditionalDestroy has run for this object
     ObjectFlag_80000000 = 0x80000000    // cleared when ConditionalDestroy runs
 };
+
+// A script native reads its parameters from the bytecode and writes its result.
+#define RESULT_DECL void *const Result
+#define DECLARE_NATIVE(Name) void Name(FFrame &Stack, RESULT_DECL);
 
 // The COM-style root of UObject: three __stdcall methods at the head of every object vtable.
 class FUnknown {
@@ -21,7 +28,9 @@ public:
 };
 
 // Core.Object: 0x28 bytes. 22 virtual functions in the Versus executable, 24 in Campaign.
-// Slots 0 to 3 and 9 hold the same functions in both; the other slots are not identified yet.
+// Slots 0 to 3 and 9 hold the same functions in both; CallFunction is slot 18 in Campaign.
+// The other slots are not identified yet. Both executables read Index and ObjectFlags
+// (ConditionalDestroy); the Campaign natives read StateFrame and Class.
 class UObject : public FUnknown {
 public:
     virtual ~UObject();
@@ -39,19 +48,27 @@ public:
     virtual void VirtualSlot15();
     virtual void VirtualSlot16();
     virtual void VirtualSlot17();
+#ifdef SCCT_VERSUS
     virtual void VirtualSlot18();
     virtual void VirtualSlot19();
     virtual void VirtualSlot20();
     virtual void VirtualSlot21();
-#ifndef SCCT_VERSUS
+#else
+    virtual void CallFunction(FFrame &Stack, RESULT_DECL, class UFunction *Function);
+    virtual void VirtualSlot19();
+    virtual void VirtualSlot20();
+    virtual void VirtualSlot21();
     virtual void VirtualSlot22();
     virtual void VirtualSlot23();
 #endif
 
-    INT   Index;            // -1 while the object is not in the object table
-    BYTE  unk_8[0x14];
-    DWORD ObjectFlags;      // ObjectFlag_ bits
-    BYTE  unk_20[0x8];
+    INT           Index;        // -1 while the object is not in the object table
+    BYTE          unk_8[0x4];
+    FStateFrame  *StateFrame;   // script execution state, when the object runs state code
+    BYTE          unk_10[0xc];
+    DWORD         ObjectFlags;  // ObjectFlag_ bits
+    BYTE          unk_20[0x4];
+    class UClass *Class;
 
     // Destroys the object once: marks it, then calls Destroy.
     INT ConditionalDestroy()
@@ -64,6 +81,53 @@ public:
         }
         return 0;
     }
+
+    const TCHAR *GetName() const;
+    class UClass *GetClass() const { return Class; }
+    class UFunction *FindFunctionChecked(FName InName, UBOOL Global);
+
+    // Campaign natives, in the order of their units
+    DECLARE_NATIVE(execJumpIfNot)
+    DECLARE_NATIVE(execVirtualFunction)
+    DECLARE_NATIVE(execGlobalFunction)
+    DECLARE_NATIVE(execStringConst)
+    DECLARE_NATIVE(execUnicodeStringConst)
+    DECLARE_NATIVE(execBoolToString)
+    DECLARE_NATIVE(execInstanceVariable)
+    DECLARE_NATIVE(execDefaultVariable)
+    DECLARE_NATIVE(execLetBool)
+    DECLARE_NATIVE(execCross_VectorVector)
+    DECLARE_NATIVE(execNormal)
+    DECLARE_NATIVE(execVectorToRotator)
+    DECLARE_NATIVE(execRotatorToVector)
+    DECLARE_NATIVE(execAssert)
+    DECLARE_NATIVE(execObjectToString)
+    DECLARE_NATIVE(execVectorToBool)
+    DECLARE_NATIVE(execLen)
+    DECLARE_NATIVE(execStringToInt)
+    DECLARE_NATIVE(execStringToByte)
+    DECLARE_NATIVE(execStringToFloat)
+    DECLARE_NATIVE(execAsc)
+    DECLARE_NATIVE(execEatString)
+    DECLARE_NATIVE(execEqualEqual_StringString)
+    DECLARE_NATIVE(execNotEqual_StringString)
+    DECLARE_NATIVE(execLess_StringString)
+    DECLARE_NATIVE(execGreater_StringString)
+    DECLARE_NATIVE(execLessEqual_StringString)
+    DECLARE_NATIVE(execGreaterEqual_StringString)
+    DECLARE_NATIVE(execComplementEqual_StringString)
+    DECLARE_NATIVE(execStringToBool)
+    DECLARE_NATIVE(execCaps)
+    DECLARE_NATIVE(execInStr)
+    DECLARE_NATIVE(execLog)
+    DECLARE_NATIVE(execWarn)
+    DECLARE_NATIVE(execMultiply_RotatorFloat)
+    DECLARE_NATIVE(execMultiply_FloatRotator)
+    DECLARE_NATIVE(execFClamp)
+    DECLARE_NATIVE(execSmerp)
+    DECLARE_NATIVE(execDampFloat)
+    DECLARE_NATIVE(execDampInt)
+    DECLARE_NATIVE(execDampVec)
 };
 
 #endif // UNREAL_OBJECT_H
