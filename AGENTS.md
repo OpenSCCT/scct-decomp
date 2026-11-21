@@ -202,7 +202,7 @@ Send a fakematch back as `MATCH-PENDING`. Never rewrite it during a merge.
 ## Rule changes
 
 None yet: the catalogue applies as written. Tightening or relaxing a rule is a maintainers'
-ruling, recorded here with its reason, and the checker changes in the same commit. Seven rulings
+ruling, recorded here with its reason, and the checker changes in the same commit. Eight rulings
 are open:
 
 1. **Members written as free functions.** 463 definitions are `__fastcall` functions whose
@@ -243,6 +243,14 @@ are open:
    registers no per-file build chooses. A unit compiled alone cannot reproduce those, and a
    stand-in that does (`TArrayLtcg` in `versus_ltcg.h`) is a fakematch, marked as one. Whether
    the gate should grow a link-time step, or such functions stay open, is not decided.
+8. **Standard library code typed in again.** The verifier builds a unit from its listed
+   inputs only, with no SDK include path, so units that instantiate the compiler's own
+   containers retype them (`campaign_vector_insert.cpp`, the `container_*.cpp` units) and the
+   sound and runtime units declare the few Win32 and C functions they call. R6 asks for the
+   real header. Until the verifier can take the Toolkit's include directory, the checker
+   holds such a unit to the same rows as any other: the vector insert's
+   `if ( Count == 0 ) ; else if …` is flagged as an empty `if` although the Toolkit's own
+   `<vector>` is written that way.
 
 ## Tooling
 

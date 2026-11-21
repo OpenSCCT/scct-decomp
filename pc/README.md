@@ -58,7 +58,7 @@ The campaign experiment reproduced three retail bytes under two different compil
 From the repository root, pass the installed game directory to the verifier.
 Pass the x86 compiler paths for Visual C++ Toolkit 2003 13.10.3052, VC6
 12.00.8804, MSVC 19.44.35229.0 and Clang 19.1.0. The Toolkit compiler alone
-rebuilds 19,942 of the 20,222 PC units; `--skip-unavailable` gates those and
+rebuilds 20,142 of the 20,422 PC units; `--skip-unavailable` gates those and
 lists the units that need another compiler. The [toolchain notes](TOOLCHAIN.md)
 identify the VC6 frontend and backend and the Clang revision used for these builds.
 
