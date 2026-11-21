@@ -36,7 +36,33 @@ public:
     BYTE         unk_284[0x18];
     TArray<BYTE> Defaults;      // the class's default property values
     BYTE         unk_2a8[0x38];
+
+    UClass *GetSuperClass() const { return (UClass *)SuperField; }
 };
+
+// UObject::IsA: whether the object's class is SomeBase or derives from it
+inline UBOOL UObject::IsA(UClass *SomeBase) const
+{
+    for (UClass *TempClass = Class; TempClass; TempClass = TempClass->GetSuperClass())
+        if (TempClass == SomeBase)
+            return 1;
+    return SomeBase == 0;
+}
+
+// A class whose class object is created on first use.
+#define DECLARE_LAZY_CLASS(Name)                                            \
+    static UClass *PrivateStaticClass;                                      \
+    static UClass *GetPrivateStaticClass##Name(const TCHAR *Package);       \
+    static void InitializePrivateStaticClass##Name();                       \
+    static UClass *StaticClass()                                            \
+    {                                                                       \
+        if (!PrivateStaticClass)                                            \
+        {                                                                   \
+            PrivateStaticClass = GetPrivateStaticClass##Name(L"Engine");    \
+            InitializePrivateStaticClass##Name();                           \
+        }                                                                   \
+        return PrivateStaticClass;                                          \
+    }
 
 #endif // SCCT_VERSUS
 

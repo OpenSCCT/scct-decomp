@@ -4,6 +4,20 @@
 
 #include "unreal_types.h"
 
+#define PI (3.1415926535897932)
+#define MAXWORD 0xffff
+
+// campaign_core_math.cpp, campaign_core_math_2.cpp
+DOUBLE appSqrt(DOUBLE Value);
+DOUBLE appAtan2(DOUBLE Y, DOUBLE X);
+DOUBLE appExp(DOUBLE Value);
+DOUBLE appLoge(DOUBLE Value);
+DOUBLE appSin(DOUBLE Value);
+DOUBLE appCos(DOUBLE Value);
+DOUBLE appAsin(DOUBLE Value);
+DOUBLE appTan(DOUBLE Value);
+DOUBLE appAtan(DOUBLE Value);
+
 struct FRotator;
 struct FCoords;
 
@@ -17,10 +31,43 @@ struct FVector {
     {
         return FVector(Y * V.Z - Z * V.Y, Z * V.X - X * V.Z, X * V.Y - Y * V.X);
     }
+    // dot product
+    FLOAT operator|(const FVector &V) const { return X * V.X + Y * V.Y + Z * V.Z; }
+    FVector operator+(const FVector &V) const { return FVector(X + V.X, Y + V.Y, Z + V.Z); }
+    FVector operator-(const FVector &V) const { return FVector(X - V.X, Y - V.Y, Z - V.Z); }
+    FVector operator*(FLOAT Scale) const { return FVector(X * Scale, Y * Scale, Z * Scale); }
+    FVector operator/(FLOAT Scale) const
+    {
+        FLOAT RScale = 1.0f / Scale;
+        return FVector(X * RScale, Y * RScale, Z * RScale);
+    }
+    FVector &operator*=(FLOAT Scale)
+    {
+        X *= Scale;
+        Y *= Scale;
+        Z *= Scale;
+        return *this;
+    }
+    FVector &operator/=(FLOAT V)
+    {
+        FLOAT RV = 1.0f / V;
+        X *= RV;
+        Y *= RV;
+        Z *= RV;
+        return *this;
+    }
+    FLOAT Size() const { return (FLOAT)appSqrt(X * X + Y * Y + Z * Z); }
     UBOOL IsZero() const { return X == 0.0f && Y == 0.0f && Z == 0.0f; }
     FVector SafeNormal() const;
     FRotator Rotation();
 };
+
+inline FVector operator*(FLOAT Scale, const FVector &V)
+{
+    return FVector(V.X * Scale, V.Y * Scale, V.Z * Scale);
+}
+
+extern FVector GDefaultVector;      // the zero vector natives use as a default argument
 
 struct FColor {
     BYTE B, G, R, A;
@@ -36,6 +83,19 @@ struct FRotator {
     FRotator operator*(FLOAT Scale) const
     {
         return FRotator((INT)(Pitch * Scale), (INT)(Yaw * Scale), (INT)(Roll * Scale));
+    }
+    FRotator operator/(FLOAT Scale) const
+    {
+        FLOAT RScale = 1.0f / Scale;
+        return FRotator((INT)(Pitch * RScale), (INT)(Yaw * RScale), (INT)(Roll * RScale));
+    }
+    FRotator &operator/=(FLOAT Scale)
+    {
+        FLOAT RScale = 1.0f / Scale;
+        Pitch = (INT)(Pitch * RScale);
+        Yaw = (INT)(Yaw * RScale);
+        Roll = (INT)(Roll * RScale);
+        return *this;
     }
     // Maps an angle to -32768..32767.
     INT NormalizeAxis(INT Angle) const
@@ -78,16 +138,30 @@ inline FVector FRotator::Vector()
     return (GMath.UnitCoords / *this).XAxis;
 }
 
+struct FQuat {
+    FLOAT X, Y, Z, W;
+};
+
+FQuat FRotatorToQuat(const FRotator &Rot);
+FRotator FQuatToRotator(const FQuat &Quat);
+void AlignFQuatWith(FQuat &Quat, const FQuat &Other);
+FQuat SlerpQuat(const FQuat &Quat1, const FQuat &Quat2, FLOAT Slerp);
+
 // Clamp: X limited to the range Min..Max
 template<class T> inline T Clamp(const T X, const T Min, const T Max)
 {
     return X < Min ? Min : X < Max ? X : Max;
 }
 
-INT InterpolateRotatorValue(INT Current, INT Desired, FLOAT Rate);
+FLOAT PointToLineDistance(const FVector &Point, FVector &LineOrigin, FVector &LineDir);
 FRotator InterpolateRotator(FLOAT Alpha, const FRotator &A, const FRotator &B);
+
+// campaign_engine_helpers.cpp
 FLOAT DampFloat(FLOAT Current, FLOAT Target, FLOAT Rate, FLOAT DeltaTime);
 INT DampInt(INT Current, INT Target, FLOAT Rate, FLOAT DeltaTime);
 FVector DampVec(const FVector &Current, const FVector &Target, FLOAT Rate, FLOAT DeltaTime);
+
+// campaign_engine_helpers_2.cpp
+INT InterpolateRotatorValue(FLOAT Rate, INT Current, INT Desired);
 
 #endif // UNREAL_MATH_H

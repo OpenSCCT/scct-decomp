@@ -77,11 +77,11 @@ void AActor::execChangeSoundVolume(FFrame &Stack, RESULT_DECL)
 // AActor::execInterpolateRotatorValue
 void AActor::execInterpolateRotatorValue(FFrame &Stack, RESULT_DECL)
 {
+    P_GET_FLOAT(Rate);
     P_GET_INT(Current);
     P_GET_INT(Desired);
-    P_GET_FLOAT(Rate);
     P_FINISH;
-    *(INT *)Result = InterpolateRotatorValue(Current, Desired, Rate);
+    *(INT *)Result = InterpolateRotatorValue(Rate, Current, Desired);
 }
 
 // AController::execPickWallAdjust

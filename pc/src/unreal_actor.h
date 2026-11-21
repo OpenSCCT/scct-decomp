@@ -100,7 +100,7 @@ public:
     virtual void VirtualSlot27();
     virtual void VirtualSlot28();
     virtual void VirtualSlot29();
-    virtual void VirtualSlot30();
+    virtual void PlayOwnedSound(class USound *Sound, BYTE Slot);
     virtual void VirtualSlot31();
     virtual void VirtualSlot32();
     virtual void VirtualSlot33();
@@ -203,7 +203,8 @@ public:
     virtual void VirtualSlot129();
     virtual void VirtualSlot130();
     virtual void VirtualSlot131();
-    virtual void VirtualSlot132();
+    virtual void MakeNoise(FLOAT Loudness, INT NoiseType, const FVector &NoiseLocation, INT Option4,
+                           const FVector &Option5, INT Option6, UBOOL bOption7);
     virtual void VirtualSlot133();
     virtual void StopAllSoundsActor(INT Flags, FLOAT FadeTime, INT Slot);
     virtual void VirtualSlot135();
@@ -238,20 +239,54 @@ public:
     virtual void VirtualSlot164();
     virtual void VirtualSlot165();
 
-    BYTE          unk_28[0x4];
-    DWORD         unk_2c;       // flag word; execMoveSmooth clears bit 0x02000000
-    BYTE          unk_30[0x4c];
-    class ULevel *XLevel;       // the level the actor is in
-    BYTE          unk_80[0x44];
-    FLOAT         LatentFloat;  // parameter of the latent function in progress
-    BYTE          unk_c8[0x1ec];
+    DWORD                unk_28;        // flag word: PlayActorSound tests 4
+    DWORD                unk_2c;        // flag word: MoveSmooth clears 0x02000000, bone traces test 0x40
+    BITFIELD             unk_30_0 : 25;
+    BITFIELD             bCollideActors : 1;    // the actor is in the level's collision hash
+    BITFIELD             unk_30_26 : 6;
+    BYTE                 unk_34[0x20];
+    FName                Tag;
+    BYTE                 unk_58[0xc];
+    class UMeshInstance *MeshInstance;
+    BYTE                 unk_68[0x4];
+    AActor              *Owner;
+    BYTE                 unk_70[0xc];
+    class ULevel        *XLevel;        // the level the actor is in
+    BYTE                 unk_80[0x4];
+    class APawn         *Instigator;
+    BYTE                 unk_88[0x3c];
+    FLOAT                LatentFloat;   // parameter of the latent function in progress
+    BYTE                 unk_c8[0x20];
+    FVector              Location;
+    FRotator             Rotation;
+    BYTE                 unk_100[0x84];
+    class UMesh         *Mesh;
+    BYTE                 unk_188[0x10];
+    FVector              DrawScale3D;
+    BYTE                 unk_1a4[0x110];
 
     UBOOL SetRotation(const FRotator &NewRotation);
     UBOOL SetRelativeRotation(const FRotator &NewRotation);
     UBOOL SetRelativeLocation(const FVector &NewLocation);
     UBOOL SetLocation(const FVector &NewLocation, UBOOL bNoCheck);
     void SetDrawScale3D(FVector NewScale3D);
+    void ClearRenderData();
     UBOOL MoveSmooth(FVector Delta);
+    UBOOL PlayActorSound(class USound *Sound, BYTE Slot, FLOAT Volume, INT Option4, FLOAT Option5,
+                         FLOAT Option6);
+    AActor *TraceBoneCheck(FName &HitBone, FVector &HitLocation, FVector &HitNormal, const FVector &TraceEnd,
+                           const FVector &TraceStart, class UMaterial **Material, INT TraceFlags,
+                           INT bOption8);
+    AActor *TraceCheck(FVector &HitLocation, FVector &HitNormal, const FVector &TraceEnd,
+                       const FVector &TraceStart, const FVector &Extent, class UMaterial **Material,
+                       INT TraceFlags, INT bOption8, class UPrimitive **Primitive, INT Mode);
+    AActor *TraceMode(INT Mode, FVector &HitLocation, FVector &HitNormal, const FVector &TraceEnd,
+                      const FVector &TraceStart, const FVector &Extent, class UMaterial **Material,
+                      INT TraceFlags, INT bOption8, class UPrimitive **Primitive);
+    UBOOL FastTraceCheck(const FVector &TraceEnd, const FVector &TraceStart, const FVector &Extent,
+                         INT TraceFlags, UBOOL bOption);
+    UBOOL AttachToBone(AActor *Attachment, const FName &BoneName, INT Slot, INT Option4, INT Option5,
+                       INT Option6, INT Option7, FVector RelLocation, FRotator RelRotation);
     class ULevel *GetLevel() const { return XLevel; }
 
     DECLARE_NATIVE(execPollFinishAnim)
@@ -276,6 +311,23 @@ public:
     DECLARE_NATIVE(execTweenAnim)
     DECLARE_NATIVE(execPlayAnim)
     DECLARE_NATIVE(execLoopAnim)
+    DECLARE_NATIVE(execSetBoneScale)
+    DECLARE_NATIVE(execSetBoneDirection)
+    DECLARE_NATIVE(execGetBoneRotation)
+    DECLARE_NATIVE(execGetBoneCoords)
+    DECLARE_NATIVE(execSetBoneLocation)
+    DECLARE_NATIVE(execSetBoneRotation)
+    DECLARE_NATIVE(execAddSoundRequest)
+    DECLARE_NATIVE(execMakeNoise)
+    DECLARE_NATIVE(execMove)
+    DECLARE_NATIVE(execFastTrace)
+    DECLARE_NATIVE(execDistancePointToLine)
+    DECLARE_NATIVE(execAttachToBone)
+    DECLARE_NATIVE(execGetAnimParams)
+    DECLARE_NATIVE(execSpawn)
+    DECLARE_NATIVE(execPlaySound)
+    DECLARE_NATIVE(execTraceBone)
+    DECLARE_NATIVE(execTrace)
 };
 
 #endif // SCCT_VERSUS

@@ -54,7 +54,8 @@ public:
     virtual void VirtualSlot26();
     virtual void VirtualSlot27();
 
-    BYTE unk_28[0xc];
+    UField *SuperField;         // the class or struct this one extends
+    BYTE    unk_2c[0x8];
 };
 
 // Core.Struct: 0x6c bytes, 35 virtual functions
@@ -69,9 +70,12 @@ public:
     virtual void VirtualSlot33();
     virtual void VirtualSlot34();
 
-    BYTE         unk_34[0x1c];
-    TArray<BYTE> Script;        // bytecode
+    BYTE         unk_34[0x18];
+    INT          PropertiesSize;    // bytes of one instance
+    TArray<BYTE> Script;            // bytecode
     BYTE         unk_5c[0x10];
+
+    UBOOL StructCompare(const void *A, const void *B);
 };
 
 // Core.State: 0x284 bytes, 35 virtual functions

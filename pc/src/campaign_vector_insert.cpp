@@ -1,15 +1,13 @@
+// campaign_vector_insert.cpp -- insertion routines of the game's growable arrays
+//
 // A growable array with the layout and code shape of the vector in the
 // VC7.1 standard library that the game was built with. The game compiled its
 // containers without exception support, so failed size checks do nothing and
 // there are no cleanup paths.
 
-typedef unsigned int size_t;
-typedef int ptrdiff_t;
+#include "campaign_container_allocator.h"
 
-inline void *operator new(size_t, void *Where)
-{
-    return Where;
-}
+typedef int ptrdiff_t;
 
 namespace stl {
 
@@ -223,21 +221,6 @@ protected:
 };
 
 } // namespace stl
-
-typedef unsigned short TCHAR;
-void *operator new(size_t Size, const TCHAR *Tag);
-void operator delete(void *Ptr);
-extern const TCHAR *GContainerTag;
-
-// Allocates container storage from the engine heap.
-template<class T> class TContainerAllocator {
-public:
-    T *Allocate(size_t Count) { return (T *)operator new(Count * sizeof(T), GContainerTag); }
-    void Deallocate(T *Ptr, size_t) { operator delete(Ptr); }
-    void construct(T *Ptr, const T &Value) { new ((void *)Ptr) T(Value); }
-    void destroy(T *Ptr) { Ptr->~T(); }
-    size_t MaxSize() const { size_t Count = (size_t)-1 / sizeof(T); return 0 < Count ? Count : 1; }
-};
 
 // Element types are named by the retail insertion routine that copies them;
 // only their size is known.

@@ -36,7 +36,20 @@ public:
 
 #include "unreal_math.h"
 
-// The engine's allocator: 7 virtual functions; the natives use Realloc and Free.
+extern "C" void *__cdecl _alloca(unsigned int Size);
+extern "C" void *__cdecl memset(void *Dest, int Value, unsigned int Count);
+#pragma intrinsic(memset)
+
+// Stack storage that lasts until the calling function returns.
+#define appAlloca(size) ((size == 0) ? 0 : _alloca((size + 7) & ~7))
+
+// appMemzero
+inline void appMemzero(void *Dest, INT Count)
+{
+    memset(Dest, 0, Count);
+}
+
+// The engine's allocator: 7 virtual functions; the units use Realloc and Free.
 class FMalloc {
 public:
     virtual void *Malloc(DWORD Count, const TCHAR *Tag);
@@ -66,6 +79,7 @@ public:
         ArrayNum = ArrayMax = 0;
     }
     void Remove(INT Index, INT Count, INT ElementSize);
+    void Realloc(INT ElementSize);
     INT Num() const { return ArrayNum; }
 };
 
@@ -74,7 +88,20 @@ template<class T> class TArray : public FArray {
 public:
     ~TArray() { Remove(0, ArrayNum, sizeof(T)); }
     T &operator()(INT i) { return ((T *)Data)[i]; }
+    T &Last() { return ((T *)Data)[ArrayNum - 1]; }
+    // Appends Count zeroed elements; returns the index of the first.
+    INT AddZeroed(INT Count = 1)
+    {
+        INT Index = ArrayNum;
+        ArrayNum += Count;
+        Realloc(sizeof(T));
+        appMemzero((T *)Data + Index, Count * sizeof(T));
+        return Index;
+    }
 };
+
+INT appGetVarArgs(TCHAR *Dest, INT Count, const TCHAR *&Fmt);
+#define GET_VARARGS(Msg, Len, Fmt) appGetVarArgs(Msg, Len, Fmt)
 
 // A dynamic string: an array of TCHAR that includes the terminating zero.
 class FString : public TArray<TCHAR> {
@@ -91,6 +118,8 @@ public:
     }
     FString &operator=(const TCHAR *Other);
     FString &operator=(const FString &Other);
+    FString operator+(const TCHAR *Str) const;
+    FString operator+(const FString &Str) const { return operator+(*Str); }
     const TCHAR *operator*() const { return ArrayNum ? (const TCHAR *)Data : (const TCHAR *)L""; }
     INT Len() const { return ArrayNum ? ArrayNum - 1 : 0; }
     FString Caps() const;
@@ -104,12 +133,14 @@ public:
         return FString(End - Start, **this + Start);
     }
     INT InStr(const TCHAR *SubStr, UBOOL Right = 0) const;
+    static FString Printf(const TCHAR *Fmt, ...);
 };
 
 INT appAtoi(const TCHAR *Str);
 FLOAT appAtof(const TCHAR *Str);
 INT appStrcmp(const TCHAR *A, const TCHAR *B);
 INT appStricmp(const TCHAR *A, const TCHAR *B);
+const TCHAR *appStrstr(const TCHAR *String, const TCHAR *Find);
 TCHAR *appFromAnsi(const ANSICHAR *Str);
 TCHAR *appFromUnicode(const TCHAR *Str);
 void appClipboardCopy(const TCHAR *Str);

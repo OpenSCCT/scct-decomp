@@ -15,6 +15,12 @@ enum {
     ObjectFlag_80000000 = 0x80000000    // cleared when ConditionalDestroy runs
 };
 
+// UObject::StaticLoadObject flags
+enum ELoadFlags {
+    LOAD_NoWarn = 0x0002,
+    LOAD_Quiet  = 0x2000
+};
+
 // A script native reads its parameters from the bytecode and writes its result.
 #define RESULT_DECL void *const Result
 #define DECLARE_NATIVE(Name) void Name(FFrame &Stack, RESULT_DECL);
@@ -84,7 +90,12 @@ public:
 
     const TCHAR *GetName() const;
     class UClass *GetClass() const { return Class; }
+    UBOOL IsA(class UClass *SomeBase) const;
     class UFunction *FindFunctionChecked(FName InName, UBOOL Global);
+    static UObject *StaticLoadObject(class UClass *Class, UObject *InOuter, const TCHAR *Name,
+                                     const TCHAR *Filename, DWORD LoadFlags, void *Sandbox);
+    static UObject *StaticFindObject(class UClass *Class, UObject *InOuter, const TCHAR *Name,
+                                     UBOOL ExactClass = 0);
 
     // Campaign natives, in the order of their units
     DECLARE_NATIVE(execJumpIfNot)
@@ -128,6 +139,20 @@ public:
     DECLARE_NATIVE(execDampFloat)
     DECLARE_NATIVE(execDampInt)
     DECLARE_NATIVE(execDampVec)
+    DECLARE_NATIVE(execDivide_VectorFloat)
+    DECLARE_NATIVE(execDivideEqual_VectorFloat)
+    DECLARE_NATIVE(execMirrorVectorByNormal)
+    DECLARE_NATIVE(execDivide_RotatorFloat)
+    DECLARE_NATIVE(execDivideEqual_RotatorFloat)
+    DECLARE_NATIVE(execFloatToString)
+    DECLARE_NATIVE(execStringToVector)
+    DECLARE_NATIVE(execStringToRotator)
+    DECLARE_NATIVE(execVectorToString)
+    DECLARE_NATIVE(execRotatorToString)
+    DECLARE_NATIVE(execStructCmpEq)
+    DECLARE_NATIVE(execStructCmpNe)
+    DECLARE_NATIVE(execDynamicLoadObject)
+    DECLARE_NATIVE(execFindObject)
 };
 
 #endif // UNREAL_OBJECT_H

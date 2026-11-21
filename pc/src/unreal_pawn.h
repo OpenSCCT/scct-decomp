@@ -69,11 +69,14 @@ public:
     virtual void VirtualSlot175();
 
     class APawn *Pawn;          // the pawn this controller drives
-    BYTE         unk_2b8[0xdc];
+    BYTE         unk_2b8[0x30];
+    FVector      Destination;
+    BYTE         unk_2f4[0xa0];
 
     DECLARE_NATIVE(execPickWallAdjust)
     DECLARE_NATIVE(execpointReachable)
     DECLARE_NATIVE(execFindPathTo)
+    DECLARE_NATIVE(execEAdjustJump)
 };
 
 // Engine.Pawn: 0x6d8 bytes, 190 virtual functions
@@ -105,11 +108,14 @@ public:
     virtual void VirtualSlot188();
     virtual void VirtualSlot189();
 
-    BYTE unk_2b4[0x424];
+    BYTE  unk_2b4[0x4];
+    DWORD unk_2b8;              // flag word: a bone trace clears 0x100
+    BYTE  unk_2bc[0x41c];
 
     UBOOL PickWallAdjust(FVector WallHitNormal);
     UBOOL pointReachable(FVector aPoint, INT bKnowVisible, INT bExtra);
     FLOAT findPathToward(AActor *Goal, FVector Dest, void *NodeEval, UBOOL bClearPaths, INT bExtra);
+    FVector SuggestJumpVelocity(FVector Dest, FLOAT XYSpeed, FLOAT BaseZ);
 };
 
 // Engine.PlayerController: 0x494 bytes, 186 virtual functions
@@ -127,7 +133,8 @@ public:
     virtual void VirtualSlot184();
     virtual void VirtualSlot185();
 
-    BYTE unk_394[0x100];
+    class UPlayer *Player;      // the viewport or connection that controls this actor
+    BYTE           unk_398[0xfc];
 
     DECLARE_NATIVE(execCopyToClipboard)
 };

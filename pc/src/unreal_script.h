@@ -79,6 +79,27 @@ extern class UProperty *GProperty;
 #define P_GET_VECTOR(Var) FVector Var; Stack.Step(Stack.Object, &Var)
 #define P_GET_VECTOR_OPTX(Var, Def) FVector Var = Def; Stack.Step(Stack.Object, &Var)
 #define P_GET_ROTATOR(Var) FRotator Var; Stack.Step(Stack.Object, &Var)
+#define P_GET_ROTATOR_OPTX(Var, Def) FRotator Var = Def; Stack.Step(Stack.Object, &Var)
+#define P_GET_BYTE_OPTX(Var, Def) BYTE Var = Def; Stack.Step(Stack.Object, &Var)
+#define P_GET_INT_OPTX(Var, Def) INT Var = Def; Stack.Step(Stack.Object, &Var)
+#define P_GET_STRUCT(Type, Var) Type Var; Stack.Step(Stack.Object, &Var)
+// An out parameter: Var points at the script variable, or at a local when the expression
+// was not a variable.
+#define P_GET_FLOAT_REF(Var) \
+    FLOAT Var##T = 0.0f; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
+    FLOAT *Var = GPropAddr ? (FLOAT *)GPropAddr : &Var##T
+#define P_GET_NAME_REF(Var) \
+    FName Var##T; Var##T.Index = 0; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
+    FName *Var = GPropAddr ? (FName *)GPropAddr : &Var##T
+#define P_GET_OBJECT_REF(Cls, Var) \
+    Cls *Var##T = 0; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
+    Cls **Var = GPropAddr ? (Cls **)GPropAddr : &Var##T
+#define P_GET_VECTOR_REF(Var) \
+    FVector Var##T; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
+    FVector *Var = GPropAddr ? (FVector *)GPropAddr : &Var##T
+#define P_GET_ROTATOR_REF(Var) \
+    FRotator Var##T; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
+    FRotator *Var = GPropAddr ? (FRotator *)GPropAddr : &Var##T
 #ifdef SCCT_VERSUS
 #define P_FINISH Stack.Code++
 #else

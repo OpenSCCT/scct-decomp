@@ -7,6 +7,7 @@ typedef unsigned short _WORD;
 typedef int INT;
 typedef unsigned long DWORD;
 typedef float FLOAT;
+typedef double DOUBLE;
 typedef int UBOOL;                  // a boolean that fills a machine word
 typedef DWORD BITFIELD;             // the word a run of one-bit members shares
 typedef char ANSICHAR;
