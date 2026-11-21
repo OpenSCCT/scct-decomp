@@ -1,25 +1,25 @@
-/* Each mode owns 128 signed 16.16 gain values in the retail data section. */
-extern const int VolumeCurves[12][128];
+/* volume_lookup.c -- the volume along a fade curve (sndVolume.c) */
+#include "sound_volume.h"
 
-#pragma code_seg(".text$V74ad90")
-int __cdecl linear_to_volume(int amplitude, unsigned mode)
+/* fn_rGetVolFadeAttenuation: the volume in decibels at rPos, from 0 to 1, along a fade curve */
+SndReal __cdecl fn_rGetVolFadeAttenuation(SndReal rPos, SND_tdeFadeType eFadeType)
 {
-    int index = amplitude >> 9;
-    if (index >= 128)
-        index = 127;
-    switch (mode) {
-    case 0: return VolumeCurves[0][index];
-    case 1: return VolumeCurves[1][index];
-    case 2: return VolumeCurves[2][index];
-    case 3: return VolumeCurves[3][index];
-    case 4: return VolumeCurves[4][index];
-    case 5: return VolumeCurves[5][index];
-    case 6: return VolumeCurves[6][index];
-    case 7: return VolumeCurves[7][index];
-    case 8: return VolumeCurves[8][index];
-    case 9: return VolumeCurves[9][index];
-    case 10: return VolumeCurves[10][index];
-    case 11: return VolumeCurves[11][index];
-    default: return -96 * 65536;
+    long lIndice = rPos >> 9;
+    if (lIndice >= 128)
+        lIndice = 127;
+    switch (eFadeType) {
+    case SND_E_FADE_LINEAR: return rFade_Lin[lIndice];
+    case SND_E_FADE_LOG: return rFade_Log[lIndice];
+    case SND_E_FADE_POW_9: return rFade_Pow_9[lIndice];
+    case SND_E_FADE_POW_12: return rFade_Pow_12[lIndice];
+    case SND_E_FADE_POW_18: return rFade_Pow_18[lIndice];
+    case SND_E_FADE_POW_3: return rFade_Pow_3[lIndice];
+    case SND_E_FADE_POW_4: return rFade_Pow_4[lIndice];
+    case SND_E_FADE_POW_5: return rFade_Pow_5[lIndice];
+    case SND_E_FADE_SCURVE_1_5: return rFade_scurve_1_5[lIndice];
+    case SND_E_FADE_SCURVE_0_75: return rFade_scurve_0_75[lIndice];
+    case SND_E_FADE_INV_SCURVE_5: return rFade_Inv_scurve_5[lIndice];
+    case SND_E_FADE_INV_SCURVE_5_75: return rFade_Inv_scurve_5_75[lIndice];
+    default: return SND_VOLUME_MIN_DB;
     }
 }

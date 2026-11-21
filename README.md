@@ -29,6 +29,27 @@ bytes additionally need reviewed evidence of the original compiler and flags. Th
 machine-readable feed is [reports/progress.json](reports/progress.json), and
 [ByteMatch](https://bytematch.dev/OpenSCCT/scct-decomp) reads the same receipts.
 
+### Matched under the rules
+
+Matching bytes prove the source is faithful; readable source is the point. A unit counts as
+**matched under the rules** only when its bytes match *and* its source passes every [match] rule
+of the [code rules](docs/code-rules/README.md): one declaration per type and global, no offset
+casts, real vtables, no fake code, no assembly bodies. A unit that reproduces the bytes with
+scattered declarations or a compiler-steering trick is `MATCH-PENDING`: open work, not progress.
+
+<!-- rules:begin -->
+| Build and program | Bytes matched | Verified | Verified under the rules | `MATCH-PENDING` |
+| --- | ---: | ---: | ---: | ---: |
+| Steam 252084 · Campaign and co-op | 1,005,558 | 972,947 | 77,342 | 923,393 |
+| Steam 252084 · Versus | 273,298 | 243,478 | 6,574 | 265,405 |
+| PAL 1.01 · Online program | 8 | 0 | 0 | 0 |
+<!-- rules:end -->
+
+[reports/rules.json](reports/rules.json) holds the same totals with the count behind each rule;
+`rules --explain <unit>` lists what holds one unit back. Nearly all pending units fail R1 or R2:
+each source file declares its own copy of the types and globals it touches. The
+[project profile](AGENTS.md) says how to fix that, and from which evidence names may be taken.
+
 **PC.** Both Steam files match the sizes and SHA-1 values in depot 13571, manifest
 `2604462187318687519`; the manifests also lock each file by SHA-256.
 **PS2.** The PAL disc's `SYSTEM.CNF` boots `SLES_532.87`; the offline and online ELF
@@ -43,7 +64,11 @@ section, so a reviewed code map is needed before a percentage can be measured.
 | `<platform>/src/` | Independently written C and C++ sources |
 | `pc/function_maps/` | Function boundaries from Ghidra analysis, as file offsets (no game bytes), so ByteMatch can draw unmatched code function by function; `pc/README.md` explains how to regenerate them |
 | `tools/` | Image reader, progress tracker, x86 COFF linker, ByteMatch export, progress publisher |
+| `tools/rules/` | Code-rule checker (C): computes which matched units also pass the [match] rules |
+| `tools/evidence/` | Symbol indexer (C) for sibling builds that shipped with symbols |
+| `docs/code-rules/` | The code rules; `AGENTS.md` at the root is this project's profile |
 | `reports/progress.json` | Generated feed used by the website and ByteMatch |
+| `reports/rules.json` | Generated totals of units matched under the rules |
 
 Game files, disc images, compiled objects and analysis databases stay in an ignored
 `local/` folder or outside the checkout. `tools/ci/no_game_data.py` enforces this in CI.
@@ -53,8 +78,9 @@ Game files, disc images, compiled objects and analysis databases stay in an igno
 1. **Disassemble.** Verify your own executable against its manifest hash. Keep extracted
    bytes, disassembly and databases under `local/`.
    [Source and evidence rules](https://github.com/OpenSCCT/OpenSCCT/blob/main/re/PROVENANCE.md)
-2. **Rewrite.** Write one complete function in C, or in C++ where the original needs
-   C++ code generation such as exception frames. Record the compiler and flags.
+2. **Rewrite.** Write one complete function in the language and dialect the original used,
+   following the [code rules](docs/code-rules/README.md) and the [project profile](AGENTS.md):
+   shared declarations, typed members, names from evidence. Record the compiler and flags.
 3. **Verify.** Link compiler-emitted references against retail evidence and compare the
    whole function. Commit the source, recipe and receipt hashes.
 
@@ -64,6 +90,8 @@ python tools/progress.py verify EDITION TARGET PATH_TO_EXECUTABLE
 python tools/progress.py match EDITION TARGET PATH_TO_EXECUTABLE UNIT BUILT_ARTIFACT
 python tools/progress.py report [--check]
 python -m unittest discover -s tools
+cc -std=c99 -O2 -o local/bin/rules tools/rules/rules.c
+local/bin/rules [--findings] [--explain UNIT] [--json reports/rules.json] [--check]
 ```
 
 ## Reading a report

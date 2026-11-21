@@ -1,15 +1,15 @@
-/* Named KERNEL32 import slots in the Steam 252084 campaign image. */
-typedef int (__stdcall *CloseHandleFn)(void *file);
-typedef int (__stdcall *DeleteFileFn)(const char *path);
-#define CLOSE_HANDLE (*(CloseHandleFn const *)0x110b738c)
-#define DELETE_FILE (*(DeleteFileFn const *)0x110b7378)
+/* sound_file_handles.c -- closes and deletes files (sndfile.c) */
+#include "sound_file.h"
+#include "sound_win32.h"
 
-void __stdcall SND_fn_vCloseFileSnd(void *file)
+/* SND_fn_vCloseFileSnd */
+void __stdcall SND_fn_vCloseFileSnd(SndFile hFile)
 {
-    CLOSE_HANDLE(file);
+    CloseHandle(hFile);
 }
 
-int __stdcall SND_fn_bDeleteFile(const char *path)
+/* SND_fn_bDeleteFile */
+int __stdcall SND_fn_bDeleteFile(const char *szFileName)
 {
-    return DELETE_FILE(path);
+    return DeleteFileA(szFileName);
 }

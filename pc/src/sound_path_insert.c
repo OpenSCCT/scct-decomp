@@ -1,90 +1,60 @@
-/* Each audio search path carries intrusive links and an optional owner list. */
-struct SoundPath;
-struct SoundPathList {
-    struct SoundPath *first;
-    struct SoundPath *last;
-    unsigned count;
-};
+/* sound_path_insert.c -- adds a partial directory (snddata.c) */
+#include "sound_data.h"
+#include "sound_error.h"
+#include "sound_file.h"
+#include "sound_memory.h"
+#include "sound_string.h"
+#include "sound_thread.h"
 
-struct SoundPath {
-    char name[256];
-    struct SoundPath *next;
-    struct SoundPath *previous;
-    struct SoundPathList *owner;
-};
-
-extern struct SoundPathList sound_paths;
-extern char sound_master_directory[256];
-extern const char sound_directory_source[];
-
-void __stdcall SND_fn_vEnterCriticalSectionThreadSnd_(void);
-void __stdcall SND_fn_vQuitCriticalSectionThreadSnd(void);
-void __stdcall SND_fn_vMouchardThreadsnd(const char *file, unsigned line);
-void __stdcall SND_fn_vMemsetSnd(void *dest, int fill, unsigned length);
-void __stdcall SND_fn_vFreeSnd(void *pointer);
-long __stdcall SND_fn_lStriCmp(const char *left, const char *right);
-
-
-extern const char sound_null_partial_input[];
-extern const char sound_missing_master_path[];
-extern const char sound_insufficient_path_memory[];
-extern const char sound_partial_missing_separator[];
-unsigned __cdecl strlen(const char *);
-char *__cdecl strcpy(char *dest, const char *src);
-void __stdcall SND_fn_vDisplayError(unsigned code, const char *message);
-void *__stdcall SND_fn_pvMallocSnd(unsigned size);
-char __stdcall SND_fn_cGetDirectorySeparator(void);
-int __stdcall SND_fn_bIsDataDirectory(const char *name);
-void __stdcall SND_fn_vStrncpy(char *dest, const char *src, unsigned capacity);
-
-void __stdcall SND_fn_vAddPartialDirectory(const char *name)
+/* SND_fn_vAddPartialDirectory: the directory must end with a separator; it is added once */
+void __stdcall SND_fn_vAddPartialDirectory(const char *cszDir)
 {
-    int length, i;
-    char *copy;
-    struct SoundPath *node;
-    if (!name) {
-        SND_fn_vDisplayError(47, sound_null_partial_input);
+    int iStrLen, i;
+    char *czStrTemp;
+    tdstDataRootDirectory *pstNewDataRoot;
+    if (!cszDir) {
+        SND_fn_vDisplayError(47, "Error in SndFile:SND_fn_vAddPartialDirectory : Game send us a NULL pointer string");
         return;
     }
-    if (strlen(sound_master_directory) == 0) {
-        SND_fn_vDisplayError(47, sound_missing_master_path);
+    if (strlen(g_czSndMasterDirectory) == 0) {
+        SND_fn_vDisplayError(47, "Error in SndFile:SND_fn_vAddPartialDirectory : Game has not set the Master Directory.");
         return;
     }
-    length = strlen(name);
-    copy = SND_fn_pvMallocSnd(length + 1);
-    if (!copy) {
-        SND_fn_vDisplayError(47, sound_insufficient_path_memory);
+    iStrLen = strlen(cszDir);
+    czStrTemp = SND_fn_pvMallocSnd(iStrLen + 1);
+    if (!czStrTemp) {
+        SND_fn_vDisplayError(47, "Error in SND_fn_vAddPartialDirectory : Memory Allocation failed");
         return;
     }
-    strcpy(copy, name);
-    for (i = 0; i < length; ++i) {
-        if (copy[i] == '/' || copy[i] == '\\')
-            copy[i] = SND_fn_cGetDirectorySeparator();
+    strcpy(czStrTemp, cszDir);
+    for (i = 0; i < iStrLen; ++i) {
+        if (czStrTemp[i] == '/' || czStrTemp[i] == '\\')
+            czStrTemp[i] = SND_fn_cGetDirectorySeparator();
     }
-    if (length > 0 && copy[length - 1] != SND_fn_cGetDirectorySeparator()) {
-        SND_fn_vDisplayError(47, sound_partial_missing_separator);
-        SND_fn_vFreeSnd(copy);
+    if (iStrLen > 0 && czStrTemp[iStrLen - 1] != SND_fn_cGetDirectorySeparator()) {
+        SND_fn_vDisplayError(47, "Error in SND_fn_vAddPartialDirectory : path string must include final \\ or /.");
+        SND_fn_vFreeSnd(czStrTemp);
         return;
     }
     SND_fn_vEnterCriticalSectionThreadSnd_();
-    SND_fn_vMouchardThreadsnd(sound_directory_source, 215);
-    if (!SND_fn_bIsDataDirectory(copy)) {
-        node = SND_fn_pvMallocSnd(sizeof(*node));
-        if (node) {
-            SND_fn_vStrncpy(node->name, copy, sizeof(node->name));
-            node->previous = 0;
-            node->owner = 0;
-            node->next = 0;
-            node->previous = sound_paths.last;
-            node->owner = &sound_paths;
-            if (sound_paths.first == 0)
-                sound_paths.first = node;
+    SND_fn_vMouchardThreadsnd(SNDDATA_C_FILE, 215);
+    if (!SND_fn_bIsDataDirectory(czStrTemp)) {
+        pstNewDataRoot = SND_fn_pvMallocSnd(sizeof(*pstNewDataRoot));
+        if (pstNewDataRoot) {
+            SND_fn_vStrncpy(pstNewDataRoot->szDirectory, czStrTemp, sizeof(pstNewDataRoot->szDirectory));
+            pstNewDataRoot->hPrevBrotherDyn = 0;
+            pstNewDataRoot->hFatherDyn = 0;
+            pstNewDataRoot->hNextBrotherDyn = 0;
+            pstNewDataRoot->hPrevBrotherDyn = gs_stDataPartialDirectoryList.hLastElementDyn;
+            pstNewDataRoot->hFatherDyn = &gs_stDataPartialDirectoryList;
+            if (gs_stDataPartialDirectoryList.hFirstElementDyn == 0)
+                gs_stDataPartialDirectoryList.hFirstElementDyn = pstNewDataRoot;
             else
-                sound_paths.last->next = node;
-            sound_paths.last = node;
-            ++sound_paths.count;
+                gs_stDataPartialDirectoryList.hLastElementDyn->hNextBrotherDyn = pstNewDataRoot;
+            gs_stDataPartialDirectoryList.hLastElementDyn = pstNewDataRoot;
+            ++gs_stDataPartialDirectoryList.lNumberOfElementsDyn;
         }
     }
     SND_fn_vQuitCriticalSectionThreadSnd();
-    SND_fn_vFreeSnd(copy);
+    SND_fn_vFreeSnd(czStrTemp);
 }

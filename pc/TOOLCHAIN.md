@@ -7,6 +7,24 @@
 
 Ghidra's product table associates `0x003d` with the Visual Studio .NET 2002 linker, `0x001c` and `0x001d` with its C and C++ tools, and `0x0060` with Visual Studio .NET 2003 C++. The Versus file includes all four IDs. Mixed producer records can come from several libraries and translation units. The output of `workflow.py â€¦ inspect` lists the raw product IDs, builds and counts for this exact binary. [Microsoft PE format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format) Â· [Ghidra 12.1.4 product table](https://github.com/NationalSecurityAgency/ghidra/blob/Ghidra_12.1.4_build/Ghidra/Features/Base/data/ms_pe_rich_products.xml)
 
+## Campaign build record
+
+Each line below can be read from the locked Campaign image without running it.
+
+| Observation | Where | What it shows |
+| --- | --- | --- |
+| Linker version 7.10 | PE32 optional header | Visual Studio .NET 2003 linker |
+| Link time `0x431DDA4A`, 2005-09-06 18:04:58 UTC | COFF header and the debug directory entry | The build predates Visual Studio .NET 2003 Service Pack 1 (compiler 13.10.6030, 2006), which leaves the 13.10.3077 release compiler |
+| One CodeView debug entry, signature `RSDS`, naming `d:\build\splintercellx-pc\patch\SplinterCell2\Launch\Src\Retail Static NoMassive\SplinterCell3.pdb` | Debug directory, file offset `0x8783c8` | A PDB 7.0 record: VC7 or later. The configuration name says the engine packages are linked statically into the launcher, which is why this executable also exports their functions |
+| File bytes `0x40` to `0x148` are all zero, and `e_lfanew` is `0x148` | DOS header and stub | The linker's stub and Rich record were wiped after linking. 200 bytes follow the standard `0x80` stub position: room for a Rich record of about 22 producer entries. "No Rich marker" therefore does not mean the linker wrote none |
+| Entry point RVA `0xaa7443` lies in the non-code section `.bind` | Optional header, section table | Steam's wrapper was added after linking and runs first |
+| `6a 60 68 … e8 … bf 94 00 00 00` (`push 60h`, `push` of the scope table, `call __SEH_prolog`, `mov edi, 94h`) at RVA `0x63185a` | `.text` | The VC7.x `WinMainCRTStartup`: the original entry point, inside a statically linked C runtime |
+| No import of `msvcr71.dll` or `msvcp71.dll`; the text `Unknown security failure detected!` is present once | Import directory, `.rdata` | Static VC7.1 runtime with the `/GS` failure handler. The `msvcr71.dll` shipped beside the executable (7.10.3052.4) serves other modules |
+| 90 run-time type names in the `_STL` namespace | `.data` | STLport, not the Microsoft standard library, in the code that uses the standard containers |
+
+The Versus payload links seventeen weeks earlier (2005-05-04 08:28:43 UTC, linker 7.00) and
+has no debug directory entry.
+
 ## Campaign sound catalogue
 
 The campaign export table resolves `_SND_fn_lGetSoundTextureCount@0`, ordinal 57, to preferred VA `0x11048e10` (RVA `0x748e10`). REA export evidence is `ev_2265eec6bc83a81dc32381bb16c057ab071e61ff853f63232491831a06a3e06d`. Ghidra 12.1.4 identified a three-byte function returning zero. The independent C implementation uses the export's x86 calling convention.
@@ -17,7 +35,7 @@ The campaign export table resolves `_SND_fn_lGetSoundTextureCount@0`, ordinal 57
 | MSVC 19.44.35229.0 | `/O1 /c` | Three identical bytes, objdiff symbol 100% |
 | MSVC 19.44.35229.0 | `/Od /c` | Different function size |
 
-An exact result for this constant return cannot distinguish the two optimisations. Reproducing an historical recipe requires independent evidence for the compiler version and flags. A shipped build record, debug information or a representative set of functions with differentiating code generation could advance the investigation.
+The Toolkit 2003 compiler (13.10.3052) reproduces the same three bytes with `/O2 /Gy`, and the manifest now records that recipe. An exact result for this constant return cannot distinguish the two optimisations. Reproducing an historical recipe requires independent evidence for the compiler version and flags. A shipped build record, debug information or a representative set of functions with differentiating code generation could advance the investigation.
 
 ## Versus vector arithmetic
 
@@ -36,6 +54,16 @@ covering 610 bytes, `/O2 /Gy`, `/Ox /Gy` and `/O2 /G6 /Gy` each matched
 all seven. `/O1 /Gy` matched one, and x86 MSVC 19.44 matched none of the
 seven in the tested profiles. The manifest records a working recipe for
 each independently compiled function.
+
+Eighty-four candidates were first recorded against x86 MSVC 19.44. Rebuilt
+with 13.10.3052, seventy reproduce every retail byte (forty-nine Campaign,
+twenty-one Versus), sixty-seven with their recorded switches and three
+after `/arch:IA32` was dropped or `/O1` became `/O2`; their manifest entries
+now name the period compiler. They stay candidates until a reviewed basis
+covers them. The other fourteen are thirteen Versus Windows dispatch
+wrappers, whose 13.10.3052 output differs from retail, and one unit that
+needs a relocation binding. A unit that only a 2022 compiler reproduces is
+a lead on the original source, not a match of it.
 
 Twelve wide-string and Unicode digit functions in the campaign cover 931 bytes
 and match complete, uniquely

@@ -1,34 +1,31 @@
-/* Reconstructed contracts of the campaign directory module. The build's
-   named procedure exports identify the helpers used by these routines. */
-void __stdcall SND_fn_vEnterCriticalSectionThreadSnd_(void);
-void __stdcall SND_fn_vQuitCriticalSectionThreadSnd(void);
-void __stdcall SND_fn_vMouchardThreadsnd(const char *file, unsigned line);
-void __stdcall SND_fn_vStrncpy(char *dest, const char *src, unsigned capacity);
+/* sound_directory_updates.c -- the directory count and the soft and language directories
+   (snddata.c) */
+#include "sound_data.h"
+#include "sound_string.h"
+#include "sound_thread.h"
 
-extern char sound_soft_directory[256];
-extern char sound_current_language_directory[9];
-extern const char sound_directory_source[];
-extern unsigned long sound_partial_directory_count;
-
+/* SND_fn_ulGetNumberOfPartialDirectory: the partial directories and the master directory */
 unsigned long __stdcall SND_fn_ulGetNumberOfPartialDirectory(void)
 {
     unsigned long total;
     SND_fn_vEnterCriticalSectionThreadSnd_();
-    SND_fn_vMouchardThreadsnd(sound_directory_source, 363);
-    total = sound_partial_directory_count + 1;
+    SND_fn_vMouchardThreadsnd(SNDDATA_C_FILE, 363);
+    total = gs_stDataPartialDirectoryList.lNumberOfElementsDyn + 1;
     SND_fn_vQuitCriticalSectionThreadSnd();
     return total;
 }
 
-void __stdcall SND_fn_vSetSoftDirectory(const char *directory)
+/* SND_fn_vSetSoftDirectory */
+void __stdcall SND_fn_vSetSoftDirectory(const char *cszDir)
 {
     SND_fn_vEnterCriticalSectionThreadSnd_();
-    SND_fn_vMouchardThreadsnd(sound_directory_source, 496);
-    SND_fn_vStrncpy(sound_soft_directory, directory, sizeof(sound_soft_directory));
+    SND_fn_vMouchardThreadsnd(SNDDATA_C_FILE, 496);
+    SND_fn_vStrncpy(g_czSoundSoftDirectory, cszDir, sizeof(g_czSoundSoftDirectory));
     SND_fn_vQuitCriticalSectionThreadSnd();
 }
 
-void __stdcall SND_fn_vSetCurrentLangDirectory(const char *directory)
+/* SND_fn_vSetCurrentLangDirectory */
+void __stdcall SND_fn_vSetCurrentLangDirectory(const char *cszLanguage)
 {
-    SND_fn_vStrncpy(sound_current_language_directory, directory, sizeof(sound_current_language_directory));
+    SND_fn_vStrncpy(g_czCurrentLang, cszLanguage, sizeof(g_czCurrentLang));
 }

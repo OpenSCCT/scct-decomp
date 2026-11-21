@@ -1,20 +1,18 @@
-typedef unsigned long Word;
-typedef void *File;
-File __stdcall SND_fn_hOpenFileReadSnd(const char *path);
-Word __stdcall SND_fn_ulReadFileSnd(File file, Word count, void *buffer);
-void __stdcall SND_fn_vCloseFileSnd(File file);
+/* sound_load_range.c -- reads part of a file into memory (snddata.c) */
+#include "sound_data.h"
+#include "sound_file.h"
 
-Word __stdcall SND_fn_ulSeekFileSnd(File file, long distance, int origin);
-
-int __stdcall SND_fn_bLoadDataInMem(void *destination, Word size, const char *path, long offset)
+/* SND_fn_bLoadDataInMem: true when all ulSize bytes at lOffset were read */
+int __stdcall SND_fn_bLoadDataInMem(void *pvDest, unsigned long ulSize, const char *szFileName,
+                                    long lOffset)
 {
-    Word count;
-    File file = SND_fn_hOpenFileReadSnd(path);
-    if (file != (File)-1) {
-        SND_fn_ulSeekFileSnd(file, offset, 0);
-        count = SND_fn_ulReadFileSnd(file, size, destination);
-        SND_fn_vCloseFileSnd(file);
-        if (count == size)
+    unsigned long count;
+    SndFile hFile = SND_fn_hOpenFileReadSnd(szFileName);
+    if (hFile != SND_FILE_INVALID) {
+        SND_fn_ulSeekFileSnd(hFile, lOffset, 0);
+        count = SND_fn_ulReadFileSnd(hFile, ulSize, pvDest);
+        SND_fn_vCloseFileSnd(hFile);
+        if (count == ulSize)
             return 1;
     }
     return 0;

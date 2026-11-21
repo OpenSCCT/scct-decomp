@@ -1,35 +1,32 @@
-typedef unsigned long DWord;
-typedef int (__stdcall *ReadFileFn)(void *file, void *buffer, DWord count, DWord *read, void *overlapped);
-typedef int (__stdcall *WriteFileFn)(void *file, const void *buffer, DWord count, DWord *written, void *overlapped);
-typedef DWord (__stdcall *GetLastErrorFn)(void);
-typedef DWord (__stdcall *GetFileSizeFn)(void *file, DWord *high);
+/* sound_file_io.c -- reads, writes and measures a file (sndfile.c) */
+#include "sound_file.h"
+#include "sound_win32.h"
 
-#define READ_FILE (*(ReadFileFn const *)0x110b72cc)
-#define WRITE_FILE (*(WriteFileFn const *)0x110b73c8)
-#define GET_LAST_ERROR (*(GetLastErrorFn const *)0x110b73b4)
-#define GET_FILE_SIZE (*(GetFileSizeFn const *)0x110b73b8)
-
-DWord __stdcall SND_fn_ulReadFileSnd(void *file, DWord count, void *buffer)
+/* SND_fn_ulReadFileSnd: the number of bytes read, 0 on failure */
+unsigned long __stdcall SND_fn_ulReadFileSnd(SndFile hFile, unsigned long ulNbBytes, void *pvBuffer)
 {
-    DWord read = 0;
-    if (!READ_FILE(file, buffer, count, &read, 0)) {
-        GET_LAST_ERROR();
+    unsigned long read = 0;
+    if (!ReadFile(hFile, pvBuffer, ulNbBytes, &read, 0)) {
+        GetLastError();
         return 0;
     }
     return read;
 }
 
-DWord __stdcall SND_fn_ulWriteFileSnd(void *file, DWord count, const void *buffer)
+/* SND_fn_ulWriteFileSnd: the number of bytes written, 0 on failure */
+unsigned long __stdcall SND_fn_ulWriteFileSnd(SndFile hFile, unsigned long ulNbBytes,
+                                              const void *pvBuffer)
 {
-    DWord written = 0;
-    if (!WRITE_FILE(file, buffer, count, &written, 0)) {
-        GET_LAST_ERROR();
+    unsigned long written = 0;
+    if (!WriteFile(hFile, pvBuffer, ulNbBytes, &written, 0)) {
+        GetLastError();
         return 0;
     }
     return written;
 }
 
-DWord __stdcall SND_fn_ulGetFileSize(void *file)
+/* SND_fn_ulGetFileSize */
+unsigned long __stdcall SND_fn_ulGetFileSize(SndFile hFile)
 {
-    return GET_FILE_SIZE(file, 0);
+    return GetFileSize(hFile, 0);
 }

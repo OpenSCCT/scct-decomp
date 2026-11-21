@@ -1,0 +1,69 @@
+src/generated.c:4: R2 [match] `extern` global declared inside a macro or a function: declare it once, in a header
+src/record_b.c:4: R2 [match] `extern` of global `frame_total` in a source file: declare it once, in a header
+src/offsets.c:4: R4 [match] fixed offset +0x58 through a byte-pointer cast, then a dereference cast
+src/offsets.c:9: R4 advisory byte-pointer cast of `object` + 16: a member's address taken by offset
+src/fakes.c:4: R17 [match] padding member `pad`
+src/fakes.c:5: R27 advisory filler member `gap` names no offset: use `unk_<offset>` for an untouched range
+src/fakes.c:6: R7 advisory placeholder member name `unk_18`: open naming work
+src/fakes.c:13: R17 [match] `volatile` on a local, a parameter or a cast, without a `// volatile: <evidence>` note
+src/fakes.c:16: R17 [match] empty `if` block
+src/fakes.c:19: R17 [match] self-assignment
+src/fakes.c:20: R17 [match] `do { } while ( 0 )` outside a macro
+src/fakes.c:21: R17 [match] bare `;` statement
+src/fakes.c:23: R17 [match] `+ 0` steers the compiler
+src/fakes.c:14: R17 [match] local `unused` is declared and never used
+src/fakes.c:27: R12 advisory `__fastcall` with unused second parameter `reserved_edx`: a member function written as a free function
+src/fakes.c:33: R18 [match] assembly token `__asm`
+src/vtable.cpp:5: R13 [match] padding virtual `pad1`
+src/generated.c:10: R7 advisory placeholder function name `get_sub_401000`: open naming work
+src/record_b.c:2: R1 [match] type `Record` has 1 other definitions, 1 with a different body (one in src/record_a.c)
+src/record_a.c:2: R1 [match] type `Record` has 1 other definitions, 1 with a different body (one in src/record_b.c)
+src/marked.cpp:24: R17 [match] marked as a probe or a fakematch
+src/variant.h:7: R17 [match] marked as a probe or a fakematch
+14 source files, 22 findings
+  R1   [match]       2
+  R2   [match]       2
+  R4   [match]       1
+  R13  [match]       1
+  R17  [match]      10
+  R18  [match]       1
+  R4   advisory      1
+  R7   advisory      2
+  R12  advisory      1
+  R22  advisory      0
+  R25  advisory      0
+  R27  advisory      1
+  R33  advisory      0
+  R35  advisory      0
+  R37  advisory      0
+synthetic
+  bytes matched:                19 functions       304 bytes
+  verified:                     17 functions       272 bytes
+  verified under the rules:      7 functions       112 bytes
+  MATCH-PENDING:                11 functions       176 bytes
+    R1        2 functions        32 bytes
+    R2        3 functions        48 bytes
+    R4        1 functions        16 bytes
+    R13       1 functions        16 bytes
+    R17       4 functions        64 bytes
+    R18       1 functions        16 bytes
+target	unit	bytes	evidence	status	source_found_by	rules
+synthetic	widget-count	16	verified	matched	function	
+synthetic	widget-hide	16	verified	matched	function	
+synthetic	idiom-copy	16	verified	matched	function	
+synthetic	idiom-sum	16	verified	matched	function	
+synthetic	record-count	16	verified	MATCH-PENDING	function	R1 
+synthetic	record-add	16	verified	MATCH-PENDING	function	R1 R2 
+synthetic	record-seven	16	verified	matched	function	
+synthetic	object-radius	16	verified	MATCH-PENDING	function	R4 
+synthetic	object-child	16	candidate	matched	function	
+synthetic	fake-steering	16	verified	MATCH-PENDING	function	R17 
+synthetic	fake-method	16	verified	MATCH-PENDING	function	R17 
+synthetic	fake-asm	16	verified	MATCH-PENDING	function	R18 
+synthetic	shape-destructor	16	verified	MATCH-PENDING	function	R13 
+synthetic	get-red	16	verified	MATCH-PENDING	function	R2 
+synthetic	get-placeholder	16	candidate	MATCH-PENDING	function	R2 
+synthetic	property-address	16	verified	matched	function	
+synthetic	marked-stand-in	16	verified	MATCH-PENDING	function	R17 
+synthetic	variant-a-first	16	verified	matched	function	
+synthetic	variant-b-first	16	verified	MATCH-PENDING	function	R17 

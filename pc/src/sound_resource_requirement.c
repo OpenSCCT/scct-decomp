@@ -1,35 +1,26 @@
-typedef struct Sample Sample;
-typedef struct { Sample *resource; unsigned fields[4]; } ChildResource;
-struct Sample {
-    unsigned id, type;
-    char reserved[0x38];
-    ChildResource *children;
-    int count;
-};
+/* sound_resource_requirement.c -- what a resource needs from the renderer to play
+   (sndmanager.cpp) */
+#include "sound_manager.h"
 
-extern unsigned __cdecl locked_resource_channels(const Sample *);
-extern unsigned __cdecl channel_requirement(unsigned channels);
-extern void __stdcall EnterCriticalSectionTool_(void);
-extern void __stdcall QuitCriticalSectionTool(void);
-extern void __stdcall MouchardThreadTool(const char *site,int line);
-extern const char MixerLockSite[];
-
-#pragma code_seg(".text$V7596a0")
-unsigned __cdecl resource_requirement(const Sample *sample)
+/* resource_requirement: the largest requirement of the resource or of its elements.
+   guess: SndManager::GetNbHWVoice of the sibling builds */
+unsigned long __cdecl resource_requirement(const tdstBlockResourceMem *res)
 {
-    unsigned result;
+    unsigned long result;
     EnterCriticalSectionTool_();
-    MouchardThreadTool(MixerLockSite, 0xbeb);
+    MouchardThreadTool(SNDMANAGER_CPP_FILE, 3051);
     result = 0;
-    switch (sample->type) {
-    case 1: case 6: case 9:
-        result = channel_requirement(locked_resource_channels(sample));
+    switch (res->eType) {
+    case TYPE_SAMPLE:
+    case TYPE_MULTITRACK:
+    case 9:
+        result = channel_requirement(locked_resource_channels(res));
         break;
     case 5: {
         int i;
-        const ChildResource *child = sample->children;
-        for (i = 0; i < sample->count; ++i, ++child) {
-            unsigned requirement = resource_requirement(child->resource);
+        const tdstType5Element *element = res->uRes.stType5.elements;
+        for (i = 0; i < res->uRes.stType5.count; ++i, ++element) {
+            unsigned long requirement = resource_requirement(element->resource);
             if (result < requirement)
                 result = requirement;
         }

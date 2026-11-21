@@ -44,6 +44,33 @@ units are recorded as byte-identical candidates without compiler evidence.
 The roughly 3,200 Versus units verified before that date keep their 3077
 evidence.
 
+## Link-time code generation
+
+Versus was linked with whole-program optimisation; the
+[toolchain notes](../TOOLCHAIN.md#link-time-code-generation-versus) and
+[versus-vc70-switches.md](versus-vc70-switches.md) now establish it from the Rich records and
+rebuild such units through a link step. One function shows it without any tooling. The
+function at RVA `0xc7d0`, which removes a run of 12-byte elements from an array, reads its
+index from EDI without ever setting it:
+
+```text
+1090c7d0  mov  eax, [esp+8]      ; count
+1090c7d4  add  eax, edi          ; index arrives in EDI
+1090c7d6  cmp  edi, eax
+1090c7d8  push ebp
+1090c7d9  mov  ebp, [esp+8]      ; this arrives on the stack
+```
+
+Its two callers, at RVA `0xc61c` and `0xca7b1`, lie 780 KB apart, and the first clears EDI
+with `xor edi, edi` just before it pushes the other arguments. No calling convention a
+programmer can write passes an argument in EDI, and a compiler that sees one translation unit
+chooses such a convention only for a `static` function.
+
+A unit compiled alone can therefore reproduce only the functions whose convention the link
+step left alone. The units that imitate a link-time convention through a stand-in
+(`TArrayLtcg` in `src/versus_ltcg.h`) are fakematches, marked as such; with the `ltcg_link`
+recipe they can be rebuilt from a plain `TArray<T>` member instead.
+
 ## Decision needed
 
 1. Keep the current attribution and turn Versus evidence back on.

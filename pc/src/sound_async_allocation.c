@@ -1,10 +1,9 @@
+/* sound_async_allocation.c -- creates and destroys asynchronous read requests */
 #include "sound_async_worker.h"
-void *__stdcall SND_fn_pvMallocSnd(Word size);
-void __stdcall SND_fn_vFreeSnd(void *allocation);
-__declspec(dllimport) Handle __stdcall CreateMutexA(void *attributes, int owned, const char *name);
-__declspec(dllimport) int __stdcall CloseHandle(Handle handle);
+#include "sound_memory.h"
 
-AsyncRequest *__cdecl sound_alloc_stream_request(Word bytes)
+/* sound_alloc_stream_request: a request with its mutex and a buffer of the given size */
+AsyncRequest *__cdecl sound_alloc_stream_request(unsigned long bytes)
 {
     AsyncRequest *request = SND_fn_pvMallocSnd(sizeof(AsyncRequest));
     if (!request)
@@ -25,6 +24,7 @@ failed:
     return 0;
 }
 
+/* sound_dispose_stream_request */
 void __cdecl sound_dispose_stream_request(AsyncRequest *request)
 {
     SND_fn_vFreeSnd(request->buffer);

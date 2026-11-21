@@ -1023,14 +1023,26 @@
     "size": 60,
     "rebuilt_symbol": "_SND_fn_ulReadFileSnd@12",
     "inputs": [
-      "src/sound_file_io.c"
+      "src/sound_file_io.c",
+      "src/sound_file.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_file_io.obj src/sound_file_io.c",
+    "link_bindings": {
+      "__imp__ReadFile@20": {
+        "va": 285962956,
+        "basis": "KERNEL32 import slot called by the export SND_fn_ulReadFileSnd."
+      },
+      "__imp__GetLastError@0": {
+        "va": 285963188,
+        "basis": "KERNEL32 import slot."
+      }
+    },
     "identification": "Steam PE export _SND_fn_ulReadFileSnd@12 at RVA 0x7945b0. Passes file, buffer and count to the named ReadFile import. Both success and failure branches return a byte count, with GetLastError called before returning zero on failure. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "f9acbd2cf825496be0c60f1e154de8686db858d2a3861e028dd230e0f2e4efc1",
-      "inputs_sha256": "a4d8a0f872f723be43852e35284c710e1ab0824557247c54afa31f390eb94945"
+      "inputs_sha256": "023fe03b7141f4970ad0b6736f0fdb171c091adf7787c4a413e142f42bd85bd2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1047,7 +1059,10 @@
     "size": 80,
     "rebuilt_symbol": "_SND_fn_ulSeekFileSnd@12",
     "inputs": [
-      "src/sound_file_range.c"
+      "src/sound_file_range.c",
+      "src/sound_error.h",
+      "src/sound_file.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_file_range.obj src/sound_file_range.c",
@@ -1056,11 +1071,19 @@
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named export _SND_fn_vDisplayError@8 in the Steam campaign PE."
+      },
+      "__imp__SetFilePointer@16": {
+        "va": 285963204,
+        "basis": "KERNEL32 import slot called by the export SND_fn_ulSeekFileSnd."
+      },
+      "??_C@_0DA@OMLAEDOC@Bad?5_eOrigin?5parameter?5for?5SND_f@": {
+        "va": 286753312,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "15b47c42b5e55441c928377f7a98685d7e09b2bf5bacb1908cc40b8e853f86cb",
-      "inputs_sha256": "3bf70bdc833af1c975b580e93867410a0bfc7ee3be24c6d42a776e013a044e27"
+      "inputs_sha256": "10a99036c965c39756414c97f07a7b92d0af22883cb42a2a5b61a788b737cd74"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1077,14 +1100,22 @@
     "size": 6,
     "rebuilt_symbol": "_SND_fn_vCloseFileSnd@4",
     "inputs": [
-      "src/sound_file_handles.c"
+      "src/sound_file_handles.c",
+      "src/sound_file.h",
+      "src/sound_win32.h"
     ],
-    "toolchain": "Microsoft C/C++ 19.44.35229.0 for x86",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O1 /Gy /c /Folocal/sound_file_handles.obj src/sound_file_handles.c",
+    "link_bindings": {
+      "__imp__CloseHandle@4": {
+        "va": 285963148,
+        "basis": "KERNEL32 import slot."
+      }
+    },
     "identification": "The named export is a single terminal indirect jump through the KERNEL32 CloseHandle import at VA 0x110b738c. The next bytes are alignment. The caller already supplied the handle on the stack.",
     "match": {
       "bytes_sha256": "130bca5d2a3c2ca69c636b7ee88752f201f4be9977500395b60faff6d61f8672",
-      "inputs_sha256": "3f7ee11b9dfb397dfa6a490ff06fff4e1c2496c9c8c84f6c13a141b79ded0111"
+      "inputs_sha256": "35452b48abfc0762017e1700ae618f6739ea9066e3f477824ec22b3aa78c9306"
     }
   },
   {
@@ -1093,14 +1124,16 @@
     "size": 3,
     "rebuilt_symbol": "_SND_fn_cGetDirectorySeparator@0",
     "inputs": [
-      "src/sound_directory_queries.c"
+      "src/sound_directory_queries.c",
+      "src/sound_data.h",
+      "src/sound_file.h"
     ],
-    "toolchain": "Microsoft C/C++ 19.44.35229.0 for x86",
-    "build_command": "cl /nologo /Gy /c /O2 /Folocal/sound_directory_queries.obj src/sound_directory_queries.c",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/sound_directory_queries.obj src/sound_directory_queries.c",
     "identification": "The retail export table names _SND_fn_cGetDirectorySeparator@0 at RVA 0x794650. Its return immediately precedes alignment.",
     "match": {
       "bytes_sha256": "843316f2067c905c3f17a526081c3028022d685a1a6652709f90bedbae6c3cd0",
-      "inputs_sha256": "fad4352d60430b56a153d75602fc8a8fea1cfb486cc849e9999ae97e262190d3"
+      "inputs_sha256": "35c95d79cea25b21a9013cd05b6993a9da28961019a740f1031db513492ff628"
     }
   },
   {
@@ -1109,7 +1142,9 @@
     "size": 97,
     "rebuilt_symbol": "_SND_fn_bTestFileExistSnd@4",
     "inputs": [
-      "src/sound_file_exists.c"
+      "src/sound_file_exists.c",
+      "src/sound_file.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /GS /Gy /c /Folocal/sound_file_exists.obj src/sound_file_exists.c",
@@ -1122,11 +1157,19 @@
       "@__security_check_cookie@4": {
         "va": 284363865,
         "basis": "Both returns in the named Sound file-existence export call this guard with the saved cookie in ECX."
+      },
+      "__imp__FindFirstFileA@8": {
+        "va": 285962912,
+        "basis": "KERNEL32 import slot called by the export SND_fn_bTestFileExistSnd."
+      },
+      "__imp__FindClose@4": {
+        "va": 285962908,
+        "basis": "KERNEL32 import slot called by the export SND_fn_bTestFileExistSnd."
       }
     },
     "match": {
       "bytes_sha256": "9af0e15ffedd09803f22ca0c9e71b482dd9f7d49f35715d2e925ed0322fae980",
-      "inputs_sha256": "170e305da800b9a28fbe9993968886465d9d52706bc3694b7e125566af98215d"
+      "inputs_sha256": "f964712a6f480190ea40c9cee1de305b8a6bcbb82f0414de60a3da8b5d65d58d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1144,14 +1187,26 @@
     "size": 60,
     "rebuilt_symbol": "_SND_fn_ulWriteFileSnd@12",
     "inputs": [
-      "src/sound_file_io.c"
+      "src/sound_file_io.c",
+      "src/sound_file.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_file_io.obj src/sound_file_io.c",
+    "link_bindings": {
+      "__imp__WriteFile@20": {
+        "va": 285963208,
+        "basis": "KERNEL32 import slot called by the export SND_fn_ulWriteFileSnd."
+      },
+      "__imp__GetLastError@0": {
+        "va": 285963188,
+        "basis": "KERNEL32 import slot."
+      }
+    },
     "identification": "Steam PE export _SND_fn_ulWriteFileSnd@12 at RVA 0x794700. Passes file, buffer and count to the named WriteFile import. The success path returns the written count and the failure path calls GetLastError before returning zero. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "e416902619fd4b8615916bc6a29b60ecd923be2414a89c228b15ebd712bad00a",
-      "inputs_sha256": "b12f6a8d77e144fa43ee6506ca699c93a50ff360846394727be531956d5a5e75"
+      "inputs_sha256": "1b555ed795e14f619179f115087c924f3b191a71bde145b26aea8578d5d94b6b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1168,14 +1223,22 @@
     "size": 16,
     "rebuilt_symbol": "_SND_fn_ulGetFileSize@4",
     "inputs": [
-      "src/sound_file_io.c"
+      "src/sound_file_io.c",
+      "src/sound_file.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_file_io.obj src/sound_file_io.c",
+    "link_bindings": {
+      "__imp__GetFileSize@8": {
+        "va": 285963192,
+        "basis": "KERNEL32 import slot called by the export SND_fn_ulGetFileSize."
+      }
+    },
     "identification": "Steam PE export _SND_fn_ulGetFileSize@4 at RVA 0x794740. Calls the named GetFileSize import with the file handle and a null high-word output. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "b9e62b4613836259d794a02c6fa15785fef069c21ce34002379b0168ad8ac4eb",
-      "inputs_sha256": "5a2dc3eda0a81c945a622dca0c59dc6766cd17dc5135c9a6e187fc9ca66f9778"
+      "inputs_sha256": "49694f0987f56b0063b126f9b40a74de2d469db49f2b1a7d0511a8a29ad3a13d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1192,14 +1255,22 @@
     "size": 6,
     "rebuilt_symbol": "_SND_fn_bDeleteFile@4",
     "inputs": [
-      "src/sound_file_handles.c"
+      "src/sound_file_handles.c",
+      "src/sound_file.h",
+      "src/sound_win32.h"
     ],
-    "toolchain": "Microsoft C/C++ 19.44.35229.0 for x86",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O1 /Gy /c /Folocal/sound_file_handles.obj src/sound_file_handles.c",
+    "link_bindings": {
+      "__imp__DeleteFileA@4": {
+        "va": 285963128,
+        "basis": "KERNEL32 import slot called by the export SND_fn_bDeleteFile."
+      }
+    },
     "identification": "The named export is a single terminal indirect jump through KERNEL32 DeleteFileA at VA 0x110b7378. Alignment follows the jump. The single path argument is forwarded on the stack.",
     "match": {
       "bytes_sha256": "4d1ada4aae7132fb1bcec215d2de3d33db9804c95d7531de843c88fc708509c9",
-      "inputs_sha256": "3b24ac9fb15245207910ec10093bbd7357f390b07ba0c66d311f8a69f0f79b01"
+      "inputs_sha256": "7e6315ef78b0ea407665eb99423f62f2104d1e6b3ae7e70ae7fa6b252d1b5411"
     }
   },
   {
@@ -1208,7 +1279,11 @@
     "size": 152,
     "rebuilt_symbol": "_SND_fn_bInitStreamAsyncSnd@8",
     "inputs": [
-      "src/sound_io_begin.c"
+      "src/sound_io_begin.c",
+      "src/sound_async_worker.h",
+      "src/sound_error.h",
+      "src/sound_string.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /GS /Gy /c /Folocal/sound_io_begin.obj src/sound_io_begin.c",
@@ -1230,10 +1305,6 @@
         "va": 287255792,
         "basis": "Per-stream timing budget in the retail float slot."
       },
-      "_sound_format_message": {
-        "va": 284369247,
-        "basis": "The variadic CRT formatting target given a stack buffer and two floating arguments."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named export _SND_fn_vDisplayError@8 in the Steam campaign PE."
@@ -1245,11 +1316,19 @@
       "@__security_check_cookie@4": {
         "va": 284363865,
         "basis": "Retail stack guard validation routine."
+      },
+      "_sprintf": {
+        "va": 284369247,
+        "basis": "C runtime sprintf, called with a stack buffer, a format and its arguments."
+      },
+      "??_C@_0GA@PFCAMNKM@The?5sound?5project?8s?5streaming?5pr@": {
+        "va": 286753360,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "9f9db1f88d6e3bddce24866706421eb3f715c57cc98b1ae1d7b1eaa7ef62a12c",
-      "inputs_sha256": "063e8529450f545c4ed0ade81625c390f32c52c3816ee42c898acccd696a1966"
+      "inputs_sha256": "3e0028a89f5243f54c813017d4072abdd03116c9c54b4be2b9a64c98be72f389"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1267,7 +1346,9 @@
     "size": 5,
     "rebuilt_symbol": "_SND_fn_vDesInitStreamAsyncSnd@0",
     "inputs": [
-      "src/sound_stream_shutdown.c"
+      "src/sound_stream_shutdown.c",
+      "src/sound_async_worker.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_stream_shutdown.obj src/sound_stream_shutdown.c",
@@ -1280,7 +1361,7 @@
     },
     "match": {
       "bytes_sha256": "ffeced9d36c2a89eafdbd53d41d269f78260d817da6ad45e29bd4be591aca658",
-      "inputs_sha256": "c284a3bb7652f88e628e023579973dfefebf54327ef9e5036e583f4298abf679"
+      "inputs_sha256": "32a4b3a263ad0d845320ee0b4cc733b42c8eac130f9ba62653bd06042f9d6528"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1449,7 +1530,9 @@
     "rebuilt_symbol": "_sound_alloc_stream_request",
     "inputs": [
       "src/sound_async_allocation.c",
-      "src/sound_async_worker.h"
+      "src/sound_async_worker.h",
+      "src/sound_memory.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_async_allocation.obj src/sound_async_allocation.c",
@@ -1465,7 +1548,7 @@
       },
       "__imp__CloseHandle@4": {
         "va": 285963148,
-        "basis": "Named handle-close import."
+        "basis": "KERNEL32 import slot."
       },
       "_SND_fn_vFreeSnd@4": {
         "va": 285460592,
@@ -1474,7 +1557,7 @@
     },
     "match": {
       "bytes_sha256": "cb6eff573ccfed9d6711e0a8abf43f3acc394fa42405d93bb46fdc9d6d88899f",
-      "inputs_sha256": "473823810a1b24aa2629708492ce02043f240ca4b7d31889e6b3bbad5cd30f29"
+      "inputs_sha256": "40095793dd725aca735510bb61426ca542ac1156690a820ad1bbdb4464e4c4e8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1492,7 +1575,9 @@
     "rebuilt_symbol": "_sound_dispose_stream_request",
     "inputs": [
       "src/sound_async_allocation.c",
-      "src/sound_async_worker.h"
+      "src/sound_async_worker.h",
+      "src/sound_memory.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_async_allocation.obj src/sound_async_allocation.c",
@@ -1504,12 +1589,12 @@
       },
       "__imp__CloseHandle@4": {
         "va": 285963148,
-        "basis": "Named handle-close import."
+        "basis": "KERNEL32 import slot."
       }
     },
     "match": {
       "bytes_sha256": "5bcfdf0772f3ddd0b92af2a9e182b4bdf211ef25a3d02e70afe96e4aefd91a6c",
-      "inputs_sha256": "806b20f762b449fd2f7313f95bdcd1179cd1e4b243f419178a2e17ab9d3c3644"
+      "inputs_sha256": "c703a7e1e0ba9a9269b4bee36fd4585b90f2676fc1bac402fd24fa62306f6468"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1526,7 +1611,10 @@
     "size": 67,
     "rebuilt_symbol": "_sound_reset_file_cache",
     "inputs": [
-      "src/sound_file_cache.c"
+      "src/sound_file_cache.c",
+      "src/sound_async_worker.h",
+      "src/sound_memory.h",
+      "src/sound_win32.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_file_cache.obj src/sound_file_cache.c",
@@ -1555,7 +1643,7 @@
     },
     "match": {
       "bytes_sha256": "36d0cc63fbdfda2f7a7ec36b08d5ab7069e588461991322760b5892b23d252f3",
-      "inputs_sha256": "49eca527c3c8670403bcc3aa77edb6cda4d0efcd499bb59439d21a992a7a5cbd"
+      "inputs_sha256": "46876d8c88c2e02d259e35b3e7b23e825730a97a0b474eddbd247b2541b07673"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

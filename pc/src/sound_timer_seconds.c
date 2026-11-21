@@ -1,28 +1,23 @@
-typedef int (__stdcall *ReadCounter)(long long *);
-#define QUERY_COUNTER (*(ReadCounter const *)0x110b72e4)
-#define QUERY_FREQUENCY (*(ReadCounter const *)0x110b72e0)
-#define ZERO_SECONDS (*(const float *)0x110b8220)
+/* sound_timer_seconds.c -- reads a timer */
+#include "sound_timer.h"
+#include "sound_win32.h"
 
-typedef struct SoundTimer {
-    long paused;
-    long alignment;
-    long long origin;
-    long long pause_start;
-} SoundTimer;
-
-float __stdcall SND_fn_fGetCurrentTime(const SoundTimer *timer)
+/* SND_fn_fGetCurrentTime: the seconds since the timer was reset, pauses left out */
+float __stdcall SND_fn_fGetCurrentTime(long lTimerId)
 {
-    long long now, frequency;
-    long long elapsed;
-    if (!timer || timer == (const SoundTimer *)-2 || !QUERY_FREQUENCY(&frequency))
-        return ZERO_SECONDS;
+    const tdstSndTimer *pSndTimer = (const tdstSndTimer *)lTimerId;
+    __int64 currentTick, frequency;
+    __int64 deltaTick;
+    if (!pSndTimer || pSndTimer == (const tdstSndTimer *)SND_TIMER_NONE
+        || !QueryPerformanceFrequency(&frequency))
+        return 0.0f;
 
-    if (timer->paused) {
-        elapsed = timer->pause_start - timer->origin;
+    if (pSndTimer->bPaused) {
+        deltaTick = pSndTimer->pauseTick - pSndTimer->initTick;
     } else {
-        if (!QUERY_COUNTER(&now))
-            return ZERO_SECONDS;
-        elapsed = now - timer->origin;
+        if (!QueryPerformanceCounter(&currentTick))
+            return 0.0f;
+        deltaTick = currentTick - pSndTimer->initTick;
     }
-    return (float)elapsed / (float)frequency;
+    return (float)deltaTick / (float)frequency;
 }

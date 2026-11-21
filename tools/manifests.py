@@ -40,3 +40,24 @@ def save_receipt(path, unit, write):
             write(file, config if file == path else rows)
             return
     raise ValueError(f"unit missing while saving receipt: {unit['id']}")
+
+
+def save_receipts(path, units, write):
+    """Update many receipts at once, rewriting each owning file a single time."""
+    config = json.loads(path.read_text(encoding="utf-8"))
+    pending = {unit["id"]: unit for unit in units}
+    for file, rows in groups(path, config):
+        changed = False
+        for stored in rows:
+            unit = pending.pop(stored["id"], None)
+            if unit is None:
+                continue
+            if {k: v for k, v in stored.items() if k != "match"} != {k: v for k, v in unit.items() if k != "match"}:
+                raise ValueError(f"{unit['id']}: unit definition changed during verification")
+            if stored.get("match") != unit["match"]:
+                stored["match"] = unit["match"]
+                changed = True
+        if changed:
+            write(file, config if file == path else rows)
+    if pending:
+        raise ValueError(f"unit missing while saving receipt: {sorted(pending)[0]}")

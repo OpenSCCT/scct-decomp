@@ -1,36 +1,44 @@
+/* sound_find_event.c -- an event of the loaded maps by editor identifier (sndldmap.c) */
 #include "sound_bank_layout.h"
 
-extern EventGroup *bank_a_events;
-extern EventGroup *bank_b_events;
-extern EventGroup *bank_a_extra_events;
-extern EventGroup *bank_b_extra_events;
-
-#define USE_EXTRA_EVENTS (*(const long *)0x1132ba68)
-
-static __forceinline SoundRecord *find_record(RecordTable *table, unsigned long id)
+/* fn_pGetEventPointerFromEdId_Map: searches the events of one map, common or localised */
+static __forceinline SND_tdstBlockEvent *fn_pGetEventPointerFromEdId_Map(unsigned long ulEdId,
+                                                                         int bMapFix,
+                                                                         int bLocalised)
 {
-    long index;
-    if (table) {
-        SoundRecord *record = table->entries;
-        for (index = 0; index < table->count; ++index, ++record)
-            if (record->editor_id == id)
-                return record;
+    tdstMapMem *pstMapMem;
+    tdstMapHeader *pstMapHeader;
+    tdstBlockEventList *pstBlockEventList;
+    SND_tdstBlockEvent *pstBlockEvent;
+    long i;
+    pstMapMem = bMapFix ? &gs_stMapFix : &gs_stCurrentMap;
+    pstMapHeader = bLocalised ? pstMapMem->stLoc.pstMapHeader : pstMapMem->stNLoc.pstMapHeader;
+    if (pstMapHeader) {
+        pstBlockEventList = &pstMapHeader->stBlockEventList;
+        if (pstBlockEventList) {
+            pstBlockEvent = pstBlockEventList->hFirstElementOpt;
+            for (i = 0; i < pstBlockEventList->lNumberOfElementsOpt; ++i, ++pstBlockEvent)
+                if (pstBlockEvent->Id == ulEdId)
+                    return pstBlockEvent;
+        }
     }
     return 0;
 }
 
-SoundRecord *__cdecl sound_handle_by_editor_id_mode1(unsigned long id)
+/* SND_fn_hGetSoundEventHandleFromEditorId_Map: the fixed map first, then the current one;
+   then the same for the current language when the project is localised */
+SND_tdstBlockEvent *__cdecl SND_fn_hGetSoundEventHandleFromEditorId_Map(unsigned long ulEdId)
 {
-    SoundRecord *event;
-    if (bank_a_events && (event = find_record(&bank_a_events->events, id)))
-        return event;
-    if (bank_b_events && (event = find_record(&bank_b_events->events, id)))
-        return event;
-    if (USE_EXTRA_EVENTS) {
-        if (bank_a_extra_events && (event = find_record(&bank_a_extra_events->events, id)))
-            return event;
-        if (bank_b_extra_events && (event = find_record(&bank_b_extra_events->events, id)))
-            return event;
+    SND_tdstBlockEvent *pstBlockEvent;
+    if ((pstBlockEvent = fn_pGetEventPointerFromEdId_Map(ulEdId, 1, 0)) != 0)
+        return pstBlockEvent;
+    if ((pstBlockEvent = fn_pGetEventPointerFromEdId_Map(ulEdId, 0, 0)) != 0)
+        return pstBlockEvent;
+    if (g_stProjectDesc.bLocalised) {
+        if ((pstBlockEvent = fn_pGetEventPointerFromEdId_Map(ulEdId, 1, 1)) != 0)
+            return pstBlockEvent;
+        if ((pstBlockEvent = fn_pGetEventPointerFromEdId_Map(ulEdId, 0, 1)) != 0)
+            return pstBlockEvent;
     }
     return 0;
 }

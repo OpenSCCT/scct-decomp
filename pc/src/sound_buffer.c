@@ -5,10 +5,12 @@ typedef union {
     Word value;
     float stack_word;
 } StackWord;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     Word value;
 } WordArg;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     Word *value;

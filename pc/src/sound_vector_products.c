@@ -1,34 +1,26 @@
-typedef int SoundFixed;
+/* sound_vector_products.c -- dot and cross products (sndvect.c) */
+#include "sound_vector.h"
 
-typedef struct {
-    SoundFixed x;
-    SoundFixed y;
-    SoundFixed z;
-} SoundVector;
-
-extern SoundFixed __stdcall SND_fn_rMulRealRealQuickSnd(SoundFixed a, SoundFixed b);
-extern SoundFixed __stdcall SND_fn_rMulRealRealSnd(SoundFixed a, SoundFixed b);
-
-#pragma code_seg(".text$B")
-SoundFixed __stdcall SND_fn_rScalaireVectorSnd(const SoundVector *a, const SoundVector *b)
+/* SND_fn_rScalaireVectorSnd: the dot product */
+SndReal __stdcall SND_fn_rScalaireVectorSnd(const SndVector *v1, const SndVector *v2)
 {
-    return SND_fn_rMulRealRealSnd(a->x, b->x)
-         + SND_fn_rMulRealRealSnd(a->y, b->y)
-         + SND_fn_rMulRealRealSnd(a->z, b->z);
+    return SND_fn_rMulRealRealSnd(v1->x, v2->x)
+         + SND_fn_rMulRealRealSnd(v1->y, v2->y)
+         + SND_fn_rMulRealRealSnd(v1->z, v2->z);
 }
 
-#pragma code_seg(".text$C")
-SoundFixed __stdcall SND_fn_rPseudoScalaireNormeVectorSnd(const SoundVector *a, const SoundVector *b)
+/* SND_fn_rPseudoScalaireNormeVectorSnd: the dot product with the quick multiplication */
+SndReal __stdcall SND_fn_rPseudoScalaireNormeVectorSnd(const SndVector *v1, const SndVector *v2)
 {
-    return SND_fn_rMulRealRealQuickSnd(a->x, b->x)
-         + SND_fn_rMulRealRealQuickSnd(a->y, b->y)
-         + SND_fn_rMulRealRealQuickSnd(a->z, b->z);
+    return SND_fn_rMulRealRealQuickSnd(v1->x, v2->x)
+         + SND_fn_rMulRealRealQuickSnd(v1->y, v2->y)
+         + SND_fn_rMulRealRealQuickSnd(v1->z, v2->z);
 }
 
-#pragma code_seg(".text$D")
-void __stdcall SND_fn_vProduitVectorSnd(const SoundVector *a, const SoundVector *b, SoundVector *out)
+/* SND_fn_vProduitVectorSnd: the cross product */
+void __stdcall SND_fn_vProduitVectorSnd(const SndVector *v1, const SndVector *v2, SndVector *v)
 {
-    out->x = SND_fn_rMulRealRealSnd(a->y, b->z) - SND_fn_rMulRealRealSnd(a->z, b->y);
-    out->y = SND_fn_rMulRealRealSnd(a->z, b->x) - SND_fn_rMulRealRealSnd(a->x, b->z);
-    out->z = SND_fn_rMulRealRealSnd(a->x, b->y) - SND_fn_rMulRealRealSnd(a->y, b->x);
+    v->x = SND_fn_rMulRealRealSnd(v1->y, v2->z) - SND_fn_rMulRealRealSnd(v1->z, v2->y);
+    v->y = SND_fn_rMulRealRealSnd(v1->z, v2->x) - SND_fn_rMulRealRealSnd(v1->x, v2->z);
+    v->z = SND_fn_rMulRealRealSnd(v1->x, v2->y) - SND_fn_rMulRealRealSnd(v1->y, v2->x);
 }

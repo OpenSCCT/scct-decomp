@@ -1,17 +1,14 @@
-typedef struct FindDataA {
-    unsigned char data[320];
-} FindDataA;
-typedef void *(__stdcall *FindFirstFileFn)(const char *path, FindDataA *data);
-typedef int (__stdcall *FindCloseFn)(void *handle);
-#define FIND_FIRST_FILE (*(FindFirstFileFn const *)0x110b72a0)
-#define FIND_CLOSE (*(FindCloseFn const *)0x110b729c)
+/* sound_file_exists.c -- tells whether a file exists (sndfile.c) */
+#include "sound_file.h"
+#include "sound_win32.h"
 
-int __stdcall SND_fn_bTestFileExistSnd(const char *path)
+/* SND_fn_bTestFileExistSnd */
+int __stdcall SND_fn_bTestFileExistSnd(const char *szFileName)
 {
-    FindDataA data;
-    void *handle = FIND_FIRST_FILE(path, &data);
-    if (handle == (void *)-1)
+    WIN32_FIND_DATAA data;
+    void *handle = FindFirstFileA(szFileName, &data);
+    if (handle == INVALID_HANDLE_VALUE)
         return 0;
-    FIND_CLOSE(handle);
+    FindClose(handle);
     return 1;
 }

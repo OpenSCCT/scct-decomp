@@ -1,18 +1,14 @@
-typedef struct SoundAllocator SoundAllocator;
-struct SoundAllocator {
-    const struct {
-        void *(__fastcall *allocate)(SoundAllocator *, unsigned long unused_edx, unsigned long size, const void *tag);
-        void *(__fastcall *resize)(SoundAllocator *, void *unused_edx, void *allocation, unsigned long size, const void *tag);
-        void *release;
-    } *methods;
-};
-#define ALLOCATOR (*(SoundAllocator **)0x111c88a0)
-#define SOUND_ALLOCATION_TAG ((const void *)0x111e42c8)
-void *__stdcall SND_fn_pvMallocSnd(unsigned long size)
+/* sound_allocation.c -- allocates and resizes through the game's allocator (sndmem.c) */
+#include "sound_memory.h"
+
+/* SND_fn_pvMallocSnd */
+void *__stdcall SND_fn_pvMallocSnd(unsigned long ulNbBytes)
 {
-    return ALLOCATOR->methods->allocate(ALLOCATOR, size, size, SOUND_ALLOCATION_TAG);
+    return sound_allocator->methods->allocate(sound_allocator, ulNbBytes, ulNbBytes, StaticTag);
 }
-void *__stdcall SND_fn_pvReAllocSnd(void *allocation, unsigned long size)
+
+/* SND_fn_pvReAllocSnd */
+void *__stdcall SND_fn_pvReAllocSnd(void *pvPtr, unsigned long ulNbBytes)
 {
-    return ALLOCATOR->methods->resize(ALLOCATOR, allocation, allocation, size, SOUND_ALLOCATION_TAG);
+    return sound_allocator->methods->resize(sound_allocator, pvPtr, pvPtr, ulNbBytes, StaticTag);
 }

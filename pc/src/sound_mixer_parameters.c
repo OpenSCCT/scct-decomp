@@ -1,57 +1,54 @@
-typedef int Fixed;
-typedef struct {
-    Fixed pitch, volume;
-    unsigned char pan;
-    unsigned char reserved[0x1b];
-    unsigned flags;
-} Input;
-typedef struct {
-    Fixed pitch, volume;
-    int mode;
-    union { struct { unsigned char pan, dolby; } channels; int angle; } output;
-} Mixer;
-typedef struct {
-    unsigned unknown00, type;
-    unsigned unknown08[2], field10;
-} Resource;
+/* sound_mixer_parameters.c -- a sound's parameters converted for a renderer (sndxdmic.c) */
+#include "sound_micro.h"
+#include "sound_manager.h"
 
-extern int SoundReceiverCount;
-extern unsigned __cdecl resource_channels(const Resource *resource);
-extern void __cdecl spatial_parameters(const Input *input, Mixer *mix);
-
-static __forceinline void direct_sound_parameters(const Input *input, Mixer *mix)
+/* Snd_ParConv_ConvertWithNoPosition: the volume and pan as the game gave them */
+static __forceinline void Snd_ParConv_ConvertWithNoPosition(const SoundParam *par3D,
+                                                            PrivateSoundParam *par)
 {
-    mix->volume = input->volume;
-    mix->pitch = input->pitch;
-    switch (mix->mode) {
-    case 0: mix->output.channels.pan = input->pan; break;
-    case 1: mix->output.channels.pan = input->pan; mix->output.channels.dolby = 0; break;
-    case 2: mix->output.angle = 0; break;
+    par->volume = par3D->rVol_dB;
+    par->pitch = par3D->Freq;
+    switch (par->format) {
+    case 0:
+        par->position.channels.pan = par3D->ucPan;
+        break;
+    case 1:
+        par->position.channels.pan = par3D->ucPan;
+        par->position.channels.dolby = 0;
+        break;
+    case 2:
+        par->position.angle = 0;
+        break;
     }
 }
 
-extern void __cdecl no_receiver_parameters(const Input *input, Mixer *mix);
-
-#pragma code_seg(".text$V75cad0")
-__declspec(noinline) void __stdcall SND_fn_vSndParToPrivSndPar(const Input *input, Mixer *mix, int mode)
+/* SND_fn_vSndParToPrivSndPar */
+__declspec(noinline) void __stdcall SND_fn_vSndParToPrivSndPar(const SoundParam *par3D,
+                                                               PrivateSoundParam *par,
+                                                               tdePositionFormat format)
 {
-    mix->mode = mode;
-    if (input->flags & 1)
-        direct_sound_parameters(input, mix);
-    else if (!SoundReceiverCount)
-        no_receiver_parameters(input, mix);
+    par->format = format;
+    if (par3D->iFlags & 1)
+        Snd_ParConv_ConvertWithNoPosition(par3D, par);
+    else if (!g_iNbMicrosSxd)
+        Snd_ParConv_ConvertWithNoMicro(par3D, par);
     else
-        spatial_parameters(input, mix);
+        Snd_ParConv_ConvertWithOneMicro(par3D, par);
 }
-#pragma code_seg(".text$V75cb40")
-void __stdcall SND_fn_vBestConvertionForSndParToPrivSndPar(const Input *input, Mixer *mix, int mode, const Resource *resource)
+
+/* SND_fn_vBestConvertionForSndParToPrivSndPar: a resource with several channels keeps a plain
+   pan, centred unless the resource may be panned */
+void __stdcall SND_fn_vBestConvertionForSndParToPrivSndPar(const SoundParam *par3D,
+                                                           PrivateSoundParam *par,
+                                                           tdePositionFormat format,
+                                                           const tdstBlockResourceMem *res)
 {
-    int chosen = mode;
-    if (resource && resource->type == 1 && resource_channels(resource) > 1)
+    tdePositionFormat chosen = format;
+    if (res && res->eType == TYPE_SAMPLE && SND_fn_ulGetResourceNbChannel(res) > 1)
         chosen = 0;
-    if (mode == 2 && (input->flags & 1))
+    if (format == 2 && (par3D->iFlags & 1))
         chosen = 0;
-    SND_fn_vSndParToPrivSndPar(input, mix, chosen);
-    if (resource && resource_channels(resource) > 1 && !resource->field10)
-        mix->output.channels.pan = 64;
+    SND_fn_vSndParToPrivSndPar(par3D, par, chosen);
+    if (res && SND_fn_ulGetResourceNbChannel(res) > 1 && !res->uRes.stSample.bBalance)
+        par->position.channels.pan = 64;
 }

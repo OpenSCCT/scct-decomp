@@ -1,8 +1,8 @@
 #include "sound_name_tree.h"
 
-static __inline Word sound_reflect_bits(Word bits, signed char width)
+static __inline unsigned long sound_reflect_bits(unsigned long bits, signed char width)
 {
-    Word result = 0;
+    unsigned long result = 0;
     int i;
     for (i = width - 1; i > -1; --i) {
         if (bits & 1)
@@ -23,9 +23,9 @@ void __fastcall sound_init_crc_table(SoundCRC *crc)
     }
 }
 
-Word __fastcall sound_crc_name(const SoundCRC *crc, NameArg name)
+unsigned long __fastcall sound_crc_name(const SoundCRC *crc, SoundNameArg name)
 {
-    Word result = 0xfffffffful;
+    unsigned long result = 0xfffffffful;
     const unsigned char *text = (const unsigned char *)name.text;
     while (*text) {
         result = (result >> 8) ^ crc->table[(result & 0xff) ^ *text];

@@ -1,11 +1,14 @@
-#define EVENT_NAMES_ENABLED (*(unsigned long *)0x1132c7e8)
+/* sound_event_name_support.c -- whether the project carries its event names */
+#include "sound_name_tree.h"
 
+/* sound_set_event_name_support */
 void __cdecl sound_set_event_name_support(unsigned long setting)
 {
-    EVENT_NAMES_ENABLED = setting;
+    event_name_support = setting;
 }
 
+/* sound_get_event_name_support */
 unsigned long __cdecl sound_get_event_name_support(void)
 {
-    return EVENT_NAMES_ENABLED;
+    return event_name_support;
 }

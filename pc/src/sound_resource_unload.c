@@ -1,19 +1,15 @@
-typedef struct SoundResource {
-    unsigned long id;
-    int kind;
-    unsigned long reserved;
-    unsigned long data;
-} SoundResource;
-void __cdecl sound_release_binary_resource(SoundResource *resource);
+/* sound_resource_unload.c -- unloads a resource's binary data (sndplay.c) */
+#include "sound_manager.h"
 
-void __stdcall SND_fn_vUnLoadResBinarySnd(SoundResource *resource)
+/* SND_fn_vUnLoadResBinarySnd */
+void __stdcall SND_fn_vUnLoadResBinarySnd(tdstBlockResourceMem *res)
 {
-    switch (resource->kind) {
-    case 1:
-    case 6:
-        sound_release_binary_resource(resource);
+    switch (res->eType) {
+    case TYPE_SAMPLE:
+    case TYPE_MULTITRACK:
+        sound_release_binary_resource(res);
         break;
     }
-    resource->data = 0;
-    resource->kind = 0;
+    res->bIsLoaded = 0;
+    res->eType = TYPE_INVALID;
 }

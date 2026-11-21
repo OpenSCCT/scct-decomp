@@ -1,23 +1,19 @@
-/* The named campaign exports encode the division in signed 16.16 arithmetic.
-   Link the recovered caller pair at its retail addresses for exact REL32s. */
-#pragma code_seg(".text$B")
-typedef int SoundFixed;
+/* doppler.c -- the Doppler factor (sndspace.c) */
+#include "sound_space.h"
 
-extern SoundFixed __stdcall SND_fn_rDivRealRealSnd(SoundFixed numerator, SoundFixed denominator);
-extern int DopplerPropagationSpeed;
-
-void __stdcall SND_fn_vSetDopplerFactor(SoundFixed factor)
+/* SND_fn_vSetDopplerFactor: sets the speed of sound to 300 divided by the factor */
+void __stdcall SND_fn_vSetDopplerFactor(SndReal rFactor)
 {
-    if (factor)
-        DopplerPropagationSpeed = SND_fn_rDivRealRealSnd(300 * 65536, factor) >> 16;
+    if (rFactor)
+        gs_lSoundSpeed = SND_fn_rDivRealRealSnd(300 * 65536, rFactor) >> 16;
     else
-        DopplerPropagationSpeed = 0;
+        gs_lSoundSpeed = 0;
 }
 
-#pragma code_seg(".text$C")
-SoundFixed __stdcall SND_fn_rGetDopplerFactor(void)
+/* SND_fn_rGetDopplerFactor */
+SndReal __stdcall SND_fn_rGetDopplerFactor(void)
 {
-    if (DopplerPropagationSpeed)
-        return SND_fn_rDivRealRealSnd(300 * 65536, (unsigned)DopplerPropagationSpeed << 16);
+    if (gs_lSoundSpeed)
+        return SND_fn_rDivRealRealSnd(300 * 65536, (unsigned long)gs_lSoundSpeed << 16);
     return 0;
 }

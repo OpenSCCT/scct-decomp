@@ -556,7 +556,7 @@
       "src/campaign_heap_release_dispatch.c"
     ],
     "rebuilt_symbol": "_release_739a40@4",
-    "toolchain": "Microsoft C/C++ 19.44.35229.0 for x86",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O1 /Gy /c /Folocal/campaign_heap_release_dispatch.obj src/campaign_heap_release_dispatch.c",
     "link_bindings": {
       "_engine_heap": {
@@ -567,7 +567,7 @@
     "identification": "Direct call at RVA 0x5e9220 in the independently delineated function at RVA 0x5e9210. Dispatches through the engine heap at its identified slot.",
     "match": {
       "bytes_sha256": "d416b7f25a99b31f9c55fdae14c2329234588389dc0c4f2705fa4a85c3a9831c",
-      "inputs_sha256": "255786fea1080851a1777702f2e4928c3ef0ef5cdcbf3583dd18f2c70ef12b36"
+      "inputs_sha256": "9104360071f6a442afd82e730f113b0eab3870ab62a92eec3aa373e9cef6c2e9"
     }
   },
   {
@@ -1698,7 +1698,9 @@
     "size": 64,
     "rebuilt_symbol": "_SND_fn_bInitMallocSnd@0",
     "inputs": [
-      "src/sound_heap_init.c"
+      "src/sound_heap_init.c",
+      "src/sound_error.h",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_heap_init.obj src/sound_heap_init.c",
@@ -1711,11 +1713,15 @@
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named export _SND_fn_vDisplayError@8 in the Steam campaign PE."
+      },
+      "??_C@_0DF@CELEKDMP@This?5game?5require?5support?5for?5In@": {
+        "va": 286725548,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "09f87ee9c972dae98e2e770dee4768eaf0a61a51f2ed43587b3971ceb330e73c",
-      "inputs_sha256": "b3cb0fd63256d022eaa6ebaa203f727a50e27ba52b10bfbd4bf25ffde3b8b9a0"
+      "inputs_sha256": "d695e415791ab3b90cde21ca753ccb46aeadde69f77f9259b1312eb8d11b5912"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1732,20 +1738,21 @@
     "size": 26,
     "rebuilt_symbol": "_SND_fn_vMemMoveSnd@12",
     "inputs": [
-      "src/sound_memmove.c"
+      "src/sound_memmove.c",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_memmove.obj src/sound_memmove.c",
     "identification": "Steam PE export _SND_fn_vMemMoveSnd@12 at RVA 0x73c630. The named export forwards the destination, source and count to the movement helper. Includes all reachable exits and excludes alignment.",
     "link_bindings": {
-      "_sound_move_bytes": {
+      "_memmove": {
         "va": 284367760,
-        "basis": "Called directly from the wrapper; its argument order and the export name identify the movement operation."
+        "basis": "C runtime function the export SND_fn_vMemMoveSnd forwards its destination, source and count to. guess: memmove, by the export's name; not compared with the runtime library."
       }
     },
     "match": {
       "bytes_sha256": "d884d7d5b07f0c993521829f43df93faa5e5d115038a66a90dc72ac1b826c3ce",
-      "inputs_sha256": "a5c255140bc1882d24ac2a2b072e7921e8fa034882dea2833e01e7bf4cc35fe4"
+      "inputs_sha256": "387231b6eb1026c362f818556c0c72810b6d3d3323f2fba4d29dc6def7c98bbe"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1800,7 +1807,8 @@
     "size": 5,
     "rebuilt_symbol": "_SND_fn_vDesInitErrorSnd@0",
     "inputs": [
-      "src/sound_error_display.c"
+      "src/sound_error_display.c",
+      "src/sound_error.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_display.obj src/sound_error_display.c",
@@ -1813,7 +1821,7 @@
     },
     "match": {
       "bytes_sha256": "48d0f4e1d3ac6ff9cdbc9af0178f55d9978e4fe8b7ad9a58cd40019db9880ef2",
-      "inputs_sha256": "67541b4f7762551cded3ebcf50cc3f362631ec2faf4384d2abb38ba328f6d117"
+      "inputs_sha256": "6d29a7767f9f78fcd2d0a6eb18b2fb14fb3ede8aeb73b4da9404888ad7190e6b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1830,7 +1838,8 @@
     "size": 67,
     "rebuilt_symbol": "_sound_error_label",
     "inputs": [
-      "src/sound_error_label.c"
+      "src/sound_error_label.c",
+      "src/sound_error.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_label.obj src/sound_error_label.c",
@@ -1839,11 +1848,15 @@
       "_SOUND_ERRORS": {
         "va": 287195512,
         "basis": "The code/label table is indexed directly by the common error helper from the two named display exports."
+      },
+      "??_C@_0O@NIPGCINC@Unknown?5error?$AA@": {
+        "va": 286727068,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "d8699995640c4c6fedfea57e319535cacbaa1c50f205f93ef685ed611a44784d",
-      "inputs_sha256": "40b9f52869c2d6a121bee47b9c1aa3a364af383f85526ff230371f086d995b43"
+      "inputs_sha256": "bf0c7983ec71944cd811531e5b58415d93c1852d8473e4cbc7828bbd5f65c9d8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1860,7 +1873,8 @@
     "size": 30,
     "rebuilt_symbol": "_SND_fn_vDisplayError@8",
     "inputs": [
-      "src/sound_error_display.c"
+      "src/sound_error_display.c",
+      "src/sound_error.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_display.obj src/sound_error_display.c",
@@ -1877,7 +1891,7 @@
     },
     "match": {
       "bytes_sha256": "0cb9703d8849864c85ef051edce7d6265985ddd045e8f73d2c13feaf4e70a69d",
-      "inputs_sha256": "6dbe2d9c45b6c2ead053e96f2a5330b35b93a319ef86ae6b29d062bf8ca3dec5"
+      "inputs_sha256": "bc4f94e6ddb56a8533ef0aeaf7b4043591d51f6e627be3e143cc60b80b2dd313"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1894,7 +1908,8 @@
     "size": 54,
     "rebuilt_symbol": "_SND_fn_vDisplayErrorEx@12",
     "inputs": [
-      "src/sound_error_display.c"
+      "src/sound_error_display.c",
+      "src/sound_error.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_display.obj src/sound_error_display.c",
@@ -1907,11 +1922,15 @@
       "_sound_report_error": {
         "va": 285460608,
         "basis": "The two named error-display exports both pass the label and context to this routine."
+      },
+      "_SND_g_astErrorOccurArray": {
+        "va": 288536496,
+        "basis": "Per-error flags indexed by the error number in the export SND_fn_vDisplayErrorEx; SND_g_astErrorOccurArray of snderr.c in the Splinter Cell PS2 demo's debug information."
       }
     },
     "match": {
       "bytes_sha256": "a324abccdeb0eb1eae2b43e3fdaa786632277c9b1f51b09900403b53bd7fafe5",
-      "inputs_sha256": "effb0ec40950f5e67d290f310e3a857783bf2e768008e838d1ad917b5f22c7d5"
+      "inputs_sha256": "f85e4e369987ac49bdcb09c6e58952c544e43c1ecaf1deafd1c88e9661acf2a5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1928,14 +1947,25 @@
     "size": 23,
     "rebuilt_symbol": "_SND_fn_pvMallocSnd@4",
     "inputs": [
-      "src/sound_allocation.c"
+      "src/sound_allocation.c",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_allocation.obj src/sound_allocation.c",
+    "link_bindings": {
+      "_sound_allocator": {
+        "va": 287082656,
+        "basis": "Pointer to the C++ allocator object whose first three virtual functions the exports SND_fn_pvMallocSnd, SND_fn_pvReAllocSnd and SND_fn_vFreeSnd call. Invented name."
+      },
+      "_StaticTag": {
+        "va": 287195848,
+        "basis": "Address passed as the last argument of every allocation by the exports SND_fn_pvMallocSnd and SND_fn_pvReAllocSnd; StaticTag, the file-static of sndmem.c in the Double Agent PS2 linker map."
+      }
+    },
     "identification": "Steam PE export _SND_fn_pvMallocSnd@4 at RVA 0x73c830. Dispatches the requested size and a constant tag to slot zero of the allocator at VA 0x111c88a0. The object is passed in ECX. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "22c72acdfe4c7380ff0f95ccb66a9c0f64c4370b6618895098fd78f93214968e",
-      "inputs_sha256": "89b9f7169323f38fd586e855a883ed977bc738d780c7b089faec1cb9a51a2de5"
+      "inputs_sha256": "7ab77e112c9fcdfac13df88103ea0a33bf84df8e8f5777f4cd82ca02bc0ccb20"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1952,14 +1982,25 @@
     "size": 29,
     "rebuilt_symbol": "_SND_fn_pvReAllocSnd@8",
     "inputs": [
-      "src/sound_allocation.c"
+      "src/sound_allocation.c",
+      "src/sound_memory.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_allocation.obj src/sound_allocation.c",
+    "link_bindings": {
+      "_sound_allocator": {
+        "va": 287082656,
+        "basis": "Pointer to the C++ allocator object whose first three virtual functions the exports SND_fn_pvMallocSnd, SND_fn_pvReAllocSnd and SND_fn_vFreeSnd call. Invented name."
+      },
+      "_StaticTag": {
+        "va": 287195848,
+        "basis": "Address passed as the last argument of every allocation by the exports SND_fn_pvMallocSnd and SND_fn_pvReAllocSnd; StaticTag, the file-static of sndmem.c in the Double Agent PS2 linker map."
+      }
+    },
     "identification": "Steam PE export _SND_fn_pvReAllocSnd@8 at RVA 0x73c850. Dispatches the existing block, new size and tag to slot one of the same allocator. The object is passed in ECX. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "3a878adb65d910ab19e76222c29734b7f5271df80f1bee83b50436453376ef68",
-      "inputs_sha256": "85db13e4cc677a8606c89b825abd6a4372b58cf5f7ce2d77d3810131e7e885f3"
+      "inputs_sha256": "9e913fe211e3fd232b6b5feb547e96b686df35ca4daf0c502f40879b748a896b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1976,14 +2017,21 @@
     "size": 11,
     "rebuilt_symbol": "_SND_fn_vFreeSnd@4",
     "inputs": [
-      "src/sound_allocator.c"
+      "src/sound_allocator.c",
+      "src/sound_memory.h"
     ],
-    "toolchain": "Microsoft C/C++ 19.44.35229.0 for x86",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O1 /Gy /c /Folocal/sound_allocator.obj src/sound_allocator.c",
+    "link_bindings": {
+      "_sound_allocator": {
+        "va": 287082656,
+        "basis": "Pointer to the C++ allocator object whose first three virtual functions the exports SND_fn_pvMallocSnd, SND_fn_pvReAllocSnd and SND_fn_vFreeSnd call. Invented name."
+      }
+    },
     "identification": "The named stdcall export takes its allocation on the stack, loads the allocator singleton at VA 0x111c88a0 into ECX, and tail-dispatches via virtual table slot two. Alignment follows the jump.",
     "match": {
       "bytes_sha256": "d416b7f25a99b31f9c55fdae14c2329234588389dc0c4f2705fa4a85c3a9831c",
-      "inputs_sha256": "83cf7c248c2c3aecc9028d61b386d785870f1dbbc5209eb9ea32dc96dfe029af"
+      "inputs_sha256": "66e4d6c337f6add4052f6e0e464e49e6b6d01b3a6b1b2102f0ebf09990e306dc"
     }
   },
   {
@@ -2025,35 +2073,32 @@
     "id": "sound-local-event-by-editor-id",
     "offset": 7591440,
     "size": 183,
-    "rebuilt_symbol": "_sound_handle_by_editor_id_mode1",
+    "rebuilt_symbol": "_SND_fn_hGetSoundEventHandleFromEditorId_Map",
     "inputs": [
       "src/sound_find_event.c",
-      "src/sound_bank_layout.h"
+      "src/sound_bank_layout.h",
+      "src/sound_resource.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_find_event.obj src/sound_find_event.c",
-    "identification": "Direct mode-one call target of SND_fn_hGetSoundEventHandleFromEditorId at RVA 0x745e1d. Searches ordinary A/B event groups, then extra A/B groups when enabled. Matches editor IDs on 104-byte records. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only.",
+    "identification": "Direct mode-one call target of SND_fn_hGetSoundEventHandleFromEditorId at RVA 0x745e1d. Searches ordinary A/B event groups, then extra A/B groups when enabled. Matches editor IDs on 104-byte records. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "link_bindings": {
-      "_bank_a_events": {
-        "va": 288536716,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
+      "_gs_stMapFix": {
+        "va": 288536704,
+        "basis": "The fixed map, chosen by a clear bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stMapFix of sndldmap.c in the Splinter Cell PS2 demo's debug information, where it also lies before gs_stCurrentMap."
       },
-      "_bank_b_events": {
-        "va": 288536836,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
+      "_gs_stCurrentMap": {
+        "va": 288536824,
+        "basis": "The current map, chosen by a set bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stCurrentMap of sndldmap.c in the Splinter Cell PS2 demo's debug information."
       },
-      "_bank_a_extra_events": {
-        "va": 288536756,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
-      "_bank_b_extra_events": {
-        "va": 288536876,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
+      "_g_stProjectDesc": {
+        "va": 288537184,
+        "basis": "Project description whose member at +8 makes SND_fn_hGetSoundEventHandleFromEditorId_Map search the localised data. guess: g_stProjectDesc of the Splinter Cell PS2 demo's debug information, whose bLocalised is at +8; the following words are referenced one by one from the loader."
       }
     },
     "match": {
       "bytes_sha256": "5bb49e2c1d4b2221db2d82b24e6fdb64700ae1996b7ca869cdc026d8ae6c1f56",
-      "inputs_sha256": "0b52d7993fdc37c716d66ab1ec98e4d5a5ae31e96bff0527732c05394635037e"
+      "inputs_sha256": "da47cd20a566d8e69f41cc3a35affdbf15f262ae81c0f2ecc6028a775bd7f6bd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2068,17 +2113,28 @@
     "id": "sound-local-resource-by-editor-id",
     "offset": 7591968,
     "size": 149,
-    "rebuilt_symbol": "_sound_resource_by_editor_id_mode1@4",
+    "rebuilt_symbol": "_SND_fn_pstGetResFromEdIdSnd_Map@4",
     "inputs": [
       "src/sound_find_local.c",
-      "src/sound_bank_layout.h"
+      "src/sound_bank_layout.h",
+      "src/sound_resource.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_find_local.obj src/sound_find_local.c",
-    "identification": "Direct mode-one tail target of SND_fn_pstGetResFromEdIdSnd from RVA 0x745ffe. Scans each loaded bank in B-then-A order, testing its normal and extra 104-byte resource arrays. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only.",
+    "link_bindings": {
+      "_gs_stCurrentMap": {
+        "va": 288536824,
+        "basis": "The current map, chosen by a set bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stCurrentMap of sndldmap.c in the Splinter Cell PS2 demo's debug information."
+      },
+      "_gs_stMapFix": {
+        "va": 288536704,
+        "basis": "The fixed map, chosen by a clear bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stMapFix of sndldmap.c in the Splinter Cell PS2 demo's debug information, where it also lies before gs_stCurrentMap."
+      }
+    },
+    "identification": "Direct mode-one tail target of SND_fn_pstGetResFromEdIdSnd from RVA 0x745ffe. Scans each loaded bank in B-then-A order, testing its normal and extra 104-byte resource arrays. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "match": {
       "bytes_sha256": "de292878774a5ab36a21f96a41fc2601c03b4a6e6d169e663447b6d6e6e9b8e5",
-      "inputs_sha256": "943598d9a843ec5e32d06f9d590e9914fa2440d52f223de2fc540f7de6814a8a"
+      "inputs_sha256": "72382a9966d7ceee80f058d77f565fb6e03a4459d9407cb013e8249cbbbb0a8c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2093,31 +2149,37 @@
     "id": "sound-local-resource-at",
     "offset": 7592128,
     "size": 81,
-    "rebuilt_symbol": "_sound_bin_res_mode1@4",
+    "rebuilt_symbol": "_SND_fn_pGetBinRes_Map@4",
     "inputs": [
       "src/sound_local_record_access.c",
-      "src/sound_bank_layout.h"
+      "src/sound_bank_layout.h",
+      "src/sound_error.h",
+      "src/sound_resource.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_local_record_access.obj src/sound_local_record_access.c",
-    "identification": "Direct mode-one tail target of SND_fn_pGetBinRes at RVA 0x745578. High bits select the bank and group, the low 16 bits index the 104-byte records; -2 returns null. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only.",
+    "identification": "Direct mode-one tail target of SND_fn_pGetBinRes at RVA 0x745578. High bits select the bank and group, the low 16 bits index the 104-byte records; -2 returns null. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "link_bindings": {
-      "_bank_b": {
-        "va": 288536824,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
-      "_bank_a": {
-        "va": 288536704,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named export _SND_fn_vDisplayError@8 in the Steam campaign PE."
+      },
+      "_gs_stCurrentMap": {
+        "va": 288536824,
+        "basis": "The current map, chosen by a set bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stCurrentMap of sndldmap.c in the Splinter Cell PS2 demo's debug information."
+      },
+      "_gs_stMapFix": {
+        "va": 288536704,
+        "basis": "The fixed map, chosen by a clear bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stMapFix of sndldmap.c in the Splinter Cell PS2 demo's debug information, where it also lies before gs_stCurrentMap."
+      },
+      "??_C@_0CJ@DEMBLCKF@ERROR?3?5Cannot?5find?5block?5resourc@": {
+        "va": 286728412,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "12fdc05d47db00dd5c1b75ebe6efe9b62298ae309a5fa6d141d0f35d3ffd9573",
-      "inputs_sha256": "a79c0831dab3243c572d8e5f89311b80aeb4fecf9abbf693760e232bac789941"
+      "inputs_sha256": "3bd5ead7f0e58280e785fa5bfe015c5c02af602d304d4c06d43219f8a11009f4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2132,31 +2194,37 @@
     "id": "sound-local-event-at",
     "offset": 7592224,
     "size": 75,
-    "rebuilt_symbol": "_sound_bin_event_mode1",
+    "rebuilt_symbol": "_SND_fn_pGetBinEvent_Map",
     "inputs": [
       "src/sound_local_record_access.c",
-      "src/sound_bank_layout.h"
+      "src/sound_bank_layout.h",
+      "src/sound_error.h",
+      "src/sound_resource.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_local_record_access.obj src/sound_local_record_access.c",
-    "identification": "Direct mode-one call target of SND_fn_pGetBinEvent at RVA 0x7455cd. Uses the same packed bank, group and record index to select an event. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only.",
+    "identification": "Direct mode-one call target of SND_fn_pGetBinEvent at RVA 0x7455cd. Uses the same packed bank, group and record index to select an event. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "link_bindings": {
-      "_bank_b": {
-        "va": 288536824,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
-      "_bank_a": {
-        "va": 288536704,
-        "basis": "Bank or event-group member address used by the directly called Steam mode-one resource lookup."
-      },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named export _SND_fn_vDisplayError@8 in the Steam campaign PE."
+      },
+      "_gs_stCurrentMap": {
+        "va": 288536824,
+        "basis": "The current map, chosen by a set bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stCurrentMap of sndldmap.c in the Splinter Cell PS2 demo's debug information."
+      },
+      "_gs_stMapFix": {
+        "va": 288536704,
+        "basis": "The fixed map, chosen by a clear bit 31 of a binary identifier in SND_fn_pGetBinRes_Map; gs_stMapFix of sndldmap.c in the Splinter Cell PS2 demo's debug information, where it also lies before gs_stCurrentMap."
+      },
+      "??_C@_0CA@ECDLIHEG@ERROR?3?5Cannot?5find?5block?5event?4?$AA@": {
+        "va": 286728456,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
     "match": {
       "bytes_sha256": "9b2861f388c9b653068c931326f13c1bb5b811a5eec61243308030251651cfb7",
-      "inputs_sha256": "7081c5695cd1ada6e624a7d55f0a781a1252aaabc06f8d2f004ca69d35c0d12f"
+      "inputs_sha256": "beea440449f8793713b4d2a6d9740031b5cdc19c0a7e34f1d731509348e9d5f2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

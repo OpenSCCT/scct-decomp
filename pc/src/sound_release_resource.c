@@ -1,35 +1,23 @@
-typedef struct {
-    unsigned id, type;
-    unsigned unknown08, field0c;
-    unsigned gap10[5], field24;
-    void *field28;
-} SoundResource;
-extern void __stdcall EnterCriticalSectionTool_(void);
-extern void __stdcall MouchardThreadTool(const char *site,int line);
-extern void __stdcall QuitCriticalSectionTool(void);
-extern const char MixerLockSite[];
-extern void __stdcall SND_fn_vFreeSnd(void *buffer);
-extern void __cdecl release_sample(SoundResource *resource, int full);
+/* sound_release_resource.c -- unloads a resource's binary data and frees its buffers
+   (sndmanager.cpp) */
+#include "sound_manager.h"
 
-#pragma code_seg(".text$V759230")
-void __cdecl release_sound_resource(SoundResource *resource)
+/* release_sound_resource */
+void __cdecl release_sound_resource(tdstBlockResourceMem *res)
 {
-    if (!resource)
+    if (!res)
         return;
     EnterCriticalSectionTool_();
-    MouchardThreadTool(MixerLockSite, 0xdcb);
-    switch (resource->type) {
-    case 1:
-        release_sample(resource, 1);
+    MouchardThreadTool(SNDMANAGER_CPP_FILE, 3531);
+    switch (res->eType) {
+    case TYPE_SAMPLE:
+        release_sample(res, 1);
         break;
-    case 6:
-        if (resource->field0c && !resource->field24 && resource->field28)
-            SND_fn_vFreeSnd(resource->field28);
-        resource->field28 = 0;
-        resource->type = 0;
+    case TYPE_MULTITRACK:
+        unload_resource_multitrack(res, 1);
         break;
-    case 8:
-        resource->type = 0;
+    case TYPE_SILENCE:
+        res->eType = TYPE_INVALID;
         break;
     }
     QuitCriticalSectionTool();

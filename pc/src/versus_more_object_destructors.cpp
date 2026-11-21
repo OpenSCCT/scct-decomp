@@ -1,204 +1,326 @@
-// More Unreal Engine 2 class destructors from the Steam Versus payload. A class
-// whose registered placement constructor does not identify its vtable is named
-// UnnamedClass followed by that vtable's address relative to the image base.
-// Each class destructor runs UObject::ConditionalDestroy() before its parent's
-// destructor, as the engine's DECLARE_CLASS destructor does. Only the members these
-// destructors touch are declared; VirtualSlot names stand for engine virtual methods
-// whose names this translation unit does not need.
-enum { INDEX_NONE = -1 };
-enum EObjectFlags { RF_Destroyed = 0x00800000, RF_DebugDestroy = 0x80000000 };
+// versus_more_object_destructors.cpp -- more Versus class destructors that destroy no member
+//
+// Each destructor runs UObject::ConditionalDestroy before the members and the parent class
+// are destroyed.
+#include "versus_build.h"
+#include "unreal_field.h"
+#include "unreal_property.h"
+#include "unreal_subsystem.h"
+#include "versus_core_classes.h"
+#include "versus_engine_classes.h"
+#include "versus_ipdrv_classes.h"
+#include "versus_sbase_classes.h"
+#include "versus_softbody_classes.h"
+#include "versus_window_classes.h"
 
-class UObject {
-public:
-    virtual ~UObject();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
-    virtual void VirtualSlot7();
-    virtual void VirtualSlot8();
-    virtual void Destroy();
-    int Index;
-    unsigned Reserved[5];
-    unsigned ObjectFlags;
-    int ConditionalDestroy()
-    {
-        if (Index != INDEX_NONE && !(ObjectFlags & RF_Destroyed)) {
-            ObjectFlags = (ObjectFlags & ~(RF_DebugDestroy | RF_Destroyed)) | RF_Destroyed;
-            Destroy();
-            return 1;
-        }
-        return 0;
-    }
-};
+// USubsystem::~USubsystem
+USubsystem::~USubsystem()
+{
+    ConditionalDestroy();
+}
 
-// Parent classes whose own destructors are matched elsewhere or remain open.
-class AInternetInfo : public UObject { public: virtual ~AInternetInfo(); };
-class UESBPatch : public UObject { public: virtual ~UESBPatch(); };
-class UESBRope : public UObject { public: virtual ~UESBRope(); };
-class UnnamedClass2F7AD8 : public UObject { public: virtual ~UnnamedClass2F7AD8(); };
-class UnnamedClass303F10 : public UObject { public: virtual ~UnnamedClass303F10(); };
-class UnnamedClass3066B8 : public UObject { public: virtual ~UnnamedClass3066B8(); };
-class UnnamedClass30BBB8 : public UObject { public: virtual ~UnnamedClass30BBB8(); };
-class UnnamedClass30C340 : public UObject { public: virtual ~UnnamedClass30C340(); };
-class UnnamedClass30C9E8 : public UObject { public: virtual ~UnnamedClass30C9E8(); };
-class UnnamedClass30CED0 : public UObject { public: virtual ~UnnamedClass30CED0(); };
-class UnnamedClass30D0B8 : public UObject { public: virtual ~UnnamedClass30D0B8(); };
+// UField::~UField
+UField::~UField()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass30D7D8 : public UObject { public: virtual ~UnnamedClass30D7D8(); };
-UnnamedClass30D7D8::~UnnamedClass30D7D8() { ConditionalDestroy(); }
+// UProperty::~UProperty
+UProperty::~UProperty()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass30D6A0 : public UObject { public: virtual ~UnnamedClass30D6A0(); };
-UnnamedClass30D6A0::~UnnamedClass30D6A0() { ConditionalDestroy(); }
+// UIntProperty::~UIntProperty
+UIntProperty::~UIntProperty()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass30D600 : public UnnamedClass30D6A0 { public: virtual ~UnnamedClass30D600(); };
-UnnamedClass30D600::~UnnamedClass30D600() { ConditionalDestroy(); }
+// UBoolProperty::~UBoolProperty
+UBoolProperty::~UBoolProperty()
+{
+    ConditionalDestroy();
+}
 
-class UIntProperty : public UnnamedClass30D600 { public: virtual ~UIntProperty(); };
-UIntProperty::~UIntProperty() { ConditionalDestroy(); }
+// UStrProperty::~UStrProperty
+UStrProperty::~UStrProperty()
+{
+    ConditionalDestroy();
+}
 
-class UBoolProperty : public UnnamedClass30D600 { public: virtual ~UBoolProperty(); };
-UBoolProperty::~UBoolProperty() { ConditionalDestroy(); }
+// UArrayProperty::~UArrayProperty
+UArrayProperty::~UArrayProperty()
+{
+    ConditionalDestroy();
+}
 
-class UStrProperty : public UnnamedClass30D600 { public: virtual ~UStrProperty(); };
-UStrProperty::~UStrProperty() { ConditionalDestroy(); }
+// UTextBufferFactory::~UTextBufferFactory
+UTextBufferFactory::~UTextBufferFactory()
+{
+    ConditionalDestroy();
+}
 
-class UArrayProperty : public UnnamedClass30D600 { public: virtual ~UArrayProperty(); };
-UArrayProperty::~UArrayProperty() { ConditionalDestroy(); }
+// UByteProperty::~UByteProperty
+UByteProperty::~UByteProperty()
+{
+    ConditionalDestroy();
+}
 
-class UTextBufferFactory : public UnnamedClass30CED0 { public: virtual ~UTextBufferFactory(); };
-UTextBufferFactory::~UTextBufferFactory() { ConditionalDestroy(); }
+// UFloatProperty::~UFloatProperty
+UFloatProperty::~UFloatProperty()
+{
+    ConditionalDestroy();
+}
 
-class UByteProperty : public UnnamedClass30D600 { public: virtual ~UByteProperty(); };
-UByteProperty::~UByteProperty() { ConditionalDestroy(); }
+// UObjectProperty::~UObjectProperty
+UObjectProperty::~UObjectProperty()
+{
+    ConditionalDestroy();
+}
 
-class UFloatProperty : public UnnamedClass30D600 { public: virtual ~UFloatProperty(); };
-UFloatProperty::~UFloatProperty() { ConditionalDestroy(); }
+// UNameProperty::~UNameProperty
+UNameProperty::~UNameProperty()
+{
+    ConditionalDestroy();
+}
 
-class UObjectProperty : public UnnamedClass30D600 { public: virtual ~UObjectProperty(); };
-UObjectProperty::~UObjectProperty() { ConditionalDestroy(); }
+// UFixedArrayProperty::~UFixedArrayProperty
+UFixedArrayProperty::~UFixedArrayProperty()
+{
+    ConditionalDestroy();
+}
 
-class UNameProperty : public UnnamedClass30D600 { public: virtual ~UNameProperty(); };
-UNameProperty::~UNameProperty() { ConditionalDestroy(); }
+// UMapProperty::~UMapProperty
+UMapProperty::~UMapProperty()
+{
+    ConditionalDestroy();
+}
 
-class UFixedArrayProperty : public UnnamedClass30D600 { public: virtual ~UFixedArrayProperty(); };
-UFixedArrayProperty::~UFixedArrayProperty() { ConditionalDestroy(); }
+// UStructProperty::~UStructProperty
+UStructProperty::~UStructProperty()
+{
+    ConditionalDestroy();
+}
 
-class UMapProperty : public UnnamedClass30D600 { public: virtual ~UMapProperty(); };
-UMapProperty::~UMapProperty() { ConditionalDestroy(); }
+// UDelegateProperty::~UDelegateProperty
+UDelegateProperty::~UDelegateProperty()
+{
+    ConditionalDestroy();
+}
 
-class UStructProperty : public UnnamedClass30D600 { public: virtual ~UStructProperty(); };
-UStructProperty::~UStructProperty() { ConditionalDestroy(); }
+// UObjectExporterT3D::~UObjectExporterT3D
+UObjectExporterT3D::~UObjectExporterT3D()
+{
+    ConditionalDestroy();
+}
 
-class UDelegateProperty : public UnnamedClass30D600 { public: virtual ~UDelegateProperty(); };
-UDelegateProperty::~UDelegateProperty() { ConditionalDestroy(); }
+// UPrimitive::~UPrimitive
+UPrimitive::~UPrimitive()
+{
+    ConditionalDestroy();
+}
 
-class UObjectExporterT3D : public UnnamedClass30C9E8 { public: virtual ~UObjectExporterT3D(); };
-UObjectExporterT3D::~UObjectExporterT3D() { ConditionalDestroy(); }
+// UMaterial::~UMaterial
+UMaterial::~UMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UPrimitive : public UObject { public: virtual ~UPrimitive(); };
-UPrimitive::~UPrimitive() { ConditionalDestroy(); }
+// UMeshInstance::~UMeshInstance
+UMeshInstance::~UMeshInstance()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass30B990 : public UObject { public: virtual ~UnnamedClass30B990(); };
-UnnamedClass30B990::~UnnamedClass30B990() { ConditionalDestroy(); }
+// UMesh::~UMesh
+UMesh::~UMesh()
+{
+    ConditionalDestroy();
+}
 
-class UMeshInstance : public UPrimitive { public: virtual ~UMeshInstance(); };
-UMeshInstance::~UMeshInstance() { ConditionalDestroy(); }
+// URenderedMaterial::~URenderedMaterial
+URenderedMaterial::~URenderedMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass30A7B0 : public UPrimitive { public: virtual ~UnnamedClass30A7B0(); };
-UnnamedClass30A7B0::~UnnamedClass30A7B0() { ConditionalDestroy(); }
+// UBitmapMaterial::~UBitmapMaterial
+UBitmapMaterial::~UBitmapMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass309E98 : public UnnamedClass30B990 { public: virtual ~UnnamedClass309E98(); };
-UnnamedClass309E98::~UnnamedClass309E98() { ConditionalDestroy(); }
+// UShadowBitmapMaterial::~UShadowBitmapMaterial
+UShadowBitmapMaterial::~UShadowBitmapMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass309E00 : public UnnamedClass309E98 { public: virtual ~UnnamedClass309E00(); };
-UnnamedClass309E00::~UnnamedClass309E00() { ConditionalDestroy(); }
+// UScriptedTexture::~UScriptedTexture
+UScriptedTexture::~UScriptedTexture()
+{
+    ConditionalDestroy();
+}
 
-class UShadowBitmapMaterial : public UnnamedClass309E00 { public: virtual ~UShadowBitmapMaterial(); };
-UShadowBitmapMaterial::~UShadowBitmapMaterial() { ConditionalDestroy(); }
+// URenderResource::~URenderResource
+URenderResource::~URenderResource()
+{
+    ConditionalDestroy();
+}
 
-class UScriptedTexture : public UnnamedClass309E00 { public: virtual ~UScriptedTexture(); };
-UScriptedTexture::~UScriptedTexture() { ConditionalDestroy(); }
+// UVertexStreamBase::~UVertexStreamBase
+UVertexStreamBase::~UVertexStreamBase()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass3099B0 : public UObject { public: virtual ~UnnamedClass3099B0(); };
-UnnamedClass3099B0::~UnnamedClass3099B0() { ConditionalDestroy(); }
+// UProjectorMaterial::~UProjectorMaterial
+UProjectorMaterial::~UProjectorMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass3098A0 : public UnnamedClass3099B0 { public: virtual ~UnnamedClass3098A0(); };
-UnnamedClass3098A0::~UnnamedClass3098A0() { ConditionalDestroy(); }
+// UProjectorPrimitive::~UProjectorPrimitive
+UProjectorPrimitive::~UProjectorPrimitive()
+{
+    ConditionalDestroy();
+}
 
-class UProjectorMaterial : public UnnamedClass309E98 { public: virtual ~UProjectorMaterial(); };
-UProjectorMaterial::~UProjectorMaterial() { ConditionalDestroy(); }
+// UParticleMaterial::~UParticleMaterial
+UParticleMaterial::~UParticleMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UProjectorPrimitive : public UPrimitive { public: virtual ~UProjectorPrimitive(); };
-UProjectorPrimitive::~UProjectorPrimitive() { ConditionalDestroy(); }
+// UPackageMapLevel::~UPackageMapLevel
+UPackageMapLevel::~UPackageMapLevel()
+{
+    ConditionalDestroy();
+}
 
-class UParticleMaterial : public UnnamedClass309E98 { public: virtual ~UParticleMaterial(); };
-UParticleMaterial::~UParticleMaterial() { ConditionalDestroy(); }
+// UModifier::~UModifier
+UModifier::~UModifier()
+{
+    ConditionalDestroy();
+}
 
-class UPackageMapLevel : public UnnamedClass30C340 { public: virtual ~UPackageMapLevel(); };
-UPackageMapLevel::~UPackageMapLevel() { ConditionalDestroy(); }
+// UVertexColor::~UVertexColor
+UVertexColor::~UVertexColor()
+{
+    ConditionalDestroy();
+}
 
-class UModifier : public UnnamedClass30B990 { public: virtual ~UModifier(); };
-UModifier::~UModifier() { ConditionalDestroy(); }
+// UConstantMaterial::~UConstantMaterial
+UConstantMaterial::~UConstantMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UVertexColor : public UnnamedClass309E98 { public: virtual ~UVertexColor(); };
-UVertexColor::~UVertexColor() { ConditionalDestroy(); }
+// UCombiner::~UCombiner
+UCombiner::~UCombiner()
+{
+    ConditionalDestroy();
+}
 
-class UConstantMaterial : public UnnamedClass309E98 { public: virtual ~UConstantMaterial(); };
-UConstantMaterial::~UConstantMaterial() { ConditionalDestroy(); }
+// ULitSpecularMaterial::~ULitSpecularMaterial
+ULitSpecularMaterial::~ULitSpecularMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UCombiner : public UnnamedClass30B990 { public: virtual ~UCombiner(); };
-UCombiner::~UCombiner() { ConditionalDestroy(); }
+// UShader::~UShader
+UShader::~UShader()
+{
+    ConditionalDestroy();
+}
 
-class ULitSpecularMaterial : public UnnamedClass309E98 { public: virtual ~ULitSpecularMaterial(); };
-ULitSpecularMaterial::~ULitSpecularMaterial() { ConditionalDestroy(); }
+// UEchelonLightingMaterial::~UEchelonLightingMaterial
+UEchelonLightingMaterial::~UEchelonLightingMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UShader : public UnnamedClass309E98 { public: virtual ~UShader(); };
-UShader::~UShader() { ConditionalDestroy(); }
+// UTexCoordMaterial::~UTexCoordMaterial
+UTexCoordMaterial::~UTexCoordMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UEchelonLightingMaterial : public UnnamedClass30B990 { public: virtual ~UEchelonLightingMaterial(); };
-UEchelonLightingMaterial::~UEchelonLightingMaterial() { ConditionalDestroy(); }
+// UProxyBitmapMaterial::~UProxyBitmapMaterial
+UProxyBitmapMaterial::~UProxyBitmapMaterial()
+{
+    ConditionalDestroy();
+}
 
-class UTexCoordMaterial : public UnnamedClass309E98 { public: virtual ~UTexCoordMaterial(); };
-UTexCoordMaterial::~UTexCoordMaterial() { ConditionalDestroy(); }
+// UServerCommandlet::~UServerCommandlet
+UServerCommandlet::~UServerCommandlet()
+{
+    ConditionalDestroy();
+}
 
-class UProxyBitmapMaterial : public UnnamedClass309E00 { public: virtual ~UProxyBitmapMaterial(); };
-UProxyBitmapMaterial::~UProxyBitmapMaterial() { ConditionalDestroy(); }
+// ACamera::~ACamera
+ACamera::~ACamera()
+{
+    ConditionalDestroy();
+}
 
-class UServerCommandlet : public UnnamedClass30D0B8 { public: virtual ~UServerCommandlet(); };
-UServerCommandlet::~UServerCommandlet() { ConditionalDestroy(); }
+// UChannel::~UChannel
+UChannel::~UChannel()
+{
+    ConditionalDestroy();
+}
 
-class ACamera : public UnnamedClass3066B8 { public: virtual ~ACamera(); };
-ACamera::~ACamera() { ConditionalDestroy(); }
+// UCubemap::~UCubemap
+UCubemap::~UCubemap()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass304548 : public UObject { public: virtual ~UnnamedClass304548(); };
-UnnamedClass304548::~UnnamedClass304548() { ConditionalDestroy(); }
+// AERainVolume::~AERainVolume
+AERainVolume::~AERainVolume()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass304020 : public UnnamedClass303F10 { public: virtual ~UnnamedClass304020(); };
-UnnamedClass304020::~UnnamedClass304020() { ConditionalDestroy(); }
+// AInternetLink::~AInternetLink
+AInternetLink::~AInternetLink()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass303C40 : public UnnamedClass30BBB8 { public: virtual ~UnnamedClass303C40(); };
-UnnamedClass303C40::~UnnamedClass303C40() { ConditionalDestroy(); }
+// AUdpLink::~AUdpLink
+AUdpLink::~AUdpLink()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass2FF448 : public AInternetInfo { public: virtual ~UnnamedClass2FF448(); };
-UnnamedClass2FF448::~UnnamedClass2FF448() { ConditionalDestroy(); }
+// ASLANClientLink::~ASLANClientLink
+ASLANClientLink::~ASLANClientLink()
+{
+    ConditionalDestroy();
+}
 
-class UnnamedClass2FF580 : public UnnamedClass2FF448 { public: virtual ~UnnamedClass2FF580(); };
-UnnamedClass2FF580::~UnnamedClass2FF580() { ConditionalDestroy(); }
+// ASGadMultiPresDetectorLauncher::~ASGadMultiPresDetectorLauncher
+ASGadMultiPresDetectorLauncher::~ASGadMultiPresDetectorLauncher()
+{
+    ConditionalDestroy();
+}
 
-class ASLANClientLink : public UnnamedClass2FF580 { public: virtual ~ASLANClientLink(); };
-ASLANClientLink::~ASLANClientLink() { ConditionalDestroy(); }
+// UESBChain::~UESBChain
+UESBChain::~UESBChain()
+{
+    ConditionalDestroy();
+}
 
-class ASGadMultiPresDetectorLauncher : public UnnamedClass2F7AD8 { public: virtual ~ASGadMultiPresDetectorLauncher(); };
-ASGadMultiPresDetectorLauncher::~ASGadMultiPresDetectorLauncher() { ConditionalDestroy(); }
+// UESBStripDoor::~UESBStripDoor
+UESBStripDoor::~UESBStripDoor()
+{
+    ConditionalDestroy();
+}
 
-class UESBChain : public UESBRope { public: virtual ~UESBChain(); };
-UESBChain::~UESBChain() { ConditionalDestroy(); }
-
-class UESBStripDoor : public UESBPatch { public: virtual ~UESBStripDoor(); };
-UESBStripDoor::~UESBStripDoor() { ConditionalDestroy(); }
-
-class UnnamedClass2F2628 : public UnnamedClass30D7D8 { public: virtual ~UnnamedClass2F2628(); };
-UnnamedClass2F2628::~UnnamedClass2F2628() { ConditionalDestroy(); }
+// UWindowManager::~UWindowManager
+UWindowManager::~UWindowManager()
+{
+    ConditionalDestroy();
+}

@@ -1,31 +1,27 @@
-typedef int Fixed;
-typedef struct {
-    Fixed pitch, volume;
-    unsigned char pan;
-    unsigned char reserved[0x1b];
-    unsigned flags;
-} Input;
-typedef struct {
-    Fixed pitch, volume;
-    int mode;
-    union { struct { unsigned char pan, dolby; } channels; int angle; } output;
-} Mixer;
-extern int NoReceiverReported;
-extern const char NoReceiverMessage[];
-extern void __stdcall SND_fn_vDisplayError(int code, const char *message);
+/* sound_no_receiver.c -- a positioned sound's parameters when no microphone exists
+   (sndxdmic.c) */
+#include "sound_error.h"
+#include "sound_micro.h"
 
-#pragma code_seg(".text$V75c5f0")
-__declspec(noinline) void __cdecl no_receiver_parameters(const Input *input, Mixer *mix)
+/* Snd_ParConv_ConvertWithNoMicro: a silent, centred sound, and one warning for all calls */
+__declspec(noinline) void __cdecl Snd_ParConv_ConvertWithNoMicro(const SoundParam *par3D,
+                                                                 PrivateSoundParam *par)
 {
-    mix->volume = 0;
-    mix->pitch = 65536;
-    if (!NoReceiverReported) {
-        NoReceiverReported = 1;
-        SND_fn_vDisplayError(8, NoReceiverMessage);
+    par->volume = 0;
+    par->pitch = 65536;
+    if (!bDisplayed) {
+        bDisplayed = 1;
+        SND_fn_vDisplayError(E_uwSndGenericWarning, "You should define a microphone to play a 3D Sound");
     }
-    switch (mix->mode) {
-    case 1: mix->output.channels.dolby = 0; /* fall through */
-    case 0: mix->output.channels.pan = 64; break;
-    case 2: mix->output.angle = 0; break;
+    switch (par->format) {
+    case 1:
+        par->position.channels.dolby = 0;
+        /* fall through */
+    case 0:
+        par->position.channels.pan = 64;
+        break;
+    case 2:
+        par->position.angle = 0;
+        break;
     }
 }

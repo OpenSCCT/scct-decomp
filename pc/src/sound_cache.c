@@ -1,7 +1,7 @@
 #include "sound_cache.h"
 
 #pragma code_seg(".text$V75cbf0")
-int __fastcall cache_accepts_size(Cache *cache, ItemArg item)
+int __fastcall cache_accepts_size(SoundCache *cache, SoundCacheItemArg item)
 {
     if (!cache->enabled)
         return 0;
@@ -9,17 +9,17 @@ int __fastcall cache_accepts_size(Cache *cache, ItemArg item)
 }
 
 #pragma code_seg(".text$V75cee0")
-int __fastcall cache_insert_priority(Cache *cache, ItemArg item)
+int __fastcall cache_insert_priority(SoundCache *cache, SoundCacheItemArg item)
 {
     int priority;
-    Node *cursor;
+    SndPtrListNode *cursor;
     if (!cache->enabled)
         return 0;
     priority = cache_item_priority(item.ptr);
     cursor = cache->entries.first;
     while (cursor)
     {
-        NodeArg at;
+        SndPtrListNodeArg at;
         SoundCacheItem *other;
         at.ptr = cursor;
         other = next_item(&cursor);
@@ -36,9 +36,9 @@ int __fastcall cache_insert_priority(Cache *cache, ItemArg item)
 }
 
 #pragma code_seg(".text$V75cf60")
-void __fastcall cache_remove_item(Cache *cache, ItemArg item)
+void __fastcall cache_remove_item(SoundCache *cache, SoundCacheItemArg item)
 {
-    NodeArg at;
+    SndPtrListNodeArg at;
     if (!cache->enabled)
         return;
     at.ptr = find_item(&cache->entries, item.ptr, 0);
@@ -50,7 +50,7 @@ void __fastcall cache_remove_item(Cache *cache, ItemArg item)
 }
 
 #pragma code_seg(".text$V75cfa0")
-SoundCacheItem *__fastcall cache_pop_last(Cache *cache)
+SoundCacheItem *__fastcall cache_pop_last(SoundCache *cache)
 {
     SoundCacheItem *item;
     if (!cache->enabled)
@@ -62,15 +62,15 @@ SoundCacheItem *__fastcall cache_pop_last(Cache *cache)
 }
 
 #pragma code_seg(".text$V75cff0")
-SoundCacheItem *__fastcall cache_take_key(Cache *cache, WordArg key)
+SoundCacheItem *__fastcall cache_take_key(SoundCache *cache, SndWordArg key)
 {
-    Node *cursor;
+    SndPtrListNode *cursor;
     if (!cache->enabled)
         return 0;
     cursor = cache->entries.first;
     while (cursor)
     {
-        NodeArg at;
+        SndPtrListNodeArg at;
         SoundCacheItem *item;
         at.ptr = cursor;
         item = next_item(&cursor);
@@ -85,12 +85,12 @@ SoundCacheItem *__fastcall cache_take_key(Cache *cache, WordArg key)
 }
 
 #pragma code_seg(".text$V75d060")
-__declspec(noinline) void __fastcall clear_cache_list(List *list)
+__declspec(noinline) void __fastcall clear_cache_list(SndPtrList *list)
 {
     while (list->count)
         pop_first(list);
 }
-static __forceinline void initialize_list(List *list)
+static __forceinline void initialize_list(SndPtrList *list)
 {
     list->count = 0;
     list->last = 0;
@@ -98,7 +98,7 @@ static __forceinline void initialize_list(List *list)
 }
 
 #pragma code_seg(".text$V75d0b0")
-Cache *__fastcall initialize_sound_cache(Cache *cache, WordArg capacity)
+SoundCache *__fastcall initialize_sound_cache(SoundCache *cache, SndWordArg capacity)
 {
     initialize_list(&cache->entries);
     cache->enabled = 1;
@@ -109,7 +109,7 @@ Cache *__fastcall initialize_sound_cache(Cache *cache, WordArg capacity)
 }
 
 #pragma code_seg(".text$V75d0f0")
-void __fastcall release_sound_cache(Cache *cache)
+void __fastcall release_sound_cache(SoundCache *cache)
 {
     clear_cache_list(&cache->entries);
 }

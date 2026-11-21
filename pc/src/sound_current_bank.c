@@ -1,10 +1,8 @@
-struct SoundBank;
-typedef struct SoundBankManager {
-    unsigned char reserved[12];
-    struct SoundBank *current;
-} SoundBankManager;
+/* sound_current_bank.c -- the bank in use */
+#include "sound_bank_layout.h"
 
-struct SoundBank *__fastcall sound_current_bank(SoundBankManager *manager)
+/* sound_current_bank: a C++ member function; `this` arrives in ECX */
+tdstBankElement *__fastcall sound_current_bank(SoundBankManager *manager)
 {
     return manager->current;
 }

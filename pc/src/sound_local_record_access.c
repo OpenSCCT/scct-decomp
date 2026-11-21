@@ -1,38 +1,46 @@
+/* sound_local_record_access.c -- resources and events of the loaded maps by binary identifier
+   (sndldmap.c) */
 #include "sound_bank_layout.h"
+#include "sound_error.h"
 
-extern LocalBank bank_a, bank_b;
-void __stdcall SND_fn_vDisplayError(int code, const char *context);
+/* A binary identifier holds an index in its low 16 bits; bit 31 chooses the current map over
+   the fixed one and bit 30 the data of the current language. */
 
-SoundRecord *__stdcall sound_bin_res_mode1(long id)
+/* SND_fn_pGetBinRes_Map */
+tdstBlockResourceMem *__stdcall SND_fn_pGetBinRes_Map(unsigned long _ulBinId)
 {
-    LocalBank *bank;
-    RecordTable *table;
-    unsigned long extra;
-    SoundRecord *record;
-    if (id == -2)
+    tdstMapMem *pstMapMem;
+    tdstBlockResMemList *pstBlockResMemList;
+    unsigned long ulBinId = _ulBinId;
+    unsigned long bLocalised;
+    tdstBlockResourceMem *pstBlockResMem;
+    if (ulBinId == (unsigned long)-2)
         return 0;
-    bank = ((unsigned long)id >> 31) ? &bank_b : &bank_a;
-    extra = ((unsigned long)id >> 30) & 1;
-    id &= 0xffff;
-    table = extra ? &bank->extra_resources : &bank->resources;
-    record = table->entries + id;
-    if (!record)
-        SND_fn_vDisplayError(8, (const char *)0x111720dc);
-    return record;
+    pstMapMem = (ulBinId >> 31) ? &gs_stCurrentMap : &gs_stMapFix;
+    bLocalised = (ulBinId >> 30) & 1;
+    ulBinId &= 0xffff;
+    pstBlockResMemList = bLocalised ? &pstMapMem->stLoc.stBlockResMemList : &pstMapMem->stNLoc.stBlockResMemList;
+    pstBlockResMem = pstBlockResMemList->hFirstElementOpt + ulBinId;
+    if (!pstBlockResMem)
+        SND_fn_vDisplayError(E_uwSndGenericWarning, "ERROR: Cannot find block resource memory");
+    return pstBlockResMem;
 }
 
-SoundRecord *__cdecl sound_bin_event_mode1(long id)
+/* SND_fn_pGetBinEvent_Map */
+SND_tdstBlockEvent *__cdecl SND_fn_pGetBinEvent_Map(unsigned long _ulBinId)
 {
-    LocalBank *bank;
-    RecordTable *table;
-    unsigned long extra;
-    SoundRecord *record;
-    bank = ((unsigned long)id >> 31) ? &bank_b : &bank_a;
-    extra = ((unsigned long)id >> 30) & 1;
-    id &= 0xffff;
-    table = extra ? &bank->extra_events->events : &bank->events->events;
-    record = table->entries + id;
-    if (!record)
-        SND_fn_vDisplayError(8, (const char *)0x11172108);
-    return record;
+    tdstMapMem *pstMapMem;
+    tdstBlockEventList *pstBlockEventList;
+    unsigned long ulBinId = _ulBinId;
+    unsigned long bLocalised;
+    SND_tdstBlockEvent *pstBlockEvent;
+    pstMapMem = (ulBinId >> 31) ? &gs_stCurrentMap : &gs_stMapFix;
+    bLocalised = (ulBinId >> 30) & 1;
+    ulBinId &= 0xffff;
+    pstBlockEventList = bLocalised ? &pstMapMem->stLoc.pstMapHeader->stBlockEventList
+                                   : &pstMapMem->stNLoc.pstMapHeader->stBlockEventList;
+    pstBlockEvent = pstBlockEventList->hFirstElementOpt + ulBinId;
+    if (!pstBlockEvent)
+        SND_fn_vDisplayError(E_uwSndGenericWarning, "ERROR: Cannot find block event.");
+    return pstBlockEvent;
 }

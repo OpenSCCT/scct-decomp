@@ -1,53 +1,53 @@
-typedef int SoundFixed;
-typedef struct {
-    SoundFixed nearDistance, maxDistance, fadeStart, fadeEnd;
-} SoundRollOff;
-extern SoundRollOff DefaultRollOff;
-extern void __stdcall SND_fn_vMemCopySnd(void *to, const void *from, int count);
-extern SoundFixed __stdcall SND_fn_rDivRealRealSnd(SoundFixed numerator, SoundFixed denominator);
-extern SoundFixed __stdcall SND_fn_rMulRealRealSnd(SoundFixed a, SoundFixed b);
-extern SoundFixed __cdecl distance_attenuation(SoundFixed distance, SoundFixed nearDistance);
-extern SoundFixed __cdecl volume_to_linear(SoundFixed volume, int bits);
-extern SoundFixed __cdecl linear_to_volume(SoundFixed amplitude, int mode);
+/* sound_extended_rolloff.c -- distance to volume with a caller's roll-off (sndspace.c) */
+#include "sound_memory.h"
+#include "sound_space.h"
+#include "sound_volume.h"
 
-static __forceinline SoundFixed evaluate_rolloff(SoundFixed distance, SoundRollOff *resolved)
+/* The volume in decibels at rDist under a roll-off whose defaults are already filled in. */
+static __forceinline SndReal evaluate_rolloff(SndReal rDist, RollOffParam *pstRollOff)
 {
-    if (resolved->maxDistance != -1 && distance > resolved->maxDistance)
-        distance = resolved->maxDistance;
-    if (distance < resolved->nearDistance)
+    if (pstRollOff->rDistBackGround != ROLLOFF_NONE && rDist > pstRollOff->rDistBackGround)
+        rDist = pstRollOff->rDistBackGround;
+    if (rDist < pstRollOff->rDistSatur)
         return 0;
-    if (resolved->fadeStart != -1 && resolved->fadeEnd != -1 && distance >= resolved->fadeStart) {
-        SoundFixed baseVolume, phase;
-        if (distance < resolved->fadeEnd) {
-            baseVolume = distance_attenuation(resolved->fadeStart, resolved->nearDistance);
-            baseVolume = volume_to_linear(baseVolume, 8);
-            baseVolume = SND_fn_rDivRealRealSnd(baseVolume, 128);
-            phase = SND_fn_rDivRealRealSnd(distance - resolved->fadeStart, resolved->fadeEnd - resolved->fadeStart);
-            phase = 65536 - phase;
-            phase = SND_fn_rMulRealRealSnd(phase, baseVolume);
-            return linear_to_volume(phase, 0);
+    if (pstRollOff->rDistTransitLinear != ROLLOFF_NONE && pstRollOff->rDistInaudible != ROLLOFF_NONE
+        && rDist >= pstRollOff->rDistTransitLinear) {
+        SndReal rStartVol, rPos;
+        if (rDist < pstRollOff->rDistInaudible) {
+            rStartVol = fn_rDist2Vol(pstRollOff->rDistTransitLinear, pstRollOff->rDistSatur);
+            rStartVol = SND_fn_lConvertDb2LinearVolume(rStartVol, 8);
+            rStartVol = SND_fn_rDivRealRealSnd(rStartVol, 128);
+            rPos = SND_fn_rDivRealRealSnd(rDist - pstRollOff->rDistTransitLinear,
+                                          pstRollOff->rDistInaudible - pstRollOff->rDistTransitLinear);
+            rPos = 65536 - rPos;
+            rPos = SND_fn_rMulRealRealSnd(rPos, rStartVol);
+            return fn_rGetVolFadeAttenuation(rPos, SND_E_FADE_LINEAR);
         }
-        return -96 * 65536;
+        return SND_VOLUME_MIN_DB;
     }
-    return distance_attenuation(distance, resolved->nearDistance);
+    return fn_rDist2Vol(rDist, pstRollOff->rDistSatur);
 }
 
-#pragma code_seg(".text$V74b540")
-SoundFixed __stdcall SND_fn_rDistanceToVolumeEx(SoundFixed distance, const SoundRollOff *settings)
+/* SND_fn_rDistanceToVolumeEx */
+SndReal __stdcall SND_fn_rDistanceToVolumeEx(SndReal _rDist, const RollOffParam *_pstRollOff)
 {
-    SoundRollOff resolved;
-    if (!settings) {
-        SoundRollOff defaults = DefaultRollOff;
-        return SND_fn_rDistanceToVolumeEx(distance, &defaults);
+    RollOffParam stRollOff;
+    if (!_pstRollOff) {
+        RollOffParam rolloff;
+        rolloff.rDistSatur = gs_rDefaultDistSatur;
+        rolloff.rDistBackGround = gs_rDefaultDistBackGround;
+        rolloff.rDistTransitLinear = gs_rDefaultDistTransitLinear;
+        rolloff.rDistInaudible = gs_rDefaultDistInaudible;
+        return SND_fn_rDistanceToVolumeEx(_rDist, &rolloff);
     }
-    SND_fn_vMemCopySnd(&resolved, settings, sizeof(resolved));
-    if (resolved.nearDistance == -2)
-        resolved.nearDistance = DefaultRollOff.nearDistance;
-    if (resolved.maxDistance == -2)
-        resolved.maxDistance = DefaultRollOff.maxDistance;
-    if (resolved.fadeStart == -2)
-        resolved.fadeStart = DefaultRollOff.fadeStart;
-    if (resolved.fadeEnd == -2)
-        resolved.fadeEnd = DefaultRollOff.fadeEnd;
-    return evaluate_rolloff(distance, &resolved);
+    SND_fn_vMemCopySnd(&stRollOff, _pstRollOff, sizeof(stRollOff));
+    if (stRollOff.rDistSatur == ROLLOFF_DEFAULT)
+        stRollOff.rDistSatur = gs_rDefaultDistSatur;
+    if (stRollOff.rDistBackGround == ROLLOFF_DEFAULT)
+        stRollOff.rDistBackGround = gs_rDefaultDistBackGround;
+    if (stRollOff.rDistTransitLinear == ROLLOFF_DEFAULT)
+        stRollOff.rDistTransitLinear = gs_rDefaultDistTransitLinear;
+    if (stRollOff.rDistInaudible == ROLLOFF_DEFAULT)
+        stRollOff.rDistInaudible = gs_rDefaultDistInaudible;
+    return evaluate_rolloff(_rDist, &stRollOff);
 }

@@ -1,6 +1,9 @@
 #ifndef SOUND_CACHE_H
 #define SOUND_CACHE_H
 
+#include "sound_list.h"
+#include "sound_memory.h"
+
 typedef struct SoundCacheItem
 {
     unsigned fields00[2];
@@ -8,42 +11,23 @@ typedef struct SoundCacheItem
     int priority;
     unsigned key;
 } SoundCacheItem;
-typedef struct Node
-{
-    struct Node *next, *previous;
-    SoundCacheItem *item;
-} Node;
-typedef struct
-{
-    Node *first, *last;
-    unsigned count;
-} List;
 typedef struct
 {
     int enabled;
     unsigned capacity, used;
-    List entries;
-} Cache;
+    SndPtrList entries;
+} SoundCache;
 
 /* MSVC x86 passes aggregate arguments on the stack and the fastcall receiver in ECX. */
-typedef struct
-{
-    Node *ptr;
-} NodeArg;
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     SoundCacheItem *ptr;
-} ItemArg;
-typedef struct
-{
-    Node **ptr;
-} CursorArg;
-extern void *__stdcall SND_fn_pvMallocSnd(unsigned size);
-extern void __stdcall SND_fn_vFreeSnd(void *ptr);
+} SoundCacheItemArg;
 
-static __forceinline Node *make_node(List *list, Node *previous, Node *next)
+static __forceinline SndPtrListNode *make_node(SndPtrList *list, SndPtrListNode *previous, SndPtrListNode *next)
 {
-    Node *node = SND_fn_pvMallocSnd(sizeof(Node));
+    SndPtrListNode *node = SND_fn_pvMallocSnd(sizeof(SndPtrListNode));
     if (node)
     {
         node->next = next;
@@ -52,7 +36,7 @@ static __forceinline Node *make_node(List *list, Node *previous, Node *next)
     }
     return node;
 }
-static __forceinline void free_node(List *list, Node *node)
+static __forceinline void free_node(SndPtrList *list, SndPtrListNode *node)
 {
     if (node)
     {
@@ -60,9 +44,9 @@ static __forceinline void free_node(List *list, Node *node)
         --list->count;
     }
 }
-static __forceinline Node *add_first(List *list, SoundCacheItem *item)
+static __forceinline SndPtrListNode *add_first(SndPtrList *list, SoundCacheItem *item)
 {
-    Node *node = make_node(list, 0, list->first);
+    SndPtrListNode *node = make_node(list, 0, list->first);
     node->item = item;
     if (list->first)
         list->first->previous = node;
@@ -70,9 +54,9 @@ static __forceinline Node *add_first(List *list, SoundCacheItem *item)
         list->last = node;
     return list->first = node;
 }
-static __forceinline Node *add_last(List *list, SoundCacheItem *item)
+static __forceinline SndPtrListNode *add_last(SndPtrList *list, SoundCacheItem *item)
 {
-    Node *node = make_node(list, list->last, 0);
+    SndPtrListNode *node = make_node(list, list->last, 0);
     node->item = item;
     if (list->last)
         list->last->next = node;
@@ -80,9 +64,9 @@ static __forceinline Node *add_last(List *list, SoundCacheItem *item)
         list->first = node;
     return list->last = node;
 }
-static __forceinline SoundCacheItem *pop_first(List *list)
+static __forceinline SoundCacheItem *pop_first(SndPtrList *list)
 {
-    Node *node = list->first;
+    SndPtrListNode *node = list->first;
     SoundCacheItem *item = node->item;
     list->first = node->next;
     if (list->first)
@@ -92,9 +76,9 @@ static __forceinline SoundCacheItem *pop_first(List *list)
     free_node(list, node);
     return item;
 }
-static __forceinline SoundCacheItem *pop_last(List *list)
+static __forceinline SoundCacheItem *pop_last(SndPtrList *list)
 {
-    Node *node = list->last;
+    SndPtrListNode *node = list->last;
     SoundCacheItem *item = node->item;
     list->last = node->previous;
     if (list->last)
@@ -104,9 +88,9 @@ static __forceinline SoundCacheItem *pop_last(List *list)
     free_node(list, node);
     return item;
 }
-static __forceinline Node *find_item(List *list, SoundCacheItem *item, Node *after)
+static __forceinline SndPtrListNode *find_item(SndPtrList *list, SoundCacheItem *item, SndPtrListNode *after)
 {
-    Node *node;
+    SndPtrListNode *node;
     if (!after)
         node = list->first;
     else
@@ -119,23 +103,24 @@ static __forceinline Node *find_item(List *list, SoundCacheItem *item, Node *aft
     }
     return 0;
 }
-static __forceinline SoundCacheItem *next_item(Node **cursor)
+static __forceinline SoundCacheItem *next_item(SndPtrListNode **cursor)
 {
-    Node *node = *cursor;
+    SndPtrListNode *node = *cursor;
     *cursor = node->next;
     return node->item;
 }
 
+/* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     unsigned value;
-} WordArg;
+} SndWordArg;
 __declspec(noinline) unsigned __fastcall cache_item_bytes(SoundCacheItem *item);
 __declspec(noinline) int __fastcall cache_item_priority(SoundCacheItem *item);
-__declspec(noinline) int __fastcall cache_item_matches(SoundCacheItem *item, WordArg key);
-__declspec(noinline) Node *__fastcall append_cache_item(List *list, ItemArg item);
-__declspec(noinline) void __fastcall unlink_cache_node(List *list, NodeArg ref);
-__declspec(noinline) Node *__fastcall insert_before_cache_node(List *list, NodeArg at,
-                                                               ItemArg item);
+__declspec(noinline) int __fastcall cache_item_matches(SoundCacheItem *item, SndWordArg key);
+__declspec(noinline) SndPtrListNode *__fastcall append_cache_item(SndPtrList *list, SoundCacheItemArg item);
+__declspec(noinline) void __fastcall unlink_cache_node(SndPtrList *list, SndPtrListNodeArg ref);
+__declspec(noinline) SndPtrListNode *__fastcall insert_before_cache_node(SndPtrList *list, SndPtrListNodeArg at,
+                                                               SoundCacheItemArg item);
 
 #endif
