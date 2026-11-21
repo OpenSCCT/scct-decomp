@@ -41,11 +41,11 @@ $versus = Get-Content -Raw config/steam-252084-versus.json | ConvertFrom-Json
 
 ## Compile and compare
 
-The first independent [campaign C source](src/sound_texture_count.c) implements the sound catalogue's count query. Use an x86 Visual Studio Developer PowerShell for MSVC 19.44.35229 and install the [objdiff 3.8.3 CLI](https://github.com/encounter/objdiff/releases/tag/v3.8.3). Supply the CLI path using `--objdiff` if your executable is outside `PATH`.
+The first independent [campaign C source](src/sound_texture_count.c) implements the sound catalogue's count query. Put the Visual C++ Toolkit 2003 compiler (13.10.3052) on `PATH` and install the [objdiff 3.8.3 CLI](https://github.com/encounter/objdiff/releases/tag/v3.8.3). Supply the CLI path using `--objdiff` if your executable is outside `PATH`.
 
 ```powershell
 New-Item -ItemType Directory -Force local | Out-Null
-cl /nologo /O2 /c /Folocal/sound_texture_count.obj src/sound_texture_count.c
+cl /nologo /O2 /Gy /c /Folocal/sound_texture_count.obj src/sound_texture_count.c
 python workflow.py steam-252084-campaign $game diff sound-texture-count local/sound_texture_count.obj
 ```
 
@@ -56,13 +56,21 @@ The campaign experiment reproduced three retail bytes under two different compil
 ## Verify the complete Steam pass
 
 From the repository root, pass the installed game directory to the verifier.
-Pass the x86 compiler paths for MSVC 19.44.35229.0, Visual C++ Toolkit 2003
-13.10.3052, VC6 12.00.8804, and Clang 19.1.0. The [toolchain notes](TOOLCHAIN.md)
+Pass the x86 compiler paths for Visual C++ Toolkit 2003 13.10.3052, VC6
+12.00.8804, MSVC 19.44.35229.0 and Clang 19.1.0. The Toolkit compiler alone
+rebuilds 19,942 of the 20,222 PC units; `--skip-unavailable` gates those and
+lists the units that need another compiler. The [toolchain notes](TOOLCHAIN.md)
 identify the VC6 frontend and backend and the Clang revision used for these builds.
 
 ```powershell
-python pc/verify_build.py $game --cl $modernCl --cl $toolkit2003Cl --cl $vc6Cl --clang $clang
+python pc/verify_build.py $game --cl $toolkit2003Cl --cl $vc6Cl --cl $modernCl --clang $clang
+python pc/verify_build.py $game --cl $toolkit2003Cl --skip-unavailable
+python pc/verify_build.py $game --cl $toolkit2003Cl --skip-unavailable --source 'src/sound_*' --update-receipts
 ```
+
+`--source` limits the gate to units with a matching input. `--update-receipts`
+records a new receipt for a unit whose inputs were edited, after the rebuilt
+unit has reproduced every retail byte; without it an edited input stops the gate.
 
 The verifier checks each complete retail SHA-256 and each source receipt,
 compiles in a fresh directory, and compares every byte in each named COFF
