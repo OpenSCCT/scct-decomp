@@ -36,7 +36,10 @@ def symbol_index(obj):
             short = names[start:end]
         name = short.rstrip(b"\0")
         symbols[index] = (name, value, section, kind, storage)
-        if kind == 0x20 and 1 <= section <= sections:
+        # A C++ catch block is emitted after the function's return in the same section,
+        # under a private $L label; it belongs to that function rather than starting another.
+        catch_block = storage == 3 and value > 0 and name.startswith(b"$L") and name[2:].isdigit()
+        if kind == 0x20 and 1 <= section <= sections and not catch_block:
             section_functions[section] += 1
             if value == 0 and storage in (2, 3):
                 functions[name].append(section)

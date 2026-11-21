@@ -106,3 +106,20 @@ thread information block. A function's own `__ehhandler$` label in its
 table is bound to the retail table. The audit verifies each handler as
 `mov eax, FuncInfo; jmp`, checks the FuncInfo magic `0x19930520`, and follows
 the only unwind action to a funclet that calls the same parent destructor.
+
+### Catch blocks and `/EHa`
+
+Node allocators of the engine's `std::list` and `std::map`/`std::set` keep a
+`try`/`catch (...)` around their link construction even though nothing in it
+can throw, and keep every local in the try region in memory. Only
+asynchronous exception handling (`/EHa`) reproduces that: with `/GX` the
+compiler removes the try block. `src/container_nodes.cpp` builds these with
+`/O2 /Gy /EHa`.
+
+MSVC places a catch block after the function's return in the same section,
+under a private `$L` label. Ghidra's function body stops at the return and
+nothing indexes the catch block, so each unit covers the whole section. The
+linker treats a private `$L` function label at a nonzero offset as part of its
+function. The audit requires the indexed body to end at that label, no indexed
+function inside the catch range, and the retail FuncInfo to name the label as
+the only `catch (...)` handler.

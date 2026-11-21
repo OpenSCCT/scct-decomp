@@ -29,5 +29,30 @@ class ExceptListTests(unittest.TestCase):
             link_function(object_file("_data"), "_unit", 4, 0x41000, {"_data": {"va": 0, "basis": "fixture"}})
 
 
+def section_with_label(label, value, storage):
+    """One 8-byte section holding _unit, a second function-typed symbol and one data reference."""
+    header = struct.pack("<HHIIIHH", 0x14c, 1, 0, 60 + 8 + 10, 3, 0, 0)
+    section = struct.pack("<8sIIIIIIHHI", b".text", 0, 0, 8, 60, 68, 0, 1, 0, 0x60000020)
+    relocation = struct.pack("<IIH", 0, 2, 6)
+    unit = struct.pack("<8sIhHBB", b"_unit", 0, 1, 0x20, 2, 0)
+    other = struct.pack("<8sIhHBB", label.ljust(8, b"\0"), value, 1, 0x20, storage, 0)
+    data = struct.pack("<8sIhHBB", b"_data", 0, 0, 0, 2, 0)
+    return header + section + bytes(4) + b"\xcc" * 4 + relocation + unit + other + data + struct.pack("<I", 4)
+
+
+DATA = {"_data": {"va": 0x42000, "basis": "fixture"}}
+
+
+class CatchBlockTests(unittest.TestCase):
+    def test_catch_block_label_stays_with_its_function(self):
+        linked = link_function(section_with_label(b"$L865", 6, 3), "_unit", 8, 0x41000, DATA)
+        self.assertEqual(linked, struct.pack("<I", 0x42000) + b"\xcc" * 4)
+
+    def test_second_function_in_section_is_still_rejected(self):
+        for label, value, storage in ((b"_other", 6, 2), (b"$L865", 0, 3), (b"$Lx", 6, 3)):
+            with self.assertRaisesRegex(ValueError, "multiple functions|expected one"):
+                link_function(section_with_label(label, value, storage), "_unit", 8, 0x41000, DATA)
+
+
 if __name__ == "__main__":
     unittest.main()
