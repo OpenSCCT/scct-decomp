@@ -62,6 +62,14 @@ def inputs_digest(folder, unit, image_hash, file_cache=None):
         if (evidence["compiler"] != unit["toolchain"] or not isinstance(evidence["flags"], list)
                 or not all(isinstance(flag, str) and flag for flag in evidence["flags"])):
             raise ValueError("record the original compiler and flags for this unit")
+        if not set(evidence["flags"]) <= set(unit["build_command"].split()):
+            raise ValueError("evidence flags must appear in the unit's build command")
+        # When the original compiler build is unavailable, the note may establish that the
+        # compiler used here generates the same code; it names the original separately.
+        original = evidence.get("original_compiler")
+        if original is not None and (type(original) is not str or not original.strip()
+                                     or original == evidence["compiler"]):
+            raise ValueError("name a different original compiler, or leave it out")
         basis = evidence["basis"]
         if Path(basis).suffix.lower() != ".md":
             raise ValueError("original compiler and flag evidence requires a reviewed Markdown note")

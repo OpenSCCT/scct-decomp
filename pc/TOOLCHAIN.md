@@ -47,6 +47,11 @@ contributions also agree in bytes and relocation locations. This identifies
 the runtime family and explains why these twelve units still carry candidate
 receipts. The campaign manifest records the per-member hashes. [CRT makefile](https://github.com/QianNangong/VC6Ultimate/blob/620bdecb834a8d59c576e20fa65086b4c654eb5b/VisualUltimate/WindowsSDKs/vc7/crt/src/makefile.sub#L38-L67)
 
+[Campaign compiler and switches](evidence/campaign-vc71-o2.md) is the
+reviewed basis for Campaign `/O2` and `/O2 /EHa` units. It names 13.10.3077
+as the original compiler, shows that 13.10.3052 generates the same code, and
+records the switch experiments across all 15,904 units.
+
 ## Versus actor placement
 
 The stock AActor placement callback at RVA `0xae2f0` transfers the object in

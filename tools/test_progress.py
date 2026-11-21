@@ -77,6 +77,18 @@ class ProgressTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "changed build inputs"):
                 summary(folder, item)
             note.write_text("Synthetic compiler and flag evidence for fixture.", encoding="utf-8")
+            evidence = unit["recipe_evidence"]
+            for bad, message in ((dict(flags=["/O2"]), "build command"),
+                                 (dict(original_compiler="synthetic"), "different original compiler"),
+                                 (dict(original_compiler=" "), "different original compiler")):
+                unit["recipe_evidence"] = dict(evidence, **bad)
+                with self.assertRaisesRegex(ValueError, message):
+                    summary(folder, item)
+            unit["recipe_evidence"] = dict(evidence, original_compiler="synthetic original", flags=["compiler"])
+            match(folder, item, "sample", original, rebuilt)
+            self.assertEqual(summary(folder, item)["matched_bytes"], 4)
+            unit["recipe_evidence"] = evidence
+            match(folder, item, "sample", original, rebuilt)
             verify(item, original)
             with self.assertRaisesRegex(ValueError, "rebuilt artifact"):
                 match(folder, item, "sample", original, original)

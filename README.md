@@ -15,7 +15,7 @@ repository as `decomp/` and shows its progress on the player website.
 <!-- status:begin -->
 | Build and program | Verified bytes | Candidate bytes | Measured code |
 | --- | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 0 | 900,627 | 8,082,506 bytes |
+| Steam 252084 · Campaign and co-op | 866,329 | 34,298 | 8,082,506 bytes |
 | Steam 252084 · Versus | 0 | 202,624 | 2,991,392 bytes |
 | PAL 1.01 · Disc boot | 0 | 0 | Unmeasured |
 | PAL 1.01 · Offline program | 0 | 0 | Unmeasured |
@@ -67,8 +67,11 @@ python -m unittest discover -s tools
 
 The numerator counts nonoverlapping whole units with a recorded byte-for-byte comparison
 **and** reviewed original build evidence (`recipe_evidence`: compiler, flags and a
-Markdown basis). Byte-identical candidates are counted separately until that evidence
-exists. Each receipt binds the original build hash, unit boundaries, compiler recipe and
+Markdown basis). When the original compiler build cannot optimise or is unavailable, the
+evidence names it as `original_compiler` and the basis must show that the compiler used
+generates the same code ([Campaign basis](pc/evidence/campaign-vc71-o2.md)).
+Byte-identical candidates are counted separately until that evidence exists.
+Each receipt binds the original build hash, unit boundaries, compiler recipe and
 tracked inputs to the result; CI checks receipts against their inputs with synthetic
 fixtures.
 
