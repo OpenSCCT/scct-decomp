@@ -2,7 +2,7 @@
 #include "unreal_script.h"
 #include "unreal_math.h"
 #include "unreal_containers.h"
-#include "campaign_engine_classes.h"
+#include "campaign_canvas.h"
 
 // UECanvas::DrawLine
 void UECanvas::DrawLine(INT X, INT Y, INT XL, INT YL, const FColor &InColor, INT Alpha, UMaterial *Material)

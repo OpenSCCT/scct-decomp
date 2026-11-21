@@ -3,7 +3,6 @@
 #include "unreal_math.h"
 #include "unreal_containers.h"
 #include "unreal_actor.h"
-#include "unreal_pawn.h"
 #include "campaign_engine_classes.h"
 
 // AActor::SetLocation

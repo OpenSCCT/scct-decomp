@@ -49,21 +49,6 @@ inline UBOOL UObject::IsA(UClass *SomeBase) const
     return SomeBase == 0;
 }
 
-// A class whose class object is created on first use.
-#define DECLARE_LAZY_CLASS(Name)                                            \
-    static UClass *PrivateStaticClass;                                      \
-    static UClass *GetPrivateStaticClass##Name(const TCHAR *Package);       \
-    static void InitializePrivateStaticClass##Name();                       \
-    static UClass *StaticClass()                                            \
-    {                                                                       \
-        if (!PrivateStaticClass)                                            \
-        {                                                                   \
-            PrivateStaticClass = GetPrivateStaticClass##Name(L"Engine");    \
-            InitializePrivateStaticClass##Name();                           \
-        }                                                                   \
-        return PrivateStaticClass;                                          \
-    }
-
 #endif // SCCT_VERSUS
 
 #endif // UNREAL_CLASS_H

@@ -2,8 +2,8 @@
 #include "unreal_script.h"
 #include "unreal_math.h"
 #include "unreal_containers.h"
-#include "unreal_class.h"
-#include "campaign_engine_classes.h"
+#include "unreal_actor.h"
+#include "campaign_canvas.h"
 
 // UObject::execFindObject
 // The release build compiles out the divide-by-zero script warning.

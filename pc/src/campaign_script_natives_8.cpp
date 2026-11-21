@@ -2,10 +2,10 @@
 #include "unreal_script.h"
 #include "unreal_math.h"
 #include "unreal_containers.h"
-#include "unreal_class.h"
 #include "unreal_actor.h"
 #include "unreal_pawn.h"
 #include "campaign_engine_classes.h"
+#include "campaign_mesh_classes.h"
 
 // AActor::execGetAnimParams
 // The PC build reads these console rendering natives' parameters and ignores them.

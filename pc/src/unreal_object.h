@@ -155,4 +155,19 @@ public:
     DECLARE_NATIVE(execFindObject)
 };
 
+// A class whose class object is created on first use.
+#define DECLARE_LAZY_CLASS(Name)                                                    \
+    static class UClass *PrivateStaticClass;                                        \
+    static class UClass *GetPrivateStaticClass##Name(const TCHAR *Package);         \
+    static void InitializePrivateStaticClass##Name();                               \
+    static class UClass *StaticClass()                                              \
+    {                                                                               \
+        if (!PrivateStaticClass)                                                    \
+        {                                                                           \
+            PrivateStaticClass = GetPrivateStaticClass##Name(L"Engine");            \
+            InitializePrivateStaticClass##Name();                                   \
+        }                                                                           \
+        return PrivateStaticClass;                                                  \
+    }
+
 #endif // UNREAL_OBJECT_H

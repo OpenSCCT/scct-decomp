@@ -2,10 +2,9 @@
 #include "unreal_script.h"
 #include "unreal_math.h"
 #include "unreal_containers.h"
-#include "unreal_class.h"
 #include "unreal_actor.h"
-#include "unreal_pawn.h"
 #include "campaign_engine_classes.h"
+#include "campaign_mesh_classes.h"
 
 // AActor::TraceCheck
 AActor *AActor::TraceCheck(FVector &HitLocation, FVector &HitNormal, const FVector &TraceEnd, const FVector &TraceStart, const FVector &Extent, UMaterial **Material, INT TraceFlags, INT bOption8, UPrimitive **Primitive, INT Mode)

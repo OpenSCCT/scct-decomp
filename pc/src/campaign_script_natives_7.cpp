@@ -4,7 +4,8 @@
 #include "unreal_containers.h"
 #include "unreal_class.h"
 #include "unreal_actor.h"
-#include "campaign_engine_classes.h"
+#include "campaign_mesh_classes.h"
+#include "campaign_canvas.h"
 
 // UECanvas::execDrawRectangle
 // The PC build reads these console rendering natives' parameters and ignores them.

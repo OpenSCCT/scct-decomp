@@ -1,7 +1,5 @@
 // campaign_engine_helpers_2.cpp -- InterpolateRotatorValue and FVector::Rotation
-#include "unreal_script.h"
 #include "unreal_math.h"
-#include "unreal_containers.h"
 
 // FVector::Rotation
 FRotator FVector::Rotation()
