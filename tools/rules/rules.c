@@ -295,6 +295,7 @@ typedef struct {
 	int kind;		/* tokenKind_t */
 	int symbol;		/* interned spelling */
 	int line;
+	int condition;		/* +symbol inside #ifdef symbol, -symbol where it is not defined, 0 otherwise */
 } token_t;
 
 /* Flags a comment leaves on the lines it covers. */
@@ -332,6 +333,7 @@ typedef struct {
 	int numLines;
 	unsigned char *reach;	/* reach[f]: this file sees file f through its includes */
 	unsigned targets;		/* bit per executable whose units compile this file */
+	int condition;			/* while lexing: the build conditional the next token sits in */
 } file_t;
 
 typedef enum {
@@ -448,6 +450,7 @@ static void PushToken( file_t *file, int toMacro, int kind, const char *text, in
 	token->kind = kind;
 	token->symbol = Intern( text, length );
 	token->line = line;
+	token->condition = file->condition;
 	file->lineFlags[line] |= LF_CODE;
 }
 
@@ -505,6 +508,31 @@ static void AddInclude( const char *editionDir, int fileIndex, const char *name,
 	file->includes[file->numIncludes++] = target;
 }
 
+/* True when "#ifndef NAME" is followed at once by "#define NAME": an include guard. */
+static int IsIncludeGuard( const char *p, const char *end, const char *name, int length ) {
+	while ( p < end && *p != '\n' ) {
+		p++;
+	}
+	while ( p < end && isspace( (unsigned char)*p ) ) {
+		p++;
+	}
+	if ( p >= end || *p != '#' ) {
+		return 0;
+	}
+	p++;
+	while ( p < end && ( *p == ' ' || *p == '\t' ) ) {
+		p++;
+	}
+	if ( end - p < 6 || memcmp( p, "define", 6 ) ) {
+		return 0;
+	}
+	p += 6;
+	while ( p < end && ( *p == ' ' || *p == '\t' ) ) {
+		p++;
+	}
+	return end - p > length && !memcmp( p, name, (size_t)length ) && !isalnum( (unsigned char)p[length] ) && p[length] != '_';
+}
+
 /* Splits a file into code tokens, macro replacement lists and line notes. */
 static void LexFile( const char *editionDir, int fileIndex, const char *text, int length ) {
 	file_t *file = &files[fileIndex];
@@ -513,6 +541,8 @@ static void LexFile( const char *editionDir, int fileIndex, const char *text, in
 	int line = 1;
 	int lineStart = 1;		/* only blanks since the last newline */
 	int inDefine = 0;		/* tokens go to the macro stream until the line ends */
+	int conditions[64];		/* open #if blocks: +symbol, -symbol, or 0 when not a plain #ifdef */
+	int numConditions = 0;
 	int i;
 
 	for ( i = 0; i < length; i++ ) {
@@ -638,7 +668,42 @@ static void LexFile( const char *editionDir, int fileIndex, const char *text, in
 					AddInclude( editionDir, fileIndex, name, (int)( p - name ) );
 					file = &files[fileIndex];		/* the file table may have moved */
 				}
+			} else if ( ( wordLength == 5 && !memcmp( word, "ifdef", 5 ) ) || ( wordLength == 6 && !memcmp( word, "ifndef", 6 ) ) ) {
+				const char *name;
+				int symbol;
+
+				while ( p < end && ( *p == ' ' || *p == '\t' ) ) {
+					p++;
+				}
+				name = p;
+				while ( p < end && ( isalnum( (unsigned char)*p ) || *p == '_' ) ) {
+					p++;
+				}
+				symbol = p > name ? Intern( name, (int)( p - name ) ) : 0;
+				if ( wordLength == 6 && symbol && IsIncludeGuard( p, end, name, (int)( p - name ) ) ) {
+					symbol = 0;		/* an include guard is not a build variant */
+				}
+				if ( numConditions < 64 ) {
+					conditions[numConditions++] = wordLength == 5 ? symbol : -symbol;
+				}
+			} else if ( wordLength == 4 && !memcmp( word, "else", 4 ) ) {
+				if ( numConditions ) {
+					conditions[numConditions - 1] = -conditions[numConditions - 1];
+				}
+			} else if ( wordLength == 4 && !memcmp( word, "elif", 4 ) ) {
+				if ( numConditions ) {
+					conditions[numConditions - 1] = 0;
+				}
+			} else if ( wordLength == 5 && !memcmp( word, "endif", 5 ) ) {
+				if ( numConditions ) {
+					numConditions--;
+				}
 			} else if ( wordLength == 2 && !memcmp( word, "if", 2 ) ) {
+				if ( numConditions < 64 ) {
+					conditions[numConditions++] = 0;
+				}
+			}
+			if ( wordLength == 2 && !memcmp( word, "if", 2 ) ) {
 				const char *q = p;
 
 				while ( q < end && ( *q == ' ' || *q == '\t' ) ) {
@@ -647,6 +712,11 @@ static void LexFile( const char *editionDir, int fileIndex, const char *text, in
 				if ( q < end && *q == '0' && ( q + 1 == end || isspace( (unsigned char)q[1] ) ) ) {
 					Report( fileIndex, line, RULE_R37, -1, "#if 0 block: no build compiles it" );
 				}
+			}
+			/* tokens take the innermost plain #ifdef they sit in */
+			file->condition = 0;
+			for ( i = numConditions - 1; i >= 0 && !file->condition; i-- ) {
+				file->condition = conditions[i];
 			}
 			/* the rest of any other directive is not code */
 			while ( p < end && *p != '\n' ) {
@@ -2370,6 +2440,34 @@ static int SourceName( const char *symbol, char *out, size_t size ) {
 	return out[0] != 0;
 }
 
+/* True when a unit that sees the `visible` files compiles a token or node under
+   this build conditional: the macro is defined in a file the unit includes, or not. */
+static int Compiled( int condition, const unsigned char *visible ) {
+	int symbol = condition < 0 ? -condition : condition;
+	int defined = 0;
+	int node;
+
+	if ( !condition ) {
+		return 1;
+	}
+	for ( node = symbolFirstNode[symbol]; node >= 0; node = nodes[node].nextSameName ) {
+		if ( nodes[node].kind == N_MACRO && visible[nodes[node].file] ) {
+			defined = 1;
+		}
+	}
+	return defined == ( condition > 0 );
+}
+
+/* The build conditional a node's declaration sits in. */
+static int NodeCondition( const node_t *node ) {
+	const file_t *file = &files[node->file];
+
+	if ( node->end <= node->begin ) {
+		return 0;
+	}
+	return ( ( node->flags & NF_IN_MACRO ) ? file->macroTokens : file->tokens )[node->begin].condition;
+}
+
 /* Collects the [match] rules a node breaks, with those of everything it names. */
 static unsigned Closure( int start, const unsigned char *visible, int explain ) {
 	int *stack = NULL;
@@ -2400,7 +2498,7 @@ static unsigned Closure( int start, const unsigned char *visible, int explain ) 
 			/* the pasted names first, then the node's own tokens */
 			if ( i < node->begin ) {
 				symbol = node->refs[i - ( node->begin - node->numRefs )];
-			} else if ( tokens[i].kind == T_ID ) {
+			} else if ( tokens[i].kind == T_ID && Compiled( tokens[i].condition, visible ) ) {
 				symbol = tokens[i].symbol;
 			} else {
 				continue;
@@ -2408,7 +2506,8 @@ static unsigned Closure( int start, const unsigned char *visible, int explain ) 
 			for ( other = symbolFirstNode[symbol]; other >= 0; other = nodes[other].nextSameName ) {
 				const node_t *candidate = &nodes[other];
 
-				if ( candidate->stamp == closureStamp || !visible[candidate->file] ) {
+				if ( candidate->stamp == closureStamp || !visible[candidate->file]
+					|| !Compiled( NodeCondition( candidate ), visible ) ) {
 					continue;
 				}
 				/* another unit's function is that unit's business; a helper compiled into
@@ -2464,7 +2563,8 @@ static void JudgeUnit( targetTotals_t *totals, const json_t *unit ) {
 		char *scope;
 
 		for ( node = symbolFirstNode[nameSymbol]; node >= 0; node = nodes[node].nextSameName ) {
-			if ( nodes[node].kind == N_FUNCTION && visible[nodes[node].file] ) {
+			if ( nodes[node].kind == N_FUNCTION && visible[nodes[node].file]
+				&& Compiled( NodeCondition( &nodes[node] ), visible ) ) {
 				found = node;
 				how = "function";
 			}
@@ -2474,7 +2574,8 @@ static void JudgeUnit( targetTotals_t *totals, const json_t *unit ) {
 		if ( found < 0 && scope ) {
 			*scope = 0;
 			for ( node = symbolFirstNode[InternString( name )]; node >= 0; node = nodes[node].nextSameName ) {
-				if ( nodes[node].kind == N_TYPE && nodes[node].keyword != sTypedef && visible[nodes[node].file] ) {
+				if ( nodes[node].kind == N_TYPE && nodes[node].keyword != sTypedef && visible[nodes[node].file]
+					&& Compiled( NodeCondition( &nodes[node] ), visible ) ) {
 					found = node;
 					how = "class";
 				}
