@@ -9,9 +9,11 @@ from progress import EDITIONS, ROOT, summary, write
 from manifests import load_target
 
 
-def byte_measures(total, matched):
+def code_measures(total, matched, functions=0, matched_functions=0):
     return dict(total_code=str(total), matched_code=str(matched),
-                matched_code_percent=100 * matched / total if total else 0)
+                matched_code_percent=100 * matched / total if total else 0,
+                total_functions=functions, matched_functions=matched_functions,
+                matched_functions_percent=100 * matched_functions / functions if functions else 0)
 
 
 CATEGORIES = {"game": "Game code", "runtime": "C runtime library"}
@@ -36,12 +38,11 @@ def build_report(folder, target):
         raise ValueError("This image has no measured code denominator yet")
     units = []
     described = 0
-    totals = {key: [0, 0] for key in CATEGORIES}
+    totals = {key: [0, 0, 0, 0] for key in CATEGORIES}
     for unit in target["units"]:
         size = unit["size"]
         verified = "match" in unit and unit.get("recipe_evidence") is not None
-        measures = byte_measures(size, size if verified else 0)
-        measures.update(total_functions=1, matched_functions=int(verified))
+        measures = code_measures(size, size if verified else 0, 1, int(verified))
         source = next(path for path in unit["inputs"] if path.lower().endswith((".c", ".cpp")))
         symbol = unit.get("rebuilt_symbol", unit["id"])
         details = dict(virtual_address=str(virtual_address(target, unit["offset"])))
@@ -53,6 +54,8 @@ def build_report(folder, target):
         category = "runtime" if stem.startswith("crt_") else "game"
         totals[category][0] += size
         totals[category][1] += size if verified else 0
+        totals[category][2] += 1
+        totals[category][3] += int(verified)
         units.append(dict(name=f'{folder.name}/{stem}/{unit["id"]}', measures=measures, functions=[function],
                           metadata=dict(source_path=f"{folder.name}/{source}", complete=verified,
                                         progress_categories=[category])))
@@ -70,19 +73,18 @@ def build_report(folder, target):
             address = virtual_address(target, entry)
             function = dict(name=f"fun_{address:08x}", size=str(size), fuzzy_match_percent=0,
                             metadata=dict(virtual_address=str(address)))
-            measures = byte_measures(size, 0)
-            measures.update(total_functions=1, matched_functions=0)
+            measures = code_measures(size, 0, 1, 0)
             units.append(dict(name=f"{folder.name}/not-started/{address & ~0xFFFF:08x}/fun_{address:08x}",
                               measures=measures, functions=[function],
                               metadata=dict(complete=False, progress_categories=["game"])))
             totals["game"][0] += size
+            totals["game"][2] += 1
             remainder -= size
         # Code that neither a unit nor a mapped function covers (alignment, unanalysed code)
         # is drawn as one tile per 64 KB of address space.
         for start, _, size in leftover:
             address = virtual_address(target, start)
-            measures = byte_measures(size, 0)
-            measures.update(total_functions=0, matched_functions=0)
+            measures = code_measures(size, 0)
             units.append(dict(name=f"{folder.name}/not-started/{address & ~0xFFFF:08x}/unassigned",
                               measures=measures, metadata=dict(complete=False, progress_categories=["game"])))
             totals["game"][0] += size
@@ -91,11 +93,15 @@ def build_report(folder, target):
             raise ValueError("function map accounting differs from the measured code")
     if remainder:
         # Code no unit or mapped function covers is counted as game code until it is identified.
-        units.append(dict(name=f"{folder.name}/unmapped-code", measures=byte_measures(remainder, 0),
+        units.append(dict(name=f"{folder.name}/unmapped-code", measures=code_measures(remainder, 0),
                           metadata=dict(progress_categories=["game"])))
         totals["game"][0] += remainder
-    return dict(version=2, measures=byte_measures(counts["total_bytes"], counts["matched_bytes"]),
-                units=units, categories=[dict(id=key, name=name, measures=byte_measures(*totals[key]))
+    total_functions = sum(total[2] for total in totals.values())
+    matched_functions = sum(total[3] for total in totals.values())
+    return dict(version=2,
+                measures=code_measures(counts["total_bytes"], counts["matched_bytes"],
+                                       total_functions, matched_functions),
+                units=units, categories=[dict(id=key, name=name, measures=code_measures(*totals[key]))
                                          for key, name in CATEGORIES.items()])
 
 
