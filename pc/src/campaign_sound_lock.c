@@ -1,8 +1,11 @@
+/* campaign_sound_lock.c -- enters the sound library's two locks */
 #include "sound_error.h"
 #include "sound_string.h"
 #include "sound_thread.h"
 #include "sound_win32.h"
 
+/* SND_fn_vEnterCriticalSectionThreadSnd_: waits for the engine's lock. When the wait fails,
+   reports the place the watcher last recorded and waits again. */
 void __stdcall SND_fn_vEnterCriticalSectionThreadSnd_(void)
 {
     char message[1024];
@@ -25,6 +28,7 @@ void __stdcall SND_fn_vEnterCriticalSectionThreadSnd_(void)
     }
 }
 
+/* EnterCriticalSectionTool_: the same for the tools' lock */
 void __stdcall EnterCriticalSectionTool_(void)
 {
     char message[256];
