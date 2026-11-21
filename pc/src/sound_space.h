@@ -18,7 +18,7 @@ typedef struct _RollOffParam {
 } RollOffParam;
 
 /* File-static in sndspace.c of the sibling builds. */
-extern long gs_lSoundSpeed;                         /* metres per second; 0 switches Doppler off */
+extern long gs_lSoundSpeed;                         /* the speed of sound; 0 switches Doppler off */
 extern SndReal gs_rDefaultDistSatur;                /* the default roll-off, member by member */
 extern SndReal gs_rDefaultDistBackGround;
 extern SndReal gs_rDefaultDistTransitLinear;
