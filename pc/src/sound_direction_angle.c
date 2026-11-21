@@ -1,7 +1,5 @@
-typedef struct { int x, y, z; } FixedVector;
-typedef struct { FixedVector position, velocity, forward, right; } ReceiverPose;
-extern ReceiverPose *FirstSoundReceiver;
-extern float __cdecl approximate_atan(float tangent);
+#include "sound_math.h"
+#include "sound_micro.h"
 
 static __forceinline float angle_from_projection(float x, float y)
 {
@@ -15,7 +13,7 @@ static __forceinline float angle_from_projection(float x, float y)
         if (x > 0) return 0;
         return 0.5f;
     }
-    angle = approximate_atan(y / x);
+    angle = SND_fn_fFastAtan(y / x);
     if (angle < 0) {
         if (y > 0) angle += 0.5f;
         else angle += 1.0f;
@@ -26,23 +24,22 @@ static __forceinline float angle_from_projection(float x, float y)
     return angle;
 }
 
-#pragma code_seg(".text$V75c420")
-float __fastcall direction_in_turns(const FixedVector *position)
+float __fastcall fn_fGetObjectAngleWithMicroNor(const SndVector *pos)
 {
-    ReceiverPose *receiver = FirstSoundReceiver;
-    FixedVector delta;
+    tdstMicroDescription *pstMicro = gs_stMicrosSxd.pList.hFirstElementDyn;
+    SndVector vect;
     float dx, dy, dz, x, y;
-    if (!receiver)
+    if (!pstMicro)
         return 0.0f;
-    delta.x = position->x - receiver->position.x;
-    delta.y = position->y - receiver->position.y;
-    delta.z = position->z - receiver->position.z;
-    dz = delta.z / 65536.0f;
-    dy = delta.y / 65536.0f;
-    dx = delta.x / 65536.0f;
-    x = dx * (receiver->forward.x / 65536.0f)
-        + (dy * (receiver->forward.y / 65536.0f) + dz * (receiver->forward.z / 65536.0f));
-    y = dx * (receiver->right.x / 65536.0f)
-        + (dy * (receiver->right.y / 65536.0f) + dz * (receiver->right.z / 65536.0f));
+    vect.x = pos->x - pstMicro->pos.x;
+    vect.y = pos->y - pstMicro->pos.y;
+    vect.z = pos->z - pstMicro->pos.z;
+    dz = vect.z / 65536.0f;
+    dy = vect.y / 65536.0f;
+    dx = vect.x / 65536.0f;
+    x = dx * (pstMicro->dir_nor.x / 65536.0f)
+        + (dy * (pstMicro->dir_nor.y / 65536.0f) + dz * (pstMicro->dir_nor.z / 65536.0f));
+    y = dx * (pstMicro->dir_tan.x / 65536.0f)
+        + (dy * (pstMicro->dir_tan.y / 65536.0f) + dz * (pstMicro->dir_tan.z / 65536.0f));
     return angle_from_projection(x, y);
 }

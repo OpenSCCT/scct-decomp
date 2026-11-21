@@ -208,14 +208,18 @@
     "size": 8,
     "rebuilt_symbol": "_simple_channels",
     "inputs": [
-      "src/sound_resource_channels.c"
+      "src/sound_resource_channels.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_resource_channels.obj src/sound_resource_channels.c",
     "identification": "A direct retail branch at VA 0x110591c9 identifies the entry. Full range 0x11051aa0..0x11051aa8 (exclusive), followed by alignment. Returns the channel count from the type-1 payload at offset 0x24.",
     "match": {
       "bytes_sha256": "ddcfb7bd6f480421eff2205f78860fcd2f0a42865b63b8dc6ea9cf37a9873ecc",
-      "inputs_sha256": "703f3f38f5dbdd5765534315f57b78cc656316ed30ec2461c9f56bd085aba6d8"
+      "inputs_sha256": "ce8d740eaf4de584f5ee21003f47d6211dcdbc43403124fb45d1df1e475c5e98"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1032,14 +1036,18 @@
     "size": 38,
     "rebuilt_symbol": "_collection_channels",
     "inputs": [
-      "src/sound_resource_channels.c"
+      "src/sound_resource_channels.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_resource_channels.obj src/sound_resource_channels.c",
     "identification": "A direct retail branch at VA 0x110591b2 identifies the entry. Full range 0x11057eb0..0x11057ed6 (exclusive), followed by alignment. Finds the largest unsigned channel count among the 24-byte records of a type-6 collection.",
     "match": {
       "bytes_sha256": "173b0da48fa648ce40bb193566dacd5c5207c16f3403f4a60e62a1f99c3f9c06",
-      "inputs_sha256": "e7f22a46db6e133c8816262b7eec2fe3de373b464428f623729393dc2b0fa2d2"
+      "inputs_sha256": "69a2a316075900e19f5ad5608d734e26f524d29104ff3dd6fb71b3b4b3f4b1be"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1056,7 +1064,11 @@
     "size": 95,
     "rebuilt_symbol": "_release_sample",
     "inputs": [
-      "src/sound_sample_release.c"
+      "src/sound_sample_release.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_sample_release.obj src/sound_sample_release.c",
@@ -1065,17 +1077,13 @@
         "va": 285504880,
         "basis": "Named retail campaign export _EnterCriticalSectionTool_@0."
       },
-      "_MixerLockSite": {
-        "va": 286741128,
-        "basis": "Constant original diagnostic-site argument to the named MouchardThreadTool export."
-      },
       "_MouchardThreadTool@8": {
         "va": 285505120,
         "basis": "Named retail campaign export _MouchardThreadTool@8."
       },
-      "_SoundDriver": {
+      "_m_pRenderer": {
         "va": 288549376,
-        "basis": "Driver pointer loaded before its release vtable call at VA 0x1105818a."
+        "basis": "Pointer to the C++ object whose virtual slot 25 unloads a sample. guess: the static member SndManager::m_pRenderer of the Double Agent PS2 linker map."
       },
       "_SND_fn_vFreeSnd@4": {
         "va": 285460592,
@@ -1084,12 +1092,16 @@
       "_QuitCriticalSectionTool@0": {
         "va": 285505088,
         "basis": "Named retail campaign export _QuitCriticalSectionTool@0."
+      },
+      "??_C@_0ID@KDLKNLNA@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286741128,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Direct retail branch at 0x1105929c. Complete isolated compiler contribution at 0x11058170 through 0x110581cf exclusive. Inside the sound lock, calls the driver release method in virtual slot 25, clears owned sample data when applicable and then clears the pointer.",
     "match": {
       "bytes_sha256": "1ceac8b824d21441137e5c3d5aded6a7fa2b099c247d45f43075771f4f25093d",
-      "inputs_sha256": "96f12abe1827a840e1f190e4004ee9fec123bece49f90b6a8706e0ad70e15eb6"
+      "inputs_sha256": "5d9b9777b3f430b121986746a866d07a4ab503759b627997758c58a43967422e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1106,7 +1118,11 @@
     "size": 56,
     "rebuilt_symbol": "_release_sample_collection",
     "inputs": [
-      "src/sound_sample_release.c"
+      "src/sound_sample_release.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_sample_release.obj src/sound_sample_release.c",
@@ -1119,7 +1135,7 @@
     "identification": "Complete isolated compiler contribution at 0x110581d0 through 0x11058208 exclusive. The type-6 collection release code also appears inlined in the verified resource dispatcher at 0x11059230. The standalone function accepts a flag controlling release of owned data, clears the pointer and resets the resource kind.",
     "match": {
       "bytes_sha256": "c78b315a5f6d125bfd6cfd27915209a69df3b2e809773e307a369db9bd30e307",
-      "inputs_sha256": "e24ce865847cbdaa2f0abd954cb7663d5714111e0690889381e6f551e20a5403"
+      "inputs_sha256": "469fb348abc094ec2f1ba29e53dd7f0abef0b3a5d33f909d338a3ff4ede35ff6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1136,14 +1152,18 @@
     "size": 113,
     "rebuilt_symbol": "_decode_sample_fields",
     "inputs": [
-      "src/sound_sample_decode.c"
+      "src/sound_sample_decode.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_sample_decode.obj src/sound_sample_decode.c",
     "identification": "Direct retail branch at 0x11059217. Complete isolated compiler contribution at 0x11058280 through 0x110582f1 exclusive. Copies serialized sound resource metadata and resolves the selected external or internal payload offset against the corresponding base.",
     "match": {
       "bytes_sha256": "cb86afec6a11b054bc98d403d187b922e09a0f069182485ed7e9661f101bad66",
-      "inputs_sha256": "968c054d9d46e0dff13b6c4af3099f5ba442e7aba5c57fe50a845f5bec9c69b2"
+      "inputs_sha256": "56e598a97543c0f61176d75ea50ff5adef6be7d61272093b6e8aa6c681546bef"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1220,7 +1240,11 @@
     "size": 108,
     "rebuilt_symbol": "_locked_resource_channels",
     "inputs": [
-      "src/sound_resource_channels.c"
+      "src/sound_resource_channels.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_resource_channels.obj src/sound_resource_channels.c",
@@ -1228,10 +1252,6 @@
       "_EnterCriticalSectionTool_@0": {
         "va": 285504880,
         "basis": "Named retail campaign export _EnterCriticalSectionTool_@0."
-      },
-      "_MixerLockSite": {
-        "va": 286741128,
-        "basis": "Original file identifier supplied to the named MouchardThreadTool lock diagnostic."
       },
       "_MouchardThreadTool@8": {
         "va": 285505120,
@@ -1248,12 +1268,16 @@
       "_simple_channels": {
         "va": 285547168,
         "basis": "Returns the channel count from the type-1 payload at offset 0x24."
+      },
+      "??_C@_0ID@KDLKNLNA@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286741128,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "A direct retail branch at VA 0x1104fe20 identifies the entry. Full range 0x11059170..0x110591dc (exclusive), followed by alignment. Reads channel metadata for the three supported types while holding the audio critical section.",
     "match": {
       "bytes_sha256": "7596d0211827745a85e45855ddda6d2c46eb6ad219546816aa17216056cba9b8",
-      "inputs_sha256": "9afd03241933a6a02c75d41141052b33be24225be04c4f3c407935952409472a"
+      "inputs_sha256": "fe945d4d566e161b4e9c618774e52a1011d4ed383c7afd3ea676c1dfd79f0fc2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1270,7 +1294,11 @@
     "size": 75,
     "rebuilt_symbol": "_decode_sound_sample",
     "inputs": [
-      "src/sound_sample_decode.c"
+      "src/sound_sample_decode.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_sample_decode.obj src/sound_sample_decode.c",
@@ -1278,10 +1306,6 @@
       "_EnterCriticalSectionTool_@0": {
         "va": 285504880,
         "basis": "Named retail campaign export _EnterCriticalSectionTool_@0."
-      },
-      "_MixerLockSite": {
-        "va": 286741128,
-        "basis": "Constant original diagnostic-site argument to the named MouchardThreadTool export."
       },
       "_MouchardThreadTool@8": {
         "va": 285505120,
@@ -1294,12 +1318,16 @@
       "_QuitCriticalSectionTool@0": {
         "va": 285505088,
         "basis": "Named retail campaign export _QuitCriticalSectionTool@0."
+      },
+      "??_C@_0ID@KDLKNLNA@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286741128,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Direct retail branch at 0x1104f610. Complete isolated compiler contribution at 0x110591e0 through 0x1105922b exclusive. Locks the audio subsystem, computes the data address and size, then decodes the sample metadata and returns success.",
     "match": {
       "bytes_sha256": "a6d5decea07065a4ce7d2ae132ff18de7f1807a26955bef1e413cc80184f2ebe",
-      "inputs_sha256": "ab901969d3f47d5fa5cd7d940699489399e4d1f1b6cafa41ffa94070f31a3402"
+      "inputs_sha256": "81ba0292e0a07c6394bd88685c81955ffb699300aab12deee8de86876d104d83"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1316,7 +1344,11 @@
     "size": 124,
     "rebuilt_symbol": "_release_sound_resource",
     "inputs": [
-      "src/sound_release_resource.c"
+      "src/sound_release_resource.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_release_resource.obj src/sound_release_resource.c",
@@ -1324,10 +1356,6 @@
       "_EnterCriticalSectionTool_@0": {
         "va": 285504880,
         "basis": "Named retail campaign export _EnterCriticalSectionTool_@0."
-      },
-      "_MixerLockSite": {
-        "va": 286741128,
-        "basis": "Original file identifier supplied to the named MouchardThreadTool lock diagnostic."
       },
       "_MouchardThreadTool@8": {
         "va": 285505120,
@@ -1344,12 +1372,16 @@
       "_release_sample": {
         "va": 285573488,
         "basis": "Direct call at 0x1105929c from the type-1 disposal branch with a true release flag."
+      },
+      "??_C@_0ID@KDLKNLNA@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286741128,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Full range 0x11059230..0x110592ac (exclusive), followed by alignment. Internal audio resource disposal routine between aligned entries: checks null, enters the audio lock, releases type-1 resources through 0x11058170, selectively frees type-6 storage, and resets the type for kinds 6 and 8. Both return and tail-jump exits are inside the measured range.",
     "match": {
       "bytes_sha256": "ed086ffbe4524bf868e3d1f71fda64742213f86d71cbdff41b1e8ebf9751883d",
-      "inputs_sha256": "0e1f72e38df4b14036aedc2128add1224c38c2fd08f19110c378e4472477c5ba"
+      "inputs_sha256": "ad5ea77490c1f8ac2ca8d858137ebfec4977c9d50685cfaa226251e81a5bf669"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1366,7 +1398,11 @@
     "size": 122,
     "rebuilt_symbol": "_sound_release_binary_backend",
     "inputs": [
-      "src/sound_release_backend.c"
+      "src/sound_release_backend.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_release_backend.obj src/sound_release_backend.c",
@@ -1383,11 +1419,19 @@
       "_QuitCriticalSectionTool@0": {
         "va": 285505088,
         "basis": "Named export _QuitCriticalSectionTool@0 in the Steam campaign PE."
+      },
+      "??_C@_0ID@KDLKNLNA@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286741128,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
+      },
+      "_m_pRenderer": {
+        "va": 288549376,
+        "basis": "Pointer to the C++ object whose virtual slot 25 unloads a sample. guess: the static member SndManager::m_pRenderer of the Double Agent PS2 linker map."
       }
     },
     "match": {
       "bytes_sha256": "eb06ea156a5440a9e0e9229d44a493abfb3c763aeb0f29eeea219f8e8b845da3",
-      "inputs_sha256": "5a0e08b0b55ccbc4c239e8444b73222b6af70dc71e261e088d03ddc8dab1e185"
+      "inputs_sha256": "09074374c1fcff6c6c6cfa081d40f5955580035bad9dafd1d258c965b90418bd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1592,7 +1636,11 @@
     "size": 169,
     "rebuilt_symbol": "_resource_requirement",
     "inputs": [
-      "src/sound_resource_requirement.c"
+      "src/sound_resource_requirement.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_resource_requirement.obj src/sound_resource_requirement.c",
@@ -1600,10 +1648,6 @@
       "_EnterCriticalSectionTool_@0": {
         "va": 285504880,
         "basis": "Named retail campaign export _EnterCriticalSectionTool_@0."
-      },
-      "_MixerLockSite": {
-        "va": 286741128,
-        "basis": "Constant original diagnostic-site argument to the named MouchardThreadTool export."
       },
       "_MouchardThreadTool@8": {
         "va": 285505120,
@@ -1624,12 +1668,16 @@
       "_resource_requirement": {
         "va": 285578912,
         "basis": "Recursive call from VA 0x11059703 to this function."
+      },
+      "??_C@_0ID@KDLKNLNA@?2build?2splintercellx?9pc?2patch?2Sp@": {
+        "va": 286741128,
+        "basis": "__FILE__ of the original translation unit, passed to the lock watcher; the verifier compares its bytes with retail."
       }
     },
     "identification": "Direct retail branch at 0x1104fe30. Complete isolated compiler contribution at 0x110596a0 through 0x11059749 exclusive. Recursively takes the maximum requirement over the 20-byte child records of a type-5 resource. Types 1, 6 and 9 use the channel query and the one-argument requirement helper. The complete contribution includes the switch destination and case-index tables.",
     "match": {
       "bytes_sha256": "e6fed2c5c3676a0d4dd41be5944c75dbc7dcf7b64a7e5c889fba112c371332eb",
-      "inputs_sha256": "8fdc80115ab88e9e95c6b6c03f72e1bcfd9126cd2f46550e81cd98bf7ada7419"
+      "inputs_sha256": "52441f5b583b417a10b8bd6ca236e1e9e15399a72b71135c803fe2d99014ab4c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2000,20 +2048,27 @@
     "id": "sound-direction-angle",
     "offset": 7717920,
     "size": 398,
-    "rebuilt_symbol": "@direction_in_turns@4",
+    "rebuilt_symbol": "@fn_fGetObjectAngleWithMicroNor@4",
     "inputs": [
-      "src/sound_direction_angle.c"
+      "src/sound_direction_angle.c",
+      "src/sound_math.h",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_direction_angle.obj src/sound_direction_angle.c",
     "link_bindings": {
-      "_FirstSoundReceiver": {
+      "_gs_stMicrosSxd": {
         "va": 288549564,
-        "basis": "Same head pointer read by the verified receiver-list and receiver-level functions."
+        "basis": "Microphone list whose first element the export SND_fn_rGetNormeSxd walks from; gs_stMicrosSxd, the file-static list of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "__real@00000000": {
         "va": 285966880,
-        "basis": "Compiler-emitted float 0.0 at an absolute retail operand. The literal data is checked separately against the COFF constant."
+        "basis": "Compiler-emitted float 0.0 at an absolute retail operand; the verifier compares its bytes with retail."
       },
       "__real@37800000": {
         "va": 286230640,
@@ -2031,19 +2086,19 @@
         "va": 285985376,
         "basis": "Compiler-emitted float 0.5 at an absolute retail operand. The literal data is checked separately against the COFF constant."
       },
-      "_approximate_atan": {
+      "_SND_fn_fFastAtan": {
         "va": 285505168,
-        "basis": "Signed angle-in-turns tangent table search called at 0x1105c549."
+        "basis": "Table-search arctangent called by fn_fGetObjectAngleWithMicroNor; SND_fn_fFastAtan(float) of sndmath.c in the Double Agent PS2 linker map and the Pandora Tomorrow PS2 symbol table."
       },
       "__real@3f800000": {
         "va": 285975104,
         "basis": "Compiler-emitted float 1.0 at an absolute retail operand. The literal data is checked separately against the COFF constant."
       }
     },
-    "identification": "Direct retail call at 0x1105c719 to the full function at 0x1105c420. Its final return ends at 0x1105c5ae before alignment. Computes source displacement relative to the first sound receiver and projects it onto the two orientation axes. Handles axis-aligned cases directly and corrects the lookup angle for the other quadrants. Returns the angle in turns.",
+    "identification": "Direct retail call at 0x1105c719 to the full function at 0x1105c420. Its final return ends at 0x1105c5ae before alignment. Computes source displacement relative to the first sound receiver and projects it onto the two orientation axes. Handles axis-aligned cases directly and corrects the lookup angle for the other quadrants. Returns the angle in turns. Named fn_fGetObjectAngleWithMicroNor from sndxdmic.c of the Double Agent PS2 linker map, where it is a local function taking one vector; reached here only from Snd_ParConv_ConvertWithOneMicro.",
     "match": {
       "bytes_sha256": "3c86a1bc9ab2376d4ec24b96fddfbfc7811405b0ea371cd5590c4371348bba67",
-      "inputs_sha256": "b1fa9f0843894e0b18074a8a7dc1cc04d01324f232a8c2913cf170c29e2ae110"
+      "inputs_sha256": "fd25c293d761fe38597fe629f8033527b5d7c413906d8d30c79f790e70ca2fcc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2058,46 +2113,60 @@
     "id": "no-receiver-parameters",
     "offset": 7718384,
     "size": 82,
-    "rebuilt_symbol": "_no_receiver_parameters",
+    "rebuilt_symbol": "_Snd_ParConv_ConvertWithNoMicro",
     "inputs": [
-      "src/sound_no_receiver.c"
+      "src/sound_no_receiver.c",
+      "src/sound_error.h",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Oa /Gy /c /Folocal/sound_no_receiver.obj src/sound_no_receiver.c",
     "link_bindings": {
-      "_NoReceiverReported": {
+      "_bDisplayed": {
         "va": 288549580,
-        "basis": "Read at the start of the no-receiver path and set before reporting its first warning."
-      },
-      "_NoReceiverMessage": {
-        "va": 286742068,
-        "basis": "Retail warning argument paired with code 8 in the no-receiver mixer routine."
+        "basis": "Once-only flag of the no-microphone warning; the function-static bDisplayed of Snd_ParConv_ConvertWithNoMicro in the Double Agent PS2 linker map."
       },
       "_SND_fn_vDisplayError@8": {
         "va": 285460432,
         "basis": "Named retail campaign export _SND_fn_vDisplayError@8."
+      },
+      "??_C@_0DC@PKGMNHMC@You?5should?5define?5a?5microphone?5t@": {
+        "va": 286742068,
+        "basis": "String literal; the verifier compares its bytes with retail."
       }
     },
-    "identification": "A direct retail branch at VA 0x1105cb28 identifies the entry. Full range 0x1105c5f0..0x1105c642 (exclusive), followed by alignment. The default mixer writes unity pitch and zero gain, reports the missing receiver once, and resets the mode-specific pan or angle.",
+    "identification": "A direct retail branch at VA 0x1105cb28 identifies the entry. Full range 0x1105c5f0..0x1105c642 (exclusive), followed by alignment. The default mixer writes unity pitch and zero gain, reports the missing receiver once, and resets the mode-specific pan or angle. Named Snd_ParConv_ConvertWithNoMicro from sndxdmic.c of the Double Agent PS2 linker map: the export SND_fn_vSndParToPrivSndPar calls it with the same two arguments.",
     "match": {
       "bytes_sha256": "236ed7b9997bb2dc6a8b734da2def25675f71e307c918692b1973b7bd2bff845",
-      "inputs_sha256": "3e7b2bf5076596fe778010edab08a6e1065bf8f26a2ed2dd037714370565adc2"
+      "inputs_sha256": "f9b3148cdae53c0f7ab8c891cbb463337978229b1d6cb0c2d8a3bf1fff255825"
     }
   },
   {
     "id": "sound-spatial-mixer",
     "offset": 7718480,
     "size": 417,
-    "rebuilt_symbol": "_spatial_parameters",
+    "rebuilt_symbol": "_Snd_ParConv_ConvertWithOneMicro",
     "inputs": [
-      "src/sound_spatial_mixer.c"
+      "src/sound_spatial_mixer.c",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_vector.h",
+      "src/sound_volume.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_spatial_mixer.obj src/sound_spatial_mixer.c",
     "link_bindings": {
-      "_FirstSoundReceiver": {
+      "_gs_stMicrosSxd": {
         "va": 288549564,
-        "basis": "Same head pointer read by the verified receiver-list and receiver-level functions."
+        "basis": "Microphone list whose first element the export SND_fn_rGetNormeSxd walks from; gs_stMicrosSxd, the file-static list of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "_SND_fn_rPseudoNormeVectorSnd@4": {
         "va": 285566816,
@@ -2111,9 +2180,9 @@
         "va": 285520976,
         "basis": "Named retail campaign export _SND_fn_rDistanceToVolume@4."
       },
-      "@direction_in_turns@4": {
+      "@fn_fGetObjectAngleWithMicroNor@4": {
         "va": 285590560,
-        "basis": "Direct call at 0x1105c719 to the first-receiver direction helper."
+        "basis": "Direct call at 0x1105c719 from Snd_ParConv_ConvertWithOneMicro with the sound's position; fn_fGetObjectAngleWithMicroNor, the local function of sndxdmic.c in the Double Agent PS2 linker map."
       },
       "__real@43b40000": {
         "va": 285986704,
@@ -2140,10 +2209,10 @@
         "basis": "Named retail campaign export _SND_fn_rMulRealRealSnd@8."
       }
     },
-    "identification": "Direct retail call at 0x1105cb33 to the full function at 0x1105c650. Its final return ends at 0x1105c7f1 before alignment. Combines source pitch and gain with per-receiver attenuation, stereo or Dolby panning or integer angle, and optional Doppler correction. Final gain has a floor of -96 in signed 16.16.",
+    "identification": "Direct retail call at 0x1105cb33 to the full function at 0x1105c650. Its final return ends at 0x1105c7f1 before alignment. Combines source pitch and gain with per-receiver attenuation, stereo or Dolby panning or integer angle, and optional Doppler correction. Final gain has a floor of -96 in signed 16.16. Named Snd_ParConv_ConvertWithOneMicro from sndxdmic.c of the Double Agent PS2 linker map: the export SND_fn_vSndParToPrivSndPar calls it with the same two arguments.",
     "match": {
       "bytes_sha256": "2c20838c62b35fae0c8e9932af7f47e444d59f3a4b082f88c427d5efdd4fba67",
-      "inputs_sha256": "9e9788034b8fa38dae40a6e2aa6faa013a5a6effa71bacc88ea5038abe9e9c86"
+      "inputs_sha256": "7c38b4494cfbf0e0630c9fbdfa29514bd65145c2b662282338764b73d1ec2ea1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2160,13 +2229,13 @@
     "size": 223,
     "rebuilt_symbol": "_SND_fn_rGetNormeSxd@4",
     "link_bindings": {
-      "_SoundReceiverCount": {
+      "_g_iNbMicrosSxd": {
         "va": 288549576,
-        "basis": "Referenced by retail export GetNormeSxd at 0x1105c81e. The internal query at 0x1105c8e0 reads the same value; receiver creation increments it at 0x1105c96a or 0x1105c9b2."
+        "basis": "Microphone count tested by the exports SND_fn_rGetNormeSxd and SND_fn_vSndParToPrivSndPar; g_iNbMicrosSxd of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
-      "_FirstSoundReceiver": {
+      "_gs_stMicrosSxd": {
         "va": 288549564,
-        "basis": "The exported reader starts its list walk at 0x1105c82c. The creator records a new list head at 0x1105c93e."
+        "basis": "Microphone list whose first element the export SND_fn_rGetNormeSxd walks from; gs_stMicrosSxd, the file-static list of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "_SND_fn_rPseudoNormeVectorSnd@4": {
         "va": 285566816,
@@ -2182,14 +2251,21 @@
       }
     },
     "inputs": [
-      "src/sound_receiver_level.c"
+      "src/sound_receiver_level.c",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_vector.h",
+      "src/sound_volume.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_receiver_level.obj src/sound_receiver_level.c",
     "identification": "Named retail campaign export _SND_fn_rGetNormeSxd@4 at VA 0x1105c800. The final return ends at 0x1105c8df before alignment or the next named function. Computes the loudest attenuated level among enabled matching receivers in the linked list. Flag 1 returns zero; flag 4 selects the custom rolloff parameter view at offset 0x9c. The position, list links, binding stride and enabled fields are supported by retail loads.",
     "match": {
       "bytes_sha256": "e962ff80c0dcf525a90bd1f6959e7c4f801b8914d54da9fe2437a546f078ff3f",
-      "inputs_sha256": "022a0007d69661648a39beccb2fe06ab871e6741439600fc62d5eb2214d57993"
+      "inputs_sha256": "a392eed17fc6ad7145f7fa4c16160dc04db14f34923a57603d371467c04e9e48"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2206,24 +2282,31 @@
     "size": 28,
     "rebuilt_symbol": "_reset_sound_receivers",
     "link_bindings": {
-      "_SoundReceiverCount": {
+      "_g_iNbMicrosSxd": {
         "va": 288549576,
-        "basis": "Global receiver count read at 0x1105c81e by SND_fn_rGetNormeSxd and updated by the receiver lifecycle."
+        "basis": "Microphone count tested by the exports SND_fn_rGetNormeSxd and SND_fn_vSndParToPrivSndPar; g_iNbMicrosSxd of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
-      "_SoundReceivers": {
+      "_gs_stMicrosSxd": {
         "va": 288549564,
-        "basis": "List head, tail and count read or written at 0x1132eabc, 0x1132eac0 and 0x1132eac4. The create function stores the list address in its new node."
+        "basis": "Microphone list whose first element the export SND_fn_rGetNormeSxd walks from; gs_stMicrosSxd, the file-static list of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       }
     },
     "inputs": [
-      "src/sound_receiver_list.c"
+      "src/sound_receiver_list.c",
+      "src/sound_memory.h",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_receiver_list.obj src/sound_receiver_list.c",
     "identification": "Direct call at retail VA 0x1104f436 targets this internal function at 0x1105c8f0. Its last return ends before INT3 alignment at 0x1105c90c. Resets both list endpoints and both counters, and returns success. Its caller passes one argument that the recovered function leaves unused.",
     "match": {
       "bytes_sha256": "0fb52139119f54be0009dcd39a9f1f1b6b25a989eb5263f2b2fbb9fa6940d21d",
-      "inputs_sha256": "c49c30877658f4010090a300b84ba50389776e09de220a06be8bca5afa0f5767"
+      "inputs_sha256": "9d77932986acd64638259f69459ff50ed8f9f32db8195db748b6e6e4856c85e3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2244,13 +2327,13 @@
         "va": 285460528,
         "basis": "Named export _SND_fn_pvMallocSnd@4 in the exact Steam campaign image."
       },
-      "_SoundReceivers": {
+      "_gs_stMicrosSxd": {
         "va": 288549564,
-        "basis": "List head, tail and count read or written at 0x1132eabc, 0x1132eac0 and 0x1132eac4. The create function stores the list address in its new node."
+        "basis": "Microphone list whose first element the export SND_fn_rGetNormeSxd walks from; gs_stMicrosSxd, the file-static list of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
-      "_SoundReceiverCount": {
+      "_g_iNbMicrosSxd": {
         "va": 288549576,
-        "basis": "Global receiver count read at 0x1105c81e by SND_fn_rGetNormeSxd and updated by the receiver lifecycle."
+        "basis": "Microphone count tested by the exports SND_fn_rGetNormeSxd and SND_fn_vSndParToPrivSndPar; g_iNbMicrosSxd of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "_SND_fn_vMemCopySnd@12": {
         "va": 285459920,
@@ -2258,14 +2341,21 @@
       }
     },
     "inputs": [
-      "src/sound_receiver_list.c"
+      "src/sound_receiver_list.c",
+      "src/sound_memory.h",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_receiver_list.obj src/sound_receiver_list.c",
     "identification": "Direct call at retail VA 0x1104f6c6 targets this internal function at 0x1105c910. Its last return ends before INT3 alignment at 0x1105c9bd. Creates a 68-byte doubly linked receiver node and optionally copies four pose vectors.",
     "match": {
       "bytes_sha256": "483eaee71251bd0f86de89ef16b39bae1800b57d739bdc35d6389be2f8eb39e1",
-      "inputs_sha256": "11f24a2b3fdd06e502f0ee71d6782a1445c134087c9dd080b52a547a6e8a8632"
+      "inputs_sha256": "c00e592cf50be849ce95f67fd4ea325296a735e40635bd213e543e7d159d33c8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2282,9 +2372,9 @@
     "size": 102,
     "rebuilt_symbol": "_update_sound_receiver",
     "link_bindings": {
-      "_SoundReceivers": {
+      "_gs_stMicrosSxd": {
         "va": 288549564,
-        "basis": "List head, tail and count read or written at 0x1132eabc, 0x1132eac0 and 0x1132eac4. The create function stores the list address in its new node."
+        "basis": "Microphone list whose first element the export SND_fn_rGetNormeSxd walks from; gs_stMicrosSxd, the file-static list of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
       "_SND_fn_vMemCopySnd@12": {
         "va": 285459920,
@@ -2292,14 +2382,21 @@
       }
     },
     "inputs": [
-      "src/sound_receiver_list.c"
+      "src/sound_receiver_list.c",
+      "src/sound_memory.h",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_receiver_list.obj src/sound_receiver_list.c",
     "identification": "Direct call at retail VA 0x1104f6ec targets this internal function at 0x1105c9f0. Its last return ends before INT3 alignment at 0x1105ca56. Looks up the target before enabling it and copying all four pose vectors.",
     "match": {
       "bytes_sha256": "2b56d395b6c118496231dbb30e56f41221b9712fde71c064aed4c080037e1659",
-      "inputs_sha256": "7425ec628e323e3f02b4251b74221a27d0305962be5be7601aa6a4e78d20f812"
+      "inputs_sha256": "44f6e372d4425b73a4c7be7763b83ed0dfbff34e4a6523c3776b90c44453a282"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2320,20 +2417,27 @@
         "va": 285460592,
         "basis": "Named export _SND_fn_vFreeSnd@4 in the exact Steam campaign image."
       },
-      "_SoundReceiverCount": {
+      "_g_iNbMicrosSxd": {
         "va": 288549576,
-        "basis": "Global receiver count read at 0x1105c81e by SND_fn_rGetNormeSxd and updated by the receiver lifecycle."
+        "basis": "Microphone count tested by the exports SND_fn_rGetNormeSxd and SND_fn_vSndParToPrivSndPar; g_iNbMicrosSxd of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       }
     },
     "inputs": [
-      "src/sound_receiver_list.c"
+      "src/sound_receiver_list.c",
+      "src/sound_memory.h",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_receiver_list.obj src/sound_receiver_list.c",
     "identification": "Direct call at retail VA 0x1104f716 targets this internal function at 0x1105ca60. Its last return ends before the next one-byte return routine at 0x1105cac0. Removes the node from both list directions, updates list endpoints and counts and frees it.",
     "match": {
       "bytes_sha256": "6f0d2fcf30e0f6a4922f6c6c9b4346aabfa65390882772280704371b4e91ddb4",
-      "inputs_sha256": "a183e4a6ea219a30588c3eb95e6f8992042bc93203fa8e962653d88c98dd283f"
+      "inputs_sha256": "b2135dd313f954d872f4050cc41d9608e52c64ecc69aeb9e1e70095efeffc0af"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2350,28 +2454,37 @@
     "size": 110,
     "rebuilt_symbol": "_SND_fn_vSndParToPrivSndPar@12",
     "inputs": [
-      "src/sound_mixer_parameters.c"
+      "src/sound_mixer_parameters.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_thread.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_mixer_parameters.obj src/sound_mixer_parameters.c",
     "link_bindings": {
-      "_SoundReceiverCount": {
+      "_g_iNbMicrosSxd": {
         "va": 288549576,
-        "basis": "Count read by both campaign spatial mixer paths and updated by the verified receiver lifecycle."
+        "basis": "Microphone count tested by the exports SND_fn_rGetNormeSxd and SND_fn_vSndParToPrivSndPar; g_iNbMicrosSxd of sndxdmic.c in the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map."
       },
-      "_no_receiver_parameters": {
+      "_Snd_ParConv_ConvertWithNoMicro": {
         "va": 285591024,
-        "basis": "The default mixer writes unity pitch and zero gain, reports the missing receiver once, and resets the mode-specific pan or angle."
+        "basis": "Called at 0x1105cb28 by the export SND_fn_vSndParToPrivSndPar when no microphone exists; Snd_ParConv_ConvertWithNoMicro(_SoundParam*, _PrivateSoundParam*) of sndxdmic.c in the Double Agent PS2 linker map."
       },
-      "_spatial_parameters": {
+      "_Snd_ParConv_ConvertWithOneMicro": {
         "va": 285591120,
-        "basis": "Call target at retail VA 0x1105c650, selected from 0x1105cb33 by the named mixer conversion export."
+        "basis": "Called at 0x1105cb33 by the export SND_fn_vSndParToPrivSndPar when a microphone exists; Snd_ParConv_ConvertWithOneMicro(_SoundParam*, _PrivateSoundParam*) of sndxdmic.c in the Double Agent PS2 linker map."
       }
     },
     "identification": "Full range 0x1105cad0..0x1105cb3e (exclusive), followed by alignment. The named conversion export copies non-spatial values or chooses the spatial conversion based on the receiver count.",
     "match": {
       "bytes_sha256": "8cb31d0e93cc0ab298dcee00b2dde13fed42e295fbab335373f82e1c6fb0938b",
-      "inputs_sha256": "5c1d11cd9e045639c44bbf75dd6952d4068da48808baa9c1261f6444ac7d9634"
+      "inputs_sha256": "c0b9160c50c72382804eff3b9324029271c4c9b7bf4859d1bc1b80f00dc83bfa"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2388,14 +2501,23 @@
     "size": 103,
     "rebuilt_symbol": "_SND_fn_vBestConvertionForSndParToPrivSndPar@16",
     "inputs": [
-      "src/sound_mixer_parameters.c"
+      "src/sound_mixer_parameters.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_micro.h",
+      "src/sound_param.h",
+      "src/sound_real.h",
+      "src/sound_resource.h",
+      "src/sound_space.h",
+      "src/sound_thread.h",
+      "src/sound_vector.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_mixer_parameters.obj src/sound_mixer_parameters.c",
     "link_bindings": {
-      "_resource_channels": {
+      "_SND_fn_ulGetResourceNbChannel": {
         "va": 285517568,
-        "basis": "Accepts only resource kinds 1, 6 and 9 before tail-calling the channel query; null and other kinds return zero."
+        "basis": "Called twice by the export SND_fn_vBestConvertionForSndParToPrivSndPar with its resource; SND_fn_ulGetResourceNbChannel(_tdstBlockResourceMem*) of sndplay.c in the Double Agent PS2 linker map."
       },
       "_SND_fn_vSndParToPrivSndPar@12": {
         "va": 285592272,
@@ -2405,7 +2527,7 @@
     "identification": "Full range 0x1105cb40..0x1105cba7 (exclusive), followed by alignment. The named mode-selection export chooses a compatible conversion mode and centres unsupported multichannel output on the specified path.",
     "match": {
       "bytes_sha256": "39ece02a0432380959d77a7073a2345234416b403e8a25ee7912c1e144e5d5e8",
-      "inputs_sha256": "cbdf9711a553176c862cf66c829747745dfbcac771ab2471d384b040d354cf4d"
+      "inputs_sha256": "7af6e17c459a0873359540136db8090bb1e8417f74d7a0e21e5b6d56f6721353"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

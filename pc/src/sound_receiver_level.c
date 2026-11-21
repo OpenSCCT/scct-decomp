@@ -1,65 +1,37 @@
-typedef int SoundFixed;
-typedef struct { SoundFixed x, y, z; } SoundVector;
-typedef struct { SoundFixed nearDistance, maxDistance, fadeStart, fadeEnd; } SoundRollOff;
+#include "sound_micro.h"
+#include "sound_volume.h"
 
-typedef struct Receiver {
-    SoundVector position;
-    unsigned char unknown0c[0x24];
-    int disabled;
-    int unknown34;
-    struct Receiver *next;
-} Receiver;
-typedef struct { Receiver *receiver; int enabled; } ReceiverBinding;
-typedef struct {
-    unsigned char unknown00[0xc];
-    SoundVector position;
-    unsigned char unknown18[0xc];
-    int flags;
-    int bindingCount;
-    unsigned char unknown2c[0x68];
-    /* Only the binding count and entry stride are known for this trailing view. */
-    ReceiverBinding bindings[];
-} Parameters;
-extern int SoundReceiverCount;
-extern Receiver *FirstSoundReceiver;
-extern SoundFixed __stdcall SND_fn_rPseudoNormeVectorSnd(const SoundVector *v);
-extern SoundFixed __stdcall SND_fn_rDistanceToVolume(SoundFixed distance);
-extern SoundFixed __stdcall SND_fn_rDistanceToVolumeEx(SoundFixed distance, const SoundRollOff *settings);
-
-#pragma code_seg(".text$B")
-SoundFixed __stdcall SND_fn_rGetNormeSxd(const Parameters *parameters)
+SndReal __stdcall SND_fn_rGetNormeSxd(const SoundParam *par3D)
 {
-    SoundFixed best = -96 * 65536;
-    Receiver *receiver;
-    SoundVector delta;
+    SndReal rRetVol_dB = SND_VOLUME_MIN_DB;
+    tdstMicroDescription *pstMicro;
+    SndVector vect;
 
-    if (parameters->flags & 1)
+    if (par3D->iFlags & 1)
         return 0;
-    if (SoundReceiverCount) {
-        for (receiver = FirstSoundReceiver; receiver; receiver = receiver->next) {
-            SoundFixed level = -96 * 65536;
-            if (!receiver->disabled) {
-                int i;
-                for (i = 0; i < parameters->bindingCount; ++i)
-                    if (parameters->bindings[i].receiver == receiver)
+    if (g_iNbMicrosSxd) {
+        for (pstMicro = gs_stMicrosSxd.pList.hFirstElementDyn; pstMicro; pstMicro = pstMicro->hNextBrotherDyn) {
+            SndReal rVol_dB = SND_VOLUME_MIN_DB;
+            if (!pstMicro->bJustCreated) {
+                int j;
+                for (j = 0; j < par3D->iNbLinks; ++j)
+                    if (par3D->astMicro[j].lId == (long)pstMicro)
                         break;
-                if (i < parameters->bindingCount && parameters->bindings[i].enabled) {
-                    SoundFixed distance;
-                    delta.x = parameters->position.x - receiver->position.x;
-                    delta.y = parameters->position.y - receiver->position.y;
-                    delta.z = parameters->position.z - receiver->position.z;
-                    distance = SND_fn_rPseudoNormeVectorSnd(&delta);
-                    if (parameters->flags & 4) {
-                        const unsigned char *fields = (const unsigned char *)parameters;
-                        level = SND_fn_rDistanceToVolumeEx(distance, (const SoundRollOff *)(fields + 0x9c));
-                    } else {
-                        level = SND_fn_rDistanceToVolume(distance);
-                    }
+                if (j < par3D->iNbLinks && par3D->astMicro[j].bLinked) {
+                    SndReal rDist;
+                    vect.x = par3D->Pos.x - pstMicro->pos.x;
+                    vect.y = par3D->Pos.y - pstMicro->pos.y;
+                    vect.z = par3D->Pos.z - pstMicro->pos.z;
+                    rDist = SND_fn_rPseudoNormeVectorSnd(&vect);
+                    if (par3D->iFlags & 4)
+                        rVol_dB = SND_fn_rDistanceToVolumeEx(rDist, &par3D->xExtra.stRollOff);
+                    else
+                        rVol_dB = SND_fn_rDistanceToVolume(rDist);
                 }
             }
-            if (best < level)
-                best = level;
+            if (rRetVol_dB < rVol_dB)
+                rRetVol_dB = rVol_dB;
         }
     }
-    return best;
+    return rRetVol_dB;
 }

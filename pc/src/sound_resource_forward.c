@@ -1,7 +1,6 @@
-struct SoundResource;
-void __cdecl sound_release_binary_backend(struct SoundResource *resource);
+#include "sound_manager.h"
 
-void __cdecl sound_release_binary_resource(struct SoundResource *resource)
+void __cdecl sound_release_binary_resource(tdstBlockResourceMem *res)
 {
-    sound_release_binary_backend(resource);
+    sound_release_binary_backend(res);
 }

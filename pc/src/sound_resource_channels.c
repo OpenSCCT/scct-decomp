@@ -1,66 +1,59 @@
-typedef struct {
-    unsigned char header[0x24];
-    unsigned channels;
-} Type1Sample;
-typedef struct { unsigned unknown[2], channels, remaining[3]; } ChannelEntry;
-typedef struct { unsigned char header[0x2c]; ChannelEntry *entries; int count; } Type6Sample;
-typedef struct {
-    int field, type;
-    char gap[8];
-    union {
-        Type1Sample simple;
-        Type6Sample collection;
-        struct { char fields[0x3c]; unsigned channels; } other;
-    } payload;
-} Sample;
-extern void __stdcall EnterCriticalSectionTool_(void);
-extern void __stdcall MouchardThreadTool(const char *site,int line);
-extern void __stdcall QuitCriticalSectionTool(void);
-extern const char MixerLockSite[];
+#include "sound_manager.h"
 
-#pragma code_seg(".text$V751aa0")
-__declspec(noinline) unsigned __cdecl simple_channels(const Type1Sample *sample)
+__declspec(noinline) unsigned long __cdecl simple_channels(const tdstTypeSampleMem *sample)
 {
     return sample->channels;
 }
-#pragma code_seg(".text$V757eb0")
-__declspec(noinline) unsigned __cdecl collection_channels(const Type6Sample *sample)
+
+__declspec(noinline) unsigned long __cdecl collection_channels(const tdstTypeMultiTrackMem *multitrack)
 {
-    unsigned best = 0;
+    unsigned long best = 0;
     int i;
-    const ChannelEntry *entries = sample->entries;
-    for (i = 0; i < sample->count; ++i)
-        if (entries[i].channels > best)
-            best = entries[i].channels;
+    const tdstMultiTrackElement *elements = multitrack->hFirstElementOpt;
+    for (i = 0; i < multitrack->lNumberOfElementsOpt; ++i)
+        if (elements[i].channels > best)
+            best = elements[i].channels;
     return best;
 }
-#pragma code_seg(".text$V759170")
-__declspec(noinline) unsigned __cdecl locked_resource_channels(const Sample *sample)
+
+__declspec(noinline) unsigned long __cdecl locked_resource_channels(const tdstBlockResourceMem *res)
 {
-    unsigned channels;
+    unsigned long channels;
     EnterCriticalSectionTool_();
-    MouchardThreadTool(MixerLockSite, 0xc0c);
-    switch (sample->type) {
-    case 1: channels = simple_channels(&sample->payload.simple); break;
-    case 6: channels = collection_channels(&sample->payload.collection); break;
-    case 9: channels = sample->payload.other.channels; break;
-    default: QuitCriticalSectionTool(); return 0;
+    MouchardThreadTool(SNDMANAGER_CPP_FILE, 3084);
+    switch (res->eType) {
+    case TYPE_SAMPLE:
+        channels = simple_channels(&res->uRes.stSample);
+        break;
+    case TYPE_MULTITRACK:
+        channels = collection_channels(&res->uRes.stMultiTrack);
+        break;
+    case 9:
+        channels = res->uRes.stType9.channels;
+        break;
+    default:
+        QuitCriticalSectionTool();
+        return 0;
     }
     QuitCriticalSectionTool();
     return channels;
 }
-#pragma code_seg(".text$V74fe20")
-__declspec(noinline) unsigned __cdecl query_resource_channels(const Sample *sample)
+
+__declspec(noinline) unsigned long __cdecl SND_fn_ulGetResourceNbChannelSxd(const tdstBlockResourceMem *res)
 {
-    return locked_resource_channels(sample);
+    return locked_resource_channels(res);
 }
-#pragma code_seg(".text$V74a700")
-unsigned __cdecl resource_channels(const Sample *sample)
+
+unsigned long __cdecl SND_fn_ulGetResourceNbChannel(const tdstBlockResourceMem *res)
 {
-    if (!sample)
+    if (!res)
         return 0;
-    switch (sample->type) {
-    case 1: case 6: case 9: return query_resource_channels(sample);
-    default: return 0;
+    switch (res->eType) {
+    case TYPE_SAMPLE:
+    case TYPE_MULTITRACK:
+    case 9:
+        return SND_fn_ulGetResourceNbChannelSxd(res);
+    default:
+        return 0;
     }
 }

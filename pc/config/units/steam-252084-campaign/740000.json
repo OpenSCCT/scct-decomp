@@ -963,30 +963,31 @@
     "id": "approximate-atan",
     "offset": 7632528,
     "size": 168,
-    "rebuilt_symbol": "_approximate_atan",
+    "rebuilt_symbol": "_SND_fn_fFastAtan",
     "inputs": [
-      "src/sound_tangent_table.c"
+      "src/sound_tangent_table.c",
+      "src/sound_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_tangent_table.obj src/sound_tangent_table.c",
     "link_bindings": {
-      "_SoundZero": {
-        "va": 285966880,
-        "basis": "Single-precision zero read from the locked image for magnitude and sign checks."
-      },
-      "_SoundTangentTable": {
+      "_gs_TanAngle": {
         "va": 287197144,
-        "basis": "91 pairs of 32-bit floats in the locked campaign image. Each pair holds an angle in turns and its tangent."
+        "basis": "91 angle and tangent pairs searched by SND_fn_fFastAtan; gs_TanAngle, the file-static of sndmath.c in the Double Agent PS2 linker map."
       },
-      "_SoundZeroDouble": {
+      "__real@00000000": {
+        "va": 285966880,
+        "basis": "Compiler-emitted float 0.0 at an absolute retail operand; the verifier compares its bytes with retail."
+      },
+      "__real@0000000000000000": {
         "va": 285965208,
-        "basis": "Double-precision zero used by the angle-table lower-bound correction."
+        "basis": "Compiler-emitted double 0.0 at an absolute retail operand; the verifier compares its bytes with retail."
       }
     },
-    "identification": "A direct retail branch at VA 0x1105c549 identifies the entry. Full range 0x11047690..0x11047738 (exclusive), followed by alignment. Binary-searches 91 angle/tangent pairs to find a signed angle in turns.",
+    "identification": "A direct retail branch at VA 0x1105c549 identifies the entry. Full range 0x11047690..0x11047738 (exclusive), followed by alignment. Binary-searches 91 angle/tangent pairs to find a signed angle in turns. Named SND_fn_fFastAtan from sndmath.c of the Double Agent PS2 linker map and the Pandora Tomorrow PS2 symbol table: a float-to-float arctangent over the table gs_TanAngle.",
     "match": {
       "bytes_sha256": "b206c8f0b0044575fca5cd6af78ffeae06ecaafadbe507d5fc45ca038ba36265",
-      "inputs_sha256": "5c88248311c3e3340ddd4231148137b35905bbe963b5aac306dc56d7289c1665"
+      "inputs_sha256": "99e5cb390e0d80b894eb07550cbcddd7385cf2dfd89d23b5aab6da5e71c68f55"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1736,7 +1737,11 @@
     "size": 37,
     "rebuilt_symbol": "_SND_fn_vUnLoadResBinarySnd@4",
     "inputs": [
-      "src/sound_resource_unload.c"
+      "src/sound_resource_unload.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_resource_unload.obj src/sound_resource_unload.c",
@@ -1749,7 +1754,7 @@
     },
     "match": {
       "bytes_sha256": "8882e0570d3ad1c408d94d635fa34d35a3b69972662d93c3cc9ed263d5a42e5c",
-      "inputs_sha256": "a7c9eed2d32103afd0ea35f9ee61573a6cb58db58200cb2b4c7e16b957be3a15"
+      "inputs_sha256": "83884a03cd7f940d112b6cd63d787baefbb33b41df3950758ed2f06552960bf3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1764,22 +1769,26 @@
     "id": "resource-channels",
     "offset": 7644928,
     "size": 36,
-    "rebuilt_symbol": "_resource_channels",
+    "rebuilt_symbol": "_SND_fn_ulGetResourceNbChannel",
     "inputs": [
-      "src/sound_resource_channels.c"
+      "src/sound_resource_channels.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_resource_channels.obj src/sound_resource_channels.c",
     "link_bindings": {
-      "_query_resource_channels": {
+      "_SND_fn_ulGetResourceNbChannelSxd": {
         "va": 285539872,
-        "basis": "Tail jump to the locked channel query."
+        "basis": "Called by SND_fn_ulGetResourceNbChannel and forwarding to the sound manager; SND_fn_ulGetResourceNbChannelSxd(_tdstBlockResourceMem*) of sndxdtool.cpp in the Double Agent PS2 linker map."
       }
     },
     "identification": "A direct retail branch at VA 0x1105cb58 identifies the entry. Full range 0x1104a700..0x1104a724 (exclusive), followed by alignment. Accepts only resource kinds 1, 6 and 9 before tail-calling the channel query; null and other kinds return zero.",
     "match": {
       "bytes_sha256": "01fd510063323d88eed7421f7836089e1cb9a83c183edb6a6f6c6e33c1280b87",
-      "inputs_sha256": "69f8582c3f865efc4e7f6cc052634ab21364069177ef5c353d50749f048ca05f"
+      "inputs_sha256": "fa4df6208ed78e0eed9bf0a0944574ec994e2f5dcb40d77c7050e1cb52c1cd94"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3579,7 +3588,11 @@
     "size": 5,
     "rebuilt_symbol": "_sound_release_binary_resource",
     "inputs": [
-      "src/sound_resource_forward.c"
+      "src/sound_resource_forward.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_resource_forward.obj src/sound_resource_forward.c",
@@ -3592,7 +3605,7 @@
     },
     "match": {
       "bytes_sha256": "eeb2318ee6dd5db163ff0c4a26712c7c2e742cbf554dfea69df323fdc8846723",
-      "inputs_sha256": "05b1b67d1fbbcf89dbe723cad7f486eb4d80f4d9cf1e129e3bee7c12aef8a129"
+      "inputs_sha256": "1d9dd4b04aa76d09b4eff68ce23c3a65e0c78e409175e784a54e53a0ec342024"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3607,9 +3620,13 @@
     "id": "query-resource-channels",
     "offset": 7667232,
     "size": 5,
-    "rebuilt_symbol": "_query_resource_channels",
+    "rebuilt_symbol": "_SND_fn_ulGetResourceNbChannelSxd",
     "inputs": [
-      "src/sound_resource_channels.c"
+      "src/sound_resource_channels.c",
+      "src/sound_manager.h",
+      "src/sound_memory.h",
+      "src/sound_resource.h",
+      "src/sound_thread.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_resource_channels.obj src/sound_resource_channels.c",
@@ -3622,7 +3639,7 @@
     "identification": "A direct retail branch at VA 0x1104a71f identifies the entry. Full range 0x1104fe20..0x1104fe25 (exclusive), followed by alignment. Tail jump to the locked channel query.",
     "match": {
       "bytes_sha256": "8a9d88e1850e5c22a22604cc6f2547330385a9bf291c0cd374ee2e07c2585832",
-      "inputs_sha256": "efb6b86579af22dfd1a8f4d88bb21c1288cd009e6ccb5bf1a4ed33802f923525"
+      "inputs_sha256": "4c7f5c1b7e8f8ce383c0121c23797e794aa7f7a32bb2231463e2da5f41adb902"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
