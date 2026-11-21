@@ -1,5 +1,8 @@
+/* sound_release_resource.c -- unloads a resource's binary data and frees its buffers
+   (sndmanager.cpp) */
 #include "sound_manager.h"
 
+/* release_sound_resource */
 void __cdecl release_sound_resource(tdstBlockResourceMem *res)
 {
     if (!res)

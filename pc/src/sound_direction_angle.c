@@ -1,6 +1,9 @@
+/* sound_direction_angle.c -- the direction of a position around the first microphone
+   (sndxdmic.c) */
 #include "sound_math.h"
 #include "sound_micro.h"
 
+/* The angle of the point (x, y) in turns, from 0 to 1. */
 static __forceinline float angle_from_projection(float x, float y)
 {
     float angle;
@@ -24,6 +27,8 @@ static __forceinline float angle_from_projection(float x, float y)
     return angle;
 }
 
+/* fn_fGetObjectAngleWithMicroNor: the angle in turns between the first microphone's normal
+   and the direction of pos, measured towards the microphone's tangent */
 float __fastcall fn_fGetObjectAngleWithMicroNor(const SndVector *pos)
 {
     tdstMicroDescription *pstMicro = gs_stMicrosSxd.pList.hFirstElementDyn;

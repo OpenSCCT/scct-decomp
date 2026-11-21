@@ -1,6 +1,9 @@
+/* sound_no_receiver.c -- a positioned sound's parameters when no microphone exists
+   (sndxdmic.c) */
 #include "sound_error.h"
 #include "sound_micro.h"
 
+/* Snd_ParConv_ConvertWithNoMicro: a silent, centred sound, and one warning for all calls */
 __declspec(noinline) void __cdecl Snd_ParConv_ConvertWithNoMicro(const SoundParam *par3D,
                                                                  PrivateSoundParam *par)
 {

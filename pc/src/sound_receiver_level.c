@@ -1,6 +1,8 @@
+/* sound_receiver_level.c -- the loudest a sound is heard by any microphone (sndxdmic.c) */
 #include "sound_micro.h"
 #include "sound_volume.h"
 
+/* SND_fn_rGetNormeSxd */
 SndReal __stdcall SND_fn_rGetNormeSxd(const SoundParam *par3D)
 {
     SndReal rRetVol_dB = SND_VOLUME_MIN_DB;

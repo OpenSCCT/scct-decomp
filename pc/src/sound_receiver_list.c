@@ -1,6 +1,9 @@
+/* sound_receiver_list.c -- the list of microphones (sndxdmic.c) */
 #include "sound_memory.h"
 #include "sound_micro.h"
 
+/* reset_sound_receivers: empties the microphone list.
+   guess: SND_fn_eInitSxdMic of the sibling builds, which takes the library's init structure */
 int __cdecl reset_sound_receivers(const void *unused)
 {
     g_iNbMicrosSxd = 0;
@@ -10,6 +13,7 @@ int __cdecl reset_sound_receivers(const void *unused)
     return 1;
 }
 
+/* Copies the four vectors of a microphone's parameters into its description. */
 static __forceinline void copy_micro_param(tdstMicroDescription *pstMicro, const MicroParam *par)
 {
     SND_fn_vMemCopySnd(&pstMicro->pos, &par->pos, sizeof(SndVector));
@@ -18,6 +22,8 @@ static __forceinline void copy_micro_param(tdstMicroDescription *pstMicro, const
     SND_fn_vMemCopySnd(&pstMicro->dir_tan, &par->dirtan, sizeof(SndVector));
 }
 
+/* create_sound_receiver: adds a microphone at the end of the list and returns its description.
+   guess: SND_fn_lCreateMicroSxdMic of the sibling builds */
 tdstMicroDescription *__cdecl create_sound_receiver(const MicroParam *par)
 {
     tdstMicroDescription *pstMicro = SND_fn_pvMallocSnd(sizeof(tdstMicroDescription));
@@ -42,6 +48,8 @@ tdstMicroDescription *__cdecl create_sound_receiver(const MicroParam *par)
     return pstMicro;
 }
 
+/* update_sound_receiver: sets the parameters of a microphone that is in the list.
+   guess: SND_fn_vSetMicroParamSxdMic of the sibling builds */
 void __cdecl update_sound_receiver(tdstMicroDescription *sxdId, const MicroParam *par)
 {
     tdstMicroDescription *pstMicro;
@@ -54,6 +62,8 @@ void __cdecl update_sound_receiver(tdstMicroDescription *sxdId, const MicroParam
     }
 }
 
+/* destroy_sound_receiver: takes a microphone out of its list and frees it.
+   guess: SND_fn_vDestroyMicroSxdMic of the sibling builds */
 void __cdecl destroy_sound_receiver(tdstMicroDescription *pstMicro)
 {
     if (!pstMicro)

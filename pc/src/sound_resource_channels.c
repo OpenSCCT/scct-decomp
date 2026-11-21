@@ -1,10 +1,15 @@
+/* sound_resource_channels.c -- the number of channels of a resource (sndmanager.cpp,
+   sndxdtool.cpp, sndplay.c) */
 #include "sound_manager.h"
 
+/* simple_channels: the channels of a sample */
 __declspec(noinline) unsigned long __cdecl simple_channels(const tdstTypeSampleMem *sample)
 {
     return sample->channels;
 }
 
+/* collection_channels: the most channels of any track.
+   guess: SndManager::GetResourceNbChannelMultiTrack of the sibling builds */
 __declspec(noinline) unsigned long __cdecl collection_channels(const tdstTypeMultiTrackMem *multitrack)
 {
     unsigned long best = 0;
@@ -16,6 +21,8 @@ __declspec(noinline) unsigned long __cdecl collection_channels(const tdstTypeMul
     return best;
 }
 
+/* locked_resource_channels: the channels of a resource, read inside the tool lock.
+   guess: SndManager::GetResourceNbChannel of the sibling builds */
 __declspec(noinline) unsigned long __cdecl locked_resource_channels(const tdstBlockResourceMem *res)
 {
     unsigned long channels;
@@ -39,11 +46,13 @@ __declspec(noinline) unsigned long __cdecl locked_resource_channels(const tdstBl
     return channels;
 }
 
+/* SND_fn_ulGetResourceNbChannelSxd */
 __declspec(noinline) unsigned long __cdecl SND_fn_ulGetResourceNbChannelSxd(const tdstBlockResourceMem *res)
 {
     return locked_resource_channels(res);
 }
 
+/* SND_fn_ulGetResourceNbChannel */
 unsigned long __cdecl SND_fn_ulGetResourceNbChannel(const tdstBlockResourceMem *res)
 {
     if (!res)

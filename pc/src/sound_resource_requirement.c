@@ -1,5 +1,9 @@
+/* sound_resource_requirement.c -- what a resource needs from the renderer to play
+   (sndmanager.cpp) */
 #include "sound_manager.h"
 
+/* resource_requirement: the largest requirement of the resource or of its elements.
+   guess: SndManager::GetNbHWVoice of the sibling builds */
 unsigned long __cdecl resource_requirement(const tdstBlockResourceMem *res)
 {
     unsigned long result;

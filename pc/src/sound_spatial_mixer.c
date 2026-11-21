@@ -1,6 +1,9 @@
+/* sound_spatial_mixer.c -- a positioned sound's parameters as one microphone hears it
+   (sndxdmic.c) */
 #include "sound_micro.h"
 #include "sound_volume.h"
 
+/* The parameters of a sound as pstMicro hears it. */
 static __forceinline void convert_for_micro(const SoundParam *par3D, PrivateSoundParam *par,
                                             tdstMicroDescription *pstMicro)
 {
@@ -65,6 +68,7 @@ static __forceinline void convert_for_micro(const SoundParam *par3D, PrivateSoun
     }
 }
 
+/* Snd_ParConv_ConvertWithOneMicro: converts for the first microphone of the list */
 void __cdecl Snd_ParConv_ConvertWithOneMicro(const SoundParam *par3D, PrivateSoundParam *par)
 {
     convert_for_micro(par3D, par, gs_stMicrosSxd.pList.hFirstElementDyn);

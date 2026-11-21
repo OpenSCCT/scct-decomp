@@ -1,5 +1,7 @@
+/* sound_sample_decode.c -- fills a sample resource from its bank record (sndmanager.cpp) */
 #include "sound_manager.h"
 
+/* decode_sample_fields: copies the record and turns its offsets into addresses */
 __declspec(noinline) void __cdecl decode_sample_fields(const tdstBlockResourceDisk *disk,
                                                        tdstBlockResourceMem *res,
                                                        unsigned long internal_base,
@@ -25,6 +27,7 @@ __declspec(noinline) void __cdecl decode_sample_fields(const tdstBlockResourceDi
     }
 }
 
+/* decode_sound_sample: the same inside the tool lock, with the address and size of the data */
 int __cdecl decode_sound_sample(const tdstBlockResourceDisk *disk, tdstBlockResourceMem *res,
                                 unsigned long internal_base, unsigned long external_base)
 {

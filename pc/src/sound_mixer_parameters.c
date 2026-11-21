@@ -1,6 +1,8 @@
+/* sound_mixer_parameters.c -- a sound's parameters converted for a renderer (sndxdmic.c) */
 #include "sound_micro.h"
 #include "sound_manager.h"
 
+/* Snd_ParConv_ConvertWithNoPosition: the volume and pan as the game gave them */
 static __forceinline void Snd_ParConv_ConvertWithNoPosition(const SoundParam *par3D,
                                                             PrivateSoundParam *par)
 {
@@ -20,6 +22,7 @@ static __forceinline void Snd_ParConv_ConvertWithNoPosition(const SoundParam *pa
     }
 }
 
+/* SND_fn_vSndParToPrivSndPar */
 __declspec(noinline) void __stdcall SND_fn_vSndParToPrivSndPar(const SoundParam *par3D,
                                                                PrivateSoundParam *par,
                                                                tdePositionFormat format)
@@ -33,6 +36,8 @@ __declspec(noinline) void __stdcall SND_fn_vSndParToPrivSndPar(const SoundParam 
         Snd_ParConv_ConvertWithOneMicro(par3D, par);
 }
 
+/* SND_fn_vBestConvertionForSndParToPrivSndPar: a resource with several channels keeps a plain
+   pan, centred unless the resource may be panned */
 void __stdcall SND_fn_vBestConvertionForSndParToPrivSndPar(const SoundParam *par3D,
                                                            PrivateSoundParam *par,
                                                            tdePositionFormat format,

@@ -1,5 +1,7 @@
+/* sound_resource_unload.c -- unloads a resource's binary data (sndplay.c) */
 #include "sound_manager.h"
 
+/* SND_fn_vUnLoadResBinarySnd */
 void __stdcall SND_fn_vUnLoadResBinarySnd(tdstBlockResourceMem *res)
 {
     switch (res->eType) {

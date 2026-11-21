@@ -1,5 +1,7 @@
+/* sound_tangent_table.c -- arctangent by table search (sndmath.c) */
 #include "sound_math.h"
 
+/* SND_fn_fFastAtan: the angle in turns, between -1/4 and 1/4, whose tangent is nearest */
 float __cdecl SND_fn_fFastAtan(float tangent)
 {
     float magnitude = tangent < 0 ? -tangent : tangent;

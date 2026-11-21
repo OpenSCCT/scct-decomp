@@ -1,5 +1,9 @@
+/* sound_release_backend.c -- unloads a resource's binary data, keeping its buffers
+   (sndmanager.cpp) */
 #include "sound_manager.h"
 
+/* sound_release_binary_backend.
+   guess: SndManager::UnloadResourceBinary of the sibling builds */
 void __cdecl sound_release_binary_backend(tdstBlockResourceMem *res)
 {
     if (res) {
