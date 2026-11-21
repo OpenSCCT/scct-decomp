@@ -5,6 +5,11 @@
 
 #include "sound_resource.h"
 
+/* __FILE__ of the original sndldbin.c. */
+#define SNDLDBIN_C_FILE \
+    "\\build\\splintercellx-pc\\patch\\SplinterCell2\\technology-group\\sound\\dare\\private" \
+    "\\engine\\common\\src\\sndldbin.c"
+
 /* How the project's data is loaded. */
 typedef enum _SND_tdeDataLoadMode {
     SND_E_DATALOADMODE_INVALID = -1,
@@ -110,5 +115,6 @@ tdstBlockResourceMem *__stdcall SND_fn_pGetBinRes(unsigned long ulBinId);
 SND_tdstBlockEvent *__stdcall SND_fn_pGetBinEvent(unsigned long ulBinId);
 SND_tdstBlockEvent *__stdcall SND_fn_hGetSoundEventHandleFromEditorId(unsigned long ulEdId);
 tdstBlockResourceMem *__stdcall SND_fn_pstGetResFromEdIdSnd(unsigned long ulEdId);
+unsigned long __stdcall SND_fn_ulGetEditorIdFromSoundEventName(const char *szName);
 
 #endif

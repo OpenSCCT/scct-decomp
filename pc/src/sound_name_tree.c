@@ -1,6 +1,7 @@
+#include "sound_memory.h"
 #include "sound_name_tree.h"
 
-SoundNameNode *__fastcall sound_find_name_node(SoundEventNames *tree, KeyArg argument)
+SoundNameNode *__fastcall sound_find_name_node(SoundEventNames *tree, SoundNameKeyArg argument)
 {
     const SoundNameKey *key = argument.key;
     SoundNameNode *sentinel = tree->sentinel;
@@ -32,8 +33,8 @@ SoundNameNode *__cdecl sound_rotate_name_left(SoundNameNode *node)
 SoundNameNode *__fastcall sound_init_name_node(SoundNameNode *node)
 {
     node->key.methods = sound_name_key_methods;
-    node->key.editor_id = (Word)-1;
-    node->key.crc = (Word)-1;
+    node->key.editor_id = (unsigned long)-1;
+    node->key.crc = (unsigned long)-1;
     node->lower = 0;
     node->upper = 0;
     node->field_14 = 1;
@@ -54,8 +55,6 @@ void __stdcall sound_split_name_node(SoundNameNode **link)
         ++(*link)->level;
     }
 }
-
-void *__stdcall SND_fn_pvMallocSnd(Word size);
 
 SoundEventNames *__fastcall sound_construct_name_tree(SoundEventNames *tree)
 {
