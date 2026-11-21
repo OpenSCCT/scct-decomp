@@ -56,8 +56,11 @@ objects, GCC for the PS2) is a lead. Re-verify it with the period compiler befor
 In order of weight:
 
 1. **The retail executables**, verified against the manifest hashes: the Campaign export table
-   (150 names), run-time type information in both programs, UnrealScript native registration
-   tables, wide-string allocation tags, error and log strings, vtables.
+   (150 names), the engine's class registrations (every `UClass` records its name, size and
+   super class, and its placement constructor installs its vtable), UnrealScript native
+   registration tables, wide-string allocation tags, error and log strings, `__FILE__` paths,
+   vtables. Run-time type information exists only for the ubi.com library classes (163 type
+   names in Campaign, 152 in Versus): the engine's own classes carry none.
 2. **Named C runtime objects** of the Visual C++ Toolkit 2003 libraries
    ([how they were compared](pc/evidence/compare_libraries.py)).
 3. **Sibling builds of the same engine that shipped with symbols.** They name functions, classes,
@@ -75,8 +78,8 @@ In order of weight:
    | *Essentials* PSP, multiplayer module, `…SPLINTERCELL_M.PRX` | symbol table: 9,550 functions | `45dcbfa4cda7d88f6b8a1d366425d573bf4f2ed19d4dec03c4d8467d0077e945` |
 
    A sibling build names a Chaos Theory function only once the function is identified
-   independently: by an export, a native registration entry, a vtable slot of an RTTI-named class,
-   or a string it prints. The sibling then supplies the owning class, the parameter types and the
+   independently: by an export, a native registration entry, a vtable slot of a class its
+   registration names, or a string it prints. The sibling then supplies the owning class, the parameter types and the
    spelling. It is a different game on a different compiler: never copy an offset, a size or a
    layout from it without the Chaos Theory bytes agreeing.
 4. **Other Windows programs that shipped with symbols**, for library code only. Where one links
@@ -199,13 +202,16 @@ Send a fakematch back as `MATCH-PENDING`. Never rewrite it during a merge.
 ## Rule changes
 
 None yet: the catalogue applies as written. Tightening or relaxing a rule is a maintainers'
-ruling, recorded here with its reason, and the checker changes in the same commit. Five rulings
+ruling, recorded here with its reason, and the checker changes in the same commit. Seven rulings
 are open:
 
 1. **Members written as free functions.** 463 definitions are `__fastcall` functions whose
    second parameter is never read: a C spelling of a C++ member, with a dummy standing in for
    EDX. R12 asks for the method. The checker reports them as advisory; making the pattern
-   [match] is mechanical if the maintainers want it.
+   [match] is mechanical if the maintainers want it. Its companion is the one-member structure
+   wrapped around a stack argument (`struct ArraySize { int value; }`): where a lane has met
+   one it is marked `FAKEMATCH` at its declaration, which the checker does block, but most
+   files outside the two finished lanes still carry unmarked ones.
 2. **Unwind funclets and frame-handler stubs as units.** The compiler emits these for a parent
    function's exception states. The C that reproduces them alone uses `volatile` globals as
    state flags, which R17 blocks. They may be better counted with their parent function than
@@ -226,6 +232,17 @@ are open:
    as the `crt_` units already are, under the library's names. A deleting destructor is not a
    function anyone wrote: its source is the class whose virtual destructor makes the compiler
    emit it.
+6. **One header for two programs.** Campaign and Versus are two engine branches with
+   different layouts of the same classes. The shared `unreal_*.h` headers declare both, the
+   Versus variant under `#ifdef SCCT_VERSUS` (defined by `versus_build.h`, which every Versus
+   unit includes first). R37 keeps conditionals for build variants the original had, and
+   these are two sources, not two builds of one. Headers per program would say that more
+   truthfully; the split is mechanical and the checker already scopes R1 to one program.
+7. **Whole-program optimisation in Versus.** Versus appears to have been linked with link-time code generation
+   ([evidence](pc/evidence/versus-compiler-question.md)): some functions take arguments in
+   registers no per-file build chooses. A unit compiled alone cannot reproduce those, and a
+   stand-in that does (`TArrayLtcg` in `versus_ltcg.h`) is a fakematch, marked as one. Whether
+   the gate should grow a link-time step, or such functions stay open, is not decided.
 
 ## Tooling
 
@@ -234,5 +251,21 @@ New tooling is written in C (C99, standard library only, one file per tool, buil
 where the change belongs to their own job, as the verifier's receipt update does.
 
 Before a batch of matching lanes, and again after every three, ask whether a tool would save
-more time than it costs: a vtable-slot table for R13, a prefix-copy check for R1, an evidence
-lookup from unit to sibling symbol are the known candidates.
+more time than it costs. The known candidates, most valuable first:
+
+- **A binding generator.** Both finished lanes wrote a throwaway script that derives a unit's
+  `link_bindings` and `inputs` from the relocations of its compiled function, its includes and
+  the retail operands. Every lane that moves declarations into headers needs it.
+- **A DWARF 1 reader for `tools/evidence`.** The *Splinter Cell* PS2 demo carries CodeWarrior
+  DWARF 1 for the engine and for the whole sound library: structure members, parameters,
+  locals, file-statics and translation units. `symindex` reads only its symbol table.
+- **A vtable-slot table** from the retail images, so the checker can test R13's slot row.
+- **A prefix-copy check** for R1, and an evidence lookup from a unit to its sibling symbols.
+
+## Marking a fakematch
+
+When a function or declaration reproduces the bytes through a trick and the real source is not
+found yet, keep it and write `FAKEMATCH: <what the original is>` in the comment directly above
+it. The checker reports the marker as R17, so every unit that names the marked thing is
+`MATCH-PENDING` until the real source replaces it. Mark the smallest thing that is fake: the
+wrapper structure, the stand-in template, the steering helper.

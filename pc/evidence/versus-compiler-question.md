@@ -38,6 +38,37 @@ units are recorded as byte-identical candidates without compiler evidence.
 The roughly 3,200 Versus units verified before that date keep their 3077
 evidence.
 
+## Link-time code generation
+
+Versus appears to have been linked with whole-program optimisation. The function at RVA
+`0xc7d0`, which removes a run of 12-byte elements from an array and which the engine lane
+identifies as `TArray<FString>::Remove`, reads its index from EDI without ever setting it:
+
+```text
+1090c7d0  mov  eax, [esp+8]      ; count
+1090c7d4  add  eax, edi          ; index arrives in EDI
+1090c7d6  cmp  edi, eax
+1090c7d8  push ebp
+1090c7d9  mov  ebp, [esp+8]      ; this arrives on the stack
+```
+
+It has two callers, at RVA `0xc61c` and `0xca7b1`; the first clears EDI with `xor edi, edi`
+just before it pushes the other arguments. No calling convention a programmer can write
+passes an argument in EDI. The compiler does choose such a convention by itself, without
+any link-time step, for a `static` function whose every caller it can see in one translation
+unit ([toolchain notes](../TOOLCHAIN.md), "Versus actor placement"). That explanation does
+not fit here: the two callers lie 780 KB apart in the image, and a template member has
+external linkage. Across translation units the choice needs `/GL` and `/LTCG`, which the
+7.00 linker has. The engine lane also found many array destructors with a private
+convention, `this` on the stack and popped by the callee.
+
+If so, two things follow. A unit compiled alone can only reproduce the functions whose
+convention the link step left alone, so "compiled with `/O2`" is at most half of the Versus
+recipe; and the units that reproduce a link-time convention through a stand-in are
+fakematches (`TArrayLtcg` in `src/versus_ltcg.h`, marked as one). A unity build of the
+engine would be the other reading, and would make the same per-file rebuilds wrong for the
+same reason.
+
 ## Decision needed
 
 1. Keep the current attribution and turn Versus evidence back on.

@@ -27,6 +27,16 @@ function in the same file that names none of them is not charged.
 When the function cannot be found by name (a template instantiation, a nested macro), the unit
 is charged with everything in its source files. `source_found_by` in the report counts both.
 
+## Scope
+
+- **One executable at a time.** Campaign and Versus are two programs. Two declarations
+  conflict (R1, R2) only when some unit of the same executable can see both.
+- **One side of a build conditional.** Tokens and declarations inside a plain `#ifdef NAME`
+  or `#ifndef NAME` are followed only for units whose inputs define, or do not define,
+  `NAME`. Include guards and `#if` expressions are not treated as conditionals.
+- **Markers.** A comment directly above a declaration or function that says `FAKEMATCH` or
+  `PROBE` is an R17 finding on it, so every unit that names it is `MATCH-PENDING`.
+
 ## Rows implemented
 
 | rule | fires on |
