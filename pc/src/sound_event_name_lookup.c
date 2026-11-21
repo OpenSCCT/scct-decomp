@@ -1,9 +1,12 @@
+/* sound_event_name_lookup.c -- the editor identifier of an event by its name (sndldbin.c) */
 #include "sound_bank_layout.h"
 #include "sound_error.h"
 #include "sound_name_tree.h"
 #include "sound_string.h"
 #include "sound_thread.h"
 
+/* SND_fn_ulGetEditorIdFromSoundEventName: -1 when the names are not loaded or hold no such
+   name */
 unsigned long __stdcall SND_fn_ulGetEditorIdFromSoundEventName(const char *szName)
 {
     char message[256];
