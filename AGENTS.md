@@ -79,7 +79,16 @@ In order of weight:
    or a string it prints. The sibling then supplies the owning class, the parameter types and the
    spelling. It is a different game on a different compiler: never copy an offset, a size or a
    layout from it without the Chaos Theory bytes agreeing.
-4. **Sources that stay out.** The [provenance rules](https://github.com/OpenSCCT/OpenSCCT/blob/main/re/PROVENANCE.md)
+4. **Other Windows programs that shipped with symbols**, for library code only. Where one links
+   the same static library object as Chaos Theory, the function is byte-identical apart from
+   link-time operands, and its name, library and object transfer.
+   [pc/evidence/library-code.md](pc/evidence/library-code.md) records the comparison and
+   [library-functions.tsv](pc/evidence/library-functions.tsv) lists 701 functions it names: the
+   Visual Studio .NET 2003 runtime, D3DX and the Microsoft Layer for Unicode. Check that list
+   before reconstructing a function: a library function is named from its library and grouped
+   by its object, never given an invented name. No name is ever taken from another program's
+   game code, however exactly a short function matches.
+5. **Sources that stay out.** The [provenance rules](https://github.com/OpenSCCT/OpenSCCT/blob/main/re/PROVENANCE.md)
    hold here: game files and anything derived from them live in `local/`; short identifiers
    (class, function and field names, addresses) may be committed, code may not. Licensed engine
    source and headers, SDK source and leaked material are never a reference, not even to check a
@@ -190,7 +199,7 @@ Send a fakematch back as `MATCH-PENDING`. Never rewrite it during a merge.
 ## Rule changes
 
 None yet: the catalogue applies as written. Tightening or relaxing a rule is a maintainers'
-ruling, recorded here with its reason, and the checker changes in the same commit. Four rulings
+ruling, recorded here with its reason, and the checker changes in the same commit. Five rulings
 are open:
 
 1. **Members written as free functions.** 463 definitions are `__fastcall` functions whose
@@ -209,6 +218,14 @@ are open:
    functions (template instantiations or inline copies, most likely), and a faithful source
    has each of them (R34). `rules` counts these as `one_function_several_addresses`; whether
    they block a match is not decided.
+5. **Library code and compiler-generated code as units.** 139 units are Microsoft library
+   functions (63 runtime and D3DX functions, and the 76 Versus "Windows dispatch" units, which
+   are `unicows.lib`), and 945 more are byte-identical to compiler-shaped code in unrelated
+   programs, 437 of them scalar deleting destructors
+   ([evidence](pc/evidence/library-code.md)). Library units belong in a category of their own,
+   as the `crt_` units already are, under the library's names. A deleting destructor is not a
+   function anyone wrote: its source is the class whose virtual destructor makes the compiler
+   emit it.
 
 ## Tooling
 
