@@ -1,0 +1,128 @@
+// Work item 0117 (vwork4): Versus RVA 0x155660-0x155705.
+// UGUIController::execIsProfileOnMC (RVA 0x155660).
+// Calls UnnamedModeStack_e5dc0::HasItem (RVA 0xe5e90, LTCG `this` in ESI).
+
+typedef unsigned short TCHAR;
+typedef int INT;
+typedef unsigned long DWORD;
+typedef DWORD UBOOL;
+typedef unsigned char BYTE;
+
+extern "C" __declspec(dllimport) int __cdecl wcscmp(const TCHAR *, const TCHAR *);
+
+class FArray
+{
+public:
+    void *Data;
+    INT ArrayNum;
+    INT ArrayMax;
+    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
+};
+
+template <class T> class TArray : public FArray
+{
+public:
+    TArray() {}
+    INT Num() const { return ArrayNum; }
+    T &operator()(INT i) { return ((T *)Data)[i]; }
+};
+
+class FString : public TArray<TCHAR>
+{
+public:
+    FString() {}
+    FString(const FString &Other);
+    ~FString();
+    const TCHAR *operator*() const { return ArrayNum ? (const TCHAR *)Data : L""; }
+};
+
+class FOutputDevice
+{
+public:
+    virtual void Serialize(const TCHAR *V, INT Event);
+};
+
+class UObject
+{
+public:
+    virtual ~UObject();
+};
+
+struct FFrame;
+typedef void (UObject::*Native)(FFrame &TheStack, void *const Result);
+extern Native GNatives[];
+
+struct FFrame : public FOutputDevice
+{
+    class UStruct *Node;
+    UObject *Object;
+    BYTE *Code;
+    BYTE *Locals;
+
+    void Step(UObject *Context, void *const Result)
+    {
+        INT B = *Code++;
+        (Context->*GNatives[B])(*this, Result);
+    }
+};
+
+#define RESULT_DECL void *const Result
+#define P_GET_STR(var) FString var; Stack.Step(Stack.Object, &var);
+#define P_FINISH Stack.Code++;
+
+class UnnamedModeStack_e5dc0
+{
+public:
+    virtual void Unused00();
+    INT unk_04[12];
+    INT Done[7];            // +0x34
+    INT Current;            // +0x50
+    INT unk_54[8];
+    TArray<FString> Items;  // +0x74
+
+    UBOOL HasItem(FString S);
+};
+
+// Invented name for global pointer at 0x10c924e8 (UnnamedModeStack_e5dc0*).
+extern UnnamedModeStack_e5dc0 *GProfileManager;
+
+class UGUIController : public UObject
+{
+public:
+    void execIsProfileOnMC(FFrame &Stack, RESULT_DECL);
+};
+
+// RVA 0x155660: UGUIController::execIsProfileOnMC
+void UGUIController::execIsProfileOnMC(FFrame &Stack, RESULT_DECL)
+{
+    P_GET_STR(ProfileName);
+    P_FINISH;
+    UnnamedModeStack_e5dc0 *ProfileManager = GProfileManager;
+    if (ProfileManager)
+        *(UBOOL *)Result = ProfileManager->HasItem(ProfileName);
+    else
+        *(UBOOL *)Result = 1;
+}
+
+// Scaffolding for the link, not part of the unit.
+// HasItem (published in versus_vd5_item_0203.cpp, RVA 0xe5e90) is included here
+// so LTCG assigns its retail calling convention (`this` in ESI).
+UBOOL UnnamedModeStack_e5dc0::HasItem(FString S)
+{
+    for (INT i = 0; i < Items.Num(); i++)
+        if (wcscmp(*Items(i), *S) == 0)
+            return 1;
+    return 0;
+}
+
+void Escape(void *);
+void Driver_155660(UGUIController *C, FFrame *Stack, void *Result,
+                   UnnamedModeStack_e5dc0 *M, FString *S)
+{
+    Escape(&GProfileManager);
+    Escape(GNatives);
+    void (UGUIController::*Exec)(FFrame &, void *const) = &UGUIController::execIsProfileOnMC;
+    Escape(&Exec);
+    (C->*Exec)(*Stack, Result);
+    M->HasItem(*S);
+}
