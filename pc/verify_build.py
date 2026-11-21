@@ -14,6 +14,7 @@ import tempfile
 PC = Path(__file__).resolve().parent
 sys.path.insert(0, str(PC.parent / "tools"))
 from progress import compare_unit, summary, verify
+from link_image import link_arguments, stub_object
 from manifests import load_target
 
 
@@ -69,6 +70,18 @@ def rebuild_unit(unit, cl, env, build_dir):
     subprocess.run([cl, *args], cwd=build_dir, env=env, check=True)
     if not obj.is_file():
         raise ValueError(f"compiler produced no object at {outputs[0]}")
+    if "ltcg_link" in unit:
+        # Link-time code generation: link the object, its scaffolding roots and stubs
+        # for undefined externals into a DLL with the LINK.EXE beside the compiler.
+        if "/GL" not in args:
+            raise ValueError("an LTCG unit compiles with /GL")
+        stubs = obj.with_name(obj.stem + "_stubs.obj")
+        dll = obj.with_suffix(".dll")
+        stubs.write_bytes(stub_object(unit["ltcg_link"]["stubs"]))
+        linker = Path(cl).with_name("LINK.EXE")
+        subprocess.run([str(linker), *link_arguments(unit["ltcg_link"]), "/OUT:" + str(dll), str(obj), str(stubs)],
+                       cwd=build_dir, env=env, check=True, stdout=subprocess.DEVNULL)
+        return dll
     return obj
 
 
@@ -111,9 +124,11 @@ def main():
             if unit["toolchain"] not in compilers:
                 option = "--clang" if unit["toolchain"].startswith("Clang ") else "--cl"
                 raise ValueError(f"{unit['id']}: pass {option} for {unit['toolchain']}")
-            key = (unit["toolchain"], unit["build_command"], tuple(sorted(unit["inputs"])))
+            link = unit.get("ltcg_link")
+            key = (unit["toolchain"], unit["build_command"], tuple(sorted(unit["inputs"])),
+                   link and (tuple(link["roots"]), tuple(link["stubs"])))
             recipes.setdefault(key, []).append(unit)
-        for (toolchain, _, _), units in recipes.items():
+        for (toolchain, *_), units in recipes.items():
             cl, build_env = compilers[toolchain]
             with tempfile.TemporaryDirectory(prefix="scct-decomp-") as tmp:
                 obj = rebuild_unit(units[0], cl, build_env, Path(tmp).resolve()).read_bytes()

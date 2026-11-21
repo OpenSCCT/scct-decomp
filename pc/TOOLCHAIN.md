@@ -139,3 +139,33 @@ linker treats a private `$L` function label at a nonzero offset as part of its
 function. The audit requires the indexed body to end at that label, no indexed
 function inside the catch range, and the retail FuncInfo to name the label as
 the only `catch (...)` handler.
+
+### Link-time code generation (Versus)
+
+The Versus Rich header lists 292 objects from VC7.0 13.00.9466 built for
+link-time code generation (`/GL`, product 0x2c). LINK 7.00.9466 `/LTCG`
+generated their code and gave internal functions custom calling conventions:
+`this` and arguments in ESI, EDI, EAX or EBX, `this` on the stack with
+`ret 4`, or no prologue. An object file holds only intermediate language, so
+these units are rebuilt as a linked DLL.
+
+A unit with an `ltcg_link` record compiles its source with `/GL`.
+`pc/verify_build.py` then links the object with the LINK.EXE beside the
+compiler, using the fixed options in `tools/link_image.py`, the record's
+scaffolding roots, and a stub object with one `int3` code section for each
+external the source declares but does not define. The source ends with a
+driver function, marked as scaffolding, that calls the unit the way retail
+callers do. The linker picks the calling convention from those callers. The
+driver also passes the address of each global the function reads to an
+external function, because in the original program those globals have their
+address taken elsewhere, and that stops the optimiser moving loads past stores.
+
+The record gives the function's file offset and address in the DLL, and
+every address field in it, with its kind (absolute or rel32 branch) and the
+symbol it refers to. `tools/link_image.py` checks that each built field refers
+to that symbol's address in the DLL, rewrites it with the retail address from
+`link_bindings`, and compares source-defined string literals with retail byte
+for byte. The DLL is linked at 0x10000000, so no unbound field can equal its
+retail value by accident. The audit links the DLL again, re-derives the field
+list from the DLL's base relocations and from rel32 branches that leave the
+function, and checks the symbol names against a `/MAP` of the same link.
