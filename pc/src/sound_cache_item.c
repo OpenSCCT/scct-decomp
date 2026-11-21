@@ -13,7 +13,7 @@ __declspec(noinline) int __fastcall cache_item_priority(SoundCacheItem *item)
 }
 
 #pragma code_seg(".text$V75d190")
-__declspec(noinline) int __fastcall cache_item_matches(SoundCacheItem *item, WordArg key)
+__declspec(noinline) int __fastcall cache_item_matches(SoundCacheItem *item, SndWordArg key)
 {
     return key.value == item->key;
 }
