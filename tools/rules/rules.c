@@ -1605,6 +1605,19 @@ static void AddDeclaration( int fileIndex, int begin, int end ) {
 				name = i + 3;
 				break;
 			}
+			/* "(Class::*name)": a pointer to member; the name follows the star before the closing parenthesis */
+			if ( tokens[i].symbol == sLParen ) {
+				int k = i + 1;
+
+				while ( k < end && ( tokens[k].kind == T_ID || tokens[k].symbol == sScope ) ) {
+					k++;
+				}
+				if ( k > i + 1 && k + 2 < end && tokens[k].symbol == sStar && tokens[k + 1].kind == T_ID
+					&& tokens[k + 2].symbol == sRParen ) {
+					name = k + 1;
+					break;
+				}
+			}
 		}
 		if ( name >= 0 ) {
 			node = AddNode( N_TYPE, tokens[name].symbol, fileIndex, tokens[name].line, begin, end, 0 );
