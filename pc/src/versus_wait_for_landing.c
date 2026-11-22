@@ -2,7 +2,7 @@
 
 struct StateFrame {
     unsigned char unknown[0x24];
-    unsigned latent_action;
+    int latent_action;
 };
 
 struct PawnPhysics {
