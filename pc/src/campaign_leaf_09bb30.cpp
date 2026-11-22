@@ -5,7 +5,7 @@
 
 class UnkType_1099bb30;
 
-class UnkType_1099b960
+class UnkType_1099bb30_1099b960
 {
 public:
     int Unk_1099b960(UnkType_1099bb30* const& Item);
@@ -15,7 +15,7 @@ class UnkType_1099bb30_78
 {
 public:
     unsigned char unk_000[0x728];
-    UnkType_1099b960 unk_728;
+    UnkType_1099bb30_1099b960 unk_728;
 };
 
 class UnkType_1099bb30

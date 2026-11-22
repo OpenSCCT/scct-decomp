@@ -5,7 +5,7 @@
 
 class UnkType_10a037c0;
 
-class UnkList
+class UnkType_10a037c0_List
 {
 public:
     unsigned char unk_0[0x2e0];
@@ -13,18 +13,18 @@ public:
     int unk_2e4;
 };
 
-class UnkOwner
+class UnkType_10a037c0_Owner
 {
 public:
     unsigned char unk_0[0x5d0];
-    UnkList* unk_5d0;
+    UnkType_10a037c0_List* unk_5d0;
 };
 
 class UnkType_10a037c0
 {
 public:
     unsigned char unk_0[0x78];
-    UnkOwner* unk_78;
+    UnkType_10a037c0_Owner* unk_78;
 
     UnkType_10a037c0* Unk_10a037c0();
 };

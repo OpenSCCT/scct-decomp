@@ -4,7 +4,7 @@
 // class, method, structure and member names are invented; the offsets and the bytes are the
 // binary's.
 
-struct UnkEntry_10e46880
+struct UnkType_10e46880_Entry
 {
     unsigned short unk_0;
     unsigned short unk_2;
@@ -17,7 +17,7 @@ public:
     void Unk_10e46880(int Index, int, int);
 
     unsigned char unk_0[0x20];
-    UnkEntry_10e46880 unk_20[6];
+    UnkType_10e46880_Entry unk_20[6];
     unsigned char unk_44[0x10];
     int unk_54;
     unsigned char unk_58;

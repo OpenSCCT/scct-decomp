@@ -3,7 +3,7 @@
 // a 0x4c-byte entry of the array at offset 0x34 (count at 0x38); otherwise 0. The class, method and
 // member names are invented; the offset and the bytes are the binary's.
 
-struct UnkEntry
+struct UnkType_10c1e820_Entry
 {
     void* unk_0;
     void* unk_4;
@@ -14,7 +14,7 @@ class UnkType_10c1e820
 {
 public:
     unsigned char unk_0[0x34];
-    UnkEntry* unk_34;
+    UnkType_10c1e820_Entry* unk_34;
     int unk_38;
 
     int Unk_10c1e820(void* Key);

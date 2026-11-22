@@ -3,7 +3,7 @@
 // the value through its second argument and returns 1, else returns 0. The class, method and member
 // names are invented; the offset and the bytes are the binary's.
 
-struct UnkPair
+struct UnkType_10c41bc0_Pair
 {
     int unk_0;
     int unk_4;
@@ -13,7 +13,7 @@ class UnkType_10c41bc0
 {
 public:
     unsigned char unk_0[0x414];
-    UnkPair unk_414[4];
+    UnkType_10c41bc0_Pair unk_414[4];
 
     int Unk_10c41bc0(int Key, int* Out);
 };

@@ -3,7 +3,7 @@
 // 0x40c, advances that index, wrapping to 0 at 4, and returns 1. The class, method and member
 // names are invented; the offset and the bytes are the binary's.
 
-struct UnkPair
+struct UnkType_10c41c00_Pair
 {
     int unk_0;
     int unk_4;
@@ -15,7 +15,7 @@ public:
     unsigned char unk_0[0x40c];
     int unk_40c;
     unsigned char unk_410[0x414 - 0x410];
-    UnkPair unk_414[4];
+    UnkType_10c41c00_Pair unk_414[4];
 
     int Unk_10c41c00(int Key, int Value);
 };

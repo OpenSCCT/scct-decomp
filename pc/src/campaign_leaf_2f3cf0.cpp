@@ -4,19 +4,19 @@
 // argument is never read. The class, method and member names are invented; the offset and the
 // bytes are the binary's.
 
-struct UnkVector
+struct UnkType_10bf3cf0_Vector
 {
     float X;
     float Y;
     float Z;
 
-    UnkVector(float InX, float InY, float InZ)
+    UnkType_10bf3cf0_Vector(float InX, float InY, float InZ)
         : X(InX), Y(InY), Z(InZ)
     {
     }
 };
 
-class UnkInner
+class UnkType_10bf3cf0_Inner
 {
 public:
     unsigned char unk_0[0xa4];
@@ -24,28 +24,28 @@ public:
     int unk_a8;
 };
 
-class UnkOuter
+class UnkType_10bf3cf0_Outer
 {
 public:
     unsigned char unk_0[0x38];
-    UnkInner* unk_38;
+    UnkType_10bf3cf0_Inner* unk_38;
 };
 
 class UnkType_10bf3cf0
 {
 public:
     unsigned char unk_0[0x7c];
-    UnkOuter* unk_7c;
+    UnkType_10bf3cf0_Outer* unk_7c;
 
-    void Unk_10bf3cf0(UnkVector& Out, int Unused);
+    void Unk_10bf3cf0(UnkType_10bf3cf0_Vector& Out, int Unused);
 };
 
 // UnkType_10bf3cf0::Unk_10bf3cf0
-void UnkType_10bf3cf0::Unk_10bf3cf0(UnkVector& Out, int Unused)
+void UnkType_10bf3cf0::Unk_10bf3cf0(UnkType_10bf3cf0_Vector& Out, int Unused)
 {
-    UnkInner* Inner = unk_7c->unk_38;
+    UnkType_10bf3cf0_Inner* Inner = unk_7c->unk_38;
     if ( Inner->unk_a8 && !Inner->unk_a4 )
     {
-        Out = UnkVector(115.0f, -50.0f, 20.0f);
+        Out = UnkType_10bf3cf0_Vector(115.0f, -50.0f, 20.0f);
     }
 }

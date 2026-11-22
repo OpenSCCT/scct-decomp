@@ -4,7 +4,7 @@
 // object at offset 0x6ec, and has a word other than -1 at offset 0x144; otherwise 0. The class,
 // method and member names are invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10b81be0_Item
 {
 public:
     unsigned char unk_0[0x28];
@@ -18,10 +18,10 @@ class UnkType_10b81be0
 {
 public:
     unsigned char unk_0[0x11c];
-    UnkItem** unk_11c;
+    UnkType_10b81be0_Item** unk_11c;
     int unk_120;
     unsigned char unk_124[0x6ec - 0x124];
-    UnkItem* unk_6ec;
+    UnkType_10b81be0_Item* unk_6ec;
 
     int Unk_10b81be0();
 };
@@ -31,7 +31,7 @@ int UnkType_10b81be0::Unk_10b81be0()
 {
     for ( int i = 0; i < unk_120; i++ )
     {
-        UnkItem* Item = unk_11c[i];
+        UnkType_10b81be0_Item* Item = unk_11c[i];
         if ( Item && ( Item->unk_2c & 0x8000 ) && ( Item->unk_28 & 0x8000000 ) && Item != unk_6ec
             && Item->unk_144 != -1 )
         {

@@ -3,7 +3,7 @@
 // the word between each range alone. The class, method, structure and member names are
 // invented; the offsets and the bytes are the binary's.
 
-struct UnkSource
+struct UnkType_10e113a0_Source
 {
     int unk_0;
     int unk_4;
@@ -19,7 +19,7 @@ struct UnkSource
 class UnkType_10e113a0
 {
 public:
-    void Unk_10e113a0(const UnkSource& Source);
+    void Unk_10e113a0(const UnkType_10e113a0_Source& Source);
 
     unsigned char unk_0[0x30];
     int unk_30;
@@ -34,7 +34,7 @@ public:
 };
 
 // UnkType_10e113a0::Unk_10e113a0
-void UnkType_10e113a0::Unk_10e113a0(const UnkSource& Source)
+void UnkType_10e113a0::Unk_10e113a0(const UnkType_10e113a0_Source& Source)
 {
     unk_30 = Source.unk_0;
     unk_34 = Source.unk_4;

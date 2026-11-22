@@ -3,13 +3,13 @@
 // at 0x0c of this object. The class, member and function names are invented; the offsets and the
 // addresses are the binary's.
 
-class UnkType_10adb970
+class UnkType_10ad4770_10adb970
 {
 public:
     void Unk_10adb970(int Value);
 };
 
-UnkType_10adb970* Unk_10adb390();
+UnkType_10ad4770_10adb970* Unk_10adb390();
 
 class UnkType_10ad4770
 {

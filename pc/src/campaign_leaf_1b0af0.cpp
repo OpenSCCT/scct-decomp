@@ -3,10 +3,10 @@
 // values. The same class's destructor is at VA 0x10ab0b10. The class names are invented; the
 // offsets and the address are the binary's.
 
-class UnkType_1090ba70
+class UnkType_10ab0af0_1090ba70
 {
 public:
-    UnkType_1090ba70()
+    UnkType_10ab0af0_1090ba70()
     : unk_00(0)
     , unk_04(0)
     , unk_08(0)
@@ -19,22 +19,22 @@ private:
     int unk_08;
 };
 
-class UnkType_1097b7f0
+class UnkType_10ab0af0_1097b7f0
 {
 public:
-    UnkType_1097b7f0();
+    UnkType_10ab0af0_1097b7f0();
 
 private:
     unsigned char unk_00[0x64];
 };
 
-class UnkType_10ab0af0 : public UnkType_1097b7f0
+class UnkType_10ab0af0 : public UnkType_10ab0af0_1097b7f0
 {
 public:
     UnkType_10ab0af0();
 
 private:
-    UnkType_1090ba70 unk_64;
+    UnkType_10ab0af0_1090ba70 unk_64;
 };
 
 // UnkType_10ab0af0::UnkType_10ab0af0

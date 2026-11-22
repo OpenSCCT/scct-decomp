@@ -3,9 +3,9 @@
 // equal to Value, or -1. The class, method, structure and member names are invented; the offsets
 // and the bytes are the binary's.
 
-struct UnkVector
+struct UnkType_10d19bb0_Vector
 {
-    bool operator==(const UnkVector& Other) const
+    bool operator==(const UnkType_10d19bb0_Vector& Other) const
     {
         return unk_0 == Other.unk_0 && unk_4 == Other.unk_4 && unk_8 == Other.unk_8;
     }
@@ -18,14 +18,14 @@ struct UnkVector
 class UnkType_10d19bb0
 {
 public:
-    int Unk_10d19bb0(const UnkVector& Value) const;
+    int Unk_10d19bb0(const UnkType_10d19bb0_Vector& Value) const;
 
-    UnkVector* unk_0;
+    UnkType_10d19bb0_Vector* unk_0;
     int unk_4;
 };
 
 // UnkType_10d19bb0::Unk_10d19bb0
-int UnkType_10d19bb0::Unk_10d19bb0(const UnkVector& Value) const
+int UnkType_10d19bb0::Unk_10d19bb0(const UnkType_10d19bb0_Vector& Value) const
 {
     int Index;
 

@@ -3,7 +3,7 @@
 // The class, structure, member and parameter names are invented; the offsets and the bytes are
 // the binary's.
 
-struct UnkQuad
+struct UnkType_10df75f0_Quad
 {
     int unk_0;
     int unk_4;
@@ -14,15 +14,15 @@ struct UnkQuad
 class UnkType_10df75f0
 {
 public:
-    UnkType_10df75f0(int First, int Second, const UnkQuad& Third);
+    UnkType_10df75f0(int First, int Second, const UnkType_10df75f0_Quad& Third);
 
     int unk_0;
     int unk_4;
-    UnkQuad unk_8;
+    UnkType_10df75f0_Quad unk_8;
 };
 
 // UnkType_10df75f0::UnkType_10df75f0
-UnkType_10df75f0::UnkType_10df75f0(int First, int Second, const UnkQuad& Third)
+UnkType_10df75f0::UnkType_10df75f0(int First, int Second, const UnkType_10df75f0_Quad& Third)
 {
     unk_0 = First;
     unk_4 = Second;

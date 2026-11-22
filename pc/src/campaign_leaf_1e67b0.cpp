@@ -4,7 +4,7 @@
 // the set value of the slot of the 40-entry ring at offset 0x164 for its second argument modulo
 // 40. The class, method and member names are invented; the offset and the bytes are the binary's.
 
-struct UnkSlot
+struct UnkType_10ae67b0_Slot
 {
     unsigned char unk_0;
     unsigned char unk_1[3];
@@ -15,7 +15,7 @@ class UnkType_10ae67b0
 {
 public:
     unsigned char unk_0[0x164];
-    UnkSlot unk_164[40];
+    UnkType_10ae67b0_Slot unk_164[40];
     int unk_2a4;
     unsigned char unk_2a8;
 
@@ -29,7 +29,7 @@ void UnkType_10ae67b0::Unk_10ae67b0(const int& Value, unsigned int Frame)
     {
         unk_2a8 = 1;
         unk_2a4 = Value;
-        UnkSlot& Slot = unk_164[Frame % 40];
+        UnkType_10ae67b0_Slot& Slot = unk_164[Frame % 40];
         Slot.unk_0 = 1;
         Slot.unk_4 = Value;
     }

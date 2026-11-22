@@ -4,7 +4,7 @@
 // second argument points to; it returns 1 when found, else 0. The class, method and member names
 // are invented; the offset and the bytes are the binary's.
 
-struct UnkPair
+struct UnkType_10c24fd0_Pair
 {
     int unk_0;
     int unk_4;
@@ -13,7 +13,7 @@ struct UnkPair
 class UnkType_10c24fd0
 {
 public:
-    UnkPair* unk_0;
+    UnkType_10c24fd0_Pair* unk_0;
     int unk_4;
 
     int Unk_10c24fd0(const int& Key, int& Index);

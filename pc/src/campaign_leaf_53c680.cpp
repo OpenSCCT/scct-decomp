@@ -4,7 +4,7 @@
 // cell into 0x54-0x5c. The class, method and member names are invented; the offsets and the
 // bytes are the binary's.
 
-struct UnkRange
+struct UnkType_10e3c680_Range
 {
     int unk_0;
     int unk_4;
@@ -16,7 +16,7 @@ public:
     void Unk_10e3c680();
 
     unsigned char unk_0[0xc];
-    UnkRange unk_c[3];
+    UnkType_10e3c680_Range unk_c[3];
     int unk_24;
     unsigned char unk_28[0x20];
     int unk_48[3];

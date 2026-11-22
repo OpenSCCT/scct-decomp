@@ -3,7 +3,7 @@
 // point, keeping its extents. The class, method, structure and member names are invented; the
 // offsets and the bytes are the binary's.
 
-struct UnkPoint
+struct UnkType_10d61800_Point
 {
     short unk_0;
     short unk_2;
@@ -12,7 +12,7 @@ struct UnkPoint
 class UnkType_10d61800
 {
 public:
-    void Unk_10d61800(const UnkPoint& Point);
+    void Unk_10d61800(const UnkType_10d61800_Point& Point);
 
     short unk_0;
     short unk_2;
@@ -21,7 +21,7 @@ public:
 };
 
 // UnkType_10d61800::Unk_10d61800
-void UnkType_10d61800::Unk_10d61800(const UnkPoint& Point)
+void UnkType_10d61800::Unk_10d61800(const UnkType_10d61800_Point& Point)
 {
     int Width = unk_2 - unk_0;
     int Height = unk_6 - unk_4;

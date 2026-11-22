@@ -5,7 +5,7 @@
 
 class UnkType_10a1bd30;
 
-class UnkType_1096f1e0
+class UnkType_10a1bd30_1096f1e0
 {
 public:
     int Unk_1096f1e0(UnkType_10a1bd30* const& Item);
@@ -14,11 +14,11 @@ public:
 class UnkType_10a1bd30
 {
 public:
-    int Unk_10a1bd30(UnkType_1096f1e0* Array);
+    int Unk_10a1bd30(UnkType_10a1bd30_1096f1e0* Array);
 };
 
 // UnkType_10a1bd30::Unk_10a1bd30
-int UnkType_10a1bd30::Unk_10a1bd30(UnkType_1096f1e0* Array)
+int UnkType_10a1bd30::Unk_10a1bd30(UnkType_10a1bd30_1096f1e0* Array)
 {
     return Array->Unk_1096f1e0(this);
 }

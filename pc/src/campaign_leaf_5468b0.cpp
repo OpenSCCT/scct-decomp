@@ -3,9 +3,9 @@
 // words at 0x50 and 0x54 and the byte at 0x58. The class, structure and member names are
 // invented; the offsets and the bytes are the binary's.
 
-struct UnkEntry
+struct UnkType_10e468b0_Entry
 {
-    UnkEntry()
+    UnkType_10e468b0_Entry()
     {
         unk_4 = 0;
     }
@@ -21,7 +21,7 @@ public:
     UnkType_10e468b0();
 
     unsigned char unk_0[0x20];
-    UnkEntry unk_20[8];
+    UnkType_10e468b0_Entry unk_20[8];
     int unk_50;
     int unk_54;
     unsigned char unk_58;

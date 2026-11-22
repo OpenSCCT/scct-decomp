@@ -3,7 +3,7 @@
 // its argument and returns 1; otherwise it returns 0. The class, method and member names are
 // invented; the offset and the bytes are the binary's.
 
-struct UnkTriple
+struct UnkType_10bfb5d0_Triple
 {
     int unk_0;
     int unk_4;
@@ -14,14 +14,14 @@ class UnkType_10bfb5d0
 {
 public:
     unsigned char unk_0[0x438];
-    UnkTriple unk_438;
+    UnkType_10bfb5d0_Triple unk_438;
     unsigned char unk_444;
 
-    int Unk_10bfb5d0(UnkTriple& Out);
+    int Unk_10bfb5d0(UnkType_10bfb5d0_Triple& Out);
 };
 
 // UnkType_10bfb5d0::Unk_10bfb5d0
-int UnkType_10bfb5d0::Unk_10bfb5d0(UnkTriple& Out)
+int UnkType_10bfb5d0::Unk_10bfb5d0(UnkType_10bfb5d0_Triple& Out)
 {
     if ( unk_444 & 1 )
     {

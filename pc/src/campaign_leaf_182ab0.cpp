@@ -3,18 +3,18 @@
 // (count at 0x2c) of the object at offset 0x7c whose word at offset 0x54 is the argument; otherwise
 // null. The class, method and member names are invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10a82ab0_Item
 {
 public:
     unsigned char unk_0[0x54];
     void* unk_54;
 };
 
-class UnkList
+class UnkType_10a82ab0_List
 {
 public:
     unsigned char unk_0[0x28];
-    UnkItem** unk_28;
+    UnkType_10a82ab0_Item** unk_28;
     int unk_2c;
 };
 
@@ -22,13 +22,13 @@ class UnkType_10a82ab0
 {
 public:
     unsigned char unk_0[0x7c];
-    UnkList* unk_7c;
+    UnkType_10a82ab0_List* unk_7c;
 
-    UnkItem* Unk_10a82ab0(void* Key);
+    UnkType_10a82ab0_Item* Unk_10a82ab0(void* Key);
 };
 
 // UnkType_10a82ab0::Unk_10a82ab0
-UnkItem* UnkType_10a82ab0::Unk_10a82ab0(void* Key)
+UnkType_10a82ab0_Item* UnkType_10a82ab0::Unk_10a82ab0(void* Key)
 {
     if ( Key )
     {

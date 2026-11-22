@@ -4,7 +4,7 @@
 // structure, member and parameter names are invented; the offsets and the bytes are the
 // binary's.
 
-struct UnkEntry
+struct UnkType_10d0f730_Entry
 {
     int unk_0;
     int unk_4;
@@ -16,10 +16,10 @@ public:
     int Unk_10d0f730(int First, int Second) const;
 
     unsigned char unk_0[0x2c];
-    UnkEntry** unk_2c;
+    UnkType_10d0f730_Entry** unk_2c;
     int unk_30;
     int unk_34;
-    UnkEntry** unk_38;
+    UnkType_10d0f730_Entry** unk_38;
     int unk_3c;
 };
 

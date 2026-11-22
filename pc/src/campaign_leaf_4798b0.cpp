@@ -2,9 +2,9 @@
 // returns the cross product of the three floats at 0x0 with Other's. The class, method and
 // member names are invented; the offsets and the bytes are the binary's.
 
-struct UnkVector
+struct UnkType_10d798b0_Vector
 {
-    UnkVector(float X, float Y, float Z)
+    UnkType_10d798b0_Vector(float X, float Y, float Z)
     {
         unk_0 = X;
         unk_4 = Y;
@@ -19,7 +19,7 @@ struct UnkVector
 class UnkType_10d798b0
 {
 public:
-    UnkVector Unk_10d798b0(const UnkType_10d798b0& Other) const;
+    UnkType_10d798b0_Vector Unk_10d798b0(const UnkType_10d798b0& Other) const;
 
     float unk_0;
     float unk_4;
@@ -27,9 +27,9 @@ public:
 };
 
 // UnkType_10d798b0::Unk_10d798b0
-UnkVector UnkType_10d798b0::Unk_10d798b0(const UnkType_10d798b0& Other) const
+UnkType_10d798b0_Vector UnkType_10d798b0::Unk_10d798b0(const UnkType_10d798b0& Other) const
 {
-    UnkVector Result(unk_4 * Other.unk_8 - Other.unk_4 * unk_8,
+    UnkType_10d798b0_Vector Result(unk_4 * Other.unk_8 - Other.unk_4 * unk_8,
                      Other.unk_0 * unk_8 - unk_0 * Other.unk_8,
                      Other.unk_4 * unk_0 - unk_4 * Other.unk_0);
 

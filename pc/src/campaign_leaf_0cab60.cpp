@@ -2,13 +2,13 @@
 // constructor: it copies the four float triples of its argument into the new object. The class
 // and member names are invented; the offset and the bytes are the binary's.
 
-struct UnkVector
+struct UnkType_109cab60_Vector
 {
     float X;
     float Y;
     float Z;
 
-    UnkVector(const UnkVector& Other)
+    UnkType_109cab60_Vector(const UnkType_109cab60_Vector& Other)
         : X(Other.X), Y(Other.Y), Z(Other.Z)
     {
     }
@@ -17,10 +17,10 @@ struct UnkVector
 class UnkType_109cab60
 {
 public:
-    UnkVector unk_0;
-    UnkVector unk_c;
-    UnkVector unk_18;
-    UnkVector unk_24;
+    UnkType_109cab60_Vector unk_0;
+    UnkType_109cab60_Vector unk_c;
+    UnkType_109cab60_Vector unk_18;
+    UnkType_109cab60_Vector unk_24;
 
     UnkType_109cab60(const UnkType_109cab60& Other);
 };

@@ -4,7 +4,7 @@
 // Id. It returns true. The class, method, structure, member and parameter names are invented;
 // the offsets and the bytes are the binary's.
 
-struct UnkSlot
+struct UnkType_10df2d70_Slot
 {
     unsigned char unk_0;
     unsigned char unk_1;
@@ -16,7 +16,7 @@ class UnkType_10df2d70
 public:
     bool Unk_10df2d70(const unsigned int& Index, const unsigned short& Id);
 
-    UnkSlot unk_0[40];
+    UnkType_10df2d70_Slot unk_0[40];
     unsigned short unk_a0;
     unsigned char unk_a2;
 };
@@ -26,7 +26,7 @@ bool UnkType_10df2d70::Unk_10df2d70(const unsigned int& Index, const unsigned sh
 {
     if ( unk_a2 == 0 || unk_a0 != Id )
     {
-        UnkSlot* Slot;
+        UnkType_10df2d70_Slot* Slot;
 
         unk_a2 = 1;
         unk_a0 = Id;

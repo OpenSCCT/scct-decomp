@@ -4,7 +4,7 @@
 // method, structure, member and parameter names are invented; the offsets and the bytes are the
 // binary's.
 
-struct UnkArray
+struct UnkType_10cfddb0_Array
 {
     int* unk_0;
 };
@@ -12,12 +12,12 @@ struct UnkArray
 class UnkType_10cfddb0
 {
 public:
-    void Unk_10cfddb0(UnkArray& Out, int Count, int Degree) const;
+    void Unk_10cfddb0(UnkType_10cfddb0_Array& Out, int Count, int Degree) const;
 };
 
 // UnkType_10cfddb0::Unk_10cfddb0
 // guess: a clamped B-spline knot vector.
-void UnkType_10cfddb0::Unk_10cfddb0(UnkArray& Out, int Count, int Degree) const
+void UnkType_10cfddb0::Unk_10cfddb0(UnkType_10cfddb0_Array& Out, int Count, int Degree) const
 {
     int Index;
 

@@ -4,7 +4,7 @@
 // of the array at offset 0x164 is. The class, method and member names are invented; the offset and
 // the bytes are the binary's.
 
-struct UnkEntry
+struct UnkType_10ae68c0_Entry
 {
     unsigned char unk_0;
     unsigned char unk_1[7];
@@ -14,9 +14,9 @@ class UnkType_10ae68c0
 {
 public:
     unsigned char unk_0[0x10];
-    UnkEntry unk_10[40];
+    UnkType_10ae68c0_Entry unk_10[40];
     unsigned char unk_150[0x164 - 0x150];
-    UnkEntry unk_164[40];
+    UnkType_10ae68c0_Entry unk_164[40];
 
     int Unk_10ae68c0(unsigned int Index);
 };

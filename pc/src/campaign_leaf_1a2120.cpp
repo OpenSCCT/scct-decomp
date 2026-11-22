@@ -5,7 +5,7 @@
 // to, modulo 40. It returns true. The class, method and member names are invented; the offset and
 // the bytes are the binary's.
 
-struct UnkSlot
+struct UnkType_10aa2120_Slot
 {
     unsigned char unk_0;
     unsigned char unk_1[3];
@@ -15,7 +15,7 @@ struct UnkSlot
 class UnkType_10aa2120
 {
 public:
-    UnkSlot unk_0[40];
+    UnkType_10aa2120_Slot unk_0[40];
     float unk_140;
     unsigned char unk_144;
 
@@ -29,7 +29,7 @@ bool UnkType_10aa2120::Unk_10aa2120(const unsigned int& Frame, const float& Valu
     {
         unk_144 = 1;
         unk_140 = Value;
-        UnkSlot& Slot = unk_0[Frame % 40];
+        UnkType_10aa2120_Slot& Slot = unk_0[Frame % 40];
         Slot.unk_0 = 1;
         Slot.unk_4 = Value;
     }

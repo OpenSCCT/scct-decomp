@@ -4,7 +4,7 @@
 // 1 when there is none. The class, method, structure and member names are invented; the offsets
 // and the bytes are the binary's.
 
-struct UnkEntry
+struct UnkType_10dfe430_Entry
 {
     int unk_0;
     int unk_4;
@@ -15,7 +15,7 @@ class UnkType_10dfe430
 public:
     int Unk_10dfe430(const int& Key);
 
-    UnkEntry* unk_0;
+    UnkType_10dfe430_Entry* unk_0;
     int unk_4;
 };
 

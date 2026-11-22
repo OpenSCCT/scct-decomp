@@ -4,17 +4,17 @@
 // not null, and returns 1 when every entry was counted. The class, method, structure, member and
 // parameter names are invented; the offsets and the bytes are the binary's.
 
-struct UnkObject
+struct UnkType_10d75360_Object
 {
     unsigned char unk_0[0x1c];
     int unk_1c;
 };
 
-struct UnkEntry
+struct UnkType_10d75360_Entry
 {
     int unk_0;
-    UnkObject* unk_4;
-    UnkObject* unk_8;
+    UnkType_10d75360_Object* unk_4;
+    UnkType_10d75360_Object* unk_8;
     unsigned char unk_c[0xc];
 };
 
@@ -24,7 +24,7 @@ public:
     int Unk_10d75360(unsigned int* Count) const;
 
     unsigned char unk_0[0x28];
-    UnkEntry* unk_28;
+    UnkType_10d75360_Entry* unk_28;
     int unk_2c;
     unsigned int unk_30;
 };

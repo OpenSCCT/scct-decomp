@@ -4,7 +4,7 @@
 // if it holds the first argument. The class, method and member names are invented; the offset and
 // the bytes are the binary's.
 
-class UnkItem
+class UnkType_10bbccd0_Item
 {
 public:
     unsigned char unk_0[0x36];
@@ -15,13 +15,13 @@ class UnkType_10bbccd0
 {
 public:
     unsigned char unk_0[0x614];
-    UnkItem* unk_614;
+    UnkType_10bbccd0_Item* unk_614;
 
-    void Unk_10bbccd0(UnkItem* Item, int Enable);
+    void Unk_10bbccd0(UnkType_10bbccd0_Item* Item, int Enable);
 };
 
 // UnkType_10bbccd0::Unk_10bbccd0
-void UnkType_10bbccd0::Unk_10bbccd0(UnkItem* Item, int Enable)
+void UnkType_10bbccd0::Unk_10bbccd0(UnkType_10bbccd0_Item* Item, int Enable)
 {
     if ( Enable )
     {

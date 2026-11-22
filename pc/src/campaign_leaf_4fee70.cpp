@@ -3,7 +3,7 @@
 // 0x8, 0x4, 0xc, 0x18 and 0x1c. The class, method, structure and member names are invented; the
 // offsets and the bytes are the binary's.
 
-struct UnkOut_10dfee70
+struct UnkType_10dfee70_Out
 {
     int unk_0;
     int unk_4;
@@ -18,7 +18,7 @@ struct UnkOut_10dfee70
 class UnkType_10dfee70
 {
 public:
-    void Unk_10dfee70(UnkOut_10dfee70& Out) const;
+    void Unk_10dfee70(UnkType_10dfee70_Out& Out) const;
 
     unsigned char unk_0[0x8];
     int unk_8;
@@ -31,7 +31,7 @@ public:
 };
 
 // UnkType_10dfee70::Unk_10dfee70
-void UnkType_10dfee70::Unk_10dfee70(UnkOut_10dfee70& Out) const
+void UnkType_10dfee70::Unk_10dfee70(UnkType_10dfee70_Out& Out) const
 {
     Out.unk_0 = unk_8;
     Out.unk_8 = unk_c;

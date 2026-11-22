@@ -3,7 +3,7 @@
 // and returns the word at offset 0x14 of that entry, or 0. The class, method and member names are
 // invented; the offset and the bytes are the binary's.
 
-struct UnkEntry
+struct UnkType_10bd87e0_Entry
 {
     int unk_0;
     unsigned char unk_4[0x14 - 0x4];
@@ -15,7 +15,7 @@ class UnkType_10bd87e0
 {
 public:
     unsigned char unk_0[0x320];
-    UnkEntry unk_320[2];
+    UnkType_10bd87e0_Entry unk_320[2];
 
     int Unk_10bd87e0(int Key);
 };

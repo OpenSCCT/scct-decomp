@@ -5,41 +5,41 @@
 // The class, method, structure, member and parameter names are invented; the offsets and the
 // bytes are the binary's.
 
-struct UnkEntry
+struct UnkType_10d6dfc0_Entry
 {
     unsigned char unk_0[0x10];
     int unk_10;
     unsigned char unk_14[0x4];
 };
 
-struct UnkItem
+struct UnkType_10d6dfc0_Item
 {
     unsigned char unk_0[0x28];
-    UnkEntry* unk_28;
+    UnkType_10d6dfc0_Entry* unk_28;
     int unk_2c;
     unsigned int unk_30;
 };
 
-struct UnkNode
+struct UnkType_10d6dfc0_Node
 {
-    UnkNode* unk_0;
+    UnkType_10d6dfc0_Node* unk_0;
     int unk_4;
-    UnkItem* unk_8;
+    UnkType_10d6dfc0_Item* unk_8;
 };
 
 class UnkType_10d6dfc0
 {
 public:
-    int Unk_10d6dfc0(int Key, UnkItem** Owner) const;
+    int Unk_10d6dfc0(int Key, UnkType_10d6dfc0_Item** Owner) const;
 
     unsigned char unk_0[0x150];
-    UnkNode* unk_150;
+    UnkType_10d6dfc0_Node* unk_150;
 };
 
 // UnkType_10d6dfc0::Unk_10d6dfc0
-int UnkType_10d6dfc0::Unk_10d6dfc0(int Key, UnkItem** Owner) const
+int UnkType_10d6dfc0::Unk_10d6dfc0(int Key, UnkType_10d6dfc0_Item** Owner) const
 {
-    UnkNode* Node;
+    UnkType_10d6dfc0_Node* Node;
 
     if ( Key == -2 )
     {
@@ -48,8 +48,8 @@ int UnkType_10d6dfc0::Unk_10d6dfc0(int Key, UnkItem** Owner) const
     Node = unk_150;
     while ( Node != 0 )
     {
-        UnkNode* Current = Node;
-        UnkItem* Item;
+        UnkType_10d6dfc0_Node* Current = Node;
+        UnkType_10d6dfc0_Item* Item;
         unsigned int Index;
 
         Node = Node->unk_0;

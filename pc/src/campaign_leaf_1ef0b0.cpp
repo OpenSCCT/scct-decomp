@@ -2,15 +2,15 @@
 // 0x10aee9a0 and installs this class's vtable (VA 0x110dc2c8). The class names are invented; the
 // addresses are the binary's.
 
-class UnkType_10aee9a0
+class UnkType_10aef0b0_10aee9a0
 {
 public:
-    UnkType_10aee9a0();
+    UnkType_10aef0b0_10aee9a0();
 
     virtual void VirtualSlot0();
 };
 
-class UnkType_10aef0b0 : public UnkType_10aee9a0
+class UnkType_10aef0b0 : public UnkType_10aef0b0_10aee9a0
 {
 public:
     UnkType_10aef0b0();

@@ -3,7 +3,7 @@
 // 0x74) whose word at offset 0x34 equals its argument. The class, method and member names are
 // invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10ae7db0_Item
 {
 public:
     unsigned char unk_0[0x34];
@@ -14,7 +14,7 @@ class UnkType_10ae7db0
 {
 public:
     unsigned char unk_0[0x70];
-    UnkItem** unk_70;
+    UnkType_10ae7db0_Item** unk_70;
     int unk_74;
     unsigned char unk_78[0x94 - 0x78];
     int unk_94;

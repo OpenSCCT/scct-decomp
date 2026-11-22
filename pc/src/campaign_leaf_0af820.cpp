@@ -3,7 +3,7 @@
 // object when that pointer is null. It pops one more argument it never reads. The class, method
 // and member names are invented; the offset and the bytes are the binary's.
 
-struct UnkTriple
+struct UnkType_109af820_Triple
 {
     int unk_0;
     int unk_4;
@@ -14,15 +14,15 @@ class UnkType_109af820
 {
 public:
     unsigned char unk_0[0xe8];
-    UnkTriple unk_e8;
+    UnkType_109af820_Triple unk_e8;
     unsigned char unk_f4[0x44c - 0xf4];
     UnkType_109af820* unk_44c;
 
-    UnkTriple Unk_109af820(int Unused) const;
+    UnkType_109af820_Triple Unk_109af820(int Unused) const;
 };
 
 // UnkType_109af820::Unk_109af820
-UnkTriple UnkType_109af820::Unk_109af820(int Unused) const
+UnkType_109af820_Triple UnkType_109af820::Unk_109af820(int Unused) const
 {
     if ( unk_44c )
     {

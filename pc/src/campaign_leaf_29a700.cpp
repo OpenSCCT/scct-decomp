@@ -3,35 +3,35 @@
 // offset 0x764 of the object at offset 0x78 and is linked through offset 0x270; otherwise 0. The
 // class, method and member names are invented; the offset and the bytes are the binary's.
 
-class UnkLink
+class UnkType_10b9a700_Link
 {
 public:
     unsigned char unk_0[0x270];
-    UnkLink* unk_270;
+    UnkType_10b9a700_Link* unk_270;
 };
 
-class UnkOwner
+class UnkType_10b9a700_Owner
 {
 public:
     unsigned char unk_0[0x764];
-    UnkLink* unk_764;
+    UnkType_10b9a700_Link* unk_764;
 };
 
 class UnkType_10b9a700
 {
 public:
     unsigned char unk_0[0x78];
-    UnkOwner* unk_78;
+    UnkType_10b9a700_Owner* unk_78;
 
-    int Unk_10b9a700(UnkLink* Other);
+    int Unk_10b9a700(UnkType_10b9a700_Link* Other);
 };
 
 // UnkType_10b9a700::Unk_10b9a700
-int UnkType_10b9a700::Unk_10b9a700(UnkLink* Other)
+int UnkType_10b9a700::Unk_10b9a700(UnkType_10b9a700_Link* Other)
 {
     if ( Other )
     {
-        for ( UnkLink* Link = unk_78->unk_764; Link; Link = Link->unk_270 )
+        for ( UnkType_10b9a700_Link* Link = unk_78->unk_764; Link; Link = Link->unk_270 )
         {
             if ( Other == Link )
             {

@@ -4,7 +4,7 @@
 // offset 0x410, or when the byte at offset 0x868 is nonzero; otherwise 1. The class, method and
 // member names are invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10b9cb40_Item
 {
 public:
     unsigned char unk_0[0x410];
@@ -19,15 +19,15 @@ class UnkType_10b9cb40
 {
 public:
     unsigned char unk_0[0x42c];
-    UnkItem* unk_42c;
+    UnkType_10b9cb40_Item* unk_42c;
     unsigned char unk_430[0x868 - 0x430];
     unsigned char unk_868;
 
-    int Unk_10b9cb40(UnkItem* Other);
+    int Unk_10b9cb40(UnkType_10b9cb40_Item* Other);
 };
 
 // UnkType_10b9cb40::Unk_10b9cb40
-int UnkType_10b9cb40::Unk_10b9cb40(UnkItem* Other)
+int UnkType_10b9cb40::Unk_10b9cb40(UnkType_10b9cb40_Item* Other)
 {
     int Result = 1;
     if ( !Other )

@@ -1,0 +1,83 @@
+// campaign_leaf_564c00.cpp -- thiscall method at VA 0x10e64c00: makes this object the owner of the
+// object it is given (member at 0x44), appends it to the pointer array at 0x3c, stores its index at
+// 0x58 of the object, then passes the result of the sixth virtual method of the object at 0x3c of
+// the added object to the fifth virtual method of this object. The class and method names are
+// invented.
+
+struct UnkType_10e64c00_Array;
+struct UnkType_10e64c00_Item;
+
+void Unk_10dfc430(UnkType_10e64c00_Array* Array, int ElementSize);
+
+struct UnkType_10e64c00_Array
+{
+    UnkType_10e64c00_Item** unk_00;
+    int unk_04;
+    int unk_08;
+
+    // UnkType_10e64c00_Array::Add
+    // guess: appends one pointer, growing the storage through VA 0x10dfc430 when it is full.
+    void Add(UnkType_10e64c00_Item* Item)
+    {
+        if ( unk_04 == ( unk_08 & 0x7fffffff ) )
+        {
+            Unk_10dfc430(this, 4);
+        }
+        unk_00[unk_04] = Item;
+        unk_04++;
+    }
+};
+
+class UnkType_10e64c00_3c
+{
+public:
+    virtual void VirtualSlot0();
+    virtual void VirtualSlot1();
+    virtual void VirtualSlot2();
+    virtual void VirtualSlot3();
+    virtual void VirtualSlot4();
+    virtual int VirtualSlot5();
+};
+
+class UnkType_10e64c00;
+
+struct UnkType_10e64c00_Item
+{
+    int unk_00[15];
+    UnkType_10e64c00_3c* unk_3c;
+    int unk_40;
+    UnkType_10e64c00* unk_44;
+    int unk_48[4];
+    int unk_58;
+};
+
+class UnkType_10e64c00
+{
+public:
+    virtual void VirtualSlot0();
+    virtual void VirtualSlot1();
+    virtual void VirtualSlot2();
+    virtual void VirtualSlot3();
+    virtual void VirtualSlot4(int Value);
+
+    void Unk_10e63df0(UnkType_10e64c00_Item* Item);
+    void Unk_10e64c00(UnkType_10e64c00_Item* Item);
+
+private:
+    int unk_04[9];
+    unsigned char unk_28;
+    unsigned char unk_29;
+    unsigned char unk_2a;
+    unsigned char unk_2b;
+    int unk_2c[4];
+    UnkType_10e64c00_Array unk_3c;
+};
+
+// UnkType_10e64c00::Unk_10e64c00
+void UnkType_10e64c00::Unk_10e64c00(UnkType_10e64c00_Item* Item)
+{
+    Item->unk_44 = this;
+    unk_3c.Add(Item);
+    Item->unk_58 = unk_3c.unk_04 - 1;
+    VirtualSlot4(Item->unk_3c->VirtualSlot5());
+}

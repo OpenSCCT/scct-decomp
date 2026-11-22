@@ -5,37 +5,37 @@
 // argument. The class, method and member names are invented; the offset and the bytes are the
 // binary's.
 
-struct UnkCell
+struct UnkType_109aa900_Cell
 {
     int unk_0;
     int unk_4;
 };
 
-class UnkGrid
+class UnkType_109aa900_Grid
 {
 public:
     unsigned char unk_0[0x38];
     unsigned int unk_38;
     unsigned int unk_3c;
-    UnkCell* unk_40;
+    UnkType_109aa900_Cell* unk_40;
 };
 
 class UnkType_109aa900
 {
 public:
-    UnkGrid* unk_0;
-    UnkCell* unk_4;
+    UnkType_109aa900_Grid* unk_0;
+    UnkType_109aa900_Cell* unk_4;
     int unk_8;
     int unk_c;
     int unk_10;
     int unk_14;
     int unk_18;
 
-    UnkType_109aa900(UnkGrid* Grid, int Column, int Row, int Fourth);
+    UnkType_109aa900(UnkType_109aa900_Grid* Grid, int Column, int Row, int Fourth);
 };
 
 // UnkType_109aa900::UnkType_109aa900
-UnkType_109aa900::UnkType_109aa900(UnkGrid* Grid, int Column, int Row, int Fourth)
+UnkType_109aa900::UnkType_109aa900(UnkType_109aa900_Grid* Grid, int Column, int Row, int Fourth)
     : unk_0(Grid),
       unk_4(&Grid->unk_40[Grid->unk_38 * Row + Column]),
       unk_8(Column),

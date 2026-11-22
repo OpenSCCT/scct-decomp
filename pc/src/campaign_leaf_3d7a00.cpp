@@ -3,31 +3,31 @@
 // into its 0x24-byte table at 0x88, then stores the new pair. The class, method, structure and
 // member names are invented; the offsets and the bytes are the binary's.
 
-struct UnkEntry_10cd7a00
+struct UnkType_10cd7a00_Entry
 {
     unsigned char unk_0[0x1c];
     int unk_1c;
     int unk_20;
 };
 
-struct UnkOwner_10cd7a00
+struct UnkType_10cd7a00_Owner
 {
     unsigned char unk_0[0x88];
-    UnkEntry_10cd7a00* unk_88;
+    UnkType_10cd7a00_Entry* unk_88;
 };
 
 class UnkType_10cd7a00
 {
 public:
-    void Unk_10cd7a00(UnkOwner_10cd7a00* Owner, int Index);
+    void Unk_10cd7a00(UnkType_10cd7a00_Owner* Owner, int Index);
 
     unsigned char unk_0[0x10];
-    UnkOwner_10cd7a00* unk_10;
+    UnkType_10cd7a00_Owner* unk_10;
     int unk_14;
 };
 
 // UnkType_10cd7a00::Unk_10cd7a00
-void UnkType_10cd7a00::Unk_10cd7a00(UnkOwner_10cd7a00* Owner, int Index)
+void UnkType_10cd7a00::Unk_10cd7a00(UnkType_10cd7a00_Owner* Owner, int Index)
 {
     if ( unk_10 != 0 )
     {

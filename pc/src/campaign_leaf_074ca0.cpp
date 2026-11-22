@@ -3,27 +3,27 @@
 // value. The class, method and member names are invented; the offset and the bytes are the
 // binary's.
 
-struct UnkVector
+struct UnkType_10974ca0_Vector
 {
     float X;
     float Y;
     float Z;
 };
 
-struct UnkPlane : public UnkVector
+struct UnkType_10974ca0_Plane : public UnkType_10974ca0_Vector
 {
     float W;
 
-    UnkPlane(const UnkPlane& Other)
-        : UnkVector(Other), W(Other.W)
+    UnkType_10974ca0_Plane(const UnkType_10974ca0_Plane& Other)
+        : UnkType_10974ca0_Vector(Other), W(Other.W)
     {
     }
 
-    UnkPlane Unk_10974ca0(const UnkPlane& Other);
+    UnkType_10974ca0_Plane Unk_10974ca0(const UnkType_10974ca0_Plane& Other);
 };
 
-// UnkPlane::Unk_10974ca0
-UnkPlane UnkPlane::Unk_10974ca0(const UnkPlane& Other)
+// UnkType_10974ca0_Plane::Unk_10974ca0
+UnkType_10974ca0_Plane UnkType_10974ca0_Plane::Unk_10974ca0(const UnkType_10974ca0_Plane& Other)
 {
     X += Other.X;
     Y += Other.Y;

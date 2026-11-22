@@ -3,7 +3,7 @@
 // offset 0x2e4 to that entry's byte at offset 0x354 when its argument is nonzero, else to 0. The
 // class, method and member names are invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10c05a50_Item
 {
 public:
     unsigned char unk_0[0x2e4];
@@ -16,7 +16,7 @@ class UnkType_10c05a50
 {
 public:
     unsigned char unk_0[0x34c];
-    UnkItem** unk_34c;
+    UnkType_10c05a50_Item** unk_34c;
     int unk_350;
 
     void Unk_10c05a50(int Enable);
@@ -27,7 +27,7 @@ void UnkType_10c05a50::Unk_10c05a50(int Enable)
 {
     for ( int i = 0; i < unk_350; i++ )
     {
-        UnkItem* Item = unk_34c[i];
+        UnkType_10c05a50_Item* Item = unk_34c[i];
         if ( Item )
         {
             Item->unk_2e4 = Enable ? Item->unk_354 : 0;

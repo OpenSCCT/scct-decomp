@@ -3,14 +3,14 @@
 // returns its result. The class, member and function names are invented; the offsets and the
 // addresses are the binary's.
 
-class UnkType_111fa6dc
+class UnkType_10aa48a0_111fa6dc
 {
 public:
     char unk_0000[0x1681];
     char unk_1681[1];
 };
 
-extern UnkType_111fa6dc* GUnk_111fa6dc;
+extern UnkType_10aa48a0_111fa6dc* GUnk_111fa6dc;
 
 int Unk_10cccd30(char* Text);
 

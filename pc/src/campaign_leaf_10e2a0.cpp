@@ -4,35 +4,35 @@
 // is none. The class, method and member names are invented; the offset and the bytes are the
 // binary's.
 
-class UnkItem
+class UnkType_10a0e2a0_Item
 {
 public:
     unsigned char unk_0[0x30];
     int unk_30;
 };
 
-class UnkInner
+class UnkType_10a0e2a0_Inner
 {
 public:
     unsigned char unk_0[0x2c];
-    UnkItem** unk_2c;
+    UnkType_10a0e2a0_Item** unk_2c;
 };
 
-class UnkOuter
+class UnkType_10a0e2a0_Outer
 {
 public:
     unsigned char unk_0[0x28];
-    UnkInner* unk_28;
+    UnkType_10a0e2a0_Inner* unk_28;
 };
 
 class UnkType_10a0e2a0
 {
 public:
     unsigned char unk_0[0x2c];
-    UnkItem* unk_2c;
-    UnkOuter* unk_30;
+    UnkType_10a0e2a0_Item* unk_2c;
+    UnkType_10a0e2a0_Outer* unk_30;
 
-    UnkItem* GetUnkItem() const
+    UnkType_10a0e2a0_Item* GetUnkItem() const
     {
         return unk_2c ? unk_2c : unk_30->unk_28->unk_2c[0];
     }

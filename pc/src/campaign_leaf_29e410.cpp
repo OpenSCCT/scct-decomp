@@ -4,18 +4,18 @@
 // second argument set; otherwise 0. The class, method and member names are invented; the offset
 // and the bytes are the binary's.
 
-struct UnkEntry
+struct UnkType_10b9e410_Entry
 {
     unsigned char unk_0[0x2c];
     int unk_2c;
     unsigned char unk_30[0x3c - 0x30];
 };
 
-class UnkOwner
+class UnkType_10b9e410_Owner
 {
 public:
     unsigned char unk_0[0x68];
-    UnkEntry* unk_68;
+    UnkType_10b9e410_Entry* unk_68;
     int unk_6c;
 };
 
@@ -23,7 +23,7 @@ class UnkType_10b9e410
 {
 public:
     unsigned char unk_0[0x518];
-    UnkOwner* unk_518;
+    UnkType_10b9e410_Owner* unk_518;
 
     int Unk_10b9e410(int Index, int Mask);
 };

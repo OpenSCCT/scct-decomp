@@ -3,7 +3,7 @@
 // word in its array at offset 0x24 (count at 0x28), else 0. The class, method and member names are
 // invented; the offset and the bytes are the binary's.
 
-struct UnkGroup
+struct UnkType_10bd5ef0_Group
 {
     unsigned char unk_0[0x24];
     void** unk_24;
@@ -15,7 +15,7 @@ class UnkType_10bd5ef0
 {
 public:
     unsigned char unk_0[0x2b4];
-    UnkGroup* unk_2b4;
+    UnkType_10bd5ef0_Group* unk_2b4;
     int unk_2b8;
 
     int Unk_10bd5ef0();

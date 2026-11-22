@@ -4,7 +4,7 @@
 // words at offsets 0x184 and 0x64. It has no this pointer. The class, method and member names are
 // invented; the offset and the bytes are the binary's.
 
-class UnkOwner
+class UnkType_10aef290_Owner
 {
 public:
     unsigned char unk_0[0x4d];
@@ -18,7 +18,7 @@ public:
 class UnkType_10aef290
 {
 public:
-    UnkOwner* unk_0;
+    UnkType_10aef290_Owner* unk_0;
     unsigned char unk_4[0x7c - 0x4];
     int unk_7c;
     unsigned char unk_80[0x88 - 0x80];
@@ -45,7 +45,7 @@ void UnkType_10aef290::Unk_10aef290(UnkType_10aef290* Object)
     Object->unk_9c = 0;
     Object->unk_a0 = 0;
     Object->unk_a4 = 0;
-    UnkOwner* Owner = Object->unk_0;
+    UnkType_10aef290_Owner* Owner = Object->unk_0;
     if ( !Owner || Owner->unk_4d != 2 || !Owner->unk_184 || !Owner->unk_64 )
     {
         Object->unk_7c = 0;

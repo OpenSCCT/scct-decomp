@@ -3,7 +3,7 @@
 // pointer, then count at 0xcc). The class, method, structure and member names are invented; the
 // offsets and the bytes are the binary's.
 
-struct UnkArray
+struct UnkType_10c5c8b0_Array
 {
     int FindItem(int Value) const
     {
@@ -30,7 +30,7 @@ public:
     int Unk_10c5c8b0(int Value) const;
 
     unsigned char unk_0[0xc8];
-    UnkArray unk_c8;
+    UnkType_10c5c8b0_Array unk_c8;
     unsigned char unk_d4[0x368];
     unsigned char unk_43c;
 };

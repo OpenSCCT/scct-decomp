@@ -3,7 +3,7 @@
 // this pointer. The function, structure, member and parameter names are invented; the bytes are
 // the binary's.
 
-struct UnkVector
+struct UnkType_10e43560_Vector
 {
     float unk_0;
     float unk_4;
@@ -11,7 +11,7 @@ struct UnkVector
 };
 
 // Unk_10e43560
-void Unk_10e43560(const UnkVector& Value, const float& Limit, int& Result)
+void Unk_10e43560(const UnkType_10e43560_Vector& Value, const float& Limit, int& Result)
 {
     Result = Value.unk_0 > Limit || Value.unk_4 > Limit || Value.unk_8 > Limit;
 }

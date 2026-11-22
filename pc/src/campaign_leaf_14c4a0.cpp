@@ -3,19 +3,19 @@
 // argument it never reads. The class, method and member names are invented; the offset and the
 // bytes are the binary's.
 
-struct UnkVector
+struct UnkType_10a4c4a0_Vector
 {
     float X;
     float Y;
     float Z;
 };
 
-struct UnkPlane : public UnkVector
+struct UnkType_10a4c4a0_Plane : public UnkType_10a4c4a0_Vector
 {
     float W;
 
-    UnkPlane(const UnkPlane& Other)
-        : UnkVector(Other), W(Other.W)
+    UnkType_10a4c4a0_Plane(const UnkType_10a4c4a0_Plane& Other)
+        : UnkType_10a4c4a0_Vector(Other), W(Other.W)
     {
     }
 };
@@ -24,13 +24,13 @@ class UnkType_10a4c4a0
 {
 public:
     unsigned char unk_0[0x44];
-    UnkPlane unk_44;
+    UnkType_10a4c4a0_Plane unk_44;
 
-    UnkPlane GetUnk44(int Unused) const;
+    UnkType_10a4c4a0_Plane Unk_10a4c4a0(int Unused) const;
 };
 
-// UnkType_10a4c4a0::GetUnk44
-UnkPlane UnkType_10a4c4a0::GetUnk44(int Unused) const
+// UnkType_10a4c4a0::Unk_10a4c4a0
+UnkType_10a4c4a0_Plane UnkType_10a4c4a0::Unk_10a4c4a0(int Unused) const
 {
     return unk_44;
 }

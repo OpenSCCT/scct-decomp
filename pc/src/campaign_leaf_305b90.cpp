@@ -3,7 +3,7 @@
 // entry of the pointer array at offset 0x34c (count at 0x350). The class, method and member names
 // are invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10c05b90_Item
 {
 public:
     unsigned char unk_0[0x2e4];
@@ -14,7 +14,7 @@ class UnkType_10c05b90
 {
 public:
     unsigned char unk_0[0x34c];
-    UnkItem** unk_34c;
+    UnkType_10c05b90_Item** unk_34c;
     int unk_350;
     unsigned char unk_354[0x358 - 0x354];
     unsigned char unk_358;

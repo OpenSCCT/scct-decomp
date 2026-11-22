@@ -4,12 +4,12 @@
 // byte at 0x233; otherwise null. Its first and third parameters are unused. The class, method,
 // structure, member and parameter names are invented; the offsets and the bytes are the binary's.
 
-struct UnkObject;
+struct UnkType_10c6e3d0_Object;
 
 class UnkType_10c6e3d0
 {
 public:
-    UnkObject* Unk_10c6e3d0(int, unsigned int Flags, int) const;
+    UnkType_10c6e3d0_Object* Unk_10c6e3d0(int, unsigned int Flags, int) const;
 
     unsigned char unk_0[0x230];
     unsigned char unk_230;
@@ -17,11 +17,11 @@ public:
     unsigned char unk_233;
     unsigned char unk_234;
     unsigned char unk_235[0x7f];
-    UnkObject* unk_2b4;
+    UnkType_10c6e3d0_Object* unk_2b4;
 };
 
 // UnkType_10c6e3d0::Unk_10c6e3d0
-UnkObject* UnkType_10c6e3d0::Unk_10c6e3d0(int, unsigned int Flags, int) const
+UnkType_10c6e3d0_Object* UnkType_10c6e3d0::Unk_10c6e3d0(int, unsigned int Flags, int) const
 {
     if ( unk_2b4 != 0 )
     {

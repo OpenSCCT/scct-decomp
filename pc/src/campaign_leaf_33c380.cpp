@@ -3,7 +3,7 @@
 // else the one at offset 0x578. The class, method and member names are invented; the offset and
 // the bytes are the binary's.
 
-struct UnkTriple
+struct UnkType_10c3c380_Triple
 {
     int unk_0;
     int unk_4;
@@ -14,14 +14,14 @@ class UnkType_10c3c380
 {
 public:
     unsigned char unk_0[0x56c];
-    UnkTriple unk_56c;
-    UnkTriple unk_578;
+    UnkType_10c3c380_Triple unk_56c;
+    UnkType_10c3c380_Triple unk_578;
 
-    UnkTriple Unk_10c3c380(const int& Kind) const;
+    UnkType_10c3c380_Triple Unk_10c3c380(const int& Kind) const;
 };
 
 // UnkType_10c3c380::Unk_10c3c380
-UnkTriple UnkType_10c3c380::Unk_10c3c380(const int& Kind) const
+UnkType_10c3c380_Triple UnkType_10c3c380::Unk_10c3c380(const int& Kind) const
 {
     if ( Kind == 1 )
     {

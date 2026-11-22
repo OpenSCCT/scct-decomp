@@ -4,7 +4,7 @@
 // zeroes them for a null Source. The class, method, structure and member names are invented; the
 // offsets and the bytes are the binary's.
 
-struct UnkSource
+struct UnkType_10ddc3f0_Source
 {
     unsigned char unk_0[0x14];
     int unk_14;
@@ -14,17 +14,17 @@ struct UnkSource
 class UnkType_10ddc3f0
 {
 public:
-    void Unk_10ddc3f0(UnkSource* Source);
+    void Unk_10ddc3f0(UnkType_10ddc3f0_Source* Source);
 
     unsigned char unk_0[0x28];
-    UnkSource* unk_28;
+    UnkType_10ddc3f0_Source* unk_28;
     unsigned char unk_2c;
     int unk_30;
     int unk_34;
 };
 
 // UnkType_10ddc3f0::Unk_10ddc3f0
-void UnkType_10ddc3f0::Unk_10ddc3f0(UnkSource* Source)
+void UnkType_10ddc3f0::Unk_10ddc3f0(UnkType_10ddc3f0_Source* Source)
 {
     if ( unk_2c != 0 && Source == 0 )
     {

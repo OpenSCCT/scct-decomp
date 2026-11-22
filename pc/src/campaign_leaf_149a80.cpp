@@ -5,7 +5,7 @@
 // value, or null. The class, method and member names are invented; the offset and the bytes are
 // the binary's.
 
-struct UnkHashEntry
+struct UnkType_10a49a80_HashEntry
 {
     int unk_0;
     unsigned short unk_4;
@@ -15,7 +15,7 @@ struct UnkHashEntry
 class UnkType_10a49a80
 {
 public:
-    UnkHashEntry* unk_0;
+    UnkType_10a49a80_HashEntry* unk_0;
     int unk_4;
     int unk_8;
     int* unk_c;

@@ -7,9 +7,9 @@
 extern "C" int __cdecl abs(int Value);
 #pragma intrinsic(abs)
 
-struct UnkAngle
+struct UnkType_10dec730_Angle
 {
-    int UnkDelta(const UnkAngle& Other) const
+    int UnkDelta(const UnkType_10dec730_Angle& Other) const
     {
         int Mine = unk_0;
         int Theirs = Other.unk_0;
@@ -28,11 +28,13 @@ struct UnkAngle
 class UnkType_10dec730
 {
 public:
-    int Unk_10dec730(const UnkAngle& First, const UnkAngle& Second) const;
+    int Unk_10dec730(const UnkType_10dec730_Angle& First,
+                     const UnkType_10dec730_Angle& Second) const;
 };
 
 // UnkType_10dec730::Unk_10dec730
-int UnkType_10dec730::Unk_10dec730(const UnkAngle& First, const UnkAngle& Second) const
+int UnkType_10dec730::Unk_10dec730(const UnkType_10dec730_Angle& First,
+                                   const UnkType_10dec730_Angle& Second) const
 {
     return Second.UnkDelta(First) > 0;
 }

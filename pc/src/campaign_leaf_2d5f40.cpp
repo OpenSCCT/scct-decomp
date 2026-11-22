@@ -3,7 +3,7 @@
 // its second argument, else 0. It does not read its this pointer. The class, method and member
 // names are invented; the offset and the bytes are the binary's.
 
-struct UnkIntArray
+struct UnkType_10bd5f40_IntArray
 {
     int* unk_0;
     int unk_4;
@@ -12,11 +12,11 @@ struct UnkIntArray
 class UnkType_10bd5f40
 {
 public:
-    int Unk_10bd5f40(const UnkIntArray& Array, int Value);
+    int Unk_10bd5f40(const UnkType_10bd5f40_IntArray& Array, int Value);
 };
 
 // UnkType_10bd5f40::Unk_10bd5f40
-int UnkType_10bd5f40::Unk_10bd5f40(const UnkIntArray& Array, int Value)
+int UnkType_10bd5f40::Unk_10bd5f40(const UnkType_10bd5f40_IntArray& Array, int Value)
 {
     for ( int i = 0; i < Array.unk_4; i++ )
     {

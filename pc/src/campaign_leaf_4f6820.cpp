@@ -3,9 +3,9 @@
 // words at 0x0 and 0xb0. The class, structure and member names are invented; the offsets and the
 // bytes are the binary's.
 
-struct UnkPair
+struct UnkType_10df6820_Pair
 {
-    UnkPair()
+    UnkType_10df6820_Pair()
     {
         unk_0 = 0;
         unk_4 = 0;
@@ -21,9 +21,9 @@ public:
     UnkType_10df6820();
 
     int unk_0;
-    UnkPair unk_4;
+    UnkType_10df6820_Pair unk_4;
     int unk_c;
-    UnkPair unk_10[20];
+    UnkType_10df6820_Pair unk_10[20];
     int unk_b0;
 };
 

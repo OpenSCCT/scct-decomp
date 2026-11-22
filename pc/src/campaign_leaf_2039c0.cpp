@@ -3,7 +3,7 @@
 // argument points to. The class, member and function names are invented; the offsets and the
 // addresses are the binary's.
 
-class UnkType_10d9e850
+class UnkType_10b039c0_10d9e850
 {
 public:
     void Unk_10d9e850(int Value);
@@ -17,7 +17,7 @@ public:
 };
 
 // Unk_10b039c0
-void Unk_10b039c0(UnkType_10d9e850* Target, UnkType_10b039c0* Source)
+void Unk_10b039c0(UnkType_10b039c0_10d9e850* Target, UnkType_10b039c0* Source)
 {
     Target->Unk_10d9e850(Source->unk_04);
 }

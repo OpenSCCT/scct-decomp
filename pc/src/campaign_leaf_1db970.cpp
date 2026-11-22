@@ -3,7 +3,7 @@
 // offset 0x18 equals its argument and returns that entry's word at offset 0x14, or 0. The class,
 // method and member names are invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10adb970_Item
 {
 public:
     unsigned char unk_0[0x14];
@@ -15,7 +15,7 @@ class UnkType_10adb970
 {
 public:
     unsigned char unk_0[0x3c];
-    UnkItem** unk_3c;
+    UnkType_10adb970_Item** unk_3c;
     int unk_40;
 
     int Unk_10adb970(int Key);
@@ -26,7 +26,7 @@ int UnkType_10adb970::Unk_10adb970(int Key)
 {
     for ( int i = 0; i < unk_40; i++ )
     {
-        UnkItem* Item = unk_3c[i];
+        UnkType_10adb970_Item* Item = unk_3c[i];
         if ( Item && Item->unk_18 == Key )
         {
             return Item->unk_14;

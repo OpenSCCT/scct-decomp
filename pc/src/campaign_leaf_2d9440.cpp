@@ -4,7 +4,7 @@
 // byte at offset 0x744; otherwise 1. It does not read its this pointer. The class, method and
 // member names are invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10bd9440_Item
 {
 public:
     unsigned char unk_0[0x2c];
@@ -13,9 +13,9 @@ public:
     unsigned char unk_744;
 };
 
-struct UnkEntry
+struct UnkType_10bd9440_Entry
 {
-    UnkItem* unk_0;
+    UnkType_10bd9440_Item* unk_0;
     unsigned char unk_4[0x64 - 0x4];
 };
 
@@ -23,7 +23,7 @@ class UnkType_10bd9440
 {
 public:
     unsigned char unk_0[0x4f0];
-    UnkEntry* unk_4f0;
+    UnkType_10bd9440_Entry* unk_4f0;
     int unk_4f4;
 
     int Unk_10bd9440(const UnkType_10bd9440* Object);
@@ -35,7 +35,7 @@ int UnkType_10bd9440::Unk_10bd9440(const UnkType_10bd9440* Object)
     int Result = 1;
     for ( int i = 0; i < Object->unk_4f4; i++ )
     {
-        UnkItem* Item = Object->unk_4f0[i].unk_0;
+        UnkType_10bd9440_Item* Item = Object->unk_4f0[i].unk_0;
         if ( ( Item->unk_2c & 0x40 ) && ( Item->unk_744 & 8 ) )
         {
             Result = 0;

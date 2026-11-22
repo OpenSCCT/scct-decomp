@@ -4,7 +4,7 @@
 // class, method, structure and member names are invented; the offsets and the bytes are the
 // binary's.
 
-struct UnkOther
+struct UnkType_10ce3e00_Other
 {
     unsigned char unk_0[0x1c];
     int unk_1c;
@@ -15,20 +15,20 @@ struct UnkOther
 class UnkType_10ce3e00
 {
 public:
-    int UnkTest(const UnkOther& Other) const
+    int UnkTest(const UnkType_10ce3e00_Other& Other) const
     {
         return ( unk_38 & 0x400 ) != 0 || ( ( unk_38 & 0x800 ) && Other.unk_24 != 0 )
             || ( ( unk_38 & 0x200000 ) && Other.unk_1c != 0 );
     }
 
-    int Unk_10ce3e00(const UnkOther& Other) const;
+    int Unk_10ce3e00(const UnkType_10ce3e00_Other& Other) const;
 
     unsigned char unk_0[0x38];
     unsigned int unk_38;
 };
 
 // UnkType_10ce3e00::Unk_10ce3e00
-int UnkType_10ce3e00::Unk_10ce3e00(const UnkOther& Other) const
+int UnkType_10ce3e00::Unk_10ce3e00(const UnkType_10ce3e00_Other& Other) const
 {
     return !UnkTest(Other);
 }

@@ -3,13 +3,13 @@
 // follow to (1, 0, 0), (0, 1, 0) and (0, 0, 1). The class, method and member names are invented;
 // the offset and the bytes are the binary's.
 
-struct UnkVector
+struct UnkType_1099fbd0_Vector
 {
     float X;
     float Y;
     float Z;
 
-    UnkVector(float InX, float InY, float InZ)
+    UnkType_1099fbd0_Vector(float InX, float InY, float InZ)
         : X(InX), Y(InY), Z(InZ)
     {
     }
@@ -18,16 +18,16 @@ struct UnkVector
 class UnkType_1099fbd0
 {
 public:
-    UnkVector unk_0;
-    UnkVector unk_c;
-    UnkVector unk_18;
-    UnkVector unk_24;
+    UnkType_1099fbd0_Vector unk_0;
+    UnkType_1099fbd0_Vector unk_c;
+    UnkType_1099fbd0_Vector unk_18;
+    UnkType_1099fbd0_Vector unk_24;
 
-    UnkType_1099fbd0(const UnkVector& First);
+    UnkType_1099fbd0(const UnkType_1099fbd0_Vector& First);
 };
 
 // UnkType_1099fbd0::UnkType_1099fbd0
-UnkType_1099fbd0::UnkType_1099fbd0(const UnkVector& First)
+UnkType_1099fbd0::UnkType_1099fbd0(const UnkType_1099fbd0_Vector& First)
     : unk_0(First), unk_c(1, 0, 0), unk_18(0, 1, 0), unk_24(0, 0, 1)
 {
 }

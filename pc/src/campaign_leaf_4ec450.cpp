@@ -3,7 +3,7 @@
 // 0x14 and clears the byte at 0x15. The class, structure, member and parameter names are
 // invented; the offsets and the bytes are the binary's.
 
-struct UnkPair
+struct UnkType_10dec450_Pair
 {
     short unk_0;
     int unk_4;
@@ -12,19 +12,20 @@ struct UnkPair
 class UnkType_10dec450
 {
 public:
-    UnkType_10dec450(int First, int Second, int Third, const UnkPair& Fourth, unsigned char Fifth);
+    UnkType_10dec450(int First, int Second, int Third, const UnkType_10dec450_Pair& Fourth,
+                     unsigned char Fifth);
 
     int unk_0;
     int unk_4;
     int unk_8;
-    UnkPair unk_c;
+    UnkType_10dec450_Pair unk_c;
     unsigned char unk_14;
     unsigned char unk_15;
 };
 
 // UnkType_10dec450::UnkType_10dec450
-UnkType_10dec450::UnkType_10dec450(int First, int Second, int Third, const UnkPair& Fourth,
-                         unsigned char Fifth)
+UnkType_10dec450::UnkType_10dec450(int First, int Second, int Third,
+                                   const UnkType_10dec450_Pair& Fourth, unsigned char Fifth)
 {
     unk_0 = First;
     unk_4 = Second;

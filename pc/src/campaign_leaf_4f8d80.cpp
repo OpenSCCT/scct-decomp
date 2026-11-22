@@ -4,7 +4,7 @@
 // reached 20. The class, method, structure, member and parameter names are invented; the offsets
 // and the bytes are the binary's.
 
-struct UnkSlot
+struct UnkType_10df8d80_Slot
 {
     unsigned char unk_0;
     unsigned char unk_1[3];
@@ -19,13 +19,13 @@ public:
     unsigned char unk_0[0xb0];
     int unk_b0;
     unsigned char unk_b4[0x8];
-    UnkSlot unk_bc[40];
+    UnkType_10df8d80_Slot unk_bc[40];
 };
 
 // UnkType_10df8d80::Unk_10df8d80
 bool UnkType_10df8d80::Unk_10df8d80(unsigned int Index)
 {
-    UnkSlot* Slot = &unk_bc[Index % 40];
+    UnkType_10df8d80_Slot* Slot = &unk_bc[Index % 40];
     bool Found;
 
     if ( Slot->unk_0 != 0 )

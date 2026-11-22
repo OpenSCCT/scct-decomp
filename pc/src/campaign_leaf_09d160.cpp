@@ -1,8 +1,8 @@
 // campaign_leaf_09d160.cpp -- one function at file offset 0x9d160, preferred VA 0x1099d160. It
 // returns 0 when its first argument has bit 0x10 set at offset 0x2c or is the object stored at
-// offset 0x6c of this one; otherwise the byte at offset 0x230 of the argument, raised to at least 2,
-// minus 2. Its second argument is never read. The class, method and member names are invented; the
-// offset and the bytes are the binary's.
+// offset 0x6c of this one; otherwise the byte at offset 0x230 of the argument, raised to at least
+// 2, minus 2. Its second argument is never read. The class, method and member names are
+// invented; the offset and the bytes are the binary's.
 
 class UnkType_1099d160
 {

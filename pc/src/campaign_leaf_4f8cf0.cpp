@@ -4,7 +4,7 @@
 // Id. The class, method, structure, member and parameter names are invented; the offsets and the
 // bytes are the binary's.
 
-struct UnkSlot
+struct UnkType_10df8cf0_Slot
 {
     unsigned char unk_0;
     unsigned char unk_1[3];
@@ -17,7 +17,7 @@ public:
     void Unk_10df8cf0(const int& Id, unsigned int Index);
 
     unsigned char unk_0[0xbc];
-    UnkSlot unk_bc[40];
+    UnkType_10df8cf0_Slot unk_bc[40];
     int unk_1fc;
     unsigned char unk_200;
 };
@@ -27,7 +27,7 @@ void UnkType_10df8cf0::Unk_10df8cf0(const int& Id, unsigned int Index)
 {
     if ( unk_200 == 0 || unk_1fc != Id )
     {
-        UnkSlot* Slot;
+        UnkType_10df8cf0_Slot* Slot;
 
         unk_200 = 1;
         unk_1fc = Id;

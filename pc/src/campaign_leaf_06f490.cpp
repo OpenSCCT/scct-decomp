@@ -3,23 +3,23 @@
 // has no this pointer. The class, method and member names are invented; the offset and the bytes
 // are the binary's.
 
-struct UnkVector
+struct UnkType_1096f490_Vector
 {
     float X;
     float Y;
     float Z;
 
-    UnkVector(float InX, float InY, float InZ)
+    UnkType_1096f490_Vector(float InX, float InY, float InZ)
         : X(InX), Y(InY), Z(InZ)
     {
     }
 
-    UnkVector operator-(const UnkVector& Other) const
+    UnkType_1096f490_Vector operator-(const UnkType_1096f490_Vector& Other) const
     {
-        return UnkVector(X - Other.X, Y - Other.Y, Z - Other.Z);
+        return UnkType_1096f490_Vector(X - Other.X, Y - Other.Y, Z - Other.Z);
     }
 
-    float operator|(const UnkVector& Other) const
+    float operator|(const UnkType_1096f490_Vector& Other) const
     {
         return X * Other.X + Y * Other.Y + Z * Other.Z;
     }
@@ -28,13 +28,13 @@ struct UnkVector
 class UnkType_1096f490
 {
 public:
-    static float Unk_1096f490(const UnkVector& First, const UnkVector& Second,
-        const UnkVector& Third);
+    static float Unk_1096f490(const UnkType_1096f490_Vector& First,
+        const UnkType_1096f490_Vector& Second, const UnkType_1096f490_Vector& Third);
 };
 
 // UnkType_1096f490::Unk_1096f490
-float UnkType_1096f490::Unk_1096f490(const UnkVector& First,
-    const UnkVector& Second, const UnkVector& Third)
+float UnkType_1096f490::Unk_1096f490(const UnkType_1096f490_Vector& First,
+    const UnkType_1096f490_Vector& Second, const UnkType_1096f490_Vector& Third)
 {
     return ( First - Second ) | Third;
 }

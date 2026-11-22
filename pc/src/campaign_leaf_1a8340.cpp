@@ -3,13 +3,13 @@
 // pointer at offset 0x78, -1 and a zero byte. Its two arguments are never read. The class, method
 // and member names are invented; the offset and the bytes are the binary's.
 
-struct UnkRecord
+struct UnkType_10aa8340_Record
 {
     void* unk_0;
     int unk_4;
     unsigned char unk_8;
 
-    UnkRecord(void* First, int Second, unsigned char Third)
+    UnkType_10aa8340_Record(void* First, int Second, unsigned char Third)
         : unk_0(First), unk_4(Second), unk_8(Third)
     {
     }
@@ -23,7 +23,7 @@ public:
     unsigned char unk_29[0x78 - 0x29];
     void* unk_78;
     unsigned char unk_7c[0xac - 0x7c];
-    UnkRecord unk_ac;
+    UnkType_10aa8340_Record unk_ac;
 
     void Unk_10aa8340(int First, int Second);
 };
@@ -33,6 +33,6 @@ void UnkType_10aa8340::Unk_10aa8340(int First, int Second)
 {
     if ( !( unk_28 & 4 ) )
     {
-        unk_ac = UnkRecord(unk_78, -1, 0);
+        unk_ac = UnkType_10aa8340_Record(unk_78, -1, 0);
     }
 }

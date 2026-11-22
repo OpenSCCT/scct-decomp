@@ -6,7 +6,7 @@
 
 class UnkType_10b9e450;
 
-struct UnkEntry
+struct UnkType_10b9e450_Entry
 {
     UnkType_10b9e450* unk_0;
     unsigned char unk_4[0x64 - 0x4];
@@ -18,7 +18,7 @@ public:
     unsigned char unk_0[0x2c];
     int unk_2c;
     unsigned char unk_30[0x4f0 - 0x30];
-    UnkEntry* unk_4f0;
+    UnkType_10b9e450_Entry* unk_4f0;
     int unk_4f4;
 
     int Unk_10b9e450(UnkType_10b9e450* Other);

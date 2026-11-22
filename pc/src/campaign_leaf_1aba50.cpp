@@ -3,7 +3,7 @@
 // object the global at VA 0x111c88a0 points to. The class, member and global names are invented;
 // the offsets and the addresses are the binary's.
 
-class UnkType_111c88a0
+class UnkType_10aaba50_111c88a0
 {
 public:
     virtual void VirtualSlot0();
@@ -11,7 +11,7 @@ public:
     virtual void VirtualSlot2(void* Data);
 };
 
-extern UnkType_111c88a0* GUnk_111c88a0;
+extern UnkType_10aaba50_111c88a0* GUnk_111c88a0;
 
 class UnkType_10aaba50
 {

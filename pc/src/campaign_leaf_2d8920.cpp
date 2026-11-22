@@ -4,7 +4,7 @@
 // 0; when it has bit 0x40 set instead it returns the argument's word at offset 0x428; otherwise 0.
 // The class, method and member names are invented; the offset and the bytes are the binary's.
 
-class UnkItem
+class UnkType_10bd8920_Item
 {
 public:
     unsigned char unk_0[0x2c];
@@ -13,9 +13,9 @@ public:
     int unk_428;
 };
 
-struct UnkEntry
+struct UnkType_10bd8920_Entry
 {
-    UnkItem* unk_0;
+    UnkType_10bd8920_Item* unk_0;
     unsigned char unk_4[0x3c - 0x4];
     int unk_3c;
     unsigned char unk_40[0x58 - 0x40];
@@ -25,13 +25,13 @@ class UnkType_10bd8920
 {
 public:
     unsigned char unk_0[0x320];
-    UnkEntry unk_320[2];
+    UnkType_10bd8920_Entry unk_320[2];
 
-    int Unk_10bd8920(UnkItem* Item);
+    int Unk_10bd8920(UnkType_10bd8920_Item* Item);
 };
 
 // UnkType_10bd8920::Unk_10bd8920
-int UnkType_10bd8920::Unk_10bd8920(UnkItem* Item)
+int UnkType_10bd8920::Unk_10bd8920(UnkType_10bd8920_Item* Item)
 {
     if ( Item->unk_2c & 0x20 )
     {

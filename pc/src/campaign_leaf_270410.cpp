@@ -5,7 +5,7 @@
 
 extern "C" void* __cdecl memset(void* Dest, int Value, unsigned int Count);
 
-struct UnkBlock
+struct UnkType_10b70410_Block
 {
     int unk_0;
     int unk_4;
@@ -28,7 +28,7 @@ public:
     int unk_2c;
     int unk_30;
     int unk_34;
-    UnkBlock unk_38;
+    UnkType_10b70410_Block unk_38;
 
     bool Unk_10b70410();
 };

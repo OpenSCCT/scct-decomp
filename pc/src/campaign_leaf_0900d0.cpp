@@ -4,20 +4,20 @@
 // 0x1c8; the pointer at offset 0x40 of the object reached through offsets 0x7c and 0x38; else null.
 // The class, method and member names are invented; the offset and the bytes are the binary's.
 
-class UnkItem;
+class UnkType_109900d0_Item;
 
-class UnkInner
+class UnkType_109900d0_Inner
 {
 public:
     unsigned char unk_0[0x40];
-    UnkItem* unk_40;
+    UnkType_109900d0_Item* unk_40;
 };
 
-class UnkOuter
+class UnkType_109900d0_Outer
 {
 public:
     unsigned char unk_0[0x38];
-    UnkInner* unk_38;
+    UnkType_109900d0_Inner* unk_38;
 };
 
 class UnkType_109900d0
@@ -26,18 +26,18 @@ public:
     unsigned char unk_0[0x30];
     int unk_30;
     unsigned char unk_34[0x7c - 0x34];
-    UnkOuter* unk_7c;
+    UnkType_109900d0_Outer* unk_7c;
     unsigned char unk_80[0x184 - 0x80];
-    UnkItem* unk_184;
-    UnkItem* unk_188;
+    UnkType_109900d0_Item* unk_184;
+    UnkType_109900d0_Item* unk_188;
     unsigned char unk_18c[0x1c8 - 0x18c];
-    UnkItem* unk_1c8;
+    UnkType_109900d0_Item* unk_1c8;
 
-    UnkItem* Unk_109900d0(int Flag);
+    UnkType_109900d0_Item* Unk_109900d0(int Flag);
 };
 
 // UnkType_109900d0::Unk_109900d0
-UnkItem* UnkType_109900d0::Unk_109900d0(int Flag)
+UnkType_109900d0_Item* UnkType_109900d0::Unk_109900d0(int Flag)
 {
     if ( unk_184 )
     {

@@ -4,7 +4,7 @@
 // 0x370 here; it returns 1 when it set a step. The class, method, structure, member and
 // parameter names are invented; the offsets, the constants and the bytes are the binary's.
 
-struct UnkObject
+struct UnkType_10c6ee60_Object
 {
     unsigned char unk_0[0x26c];
     int unk_26c;
@@ -18,7 +18,7 @@ public:
     int Unk_10c6ee60(int Up);
 
     unsigned char unk_0[0x2b4];
-    UnkObject* unk_2b4;
+    UnkType_10c6ee60_Object* unk_2b4;
     unsigned char unk_2b8[0xb8];
     int unk_370;
 };

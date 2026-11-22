@@ -4,18 +4,18 @@
 // and 0x470 when both pointers are non-null. The class, method and member names are invented; the
 // offset and the bytes are the binary's.
 
-class UnkTarget
+class UnkType_10c48210_Target
 {
 public:
     unsigned char unk_0[0x30];
     int unk_30;
 };
 
-class UnkOwner
+class UnkType_10c48210_Owner
 {
 public:
     unsigned char unk_0[0x470];
-    UnkTarget* unk_470;
+    UnkType_10c48210_Target* unk_470;
 };
 
 class UnkType_10c48210
@@ -27,7 +27,7 @@ public:
     unsigned int unk_44c_0 : 1;
     unsigned int unk_44c_1 : 1;
     unsigned char unk_450[0x474 - 0x450];
-    UnkOwner* unk_474;
+    UnkType_10c48210_Owner* unk_474;
 
     void Unk_10c48210();
 };

@@ -1,8 +1,9 @@
 // campaign_leaf_506850.cpp -- one function at file offset 0x506850, preferred VA 0x10e06850. It
-// copies the word at 0x0 and the 32 words at 0x4 of the argument in, to 0x18 and 0x1c. The class, method, structure and member names are invented; the offsets and
-// the bytes are the binary's.
+// copies the word at 0x0 and the 32 words at 0x4 of the argument in, to 0x18 and 0x1c. The
+// class, method, structure and member names are invented; the offsets and the bytes are the
+// binary's.
 
-struct UnkBlock_10e06850
+struct UnkType_10e06850_Block
 {
     int unk_0;
     int unk_4[32];
@@ -11,7 +12,7 @@ struct UnkBlock_10e06850
 class UnkType_10e06850
 {
 public:
-    void Unk_10e06850(const UnkBlock_10e06850& Out);
+    void Unk_10e06850(const UnkType_10e06850_Block& Out);
 
     unsigned char unk_0[0x18];
     int unk_18;
@@ -19,7 +20,7 @@ public:
 };
 
 // UnkType_10e06850::Unk_10e06850
-void UnkType_10e06850::Unk_10e06850(const UnkBlock_10e06850& Out)
+void UnkType_10e06850::Unk_10e06850(const UnkType_10e06850_Block& Out)
 {
     int Index;
 

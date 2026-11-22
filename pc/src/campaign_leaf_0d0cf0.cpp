@@ -3,7 +3,7 @@
 // sets bit field 7 of the word at offset 0x28 of that entry from its second argument. The class,
 // method and member names are invented; the offset and the bytes are the binary's.
 
-struct UnkEntry
+struct UnkType_109d0cf0_Entry
 {
     unsigned char unk_0[0x28];
     unsigned int unk_28_0 : 7;
@@ -16,7 +16,7 @@ class UnkType_109d0cf0
 {
 public:
     unsigned char unk_0[0x94];
-    UnkEntry* unk_94;
+    UnkType_109d0cf0_Entry* unk_94;
     int unk_98;
 
     void Unk_109d0cf0(int Index, int Value);

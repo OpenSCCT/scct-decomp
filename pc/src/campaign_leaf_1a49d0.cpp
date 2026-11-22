@@ -2,13 +2,13 @@
 // the object the global at VA 0x111fa6dc points to, with its one argument, and returns nothing. The class, method
 // and function names are invented; the addresses are the binary's.
 
-class UnkType_111fa6dc
+class UnkType_10aa49d0_111fa6dc
 {
 public:
     void Unk_10b06e00(int);
 };
 
-extern UnkType_111fa6dc* GUnk_111fa6dc;
+extern UnkType_10aa49d0_111fa6dc* GUnk_111fa6dc;
 
 // Unk_10aa49d0
 void Unk_10aa49d0(int Arg0)

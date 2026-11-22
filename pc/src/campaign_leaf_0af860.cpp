@@ -3,23 +3,25 @@
 // argument. The class, method and member names are invented; the offset and the bytes are the
 // binary's.
 
-class UnkIntTriple
+class UnkType_109af860_IntTriple
 {
 public:
     int unk_0;
     int unk_4;
     int unk_8;
 
-    UnkIntTriple(int First, int Second, int Third)
+    UnkType_109af860_IntTriple(int First, int Second, int Third)
         : unk_0(First), unk_4(Second), unk_8(Third)
     {
     }
 
-    UnkIntTriple Unk_109af860(const UnkIntTriple& Other) const;
+    UnkType_109af860_IntTriple Unk_109af860(const UnkType_109af860_IntTriple& Other) const;
 };
 
-// UnkIntTriple::Unk_109af860
-UnkIntTriple UnkIntTriple::Unk_109af860(const UnkIntTriple& Other) const
+// UnkType_109af860_IntTriple::Unk_109af860
+UnkType_109af860_IntTriple UnkType_109af860_IntTriple::Unk_109af860(
+    const UnkType_109af860_IntTriple& Other) const
 {
-    return UnkIntTriple(unk_0 + Other.unk_0, unk_4 + Other.unk_4, unk_8 + Other.unk_8);
+    return UnkType_109af860_IntTriple(unk_0 + Other.unk_0, unk_4 + Other.unk_4,
+        unk_8 + Other.unk_8);
 }

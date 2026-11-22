@@ -4,7 +4,7 @@
 // When the argument is at least 20 it clears the flag of the slot 20 entries behind. The class,
 // method and member names are invented; the offset and the bytes are the binary's.
 
-struct UnkSlot
+struct UnkType_10b03160_Slot
 {
     unsigned char unk_0;
     unsigned char unk_1[3];
@@ -17,7 +17,7 @@ public:
     unsigned char unk_0[0x2ac];
     int unk_2ac;
     unsigned char unk_2b0[0x2b8 - 0x2b0];
-    UnkSlot unk_2b8[40];
+    UnkType_10b03160_Slot unk_2b8[40];
 
     bool Unk_10b03160(unsigned int Frame);
 };
@@ -26,7 +26,7 @@ public:
 bool UnkType_10b03160::Unk_10b03160(unsigned int Frame)
 {
     bool Result;
-    UnkSlot& Slot = unk_2b8[Frame % 40];
+    UnkType_10b03160_Slot& Slot = unk_2b8[Frame % 40];
     if ( Slot.unk_0 )
     {
         Slot.unk_0 = 1;
