@@ -1,5 +1,7 @@
 // w4_item_0035.cpp -- AActor::ProcessState (Versus RVA 0x129470)
 
+#include "versus_build.h"
+#include "unreal_containers.h"
 typedef unsigned char BYTE;
 typedef unsigned short _WORD;
 typedef int INT;
@@ -38,13 +40,6 @@ struct FStateFrame;
 class FName {
 public:
     INT Index;
-};
-
-template <class T> class TArray {
-public:
-    T   *Data;
-    INT  ArrayNum;
-    INT  ArrayMax;
 };
 
 class FUnknown {

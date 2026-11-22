@@ -4,6 +4,8 @@
 // UInteraction::~UInteraction. Member names are neutral; the two 16-entry arrays
 // of 12-byte elements are destroyed through one shared out-of-line destructor
 // (0xa79000), likely the console's history/scrollback string rings.
+#include "versus_build.h"
+#include "unreal_containers.h"
 enum { INDEX_NONE = -1 };
 enum EObjectFlags { RF_Destroyed = 0x00800000, RF_DebugDestroy = 0x80000000 };
 
@@ -31,14 +33,6 @@ public:
         }
         return 0;
     }
-};
-
-class FString {
-public:
-    ~FString();
-    void *Data;
-    int ArrayNum;
-    int ArrayMax;
 };
 
 // 12-byte element with its own out-of-line destructor (0xa79000).

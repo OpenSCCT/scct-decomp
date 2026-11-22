@@ -9,6 +9,8 @@
 //   0x99b10 actor constructor    8 bytes off: lea/load order in the Location copy
 //   0x99810 GetStreamData        159 bytes off: register choice and the
 //           scheduling of the FPlane argument build
+#include "versus_build.h"
+#include "unreal_containers.h"
 typedef unsigned char BYTE;
 typedef unsigned short TCHAR;
 typedef int INT;
@@ -46,14 +48,6 @@ struct FPlane : public FVector
     FPlane() {}
     FPlane(FLOAT InX, FLOAT InY, FLOAT InZ, FLOAT InW) : FVector(InX, InY, InZ), W(InW) {}
     FPlane(const FVector &V, FLOAT InW) : FVector(V), W(InW) {}
-};
-
-struct FArray
-{
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
 };
 
 struct FRotator

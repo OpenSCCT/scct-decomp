@@ -2,6 +2,8 @@
 // 0xa2eb0: UERainPrimitive destructor (its deleting destructor is at 0xa2e80).
 // 0xa2f40: constructor of a render resource (LTCG, this in ESI); class name not
 // recovered, so it is called FRenderResource_A2F40.
+#include "versus_build.h"
+#include "unreal_containers.h"
 typedef unsigned long DWORD;
 typedef int INT;
 typedef unsigned __int64 QWORD;
@@ -74,13 +76,6 @@ inline QWORD MakeCacheID(INT Base)
 }
 
 #pragma pack(push, 4)
-class FArray {
-public:
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
-};
 class FRenderResource_A2F40 {
 public:
     virtual INT GetCacheIdSlot();

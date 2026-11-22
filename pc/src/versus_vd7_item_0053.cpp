@@ -9,6 +9,8 @@
 // The five event names (FName indices 0x134, 0x151, 0xe79, 0x157, 0x11f5)
 // are not yet recovered from evidence and use neutral names.
 
+#include "versus_build.h"
+#include "unreal_containers.h"
 #pragma pack(push, 4)
 
 typedef unsigned char BYTE;
@@ -34,14 +36,6 @@ public:
     FName(EName N) : Index(N) {}
     FName(const FName &Other) : Index(Other.Index) {}
     INT GetIndex() const { return Index; }
-};
-
-class FString {
-public:
-    TCHAR *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FString &operator=(const FString &Other);
 };
 
 class __declspec(novtable) FOutputDevice {

@@ -1,6 +1,8 @@
 // Work item 0205: Versus RVA 0xe6240 and 0xe62f0.
 // Class names are neutral (UnnamedClass<vtable RVA>) because no registered
 // name identifies these vtables.
+#include "versus_build.h"
+#include "unreal_containers.h"
 enum { INDEX_NONE = -1 };
 enum EObjectFlags { RF_Destroyed = 0x00800000, RF_DebugDestroy = 0x80000000 };
 
@@ -33,22 +35,6 @@ public:
         }
         return 0;
     }
-};
-
-class FString {
-public:
-    ~FString();
-    TCHAR *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-};
-
-template<class T> class TArray {
-public:
-    ~TArray();
-    T *Data;
-    INT ArrayNum;
-    INT ArrayMax;
 };
 
 // Parent class; its destructor is matched in versus_more_object_destructors.cpp.

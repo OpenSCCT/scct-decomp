@@ -3,6 +3,8 @@
 // calls it; the class derives from AActor. Member names are neutral: an
 // array of 8 records (0x1c bytes each, destructor at 0xa79000) at 0x2fc and
 // an FString at 0x40c.
+#include "versus_build.h"
+#include "unreal_containers.h"
 typedef unsigned short TCHAR;
 typedef int INT;
 
@@ -39,14 +41,6 @@ class AActor : public UObject {
 public:
     virtual ~AActor();                    // 0x925d0
     unsigned char ActorData[0x2fc - 0x20];
-};
-
-class FString {
-public:
-    TCHAR *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    ~FString();                           // 0x48b0
 };
 
 struct FHUDRecord_1c {

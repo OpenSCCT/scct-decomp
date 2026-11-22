@@ -1,5 +1,7 @@
 // w4_item_0154.cpp -- Versus work item 0154 (RVA 0x160080)
 
+#include "versus_build.h"
+#include "unreal_containers.h"
 typedef unsigned char BYTE;
 typedef unsigned short _WORD;
 typedef int INT;
@@ -13,28 +15,6 @@ typedef unsigned short TCHAR;
 
 struct FGuid;
 struct FStateFrame;
-
-class FArray {
-public:
-    void *Data;
-    INT   ArrayNum;
-    INT   ArrayMax;
-
-    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
-};
-
-template<class T> class TArray : public FArray {
-public:
-    ~TArray();
-};
-
-class FString : public TArray<TCHAR> {
-public:
-    FString() {}
-    FString(const FString &Other);
-    ~FString();
-    FString &operator=(const FString &Other);
-};
 
 class FUnknown {
 public:

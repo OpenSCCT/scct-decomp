@@ -3,27 +3,11 @@
 // 0x5b50 (see item 0024), holding at +0x3c the three-FString record whose copy
 // constructor is retail 0x6260 (see item 0027). Names are neutral: no vtable
 // label or string identifies these classes.
+#include "versus_build.h"
+#include "unreal_containers.h"
 typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned long DWORD;
-
-class FString {
-public:
-    TCHAR *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FString(const FString &Other);  // retail 0x4640
-    ~FString();                     // retail 0x48b0
-};
-
-template <class T> class TArray {
-public:
-    T *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    TArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
-    ~TArray();
-};
 
 // Record held at +0x3c: implicit copy constructor is retail 0x6260,
 // implicit destructor 0x6200.

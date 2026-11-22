@@ -4,20 +4,12 @@
 // identified (dtor 0x62d0). Names are neutral: no label identifies them.
 // All three match under try_ltcg.py with /O2 /Ob1 /Gy /GX; /Ob1 keeps the
 // out-of-line record destructor a call in 0x62d0, as retail has it.
+#include "versus_build.h"
+#include "unreal_containers.h"
 typedef unsigned short TCHAR;
 typedef unsigned long DWORD;
 typedef unsigned char BYTE;
 typedef int INT;
-
-class FString
-{
-public:
-    TCHAR* Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FString(const FString& Other); // RVA 0x4640
-    ~FString();                    // RVA 0x48b0
-};
 
 struct UnnamedRecord_6200
 {
