@@ -3,7 +3,9 @@
 
 typedef struct Frame Frame;
 typedef struct Object Object;
-typedef void (__fastcall *Native)(Object *, unsigned, Frame *, void *);
+/* VmNative: invented name (the original's name for this pointer type is unknown). The UE2
+   member pointer that the unreal_script.h header calls Native is a different type. */
+typedef void (__fastcall *VmNative)(Object *, unsigned, Frame *, void *);
 struct Frame {
     void *frame_prefix;
     void *node;
@@ -15,8 +17,8 @@ typedef struct FrameArg { Frame *frame; } FrameArg;
    word. Passing x86 positive zero leaves EDX available and places the
    four-byte null result in that stack slot. */
 typedef void (__fastcall *DebugInfoCall)(Object *, FrameArg, float);
-extern Native campaign_native_table[];
-extern Native campaign_cast_table[];
+extern VmNative campaign_native_table[];
+extern VmNative campaign_cast_table[];
 #define DISPATCH campaign_native_table
 #define HANDLER(name, result_type) \
     void __fastcall name(Object *self, void *unused_edx, Frame *frame, result_type *result)
