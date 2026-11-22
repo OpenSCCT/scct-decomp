@@ -1,0 +1,78 @@
+// versus_large_1649c0.h -- stock UClass objects that the registration block at RVA 0x1649c0
+// constructs. Each name is the C symbol that a matched unit gives the same object (see the
+// unit's link_bindings). UObject::PrivateStaticClass is declared in versus_large_1649c0.cpp.
+
+#ifndef VERSUS_LARGE_1649C0_H
+#define VERSUS_LARGE_1649C0_H
+
+struct RuntimeClass;
+
+extern "C" {
+extern struct RuntimeClass class_object_UBaseGUIController;
+extern struct RuntimeClass class_object_UBrowser_Keys;
+extern struct RuntimeClass class_object_UGUI;
+extern struct RuntimeClass class_object_UGUIButton;
+extern struct RuntimeClass class_object_UGUICadre;
+extern struct RuntimeClass class_object_UGUIChatBox;
+extern struct RuntimeClass class_object_UGUICheckBox;
+extern struct RuntimeClass class_object_UGUICheckBoxButton;
+extern struct RuntimeClass class_object_UGUICircularList;
+extern struct RuntimeClass class_object_UGUIComboBox;
+extern struct RuntimeClass class_object_UGUIComponent;
+extern struct RuntimeClass class_object_UGUIController;
+extern struct RuntimeClass class_object_UGUIEditBox;
+extern struct RuntimeClass class_object_UGUIFont;
+extern struct RuntimeClass class_object_UGUIGFXButton;
+extern struct RuntimeClass class_object_UGUIHorzGripButton;
+extern struct RuntimeClass class_object_UGUIHorzList;
+extern struct RuntimeClass class_object_UGUIHorzScrollBar;
+extern struct RuntimeClass class_object_UGUIHorzScrollButton;
+extern struct RuntimeClass class_object_UGUIHorzScrollZone;
+extern struct RuntimeClass class_object_UGUIImage;
+extern struct RuntimeClass class_object_UGUILabel;
+extern struct RuntimeClass class_object_UGUILabelPad;
+extern struct RuntimeClass class_object_UGUIList;
+extern struct RuntimeClass class_object_UGUIListBase;
+extern struct RuntimeClass class_object_UGUIListBox;
+extern struct RuntimeClass class_object_UGUIListBoxBase;
+extern struct RuntimeClass class_object_UGUIListFriends;
+extern struct RuntimeClass class_object_UGUIMOTDInfoBox;
+extern struct RuntimeClass class_object_UGUIMenuOption;
+extern struct RuntimeClass class_object_UGUIMultiColumnList;
+extern struct RuntimeClass class_object_UGUIMultiColumnListBox;
+extern struct RuntimeClass class_object_UGUIMultiColumnListHeader;
+extern struct RuntimeClass class_object_UGUIMultiComponent;
+extern struct RuntimeClass class_object_UGUIMultiPageLabel;
+extern struct RuntimeClass class_object_UGUIMultiPageLabelBox;
+extern struct RuntimeClass class_object_UGUINumericEdit;
+extern struct RuntimeClass class_object_UGUIPage;
+extern struct RuntimeClass class_object_UGUIPageWaitLaunch;
+extern struct RuntimeClass class_object_UGUIPanel;
+extern struct RuntimeClass class_object_UGUIProgressBar;
+extern struct RuntimeClass class_object_UGUIScrollBarBase;
+extern struct RuntimeClass class_object_UGUIScrollText;
+extern struct RuntimeClass class_object_UGUIScrollTextBox;
+extern struct RuntimeClass class_object_UGUISearchFilterBox;
+extern struct RuntimeClass class_object_UGUISessionInfoBox;
+extern struct RuntimeClass class_object_UGUISlider;
+extern struct RuntimeClass class_object_UGUISpinnerButton;
+extern struct RuntimeClass class_object_UGUISplitter;
+extern struct RuntimeClass class_object_UGUIStyles;
+extern struct RuntimeClass class_object_UGUITabButton;
+extern struct RuntimeClass class_object_UGUITabControl;
+extern struct RuntimeClass class_object_UGUITabPanel;
+extern struct RuntimeClass class_object_UGUITitleBar;
+extern struct RuntimeClass class_object_UGUIVertGripButton;
+extern struct RuntimeClass class_object_UGUIVertList;
+extern struct RuntimeClass class_object_UGUIVertScrollBar;
+extern struct RuntimeClass class_object_UGUIVertScrollBarLabel;
+extern struct RuntimeClass class_object_UGUIVertScrollButton;
+extern struct RuntimeClass class_object_UGUIVertScrollZone;
+extern struct RuntimeClass class_object_UStrategicMap;
+extern struct RuntimeClass class_object_UmoEditBox;
+extern struct RuntimeClass class_object_UmoImageListMap;
+extern struct RuntimeClass class_object_UmoListEditBox;
+extern struct RuntimeClass class_object_UmoListEditBox_GameMode;
+}
+
+#endif
