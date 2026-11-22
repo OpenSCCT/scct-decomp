@@ -51,6 +51,16 @@ def readonly_pe_data(data, address, size):
     raise ValueError("constant lies outside a file-backed read-only data section")
 
 
+def file_pe_data(data, address, size):
+    """Read a complete range of file-backed PE bytes, in code or data, as the file stores them."""
+    for _, offset, length, base, _ in pe_file_sections(data):
+        relative = address - base
+        if 0 <= relative and relative + size <= length:
+            first, end = span(offset + relative, size, len(data))
+            return data[first:end]
+    raise ValueError("bytes lie outside a file-backed PE section")
+
+
 def elf_sections(data):
     if data[:7] != b"\x7fELF\x01\x01\x01" or struct.unpack_from("<HH", data, 16) != (2, 8):
         raise ValueError("expected a little-endian MIPS ELF32 executable")

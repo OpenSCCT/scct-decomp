@@ -9,7 +9,7 @@ import struct
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from images import coff_symbol_offset, inspect, readonly_pe_data, span
+from images import coff_symbol_offset, file_pe_data, inspect, readonly_pe_data, span
 from link_image import place_function
 from link_x86 import link_function
 from manifests import load_target, save_receipt
@@ -239,7 +239,8 @@ def built_unit_bytes(target, unit, output, original=None):
             if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
                 return place_function(output, unit["size"], s["address"] + a - s["offset"], unit["ltcg_link"],
                                       unit["link_bindings"],
-                                      read_constant=lambda va, size: readonly_pe_data(original, va, size))
+                                      read_constant=lambda va, size: readonly_pe_data(original, va, size),
+                                      read_table=lambda va, size: file_pe_data(original, va, size))
         raise ValueError("link address outside a measured code section")
     if "coff_alignment" in unit:
         alignment = unit["coff_alignment"]

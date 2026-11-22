@@ -73,5 +73,22 @@ class UnresolvedExternalTests(unittest.TestCase):
         self.assertEqual(verify_build.unresolved_externals("Generating code\nFinished generating code\n"), [])
 
 
+class StubPlanTests(unittest.TestCase):
+    def test_a_declared_external_is_stubbed_once(self):
+        self.assertEqual(verify_build.stub_plan(["_a", "__fltused"], ["__fltused", "_a"]),
+                         (["__fltused", "_a"], []))
+
+    def test_fltused_is_stubbed_without_a_declaration(self):
+        # A callee that uses floating point makes LINK.EXE report __fltused; no record declares it.
+        self.assertEqual(verify_build.stub_plan(["__fltused"], []), (["__fltused"], []))
+
+    def test_other_undeclared_externals_are_still_refused(self):
+        self.assertEqual(verify_build.stub_plan(["?Foo@@YAXXZ", "__fltused"], []),
+                         (["__fltused"], ["?Foo@@YAXXZ"]))
+
+    def test_nothing_unresolved_needs_no_stub(self):
+        self.assertEqual(verify_build.stub_plan([], ["_a"]), ([], []))
+
+
 if __name__ == "__main__":
     unittest.main()

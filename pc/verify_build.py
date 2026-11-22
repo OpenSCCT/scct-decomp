@@ -101,13 +101,29 @@ def unresolved_externals(output):
     return names
 
 
+# MSVC's floating-point code needs the marker __fltused, which the C runtime defines. A callee that
+# uses floating point makes LINK.EXE report it, and no record declares it, so it is stubbed whenever
+# the probe reports it.
+IMPLICIT_STUBS = ("__fltused",)
+
+
+def stub_plan(unresolved, declared):
+    """Return (names to stub, unresolved names that neither a record nor an implicit stub covers)."""
+    names = [name for name in declared if name in unresolved]
+    names += [name for name in IMPLICIT_STUBS if name in unresolved and name not in names]
+    undeclared = [name for name in unresolved
+                  if name not in declared and name not in IMPLICIT_STUBS]
+    return names, undeclared
+
+
 def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, streams):
     """Link a unit's object with the objects of its callees into one DLL.
 
     The link decides the calling convention of every call between these units, as the original
     link did. A stub is made only for an external that the linked objects leave unresolved, so no
     stub shadows a callee's definition. An external that no object defines and no record declares
-    stays unresolved, and LINK.EXE fails the build."""
+    stays unresolved, and LINK.EXE fails the build. The implicit stubs in IMPLICIT_STUBS are made
+    without a declaration."""
     links = [m.get("ltcg_link", {"roots": [], "stubs": []}) for m in [unit, *callees]]
     roots = list(dict.fromkeys(root for link in links for root in link["roots"]))
     declared = list(dict.fromkeys(name for link in links for name in link["stubs"]))
@@ -120,11 +136,10 @@ def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, st
     unresolved = unresolved_externals(probe.stdout) if probe.returncode else []
     if probe.returncode and not unresolved:
         raise ValueError(f"{unit['id']}: LINK.EXE failed: {probe.stdout.strip()}")
-    undeclared = [name for name in unresolved if name not in declared]
+    names, undeclared = stub_plan(unresolved, declared)
     if undeclared:
         raise ValueError(f"{unit['id']}: unresolved external {undeclared[0]}: no linked object defines it "
                          "and no record declares it as a stub")
-    names = [name for name in declared if name in unresolved]
     dll = obj.with_suffix(".dll")
     args = [*options, "/OUT:" + str(dll), *objects]
     if names:

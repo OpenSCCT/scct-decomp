@@ -12,6 +12,8 @@ whether it is absolute or a rel32 branch, and the symbol it refers to. The built
 must refer to that symbol's recorded DLL address; it is then rewritten with the retail
 address from the unit's link_bindings, as tools/link_x86.py does for COFF relocations.
 Constants the source defines (string literals) are compared with retail byte for byte.
+A jump table the compiler places after the function is a symbol too: the record names it in
+"tables" with its entry count, and check_table compares its entries with the retail table.
 """
 
 import struct
@@ -82,7 +84,33 @@ def _file_offset(image, va, size):
     raise ValueError(f"address 0x{va:x} is outside the linked image's sections")
 
 
-def place_function(image, size, address, link, bindings, *, read_constant=None):
+TABLE_ENTRY_LIMIT = 0x1000
+
+
+def check_table(image, built, size, address, linked, retail, count, read_table):
+    """Check a jump table that the compiler placed after its function.
+
+    The table holds absolute addresses of labels inside the function, so each entry must lie in
+    the linked function. Rebased to the retail function, the entries must be the bytes retail holds
+    at the table's retail address, which must also lie after the function's end."""
+    if type(count) is not int or not 0 < count <= TABLE_ENTRY_LIMIT:
+        raise ValueError("a jump table needs a positive entry count")
+    if read_table is None:
+        raise ValueError("jump tables need the retail image")
+    if type(linked) is not int or type(retail) is not int:
+        raise ValueError("jump table addresses must be integers")
+    if linked < built + size or retail < address + size:
+        raise ValueError("a jump table must lie after its function in the image and in retail")
+    start, _ = _file_offset(image, linked, 4 * count)
+    entries = struct.unpack_from(f"<{count}I", image, start)
+    if any(not built <= entry < built + size for entry in entries):
+        raise ValueError("a jump table entry lies outside its function")
+    rebased = [(address + entry - built) & 0xFFFFFFFF for entry in entries]
+    if read_table(retail, 4 * count) != struct.pack(f"<{count}I", *rebased):
+        raise ValueError(f"jump table at 0x{retail:x} differs from retail")
+
+
+def place_function(image, size, address, link, bindings, *, read_constant=None, read_table=None):
     """Return the function's bytes from the linked DLL as they appear at retail `address`."""
     offset, built = link["rebuilt_offset"], link["rebuilt_address"]
     if type(offset) is not int or type(built) is not int:
@@ -92,6 +120,10 @@ def place_function(image, size, address, link, bindings, *, read_constant=None):
         raise ValueError("the function's offset and address disagree or lie outside code")
     code = bytearray(image[offset:offset + size])
     symbols, constants = link["symbols"], link.get("constants", {})
+    tables = link.get("tables", {})
+    if type(tables) is not dict:
+        raise ValueError("tables maps each jump table to its entry count")
+    referenced = set()
     seen = set()
     for site, kind, name in link["fields"]:
         if type(site) is not int or not 0 <= site <= size - 4 or site in seen:
@@ -111,7 +143,12 @@ def place_function(image, size, address, link, bindings, *, read_constant=None):
         if target != symbols[name]:
             raise ValueError(f"the field at +0x{site:x} does not refer to {name}")
         retail = bindings[name]["va"]
-        if name in constants:
+        if name in tables:
+            if kind != "abs":
+                raise ValueError(f"jump table {name} is referred to by an absolute field")
+            check_table(image, built, size, address, target, retail, tables[name], read_table)
+            referenced.add(name)
+        elif name in constants:
             length = constants[name]
             if read_constant is None or type(length) is not int or length <= 0:
                 raise ValueError("constants need their size and the retail image")
@@ -120,4 +157,6 @@ def place_function(image, size, address, link, bindings, *, read_constant=None):
                 raise ValueError(f"constant {name} differs from retail")
         value = retail if kind == "abs" else (retail - (address + site + 4)) & 0xFFFFFFFF
         struct.pack_into("<I", code, site, value)
+    if set(tables) - referenced:
+        raise ValueError("tables name a jump table that no field refers to")
     return bytes(code)

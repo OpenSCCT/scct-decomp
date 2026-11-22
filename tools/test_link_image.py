@@ -1,6 +1,7 @@
 import struct
 import unittest
 
+from images import file_pe_data
 from link_image import link_arguments, place_function, stub_object
 
 BASE = 0x10000000
@@ -76,6 +77,72 @@ class LinkImageTests(unittest.TestCase):
     def test_link_arguments_include_roots(self):
         self.assertIn("/INCLUDE:_driver", link_arguments(self.link))
         self.assertIn("/LTCG", link_arguments(self.link))
+
+
+class JumpTableTests(unittest.TestCase):
+    """A switch's jump table, placed after its function in the linked DLL and in retail."""
+
+    def setUp(self):
+        self.built = BASE + 0x1000
+        self.address = 0x10904000
+        self.retail_table = self.address + 0x20
+        # jmp [table + eax*4]; three arms; two pad bytes; the table with three entries at built + 12.
+        self.function = b"\xff\x24\x85" + struct.pack("<I", self.built + 12) + b"\xc3\xc3\xc3"
+        self.code = self.function + b"\xcc\xcc" + struct.pack("<3I", self.built + 7, self.built + 8, self.built + 9)
+        self.link = {"roots": ["_driver"], "stubs": [], "rebuilt_offset": 0x200, "rebuilt_address": self.built,
+                     "fields": [[3, "abs", "$L_table"]], "symbols": {"$L_table": self.built + 12},
+                     "tables": {"$L_table": 3}}
+        self.bindings = {"$L_table": {"va": self.retail_table, "basis": "fixture retail jump table"}}
+        self.retail = {self.retail_table: struct.pack("<3I", self.address + 7, self.address + 8, self.address + 9)}
+
+    def read(self, va, size):
+        return self.retail.get(va, b"")[:size]
+
+    def place(self, code=None, **changes):
+        link = dict(self.link, **changes)
+        return place_function(image(self.code if code is None else code), len(self.function), self.address,
+                              link, self.bindings, read_table=self.read)
+
+    def test_table_is_placed_at_its_retail_address(self):
+        self.assertEqual(self.place(), b"\xff\x24\x85" + struct.pack("<I", self.retail_table) + b"\xc3\xc3\xc3")
+
+    def test_entries_must_match_the_retail_table(self):
+        self.retail[self.retail_table] = struct.pack("<3I", self.address + 7, self.address + 9, self.address + 8)
+        with self.assertRaisesRegex(ValueError, "differs from retail"):
+            self.place()
+
+    def test_retail_table_must_lie_after_its_function(self):
+        self.bindings = {"$L_table": {"va": self.address + 5, "basis": "fixture"}}
+        with self.assertRaisesRegex(ValueError, "after its function"):
+            self.place()
+
+    def test_entries_must_name_labels_inside_the_linked_function(self):
+        code = self.function + b"\xcc\xcc" + struct.pack("<3I", self.built + 7, self.built + 8, self.built + 20)
+        with self.assertRaisesRegex(ValueError, "outside its function"):
+            self.place(code)
+
+    def test_declared_table_must_be_referred_to_by_a_field(self):
+        with self.assertRaisesRegex(ValueError, "no field refers"):
+            self.place(fields=[])
+
+    def test_table_needs_the_retail_image(self):
+        with self.assertRaisesRegex(ValueError, "retail image"):
+            place_function(image(self.code), len(self.function), self.address, self.link, self.bindings)
+
+    def test_table_needs_a_positive_entry_count(self):
+        with self.assertRaisesRegex(ValueError, "entry count"):
+            self.place(tables={"$L_table": 0})
+
+    def test_table_field_must_be_absolute(self):
+        with self.assertRaises(ValueError):
+            self.place(fields=[[3, "rel32", "$L_table"]])
+
+    def test_file_pe_data_reads_code_as_the_file_stores_it(self):
+        pe32 = bytearray(image(self.code))
+        struct.pack_into("<H", pe32, 0x40 + 24, 0x10B)  # the PE32 optional header magic
+        self.assertEqual(file_pe_data(bytes(pe32), self.built, len(self.code)), self.code)
+        with self.assertRaisesRegex(ValueError, "file-backed"):
+            file_pe_data(bytes(pe32), BASE + 0x9000, 4)
 
 
 if __name__ == "__main__":

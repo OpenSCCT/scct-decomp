@@ -63,6 +63,50 @@ def handler_stub(obj, section, value):
             and obj[raw + value] == 0xb8 and obj[raw + value + 5] == 0xe9)
 
 
+def writable_data(obj, section):
+    """True when the section is initialized or uninitialized data that the program may write."""
+    header = 20 + (section - 1) * 40
+    flags, = struct.unpack_from("<I", obj, header + 36)
+    return (not flags & 0x20 and bool(flags & 0xc0) and bool(flags & 0x40000000)
+            and bool(flags & 0x80000000))
+
+
+def switch_arms(obj, body, section, size, symbols, relocation_data):
+    """Return the symbol indices of the switch arm labels that this section's jump tables name.
+
+    A jump table is the run of consecutive 4-byte absolute entries that begins at a local label
+    (storage class 3) which the code reaches by an indirect jump, FF 24 with a SIB byte of scale 4
+    and no base register: jmp [label + index*4]. Each local label in that run is an arm.
+    """
+    entries = {}
+    for position, sym_index, relocation in struct.iter_unpack("<IIH", relocation_data):
+        entries[position] = (sym_index, relocation)
+
+    def local_label(sym_index):
+        symbol, _, sym_section, kind, _ = symbols[sym_index]
+        return (kind == 0 and sym_section == section
+                and symbol.startswith(b"$L") and symbol[2:].isdigit())
+
+    arms = set()
+    for position, (sym_index, relocation) in entries.items():
+        _, value, _, _, storage = symbols[sym_index]
+        if (relocation != 6 or storage != 3 or not local_label(sym_index)
+                or value >= size or position < 3 or position + 4 > size):
+            continue
+        sib = body[position - 1]
+        if (body[position - 3:position - 1] != b"\xff\x24" or (sib & 0xc7) != 0x85
+                or ((sib >> 3) & 7) == 4):
+            continue
+        entry = value
+        while entry + 4 <= size and entry in entries and entries[entry][1] == 6:
+            arm = entries[entry][0]
+            if symbols[arm][4] not in (3, 6) or not local_label(arm):
+                break
+            arms.add(arm)
+            entry += 4
+    return arms
+
+
 def link_function(obj, name, length, address, bindings, *, read_constant=None):
     """Return the fully linked section. The retail function bytes are never an input."""
     sections, symbols, functions, section_functions, handlers = symbol_index(bytes(obj))
@@ -88,9 +132,14 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
     relocation_data = region(obj, relocs, count * 10)
     used = set()
     fields = set()
+    arms = switch_arms(obj, body, section, size, symbols, relocation_data)
     for position, sym_index, relocation in struct.iter_unpack("<IIH", relocation_data):
         symbol, value, sym_section, kind, storage = symbols[sym_index]
-        local = (storage == 3 and kind == 0 and sym_section == section
+        # VC6 writes a switch's arms as class 6 (IMAGE_SYM_CLASS_LABEL) labels. The COFF
+        # specification defines class 6 as a label, so one is local only when a jump table
+        # of this section names it.
+        table_arm = storage == 6 and sym_index in arms
+        local = ((storage == 3 or table_arm) and kind == 0 and sym_section == section
                  and symbol.startswith(b"$L") and symbol[2:].isdigit())
         private = storage in (3, 6) and not local
         # C++ exception frames push this function's own frame handler, a label in the
@@ -107,6 +156,12 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
         if private and relocation == 6 and kind == 0 and 1 <= sym_section <= sections and symbol.startswith(b"$T"):
             info_name, = struct.unpack_from("<8s", obj, 20 + (sym_section - 1) * 40)
             funcinfo = info_name.rstrip(b"\0") == b".xdata$x"
+        # A function-local static is private data: its storage slot and its guard word are each
+        # the start of a writable .bss or .data contribution, and the code reaches them by absolute
+        # DIR32 reference. Like an external global, each takes its address from the binding.
+        private_data = (private and relocation == 6 and storage == 3 and kind == 0
+                        and 1 <= sym_section <= sections and sym_section != section
+                        and not symbol.startswith(b"$") and writable_data(obj, sym_section))
         if local:
             if relocation != 6 or value >= size:
                 raise ValueError("invalid section-local switch label")
@@ -119,6 +174,9 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
                 dest_flags, = struct.unpack_from("<I", obj, dest_header + 36)
                 if dest_name.rstrip(b"\0") != b".text$x" or dest_flags & 0x20000020 != 0x20000020 or value >= dest_size:
                     raise ValueError("frame handler must be a label in the unwind code section")
+            elif private_data:
+                if value != 0:
+                    raise ValueError("private data must start its own contribution")
             elif funcinfo:
                 pass
             elif private:
@@ -151,7 +209,7 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
                 const_flags, = struct.unpack_from("<I", obj, const_header + 36)
                 if value != 0 or const_flags & 0xe0000040 != 0x40000040:
                     raise ValueError(f"expected a read-only virtual function table for {symbol}")
-            elif funcinfo or handler:
+            elif funcinfo or handler or private_data:
                 pass
             elif sym_section and kind != 0x20:
                 const_header = 20 + (sym_section - 1) * 40
@@ -170,7 +228,7 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
         addend, = struct.unpack_from("<I", body, position)
         if local and addend:
             raise ValueError("switch label relocation has a nonzero addend")
-        if private and addend and not funcinfo:
+        if private and addend and not funcinfo and not private_data:
             raise ValueError("private function relocation has a nonzero addend")
         if relocation == 0x14:  # IMAGE_REL_I386_REL32
             dest -= address + position + 4
