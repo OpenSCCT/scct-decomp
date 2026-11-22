@@ -1,5 +1,9 @@
 struct Bank;
+/* FAKEMATCH: the original passes a bank as a stack argument; this one-member struct only steers
+   that stack slot. */
 struct BankValue { struct Bank *ptr; };
+/* FAKEMATCH: the original passes a bank reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct BankRef { struct Bank **ptr; };
 struct Banks { struct Bank **data; int count; };
 struct Records { void *data; int count; };
