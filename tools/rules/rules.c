@@ -1645,6 +1645,12 @@ static void AddDeclaration( int fileIndex, int begin, int end ) {
 		}
 		return;
 	}
+	/* an operator function (`T& C::operator=( ... )`) is never a variable, though its "=" hides the paren */
+	for ( i = begin; i < end; i++ ) {
+		if ( tokens[i].symbol == sOperator ) {
+			return;
+		}
+	}
 	/* variables: each declarator's name is the last name before "=", "[", "," or the end */
 	i = begin;
 	while ( i < end ) {
