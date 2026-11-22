@@ -37,6 +37,8 @@ extern void __stdcall SND_fn_vFreeSnd(void *);
 extern void *__stdcall SND_fn_pvMallocSnd(unsigned);
 /* A floating parameter keeps an integer flag on the stack in MSVC x86 fastcall.
    This supplies the single-bit release flag expected by the deleting destructor. */
+/* FAKEMATCH: bit pattern passed as a float argument; the single-bit flag is the integer the
+   original passes in that stack slot. */
 static const union {
     Word bits;
     float stack_word;

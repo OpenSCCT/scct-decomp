@@ -13,6 +13,8 @@ struct Context {
 /* FAKEMATCH: the original passes a label as a stack argument; this one-member struct only steers
    that stack slot. */
 struct Label { const unsigned short *ptr; };
+/* FAKEMATCH: bit pattern passed as a float argument; the union integer word fills the stack slot
+   that the original fills with an integer. */
 union StackWord { unsigned value; float argument; };
 extern const void *const manager_methods[];
 extern unsigned char bypass_lock;

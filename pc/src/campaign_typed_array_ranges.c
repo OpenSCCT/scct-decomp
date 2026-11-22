@@ -5,6 +5,8 @@ struct Index { int value; };
 /* FAKEMATCH: the original passes its count as a stack argument; this one-member struct only
    steers that stack slot. */
 struct Count { unsigned value; };
+/* FAKEMATCH: bit pattern passed as a float argument; the union integer word fills the stack slot
+   that the original fills with an integer. */
 union StackWord { unsigned value; float argument; };
 
 extern void __fastcall insert_0361f0(struct Array *, struct Index, struct Count, float);

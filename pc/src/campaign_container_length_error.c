@@ -50,11 +50,15 @@ static __forceinline void raise_length_error(const char *message, float length_b
 
 #define STACK_LENGTH(message) ((sizeof(message) - 1) * 1.40129846e-45f)
 
+/* FAKEMATCH: STACK_LENGTH stores the length as a float bit pattern; the original passes that
+   integer on the stack. */
 void __fastcall vector_length_error(void *owner)
 {
     raise_length_error(vector_message, STACK_LENGTH("vector<T> too long"));
 }
 
+/* FAKEMATCH: STACK_LENGTH stores the length as a float bit pattern; the original passes that
+   integer on the stack. */
 void __fastcall deque_length_error(void *owner)
 {
     raise_length_error(deque_message, STACK_LENGTH("deque<T> too long"));

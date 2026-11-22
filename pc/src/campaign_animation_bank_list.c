@@ -14,6 +14,8 @@ struct Mesh {
 };
 extern void __fastcall grow_banks(struct Banks *, float);
 extern int __fastcall add_zeroed(struct Records *, float);
+/* FAKEMATCH: bit pattern passed as a float argument; the union integer word fills the stack slot
+   that the original fills with an integer. */
 union StackInt { int value; float argument; };
 
 __declspec(noinline) int __fastcall add_unique_bank(struct Banks *list, struct BankRef bank)

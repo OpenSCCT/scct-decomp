@@ -1,3 +1,5 @@
+/* FAKEMATCH: bit pattern passed as a float argument; the union integer word fills the stack slot
+   that the original fills with an integer. */
 union StackWord { unsigned value; float argument; };
 struct Record4 { unsigned int data[1]; };
 struct Vector4 { void *allocator; struct Record4 *begin, *end, *limit; };

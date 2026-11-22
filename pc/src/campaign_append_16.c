@@ -7,6 +7,8 @@ struct Position16 { struct Record16 *ptr; };
    steers that stack slot. */
 struct RecordRef16 { const struct Record16 *ptr; };
 /* VC7.1 passes a float word on the stack in this member-call adapter. */
+/* FAKEMATCH: bit pattern passed as a float argument; the union integer word fills the stack slot
+   that the original fills with an integer. */
 union CountWord { int value; float argument; };
 
 #define APPEND(Entry, Insert) \
