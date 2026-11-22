@@ -201,9 +201,9 @@ Send a fakematch back as `MATCH-PENDING`. Never rewrite it during a merge.
 
 ## Rule changes
 
-None yet: the catalogue applies as written. Tightening or relaxing a rule is a maintainers'
-ruling, recorded here with its reason, and the checker changes in the same commit. Eight rulings
-are open:
+No rule has changed. Tightening or relaxing a rule is a maintainers' ruling, recorded here with
+its reason, and the checker changes in the same commit. Eight rulings were open; the decisions
+made on them are in "Decisions, 2026-11-22" below. The open questions are kept here as written:
 
 1. **Members written as free functions.** 463 definitions are `__fastcall` functions whose
    second parameter is never read: a C spelling of a C++ member, with a dummy standing in for
@@ -253,6 +253,30 @@ are open:
    holds such a unit to the same rows as any other: the vector insert's
    `if ( Count == 0 ) ; else if …` is flagged as an empty `if` although the Toolkit's own
    `<vector>` is written that way.
+
+### Decisions, 2026-11-22
+
+Made by the orchestrator under the project owner's delegation, so the owner can revisit them. None of
+them changes the checker.
+
+1. **Members written as free functions:** advisory, as now. Making the pattern [match] would flag 463
+   functions whose class layouts are not recovered yet.
+2. **Unwind funclets and frame-handler stubs:** they stay separate units. Their volatile state flags remain
+   R17 until real source is found. Counting them with their parents waits until the parents match.
+3. **Period compiler as a condition of a match:** a candidate that only Clang or MSVC 19.x reproduces stays a
+   lead. Source written for 2002 and 2003 compilers must build with those compilers.
+4. **One source function at several addresses:** not a blocker. The checker keeps reporting it for review
+   (R34).
+5. **Library and compiler-generated units:** they get a category of their own, as the `crt_` units already
+   do. The progress reports do not have that category yet, so the totals stay as they are until the
+   reporting tool changes.
+6. **One header for two programs:** the shared headers keep their `SCCT_VERSUS` conditionals for now.
+   Splitting them would touch every unit in both programs and invalidate their receipts. It is a dedicated
+   lane, to run after the shared-header R1 and R2 work.
+7. **Link-time convention stand-ins:** `TArrayLtcg` stays, marked `FAKEMATCH`, until each class has an
+   `ltcg_link` replacement. That is a lane of its own.
+8. **Standard library code typed in again:** R6 is the target. The verifier first needs the Toolkit's include
+   directory, which is a tooling change, scheduled after the matching lanes.
 
 ## Tooling
 
