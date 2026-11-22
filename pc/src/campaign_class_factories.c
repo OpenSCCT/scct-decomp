@@ -10,18 +10,24 @@ struct RuntimeClass;
 struct PlacementObject;
 struct Allocator;
 
+/* FAKEMATCH: bit pattern passed as a float argument to keep the original's integer word in its stack slot. */
 typedef union { unsigned int value; float stack_word; } IntegerStackWord;
+/* FAKEMATCH: the original passes its name as a stack argument; this one-member struct only steers that stack slot. */
 typedef struct { const unsigned short *value; } NameArgument;
+/* FAKEMATCH: the original passes its placement routine as a stack argument; this one-member struct only steers that stack slot. */
 typedef struct { void (__cdecl *value)(struct PlacementObject *); } PlacementArgument;
+/* FAKEMATCH: the original passes its static constructor as a stack argument; this one-member struct only steers that stack slot. */
 typedef struct { void (__fastcall *value)(struct PlacementObject *); } StaticConstructorArgument;
 struct EngineGuid { unsigned int a, b, c, d; };
 
+/* FAKEMATCH: bit pattern passed as a float argument; the float only fills the stack slot that holds the original's integer size. */
 struct AllocatorMethods {
     void *(__fastcall *allocate)(struct Allocator *, float size, NameArgument tag);
 };
 struct Allocator { const struct AllocatorMethods *methods; };
 extern struct Allocator *engine_allocator;
 
+/* FAKEMATCH: bit patterns passed as float arguments for the native, instance size, class flags and object flags words; each call passes IntegerStackWord's stack_word. */
 struct RuntimeClass *__fastcall construct_runtime_class(
     void *storage, float native, float instance_size, float class_flags,
     struct EngineGuid guid, NameArgument name, NameArgument package, NameArgument config,
