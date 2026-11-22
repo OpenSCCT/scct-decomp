@@ -4,6 +4,7 @@
 class UnkType_1131a730
 {
 public:
+    void Unk_10dc73d0(int Value);
     void Unk_10dc74f0(int Value);
 };
 
