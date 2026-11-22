@@ -1,5 +1,9 @@
 struct Record { const void *methods; };
+/* FAKEMATCH: the original passes its deleting flags as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct DeleteFlags { unsigned value; };
+/* FAKEMATCH: the original passes the allocation as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Allocation { struct Record *object; };
 struct Heap;
 struct HeapOps {
