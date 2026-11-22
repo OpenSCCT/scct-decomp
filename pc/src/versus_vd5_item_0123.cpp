@@ -2,13 +2,14 @@
 // sequence belong to the given group? Same layout as the neighbouring
 // accessors in pc/src/versus_animation_sequences.c; this is unused.
 struct mesh_instance;
+struct sequence_notify;
 struct animation_sequence {
     int name;
     const int *groups;
     int group_count, group_capacity;
     int start_frame, frame_count;
     float rate;
-    const void *notifies;
+    const struct sequence_notify *notifies;
     int notify_count;
 };
 
