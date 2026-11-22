@@ -1,0 +1,80 @@
+[
+  {
+    "id": "synthetic-unit",
+    "offset": 512,
+    "size": 48,
+    "inputs": [
+      "src/synthetic_unit.c",
+      "src/synthetic_types.h",
+      "src/nested/synthetic_deeper.h"
+    ],
+    "rebuilt_symbol": "_unit_function",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/synthetic_unit.obj src/synthetic_unit.c",
+    "identification": "Fixture: a unit that calls two externals, reads one global and calls a private helper.",
+    "link_bindings": {
+      "_ext_unlisted": {
+        "va": 277873472,
+        "basis": "Fixture: the function map does not list the callee at file offset 0x340."
+      },
+      "_ext_callee": {
+        "va": 277873408,
+        "basis": "Fixture: a function entry at file offset 0x300."
+      },
+      "_ext_global": {
+        "va": 277873664,
+        "basis": "Fixture: a global at file offset 0x400."
+      },
+      "_helper": {
+        "va": 277873536,
+        "basis": "Fixture: the unit's own static helper at file offset 0x380."
+      }
+    }
+  },
+  {
+    "id": "synthetic-wrong",
+    "offset": 512,
+    "size": 48,
+    "inputs": [
+      "src/synthetic_unit.c",
+      "src/synthetic_types.h",
+      "src/nested/synthetic_deeper.h"
+    ],
+    "rebuilt_symbol": "_unit_function",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/synthetic_unit.obj src/synthetic_unit.c",
+    "identification": "Fixture: a record with one wrong address, one missing binding and one binding the unit does not use.",
+    "link_bindings": {
+      "_ext_unlisted": {
+        "va": 277873472,
+        "basis": "Fixture: correct address."
+      },
+      "_ext_callee": {
+        "va": 277873408,
+        "basis": "Fixture: correct address."
+      },
+      "_ext_global": {
+        "va": 277873668,
+        "basis": "Fixture: four bytes past the global."
+      },
+      "_ghost": {
+        "va": 277873536,
+        "basis": "Fixture: a binding the unit does not reference."
+      }
+    }
+  },
+  {
+    "id": "synthetic-misaligned",
+    "offset": 528,
+    "size": 48,
+    "inputs": [
+      "src/synthetic_unit.c",
+      "src/synthetic_types.h",
+      "src/nested/synthetic_deeper.h"
+    ],
+    "rebuilt_symbol": "_unit_function",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/synthetic_unit.obj src/synthetic_unit.c",
+    "identification": "Fixture: the same size at the wrong offset, so the bytes cannot match retail."
+  }
+]
