@@ -1,6 +1,7 @@
 """Rebuild the Steam 252084 PC units and verify their checked-in byte receipts."""
 
 import argparse
+import hashlib
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from fnmatch import fnmatch
@@ -22,6 +23,7 @@ from manifests import load_target, save_receipts
 
 
 CLANG_X86_TARGET = "i686-pc-windows-msvc"
+CLANG_RELEASE_19_1_0_SHA256 = "e6936af3d8a4e2badd139699816f40235e724e2131ee05651c94c1c371f7fb53"
 
 
 def compiler_identity(cl, env, *, clang=False):
@@ -29,9 +31,15 @@ def compiler_identity(cl, env, *, clang=False):
         version = subprocess.run([cl, "--target=" + CLANG_X86_TARGET, "--version"], env=env,
                                  capture_output=True, text=True, errors="replace", check=True).stdout
         build = re.search(r"(?m)^clang version ([\d.]+) \([^\n]*\b([0-9a-f]{40})\)", version)
-        if not build or f"Target: {CLANG_X86_TARGET}" not in version:
-            raise ValueError(f"cannot identify revision and x86 target of Clang at {cl}")
-        return f"Clang {build[1]} ({build[2]}) for {CLANG_X86_TARGET}"
+        if build and f"Target: {CLANG_X86_TARGET}" in version:
+            return f"Clang {build[1]} ({build[2]}) for {CLANG_X86_TARGET}"
+        # The official 19.1.0 release prints no git revision. Its exact banner and the binary's
+        # SHA-256, recorded in pc/TOOLCHAIN.md, identify it; any other build is refused.
+        digest = hashlib.sha256(Path(cl).read_bytes()).hexdigest()
+        if (re.search(r"(?m)^clang version 19\.1\.0$", version) and f"Target: {CLANG_X86_TARGET}" in version
+                and digest == CLANG_RELEASE_19_1_0_SHA256):
+            return f"Clang 19.1.0 for {CLANG_X86_TARGET}"
+        raise ValueError(f"cannot identify revision and x86 target of Clang at {cl}")
     # VC6 and the Visual C++ Toolkit 2003 report their x86 builds in the banner.
     banner = subprocess.run([cl], env=env, capture_output=True, text=True, errors="replace")
     legacy = re.search(r"Microsoft .*Compiler Version ((?:12|13)\.\d+\.\d+) for 80x86\b", banner.stderr + banner.stdout)
