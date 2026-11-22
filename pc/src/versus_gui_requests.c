@@ -16,11 +16,15 @@ struct ProfileCollection {
 
 /* The direct request getters fetch the caller's result pointer from its VM
  * stack argument before reading the fixed-image global. */
+/* FAKEMATCH: the volatile result parameter only forces the load order of the caller result slot;
+   the original load order is not recovered. */
 void __fastcall versus_gui_join_ip_requested(struct GuiController *self, unsigned reserved_edx,
                                              struct VersusScriptFrame *stack, int *volatile result) {
     ++stack->code;
     *result = JOIN_IP_REQUEST;
 }
+/* FAKEMATCH: the volatile result parameter only forces the load order of the caller result slot;
+   the original load order is not recovered. */
 void __fastcall versus_gui_create_server_requested(struct GuiController *self, unsigned reserved_edx,
                                                    struct VersusScriptFrame *stack, int *volatile result) {
     ++stack->code;
@@ -47,6 +51,8 @@ void __fastcall versus_gui_clear_create_server(struct GuiController *self, unsig
     ++stack->code;
     CREATE_SERVER_REQUEST = 0;
 }
+/* FAKEMATCH: the volatile result parameter only forces the load order of the caller result slot;
+   the original load order is not recovered. */
 void __fastcall versus_gui_default_server_port(struct GuiController *self, unsigned reserved_edx,
                                                struct VersusScriptFrame *stack, int *volatile result) {
     ++stack->code;
