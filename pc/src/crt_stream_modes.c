@@ -1,4 +1,5 @@
 #include "campaign_globals.h"
+extern int _commode, _cflush;
 
 typedef unsigned short WideChar;
 struct Stream {

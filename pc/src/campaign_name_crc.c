@@ -1,4 +1,5 @@
 #include "campaign_globals.h"
+extern unsigned crc_table[256];
 
 unsigned *__cdecl name_crc(unsigned *destination, const char *name)
 {
