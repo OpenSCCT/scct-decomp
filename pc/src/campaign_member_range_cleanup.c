@@ -1,6 +1,6 @@
 #include "campaign_array_storage.h"
 
-union StackWord { int integer; float argument; };
+union StackWord { unsigned value; float argument; };
 struct Owner4 { unsigned char prefix[4]; struct Array records; };
 struct Owner8 { unsigned char prefix[8]; struct Array records; };
 struct Owner12 { unsigned char prefix[12]; struct Array records; };

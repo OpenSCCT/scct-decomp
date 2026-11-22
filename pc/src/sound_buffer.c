@@ -2,8 +2,8 @@ typedef unsigned long Word;
 typedef long Result;
 /* The float formal occupies a stack word; the retail signature consumes its raw bits. */
 typedef union {
-    Word value;
-    float stack_word;
+    unsigned value;
+    float argument;
 } StackWord;
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct

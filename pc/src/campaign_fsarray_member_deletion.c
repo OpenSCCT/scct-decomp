@@ -10,7 +10,7 @@ struct Array { void *data; unsigned count; };
 
 struct Flags { unsigned value; };
 /* These stack words preserve the integer argument bits for the x86 member call. */
-union StackWord { unsigned value; float stack_word; };
+union StackWord { unsigned value; float argument; };
 
 extern void __fastcall remove_range_3cb3f0(struct Array *, float, float, float);
 
@@ -28,7 +28,7 @@ static __forceinline void free_allocation(void *pointer)
         union StackWord count; \
         struct Array *array = (struct Array *)((unsigned char *)self + MemberOffset); \
         count.value = array->count; \
-        Remove(array, 0.0f, count.stack_word, stride.stack_word); \
+        Remove(array, 0.0f, count.argument, stride.argument); \
         if (array->data) free_allocation(array->data); \
         array->data = 0; \
      \

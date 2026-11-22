@@ -1,4 +1,4 @@
-union StackWord { unsigned value; float stack; };
+union StackWord { unsigned value; float argument; };
 struct Record4 { unsigned int data[1]; };
 struct Vector4 { void *allocator; struct Record4 *begin, *end, *limit; };
 struct Position4 { struct Record4 *ptr; };
@@ -104,7 +104,7 @@ extern void __fastcall copies_73b470_4(struct Vector4 *, struct Position4, float
         static const union StackWord one = {1}; \
         unsigned size = !vector->begin ? 0 : (unsigned)(vector->end - vector->begin); \
         int index = size == 0 ? 0 : where.ptr - vector->begin; \
-        Insert(vector, where, one.stack, item); \
+        Insert(vector, where, one.argument, item); \
         output.ptr->ptr = vector->begin + index; \
         return output.ptr; \
     }

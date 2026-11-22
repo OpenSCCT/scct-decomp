@@ -1,7 +1,7 @@
 struct Object { const void *methods; unsigned short allocation_size; };
 struct Reference;
 /* The virtual destructor receives one 32-bit deletion flag on the stack. */
-union StackWord { unsigned value; float stack; };
+union StackWord { unsigned value; float argument; };
 struct RefMethods { void (__fastcall *destroy)(struct Reference *, float); };
 struct Reference { const struct RefMethods *methods; unsigned short size; unsigned short references; };
 struct Flags { unsigned value; };
@@ -36,7 +36,7 @@ extern void __fastcall parent_58f020(struct Object *);
         self->methods = DerivedMethods; \
         if (item) { \
             --item->references; \
-            if (!*(volatile unsigned short *)&item->references) item->methods->destroy(item, deleting.stack); \
+            if (!*(volatile unsigned short *)&item->references) item->methods->destroy(item, deleting.argument); \
             *slot = 0; \
         } \
         CleanupParent(self); \

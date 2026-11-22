@@ -1,5 +1,5 @@
 #include "campaign_array_resize_abi.h"
-union StackWord { int integer; float argument; };
+union StackWord { unsigned value; float argument; };
 
 #define CLEANUP(Entry, Object, Remove, Width, Tag) \
 void Entry(void) \

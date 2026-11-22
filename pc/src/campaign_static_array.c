@@ -1,6 +1,6 @@
 #include "campaign_array_storage.h"
 /* The recovered member ABI puts these integer bit patterns on the stack. */
-union StackWord { int integer; float argument; };
+union StackWord { unsigned value; float argument; };
 
 #define CLEANUP(Entry, Object, Remove, Width) \
 void Entry(void) \

@@ -2,7 +2,7 @@
 
 struct Owner { struct Array records; struct ArrayBuffer auxiliary; int auxiliary_count; };
 struct DeleteFlags { unsigned value; };
-union StackWord { int integer; float argument; };
+union StackWord { unsigned value; float argument; };
 
 extern void __fastcall remove_007710(struct Array *, float, struct ArraySize, float);
 extern void __fastcall remove_019a00(struct Array *, float, struct ArraySize, float);
