@@ -43,7 +43,11 @@ target. A call target the function map omits is reported on standard error only.
 
 ## Tests
 
+From a Developer Command Prompt (after `vcvars32.bat`), run the script with `cl` as the compiler and
+the Toolkit 2003 `cl.exe` for the compile path:
+
 ```powershell
+$env:CC = 'cl'
 $env:BINDGEN_CL = 'C:\Program Files (x86)\Microsoft Visual C++ Toolkit 2003\bin\cl.exe'
 sh tools/bindgen/test_bindgen.sh
 ```
