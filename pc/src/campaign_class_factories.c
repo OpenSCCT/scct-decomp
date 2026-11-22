@@ -4,6 +4,8 @@
    parameters. IntegerStackWord supplies the original unsigned integer word
    through the float parameter's stack slot without numeric conversion.
    Pointer arguments use one-word aggregates for the same stack convention. */
+#include "campaign_class_factory_symbols.h"
+
 struct RuntimeClass;
 struct PlacementObject;
 struct Allocator;
@@ -19,7 +21,6 @@ struct AllocatorMethods {
 };
 struct Allocator { const struct AllocatorMethods *methods; };
 extern struct Allocator *engine_allocator;
-extern const unsigned short config_System[], config_User[];
 
 struct RuntimeClass *__fastcall construct_runtime_class(
     void *storage, float native, float instance_size, float class_flags,
@@ -27,9 +28,6 @@ struct RuntimeClass *__fastcall construct_runtime_class(
     float object_flags, PlacementArgument placement, StaticConstructorArgument initialize);
 
 #define DEFINE_CLASS_FACTORY(Type, InstanceSize, Flags, Config)                \
-    extern const unsigned short native_name_##Type[];                         \
-    extern void place_##Type(struct PlacementObject *);                       \
-    extern void __fastcall static_init_##Type(struct PlacementObject *);      \
     struct RuntimeClass *create_##Type(const unsigned short *package)         \
     {                                                                         \
         static const IntegerStackWord descriptor_size = { 0x2e0 };            \
