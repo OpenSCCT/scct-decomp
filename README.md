@@ -17,7 +17,7 @@ repository as `decomp/` and shows its progress on the player website.
 <!-- status:begin -->
 | Build and program | Verified bytes | Candidate bytes | Measured code |
 | --- | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 980,187 | 32,611 | 8,082,506 bytes |
+| Steam 252084 · Campaign and co-op | 981,317 | 32,616 | 8,082,506 bytes |
 | Steam 252084 · Versus | 477,016 | 57,722 | 2,991,392 bytes |
 | PAL 1.01 · Disc boot | 0 | 0 | Unmeasured |
 | PAL 1.01 · Offline program | 0 | 0 | Unmeasured |
@@ -40,7 +40,7 @@ scattered declarations or a compiler-steering trick is `MATCH-PENDING`: open wor
 <!-- rules:begin -->
 | Build and program | Bytes matched | Verified | Verified under the rules | `MATCH-PENDING` |
 | --- | ---: | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 1,012,798 | 980,187 | 153,188 | 850,977 |
+| Steam 252084 · Campaign and co-op | 1,013,933 | 981,317 | 154,318 | 850,977 |
 | Steam 252084 · Versus | 534,738 | 477,016 | 25,043 | 492,464 |
 | PAL 1.01 · Online program | 8 | 0 | 0 | 0 |
 <!-- rules:end -->
