@@ -25,21 +25,53 @@ typedef struct Script_Pawn *RefPawn;
 typedef struct Script_PhysicsVolume *RefPhysicsVolume;
 typedef struct Script_Sound *RefSound;
 typedef struct Script_StaticMesh *RefStaticMesh;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefActor value; } Arg_RefActor;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefController value; } Arg_RefController;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefEGameplayObject value; } Arg_RefEGameplayObject;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefEPawn value; } Arg_RefEPawn;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefEWeaponAttachment value; } Arg_RefEWeaponAttachment;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefPawn value; } Arg_RefPawn;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefPhysicsVolume value; } Arg_RefPhysicsVolume;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefSound value; } Arg_RefSound;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { RefStaticMesh value; } Arg_RefStaticMesh;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { ScriptBoolean value; } Arg_ScriptBoolean;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { ScriptByte value; } Arg_ScriptByte;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { ScriptEventName value; } Arg_ScriptEventName;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { ScriptRotator value; } Arg_ScriptRotator;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { ScriptVector value; } Arg_ScriptVector;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { float value; } Arg_float;
+/* FAKEMATCH: the original passes this script argument as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { int value; } Arg_int;
 
 void __fastcall script_frame_ActorEntered(struct ScriptObject *object, Arg_RefActor Other)

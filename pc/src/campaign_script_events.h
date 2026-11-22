@@ -5,8 +5,14 @@
    fastcall ABI and leaves ECX available for the UObject receiver. */
 struct ScriptObject;
 struct ScriptFunction;
+/* FAKEMATCH: the original passes a function reference as a stack argument; this one-member
+   struct only steers that stack slot. */
 typedef struct { struct ScriptFunction *value; } FunctionReference;
+/* FAKEMATCH: the original passes an event name as a stack argument; this one-member struct only
+   steers that stack slot. */
 typedef struct { unsigned int index; } ScriptEventName;
+/* FAKEMATCH: the original passes a parameter block reference as a stack argument; this one-
+   member struct only steers that stack slot. */
 typedef struct { void *address; } ParameterReference;
 struct ScriptObjectMethods {
     void *earlier_methods[4];
