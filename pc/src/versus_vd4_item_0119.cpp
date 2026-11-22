@@ -1,6 +1,9 @@
 // Work item 0119: Versus RVA 0x1f430-0x1f5cb.
 // An object-array iterator (UObject::GObjObjects style) and a
 // TMap<UObject*, 8-byte value> instantiation, all LTCG (register conventions).
+#include "versus_build.h"
+#include "unreal_object.h"
+
 typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned long DWORD;
@@ -39,21 +42,6 @@ public:
 };
 
 class UClass;
-class UObject
-{
-public:
-    void *VfTableHolder;   // stands in for the vtable pointer
-    INT Index;             // +0x04
-    UObject *HashNext;
-    void *StateFrame;
-    void *_Linker;
-    INT _LinkerIndex;
-    UObject *Outer;
-    DWORD ObjectFlags;
-    INT Name;              // FName
-    UClass *Class;         // +0x24
-    inline INT IsA(UClass *SomeBase) const;
-};
 class UField : public UObject
 {
 public:

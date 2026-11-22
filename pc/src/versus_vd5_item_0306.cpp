@@ -5,6 +5,9 @@
 //   destructor is retail 0x7bf30 (LTCG, `this` on the stack).
 // 0x106540: UFlicFlocEmitter vtable slot 27, the particle-emitter
 //   SpawnParticles(OldLeftover, Rate, DeltaTime) override.
+#include "versus_build.h"
+#include "unreal_object.h"
+
 typedef int INT;
 typedef unsigned long DWORD;
 typedef unsigned short TCHAR;
@@ -18,33 +21,6 @@ template<class T> inline T Clamp(const T X, const T Min, const T Max_) { return 
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 inline INT appFloor(FLOAT F) { return (INT)floor(F); }
-
-class UObject {
-public:
-    virtual ~UObject();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
-    virtual void VirtualSlot7();
-    virtual void VirtualSlot8();
-    virtual void Destroy();
-    INT Index;
-    DWORD Reserved[5];
-    DWORD ObjectFlags;
-    DWORD Reserved20[2];
-    INT ConditionalDestroy()
-    {
-        if (Index != INDEX_NONE && !(ObjectFlags & RF_Destroyed)) {
-            ObjectFlags = (ObjectFlags & ~(RF_DebugDestroy | RF_Destroyed)) | RF_Destroyed;
-            Destroy();
-            return 1;
-        }
-        return 0;
-    }
-};
 
 class FMalloc
 {

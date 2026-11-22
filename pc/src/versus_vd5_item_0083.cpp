@@ -2,37 +2,14 @@
 // UConsole destructor (UConsole's deleting destructor follows at 0xab610) and the
 // placement constructor callback plus constructor of a neighbouring class whose
 // name is not recovered (vtable 0x10c07758, called UnnamedClass_ab590 here).
+#include "versus_build.h"
+#include "unreal_object.h"
+
 enum { INDEX_NONE = -1 };
 enum EObjectFlags { RF_Destroyed = 0x00800000, RF_DebugDestroy = 0x80000000 };
 typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned int size_t_;
-
-class UObject {
-public:
-    virtual ~UObject();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
-    virtual void VirtualSlot7();
-    virtual void VirtualSlot8();
-    virtual void Destroy();
-    int Index;
-    unsigned Reserved[5];
-    unsigned ObjectFlags;
-    int ConditionalDestroy()
-    {
-        if (Index != INDEX_NONE && !(ObjectFlags & RF_Destroyed)) {
-            ObjectFlags = (ObjectFlags & ~(RF_DebugDestroy | RF_Destroyed)) | RF_Destroyed;
-            Destroy();
-            return 1;
-        }
-        return 0;
-    }
-};
 
 template<unsigned Size> struct InheritedData { unsigned char Bytes[Size]; };
 

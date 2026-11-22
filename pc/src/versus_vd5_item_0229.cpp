@@ -1,5 +1,8 @@
 // Work item 0229: Versus RVA 0xef740 (destructor of an unnamed UObject class
 // with a secondary interface) and 0xef7d0 (AFileLog::execOpenLog).
+#include "versus_build.h"
+#include "unreal_object.h"
+
 typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned long DWORD;
@@ -15,33 +18,6 @@ inline INT appStrlen(const TCHAR *S) { return (INT)wcslen(S); }
 inline TCHAR *appStrcpy(TCHAR *D, const TCHAR *S) { return wcscpy(D, S); }
 
 struct FFrame;
-
-class UObject {
-public:
-    virtual ~UObject();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
-    virtual void VirtualSlot7();
-    virtual void VirtualSlot8();
-    virtual void Destroy();
-    INT Index;
-    DWORD Reserved[5];
-    DWORD ObjectFlags;
-    DWORD NameAndClass[2];
-    INT ConditionalDestroy()
-    {
-        if (Index != INDEX_NONE && !(ObjectFlags & RF_Destroyed)) {
-            ObjectFlags = (ObjectFlags & ~(RF_DebugDestroy | RF_Destroyed)) | RF_Destroyed;
-            Destroy();
-            return 1;
-        }
-        return 0;
-    }
-};
 
 // ---------------------------------------------------------------------------
 // RVA 0xef740. No vtable label names this class (primary vtable 0x10c04168,

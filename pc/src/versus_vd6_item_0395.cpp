@@ -2,6 +2,9 @@
 // Retail kept every function here out of line; __declspec(noinline) stops the
 // link-time inliner folding them into the single scaffolding callers.
 
+#include "versus_build.h"
+#include "unreal_object.h"
+
 typedef unsigned char BYTE;
 typedef unsigned short _WORD;
 typedef int INT;
@@ -46,20 +49,6 @@ template<class T> class TArray : public FArray {
 };
 
 class UClass;
-
-class UObject {
-public:
-    virtual void VirtualSlot0();
-
-    INT     Index;
-    BYTE    unk_8[0x14];
-    DWORD   ObjectFlags;
-    BYTE    unk_20[0x4];
-    UClass *Class;
-
-    UClass *GetClass() const { return Class; }
-    UBOOL IsA(UClass *SomeBase) const;
-};
 
 class UClass : public UObject {
 public:

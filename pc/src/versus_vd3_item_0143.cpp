@@ -4,6 +4,9 @@
 // (an LTCG function: `this` on the stack, ret 4). The class holds a 0x40-byte block
 // at 0x2c that zeroes itself (with a TArray at its end), four further arrays and a
 // string. Class and member names were not recovered.
+#include "versus_build.h"
+#include "unreal_object.h"
+
 typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned long DWORD;
@@ -41,39 +44,6 @@ public:
 class FString : public FArray {
 public:
     ~FString();
-};
-
-class UObject {
-public:
-    UObject() {}
-    virtual ~UObject();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
-    virtual void VirtualSlot7();
-    virtual void VirtualSlot8();
-    virtual void Destroy();
-    INT Index;
-    UObject *HashNext;
-    void *StateFrame;
-    void *_Linker;
-    INT _LinkerIndex;
-    UObject *Outer;
-    DWORD ObjectFlags;
-    INT Name;
-    void *Class;
-    INT ConditionalDestroy()
-    {
-        if (Index != INDEX_NONE && !(ObjectFlags & RF_Destroyed)) {
-            ObjectFlags = (ObjectFlags & ~(RF_DebugDestroy | RF_Destroyed)) | RF_Destroyed;
-            Destroy();
-            return 1;
-        }
-        return 0;
-    }
 };
 
 // Parent class whose destructor lives at RVA 0x15ee0 (name not recovered).

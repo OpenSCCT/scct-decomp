@@ -2,15 +2,12 @@
 // The iterator (in EAX) holds a pointer to an object array and the current index;
 // it skips null objects and objects whose class chain does not contain the
 // target class (a private class object at 0x10cc4d30, neutral name below).
+#include "versus_build.h"
+#include "unreal_object.h"
+
 typedef int INT;
 
 class UClass;
-class UObject
-{
-public:
-    char Pad[0x24];
-    UClass *Class;       // 0x24
-};
 class UClass : public UObject
 {
 public:

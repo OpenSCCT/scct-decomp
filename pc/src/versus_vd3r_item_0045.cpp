@@ -5,16 +5,12 @@
 // names are neutral (UnnamedClass_c770). Retail passes the iterator in EAX
 // (link-time-generated convention: operator++ returns *this, which keeps
 // this in EAX); its constructor is at RVA 0xc750.
+#include "versus_build.h"
+#include "unreal_object.h"
+
 typedef int INT;
 
 class UClass;
-
-class UObject
-{
-public:
-    char Pad00[0x24];
-    UClass *Class;          // +0x24
-};
 
 class UClass : public UObject
 {

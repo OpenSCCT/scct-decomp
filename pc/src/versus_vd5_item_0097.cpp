@@ -2,34 +2,11 @@
 // The class name is not recovered; UnnamedInfo_ade10 is a neutral name.
 // Like every DECLARE_CLASS destructor, it runs UObject::ConditionalDestroy()
 // and then the members' destructors and AInfo's destructor.
+#include "versus_build.h"
+#include "unreal_object.h"
+
 enum { INDEX_NONE = -1 };
 enum EObjectFlags { RF_Destroyed = 0x00800000, RF_DebugDestroy = 0x80000000 };
-
-class UObject {
-public:
-    virtual ~UObject();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
-    virtual void VirtualSlot7();
-    virtual void VirtualSlot8();
-    virtual void Destroy();
-    int Index;
-    unsigned Reserved[5];
-    unsigned ObjectFlags;
-    int ConditionalDestroy()
-    {
-        if (Index != INDEX_NONE && !(ObjectFlags & RF_Destroyed)) {
-            ObjectFlags = (ObjectFlags & ~(RF_DebugDestroy | RF_Destroyed)) | RF_Destroyed;
-            Destroy();
-            return 1;
-        }
-        return 0;
-    }
-};
 
 class AInfo : public UObject { public: virtual ~AInfo(); };
 
