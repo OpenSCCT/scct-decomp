@@ -1,5 +1,5 @@
-// campaign_leaf_145a20.cpp -- when the entry at the index given by the first argument is set, stores
-// the second argument at its offset 0x04 and 0 at its offset 0x00. File offset 0x145a20, VA
+// campaign_leaf_145a20.cpp -- when the entry at the index given by the first argument is set,
+// stores the second argument at its offset 0x04 and 0 at its offset 0x00. File offset 0x145a20, VA
 // 0x10a45a20. The class and method names are invented; the offsets are the binary's, and the entry
 // type is a guess.
 

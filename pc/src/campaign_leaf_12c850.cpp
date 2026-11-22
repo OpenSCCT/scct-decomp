@@ -1,7 +1,7 @@
-// campaign_leaf_12c850.cpp -- returns 1 when the kind at offset 0x428 of the object that the pointer
-// at offset 0x30 of this points to is one of 0x05, 0x0c, 0x07, 0x1e or 0x26, or is 0x10 with the
-// dword at offset 0x410 set. Otherwise 0. File offset 0x12c850, VA 0x10a2c850. The class and method
-// names are invented; the offsets are the binary's, and the pointee type is a guess.
+// campaign_leaf_12c850.cpp -- returns 1 when the kind at offset 0x428 of the object that the
+// pointer at offset 0x30 of this points to is one of 0x05, 0x0c, 0x07, 0x1e or 0x26, or is 0x10
+// with the dword at offset 0x410 set. Otherwise 0. File offset 0x12c850, VA 0x10a2c850. The class
+// and method names are invented; the offsets are the binary's, and the pointee type is a guess.
 
 class UnkTarget_12c850;
 
