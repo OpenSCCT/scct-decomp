@@ -198,6 +198,27 @@ retail value by accident. The audit links the DLL again, re-derives the field
 list from the DLL's base relocations and from rel32 branches that leave the
 function, and checks the symbol names against a `/MAP` of the same link.
 
+A unit can name other units in `ltcg_callees`, by unit ID, so that a call from it to a helper
+resolves to the helper's real code instead of a stub. This is needed when the helper takes `this`
+or an argument in a register (for example `this` in ESI and the argument in EDI): the link chooses
+that convention, and a stand-in cannot reproduce it. Each named unit is compiled with its own
+recorded command, which must carry `/GL` and name the same compiler, and its object is linked into
+the DLL with the unit's object, using the scaffolding roots of every linked unit. A named unit can
+name its own callees, and a unit cannot name itself through them. The unit's `ltcg_link` record then
+describes the combined link, not the solo one: `rebuilt_offset`, `rebuilt_address`, `fields` and
+`symbols` are the addresses that `LINK.EXE` gives in that DLL, so take them from a `/MAP` of the
+same link. The verifier checks each field against those addresses and rewrites it with the retail
+address from `link_bindings`.
+
+The verifier links in two steps. The first link has no stubs, and `LINK.EXE` names each external
+that no linked object defines. A stub is made only for those names that a linked unit's
+`ltcg_link.stubs` declares, so a callee's own definition is never shadowed. Any other unresolved
+external stops the build and is named in the message. The receipt of a unit with `ltcg_callees` also
+binds the callees' inputs and recipes, so editing a callee's source invalidates that receipt. A unit
+without the field builds exactly as before. `LINK.EXE` may give an internal function a convention
+other than the one its source declares, even `__stdcall`; an exported function keeps its declared
+convention.
+
 ## Recovered toolsets (2026-11-22)
 
 **VC6 12.00.8804.** The recorded binaries now come from these sources. Each hash matches the component table in "Linked tree removal in the Steam executables"; the `c1xx.dll` hash is new:
