@@ -197,3 +197,19 @@ for byte. The DLL is linked at 0x10000000, so no unbound field can equal its
 retail value by accident. The audit links the DLL again, re-derives the field
 list from the DLL's base relocations and from rel32 branches that leave the
 function, and checks the symbol names against a `/MAP` of the same link.
+
+## Recovered toolsets (2026-11-22)
+
+**VC6 12.00.8804.** The recorded binaries now come from these sources. Each hash matches the component table in "Linked tree removal in the Steam executables"; the `c1xx.dll` hash is new:
+
+| Component | Source | SHA-256 |
+| --- | --- | --- |
+| `cl.exe` 12.00.8804.0 | Visual Studio 6 SP6 `Vs6sp6.exe` (63,799,912 bytes, Authenticode valid), `vc98\bin` | `1bf99f206271ecdbd13da2829192ea2c02e2a44c740b8d72935d5d9cb753b156` |
+| `c1.dll` 12.00.9782.0 | same installer | `fc6771ed73524417877f1263604bf8b9b9cd403c8cfb72b2e25737bdc81d592e` |
+| `c1xx.dll` 12.00.9782.0 | same installer | `ab4610ad56f7278a9c89d055e4189bd8037c7340a21bac5434fe24c7d5a7526d` |
+| `c2.dll`, the Processor Pack backend | `vcpp5.exe` (1,180,896 bytes, unsigned), the cabinet at offset 67104 | `6c8e3988a5ccd69a9f9829b5c7512848d71c018b8d24be3928d7b00b5f79f231` |
+
+`vcpp5.exe` (SHA-256 `96817df1bb0cb58e5b1d0fbcc5b993a63548182add1fbff66365401203ecfb6c`) is on the zx.net.nz mirror at `pub/Patches/microsoft-dev-tools/VisualC++6ProcessorPack/vcpp5.exe`. Its `c2.dll` reports file version 13.00.9044.0, so identify it by hash, not by version. The installers were read with `expand.exe` and never run. With this set, all 229 VC6 units (112 Campaign, 117 Versus) rebuild to the retail bytes with zero failures. The VC98 `c1.dll` (SHA-256 `0792033fc3d2fec262ff95478c6a9e70a06e836ed55f0a9710200fa06c204754`) also passes all 229, but it is not the recorded frontend.
+
+**Clang 19.1.0, revision `2cfe42ea...` (37 Campaign units).** The official Windows x64 build, `clang+llvm-19.1.0-x86_64-pc-windows-msvc.tar.xz` (844,572,776 bytes) from the `llvmorg-19.1.0` GitHub release that llvm.org links to, has `clang.exe` SHA-256 `e6936af3d8a4e2badd139699816f40235e724e2131ee05651c94c1c371f7fb53`. Its `--version` prints `clang version 19.1.0` with no revision, and `compiler_identity` in `pc/verify_build.py` requires a 40-character revision there, so the verifier refuses it. Rebuilt through the verifier's own rebuild and compare functions, all 37 units (in `campaign_virtual_base_events.c`, `campaign_adjusted_destructors.c` and `campaign_virtual_base_flags.c`) reproduce their recorded bytes and receipts. That probe was a scratch script that wrote no receipts and is not committed. The recorded identity is unchanged, and the `0d08cdd3...` binary it names is not available. The release tag points at commit `a4bf6cd`, so this equivalence covers the bytes of these functions, not the source revision `2cfe42ea`.
+
