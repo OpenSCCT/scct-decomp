@@ -1,4 +1,6 @@
 struct Controller;
+/* FAKEMATCH: the original passes its index as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Index { int value; };
 extern void __fastcall refresh_item(struct Controller *, struct Index, float);
 extern void __fastcall refresh_minus_two(struct Controller *);

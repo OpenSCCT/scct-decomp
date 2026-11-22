@@ -1,6 +1,8 @@
 /* Virtual methods identified by a registered class table and slot. A table
    can inherit an entry from a base class. Stack words preserve the member
    calling convention where the original parameter types are unknown. */
+/* FAKEMATCH: the original passes this word as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct stack_word { unsigned int value; };
 
 unsigned int __fastcall UState_slot_38_r00c8f0(void *self, struct stack_word arg1)

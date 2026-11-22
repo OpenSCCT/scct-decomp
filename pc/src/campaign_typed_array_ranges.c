@@ -1,5 +1,9 @@
 struct Array;
+/* FAKEMATCH: the original passes its index as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Index { int value; };
+/* FAKEMATCH: the original passes its count as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Count { unsigned value; };
 union StackWord { unsigned value; float argument; };
 
