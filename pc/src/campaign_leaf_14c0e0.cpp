@@ -14,7 +14,8 @@ public:
 class UnkType_10a4c0e0
 {
 public:
-    UnkType_10a4c0e0 *UnkMethod_10a4c0e0(int Value, UnkVec_10a4c0e0 *First, UnkVec_10a4c0e0 *Second);
+    UnkType_10a4c0e0 *UnkMethod_10a4c0e0(int Value, UnkVec_10a4c0e0 *First,
+                                         UnkVec_10a4c0e0 *Second);
 
 private:
     int unk_00;
