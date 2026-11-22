@@ -13,8 +13,8 @@ struct UnkType_109ca640_Triple
 class UnkType_109ca640
 {
 public:
-    void UnkSetThree(int Unused, const UnkType_109ca640_Triple *First, const UnkType_109ca640_Triple *Second,
-                     const UnkType_109ca640_Triple *Third);
+    void UnkSetThree(int Unused, const UnkType_109ca640_Triple *First,
+                     const UnkType_109ca640_Triple *Second, const UnkType_109ca640_Triple *Third);
 
 private:
     unsigned char unk_00[0x18];     // not read by this function
@@ -24,8 +24,9 @@ private:
 };
 
 // UnkType_109ca640::UnkSetThree
-void UnkType_109ca640::UnkSetThree(int Unused, const UnkType_109ca640_Triple *First, const UnkType_109ca640_Triple *Second,
-                      const UnkType_109ca640_Triple *Third)
+void UnkType_109ca640::UnkSetThree(int Unused, const UnkType_109ca640_Triple *First,
+                                    const UnkType_109ca640_Triple *Second,
+                                    const UnkType_109ca640_Triple *Third)
 {
     unk_18 = *First;
     unk_24 = *Second;
