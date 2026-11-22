@@ -2,6 +2,8 @@ struct Node {
     struct Node *left, *parent, *right;
     unsigned value, color;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Tree { unsigned reserved; struct Node *head; };
 /* FAKEMATCH: the original passes a node reference as a stack argument; this one-member struct
    only steers that stack slot. */

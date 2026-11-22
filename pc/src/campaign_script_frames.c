@@ -6,10 +6,14 @@ typedef unsigned char ScriptByte;
 typedef struct { float x, y, z; } ScriptVector;
 typedef struct { int pitch, yaw, roll; } ScriptRotator;
 typedef struct { ScriptByte b, g, r, a; } ScriptColor;
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ScriptStateFrame {
     unsigned char frame_fields[0x20];
     unsigned __int64 probe_mask;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ScriptObjectState {
     struct ScriptObject object;
     void *object_fields[2];

@@ -4,6 +4,8 @@ struct NameEntry { unsigned header[3]; unsigned char text[1]; };
    that stack slot. */
 struct Name { int index; };
 struct Notify { float time; struct Name name; unsigned remaining[2]; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Clip { unsigned char reserved[0x1c]; struct Notify *notifies; };
 extern struct NameEntry **name_entries;
 extern int next_buffer;

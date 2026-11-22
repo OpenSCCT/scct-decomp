@@ -8,11 +8,15 @@
 /* FAKEMATCH: the original passes a text as a stack argument; this one-member struct only steers
    that stack slot. */
 struct TextArgument { const void *value; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Text {
     unsigned reserved;
     char storage[16];
     unsigned length, capacity;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Error {
     const void *table;
     unsigned base_fields[2];

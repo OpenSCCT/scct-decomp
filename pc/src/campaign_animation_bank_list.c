@@ -7,6 +7,8 @@ struct BankValue { struct Bank *ptr; };
 struct BankRef { struct Bank **ptr; };
 struct Banks { struct Bank **data; int count; };
 struct Records { void *data; int count; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Mesh {
     unsigned char reserved[0x78];
     struct Banks banks;

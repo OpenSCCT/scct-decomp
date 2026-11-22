@@ -1,3 +1,5 @@
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Watermark {
     unsigned levels[3];
     const unsigned short *name;
@@ -17,6 +19,8 @@ struct Node {
     struct Node *next, *previous;
     struct Watermark *member;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Registry {
     unsigned reserved;
     struct Node *head;

@@ -1,5 +1,7 @@
 #include "campaign_globals.h"
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct actor_constructor {
     const void *vtable;
     unsigned char preceding_fields[0x1cc - sizeof(void *)];

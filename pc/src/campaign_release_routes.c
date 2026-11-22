@@ -2,6 +2,8 @@
    steers that stack slot. */
 struct buffer_argument { void *value; };
 struct engine_allocator;
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct allocator_methods {
     void *reserved[2];
     void (__fastcall *release)(struct engine_allocator *, struct buffer_argument);

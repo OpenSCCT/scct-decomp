@@ -14,6 +14,8 @@ typedef struct { unsigned int index; } ScriptEventName;
 /* FAKEMATCH: the original passes a parameter block reference as a stack argument; this one-
    member struct only steers that stack slot. */
 typedef struct { void *address; } ParameterReference;
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ScriptObjectMethods {
     void *earlier_methods[4];
     union {

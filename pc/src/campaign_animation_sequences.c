@@ -2,6 +2,8 @@
 
 struct mesh_instance;
 struct notify_object;
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct sequence_notify {
     float time;
     int name_index;

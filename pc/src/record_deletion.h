@@ -6,6 +6,8 @@ struct DeleteFlags { unsigned value; };
    steers that stack slot. */
 struct Allocation { struct Record *object; };
 struct Heap;
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct HeapOps {
     void *reserved[2];
     void (__fastcall *release)(struct Heap *, struct Allocation);

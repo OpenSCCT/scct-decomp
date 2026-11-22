@@ -11,6 +11,8 @@ struct Fields {
     const void *members;
     unsigned member_count;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Descriptor {
     const void *methods;
     unsigned short allocation_size;

@@ -1,3 +1,5 @@
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct CursorState {
     unsigned reserved;
     unsigned char *current;
@@ -5,6 +7,8 @@ struct CursorState {
     unsigned tail;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct CursorOwner {
     unsigned prefix[2];
     struct CursorState *after_state;

@@ -2,6 +2,8 @@
    the null superclass pointer for UField's thiscall constructor. */
 
 #include "campaign_globals.h"
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct RuntimeProperty {
     const void *const *methods;
     unsigned char field_prefix[0x34 - 4];
@@ -21,6 +23,8 @@ extern void __fastcall initialize_field(struct RuntimeProperty *, float null_sup
         } \
     }
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct VertexStream {
     const void *const *methods;
     unsigned char prefix[0x2c - 4];
@@ -44,11 +48,15 @@ void __fastcall initialize_object(void *object);
         } \
     }
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct NativeActor {
     const void *const *methods;
     unsigned char prefix[0x1cc - 4];
     float initial_values[4];
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ConstraintActor {
     struct NativeActor actor;
     unsigned char fields[0x2b4 - 0x1dc];

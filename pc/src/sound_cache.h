@@ -4,6 +4,8 @@
 #include "sound_list.h"
 #include "sound_memory.h"
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 typedef struct SoundCacheItem
 {
     unsigned fields00[2];
