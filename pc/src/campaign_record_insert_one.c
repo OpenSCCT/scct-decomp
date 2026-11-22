@@ -1,38 +1,62 @@
 union StackWord { unsigned value; float argument; };
 struct Record4 { unsigned int data[1]; };
 struct Vector4 { void *allocator; struct Record4 *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a record position as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Position4 { struct Record4 *ptr; };
 struct Output4 { struct Position4 *ptr; };
+/* FAKEMATCH: the original passes a record item as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Item4 { const struct Record4 *ptr; };
 
 struct Record8 { unsigned char bytes[8]; };
 struct Vector8 { void *allocator; struct Record8 *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a record position as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Position8 { struct Record8 *ptr; };
 struct Output8 { struct Position8 *ptr; };
+/* FAKEMATCH: the original passes a record item as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Item8 { const struct Record8 *ptr; };
 
 struct Record12 { unsigned char bytes[12]; };
 struct Vector12 { void *allocator; struct Record12 *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a record position as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Position12 { struct Record12 *ptr; };
 struct Output12 { struct Position12 *ptr; };
+/* FAKEMATCH: the original passes a record item as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Item12 { const struct Record12 *ptr; };
 
 struct Record16 { unsigned int word[4]; };
 struct Vector16 { void *allocator; struct Record16 *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a record position as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Position16 { struct Record16 *ptr; };
 struct Output16 { struct Position16 *ptr; };
+/* FAKEMATCH: the original passes a record item as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Item16 { const struct Record16 *ptr; };
 
 struct Record32 { unsigned char bytes[32]; };
 struct Vector32 { void *allocator; struct Record32 *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a record position as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Position32 { struct Record32 *ptr; };
 struct Output32 { struct Position32 *ptr; };
+/* FAKEMATCH: the original passes a record item as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Item32 { const struct Record32 *ptr; };
 
 struct Record60 { unsigned char bytes[60]; };
 struct Vector60 { void *allocator; struct Record60 *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a record position as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Position60 { struct Record60 *ptr; };
 struct Output60 { struct Position60 *ptr; };
+/* FAKEMATCH: the original passes a record item as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Item60 { const struct Record60 *ptr; };
 
 extern void __fastcall copies_10f930_4(struct Vector4 *, struct Position4, float, struct Item4);

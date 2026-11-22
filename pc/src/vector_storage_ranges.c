@@ -1,6 +1,8 @@
 struct DwordVector { unsigned char allocator; unsigned *begin, *end, *limit; };
 struct WordVector { unsigned char allocator; unsigned short *begin, *end, *limit; };
 struct ByteRef { const unsigned char *ptr; };
+/* FAKEMATCH: the original passes a position as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Position { unsigned *ptr; };
 
 struct DwordVector *__fastcall create_vector(struct DwordVector *v, struct ByteRef allocator)

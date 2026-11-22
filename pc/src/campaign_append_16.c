@@ -1,6 +1,10 @@
 struct Record16 { unsigned int word[4]; };
 struct Vector16 { void *allocator; struct Record16 *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a record position as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Position16 { struct Record16 *ptr; };
+/* FAKEMATCH: the original passes a record item as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct RecordRef16 { const struct Record16 *ptr; };
 /* VC7.1 passes a float word on the stack in this member-call adapter. */
 union CountWord { int value; float argument; };
