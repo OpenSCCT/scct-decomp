@@ -1,6 +1,6 @@
 struct Array { void *buffer; int count, capacity; };
 struct Archive;
-struct Word { int value; };
+struct Word { unsigned value; };
 struct ArchiveArg { struct Archive *ptr; };
 struct Methods {
     void *reserved[5];
