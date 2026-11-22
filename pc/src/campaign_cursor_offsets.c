@@ -1,5 +1,5 @@
 #define CURSOR_TYPE(Stride) \
-    struct Element##Stride { unsigned char storage[Stride]; }; \
+    struct Element##Stride { unsigned char bytes[Stride]; }; \
     struct Cursor##Stride { struct Element##Stride *position; };
 
 #define CURSOR_RETREAT(Stride) \
