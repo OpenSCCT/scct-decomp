@@ -64,8 +64,9 @@ compiles the fixture from its recorded `build_command`.
 - **Campaign layout only.** The manifest's code sections must sit at VA `0x10900000` + file offset,
   and a PE image must have that image base; any other layout is refused. Only the Campaign manifest
   has been run.
-- **Microsoft C/C++ units only**, compiled with `--cl`. VC6, Clang and `ltcg_link` units need
-  `--object`; `ltcg_link`, `coff_alignment` and `rebuilt_offset` records are not handled.
+- **Microsoft C/C++ units only**, compiled with `--cl`, which must be the record's toolchain: the
+  Toolkit 2003 and VC6 banners are checked. Any other compiler (Clang, MSVC 19.x) needs `--object`.
+  `ltcg_link`, `coff_alignment` and `rebuilt_offset` records are not handled.
 - **Refused, not guessed:** static data references (the verifier cannot link them), absolute
   symbols, common symbols, C++ funcinfo (`$T`) references and relocation types other than DIR32 and
   REL32. The one special case is `__except_list`, bound at VA 0 as the verifier does.

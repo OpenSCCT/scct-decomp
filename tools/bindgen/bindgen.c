@@ -1112,6 +1112,53 @@ static void backslashes(char *s)
             *s = '\\';
 }
 
+/* The compiler must be the toolchain the record names. The Toolkit 2003 and VC6 banners name the
+   version and the 80x86 target, and are checked here; other compilers need --object. */
+static void check_compiler(const char *cl, const char *toolchain, const char *build)
+{
+    char win[PATH_CAP], banner_path[PATH_CAP], identity[128], version[64], arch[32];
+    Buf cmd;
+    u8 *banner;
+    size_t n, i, k;
+    const char *v;
+    const char *p;
+
+    strcpy(win, build);
+    backslashes(win);
+    memset(&cmd, 0, sizeof cmd);
+    buf_puts(&cmd, "cd /d \"");
+    buf_puts(&cmd, win);
+    buf_puts(&cmd, "\" && \"");
+    buf_puts(&cmd, cl);
+    buf_puts(&cmd, "\" > cl.banner 2>&1");
+    system(cmd.s);
+    join_path(build, "cl.banner", banner_path);
+    banner = read_file(banner_path, &n);
+    p = strstr((const char *)banner, "Compiler Version ");
+    if (!p)
+        fail("%s printed no compiler banner; pass --object for this compiler", cl);
+    v = p + strlen("Compiler Version ");
+    for (k = 0; v[k] == '.' || (v[k] >= '0' && v[k] <= '9'); k++)
+        ;
+    if (k == 0 || k >= sizeof version || strncmp(v + k, " for ", 5) != 0)
+        fail("%s printed an unrecognized compiler banner; pass --object for this compiler", cl);
+    memcpy(version, v, k);
+    version[k] = 0;
+    v += k + 5;
+    for (i = 0; v[i] && v[i] != ' ' && v[i] != '\r' && v[i] != '\n' && i + 1 < sizeof arch; i++)
+        arch[i] = v[i];
+    arch[i] = 0;
+    if (strcmp(arch, "80x86") == 0)
+        strcpy(arch, "x86");
+    if (strncmp(version, "13.", 3) != 0 && strncmp(version, "12.", 3) != 0)
+        fail("%s is version %s; bindgen checks only Toolkit 2003 and VC6 banners: pass --object", cl, version);
+    snprintf(identity, sizeof identity, "Microsoft C/C++ %s for %s", version, arch);
+    if (strcmp(identity, toolchain) != 0)
+        fail("%s is %s; the record names %s", cl, identity, toolchain);
+    free(banner);
+    free(cmd.s);
+}
+
 /* Compiles the unit as its record says, in a fresh folder under local/ (git ignores it). The
    inputs are copied in first, as verify_build.py does, so the compiler sees only what the record
    names plus what it reaches. */
@@ -1182,6 +1229,7 @@ static u8 *compile_unit(const char *pc_root, const char *id, const char *cl, con
     backslashes(build_win);
     parent_of(cl, cl_dir);
     backslashes(cl_dir);
+    check_compiler(cl, toolchain, build);
 
     cmd.s = NULL;
     cmd.n = 0;
