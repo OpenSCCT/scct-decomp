@@ -5,7 +5,7 @@ struct Methods {
     void *(__fastcall *allocate)(struct Manager *, const struct Methods *, int);
 };
 struct Manager { const struct Methods *methods; int reserved; unsigned char *cursor; int remaining; };
-struct Count { int value; };
+struct Count { unsigned value; };
 extern struct Manager *manager;
 
 #define CONSTRUCT_SCRATCH_ARRAY(Entry, ElementBytes) \

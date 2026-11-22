@@ -1,6 +1,6 @@
 struct Array;
 struct Index { int value; };
-struct Count { int value; };
+struct Count { unsigned value; };
 union StackWord { unsigned value; float argument; };
 
 extern void __fastcall insert_0361f0(struct Array *, struct Index, struct Count, float);
