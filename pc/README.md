@@ -78,8 +78,11 @@ The campaign experiment reproduced three retail bytes under two different compil
 ## Verify the complete Steam pass
 
 From the repository root, pass the installed game directory to the verifier.
-Pass the x86 compiler paths for Visual C++ Toolkit 2003 13.10.3052, VC6
-12.00.8804, MSVC 19.44.35229.0 and Clang 19.1.0. The Toolkit compiler alone
+Pass the x86 compiler paths for Visual C++ Toolkit 2003 13.10.3052, Visual C++ .NET 2002
+13.00.9466, VC6 12.00.8804, MSVC 19.44.35229.0 and Clang 19.1.0. The .NET 2002 `cl.exe` needs
+`LINK.EXE`, `C1.DLL`, `C1XX.DLL`, `C2.DLL`, `MSPDB70.DLL` and `MSOBJ10.DLL` in one folder: the
+verifier puts that folder first on `PATH`, and link-time code generation loads `MSOBJ10.DLL`.
+The Toolkit compiler alone
 rebuilds 20,300 of the 21,037 PC units; `--skip-unavailable` gates those and
 lists the units that need another compiler. The [toolchain notes](TOOLCHAIN.md)
 identify the VC6 frontend and backend and the Clang revision used for these builds.
