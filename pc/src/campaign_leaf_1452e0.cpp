@@ -1,5 +1,5 @@
-// campaign_leaf_1452e0.cpp -- returns 1 when the pointer at offset 0x30 of this is set and the dword
-// at offset 0x428 of the object it points to is 0x27, otherwise 0. File offset 0x1452e0, VA
+// campaign_leaf_1452e0.cpp -- returns 1 when the pointer at offset 0x30 of this is set and the
+// dword at offset 0x428 of the object it points to is 0x27, otherwise 0. File offset 0x1452e0, VA
 // 0x10a452e0. The class and method names are invented; the offsets are the binary's, and the
 // pointee type is a guess.
 

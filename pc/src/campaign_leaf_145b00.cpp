@@ -1,6 +1,6 @@
-// campaign_leaf_145b00.cpp -- returns the dword at offset 0x04 of the entry at Index in the array of
-// pointers at offset 0x00 of this, when Index is below the value at offset 0x04, otherwise 0. File
-// offset 0x145b00, VA 0x10a45b00. The class and method names are invented; the offsets are the
+// campaign_leaf_145b00.cpp -- returns the dword at offset 0x04 of the entry at Index in the array
+// of pointers at offset 0x00 of this, when Index is below the value at offset 0x04, otherwise 0.
+// File offset 0x145b00, VA 0x10a45b00. The class and method names are invented; the offsets are the
 // binary's, and the entry type is a guess.
 
 class UnkTarget_10a45b00;

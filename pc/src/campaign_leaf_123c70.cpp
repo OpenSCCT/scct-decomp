@@ -1,5 +1,5 @@
-// campaign_leaf_123c70.cpp -- returns 1 when the pointer at offset 0x360 of this is set and the byte
-// at offset 0x1e2 of the object it points to is nonzero, otherwise 0. File offset 0x123c70, VA
+// campaign_leaf_123c70.cpp -- returns 1 when the pointer at offset 0x360 of this is set and the
+// byte at offset 0x1e2 of the object it points to is nonzero, otherwise 0. File offset 0x123c70, VA
 // 0x10a23c70. The class and method names are invented; the offsets are the binary's, and the
 // pointee type is a guess.
 
