@@ -16,7 +16,7 @@ import tempfile
 
 PC = Path(__file__).resolve().parent
 sys.path.insert(0, str(PC.parent / "tools"))
-from progress import compare_unit, summary, verify, write
+from progress import callee_units, compare_unit, summary, verify, write
 from link_image import link_arguments, stub_object
 from manifests import load_target, save_receipts
 
@@ -57,7 +57,8 @@ def run_tool(command, streams, *, cwd, env, stdout=subprocess.PIPE):
         raise subprocess.CalledProcessError(completed.returncode, command, completed.stdout, completed.stderr)
 
 
-def rebuild_unit(unit, cl, env, build_dir, streams):
+def compile_unit(unit, cl, env, build_dir, streams):
+    """Compile a unit with its recorded command in build_dir, and return the object it writes."""
     # Recipes use relative forward-slash paths, even on Windows.
     program, *args = shlex.split(unit["build_command"])
     if "rebuilt_symbol" not in unit:
@@ -84,11 +85,67 @@ def rebuild_unit(unit, cl, env, build_dir, streams):
     run_tool([cl, *args], streams, cwd=build_dir, env=env)
     if not obj.is_file():
         raise ValueError(f"compiler produced no object at {outputs[0]}")
+    return obj
+
+
+UNRESOLVED = re.compile(r'unresolved external symbol (?:"[^"]*" \(([^()\s]+)\)|(\S+))')
+
+
+def unresolved_externals(output):
+    """The externals that LINK.EXE reported as unresolved, in the order it reported them."""
+    names = []
+    for match in UNRESOLVED.finditer(output):
+        name = match[1] or match[2]
+        if name not in names:
+            names.append(name)
+    return names
+
+
+def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, streams):
+    """Link a unit's object with the objects of its callees into one DLL.
+
+    The link decides the calling convention of every call between these units, as the original
+    link did. A stub is made only for an external that the linked objects leave unresolved, so no
+    stub shadows a callee's definition. An external that no object defines and no record declares
+    stays unresolved, and LINK.EXE fails the build."""
+    links = [m.get("ltcg_link", {"roots": [], "stubs": []}) for m in [unit, *callees]]
+    roots = list(dict.fromkeys(root for link in links for root in link["roots"]))
+    declared = list(dict.fromkeys(name for link in links for name in link["stubs"]))
+    linker = Path(cl).with_name("LINK.EXE")
+    options = link_arguments({"roots": roots})
+    objects = [str(obj), *(str(path) for path in member_objects)]
+    # This first link has no stubs, so LINK.EXE names each external that no object defines.
+    probe = subprocess.run([str(linker), *options, "/OUT:" + str(obj.with_name(obj.stem + "_probe.dll")), *objects],
+                           cwd=build_dir, env=env, capture_output=True, text=True, errors="replace")
+    unresolved = unresolved_externals(probe.stdout) if probe.returncode else []
+    if probe.returncode and not unresolved:
+        raise ValueError(f"{unit['id']}: LINK.EXE failed: {probe.stdout.strip()}")
+    undeclared = [name for name in unresolved if name not in declared]
+    if undeclared:
+        raise ValueError(f"{unit['id']}: unresolved external {undeclared[0]}: no linked object defines it "
+                         "and no record declares it as a stub")
+    names = [name for name in declared if name in unresolved]
+    dll = obj.with_suffix(".dll")
+    args = [*options, "/OUT:" + str(dll), *objects]
+    if names:
+        stubs = obj.with_name(obj.stem + "_stubs.obj")
+        stubs.write_bytes(stub_object(names))
+        args.append(str(stubs))
+    run_tool([str(linker), *args], streams, cwd=build_dir, env=env)
+    return dll
+
+
+def rebuild_unit(unit, cl, env, build_dir, streams, callees=()):
+    obj = compile_unit(unit, cl, env, build_dir, streams)
     if "ltcg_link" in unit:
         # Link-time code generation: link the object, its scaffolding roots and stubs
         # for undefined externals into a DLL with the LINK.EXE beside the compiler.
-        if "/GL" not in args:
+        if "/GL" not in shlex.split(unit["build_command"])[1:]:
             raise ValueError("an LTCG unit compiles with /GL")
+        if callees:
+            member_objects = [compile_unit(callee, cl, env, build_dir / callee["id"], streams)
+                              for callee in callees]
+            return link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, streams)
         stubs = obj.with_name(obj.stem + "_stubs.obj")
         dll = obj.with_suffix(".dll")
         stubs.write_bytes(stub_object(unit["ltcg_link"]["stubs"]))
@@ -96,10 +153,12 @@ def rebuild_unit(unit, cl, env, build_dir, streams):
         run_tool([str(linker), *link_arguments(unit["ltcg_link"]), "/OUT:" + str(dll), str(obj), str(stubs)],
                  streams, cwd=build_dir, env=env, stdout=subprocess.DEVNULL)
         return dll
+    if callees:
+        raise ValueError(f"{unit['id']}: ltcg_callees needs an ltcg_link record")
     return obj
 
 
-def build_recipe(units, compilers):
+def build_recipe(units, compilers, callees=()):
     """Rebuild one recipe's object in a directory of its own, and return (object, error, output).
 
     A failure is returned rather than raised, so the caller can print the tools' output in
@@ -109,23 +168,24 @@ def build_recipe(units, compilers):
     streams = []
     try:
         with tempfile.TemporaryDirectory(prefix="scct-decomp-") as tmp:
-            obj = rebuild_unit(unit, cl, env, Path(tmp).resolve(), streams).read_bytes()
+            obj = rebuild_unit(unit, cl, env, Path(tmp).resolve(), streams, callees).read_bytes()
     except Exception as error:
         return None, error, streams
     return obj, None, streams
 
 
 def build_recipes(recipes, compilers, jobs):
-    """Yield (units, (object, error, output)) for each recipe, in order.
+    """Yield (units, (object, error, output)) for each (units, callees) recipe, in order.
 
     With jobs=1 each recipe is built when its turn comes, as the gate always did. With more
     jobs, the builds run concurrently in threads and are still yielded in recipe order."""
-    def build(units):
-        return units, build_recipe(units, compilers)
+    def build(recipe):
+        units, callees = recipe
+        return units, build_recipe(units, compilers, callees)
 
     if jobs == 1:
-        for units in recipes:
-            yield build(units)
+        for recipe in recipes:
+            yield build(recipe)
         return
     pool = ThreadPoolExecutor(max_workers=jobs)
     try:
@@ -190,6 +250,7 @@ def main():
         original = verify(target, retail)
         byte_count = 0
         recipes = {}
+        callees_of = {}
         skipped = Counter()
         skipped_bytes = 0
         for unit in target["units"]:
@@ -205,12 +266,17 @@ def main():
                 option = "--clang" if unit["toolchain"].startswith("Clang ") else "--cl"
                 raise ValueError(f"{unit['id']}: pass {option} for {unit['toolchain']}")
             link = unit.get("ltcg_link")
+            callees = callee_units(target["units"], unit)
             key = (unit["toolchain"], unit["build_command"], tuple(sorted(unit["inputs"])),
                    link and (tuple(link["roots"]), tuple(link["stubs"])))
+            if callees:
+                # A unit linked with callees has a recipe of its own, since the callees are part of its build.
+                key += (unit["id"],)
             recipes.setdefault(key, []).append(unit)
+            callees_of[key] = callees
         gated = 0
         updated = []
-        builds = build_recipes(list(recipes.values()), compilers, args.jobs)
+        builds = build_recipes([(units, callees_of[key]) for key, units in recipes.items()], compilers, args.jobs)
         try:
             for units, (obj, error, streams) in builds:
                 replay(streams)

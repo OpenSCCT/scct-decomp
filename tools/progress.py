@@ -50,7 +50,51 @@ def contains(ranges, bounds):
     return any(begin <= bounds[0] and bounds[1] <= end for begin, end in ranges)
 
 
-def inputs_digest(folder, unit, image_hash, file_cache=None):
+def named_callees(unit):
+    """The unit IDs that a unit's ltcg_callees field names, validated; empty when it has no field."""
+    if "ltcg_callees" not in unit:
+        return []
+    named = unit["ltcg_callees"]
+    if "ltcg_link" not in unit:
+        raise ValueError(f"{unit['id']}: ltcg_callees needs an ltcg_link record")
+    if (not isinstance(named, list) or not named or len(set(named)) != len(named)
+            or not all(isinstance(identifier, str) and identifier for identifier in named)):
+        raise ValueError(f"{unit['id']}: ltcg_callees must be a non-empty list of distinct unit IDs")
+    return named
+
+
+def callee_units(units, unit):
+    """The units a unit links with: those its ltcg_callees name, then those they name, in order.
+
+    Each callee is built with link-time code generation by the unit's own compiler, so the link
+    decides every calling convention between the units. A callee must carry /GL in its recorded
+    command and name the same toolchain, and a unit cannot be its own callee."""
+    if not named_callees(unit):
+        return []
+    by_id = {u["id"]: u for u in units}
+    closure, seen, pending = [], {unit["id"]}, [unit]
+    while pending:
+        owner = pending.pop(0)
+        for identifier in named_callees(owner):
+            if identifier == unit["id"]:
+                raise ValueError(f"{unit['id']}: a callee names this unit")
+            if identifier in seen:
+                continue
+            seen.add(identifier)
+            callee = by_id.get(identifier)
+            if callee is None:
+                raise ValueError(f"{unit['id']}: unknown callee unit {identifier}")
+            if "/GL" not in callee["build_command"].split():
+                raise ValueError(f"{unit['id']}: callee {identifier} is not built with /GL")
+            if callee["toolchain"] != unit["toolchain"]:
+                raise ValueError(f"{unit['id']}: callee {identifier} names another compiler")
+            closure.append(callee)
+            pending.append(callee)
+    return closure
+
+
+def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
+    """The fingerprint of a unit's inputs. A unit linked with callees also binds theirs."""
     if file_cache is None:
         file_cache = {}
     inputs = unit["inputs"]
@@ -94,6 +138,10 @@ def inputs_digest(folder, unit, image_hash, file_cache=None):
             file_cache[linker] = hashlib.sha256(linker.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
         fingerprints["tools/" + linker.name] = file_cache[linker]
     payload = json.dumps([image_hash, recipe, fingerprints], sort_keys=True).encode()
+    if callees:
+        # The unit's bytes come from the callees' sources and recipes too, so they are bound as well.
+        callee_digests = [inputs_digest(folder, callee, image_hash, file_cache) for callee in callees]
+        payload = json.dumps([image_hash, recipe, fingerprints, callee_digests], sort_keys=True).encode()
     return hashlib.sha256(payload).hexdigest()
 
 
@@ -132,7 +180,7 @@ def summary(folder, target):
                 raise ValueError("choose one rebuilt artifact location")
         elif type(unit.get("rebuilt_offset")) is not int or unit["rebuilt_offset"] < 0:
             raise ValueError("missing or invalid rebuilt offset")
-        signature = inputs_digest(folder, unit, image_hash, file_cache)
+        signature = inputs_digest(folder, unit, image_hash, file_cache, callee_units(units, unit))
         if "match" in unit:
             if unit["match"]["inputs_sha256"] != signature:
                 raise ValueError(f"{unit['id']}: changed build inputs; reverify this unit")
@@ -239,7 +287,8 @@ def compare_unit(folder, target, unit, original, output):
     if original[a:b] != body:
         raise ValueError(f"{unit['id']}: compiler output differs from retail")
     return dict(bytes_sha256=hashlib.sha256(body).hexdigest(),
-                inputs_sha256=inputs_digest(folder, unit, target["image"]["sha256"]))
+                inputs_sha256=inputs_digest(folder, unit, target["image"]["sha256"],
+                                            callees=callee_units(target["units"], unit)))
 
 
 def match(folder, target, unit_id, retail, rebuilt):
