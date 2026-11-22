@@ -2,6 +2,7 @@
 
 import argparse
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from fnmatch import fnmatch
 import os
 from pathlib import Path
@@ -45,7 +46,18 @@ def compiler_identity(cl, env, *, clang=False):
     return f"Microsoft C/C++ {version[1]} for {arch[1]}"
 
 
-def rebuild_unit(unit, cl, env, build_dir):
+def run_tool(command, streams, *, cwd, env, stdout=subprocess.PIPE):
+    """Run one build tool with its output captured, so concurrent recipes never interleave output.
+
+    The output is recorded in streams and printed later, in recipe order. A nonzero exit raises
+    CalledProcessError, as subprocess.run(check=True) does."""
+    completed = subprocess.run(command, stdout=stdout, stderr=subprocess.PIPE, cwd=cwd, env=env)
+    streams.append((completed.stdout or b"", completed.stderr or b""))
+    if completed.returncode:
+        raise subprocess.CalledProcessError(completed.returncode, command, completed.stdout, completed.stderr)
+
+
+def rebuild_unit(unit, cl, env, build_dir, streams):
     # Recipes use relative forward-slash paths, even on Windows.
     program, *args = shlex.split(unit["build_command"])
     if "rebuilt_symbol" not in unit:
@@ -69,7 +81,7 @@ def rebuild_unit(unit, cl, env, build_dir):
     obj.parent.mkdir(parents=True, exist_ok=True)
     if obj.exists():
         raise ValueError("the expected object already exists in the fresh build directory")
-    subprocess.run([cl, *args], cwd=build_dir, env=env, check=True)
+    run_tool([cl, *args], streams, cwd=build_dir, env=env)
     if not obj.is_file():
         raise ValueError(f"compiler produced no object at {outputs[0]}")
     if "ltcg_link" in unit:
@@ -81,10 +93,56 @@ def rebuild_unit(unit, cl, env, build_dir):
         dll = obj.with_suffix(".dll")
         stubs.write_bytes(stub_object(unit["ltcg_link"]["stubs"]))
         linker = Path(cl).with_name("LINK.EXE")
-        subprocess.run([str(linker), *link_arguments(unit["ltcg_link"]), "/OUT:" + str(dll), str(obj), str(stubs)],
-                       cwd=build_dir, env=env, check=True, stdout=subprocess.DEVNULL)
+        run_tool([str(linker), *link_arguments(unit["ltcg_link"]), "/OUT:" + str(dll), str(obj), str(stubs)],
+                 streams, cwd=build_dir, env=env, stdout=subprocess.DEVNULL)
         return dll
     return obj
+
+
+def build_recipe(units, compilers):
+    """Rebuild one recipe's object in a directory of its own, and return (object, error, output).
+
+    A failure is returned rather than raised, so the caller can print the tools' output in
+    recipe order before it reports the error."""
+    unit = units[0]
+    cl, env = compilers[unit["toolchain"]]
+    streams = []
+    try:
+        with tempfile.TemporaryDirectory(prefix="scct-decomp-") as tmp:
+            obj = rebuild_unit(unit, cl, env, Path(tmp).resolve(), streams).read_bytes()
+    except Exception as error:
+        return None, error, streams
+    return obj, None, streams
+
+
+def build_recipes(recipes, compilers, jobs):
+    """Yield (units, (object, error, output)) for each recipe, in order.
+
+    With jobs=1 each recipe is built when its turn comes, as the gate always did. With more
+    jobs, the builds run concurrently in threads and are still yielded in recipe order."""
+    def build(units):
+        return units, build_recipe(units, compilers)
+
+    if jobs == 1:
+        for units in recipes:
+            yield build(units)
+        return
+    pool = ThreadPoolExecutor(max_workers=jobs)
+    try:
+        yield from pool.map(build, recipes)
+    finally:
+        # Recipes that have not started are dropped, so a failure stops the gate as it did serially.
+        pool.shutdown(wait=True, cancel_futures=True)
+
+
+def replay(streams):
+    """Print a recipe's captured tool output as the serial gate printed it, before its PASS lines."""
+    for stdout, stderr in streams:
+        for data, stream in ((stdout, sys.stdout), (stderr, sys.stderr)):
+            if data:
+                stream.flush()
+                stream.buffer.write(data)
+                stream.buffer.flush()
 
 
 def main():
@@ -98,7 +156,11 @@ def main():
                         help="gate only units with an input matching this pattern, such as 'src/sound_*'; repeatable")
     parser.add_argument("--update-receipts", action="store_true",
                         help="after a unit's edited inputs rebuild every retail byte, record its new receipt")
+    parser.add_argument("--jobs", type=int, default=os.cpu_count() or 1,
+                        help="recipes to build at once (default: one per core); 1 builds them one at a time")
     args = parser.parse_args()
+    if args.jobs < 1:
+        parser.error("--jobs must be at least 1")
     env = os.environ.copy()
     # cl prepends CL and appends _CL_ to the command line.
     env.pop("CL", None)
@@ -148,22 +210,26 @@ def main():
             recipes.setdefault(key, []).append(unit)
         gated = 0
         updated = []
-        for (toolchain, *_), units in recipes.items():
-            cl, build_env = compilers[toolchain]
-            with tempfile.TemporaryDirectory(prefix="scct-decomp-") as tmp:
-                obj = rebuild_unit(units[0], cl, build_env, Path(tmp).resolve()).read_bytes()
-            for unit in units:
-                receipt = compare_unit(PC, target, unit, original, obj)
-                if receipt != unit["match"]:
-                    # compare_unit has already required every rebuilt byte to equal retail,
-                    # so only the fingerprint of the edited inputs can differ here.
-                    if not args.update_receipts or receipt["bytes_sha256"] != unit["match"]["bytes_sha256"]:
-                        raise ValueError(f"{unit['id']}: rebuilt receipt differs from checked-in receipt")
-                    unit["match"] = receipt
-                    updated.append(unit)
-                byte_count += unit["size"]
-                gated += 1
-                print(f"PASS {target_id}/{unit['id']} at file offset 0x{unit['offset']:x} ({unit['size']} bytes)")
+        builds = build_recipes(list(recipes.values()), compilers, args.jobs)
+        try:
+            for units, (obj, error, streams) in builds:
+                replay(streams)
+                if error is not None:
+                    raise error
+                for unit in units:
+                    receipt = compare_unit(PC, target, unit, original, obj)
+                    if receipt != unit["match"]:
+                        # compare_unit has already required every rebuilt byte to equal retail,
+                        # so only the fingerprint of the edited inputs can differ here.
+                        if not args.update_receipts or receipt["bytes_sha256"] != unit["match"]["bytes_sha256"]:
+                            raise ValueError(f"{unit['id']}: rebuilt receipt differs from checked-in receipt")
+                        unit["match"] = receipt
+                        updated.append(unit)
+                    byte_count += unit["size"]
+                    gated += 1
+                    print(f"PASS {target_id}/{unit['id']} at file offset 0x{unit['offset']:x} ({unit['size']} bytes)")
+        finally:
+            builds.close()
         if updated:
             save_receipts(manifest, updated, write)
             print(f"{target_id}: recorded {len(updated)} new receipts")
