@@ -6,7 +6,7 @@ struct AllocatorOps {
 };
 struct Allocator { const struct AllocatorOps *ops; };
 extern struct Allocator *engine_allocator;
-struct Array { void *data; unsigned count, capacity; };
+#include "campaign_array_storage.h"
 
 struct Flags { unsigned value; };
 /* These stack words preserve the integer argument bits for the x86 member call. */
@@ -44,8 +44,8 @@ static __forceinline void free_allocation(void *pointer)
         struct Array *array = (struct Array *)((unsigned char *)self + MemberOffset); \
         count.value = array->count; \
         Remove(array, 0.0f, count.argument, stride.argument); \
-        if (array->data) free_allocation(array->data); \
-        array->data = 0; \
+        if (array->buffer.bytes) free_allocation(array->buffer.bytes); \
+        array->buffer.bytes = 0; \
         array->capacity = 0; \
         array->count = 0; \
         if (flags.value & 1) free_allocation(self); \

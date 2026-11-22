@@ -3,7 +3,7 @@
    VC 7.1 C __fastcall stack-passes float and aggregate parameters; IntegerStackWord
    carries the original unsigned integer words through those stack slots. */
 typedef union { unsigned int value; float stack_word; } IntegerStackWord;
-struct Array { void *data; int count; int capacity; };
+#include "campaign_array_storage.h"
 struct Allocation { void *object; };
 struct Flags { unsigned value; };
 struct Allocator;
@@ -14,14 +14,14 @@ extern void __fastcall remove_items(struct Array *, float index, float count);
 extern void __fastcall remove_sized_items(struct Array *, float index, float count, float element_size);
 extern void __fastcall destroy_base(void *);
 
-static __forceinline void release_storage(struct Array *items)
+static __forceinline void release_items(struct Array *items)
 {
-    if (items->data) {
+    if (items->buffer.bytes) {
         struct Allocation allocation;
-        allocation.object = items->data;
+        allocation.object = items->buffer.bytes;
         allocator->methods->release(allocator, allocation);
     }
-    items->data = 0;
+    items->buffer.bytes = 0;
     items->capacity = 0;
     items->count = 0;
 }
@@ -44,7 +44,7 @@ struct ArrayOwner_##Offset *__fastcall delete_array_owner_##Offset(struct ArrayO
     IntegerStackWord count; \
     count.value = items->count; \
     remove_items(items, first.stack_word, count.stack_word); \
-    release_storage(items); \
+    release_items(items); \
     if (flags.value & 1) release_object(self); \
     return self; \
 }
@@ -59,7 +59,7 @@ struct DerivedArrayOwner_##Offset##_##ElementSize *__fastcall delete_derived_arr
     IntegerStackWord count; \
     count.value = items->count; \
     remove_sized_items(items, first.stack_word, count.stack_word, element_size.stack_word); \
-    release_storage(items); \
+    release_items(items); \
     destroy_base(self); \
     if (flags.value & 1) release_object(self); \
     return self; \

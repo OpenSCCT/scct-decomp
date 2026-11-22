@@ -1,4 +1,4 @@
-struct Array { void *data; int size; unsigned capacity; };
+#include "campaign_array_storage.h"
 struct Flags { unsigned value; };
 struct Manager;
 struct Methods {
@@ -14,7 +14,7 @@ static __forceinline void release_array(void *self, unsigned offset, unsigned el
     struct Array *array = (struct Array *)((unsigned char *)self + offset);
     unsigned capacity = array->capacity;
     if (!(capacity & 0x80000000u))
-        manager->methods->release(manager, manager->methods, array->data, (capacity & 0x7fffffffu) * element_bytes, category);
+        manager->methods->release(manager, manager->methods, array->buffer.bytes, (capacity & 0x7fffffffu) * element_bytes, category);
 }
 static __forceinline void *finish(void *self, struct Flags flags)
 {

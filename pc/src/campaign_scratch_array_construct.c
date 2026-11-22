@@ -1,4 +1,4 @@
-struct Array { void *data; int count; unsigned capacity; void *original; int original_count; };
+#include "campaign_array_with_original.h"
 struct Manager;
 struct Methods {
     void *reserved[9];
@@ -9,14 +9,14 @@ struct Count { unsigned value; };
 extern struct Manager *manager;
 
 #define CONSTRUCT_SCRATCH_ARRAY(Entry, ElementBytes) \
-    struct Array *__fastcall Entry(struct Array *array, struct Count count) \
+    struct ArrayWithOriginal *__fastcall Entry(struct ArrayWithOriginal *array, struct Count count) \
     { \
         int bytes; \
         void *data; \
         struct Manager *heap; \
-        array->data = 0; \
-        array->count = 0; \
-        array->capacity = 0x80000000u; \
+        array->array.buffer.bytes = 0; \
+        array->array.count = 0; \
+        array->array.capacity = 0x80000000u; \
         heap = manager; \
         bytes = (int)((count.value * ElementBytes + 15u) & ~15u); \
         if (bytes > heap->remaining) { \
@@ -27,8 +27,8 @@ extern struct Manager *manager;
             heap->remaining -= bytes; \
             data = previous; \
         } \
-        array->data = data; \
-        array->capacity = count.value | 0x80000000u; \
+        array->array.buffer.bytes = data; \
+        array->array.capacity = count.value | 0x80000000u; \
         array->original_count = count.value; \
         array->original = data; \
         return array; \

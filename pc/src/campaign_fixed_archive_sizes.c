@@ -1,4 +1,4 @@
-struct Array { void *buffer; int count, capacity; };
+#include "campaign_array_storage.h"
 struct Archive;
 struct Word { unsigned value; };
 struct ArchiveArg { struct Archive *ptr; };

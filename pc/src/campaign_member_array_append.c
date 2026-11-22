@@ -1,4 +1,4 @@
-struct Array { unsigned *data; int size; unsigned capacity_flags; };
+#include "campaign_array_storage.h"
 extern void __cdecl grow_array(struct Array *array, unsigned element_size);
 
 #define APPEND_METHOD(Offset) \
@@ -6,9 +6,9 @@ extern void __cdecl grow_array(struct Array *array, unsigned element_size);
     void __fastcall append_##Offset(struct Owner##Offset *owner, unsigned unused_edx, unsigned value) \
     { \
         struct Array *array = &owner->array; \
-        if (array->size == (int)(array->capacity_flags & 0x7fffffffU)) \
+        if (array->count == (int)(array->capacity & 0x7fffffffU)) \
             grow_array(array, sizeof(value)); \
-        array->data[array->size++] = value; \
+        ((unsigned *)array->buffer.bytes)[array->count++] = value; \
     }
 
 APPEND_METHOD(8)

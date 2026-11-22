@@ -1,12 +1,12 @@
-struct Array { void *data; unsigned size, capacity_flags; };
+#include "campaign_array_storage.h"
 struct InlineArray { struct Array array; unsigned char storage[1]; };
 
 struct Array *__fastcall use_buffer(struct Array *array, unsigned unused_edx,
                                     void *data, unsigned size, unsigned capacity)
 {
-    array->data = data;
-    array->size = size;
-    array->capacity_flags = capacity | 0x80000000u;
+    array->buffer.bytes = data;
+    array->count = size;
+    array->capacity = capacity | 0x80000000u;
     return array;
 }
 
@@ -14,9 +14,9 @@ struct Array *__fastcall use_buffer(struct Array *array, unsigned unused_edx,
     struct InlineArray *__fastcall use_inline_##Capacity(struct InlineArray *owner, \
                                                          unsigned unused_edx, unsigned size) \
     { \
-        owner->array.data = owner->storage; \
-        owner->array.size = size; \
-        owner->array.capacity_flags = 0x80000000u | Capacity; \
+        owner->array.buffer.bytes = owner->storage; \
+        owner->array.count = size; \
+        owner->array.capacity = 0x80000000u | Capacity; \
         return owner; \
     }
 

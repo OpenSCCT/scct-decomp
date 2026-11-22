@@ -1,4 +1,4 @@
-struct Array { void *data; int size; unsigned capacity; };
+#include "campaign_array_storage.h"
 struct Manager;
 struct Methods {
     void *reserved[5];
@@ -16,7 +16,7 @@ extern struct Manager *manager;
             void *data; \
             const struct Methods *methods; \
             heap = manager; \
-            data = array->data; \
+            data = array->buffer.bytes; \
             methods = heap->methods; \
             methods->release(heap, data, data, (capacity & 0x7fffffffu) * ElementBytes, Category); \
         } \

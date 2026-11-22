@@ -1,4 +1,4 @@
-struct Array { void *data; int count; unsigned capacity; };
+#include "campaign_array_storage.h"
 struct Request { int count; };
 extern void __cdecl grow(struct Array *, int, int);
 

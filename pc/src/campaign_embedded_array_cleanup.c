@@ -1,5 +1,5 @@
 struct Object { const void *methods; };
-struct Array { void *data; int size; unsigned capacity; };
+#include "campaign_array_storage.h"
 struct Manager;
 struct Methods {
     void *reserved[5];
@@ -22,7 +22,7 @@ extern const void *const methods_84e538[];
         self->methods = DerivedMethods; \
         capacity = array->capacity; \
         if (!(capacity & 0x80000000u)) \
-            manager->methods->release(manager, manager->methods, array->data, (capacity & 0x7fffffffu) * ElementBytes, Category); \
+            manager->methods->release(manager, manager->methods, array->buffer.bytes, (capacity & 0x7fffffffu) * ElementBytes, Category); \
         self->methods = BaseMethods; \
     }
 
@@ -33,7 +33,7 @@ extern const void *const methods_84e538[];
         unsigned capacity; \
         capacity = array->capacity; \
         if (!(capacity & 0x80000000u)) \
-            manager->methods->release(manager, manager->methods, array->data, (capacity & 0x7fffffffu) * ElementBytes, Category); \
+            manager->methods->release(manager, manager->methods, array->buffer.bytes, (capacity & 0x7fffffffu) * ElementBytes, Category); \
         self->methods = BaseMethods; \
     }
 

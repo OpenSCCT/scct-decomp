@@ -1,4 +1,4 @@
-struct Array { void *data; int count; unsigned capacity; void *original; int original_count; };
+#include "campaign_array_with_original.h"
 struct Manager;
 struct Methods {
     void *reserved[5];
@@ -10,7 +10,7 @@ struct Manager { const struct Methods *methods; int reserved; unsigned char *cur
 extern struct Manager *manager;
 
 #define DESTROY_SCRATCH_ARRAY(Entry, ElementBytes, Category) \
-    void __fastcall Entry(struct Array *array) \
+    void __fastcall Entry(struct ArrayWithOriginal *array) \
     { \
         unsigned bytes = (array->original_count * ElementBytes + 15u) & ~15u; \
         void *original = array->original; \
@@ -21,9 +21,9 @@ extern struct Manager *manager;
             heap->cursor -= bytes; \
             heap->remaining += bytes; \
         } \
-        if (!(array->capacity & 0x80000000u)) { \
+        if (!(array->array.capacity & 0x80000000u)) { \
             heap = manager; \
-            heap->methods->release(heap, heap->methods, array->data, (array->capacity & 0x7fffffffu) * ElementBytes, Category); \
+            heap->methods->release(heap, heap->methods, array->array.buffer.bytes, (array->array.capacity & 0x7fffffffu) * ElementBytes, Category); \
         } \
     }
 

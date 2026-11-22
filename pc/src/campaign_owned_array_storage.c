@@ -1,4 +1,4 @@
-struct Array { void *data; int size; unsigned capacity; };
+#include "campaign_array_storage.h"
 struct Manager;
 struct Methods {
     void *reserved[5];
@@ -12,7 +12,7 @@ extern struct Manager *manager;
     { \
         unsigned capacity = array->capacity; \
         if (!(capacity & 0x80000000u)) { \
-            manager->methods->release(manager, array, array->data, (capacity & 0x7fffffffu) * ElementBytes, Category); \
+            manager->methods->release(manager, array, array->buffer.bytes, (capacity & 0x7fffffffu) * ElementBytes, Category); \
         } \
     }
 

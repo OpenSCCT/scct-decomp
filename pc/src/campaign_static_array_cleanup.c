@@ -1,4 +1,4 @@
-struct Array { void *data; unsigned count, capacity; };
+#include "campaign_array_storage.h"
 struct Allocator;
 struct Pointer { void *value; };
 struct Count { unsigned value; };
@@ -16,11 +16,11 @@ static __forceinline void destroy_storage(float element_size_bits)
     struct Count count;
     count.value = storage.count;
     remove_range(&storage, 0.0f, count, element_size_bits);
-    if (storage.data) {
-        struct Pointer buffer = {storage.data};
+    if (storage.buffer.bytes) {
+        struct Pointer buffer = {storage.buffer.bytes};
         engine_allocator->methods->release(engine_allocator, buffer);
     }
-    storage.data = 0;
+    storage.buffer.bytes = 0;
     storage.capacity = 0;
     storage.count = 0;
 }

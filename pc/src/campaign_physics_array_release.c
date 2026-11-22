@@ -1,5 +1,5 @@
 struct Object { const void *methods; unsigned short size; };
-struct Array { void *storage; int count; unsigned capacity_flags; };
+#include "campaign_array_storage.h"
 struct Flags { unsigned value; };
 struct Manager;
 struct Methods {
@@ -19,10 +19,10 @@ extern const void *const methods_84e538[];
     { \
         struct Array *array = (struct Array *)((unsigned char *)self + ArrayOffset); \
         unsigned capacity; \
-        capacity = array->capacity_flags; \
+        capacity = array->capacity; \
         if (!(capacity & 0x80000000u)) { \
             unsigned bytes = (capacity & 0x7fffffffu) * ElementBytes; \
-            manager->methods->release(manager, manager->methods, array->storage, bytes, ArrayCategory); \
+            manager->methods->release(manager, manager->methods, array->buffer.bytes, bytes, ArrayCategory); \
         } \
         self->methods = BaseMethods; \
         if (flags.value & 1) \
@@ -36,10 +36,10 @@ extern const void *const methods_84e538[];
         struct Array *array = (struct Array *)((unsigned char *)self + ArrayOffset); \
         unsigned capacity; \
         self->methods = DerivedMethods; \
-        capacity = array->capacity_flags; \
+        capacity = array->capacity; \
         if (!(capacity & 0x80000000u)) { \
             unsigned bytes = (capacity & 0x7fffffffu) * ElementBytes; \
-            manager->methods->release(manager, manager->methods, array->storage, bytes, ArrayCategory); \
+            manager->methods->release(manager, manager->methods, array->buffer.bytes, bytes, ArrayCategory); \
         } \
         self->methods = BaseMethods; \
         if (flags.value & 1) \

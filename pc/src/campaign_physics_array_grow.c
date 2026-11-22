@@ -1,4 +1,4 @@
-struct Array { void *data; int count; unsigned capacity; };
+#include "campaign_array_storage.h"
 struct Manager;
 struct Methods {
     void *reserved[4];
@@ -18,12 +18,12 @@ void __cdecl grow(struct Array *array, int capacity, unsigned width)
         const void *src;
         struct ByteCount size;
         dst = buffer;
-        src = array->data;
+        src = array->buffer.bytes;
         size.value = array->count * width;
         copy_storage(dst, src, size);
     }
     if (!(array->capacity & 0x80000000u))
-        manager->methods->release(manager, manager->methods, array->data, (array->capacity & 0x7fffffffu) * width, 18);
-    array->data = buffer;
+        manager->methods->release(manager, manager->methods, array->buffer.bytes, (array->capacity & 0x7fffffffu) * width, 18);
+    array->buffer.bytes = buffer;
     array->capacity = capacity;
 }
