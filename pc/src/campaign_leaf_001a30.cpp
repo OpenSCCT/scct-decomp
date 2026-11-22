@@ -9,7 +9,8 @@ public:
 };
 
 // UnkType_10901a30::UnkReturnZero
-int UnkType_10901a30::UnkReturnZero(int First, int Second, int Third, int Fourth, int Fifth, int Sixth)
+int UnkType_10901a30::UnkReturnZero(int First, int Second, int Third, int Fourth, int Fifth,
+                                    int Sixth)
 {
     return 0;
 }
