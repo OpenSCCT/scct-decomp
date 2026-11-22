@@ -1,10 +1,5 @@
 #include "set_object_methods.h"
-
-extern const void *const methods_854604[];
-extern const void *const methods_854b14[];
-extern const void *const methods_854b84[];
-extern const void *const methods_87100c[];
-extern const void *const methods_875ae8[];
+#include "campaign_globals.h"
 
 RESET_METHODS(set_methods_5ef4a0, methods_854604)
 RESET_METHODS(set_methods_5f2cb0, methods_854604)

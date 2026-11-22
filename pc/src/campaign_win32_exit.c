@@ -1,6 +1,6 @@
+#include "campaign_globals.h"
+
 struct CriticalSection;
-extern struct CriticalSection engine_lock;
-extern unsigned int timer_period;
 __declspec(dllimport) void __stdcall DeleteCriticalSection(struct CriticalSection *lock);
 __declspec(dllimport) unsigned int __stdcall timeEndPeriod(unsigned int period);
 

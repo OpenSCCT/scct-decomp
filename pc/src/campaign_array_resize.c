@@ -1,4 +1,5 @@
 #include "campaign_array_resize_abi.h"
+#include "campaign_globals.h"
 
 static __forceinline void resize_storage(struct Array *array, struct ArraySize element,
                                          const unsigned short *allocation_tag)
@@ -12,19 +13,6 @@ static __forceinline void resize_storage(struct Array *array, struct ArraySize e
 #define RESIZE_ARRAY(Entry, Tag) \
     void __fastcall resize_array_##Entry(struct Array *array, struct ArraySize element) \
     { resize_storage(array, element, Tag); }
-
-extern const unsigned short heap_tag_7b78d8[];
-extern const unsigned short heap_tag_7b7b08[];
-extern const unsigned short heap_tag_7b8f84[];
-extern const unsigned short heap_tag_7ba13c[];
-extern const unsigned short heap_tag_7ba17c[];
-extern const unsigned short heap_tag_7bc158[];
-extern const unsigned short heap_tag_7bc180[];
-extern const unsigned short heap_tag_7be9a8[];
-extern const unsigned short heap_tag_7cddbc[];
-extern const unsigned short heap_tag_7cf82c[];
-extern const unsigned short heap_tag_7db4cc[];
-extern const unsigned short heap_tag_831360[];
 
 RESIZE_ARRAY(r007400, heap_tag_7b78d8)
 RESIZE_ARRAY(r009360, heap_tag_7b7b08)

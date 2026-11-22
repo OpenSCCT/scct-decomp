@@ -1,18 +1,5 @@
 #include "campaign_array_storage.h"
-
-extern const unsigned short array_tag_7b78d8[];
-extern const unsigned short array_tag_7b7b08[];
-extern const unsigned short array_tag_7b8f84[];
-extern const unsigned short array_tag_7b9b70[];
-extern const unsigned short array_tag_7ba13c[];
-extern const unsigned short array_tag_7ba17c[];
-extern const unsigned short array_tag_7bc158[];
-extern const unsigned short array_tag_7bc180[];
-extern const unsigned short array_tag_7be9a8[];
-extern const unsigned short array_tag_7cddbc[];
-extern const unsigned short array_tag_7cf82c[];
-extern const unsigned short array_tag_7db4cc[];
-extern const unsigned short array_tag_831360[];
+#include "campaign_globals.h"
 
 ARRAY_REMOVE(r007710, array_tag_7b78d8)
 ARRAY_REMOVE(r009690, array_tag_7b7b08)

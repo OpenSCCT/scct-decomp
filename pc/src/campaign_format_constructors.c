@@ -1,49 +1,9 @@
 struct Decoder { const void *methods; };
 struct Description { const void *value; };
 /* The base initializer receives width and mode in adjacent 32-bit x86 stack slots. */
-extern void __fastcall initialize_decoder(struct Decoder *, struct Description, unsigned __int64);
 
-extern const void *const methods_860798[];
-extern const void *const methods_8607a8[];
-extern const void *const methods_8607b8[];
-extern const void *const methods_8607c8[];
-extern const void *const methods_8607d8[];
-extern const void *const methods_8607e8[];
-extern const void *const methods_8607f8[];
-extern const void *const methods_860808[];
-extern const void *const methods_860818[];
-extern const void *const methods_860828[];
-extern const void *const methods_860838[];
-extern const void *const methods_860848[];
-extern const void *const methods_860858[];
-extern const void *const methods_860868[];
-extern const void *const methods_860878[];
-extern const void *const methods_860888[];
-extern const void *const methods_860898[];
-extern const void *const methods_8608ac[];
-extern const void *const methods_8608bc[];
-extern const void *const methods_8608cc[];
-extern const void *const methods_8608dc[];
-extern const void *const methods_8608ec[];
-extern const void *const methods_8608fc[];
-extern const void *const methods_86090c[];
-extern const void *const methods_86091c[];
-extern const void *const methods_86092c[];
-extern const void *const methods_86093c[];
-extern const void *const methods_86094c[];
-extern const void *const methods_86095c[];
-extern const void *const methods_86096c[];
-extern const void *const methods_86097c[];
-extern const void *const methods_86099c[];
-extern const void *const methods_8609ac[];
-extern const void *const methods_8609bc[];
-extern const void *const methods_8609ec[];
-extern const void *const methods_8609fc[];
-extern const void *const methods_860a0c[];
-extern const void *const methods_860a1c[];
-extern const void *const methods_860a40[];
-extern const void *const methods_860a50[];
-extern const void *const methods_860a60[];
+#include "campaign_globals.h"
+extern void __fastcall initialize_decoder(struct Decoder *, struct Description, unsigned __int64);
 
 #define CONSTRUCT_DECODER(Entry, Bits, Mode, Methods) \
     struct Decoder *__fastcall Entry(struct Decoder *self, struct Description description) \

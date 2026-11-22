@@ -1,4 +1,5 @@
 #include "campaign_fixed_record_growth.h"
+#include "campaign_globals.h"
 struct ScalarRef { const unsigned int *value; };
 
 #define FIND_OR_APPEND(Entry, Tag) \
@@ -12,10 +13,6 @@ struct ScalarRef { const unsigned int *value; };
         ((unsigned int *)array->buffer.bytes)[i] = *item.value; \
         return i; \
     }
-
-extern const unsigned short allocation_tag_7b7b08[];
-extern const unsigned short allocation_tag_7ba17c[];
-extern const unsigned short allocation_tag_7bc158[];
 
 FIND_OR_APPEND(r04baa0, allocation_tag_7bc158)
 FIND_OR_APPEND(r078660, allocation_tag_7b7b08)

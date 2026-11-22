@@ -50,7 +50,8 @@
     "rebuilt_symbol": "@script_frame_TriggerEvent@20",
     "inputs": [
       "src/campaign_script_frames.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_frames.obj src/campaign_script_frames.c",
@@ -67,7 +68,7 @@
     "identification": "Retail TriggerEvent event wrapper at RVA 0x293160, including the return. The name initialization and script lookup link the wrapper to its event. Matching package declaration: Engine.u declares Actor.TriggerEvent at serial offset 0x2d16e.",
     "match": {
       "bytes_sha256": "262cee85811f6afdf39af184bde4650165f60b8cc7fbbcff7f75fe8cf2ced011",
-      "inputs_sha256": "09d0151a6a319ad244643225be044ea71c532e9475e8a38c9485004ea2e2f9c4"
+      "inputs_sha256": "66743a37b9b6bfb747d32fa76591b73d2c0f28234e9c9fd1cae781b5f9b56628"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -85,7 +86,8 @@
     "inputs": [
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_globals.h"
     ],
     "rebuilt_symbol": "@resize_array_r2931d0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -103,7 +105,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x2931d0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "f4e74646c3febbb46bece6d35187d17dcf9520ec5c91d2be5427936c0573fdf6"
+      "inputs_sha256": "a772f109ceaf73214ec6573ef72529b4eb9ebe8916e106c4f8db51b8697a75f5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -157,7 +159,8 @@
     "inputs": [
       "src/campaign_array_insert_range.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_globals.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_insert_range.obj src/campaign_array_insert_range.c",
@@ -179,7 +182,7 @@
     "identification": "Complete FArray range insertion at default-analysis RVA 0x295640. Grows the element count and capacity as required, then moves the existing suffix to make space at the requested index. The stock UTF-16 allocator tag corroborates the array operation.",
     "match": {
       "bytes_sha256": "332032cd0a784a2768224a5105a096c3c9f6721677cd0ce5e37991d6be600230",
-      "inputs_sha256": "71b84aaee1d9321a4edc7c3f9b4e0659c0cbdd728481bdee2a14e72481f15fd2"
+      "inputs_sha256": "bab4e0f87de0b545a97eb98a1c9f82406f0c34dc3b7de7a6f86e068ad0c694a7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -305,7 +308,8 @@
     "rebuilt_symbol": "@array_remove_r2957b0@16",
     "inputs": [
       "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_globals.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -326,7 +330,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x2957b0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x2979eb, 0x297fe4, 0x29801a. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "0f172c331d6b7da037851face11b385eb57ac5514894826b7a8c69db3c2c2f65",
-      "inputs_sha256": "69965560ae55b529ecb3a923e949412c6b7c1e2f3e0c79d3080c2e5a62ed5897"
+      "inputs_sha256": "c58bbad577ad2e205b39a3ed3ace9f2e503f8813464005fee99528d4e8fdd8e4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -585,7 +589,8 @@
       "src/campaign_array_append_item.c",
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_globals.h"
     ],
     "rebuilt_symbol": "@append_array_item_r2978b0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -603,7 +608,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x2978b0 through its RET. Grows the allocation if required, stores the incoming four-byte element and returns its original insertion index. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "a30eb2ed2fb4d27a0d8a0ca6ad1cd005f7b706779845ef80dc3d020481cfa641",
-      "inputs_sha256": "3b9965d8553e638b4438ddbd37a22584ad75b2c549fdc2877239cb8be4f751a1"
+      "inputs_sha256": "34055edc34b0053f67ad1166957649e3bfa78a65ba7c429a85128f3365a5d64f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -622,7 +627,8 @@
       "src/campaign_record_arrays.c",
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_globals.h"
     ],
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_record_arrays.obj src/campaign_record_arrays.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -640,7 +646,7 @@
     "identification": "Stock FArray operation at RVA 0x297910. Its independent function extent agrees with the compiler contribution and the allocation tag is shared with other matched operations. Record size is 148 bytes. Appends a copy of the input record and returns its index.",
     "match": {
       "bytes_sha256": "d30b8039ad98a2694d7dbf80cdbe74547ffe90df3c14fe44c32dc309f62a6432",
-      "inputs_sha256": "37be0f34fc9303e4cc89985b69be9e57db5e099da7a46c49c1713264054795c8"
+      "inputs_sha256": "6d23cfb6c44801e5a547ea537cee2b61c84239e076c6a449d4f172863d399d78"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -659,7 +665,8 @@
       "src/campaign_array_append_item.c",
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_globals.h"
     ],
     "rebuilt_symbol": "@append_array_item_r297980@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -677,7 +684,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x297980 through its RET. Grows the allocation if required, stores the incoming four-byte element and returns its original insertion index. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "a30eb2ed2fb4d27a0d8a0ca6ad1cd005f7b706779845ef80dc3d020481cfa641",
-      "inputs_sha256": "7013cd486d6d40a3479182c3d4bb335c5662710155d92eec606b41e35c047dd2"
+      "inputs_sha256": "387362170e69ba2df04da07ee191928c7ffa61dd3004424fa692e6fc775db914"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -871,7 +878,8 @@
     "size": 48,
     "rebuilt_symbol": "@construct_AELaserMicVolume@4",
     "inputs": [
-      "src/campaign_actor_constructors.c"
+      "src/campaign_actor_constructors.c",
+      "src/campaign_globals.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_actor_constructors.obj src/campaign_actor_constructors.c",
@@ -888,7 +896,7 @@
     "identification": "Stock AELaserMicVolume constructor at RVA 0x2990e0. Its complete default-analysis extent agrees with the C contribution. It calls the shared base constructor, initializes four actor fields and installs the same vtable as the class's independently registered placement callback.",
     "match": {
       "bytes_sha256": "3b4fd2766060ca26eb47a7a7841860b5d607efa8c798a00069daf112547ed883",
-      "inputs_sha256": "c10ca7736ba4af800c1a77d80e12ac5c201951bfc65c258ea837b474a98b1cdc"
+      "inputs_sha256": "10202f38fac795a0656ab46cbdfbf611fa62e83b2be1b892767408eafc445f88"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -951,7 +959,8 @@
     "size": 48,
     "rebuilt_symbol": "@construct_AEPattern@4",
     "inputs": [
-      "src/campaign_actor_constructors.c"
+      "src/campaign_actor_constructors.c",
+      "src/campaign_globals.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_actor_constructors.obj src/campaign_actor_constructors.c",
@@ -968,7 +977,7 @@
     "identification": "Stock AEPattern constructor at RVA 0x299150. Its complete default-analysis extent agrees with the C contribution. It calls the shared base constructor, initializes four actor fields and installs the same vtable as the class's independently registered placement callback.",
     "match": {
       "bytes_sha256": "b4e4c46213ccb98516c96ada28ff697fc7dbdfe819e15c0bbe92182c38e1f619",
-      "inputs_sha256": "463cf0361a386b56f57567730a86203982aa0d1e85bb380e0b3249cf51fb26bb"
+      "inputs_sha256": "9fa44a038c31f1c46a7b5a5020da928d052598f526e18d8f01db47a4887d73ae"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1020,7 +1029,8 @@
     "size": 64,
     "rebuilt_symbol": "_place_AELaserMicVolume",
     "inputs": [
-      "src/campaign_placement.c"
+      "src/campaign_placement.c",
+      "src/campaign_globals.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_placement.obj src/campaign_placement.c",
@@ -1037,7 +1047,7 @@
     "identification": "Placement callback passed to the AELaserMicVolume class factory at RVA 0x299e20. The callback at RVA 0x299d30 covers construction and the null-storage return. ",
     "match": {
       "bytes_sha256": "5bc5438dce48f8b5ca99cbe13347e66dabca0018c47b959a394ebdc9bd981f17",
-      "inputs_sha256": "178856c7c3d3d25a04617ed589d1ebbd4214d373e6bba66d2b0ff627be7d3321"
+      "inputs_sha256": "bfe731298e5ce21479ea92958324720dbaf39b7442ecddfc8f82ccd5accb76ac"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1054,7 +1064,8 @@
     "size": 64,
     "rebuilt_symbol": "_place_AEPattern",
     "inputs": [
-      "src/campaign_placement.c"
+      "src/campaign_placement.c",
+      "src/campaign_globals.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_placement.obj src/campaign_placement.c",
@@ -1071,7 +1082,7 @@
     "identification": "Placement callback passed to the AEPattern class factory at RVA 0x299db0. The callback at RVA 0x299d70 covers construction and the null-storage return. ",
     "match": {
       "bytes_sha256": "8f5ad45e2d1c6f9adf5ac8f4a95eeb4cc3ea25e4d3cd1f06c5a68bc9d1bcc68a",
-      "inputs_sha256": "ccebaa3ab07dba0008ef3180940d4bec1631d8b806d1437f33d4ac5ac0211190"
+      "inputs_sha256": "3e0bd5f1111d7d4a4ada6713f3d84b4e43315a36c7b6363e69a4ea73f580fc40"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1225,7 +1236,8 @@
     "rebuilt_symbol": "@event_CallEndEvent@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1242,7 +1254,7 @@
     "identification": "Retail CallEndEvent event wrapper at RVA 0x29d660, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "8867d6daabb7a99d9fb5bdddc93e81894613c2468a5998fbd7ea68df88a9450d",
-      "inputs_sha256": "cc0b371eed885f690438b5a9fe8a58a3c1e3b9f26d7be4e9b029d259c6bd64ae"
+      "inputs_sha256": "6c86c1136aebb64f4ada0aa7fce4906562c17c564813596d73927c9f6a64e04d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1260,7 +1272,8 @@
     "rebuilt_symbol": "@script_frame_CanUseOpenDoorType@8",
     "inputs": [
       "src/campaign_script_frames.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_frames.obj src/campaign_script_frames.c",
@@ -1277,7 +1290,7 @@
     "identification": "Retail CanUseOpenDoorType event wrapper at RVA 0x29d680, including the return. The name initialization and script lookup link the wrapper to its event. Matching package declaration: Engine.u declares EInteractObject.CanUseOpenDoorType at serial offset 0x47e88.",
     "match": {
       "bytes_sha256": "847674cb4dc9dbab1e6172acb34f29890bf4e266c5657b25a07091906c0a6af2",
-      "inputs_sha256": "4d1972be8bf360dcd87dfda207c12cdab474359d1171cfe00e32a59c69064f5b"
+      "inputs_sha256": "2abc3a199cf23ad6e6e8a84b23e801846041ebd69fc470014d3b800141cfebe1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1295,7 +1308,8 @@
     "rebuilt_symbol": "@event_GoConveyor@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1312,7 +1326,7 @@
     "identification": "Retail GoConveyor event wrapper at RVA 0x29d6d0, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "a89eb1cea6f4b08fb33db6cd5768104f2c4dd4d5a31144749e192d6bbbadecf6",
-      "inputs_sha256": "26b80255ed082ccf9a38e04180b9a8994ac3d2f7de1224b4bab42ade1261d334"
+      "inputs_sha256": "642aad31efe11ccd4ffab4c6a2ffbdc204630fe853e8c1492ec5d4acec5399fe"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1330,7 +1344,8 @@
     "rebuilt_symbol": "@script_frame_SetDoorInteractionLocation@8",
     "inputs": [
       "src/campaign_script_frames.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_frames.obj src/campaign_script_frames.c",
@@ -1347,7 +1362,7 @@
     "identification": "Retail SetDoorInteractionLocation event wrapper at RVA 0x29d6f0, including the return. The name initialization and script lookup link the wrapper to its event. Matching package declaration: Echelon.u declares EAIController.SetDoorInteractionLocation at serial offset 0x7f6ce.",
     "match": {
       "bytes_sha256": "aaf4cd467edb685d72a6bae22228b7a2a285cd22cef2a447f831a2272d1f9257",
-      "inputs_sha256": "75bc66eb434959ea2027424b06267f0d0e1c8716d7dec59ade1e868a1f289808"
+      "inputs_sha256": "c0f34d4293ea5266c7f7b803a2b3aa168a1d9a1c3685e7246448ed4856ea7a1c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1365,7 +1380,8 @@
     "rebuilt_symbol": "@script_call_GoOnLadder@8",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -1382,7 +1398,7 @@
     "identification": "Retail GoOnLadder event wrapper at RVA 0x29d720, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EAIController.GoOnLadder with Bool bGoUp at serial offset 0x74469.",
     "match": {
       "bytes_sha256": "cb59578daeb1c9c1f02b727a22753bd34abbac09e419d822b64730bddb623b14",
-      "inputs_sha256": "b2ead49e666ecfc343df24b885764d172b575d8d4bb4310c92d5523924022544"
+      "inputs_sha256": "3e021c247daa44565ab41bfa336524e1c0e90a2ad7561800f462236d6ef2ca70"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1400,7 +1416,8 @@
     "rebuilt_symbol": "@script_call_GoOnBed@8",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -1417,7 +1434,7 @@
     "identification": "Retail GoOnBed event wrapper at RVA 0x29d750, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EAIController.GoOnBed with Bool bGoIntoBed at serial offset 0x74430.",
     "match": {
       "bytes_sha256": "ea0a1b1491b309620cee7b5f49e7b32b0eb3ae714f9c36e35927658bb2af92ad",
-      "inputs_sha256": "9f25f26cb1bdcc7d49fea2dc7f530f87e38455f441f4c768c4c071ed77172c0c"
+      "inputs_sha256": "e1da2f5f828643d9ab7d72a25c113cb4b124b2fe94a226a6e30f034292390327"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1435,7 +1452,8 @@
     "rebuilt_symbol": "@script_call_GoOnChair@8",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -1452,7 +1470,7 @@
     "identification": "Retail GoOnChair event wrapper at RVA 0x29d780, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EAIController.GoOnChair with Bool bGoIntoChair at serial offset 0x743cb.",
     "match": {
       "bytes_sha256": "55e31e5dadcbc09ef7a4769664807138f1768a34e1a920f5ad32d659fe7f0dce",
-      "inputs_sha256": "699931e566a32498327afd8dd0e469fc1a269241de4c4aa4b096b6781f847184"
+      "inputs_sha256": "cff1639077539a906806275885c555d34f84ecb363a56a22d215de973174495f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1470,7 +1488,8 @@
     "rebuilt_symbol": "@event_ThrowObject@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1487,7 +1506,7 @@
     "identification": "Retail ThrowObject event wrapper at RVA 0x29d7b0, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "dcda69662e61befa7f41eb3a5537bf88f7921a765a326ae78bc1bac078586931",
-      "inputs_sha256": "f231b29bccefcf824c5429fcc35bb20918813c057fe78e47fbfda6b09b4e2a6d"
+      "inputs_sha256": "3fd61f22f8b86d498e2eb00b9d602a38daffe7b04b920f6bc627e2fedc2a414a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1505,7 +1524,8 @@
     "rebuilt_symbol": "@event_StoppedMoving@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1522,7 +1542,7 @@
     "identification": "Retail StoppedMoving event wrapper at RVA 0x29d7d0, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "c90a0bf26739be19baadd8ad36b412bc068d2ddc602084826071e6417d7ccb42",
-      "inputs_sha256": "fca3f7eaa3215136639ef5063cb106e9b7ff78b01bf518c66e379305b9e14a26"
+      "inputs_sha256": "979278a7255acdc6bdcbd14ffd105c4044e3a82c35d7f56209e6e7d055fd254e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1540,7 +1560,8 @@
     "rebuilt_symbol": "@event_StartedMoving@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1557,7 +1578,7 @@
     "identification": "Retail StartedMoving event wrapper at RVA 0x29d7f0, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "81efcf4808c273c4f106a5b83e4f7df8a9408ef8305427f716326a49a8647c77",
-      "inputs_sha256": "41d7931773c37efc79eb9326136980fb16e7ec2cb696934be63a10b6273cbda9"
+      "inputs_sha256": "e56fa942a6dec49f33d4808f1523f4026e99e22f01f14c2f85a0b3615562e67e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1575,7 +1596,8 @@
     "rebuilt_symbol": "@script_call_SetFeetIK@8",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -1592,7 +1614,7 @@
     "identification": "Retail SetFeetIK event wrapper at RVA 0x29d810, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EAIController.SetFeetIK with Bool in_activate at serial offset 0x7ee48.",
     "match": {
       "bytes_sha256": "e0660331535fd653be0593620473b74bc4edaae65293567f03a62ddbe90c5ccc",
-      "inputs_sha256": "c2b19cfc522df6fead914294b4063282f552d08a6949e8f6ae7e3e6a9f0c782d"
+      "inputs_sha256": "bd96aa9394ed0d106fbcad117354b83d218e23be524ca7c03b88b7b655e2cc35"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1610,7 +1632,8 @@
     "rebuilt_symbol": "@script_call_GetAttenuationFactor@4",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -1627,7 +1650,7 @@
     "identification": "Retail GetAttenuationFactor event wrapper at RVA 0x29d890, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EGameplayObject.GetAttenuationFactor with Float ReturnValue at serial offset 0xb4f84.",
     "match": {
       "bytes_sha256": "ec91ba0505c41323d33d18bf1060c961f9334fd27e5784739a40886630abe663",
-      "inputs_sha256": "5970964435e678dd7358a368605e4b1b73a3573c903ee1f4bd291be75a1a5feb"
+      "inputs_sha256": "c423b7b5deaec94efe3831ac07dc46363afbb4b991b36f422d63326979997f70"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1645,7 +1668,8 @@
     "rebuilt_symbol": "@event_StayOpen@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1662,7 +1686,7 @@
     "identification": "Retail StayOpen event wrapper at RVA 0x29d8e0, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "0c33ceb73e579ddc58f1af35e6b0b9faa7ef5bb25729a300c739ba3b2aa6edae",
-      "inputs_sha256": "ec28de28783ed14c89a3c032986e29a25c68f03d852ea37f551a458a8d5ca932"
+      "inputs_sha256": "dcdd367458a6f9d3a490059c56e32d7f39d576d3c6db1d8112ebec1c77d94a29"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1680,7 +1704,8 @@
     "rebuilt_symbol": "@event_UseItem@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1697,7 +1722,7 @@
     "identification": "Retail UseItem event wrapper at RVA 0x29d900, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "0afb5c275d784c543200a8adf9be9f96f465c264991aa41e2ca51a35d019656b",
-      "inputs_sha256": "5be70c90270ec20799c65fc93c85c469dc12ce70e7d4a401c628d4a6c3e2a4ac"
+      "inputs_sha256": "3710d7b932049fdda95bc040f0f99e652e59d6c97a385368b555d979e6384fc4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1714,7 +1739,8 @@
     "offset": 2742560,
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "rebuilt_symbol": "@script_call_PlayOneShot@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1732,7 +1758,7 @@
     "identification": "Complete indexed Campaign function RVA 0x29d920. Its masked instruction shape equals matched unit script-parameters-playoneshot, and the same committed C rebuilds every byte with the retail operands bound here.",
     "match": {
       "bytes_sha256": "c67cc1e57acd1cdec4af3cf8d20923ea1e5fdfbc6667c04d04056b2f4cf9bc8a",
-      "inputs_sha256": "898c8d251717eae92594efaeec1276db571671070154cdaa20322d8164fdb7d7"
+      "inputs_sha256": "764b6615423b3caf15ca466bd6453f2d546839d69a61cf01ecfb531694118f37"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1750,7 +1776,8 @@
     "rebuilt_symbol": "@event_Fire@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1767,7 +1794,7 @@
     "identification": "Retail Fire event wrapper at RVA 0x29d950, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "9cfca6de065938948e690ad5438dfd088a83f4ebcaa0571268dbe7ac2c311b0c",
-      "inputs_sha256": "e88be7bc1d303f7af13802c0636d9971b08a29e6914580a38d5d1697d9147abc"
+      "inputs_sha256": "1c5d55b761bd018d21e43ecbf79786ddb0506e07baac89783cf4513da29c2679"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1785,7 +1812,8 @@
     "rebuilt_symbol": "@script_call_SendThrownOject@8",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -1802,7 +1830,7 @@
     "identification": "Retail SendThrownOject event wrapper at RVA 0x29d970, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EPattern.SendThrownOject with Actor Obj at serial offset 0xc5a85.",
     "match": {
       "bytes_sha256": "1ff49deeba3dddc3789edea982ad2c9d9c86640da72acfdf78d8454631920e28",
-      "inputs_sha256": "b722d997bedabcdf24024b337ef4f3eee5f860333770a20118b3411740f8129f"
+      "inputs_sha256": "16801b1b849dfa5f8c789365162aee25f0dba4a182dd1562be35e6ae07e6def2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1820,7 +1848,8 @@
     "rebuilt_symbol": "@event_PostSwitchTransition@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1837,7 +1866,7 @@
     "identification": "Retail PostSwitchTransition event wrapper at RVA 0x29d9a0, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "8ffe3eca4d0833a6b6180c74d8a416aae9ea305257303b4789202d3fdeb94dcd",
-      "inputs_sha256": "b86c33d3c7dfef45e19d61014848f96b6673835ab8567978b01045acb2b1d802"
+      "inputs_sha256": "a5ca3782dfe46608b7569abc6a9fbf404ff3d2cb9363a2fe0f7ec102ffc77688"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1855,7 +1884,8 @@
     "rebuilt_symbol": "@script_frame_NotifyEnterDoorRadius@8",
     "inputs": [
       "src/campaign_script_frames.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_frames.obj src/campaign_script_frames.c",
@@ -1872,7 +1902,7 @@
     "identification": "Retail NotifyEnterDoorRadius event wrapper at RVA 0x29d9c0, including the return. The name initialization and script lookup link the wrapper to its event. Matching package declaration: Echelon.u declares EPattern.NotifyEnterDoorRadius at serial offset 0xc55e6.",
     "match": {
       "bytes_sha256": "1f8803bdccc922ebfd5d780f31a65a66dd29736cacde863d6cb196d8ea4177c6",
-      "inputs_sha256": "e3cfb844296acc1a9e97de87a4eed706a70591d7dac002c860215e5dfc08115c"
+      "inputs_sha256": "bfd381d614238a5cc9148ba8bae1904707dbae97970439a991f818db35882a63"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1890,7 +1920,8 @@
     "rebuilt_symbol": "@event_NotifyFlareLightOut@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -1907,7 +1938,7 @@
     "identification": "Retail NotifyFlareLightOut event wrapper at RVA 0x29d9f0, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "2c6d9565922203889580307fa6c0b6b18be93b03b3ad21db51bf906e564f1be7",
-      "inputs_sha256": "419d0d84dc602b9dbe3fe4a5858194c66bd2ceb38c6bbb899e2eed0b495ff183"
+      "inputs_sha256": "9094a439a1b05a7e714a2c7b5ef8a57adb2b0c22b219e13d198cf8b0c472676c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1925,7 +1956,8 @@
     "rebuilt_symbol": "@script_call_IsSuspicious@4",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -1942,7 +1974,7 @@
     "identification": "Retail IsSuspicious event wrapper at RVA 0x29da10, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EPattern.IsSuspicious with Bool ReturnValue at serial offset 0xc552e.",
     "match": {
       "bytes_sha256": "3fc875219f9fe124f8826076f690f08cbcee627e503b58b857ef73842a5ec21a",
-      "inputs_sha256": "ecf02eee8f90097d6da25dc0ef266737f59335d97145fecce729f6b2fcf8bd18"
+      "inputs_sha256": "a860b28e928e5e59ff018c4746bfb466288ff0d2406b86b61ddfbc4914c31161"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1960,7 +1992,8 @@
     "rebuilt_symbol": "@script_call_SelectWeapon@8",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -1977,7 +2010,7 @@
     "identification": "Retail SelectWeapon event wrapper at RVA 0x29da60, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EPawn.SelectWeapon with Bool bSelectOneHanded at serial offset 0x96b4f.",
     "match": {
       "bytes_sha256": "91a95657ffce59246e02b1a5826c47b7bf2589840313d32e371bff74b8a2f5af",
-      "inputs_sha256": "6bb862162a703147f1049013c83bf5819761900ae5753947c3f49e2564c728a8"
+      "inputs_sha256": "5f8c8c97504c28d9ffec634b574e112d2e245810ee332ab7a1ed09df6555c18f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1995,7 +2028,8 @@
     "rebuilt_symbol": "@script_call_CheckForSettingOffFeetIK@4",
     "inputs": [
       "src/campaign_script_parameters.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_parameters.obj src/campaign_script_parameters.c",
@@ -2012,7 +2046,7 @@
     "identification": "Retail CheckForSettingOffFeetIK event wrapper at RVA 0x29da90, including the return. The name initialization and script lookup link the wrapper to its event. Steam package Echelon.u declares EPawn.CheckForSettingOffFeetIK with Bool ReturnValue at serial offset 0x854ec.",
     "match": {
       "bytes_sha256": "5c999fd0d8042d32dc5e10e8fd92a12f2dbf832ea94d205df75592c2ae7364c8",
-      "inputs_sha256": "2a6418ab3b70204bdbbe732f491167c9bcf8052c527960c31971ee869442014e"
+      "inputs_sha256": "c47dcb49bb31172ecf41531f68feec0cdc72b810428fbaad51b215a79d2a2fc5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2030,7 +2064,8 @@
     "rebuilt_symbol": "@event_Clear@4",
     "inputs": [
       "src/campaign_script_notifications.c",
-      "src/campaign_script_events.h"
+      "src/campaign_script_events.h",
+      "src/campaign_script_name_externs.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_script_notifications.obj src/campaign_script_notifications.c",
@@ -2047,7 +2082,7 @@
     "identification": "Retail Clear event wrapper at RVA 0x29daf0, including the return. The name initialization and script lookup link the wrapper to its event.",
     "match": {
       "bytes_sha256": "5db3e9a1f08b421f19e7d2607ff46b465e94afe4267792d8282f5a78da73d12c",
-      "inputs_sha256": "3e88fb799addc4eb5f112bcb856fc49804704e6cf342877e18abc97dc753fb44"
+      "inputs_sha256": "6cbedb4bece5cee1e94bbad09969cbe59390c973aa8818eb2b4336de6c696e30"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2432,7 +2467,7 @@
     "identification": "Class registration for AEAIController at RVA 0x29de70, called immediately after the class factory at RVA 0x2b9be0 in the singleton initialization path. Sets superclass AAIController, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "9cf456efd5b2df234c10a8d5f9b0c21fca158b2f52296d23aa8fda28f8271f81",
-      "inputs_sha256": "c1d42a0c6fb11a1bc6db14571c9db42822e4405b13fa7074a4331491424e6006"
+      "inputs_sha256": "34eb6bb4002c796b188136e0e5ccd9580fee0c11d2e836b3225036a8c1e944b4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2496,7 +2531,7 @@
     "identification": "Class registration for UETrainingData at RVA 0x29df80, called immediately after the class factory at RVA 0x2b21a0 in the singleton initialization path. Sets superclass UObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "37e183aedd88a4390674c35f7195eb79a7b06804baee12d03ef23f1b3f5f1b91",
-      "inputs_sha256": "732c36cd533df27ae51c0b84195aa1d41c2557b0b2cb19018ade85e7129b9c01"
+      "inputs_sha256": "464ba50814b47254a96cd08e0f024082c038b806184fccff5eec420c7781638c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

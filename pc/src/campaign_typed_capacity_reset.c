@@ -1,11 +1,5 @@
 #include "campaign_array_resize_abi.h"
-
-extern const unsigned short tag_7b78d8[];
-extern const unsigned short tag_7b7b08[];
-extern const unsigned short tag_7b9b70[];
-extern const unsigned short tag_7ba17c[];
-extern const unsigned short tag_7bc158[];
-extern const unsigned short tag_7db4cc[];
+#include "campaign_globals.h"
 
 #define RESET_ARRAY(Entry, Width, Tag) \
     void __fastcall Entry(struct Array *array, struct ArraySize capacity) \

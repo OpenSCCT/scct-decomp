@@ -1,0 +1,40 @@
+/* campaign_native_externs.h -- native callback and table globals; include after campaign_native_initializer.h */
+#ifndef CAMPAIGN_NATIVE_EXTERNS_H
+#define CAMPAIGN_NATIVE_EXTERNS_H
+
+#include "campaign_native_initializer.h"
+
+extern const CampaignNative callback_UObject_ByteToInt;
+extern const CampaignNative callback_UObject_ByteToBool;
+extern const CampaignNative callback_UObject_ByteToFloat;
+extern const CampaignNative callback_UObject_ByteToString;
+extern const CampaignNative callback_UObject_IntToByte;
+extern const CampaignNative callback_UObject_IntToBool;
+extern const CampaignNative callback_UObject_IntToFloat;
+extern const CampaignNative callback_UObject_IntToString;
+extern const CampaignNative callback_UObject_BoolToByte;
+extern const CampaignNative callback_UObject_BoolToInt;
+extern const CampaignNative callback_UObject_BoolToFloat;
+extern const CampaignNative callback_UObject_BoolToString;
+extern const CampaignNative callback_UObject_FloatToByte;
+extern const CampaignNative callback_UObject_FloatToInt;
+extern const CampaignNative callback_UObject_FloatToBool;
+extern const CampaignNative callback_UObject_FloatToString;
+extern const CampaignNative callback_UObject_ObjectToBool;
+extern const CampaignNative callback_UObject_ObjectToString;
+extern const CampaignNative callback_UObject_NameToBool;
+extern const CampaignNative callback_UObject_NameToString;
+extern const CampaignNative callback_UObject_StringToByte;
+extern const CampaignNative callback_UObject_StringToInt;
+extern const CampaignNative callback_UObject_StringToBool;
+extern const CampaignNative callback_UObject_StringToFloat;
+extern const CampaignNative callback_UObject_StringToVector;
+extern const CampaignNative callback_UObject_StringToRotator;
+extern const CampaignNative callback_UObject_VectorToBool;
+extern const CampaignNative callback_UObject_VectorToString;
+extern const CampaignNative callback_UObject_VectorToRotator;
+extern const CampaignNative callback_UObject_RotatorToBool;
+extern const CampaignNative callback_UObject_RotatorToVector;
+extern const CampaignNative callback_UObject_RotatorToString;
+
+#endif

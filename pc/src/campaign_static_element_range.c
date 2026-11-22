@@ -1,4 +1,5 @@
 #include "campaign_array_storage.h"
+#include "campaign_globals.h"
 
 #define CLEANUP(Entry, Object, Remove) \
 void Entry(void) \
@@ -9,9 +10,6 @@ void Entry(void) \
     release_storage(&Object); \
 }
 
-extern struct Array static_element_range_93282c;
-extern struct Array static_element_range_a120c0;
-extern struct Array static_element_range_a120cc;
 extern void __fastcall remove_range_013560(struct Array *, float start, struct ArraySize count);
 extern void __fastcall remove_range_01d320(struct Array *, float start, struct ArraySize count);
 extern void __fastcall remove_range_3ca9d0(struct Array *, float start, struct ArraySize count);

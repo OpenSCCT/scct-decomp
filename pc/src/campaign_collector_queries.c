@@ -1,8 +1,9 @@
+#include "campaign_globals.h"
+
 struct Collector { const void *methods; float distance; void *output; };
 struct Arg { void *value; };
 struct CollectorArg { struct Collector *value; };
 
-extern const void *const methods_84aa78[];
 extern void __fastcall query_5176a0(void *, struct Arg, struct Arg, struct Arg, struct CollectorArg);
 extern void __cdecl query_517a00(void *, void *, void *, struct Collector *);
 extern void __fastcall query_518f40(void *, struct Arg, struct Arg, struct Arg, struct CollectorArg);

@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 struct CursorState {
     unsigned reserved;
     unsigned char *current;
@@ -5,8 +7,6 @@ struct CursorState {
     unsigned tail;
 };
 
-extern struct CursorState *after_state;
-extern unsigned char cursor_enabled;
 extern void *__cdecl allocate_fallback(unsigned size, unsigned flags);
 
 #define ALLOCATE_ELEMENT(Stride) \

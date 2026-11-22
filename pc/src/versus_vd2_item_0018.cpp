@@ -1,3 +1,5 @@
+#include "versus_globals.h"
+
 // Work item 0018: Versus RVA 0x5890, a destructor of the same shape as
 // RVA 0x50a0 (item 0012), but with `this` passed on the stack and the base
 // destructor called the same way: the calling convention was rewritten by
@@ -19,7 +21,6 @@ struct UnnamedClass_5890
 };
 
 // Vtable of UnnamedClass_5890 (retail 0x10c0e518).
-extern void* const UnnamedClass_5890_vftable[];
 
 // Base class destructor (retail RVA 0x215970), `this` on the stack.
 void __stdcall UnnamedBase_5890_Destructor(UnnamedClass_5890* Self);

@@ -3,6 +3,8 @@
    For a small constant length, multiplying by the least positive binary32
    subnormal gives the length's exact bits in a four-byte stack slot. The
    range argument holds start in its low word and count in its high word. */
+
+#include "campaign_globals.h"
 struct TextArgument { const void *value; };
 struct Text {
     unsigned reserved;
@@ -15,8 +17,6 @@ struct Error {
     struct Text message;
 };
 
-extern const char vector_message[], deque_message[];
-extern const char error_table[], length_error_table[], length_error_type[];
 extern void __fastcall assign_text(struct Text *, struct TextArgument, float length_bits);
 extern void __fastcall construct_error(struct Error *);
 extern void __fastcall copy_range(struct Text *, struct TextArgument, unsigned __int64 range);

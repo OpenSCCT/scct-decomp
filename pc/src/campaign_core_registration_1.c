@@ -1,12 +1,11 @@
 #include "campaign_class_registration.h"
-
-extern const unsigned short package_Core[];
+#include "campaign_class_singletons.h"
+#include "campaign_globals.h"
 
 CLASS_GETTER(UClass, Core)
 CLASS_GETTER(UPackage, Core)
 CLASS_GETTER(UState, Core)
 
-extern int object_system_ready;
 #define object_system_initialized() object_system_ready
 #undef object_system_initialized
 void register_UClass(void) {

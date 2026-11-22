@@ -1,26 +1,4 @@
-extern const float factor_2ff138;
-extern const float factor_2ff13c;
-extern const float factor_2ff140;
-extern const float factor_2ff144;
-extern const float factor_2ff168;
-extern const float factor_2ff170;
-extern const float factor_2ff188;
-extern const float factor_2ff18c;
-extern const float factor_2ff198;
-extern const float factor_2ff1b0;
-extern const float factor_2ff1d4;
-extern const float factor_310a10;
-extern float defaults_374530[5];
-extern float defaults_374554[5];
-extern float defaults_374578[5];
-extern float defaults_37459c[5];
-extern float defaults_3745c0[5];
-extern float defaults_3745e4[5];
-extern float defaults_374608[5];
-extern float defaults_37462c[5];
-extern float defaults_374650[5];
-extern float defaults_374674[5];
-extern float defaults_374698[5];
+#include "versus_globals.h"
 
 #define INITIALIZE(Entry, Out, A, B, V1, V2, V3, V4) \
     void __cdecl Entry(void) \

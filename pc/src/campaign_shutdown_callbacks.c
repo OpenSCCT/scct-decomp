@@ -1,4 +1,6 @@
 /* Each entry is passed to the stock C runtime as a void(void) exit callback. */
+
+#include "campaign_globals.h"
 struct StaticRecord;
 struct RuntimeClass;
 
@@ -8,39 +10,6 @@ struct RuntimeClass;
 #define EMPTY_EXIT_CALLBACK(Entry) \
     void Entry(void) {}
 
-extern struct StaticRecord exit_object_8f3320;
-extern struct StaticRecord exit_object_8f5f14;
-extern struct StaticRecord exit_object_8f5f18;
-extern struct StaticRecord exit_object_8fa2e0;
-extern struct StaticRecord exit_object_90a8a0;
-extern struct StaticRecord exit_object_90a91c;
-extern struct StaticRecord exit_object_90a99c;
-extern struct StaticRecord exit_object_a1a5a0;
-extern struct StaticRecord exit_object_a1a644;
-extern struct StaticRecord exit_object_a1a678;
-extern struct StaticRecord exit_object_a1a694;
-extern struct StaticRecord exit_object_a1a6ac;
-extern struct StaticRecord exit_object_a1a6cc;
-extern struct StaticRecord exit_object_a1a6e4;
-extern struct StaticRecord exit_object_a1a730;
-extern struct StaticRecord exit_object_a1b110;
-extern struct StaticRecord exit_object_a1b16c;
-extern struct StaticRecord exit_object_a1b188;
-extern struct StaticRecord exit_object_a1b1a0;
-extern struct StaticRecord exit_object_a1b1ac;
-extern struct StaticRecord exit_object_a1b240;
-extern struct StaticRecord exit_object_a1b314;
-extern struct StaticRecord exit_object_a1b320;
-extern struct StaticRecord exit_object_a1b344;
-extern struct StaticRecord exit_object_a1b3a0;
-extern struct StaticRecord exit_object_a2b754;
-extern struct StaticRecord exit_object_a2e7fc;
-extern struct StaticRecord exit_object_a2e93c;
-extern struct StaticRecord exit_object_a2e948;
-extern struct StaticRecord exit_object_a2e954;
-extern struct StaticRecord exit_object_a2e960;
-extern struct StaticRecord exit_object_a2e9e0;
-extern struct StaticRecord exit_object_a2eaa4;
 extern void __fastcall destroy_record_00d8c0(struct StaticRecord *object);
 extern void __fastcall destroy_record_140d60(struct StaticRecord *object);
 extern void __fastcall destroy_record_20f490(struct StaticRecord *object);

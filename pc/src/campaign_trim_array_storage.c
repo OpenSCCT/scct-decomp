@@ -1,9 +1,5 @@
 #include "campaign_array_resize_abi.h"
-
-extern const unsigned short tag_7b78d8[];
-extern const unsigned short tag_7b7b08[];
-extern const unsigned short tag_7bc158[];
-extern const unsigned short tag_7bc180[];
+#include "campaign_globals.h"
 
 static __forceinline void trim(struct Array *array, int width, const unsigned short *label)
 {

@@ -1,4 +1,6 @@
 /* Native UClass placement callbacks. The registry supplies allocated storage. */
+
+#include "versus_globals.h"
 struct object_header {
     const void *methods;
 };
@@ -13,7 +15,6 @@ struct material_header {
 };
 
 #define PLACE_OBJECT(type) \
-    extern const void *const vtable_##type[]; \
     void place_##type(struct object_header *storage) \
     { \
         if (storage) \
@@ -21,7 +22,6 @@ struct material_header {
     }
 
 #define PLACE_MATERIAL(type) \
-    extern const void *const vtable_##type[]; \
     void place_##type(struct material_header *storage) \
     { \
         if (storage) { \

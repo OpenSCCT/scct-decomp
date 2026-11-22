@@ -1,4 +1,5 @@
 #include "campaign_fixed_record_growth.h"
+#include "campaign_globals.h"
 
 struct ArrayItemRef { const unsigned int *value; };
 
@@ -13,13 +14,6 @@ static __forceinline int append_item(struct Array *array, struct ArrayItemRef it
 #define APPEND_ARRAY_ITEM(Entry, Tag) \
     int __fastcall append_array_item_##Entry(struct Array *array, struct ArrayItemRef item) \
     { return append_item(array, item, Tag); }
-
-extern const unsigned short heap_tag_7b7b08[];
-extern const unsigned short heap_tag_7ba13c[];
-extern const unsigned short heap_tag_7ba17c[];
-extern const unsigned short heap_tag_7bc158[];
-extern const unsigned short heap_tag_7db4cc[];
-extern const unsigned short heap_tag_831360[];
 
 APPEND_ARRAY_ITEM(r00cd60, heap_tag_7b7b08)
 APPEND_ARRAY_ITEM(r00ce70, heap_tag_7b7b08)

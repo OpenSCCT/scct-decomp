@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 struct actor_constructor {
     const void *vtable;
     unsigned char preceding_fields[0x1cc - sizeof(void *)];
@@ -10,7 +12,6 @@ struct actor_constructor {
 extern void __fastcall construct_object_base(struct actor_constructor *self);
 
 #define CONSTRUCT_ACTOR(Class) \
-    extern const void *const vtable_##Class[]; \
     struct actor_constructor *__fastcall construct_##Class(struct actor_constructor *self) \
     { \
         construct_object_base(self); \

@@ -1,4 +1,5 @@
 #include "campaign_array_resize_abi.h"
+#include "campaign_globals.h"
 struct ItemRef { const unsigned int *word; };
 
 static __forceinline int remove_items(struct Array *array, struct ItemRef item, const unsigned short *allocation_tag)
@@ -28,10 +29,6 @@ static __forceinline int remove_items(struct Array *array, struct ItemRef item, 
 #define REMOVE_ITEMS(Entry, Tag) \
     int __fastcall Entry(struct Array *array, struct ItemRef item) \
     { return remove_items(array, item, Tag); }
-
-extern const unsigned short allocation_tag_7b7b08[];
-extern const unsigned short allocation_tag_7ba17c[];
-extern const unsigned short allocation_tag_7bc158[];
 
 REMOVE_ITEMS(remove_items_00cdc0, allocation_tag_7b7b08)
 REMOVE_ITEMS(remove_items_00ced0, allocation_tag_7b7b08)

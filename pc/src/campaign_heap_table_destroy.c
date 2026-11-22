@@ -1,28 +1,5 @@
 #include "record_deletion.h"
-
-extern const void *const methods_7b7860[];
-extern const void *const methods_7b78b4[];
-extern const void *const methods_7b7e68[];
-extern const void *const methods_7be874[];
-extern const void *const methods_7bf388[];
-extern const void *const methods_7c1d78[];
-extern const void *const methods_7c1d80[];
-extern const void *const methods_7da52c[];
-extern const void *const methods_7da538[];
-extern const void *const methods_7da644[];
-extern const void *const methods_7db4f4[];
-extern const void *const methods_7db750[];
-extern const void *const methods_7db8a0[];
-extern const void *const methods_7db9a4[];
-extern const void *const methods_7dc328[];
-extern const void *const methods_7defb4[];
-extern const void *const methods_7e30ac[];
-extern const void *const methods_7e43dc[];
-extern const void *const methods_7e5e08[];
-extern const void *const methods_7e6f2c[];
-extern const void *const methods_7e75d4[];
-extern const void *const methods_7e7728[];
-extern const void *const methods_810254[];
+#include "campaign_globals.h"
 
 #define DESTROY(Entry, Methods) \
     struct Record *__fastcall Entry(struct Record *self, struct DeleteFlags flags) \

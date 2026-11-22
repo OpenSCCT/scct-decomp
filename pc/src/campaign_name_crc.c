@@ -1,5 +1,4 @@
-extern unsigned char table_pending;
-extern unsigned crc_table[256];
+#include "campaign_globals.h"
 
 unsigned *__cdecl name_crc(unsigned *destination, const char *name)
 {

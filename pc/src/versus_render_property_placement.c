@@ -1,4 +1,6 @@
 /* Placement callbacks for reflected property records and offline rendering objects. */
+
+#include "versus_globals.h"
 struct object_header {
     const void *methods;
 };
@@ -27,7 +29,6 @@ struct property_header {
 };
 
 #define PLACE_PROPERTY(type) \
-    extern const void *const vtable_##type[]; \
     void place_##type(struct property_header *property) \
     { \
         if (property) { \
@@ -48,7 +49,6 @@ struct vertex_stream {
 };
 
 #define PLACE_VERTEX_STREAM(type, vertex_stride, format_id) \
-    extern const void *const vtable_##type[]; \
     void place_##type(struct vertex_stream *stream) \
     { \
         if (stream) { \
@@ -75,7 +75,6 @@ static __inline void initialize_particle_fields(struct particle_emitter *emitter
 }
 
 #define PLACE_PARTICLE(type) \
-    extern const void *const vtable_##type[]; \
     void place_##type(struct particle_emitter *emitter) \
     { \
         if (emitter) { \
@@ -84,7 +83,6 @@ static __inline void initialize_particle_fields(struct particle_emitter *emitter
         } \
     }
 
-extern const void *const vtable_UParticleEmitter[];
 void place_UParticleEmitter(struct particle_emitter *emitter)
 {
     if (emitter) {
@@ -106,7 +104,6 @@ struct buffer_record {
 };
 
 #define PLACE_ARRAY(type, record, member) \
-    extern const void *const vtable_##type[]; \
     void place_##type(struct record *storage) \
     { \
         if (storage) { \
@@ -121,7 +118,6 @@ struct mesh_animation {
     struct dynamic_array arrays[3];
 };
 
-extern const void *const vtable_UMeshAnimation[];
 void place_UMeshAnimation(struct mesh_animation *animation)
 {
     if (animation) {
@@ -138,7 +134,6 @@ struct text_buffer_factory {
     struct dynamic_array arrays[3];
 };
 
-extern const void *const vtable_UTextBufferFactory[];
 void place_UTextBufferFactory(struct text_buffer_factory *factory)
 {
     if (factory) {
@@ -158,9 +153,6 @@ struct primitive {
     float sphere_radius;
 };
 
-extern const struct vector3 *default_minimum;
-extern const struct vector3 *default_maximum;
-extern const void *const vtable_UPrimitive[];
 static __forceinline void copy_vector(struct vector3 *destination, const struct vector3 *value)
 {
     destination->x = value->x;
@@ -186,7 +178,6 @@ void place_UPrimitive(struct primitive *primitive)
 }
 
 #define PLACE_PRIMITIVE(type) \
-    extern const void *const vtable_##type[]; \
     void place_##type(struct primitive *primitive) \
     { \
         if (primitive) { \

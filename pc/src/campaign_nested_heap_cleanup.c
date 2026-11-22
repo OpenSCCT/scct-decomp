@@ -1,18 +1,6 @@
 #include "record_deletion.h"
+#include "campaign_globals.h"
 
-extern const void *const methods_7de808[];
-extern const void *const methods_7de8c8[];
-extern const void *const methods_7fba18[];
-extern const void *const methods_7fba24[];
-extern const void *const methods_7fba30[];
-extern const void *const methods_7fba9c[];
-extern const void *const methods_83ac74[];
-extern const void *const methods_876268[];
-extern const void *const methods_8768b0[];
-extern const void *const methods_876c90[];
-extern const void *const methods_876cd8[];
-extern const void *const methods_876f10[];
-extern const void *const methods_877500[];
 extern void __cdecl release_0014a0(struct Record *object);
 extern void __cdecl release_1dd0d0(struct Record *object);
 extern void __cdecl release_469670(struct Record *object);

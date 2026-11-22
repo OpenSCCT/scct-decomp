@@ -1,8 +1,8 @@
 #include "campaign_primitive_cast.h"
+#include "campaign_globals.h"
+#include "campaign_native_externs.h"
 
 #define REGISTER_CAMPAIGN_CAST(name, index)                      \
-    extern const CampaignNative callback_##name;                    \
-    extern unsigned char cast_result_##name;                        \
     void register_cast_##name(void)                                 \
     {                                                               \
         cast_result_##name = campaign_assign_cast(index, &callback_##name); \

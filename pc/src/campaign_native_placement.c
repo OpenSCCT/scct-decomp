@@ -1,5 +1,7 @@
 /* MSVC x86 passes the float word on the stack. Its positive zero supplies
    the null superclass pointer for UField's thiscall constructor. */
+
+#include "campaign_globals.h"
 struct RuntimeProperty {
     const void *const *methods;
     unsigned char field_prefix[0x34 - 4];
@@ -9,7 +11,6 @@ struct RuntimeProperty {
 };
 extern void __fastcall initialize_field(struct RuntimeProperty *, float null_super);
 #define PLACE_PROPERTY(Type) \
-    extern const void *const vtable_##Type[]; \
     void place_##Type(struct RuntimeProperty *property) \
     { \
         if (property) { \
@@ -29,7 +30,6 @@ struct VertexStream {
 };
 void __fastcall initialize_object(void *object);
 #define PLACE_STREAM(Type, Stride, Format) \
-    extern const void *const vtable_##Type[]; \
     void place_##Type(struct VertexStream *stream) \
     { \
         if (stream) { \
@@ -62,7 +62,6 @@ static __forceinline void set_actor_values(struct NativeActor *actor)
     actor->initial_values[3] = 0.0f;
 }
 #define PLACE_CONSTRAINT(Type, Derived) \
-    extern const void *const vtable_##Type[]; \
     void place_##Type(struct ConstraintActor *object) \
     { \
         if (object) { \
@@ -73,7 +72,6 @@ static __forceinline void set_actor_values(struct NativeActor *actor)
             if (!Derived) object->constraint = 0; \
         } \
     }
-extern const void *const vtable_AActor[];
 void place_AActor(struct NativeActor *actor)
 {
     if (actor) {

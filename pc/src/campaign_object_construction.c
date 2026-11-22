@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 struct Object;
 struct Class {
     unsigned char prefix[0x2a4];
@@ -5,7 +7,6 @@ struct Class {
 };
 
 extern struct Object *__cdecl default_outer(void);
-extern void *allocation_context;
 extern struct Object *__cdecl allocate_object(struct Class *, struct Object *, unsigned,
                                                unsigned, const struct Object *, void *,
                                                void *, void *);

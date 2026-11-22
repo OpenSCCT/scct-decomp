@@ -1,22 +1,8 @@
+#include "versus_globals.h"
+
 struct Object;
 extern int __cdecl register_exit(void (__cdecl *)(void));
 
-extern struct Object object_374e2c;
-extern struct Object object_375054;
-extern struct Object object_397760;
-extern struct Object object_3a7780;
-extern struct Object object_3a778c;
-extern struct Object object_3a7798;
-extern struct Object object_3a77a4;
-extern struct Object object_3a77b0;
-extern struct Object object_3a77bc;
-extern struct Object object_3a77c8;
-extern struct Object object_3a77d4;
-extern struct Object object_3a77e0;
-extern struct Object object_3b785c;
-extern struct Object object_3bcdcc;
-extern struct Object object_3c9e68;
-extern struct Object object_3c9e8c;
 extern void __fastcall construct_004630(struct Object *);
 extern void __fastcall construct_22fdf0(struct Object *);
 extern void __fastcall construct_283f0c(struct Object *);

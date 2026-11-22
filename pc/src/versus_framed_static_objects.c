@@ -1,8 +1,7 @@
+#include "versus_globals.h"
+
 struct Object;
 extern int __cdecl atexit(void (__cdecl *)(void));
-extern struct Object object_3be700;
-extern struct Object object_3be818;
-extern struct Object object_3be930;
 extern void __fastcall construct_00cfa0(struct Object *, float);
 void __cdecl finalize_2dd270(void);
 void __cdecl finalize_2dd280(void);

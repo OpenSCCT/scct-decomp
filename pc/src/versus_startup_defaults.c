@@ -1,21 +1,6 @@
-extern const float factor_2ff1a4;
-extern const float factor_310a10;
-extern float product_3b7858;
+#include "versus_globals.h"
+
 extern int __cdecl atexit(void (__cdecl *callback)(void));
-extern unsigned char storage_3a7020[];
-extern unsigned char storage_3cac00[];
-extern unsigned char storage_3cac0c[];
-extern unsigned char storage_3cac18[];
-extern unsigned char storage_3cac24[];
-extern unsigned char storage_3cac30[];
-extern unsigned char storage_3cac5c[];
-extern void *selected_3a7060;
-extern void *selected_3cabf4;
-extern void *selected_3cabf8;
-extern void *selected_3cacb8;
-extern void *selected_3cacbc;
-extern void *selected_3cacc0;
-extern void *selected_3cacc4;
 extern void __cdecl finalize_2dc650(void);
 extern void __cdecl finalize_2dd500(void);
 extern void __cdecl finalize_2dd5d0(void);

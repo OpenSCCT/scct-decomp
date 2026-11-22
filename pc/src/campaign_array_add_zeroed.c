@@ -1,4 +1,5 @@
 #include "campaign_array_growth.h"
+#include "campaign_globals.h"
 extern void *__cdecl memset(void *destination, int value, unsigned int size);
 #pragma intrinsic(memset)
 
@@ -13,14 +14,6 @@ static __forceinline int add_zeroed(struct Array *array, struct ArraySize elemen
 #define ADD_ZEROED(Entry, Tag) \
     int __fastcall add_zeroed_##Entry(struct Array *array, struct ArraySize element, struct ArraySize amount) \
     { return add_zeroed(array, element, amount, Tag); }
-
-extern const unsigned short array_add_tag_7b7b08[];
-extern const unsigned short array_add_tag_7ba13c[];
-extern const unsigned short array_add_tag_7bc158[];
-extern const unsigned short array_add_tag_7bc180[];
-extern const unsigned short array_add_tag_7be9a8[];
-extern const unsigned short array_add_tag_7cddbc[];
-extern const unsigned short array_add_tag_7cf82c[];
 
 ADD_ZEROED(r051210, array_add_tag_7b7b08)
 ADD_ZEROED(r0608b0, array_add_tag_7b7b08)

@@ -1,4 +1,5 @@
 #include "campaign_script_events.h"
+#include "campaign_script_name_externs.h"
 
 typedef int ScriptBoolean;
 typedef struct Script_Actor *RefActor;
@@ -36,7 +37,6 @@ typedef struct { int value; } Argument_int;
 /* Every parameter block follows the field order in its script declaration. */
 
 #define SCRIPT_QUERY_0(Method, Name, ResultType) \
-    extern ScriptEventName name_##Name; \
     ResultType __fastcall Method(struct ScriptObject *object) \
     { \
         struct { ResultType result; } frame; \
@@ -49,7 +49,6 @@ typedef struct { int value; } Argument_int;
     }
 
 #define SCRIPT_ACTION_1(Method, Name, T0, P0) \
-    extern ScriptEventName name_##Name; \
     void __fastcall Method(struct ScriptObject *object, Argument_##T0 P0) \
     { \
         struct { T0 P0; } frame; \
@@ -61,7 +60,6 @@ typedef struct { int value; } Argument_int;
     }
 
 #define SCRIPT_QUERY_1(Method, Name, ResultType, T0, P0) \
-    extern ScriptEventName name_##Name; \
     ResultType __fastcall Method(struct ScriptObject *object, Argument_##T0 P0) \
     { \
         struct { T0 P0; ResultType result; } frame; \
@@ -75,7 +73,6 @@ typedef struct { int value; } Argument_int;
     }
 
 #define SCRIPT_ACTION_2(Method, Name, T0, P0, T1, P1) \
-    extern ScriptEventName name_##Name; \
     void __fastcall Method(struct ScriptObject *object, Argument_##T0 P0, Argument_##T1 P1) \
     { \
         struct { T0 P0; T1 P1; } frame; \
@@ -88,7 +85,6 @@ typedef struct { int value; } Argument_int;
     }
 
 #define SCRIPT_ACTION_3(Method, Name, T0, P0, T1, P1, T2, P2) \
-    extern ScriptEventName name_##Name; \
     void __fastcall Method(struct ScriptObject *object, Argument_##T0 P0, Argument_##T1 P1, Argument_##T2 P2) \
     { \
         struct { T0 P0; T1 P1; T2 P2; } frame; \

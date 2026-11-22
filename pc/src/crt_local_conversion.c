@@ -1,8 +1,8 @@
+#include "campaign_globals.h"
+
 struct CalendarTime {
     int second, minute, hour, day, month, year, weekday, day_of_year, dst;
 };
-extern long _timezone, _dstbias;
-extern int _daylight, _days[];
 void __tzset(void);
 int _isindst(struct CalendarTime *);
 struct CalendarTime *gmtime(const long *);

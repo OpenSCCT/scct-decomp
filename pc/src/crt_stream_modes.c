@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 typedef unsigned short WideChar;
 struct Stream {
     char *cursor;
@@ -6,7 +8,6 @@ struct Stream {
     int flags, fd, small_buffer, buffer_size;
     char *temporary_name;
 };
-extern int _commode, _cflush;
 int _sopen(const char *, int, int, int);
 int _wsopen(const WideChar *, int, int, int);
 enum OpenMode {

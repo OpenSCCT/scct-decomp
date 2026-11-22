@@ -1,4 +1,5 @@
 #include "campaign_fixed_record_growth.h"
+#include "campaign_globals.h"
 
 #define APPEND_RECORD(Entry, Record, Tag) \
     int __fastcall append_record_##Entry(struct Array *array, struct ref_##Record value) \
@@ -85,16 +86,6 @@ struct record_376 { unsigned int words[94]; };
 struct ref_record_376 { const struct record_376 *record; };
 struct record_1100 { unsigned int words[275]; };
 struct ref_record_1100 { const struct record_1100 *record; };
-
-extern const unsigned short record_tag_7b78d8[];
-extern const unsigned short record_tag_7b7b08[];
-extern const unsigned short record_tag_7ba17c[];
-extern const unsigned short record_tag_7bc158[];
-extern const unsigned short record_tag_7bc180[];
-extern const unsigned short record_tag_7be9a8[];
-extern const unsigned short record_tag_7cf82c[];
-extern const unsigned short record_tag_7db4cc[];
-extern const unsigned short record_tag_831360[];
 
 ADD_RECORDS(r009590, record_2, record_tag_7b78d8)
 ADD_RECORDS(r029710, record_12, record_tag_7bc180)

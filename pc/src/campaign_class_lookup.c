@@ -1,9 +1,10 @@
+#include "campaign_class_singletons.h"
+
 struct RuntimeClass;
 struct Object;
 extern struct Object *find_object(struct RuntimeClass *, struct Object *, const unsigned short *, int);
 
 #define DEFINE_CLASS_LOOKUP(Type, Package) \
-    extern struct RuntimeClass *class_##Type; \
     extern struct RuntimeClass *create_##Type(const unsigned short *); \
     extern void register_##Type(void); \
     struct Object *find_##Type(struct Object *outer, const unsigned short *name, int exact_class) \
@@ -15,8 +16,6 @@ extern struct Object *find_object(struct RuntimeClass *, struct Object *, const 
         return find_object(class_##Type, outer, name, exact_class); \
     }
 
-extern const unsigned short package_Core[];
-extern const unsigned short package_Engine[];
 DEFINE_CLASS_LOOKUP(AActor, Engine)
 DEFINE_CLASS_LOOKUP(UClass, Core)
 DEFINE_CLASS_LOOKUP(UObject, Core)

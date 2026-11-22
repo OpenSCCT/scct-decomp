@@ -1,8 +1,5 @@
 #include "campaign_class_registration.h"
-
-extern const unsigned short package_Core[];
-extern const unsigned short package_Echelon[];
-extern const unsigned short package_Engine[];
+#include "campaign_class_singletons.h"
 
 CLASS_GETTER(AActor, Engine)
 CLASS_GETTER(AEGameplayObject, Echelon)

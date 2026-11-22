@@ -1,4 +1,5 @@
 #include "campaign_array_growth.h"
+#include "campaign_globals.h"
 
 static __forceinline void insert_range(struct Array *array, struct ArraySize index, struct ArraySize amount,
                                        struct ArraySize element, const unsigned short *allocation_tag)
@@ -12,12 +13,6 @@ static __forceinline void insert_range(struct Array *array, struct ArraySize ind
 #define INSERT_RANGE(Entry, Tag) \
     void __fastcall insert_range_##Entry(struct Array *array, struct ArraySize index, struct ArraySize amount, struct ArraySize element) \
     { insert_range(array, index, amount, element, Tag); }
-
-extern const unsigned short array_add_tag_7b7b08[];
-extern const unsigned short array_add_tag_7ba13c[];
-extern const unsigned short array_add_tag_7bc158[];
-extern const unsigned short array_add_tag_7bc180[];
-extern const unsigned short array_add_tag_7be9a8[];
 
 INSERT_RANGE(r01f6d0, array_add_tag_7b7b08)
 INSERT_RANGE(r0361f0, array_add_tag_7b7b08)

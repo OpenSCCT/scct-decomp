@@ -1,7 +1,7 @@
+#include "versus_globals.h"
+
 // Work item 0199: two small float helpers (RVA 0x4f020, 0x4f040).
 // Names are neutral; no symbol evidence ties them to a specific UE2 function.
-
-extern float FloatZero_10c109f8; // retail constant 0.0f at 0x10c109f8
 
 // 0x4f020: absolute value (appFabs-style), compared against a global zero.
 float Abs_4f020(float A)

@@ -1,8 +1,9 @@
+#include "versus_globals.h"
+
 struct MitchellCoefficients {
     double inner_constant, inner_quadratic, inner_cubic;
     double outer_constant, outer_linear, outer_quadratic, outer_cubic;
 };
-extern const double one_sixth;
 void initialize_mitchell(double b, double c, struct MitchellCoefficients *p)
 {
     double six_c;

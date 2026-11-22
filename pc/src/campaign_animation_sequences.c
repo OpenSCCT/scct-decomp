@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 struct mesh_instance;
 struct notify_object;
 struct sequence_notify {
@@ -16,7 +18,6 @@ struct animation_sequence {
     int notify_count, notify_capacity;
     int field_28;
 };
-extern const float zero_value;
 
 int *__fastcall sequence_name(const struct mesh_instance *self, void *unused, int *result, const struct animation_sequence *clip)
 {
@@ -57,7 +58,6 @@ float __fastcall sequence_notify_time(const struct mesh_instance *self, void *un
 {
     return clip ? clip->notifies[index].time : zero_value;
 }
-
 
 int __fastcall sequence_field_28(const struct mesh_instance *self, void *unused, const struct animation_sequence *clip)
 {

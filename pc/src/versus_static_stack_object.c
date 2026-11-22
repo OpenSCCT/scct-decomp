@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 struct StaticRecord;
 
 #define CLEANUP(Entry, Object, Destroy) \
@@ -6,25 +8,6 @@ void Entry(void) \
     Destroy(&Object); \
 }
 
-extern struct StaticRecord static_stack_object_373cac;
-extern struct StaticRecord static_stack_object_39776c;
-extern struct StaticRecord static_stack_object_397778;
-extern struct StaticRecord static_stack_object_397784;
-extern struct StaticRecord static_stack_object_397bf0;
-extern struct StaticRecord static_stack_object_39cf4c;
-extern struct StaticRecord static_stack_object_3b7848;
-extern struct StaticRecord static_stack_object_3bc5dc;
-extern struct StaticRecord static_stack_object_3bca48;
-extern struct StaticRecord static_stack_object_3bf650;
-extern struct StaticRecord static_stack_object_3bfd4c;
-extern struct StaticRecord static_stack_object_3c9e5c;
-extern struct StaticRecord static_stack_object_3c9e74;
-extern struct StaticRecord static_stack_object_3c9e80;
-extern struct StaticRecord static_stack_object_3c9e98;
-extern struct StaticRecord static_stack_object_3c9ea4;
-extern struct StaticRecord static_stack_object_3c9eb0;
-extern struct StaticRecord static_stack_object_3c9ebc;
-extern struct StaticRecord static_stack_object_3c9ec8;
 extern void __stdcall finalize_static_01f040(struct StaticRecord *object);
 extern void __stdcall finalize_static_01f0f0(struct StaticRecord *object);
 extern void __stdcall finalize_static_057780(struct StaticRecord *object);

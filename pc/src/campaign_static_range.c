@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 struct BufferRange { void *begin, *end, *limit; };
 extern void __cdecl release_engine_buffer(void *buffer);
 
@@ -9,48 +11,6 @@ void Entry(void) \
     Object.end = 0; \
     Object.limit = 0; \
 }
-
-extern struct BufferRange static_range_90b6c8;
-extern struct BufferRange static_range_90b734;
-extern struct BufferRange static_range_923a08;
-extern struct BufferRange static_range_923a1c;
-extern struct BufferRange static_range_92d3e8;
-extern struct BufferRange static_range_a17b0c;
-extern struct BufferRange static_range_a17b48;
-extern struct BufferRange static_range_a17b84;
-extern struct BufferRange static_range_a17bc0;
-extern struct BufferRange static_range_a17c28;
-extern struct BufferRange static_range_a17c64;
-extern struct BufferRange static_range_a17c78;
-extern struct BufferRange static_range_a17cb8;
-extern struct BufferRange static_range_a17cf4;
-extern struct BufferRange static_range_a17e04;
-extern struct BufferRange static_range_a17e68;
-extern struct BufferRange static_range_a17ea4;
-extern struct BufferRange static_range_a17eb8;
-extern struct BufferRange static_range_a17ecc;
-extern struct BufferRange static_range_a17ee0;
-extern struct BufferRange static_range_a17ef4;
-extern struct BufferRange static_range_a17fe8;
-extern struct BufferRange static_range_a18024;
-extern struct BufferRange static_range_a1a0b4;
-extern struct BufferRange static_range_a1a0f0;
-extern struct BufferRange static_range_a1a12c;
-extern struct BufferRange static_range_a1a16c;
-extern struct BufferRange static_range_a1a1a8;
-extern struct BufferRange static_range_a1a1e4;
-extern struct BufferRange static_range_a1a220;
-extern struct BufferRange static_range_a1a25c;
-extern struct BufferRange static_range_a1a298;
-extern struct BufferRange static_range_a1a2d4;
-extern struct BufferRange static_range_a1a310;
-extern struct BufferRange static_range_a1a34c;
-extern struct BufferRange static_range_a1a388;
-extern struct BufferRange static_range_a1a3c4;
-extern struct BufferRange static_range_a1a400;
-extern struct BufferRange static_range_a1a48c;
-extern struct BufferRange static_range_a1a4c8;
-extern struct BufferRange static_range_a1a504;
 
 CLEANUP(cleanup_range_7b12c0, static_range_90b6c8)
 CLEANUP(cleanup_range_7b1300, static_range_90b734)

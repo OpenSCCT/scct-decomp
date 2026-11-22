@@ -1,4 +1,5 @@
 #include "campaign_array_resize_abi.h"
+#include "campaign_globals.h"
 
 struct ResetRequest { int element_size, capacity; };
 
@@ -23,17 +24,6 @@ static __forceinline void reset_array(struct Array *array, int width, int capaci
     { \
         reset_array(array, Width, capacity.value, Tag); \
     }
-
-extern const unsigned short tag_7b78d8[];
-extern const unsigned short tag_7b7b08[];
-extern const unsigned short tag_7ba13c[];
-extern const unsigned short tag_7ba17c[];
-extern const unsigned short tag_7bc158[];
-extern const unsigned short tag_7bc180[];
-extern const unsigned short tag_7be9a8[];
-extern const unsigned short tag_7cddbc[];
-extern const unsigned short tag_7cf82c[];
-extern const unsigned short tag_831360[];
 
 RESET_DYNAMIC(reset_007540, tag_7b78d8)
 RESET_DYNAMIC(reset_00b2e0, tag_7b7b08)

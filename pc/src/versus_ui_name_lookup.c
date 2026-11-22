@@ -1,5 +1,5 @@
-extern const char *ui_names[][30];
-extern int ui_name_counts[];
+#include "versus_globals.h"
+
 __declspec(dllimport) int __cdecl _stricmp(const char *, const char *);
 
 const char *__cdecl ui_name(int category, int index)

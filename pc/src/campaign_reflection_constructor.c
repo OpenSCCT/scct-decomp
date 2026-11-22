@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 struct Descriptor;
 struct Fields {
     const char *name;
@@ -15,7 +17,6 @@ struct Descriptor {
     unsigned short references;
     struct Fields fields;
 };
-extern const void *const descriptor_methods[];
 struct Descriptor *__fastcall construct(struct Descriptor *self, struct Fields args)
 {
     self->references = 1;

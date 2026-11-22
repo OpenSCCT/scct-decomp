@@ -1,7 +1,7 @@
+#include "versus_globals.h"
+
 extern double __cdecl cos(double);
 #pragma intrinsic(cos)
-extern const double filter_half, filter_one;
-extern const double hamming_scale, hamming_offset, blackman_scale, blackman_offset;
 
 double hann_window(double x)
 {
@@ -19,13 +19,10 @@ double blackman_window(double x)
          + cos(3.141592653589793 * x) * filter_half + blackman_offset;
 }
 
-
-
 extern double __cdecl sin(double);
 extern double __cdecl sqrt(double);
 extern double __cdecl exp(double);
 #pragma intrinsic(sin, sqrt, exp)
-extern const double filter_zero, gaussian_normalization, bessel_origin;
 extern double bessel_j1(double);
 
 double sinc_filter(double x)
@@ -49,8 +46,6 @@ double gaussian_filter(double x)
     return exp(x * x * -2.0) * sqrt(gaussian_normalization);
 }
 
-
-extern const double minus_one_half, minus_three_halves, three_halves, three_quarters;
 double quadratic_filter(double x)
 {
     if (x < minus_three_halves)
@@ -67,9 +62,6 @@ double quadratic_filter(double x)
     }
     return filter_zero;
 }
-
-extern const double minus_one, minus_two, filter_two, filter_three, filter_four;
-extern const double minus_six, filter_six, one_sixth;
 
 double box_filter(double x)
 {
@@ -95,9 +87,6 @@ double cubic_filter(double x)
     }
     return filter_zero;
 }
-
-
-extern const double minus_five, filter_five, filter_eight;
 
 double catrom_filter(double x)
 {
@@ -131,7 +120,6 @@ double mitchell_filter(double x, const struct MitchellCoefficients *p)
         return p->outer_constant + x * (p->outer_linear + x * (p->outer_quadratic + x * p->outer_cubic));
     return filter_zero;
 }
-extern const double series_tolerance, filter_quarter;
 
 __declspec(noinline) double bessel_i0(double x)
 {

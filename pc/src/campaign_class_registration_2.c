@@ -1,11 +1,5 @@
 #include "campaign_class_registration.h"
-
-extern const unsigned short package_Core[];
-extern const unsigned short package_Echelon[];
-extern const unsigned short package_EchelonAI[];
-extern const unsigned short package_EchelonIngredient[];
-extern const unsigned short package_Engine[];
-extern const unsigned short package_WinDrv[];
+#include "campaign_class_singletons.h"
 
 CLASS_GETTER(AAIController, Engine)
 CLASS_GETTER(AActor, Engine)

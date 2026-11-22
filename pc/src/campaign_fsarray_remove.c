@@ -1,6 +1,5 @@
 #include "campaign_fsarray.h"
-
-extern const unsigned short fsarray_tag[];
+#include "campaign_globals.h"
 
 void __fastcall remove_fsarray_range(struct FSArray *array, struct ArraySize index,
                                      struct ArraySize amount, struct ArraySize stride)

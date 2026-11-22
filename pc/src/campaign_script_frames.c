@@ -1,4 +1,5 @@
 #include "campaign_script_events.h"
+#include "campaign_script_name_externs.h"
 
 typedef int ScriptBoolean;
 typedef unsigned char ScriptByte;
@@ -41,7 +42,6 @@ typedef struct { ScriptVector value; } Arg_ScriptVector;
 typedef struct { float value; } Arg_float;
 typedef struct { int value; } Arg_int;
 
-extern ScriptEventName name_ActorEntered;
 void __fastcall script_frame_ActorEntered(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -57,7 +57,6 @@ void __fastcall script_frame_ActorEntered(struct ScriptObject *object, Arg_RefAc
         object, find_script_function(object, name_ActorEntered, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_ActorGotoState;
 void __fastcall script_frame_ActorGotoState(struct ScriptObject *object, Arg_RefActor A, Arg_ScriptEventName newStateName, Arg_ScriptEventName newLabelName, Arg_ScriptEventName newJumpLabelName)
 {
     struct {
@@ -76,7 +75,6 @@ void __fastcall script_frame_ActorGotoState(struct ScriptObject *object, Arg_Ref
         object, find_script_function(object, name_ActorGotoState, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_ActorLeaving;
 void __fastcall script_frame_ActorLeaving(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -92,7 +90,6 @@ void __fastcall script_frame_ActorLeaving(struct ScriptObject *object, Arg_RefAc
         object, find_script_function(object, name_ActorLeaving, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_AmmoContact;
 void __fastcall script_frame_AmmoContact(struct ScriptObject *object, Arg_ScriptVector HitDirection, Arg_ScriptVector HitNormal, Arg_RefActor Hit)
 {
     struct {
@@ -109,7 +106,6 @@ void __fastcall script_frame_AmmoContact(struct ScriptObject *object, Arg_Script
         object, find_script_function(object, name_AmmoContact, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_AnimEnd;
 void __fastcall script_frame_AnimEnd(struct ScriptObject *object, Arg_int Channel)
 {
     struct {
@@ -125,7 +121,6 @@ void __fastcall script_frame_AnimEnd(struct ScriptObject *object, Arg_int Channe
         object, find_script_function(object, name_AnimEnd, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Attach;
 void __fastcall script_frame_Attach(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -141,7 +136,6 @@ void __fastcall script_frame_Attach(struct ScriptObject *object, Arg_RefActor Ot
         object, find_script_function(object, name_Attach, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_AttachObject;
 void __fastcall script_frame_AttachObject(struct ScriptObject *object, Arg_RefEGameplayObject Obj, Arg_ScriptEventName AttachTag, Arg_int inDummyAttachIndex, Arg_int in_channel, Arg_ScriptEventName DASource, Arg_ScriptEventName DATarget, Arg_ScriptEventName DATransition, Arg_ScriptVector DATransitionRelPos, Arg_ScriptRotator DATransitionRelRot)
 {
     struct {
@@ -170,7 +164,6 @@ void __fastcall script_frame_AttachObject(struct ScriptObject *object, Arg_RefEG
         object, find_script_function(object, name_AttachObject, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_BaseChange;
 void __fastcall script_frame_BaseChange(struct ScriptObject *object)
 {
     const struct ScriptStateFrame *state = ((const struct ScriptObjectState *)object)->state;
@@ -180,7 +173,6 @@ void __fastcall script_frame_BaseChange(struct ScriptObject *object)
         object, find_script_function(object, name_BaseChange, 0.0f), 0.0f, 0.0f);
 }
 
-extern ScriptEventName name_Bump;
 void __fastcall script_frame_Bump(struct ScriptObject *object, Arg_RefActor Other, Arg_int Pill)
 {
     struct {
@@ -198,7 +190,6 @@ void __fastcall script_frame_Bump(struct ScriptObject *object, Arg_RefActor Othe
         object, find_script_function(object, name_Bump, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_CanUseOpenDoorType;
 ScriptBoolean __fastcall script_frame_CanUseOpenDoorType(struct ScriptObject *object, Arg_ScriptByte openType)
 {
     struct {
@@ -214,7 +205,6 @@ ScriptBoolean __fastcall script_frame_CanUseOpenDoorType(struct ScriptObject *ob
     return frame.result;
 }
 
-extern ScriptEventName name_CollidedBy;
 void __fastcall script_frame_CollidedBy(struct ScriptObject *object, Arg_RefActor Instigator, Arg_ScriptVector HitLocation)
 {
     struct {
@@ -229,7 +219,6 @@ void __fastcall script_frame_CollidedBy(struct ScriptObject *object, Arg_RefActo
         object, find_script_function(object, name_CollidedBy, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Destroyed;
 void __fastcall script_frame_Destroyed(struct ScriptObject *object)
 {
     const struct ScriptStateFrame *state = ((const struct ScriptObjectState *)object)->state;
@@ -239,7 +228,6 @@ void __fastcall script_frame_Destroyed(struct ScriptObject *object)
         object, find_script_function(object, name_Destroyed, 0.0f), 0.0f, 0.0f);
 }
 
-extern ScriptEventName name_Detach;
 void __fastcall script_frame_Detach(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -255,7 +243,6 @@ void __fastcall script_frame_Detach(struct ScriptObject *object, Arg_RefActor Ot
         object, find_script_function(object, name_Detach, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_DoorOpenTypeIs;
 void __fastcall script_frame_DoorOpenTypeIs(struct ScriptObject *object, Arg_ScriptByte openType, Arg_RefActor Door, Arg_ScriptVector vDoorMiddle)
 {
     struct {
@@ -272,7 +259,6 @@ void __fastcall script_frame_DoorOpenTypeIs(struct ScriptObject *object, Arg_Scr
         object, find_script_function(object, name_DoorOpenTypeIs, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_EncroachedBy;
 void __fastcall script_frame_EncroachedBy(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -288,7 +274,6 @@ void __fastcall script_frame_EncroachedBy(struct ScriptObject *object, Arg_RefAc
         object, find_script_function(object, name_EncroachedBy, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_EndedRotation;
 void __fastcall script_frame_EndedRotation(struct ScriptObject *object)
 {
     const struct ScriptStateFrame *state = ((const struct ScriptObjectState *)object)->state;
@@ -298,7 +283,6 @@ void __fastcall script_frame_EndedRotation(struct ScriptObject *object)
         object, find_script_function(object, name_EndedRotation, 0.0f), 0.0f, 0.0f);
 }
 
-extern ScriptEventName name_Falling;
 void __fastcall script_frame_Falling(struct ScriptObject *object)
 {
     const struct ScriptStateFrame *state = ((const struct ScriptObjectState *)object)->state;
@@ -308,7 +292,6 @@ void __fastcall script_frame_Falling(struct ScriptObject *object)
         object, find_script_function(object, name_Falling, 0.0f), 0.0f, 0.0f);
 }
 
-extern ScriptEventName name_FeetLedge;
 ScriptBoolean __fastcall script_frame_FeetLedge(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd)
 {
     struct {
@@ -326,7 +309,6 @@ ScriptBoolean __fastcall script_frame_FeetLedge(struct ScriptObject *object, Arg
     return frame.result;
 }
 
-extern ScriptEventName name_GainedChild;
 void __fastcall script_frame_GainedChild(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -342,7 +324,6 @@ void __fastcall script_frame_GainedChild(struct ScriptObject *object, Arg_RefAct
         object, find_script_function(object, name_GainedChild, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_GenerateAINoise;
 void __fastcall script_frame_GenerateAINoise(struct ScriptObject *object, Arg_RefSound Snd, Arg_ScriptByte iAction, Arg_ScriptByte iSurface, Arg_float speed)
 {
     struct {
@@ -361,7 +342,6 @@ void __fastcall script_frame_GenerateAINoise(struct ScriptObject *object, Arg_Re
         object, find_script_function(object, name_GenerateAINoise, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_GetOpenDoorType;
 ScriptByte __fastcall script_frame_GetOpenDoorType(struct ScriptObject *object, Arg_int iOutroZone)
 {
     struct {
@@ -377,7 +357,6 @@ ScriptByte __fastcall script_frame_GetOpenDoorType(struct ScriptObject *object, 
     return frame.result;
 }
 
-extern ScriptEventName name_HandOverHand;
 ScriptBoolean __fastcall script_frame_HandOverHand(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd)
 {
     struct {
@@ -395,7 +374,6 @@ ScriptBoolean __fastcall script_frame_HandOverHand(struct ScriptObject *object, 
     return frame.result;
 }
 
-extern ScriptEventName name_HavokBump;
 void __fastcall script_frame_HavokBump(struct ScriptObject *object, Arg_RefActor Other, Arg_ScriptVector hitVelocity, Arg_ScriptVector HitLocation)
 {
     struct {
@@ -412,7 +390,6 @@ void __fastcall script_frame_HavokBump(struct ScriptObject *object, Arg_RefActor
         object, find_script_function(object, name_HavokBump, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_HitWall;
 void __fastcall script_frame_HitWall(struct ScriptObject *object, Arg_ScriptVector HitNormal, Arg_RefActor HitWall)
 {
     struct {
@@ -430,7 +407,6 @@ void __fastcall script_frame_HitWall(struct ScriptObject *object, Arg_ScriptVect
         object, find_script_function(object, name_HitWall, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_IsActiveView;
 ScriptBoolean __fastcall script_frame_IsActiveView(struct ScriptObject *object, Arg_ScriptByte eNextPlayerView)
 {
     struct {
@@ -446,7 +422,6 @@ ScriptBoolean __fastcall script_frame_IsActiveView(struct ScriptObject *object, 
     return frame.result;
 }
 
-extern ScriptEventName name_IsGranted;
 ScriptBoolean __fastcall script_frame_IsGranted(struct ScriptObject *object, Arg_RefEPawn Pawn, Arg_ScriptBoolean skipObjectState)
 {
     struct {
@@ -464,7 +439,6 @@ ScriptBoolean __fastcall script_frame_IsGranted(struct ScriptObject *object, Arg
     return frame.result;
 }
 
-extern ScriptEventName name_Landed;
 void __fastcall script_frame_Landed(struct ScriptObject *object, Arg_ScriptVector HitNormal)
 {
     struct {
@@ -480,7 +454,6 @@ void __fastcall script_frame_Landed(struct ScriptObject *object, Arg_ScriptVecto
         object, find_script_function(object, name_Landed, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Ledge;
 ScriptBoolean __fastcall script_frame_Ledge(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd, Arg_int LType)
 {
     struct {
@@ -500,7 +473,6 @@ ScriptBoolean __fastcall script_frame_Ledge(struct ScriptObject *object, Arg_Scr
     return frame.result;
 }
 
-extern ScriptEventName name_LostChild;
 void __fastcall script_frame_LostChild(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -516,7 +488,6 @@ void __fastcall script_frame_LostChild(struct ScriptObject *object, Arg_RefActor
         object, find_script_function(object, name_LostChild, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_MayFall;
 void __fastcall script_frame_MayFall(struct ScriptObject *object)
 {
     const struct ScriptStateFrame *state = ((const struct ScriptObjectState *)object)->state;
@@ -526,7 +497,6 @@ void __fastcall script_frame_MayFall(struct ScriptObject *object)
         object, find_script_function(object, name_MayFall, 0.0f), 0.0f, 0.0f);
 }
 
-extern ScriptEventName name_NarrowGap;
 ScriptBoolean __fastcall script_frame_NarrowGap(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd)
 {
     struct {
@@ -544,7 +514,6 @@ ScriptBoolean __fastcall script_frame_NarrowGap(struct ScriptObject *object, Arg
     return frame.result;
 }
 
-extern ScriptEventName name_NarrowLadder;
 ScriptBoolean __fastcall script_frame_NarrowLadder(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd, Arg_int NLType)
 {
     struct {
@@ -564,7 +533,6 @@ ScriptBoolean __fastcall script_frame_NarrowLadder(struct ScriptObject *object, 
     return frame.result;
 }
 
-extern ScriptEventName name_NotifyEnterDoorRadius;
 void __fastcall script_frame_NotifyEnterDoorRadius(struct ScriptObject *object, Arg_ScriptByte doorStatus)
 {
     struct {
@@ -577,7 +545,6 @@ void __fastcall script_frame_NotifyEnterDoorRadius(struct ScriptObject *object, 
         object, find_script_function(object, name_NotifyEnterDoorRadius, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_NotifyTouchWall;
 void __fastcall script_frame_NotifyTouchWall(struct ScriptObject *object, Arg_ScriptVector HitNormal, Arg_RefActor wall)
 {
     struct {
@@ -592,7 +559,6 @@ void __fastcall script_frame_NotifyTouchWall(struct ScriptObject *object, Arg_Sc
         object, find_script_function(object, name_NotifyTouchWall, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_OCPEffect;
 void __fastcall script_frame_OCPEffect(struct ScriptObject *object, Arg_ScriptVector Pos)
 {
     struct {
@@ -605,7 +571,6 @@ void __fastcall script_frame_OCPEffect(struct ScriptObject *object, Arg_ScriptVe
         object, find_script_function(object, name_OCPEffect, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_PauseGame;
 ScriptBoolean __fastcall script_frame_PauseGame(struct ScriptObject *object, Arg_ScriptBoolean bPause, Arg_ScriptBoolean bPauseAllSounds)
 {
     struct {
@@ -623,7 +588,6 @@ ScriptBoolean __fastcall script_frame_PauseGame(struct ScriptObject *object, Arg
     return frame.result;
 }
 
-extern ScriptEventName name_PerformingCoopInteract;
 ScriptBoolean __fastcall script_frame_PerformingCoopInteract(struct ScriptObject *object, Arg_ScriptByte Action)
 {
     struct {
@@ -639,7 +603,6 @@ ScriptBoolean __fastcall script_frame_PerformingCoopInteract(struct ScriptObject
     return frame.result;
 }
 
-extern ScriptEventName name_PhysicsVolumeChange;
 void __fastcall script_frame_PhysicsVolumeChange(struct ScriptObject *object, Arg_RefPhysicsVolume NewVolume)
 {
     struct {
@@ -655,7 +618,6 @@ void __fastcall script_frame_PhysicsVolumeChange(struct ScriptObject *object, Ar
         object, find_script_function(object, name_PhysicsVolumeChange, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Pipe;
 ScriptBoolean __fastcall script_frame_Pipe(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd)
 {
     struct {
@@ -673,7 +635,6 @@ ScriptBoolean __fastcall script_frame_Pipe(struct ScriptObject *object, Arg_Scri
     return frame.result;
 }
 
-extern ScriptEventName name_PlayAltComMove;
 void __fastcall script_frame_PlayAltComMove(struct ScriptObject *object, Arg_ScriptBoolean forward, Arg_ScriptBoolean back, Arg_ScriptBoolean Left, Arg_ScriptBoolean Right, Arg_ScriptBoolean raise, Arg_ScriptBoolean lower, Arg_ScriptBoolean Stop)
 {
     struct {
@@ -698,7 +659,6 @@ void __fastcall script_frame_PlayAltComMove(struct ScriptObject *object, Arg_Scr
         object, find_script_function(object, name_PlayAltComMove, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_PlayAnimNoMovement;
 ScriptBoolean __fastcall script_frame_PlayAnimNoMovement(struct ScriptObject *object, Arg_ScriptEventName Sequence, Arg_float Rate, Arg_float TweenTime, Arg_ScriptBoolean bBackward)
 {
     struct {
@@ -720,7 +680,6 @@ ScriptBoolean __fastcall script_frame_PlayAnimNoMovement(struct ScriptObject *ob
     return frame.result;
 }
 
-extern ScriptEventName name_PlayRandom;
 int __fastcall script_frame_PlayRandom(struct ScriptObject *object, Arg_RefActor Owner, Arg_float Delay)
 {
     struct {
@@ -738,7 +697,6 @@ int __fastcall script_frame_PlayRandom(struct ScriptObject *object, Arg_RefActor
     return frame.result;
 }
 
-extern ScriptEventName name_PlayerTick;
 void __fastcall script_frame_PlayerTick(struct ScriptObject *object, Arg_float DeltaTime)
 {
     struct {
@@ -754,7 +712,6 @@ void __fastcall script_frame_PlayerTick(struct ScriptObject *object, Arg_float D
         object, find_script_function(object, name_PlayerTick, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Poutre;
 ScriptBoolean __fastcall script_frame_Poutre(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd, Arg_int PType)
 {
     struct {
@@ -774,7 +731,6 @@ ScriptBoolean __fastcall script_frame_Poutre(struct ScriptObject *object, Arg_Sc
     return frame.result;
 }
 
-extern ScriptEventName name_ReceiveMessage;
 void __fastcall script_frame_ReceiveMessage(struct ScriptObject *object, Arg_RefEGameplayObject Sender, Arg_ScriptByte Event)
 {
     struct {
@@ -789,7 +745,6 @@ void __fastcall script_frame_ReceiveMessage(struct ScriptObject *object, Arg_Ref
         object, find_script_function(object, name_ReceiveMessage, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_ReserveLocation;
 void __fastcall script_frame_ReserveLocation(struct ScriptObject *object, Arg_ScriptVector vPos, Arg_ScriptBoolean bDontBlockPlayer)
 {
     struct {
@@ -804,7 +759,6 @@ void __fastcall script_frame_ReserveLocation(struct ScriptObject *object, Arg_Sc
         object, find_script_function(object, name_ReserveLocation, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_ResetAttachment;
 void __fastcall script_frame_ResetAttachment(struct ScriptObject *object, Arg_RefEWeaponAttachment Attachment, Arg_ScriptVector AttachmentOffset)
 {
     struct {
@@ -819,7 +773,6 @@ void __fastcall script_frame_ResetAttachment(struct ScriptObject *object, Arg_Re
         object, find_script_function(object, name_ResetAttachment, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_RestoreView;
 ScriptBoolean __fastcall script_frame_RestoreView(struct ScriptObject *object, Arg_ScriptByte eFROMPlayerView)
 {
     struct {
@@ -835,7 +788,6 @@ ScriptBoolean __fastcall script_frame_RestoreView(struct ScriptObject *object, A
     return frame.result;
 }
 
-extern ScriptEventName name_SetDistanceFog;
 void __fastcall script_frame_SetDistanceFog(struct ScriptObject *object, Arg_float _fStartDist, Arg_float _fEndDist, Arg_float _fDensity, Arg_float _fTargetDelay)
 {
     struct {
@@ -854,7 +806,6 @@ void __fastcall script_frame_SetDistanceFog(struct ScriptObject *object, Arg_flo
         object, find_script_function(object, name_SetDistanceFog, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_SetDoorInteractionLocation;
 void __fastcall script_frame_SetDoorInteractionLocation(struct ScriptObject *object, Arg_ScriptByte openType)
 {
     struct {
@@ -867,7 +818,6 @@ void __fastcall script_frame_SetDoorInteractionLocation(struct ScriptObject *obj
         object, find_script_function(object, name_SetDoorInteractionLocation, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_SetRelativeOffset;
 void __fastcall script_frame_SetRelativeOffset(struct ScriptObject *object, Arg_ScriptVector offset)
 {
     struct {
@@ -880,7 +830,6 @@ void __fastcall script_frame_SetRelativeOffset(struct ScriptObject *object, Arg_
         object, find_script_function(object, name_SetRelativeOffset, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_SetupRelative;
 void __fastcall script_frame_SetupRelative(struct ScriptObject *object, Arg_RefActor NewBase, Arg_ScriptVector offset, Arg_RefStaticMesh Mesh)
 {
     struct {
@@ -897,7 +846,6 @@ void __fastcall script_frame_SetupRelative(struct ScriptObject *object, Arg_RefA
         object, find_script_function(object, name_SetupRelative, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_TakeDamage;
 void __fastcall script_frame_TakeDamage(struct ScriptObject *object, Arg_int Damage, Arg_RefPawn EventInstigator, Arg_ScriptVector HitLocation, Arg_ScriptVector HitNormal, Arg_ScriptVector Momentum, Arg_ScriptByte DamageType, Arg_int PillTag)
 {
     struct {
@@ -922,7 +870,6 @@ void __fastcall script_frame_TakeDamage(struct ScriptObject *object, Arg_int Dam
         object, find_script_function(object, name_TakeDamage, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Throw;
 void __fastcall script_frame_Throw(struct ScriptObject *object, Arg_RefController Thrower, Arg_ScriptVector ThrowVelocity)
 {
     struct {
@@ -937,7 +884,6 @@ void __fastcall script_frame_Throw(struct ScriptObject *object, Arg_RefControlle
         object, find_script_function(object, name_Throw, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Tick;
 void __fastcall script_frame_Tick(struct ScriptObject *object, Arg_float Delta)
 {
     struct {
@@ -953,7 +899,6 @@ void __fastcall script_frame_Tick(struct ScriptObject *object, Arg_float Delta)
         object, find_script_function(object, name_Tick, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Timer;
 void __fastcall script_frame_Timer(struct ScriptObject *object)
 {
     const struct ScriptStateFrame *state = ((const struct ScriptObjectState *)object)->state;
@@ -963,7 +908,6 @@ void __fastcall script_frame_Timer(struct ScriptObject *object)
         object, find_script_function(object, name_Timer, 0.0f), 0.0f, 0.0f);
 }
 
-extern ScriptEventName name_TopNarrowLadder;
 ScriptBoolean __fastcall script_frame_TopNarrowLadder(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd)
 {
     struct {
@@ -981,7 +925,6 @@ ScriptBoolean __fastcall script_frame_TopNarrowLadder(struct ScriptObject *objec
     return frame.result;
 }
 
-extern ScriptEventName name_TopPipe;
 ScriptBoolean __fastcall script_frame_TopPipe(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd)
 {
     struct {
@@ -999,7 +942,6 @@ ScriptBoolean __fastcall script_frame_TopPipe(struct ScriptObject *object, Arg_S
     return frame.result;
 }
 
-extern ScriptEventName name_Touch;
 void __fastcall script_frame_Touch(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -1015,7 +957,6 @@ void __fastcall script_frame_Touch(struct ScriptObject *object, Arg_RefActor Oth
         object, find_script_function(object, name_Touch, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_Trigger;
 void __fastcall script_frame_Trigger(struct ScriptObject *object, Arg_RefActor Other, Arg_RefPawn EventInstigator, Arg_ScriptEventName EventID)
 {
     struct {
@@ -1035,7 +976,6 @@ void __fastcall script_frame_Trigger(struct ScriptObject *object, Arg_RefActor O
         object, find_script_function(object, name_Trigger, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_TriggerEvent;
 void __fastcall script_frame_TriggerEvent(struct ScriptObject *object, Arg_ScriptEventName EventName, Arg_RefActor Other, Arg_RefPawn EventInstigator, Arg_ScriptEventName EventID)
 {
     struct {
@@ -1054,7 +994,6 @@ void __fastcall script_frame_TriggerEvent(struct ScriptObject *object, Arg_Scrip
         object, find_script_function(object, name_TriggerEvent, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_TurnOn;
 void __fastcall script_frame_TurnOn(struct ScriptObject *object, Arg_ScriptByte Type, Arg_RefPawn EventInstigator)
 {
     struct {
@@ -1069,7 +1008,6 @@ void __fastcall script_frame_TurnOn(struct ScriptObject *object, Arg_ScriptByte 
         object, find_script_function(object, name_TurnOn, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_UnTouch;
 void __fastcall script_frame_UnTouch(struct ScriptObject *object, Arg_RefActor Other)
 {
     struct {
@@ -1085,7 +1023,6 @@ void __fastcall script_frame_UnTouch(struct ScriptObject *object, Arg_RefActor O
         object, find_script_function(object, name_UnTouch, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_UnTrigger;
 void __fastcall script_frame_UnTrigger(struct ScriptObject *object, Arg_RefActor Other, Arg_RefPawn EventInstigator)
 {
     struct {
@@ -1103,7 +1040,6 @@ void __fastcall script_frame_UnTrigger(struct ScriptObject *object, Arg_RefActor
         object, find_script_function(object, name_UnTrigger, 0.0f), address, 0.0f);
 }
 
-extern ScriptEventName name_WaistLedge;
 ScriptBoolean __fastcall script_frame_WaistLedge(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd)
 {
     struct {
@@ -1121,7 +1057,6 @@ ScriptBoolean __fastcall script_frame_WaistLedge(struct ScriptObject *object, Ar
     return frame.result;
 }
 
-extern ScriptEventName name_ZipLine;
 ScriptBoolean __fastcall script_frame_ZipLine(struct ScriptObject *object, Arg_ScriptVector locationEnd, Arg_ScriptRotator orientationEnd, Arg_int ZLType)
 {
     struct {

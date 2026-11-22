@@ -1,15 +1,5 @@
 #include "record_deletion.h"
-
-extern const void *const methods_2ff730[];
-extern const void *const methods_303304[];
-extern const void *const methods_303320[];
-extern const void *const methods_3034b4[];
-extern const void *const methods_3035fc[];
-extern const void *const methods_303dc0[];
-extern const void *const methods_3049cc[];
-extern const void *const methods_307890[];
-extern const void *const methods_30d248[];
-extern const void *const methods_30e918[];
+#include "versus_globals.h"
 
 #define DESTROY(Entry, Methods) \
     struct Record *__fastcall Entry(struct Record *self, struct DeleteFlags flags) \

@@ -1,34 +1,6 @@
 #include "record_deletion.h"
+#include "campaign_globals.h"
 
-extern const void *const methods_7d8d88[];
-extern const void *const methods_7d9358[];
-extern const void *const methods_7d9540[];
-extern const void *const methods_7d9710[];
-extern const void *const methods_83c658[];
-extern const void *const methods_83cd30[];
-extern const void *const methods_83e14c[];
-extern const void *const methods_83e7d0[];
-extern const void *const methods_83e810[];
-extern const void *const methods_83f0f4[];
-extern const void *const methods_83f7f0[];
-extern const void *const methods_840c28[];
-extern const void *const methods_84114c[];
-extern const void *const methods_842548[];
-extern const void *const methods_842778[];
-extern const void *const methods_842b48[];
-extern const void *const methods_844a78[];
-extern const void *const methods_844b78[];
-extern const void *const methods_8463b8[];
-extern const void *const methods_8464a8[];
-extern const void *const methods_84677c[];
-extern const void *const methods_846950[];
-extern const void *const methods_847744[];
-extern const void *const methods_84890c[];
-extern const void *const methods_848d68[];
-extern const void *const methods_848da8[];
-extern const void *const methods_848ed0[];
-extern const void *const methods_849340[];
-extern const void *const methods_8713a8[];
 extern void __cdecl release_487b90(struct Record *object);
 extern void __fastcall cleanup_1fdb50(void *object);
 extern void __fastcall cleanup_203fa0(void *object);

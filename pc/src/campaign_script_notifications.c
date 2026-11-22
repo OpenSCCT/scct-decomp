@@ -1,7 +1,7 @@
 #include "campaign_script_events.h"
+#include "campaign_script_name_externs.h"
 
 #define SCRIPT_NOTIFICATION(Event)                                            \
-    extern ScriptEventName name_##Event;                                      \
     void __fastcall event_##Event(struct ScriptObject *object)                \
     {                                                                         \
         object->methods->process_event.empty(                                 \

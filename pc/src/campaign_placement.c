@@ -2,6 +2,8 @@
    The base initializer is shared by classes with no additional base work.
    Actor constructors also initialize four inherited fields before installing
    the derived vtable. */
+
+#include "campaign_globals.h"
 struct PlacementObject {
     const void *const *methods;
     unsigned char actor_fields[0x1cc - 4];
@@ -9,7 +11,6 @@ struct PlacementObject {
 };
 
 #define PLACE_ACTOR(Type, Base)                                               \
-    extern const void *const vtable_##Type[];                                 \
     extern void __fastcall Base(struct PlacementObject *);                    \
     void place_##Type(struct PlacementObject *object)                         \
     {                                                                         \
@@ -24,7 +25,6 @@ struct PlacementObject {
     }
 
 #define PLACE_OBJECT(Type, Base)                                              \
-    extern const void *const vtable_##Type[];                                 \
     extern void __fastcall Base(struct PlacementObject *);                    \
     void place_##Type(struct PlacementObject *object)                         \
     {                                                                         \

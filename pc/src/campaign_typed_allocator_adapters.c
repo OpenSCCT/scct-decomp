@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 struct Context;
 extern struct Context *__cdecl context(void);
 extern void *__cdecl allocate(struct Context *, unsigned, const unsigned short *, unsigned, unsigned);
@@ -13,8 +15,6 @@ extern void __cdecl release(struct Context *, void *, unsigned);
     { \
         release(context(), block, Category); \
     }
-
-extern const unsigned short label_7be288[];
 
 RELEASE(release_05e590, 7)
 ALLOCATE(allocate_05e760, 24, label_7be288, 7)

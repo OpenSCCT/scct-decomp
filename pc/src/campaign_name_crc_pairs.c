@@ -1,3 +1,5 @@
+#include "campaign_globals.h"
+
 extern unsigned *__cdecl name_crc(unsigned *destination, const char *name);
 
 __declspec(selectany) const char name_7dae6c[] = "P_ChatIngame";
@@ -27,38 +29,6 @@ __declspec(selectany) const char name_7e4544[] = "B_Reset";
 __declspec(selectany) const char name_7e454c[] = "B_Save";
 __declspec(selectany) const char name_7e604c[] = "L_OverText";
 __declspec(selectany) const char name_7e6058[] = "A_OverArea";
-extern unsigned id_92d54c;
-extern unsigned id_92d550;
-extern unsigned id_92d700;
-extern unsigned id_92d704;
-extern unsigned id_92d75c;
-extern unsigned id_92d760;
-extern unsigned id_92d890;
-extern unsigned id_92d894;
-extern unsigned id_92d8c0;
-extern unsigned id_92d8c4;
-extern unsigned id_92dad8;
-extern unsigned id_92dadc;
-extern unsigned id_92db08;
-extern unsigned id_92db0c;
-extern unsigned id_92dd98;
-extern unsigned id_92dd9c;
-extern unsigned id_92de38;
-extern unsigned id_92de3c;
-extern unsigned id_92df04;
-extern unsigned id_92df08;
-extern unsigned id_92df34;
-extern unsigned id_92df38;
-extern unsigned id_92df64;
-extern unsigned id_92df68;
-extern unsigned id_92df94;
-extern unsigned id_92df98;
-extern unsigned id_92e428;
-extern unsigned id_92e42c;
-extern unsigned id_92e4ac;
-extern unsigned id_92e4b0;
-extern unsigned id_92e4dc;
-extern unsigned id_92e4e0;
 
 #define REGISTER_PAIR(Entry, FirstID, FirstName, SecondID, SecondName) \
     void __cdecl Entry(void) \

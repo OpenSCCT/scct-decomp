@@ -1,5 +1,5 @@
 #include "campaign_fsarray.h"
-extern const unsigned short fsarray_tag[];
+#include "campaign_globals.h"
 
 void __fastcall resize_fsarray(struct FSArray *array, struct ArraySize stride)
 {

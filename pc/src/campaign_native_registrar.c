@@ -1,9 +1,8 @@
 #include "campaign_native_initializer.h"
+#include "campaign_globals.h"
 
 extern void __fastcall campaign_undefined_native(ScriptObject *, unsigned, ScriptFrame *, void *);
 extern CampaignNative campaign_native_table[4096];
-extern int campaign_native_initialized;
-extern int campaign_native_duplicate;
 
 unsigned char __cdecl campaign_register_native(int index, const CampaignNative *entry)
 {
