@@ -31,6 +31,7 @@ esac
 base64 -d "$fixtures/fixtures/image.bin.b64" > "$out/image.bin"
 base64 -d "$fixtures/fixtures/synthetic_unit.obj.b64" > "$out/synthetic_unit.obj"
 base64 -d "$fixtures/fixtures/synthetic_vtable.obj.b64" > "$out/synthetic_vtable.obj"
+base64 -d "$fixtures/fixtures/synthetic_vtable_multibase.obj.b64" > "$out/synthetic_vtable_multibase.obj"
 
 # The fragment, and the note that the function map does not list the unlisted callee.
 "$bindgen" --object "$out/synthetic_unit.obj" --image "$out/image.bin" "$manifest" synthetic-unit \
@@ -45,6 +46,12 @@ diff -u "$fixtures/expected/synthetic-unit.stderr" "$out/unit.err"
 "$bindgen" --object "$out/synthetic_vtable.obj" --image "$out/image.bin" "$manifest" synthetic-vtable 	> "$out/vtable.raw" 2> /dev/null
 tr -d '\r' < "$out/vtable.raw" > "$out/vtable.json"
 diff -u "$fixtures/expected/synthetic-vtable.json" "$out/vtable.json"
+
+# A base subobject's table, ??_7<class>@@6B<base>@@@, is bound the same way.
+"$bindgen" --object "$out/synthetic_vtable_multibase.obj" --image "$out/image.bin" "$manifest" \
+	synthetic-vtable-multibase > "$out/multibase.raw" 2> /dev/null
+tr -d '\r' < "$out/multibase.raw" > "$out/multibase.json"
+diff -u "$fixtures/expected/synthetic-vtable-multibase.json" "$out/multibase.json"
 
 # The same operand, when the retail table does not begin with a code address, is refused.
 rm -rf "$out/notcode" && mkdir -p "$out/notcode" && cp -r "$fixtures/pc" "$out/notcode/pc"

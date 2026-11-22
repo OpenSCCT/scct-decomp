@@ -1281,7 +1281,8 @@ static int class_vtable(const Symbol *sym, const Coff *c, u32 type, u32 addend)
     if (type != REL_DIR32 || addend != 0 || sym->value != 0 || sym->section <= 0)
         return 0;
     n = strlen(sym->name);
-    if (strncmp(sym->name, "??_7", 4) != 0 || n < 9 || strcmp(sym->name + n - 5, "@@6B@") != 0)
+    if (strncmp(sym->name, "??_7", 4) != 0 || n < 10 || strstr(sym->name, "@@6B") == NULL
+        || sym->name[n - 1] != '@')
         return 0;
     coff_section(c, (u32)sym->section, &s);
     return !(s.characteristics & 0x20) && (s.characteristics & 0x40) && !(s.characteristics & 0x80000000u);
@@ -1388,6 +1389,8 @@ static void derive_bindings(const Unit *unit, const Coff *c, const Section *sect
                     fail("%s refers to static data, which the verifier cannot link", sym->name);
                 vtable = 1;
             }
+            if (!vtable && class_vtable(sym, c, type, addend))
+                vtable = 1;
             if (sym->storage != SYM_STATIC && sym->storage != SYM_EXTERNAL)
                 fail("%s has an unsupported storage class", sym->name);
             if (sym->storage == SYM_EXTERNAL && sym->value != 0)
@@ -1445,7 +1448,7 @@ static void derive_bindings(const Unit *unit, const Coff *c, const Section *sect
                      "(the C runtime's __except_list).", (unsigned)site, unit->symbol);
         else if (vtable)
             snprintf(basis, sizeof basis,
-                     "The class's vtable at VA 0x%08" PRIx32 " (file offset 0x%" PRIx32 "), named by the "
+                     "A class vtable at VA 0x%08" PRIx32 " (file offset 0x%" PRIx32 "), named by the "
                      "DIR32 operand at +0x%x of %s; its first entry points into code.",
                      target, target - IMAGE_BASE, (unsigned)site, unit->symbol);
         else

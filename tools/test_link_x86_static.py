@@ -79,13 +79,13 @@ VTABLE = b"??_7UnkType_1@@6B@"
 VTABLE_VA = 0x110BC1B8
 
 
-def vtable_object(*, value=0, flags=0x40301040, storage=3, relocation=6):
+def vtable_object(*, value=0, flags=0x40301040, storage=3, relocation=6, name=VTABLE):
     """A COFF object whose function _unit stores the address of a class vtable it defines itself.
 
     The vtable is a COMDAT in a read-only section, storage class 3 as a private contribution."""
     code = b"\xb8" + bytes(4) + b"\xc3"
     strings = bytearray(4)
-    strings += VTABLE + b"\0"
+    strings += name + b"\0"
     struct.pack_into("<I", strings, 0, len(strings))
     names = [b"_unit".ljust(8, b"\0"), struct.pack("<II", 0, 4)]
     symbols = [(names[0], 0, 1, 0x20, 2), (names[1], value, 2, 0, storage)]
@@ -120,6 +120,31 @@ class ClassVtableTests(unittest.TestCase):
     def test_vtable_needs_a_binding(self):
         with self.assertRaisesRegex(ValueError, "missing link address for"):
             link_function(vtable_object(), "_unit", 6, 0x10904000, {})
+
+
+MULTI_BASE = b"??_7UnkType_1@@6BUnkType_Base@@@"
+
+
+class MultiBaseVtableTests(unittest.TestCase):
+    def binding(self, name=MULTI_BASE):
+        return {name.decode(): {"va": VTABLE_VA, "basis": "a base subobject's vtable at its retail VA"}}
+
+    def test_base_subobject_table_binds_when_read_only_and_defined(self):
+        linked = link_function(vtable_object(name=MULTI_BASE), "_unit", 6, 0x10904000, self.binding())
+        self.assertEqual(linked, b"\xb8" + struct.pack("<I", VTABLE_VA) + b"\xc3")
+
+    def test_defined_external_base_subobject_table_binds(self):
+        obj = vtable_object(name=MULTI_BASE, storage=2)
+        self.assertEqual(link_function(obj, "_unit", 6, 0x10904000, self.binding()),
+                         b"\xb8" + struct.pack("<I", VTABLE_VA) + b"\xc3")
+
+    def test_name_rule_accepts_only_vtables(self):
+        from link_x86 import is_class_vtable
+        self.assertTrue(is_class_vtable(VTABLE))
+        self.assertTrue(is_class_vtable(MULTI_BASE))
+        self.assertFalse(is_class_vtable("?Foo@@YAXXZ"))
+        self.assertFalse(is_class_vtable("??_7Foo@@6B"))
+        self.assertFalse(is_class_vtable("??_RFoo@@6B@"))
 
 
 if __name__ == "__main__":

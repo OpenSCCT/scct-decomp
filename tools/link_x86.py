@@ -71,6 +71,13 @@ def writable_data(obj, section):
             and bool(flags & 0x80000000))
 
 
+def is_class_vtable(name):
+    """True for a class's vtable, ??_7<class>@@6B@, or a base subobject's table, ??_7<class>@@6B<base>@@@."""
+    if isinstance(name, bytes):
+        name = name.decode("latin-1")
+    return name.startswith("??_7") and "@@6B" in name and name.endswith("@") and len(name) > 9
+
+
 def readonly_data(obj, section):
     """True when the section is initialized, read-only, non-executable data."""
     header = 20 + (section - 1) * 40
@@ -174,7 +181,7 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
         # stores its address. A binding names the retail table; the local copy is not compared.
         class_vtable = (private and relocation == 6 and storage == 3 and kind == 0
                         and 1 <= sym_section <= sections and sym_section != section
-                        and symbol.startswith(b"??_7") and symbol.endswith(b"@@6B@")
+                        and is_class_vtable(symbol)
                         and readonly_data(obj, sym_section))
         if local:
             if relocation != 6 or value >= size:
@@ -219,7 +226,7 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
             low = 0 if symbol == "__except_list" and not sym_section else 1
             if type(dest) is not int or not low <= dest <= 0xffffffff or not binding["basis"].strip():
                 raise ValueError(f"invalid address or missing evidence for {symbol}")
-            if sym_section and kind == 0 and symbol.startswith("??_7") and symbol.endswith("@@6B@"):
+            if sym_section and kind == 0 and is_class_vtable(symbol):
                 # A C++ virtual function table holds relocated pointers, so its compiled
                 # contents cannot be compared before linking; the binding names the retail table.
                 const_header = 20 + (sym_section - 1) * 40
