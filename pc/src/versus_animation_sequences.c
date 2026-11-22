@@ -14,6 +14,8 @@ struct animation_sequence {
     const struct sequence_notify *notifies;
     int notify_count;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct name_entry { unsigned char prefix[0xc]; unsigned char value[1]; };
 #define zero_value (*(const float *)0x10c109f8u)
 #define name_entries (*(const struct name_entry *const *const *)0x10cc9e5cu)

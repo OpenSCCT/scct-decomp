@@ -1,5 +1,7 @@
 #include "versus_vm_argument.h"
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct CameraMode {
     float offsets[4][3];
     float distance[4];
@@ -7,6 +9,8 @@ struct CameraMode {
     int use_collision;
     unsigned char remaining[4];
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ModeCamera {
     unsigned char before_modes[0x2f8];
     struct CameraMode settings[35];

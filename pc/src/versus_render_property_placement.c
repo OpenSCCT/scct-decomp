@@ -18,6 +18,8 @@ static __inline void empty_array(struct dynamic_array *array)
     array->capacity = 0;
 }
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct property_header {
     struct object_header object;
     unsigned char prefix[0x28 - sizeof(struct object_header)];
@@ -39,6 +41,8 @@ struct property_header {
         } \
     }
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct vertex_stream {
     struct object_header object;
     unsigned char prefix[0x2c - sizeof(struct object_header)];
@@ -60,6 +64,8 @@ struct vertex_stream {
         } \
     }
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct particle_emitter {
     struct object_header object;
     unsigned char prefix[0xc0 - sizeof(struct object_header)];
@@ -91,12 +97,16 @@ void place_UParticleEmitter(struct particle_emitter *emitter)
     }
 }
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct value_record {
     struct object_header object;
     unsigned char prefix[0x30 - sizeof(struct object_header)];
     struct dynamic_array value;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct buffer_record {
     struct object_header object;
     unsigned char prefix[0x2c - sizeof(struct object_header)];
@@ -112,6 +122,8 @@ struct buffer_record {
         } \
     }
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct mesh_animation {
     struct object_header object;
     unsigned char prefix[0x2c - sizeof(struct object_header)];
@@ -128,6 +140,8 @@ void place_UMeshAnimation(struct mesh_animation *animation)
     }
 }
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct text_buffer_factory {
     struct object_header object;
     unsigned char prefix[0x30 - sizeof(struct object_header)];
@@ -145,6 +159,8 @@ void place_UTextBufferFactory(struct text_buffer_factory *factory)
 }
 
 struct vector3 { float x, y, z; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct primitive {
     struct object_header object;
     unsigned char prefix[0x28 - sizeof(struct object_header)];

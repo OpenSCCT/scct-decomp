@@ -1,10 +1,14 @@
 #include "versus_vm_argument.h"
 
 struct HudTarget;
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Hud {
     unsigned char before_lock[0x548];
     struct HudTarget *locked;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ServerPreferences {
     unsigned char before_port[0x154];
     int port;

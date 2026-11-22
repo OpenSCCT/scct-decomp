@@ -1,12 +1,18 @@
 #include "versus_vm_argument.h"
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Emitter {
     unsigned char before_count[0x3e0];
     int pending;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Gadget {
     unsigned char before_charge[0x330];
     int charge;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct HUD {
     unsigned char before_slot[0x7f8];
     int forced_slot;

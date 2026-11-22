@@ -1,5 +1,7 @@
 union UpdateTime { double seconds; unsigned words[2]; };
 struct Texture;
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct TextureMethods {
     void *before_tick[40];
     void (__fastcall *tick)(struct Texture *, float delta);
@@ -8,12 +10,16 @@ struct TextureMethods {
     void (__fastcall *update)(struct Texture *, union UpdateTime now);
     void (__fastcall *prime)(struct Texture *);
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Mip {
     unsigned char before_data[0x1c];
     void *pixels;
     unsigned length, capacity;
 };
 #pragma pack(push, 4)
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Texture {
     const struct TextureMethods *methods;
     unsigned char before_time[0x60];

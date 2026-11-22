@@ -1,6 +1,8 @@
 struct material;
 struct texture_interface;
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct material_fields {
     unsigned char prefix[0x3c];
     struct material *fallback;
@@ -9,11 +11,15 @@ struct material_fields {
     unsigned int validated : 1;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct bitmap_material {
     unsigned char prefix[0x4c];
     int width, height;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct texture {
     unsigned char prefix[0x6c];
     struct texture_interface *render_interface;
@@ -26,11 +32,15 @@ struct texture {
     unsigned int realtime_changed : 1;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct proxy_bitmap_material {
     unsigned char prefix[0x64];
     struct texture_interface *render_interface;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct constant_color {
     unsigned char prefix[0x4c];
     unsigned int color;

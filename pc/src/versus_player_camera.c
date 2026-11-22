@@ -1,5 +1,7 @@
 struct vector3 { float x, y, z; };
 struct rotator { int pitch, yaw, roll; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct camera {
     unsigned char prefix[0x18c8];
     int debug_mode;
@@ -8,18 +10,26 @@ struct camera {
     struct rotator debug_rotation;
 };
 enum { pawn_walking = 0x04u, pawn_crouched = 0x20u };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct pawn {
     unsigned char prefix[0x4a8];
     unsigned int movement_flags;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct class_record {
     unsigned char prefix[0x28];
     const struct class_record *super;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct player {
     unsigned char prefix[0x24];
     const struct class_record *type;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct player_controller {
     unsigned char prefix[0x2fc];
     const struct pawn *pawn;

@@ -5,6 +5,8 @@ struct object_header {
     const void *methods;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct material_header {
     struct object_header object;
     unsigned char fields_before_28[0x28 - sizeof(struct object_header)];

@@ -2,7 +2,11 @@
    only steers that stack slot. */
 struct Character { unsigned value; };
 struct GlyphMap { unsigned short *pages[256]; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Glyph { unsigned char prefix[6], width, remainder[17]; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Font {
     unsigned char prefix[80];
     unsigned short maximum;

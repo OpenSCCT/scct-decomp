@@ -1,5 +1,7 @@
 #include "versus_script_frame.h"
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct MineSelector {
     unsigned char unknown[0x350];
     unsigned char available;
@@ -7,11 +9,15 @@ struct MineSelector {
     int selected;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct CamOwner {
     unsigned char unknown[0x604];
     void *active;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ComponentState {
     unsigned char unknown[0x104];
     struct CamOwner *owner;

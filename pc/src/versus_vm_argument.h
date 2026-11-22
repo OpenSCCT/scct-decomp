@@ -1,6 +1,8 @@
 /* The Steam native table contains x86 member handlers. Passing the decoded
  * opcode in the unused fastcall EDX position keeps both explicit VM
  * arguments on the stack, as they are in the retail calling sequence. */
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ArgumentFrame {
     unsigned char unknown[8];
     void *context;

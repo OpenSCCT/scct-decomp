@@ -1,15 +1,21 @@
 #include "versus_script_frame.h"
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct StateFrame {
     unsigned char unknown[0x24];
     int latent_action;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct PawnPhysics {
     unsigned char unknown[0x2d8];
     unsigned char mode;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct LandingController {
     unsigned char unknown[12];
     struct StateFrame *state;

@@ -8,11 +8,15 @@ struct OwnerArgument { struct Owner *owner; };
 struct Word { unsigned value; };
 typedef unsigned char (__fastcall *Event)(struct Listener *, struct OwnerArgument);
 typedef unsigned char (__fastcall *ValueEvent)(struct Listener *, struct OwnerArgument, struct Word);
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Listener {
     void **methods;
     unsigned reserved;
     unsigned char enabled;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Owner {
     unsigned prefix[21];
     struct Listener **first;

@@ -3,10 +3,14 @@
 #define FLOAT_ZERO (*(const float *)0x10c109f8u)
 
 struct Trigger;
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct TriggerMethods {
     void *before_deactivate[78];
     void (__fastcall *deactivate)(struct Trigger *);
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Trigger {
     const struct TriggerMethods *methods;
     unsigned char before_time[0x3d4];

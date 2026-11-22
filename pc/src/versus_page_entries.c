@@ -1,4 +1,6 @@
 struct Entry { unsigned char data[32]; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Page {
     unsigned char prefix[84];
     int selection;
@@ -41,6 +43,8 @@ struct Pair *__cdecl copy_pairs(const struct Pair *first, const struct Pair *end
 
 struct Point { short x, y; };
 struct Bounds { short left, right, top, bottom; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct Widget {
     unsigned char prefix[28];
     void *component;

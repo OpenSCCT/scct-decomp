@@ -1,4 +1,6 @@
 /* Steam Versus stores its skeletal animation channels in a 144-byte array. */
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct animation_channel {
     unsigned char prefix[8];
     int sequence;
@@ -9,6 +11,8 @@ struct animation_channel {
     int backward;
     unsigned char remaining[0x48];
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct mesh_instance {
     unsigned char prefix[0x100];
     struct animation_channel *channels;

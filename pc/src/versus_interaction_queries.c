@@ -1,5 +1,7 @@
 #include "versus_script_frame.h"
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct InteractionSlotOwner {
     unsigned char unknown[0x2f8];
     void *slots[15];

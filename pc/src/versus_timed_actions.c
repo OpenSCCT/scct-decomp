@@ -1,21 +1,29 @@
 #include "versus_vm_argument.h"
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct StateFrame {
     unsigned char unknown[0x24];
     int latent_action;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct SleepActor {
     unsigned char unknown[12];
     struct StateFrame *state;
     unsigned char before_timer[0x1e8];
     float sleep_time;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct SleepPage {
     unsigned char unknown[12];
     struct StateFrame *state;
     unsigned char before_timer[0x1e0];
     float sleep_time;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ActorTimer {
     unsigned char before_rate[0x1b8];
     float rate;

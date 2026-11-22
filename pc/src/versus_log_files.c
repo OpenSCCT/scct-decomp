@@ -7,10 +7,14 @@ struct LogMethods {
 struct LogFile {
     const struct LogMethods *methods;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct FileLog {
     unsigned char unknown[0x2f8];
     struct LogFile *file;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct EventLogManager {
     unsigned char unknown[0x310];
     struct LogFile *file;

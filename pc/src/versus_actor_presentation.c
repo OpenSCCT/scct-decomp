@@ -1,6 +1,8 @@
 struct vector3 { float x, y, z; };
 struct rotator { int pitch, yaw, roll; };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct actor_fields {
     unsigned char prefix[0x80];
     struct vector3 location;
@@ -15,6 +17,8 @@ struct actor_fields {
     unsigned int flags_2ec;
     unsigned int collision_flags;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct mover_fields {
     struct actor_fields actor;
     unsigned char before_base_position[0x88];

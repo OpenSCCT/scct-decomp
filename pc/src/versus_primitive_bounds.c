@@ -1,12 +1,16 @@
 struct vector3 { float x, y, z; };
 struct box { struct vector3 minimum, maximum; };
 struct sphere { struct vector3 center; float radius; };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct primitive_bounds {
     unsigned char prefix[0x28];
     struct box box;
     struct sphere sphere;
 };
 
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct actor_placement {
     unsigned char prefix[0x80];
     struct vector3 location;

@@ -1,7 +1,11 @@
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct ObjectClass {
     unsigned char before_base[0x28];
     struct ObjectClass *base;
 };
+/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
+   named by offset and only push later members into place. */
 struct EngineObject {
     unsigned char before_outer[0x18];
     struct EngineObject *outer;
