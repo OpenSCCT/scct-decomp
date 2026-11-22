@@ -1311,8 +1311,17 @@ static void derive_bindings(const Unit *unit, const Coff *c, const Section *sect
     u8 *covered;
     size_t j;
 
-    if (section->raw_size != unit->unit_size)
-        fail("%s is %u bytes in the object; the record says %u", unit->symbol, section->raw_size, unit->unit_size);
+    if (section->raw_size != unit->unit_size) {
+        /* VC6 pads a function's section with int3-free nop (0x90) bytes to a 16-byte boundary. */
+        u32 padded = (unit->unit_size + 15u) & ~15u, p;
+        int nops = section->raw_size == padded && section->raw_size > unit->unit_size;
+        for (p = unit->unit_size; nops && p < section->raw_size; p++)
+            if (unit->object_bytes[p] != 0x90)
+                nops = 0;
+        if (!nops)
+            fail("%s is %u bytes in the object; the record says %u", unit->symbol, section->raw_size,
+                 unit->unit_size);
+    }
     if (!(section->characteristics & SCN_CODE) || !(section->characteristics & SCN_EXECUTE))
         fail("%s is not in an executable section", unit->symbol);
     for (k = 0; k < nsyms; k++) {
