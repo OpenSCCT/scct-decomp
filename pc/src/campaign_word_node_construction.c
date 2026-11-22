@@ -1,11 +1,11 @@
-struct Node { struct Node *next, *previous; unsigned value; };
+#include "campaign_list_link.h"
 
-struct Node *__fastcall initialize_node(struct Node *node, unsigned unused_edx,
-                                        struct Node *next, struct Node *previous,
+struct ListLinkWithValue *__fastcall initialize_node(struct ListLinkWithValue *node, unsigned unused_edx,
+                                        struct ListLink *next, struct ListLink *previous,
                                         const unsigned *value)
 {
-    node->next = next;
-    node->previous = previous;
+    node->link.next = next;
+    node->link.previous = previous;
     node->value = *value;
     return node;
 }

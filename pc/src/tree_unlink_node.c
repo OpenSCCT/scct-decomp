@@ -1,8 +1,8 @@
-struct Node { unsigned char color; struct Node *parent, *left, *right; };
+#include "campaign_color_node.h"
 #define ROTATE(Name, Near, Far) \
-    static __forceinline void Name(struct Node *node, struct Node **root) \
+    static __forceinline void Name(struct ColorNode *node, struct ColorNode **root) \
     { \
-        struct Node *pivot = node->Near; \
+        struct ColorNode *pivot = node->Near; \
         node->Near = pivot->Far; \
         if (pivot->Far) pivot->Far->parent = node; \
         pivot->parent = node->parent; \
@@ -16,7 +16,7 @@ ROTATE(rotate_left, right, left)
 ROTATE(rotate_right, left, right)
 
 #define FIX_SIDE(Near, Far, Rotate, Opposite) \
-            struct Node *sibling = parent->Far; \
+            struct ColorNode *sibling = parent->Far; \
             if (!sibling->color) { \
                 sibling->color = 1; parent->color = 0; \
                 Rotate(parent, root); sibling = parent->Far; \
@@ -33,10 +33,10 @@ ROTATE(rotate_right, left, right)
                 Rotate(parent, root); break; \
             }
 
-struct Node *unlink_node(struct Node *node, struct Node **root,
-                         struct Node **leftmost, struct Node **rightmost)
+struct ColorNode *unlink_node(struct ColorNode *node, struct ColorNode **root,
+                         struct ColorNode **leftmost, struct ColorNode **rightmost)
 {
-    struct Node *removed = node, *child, *parent;
+    struct ColorNode *removed = node, *child, *parent;
     if (!removed->left) child = removed->right;
     else if (!removed->right) child = removed->left;
     else {
@@ -69,7 +69,7 @@ struct Node *unlink_node(struct Node *node, struct Node **root,
         if (*leftmost == node) {
             if (!node->right) *leftmost = node->parent;
             else {
-                struct Node *cursor = child;
+                struct ColorNode *cursor = child;
                 while (cursor->left) cursor = cursor->left;
                 *leftmost = cursor;
             }
@@ -77,7 +77,7 @@ struct Node *unlink_node(struct Node *node, struct Node **root,
         if (*rightmost == node) {
             if (!node->left) *rightmost = node->parent;
             else {
-                struct Node *cursor = child;
+                struct ColorNode *cursor = child;
                 while (cursor->right) cursor = cursor->right;
                 *rightmost = cursor;
             }

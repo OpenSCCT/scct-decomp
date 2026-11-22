@@ -115,15 +115,16 @@
     "offset": 7482224,
     "size": 14,
     "inputs": [
-      "src/campaign_tree_positions.c"
+      "src/campaign_tree_positions.c",
+      "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_722b70@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_tree_positions.obj src/campaign_tree_positions.c",
-    "identification": "Tree routine at RVA 0x722860 calls this position accessor at RVA 0x7228a0 and a tree operation at RVA 0x7228cc. Returns the leftmost node through the supplied iterator.",
+    "identification": "Tree routine at RVA 0x722860 calls this position accessor at RVA 0x7228a0 and a tree operation at RVA 0x7228cc. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "47236b3c96781696068c32b827efba562c282816dda4ee4fbc1607a5608688cf"
+      "inputs_sha256": "479b9e72ab795d5c4327958d62acb4f5fd7ed9b3935c5d6b59c169ae34906677"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -191,7 +192,8 @@
     "size": 48,
     "offset": 7482432,
     "inputs": [
-      "src/campaign_sentinel_list_cleanup.c"
+      "src/campaign_sentinel_list_cleanup.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@destroy_list_722c40@4",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -202,10 +204,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "32e6663e0ac4a06885860186552d2e0b2afbda908fa02f7ea82df28a9f0be20d",
-      "inputs_sha256": "993f70f07364e073e17d4efef67bf248baaa6320e665d2dd2c5f887052d1a04d"
+      "inputs_sha256": "13ce18ffc5fb7570143adba06bd14917a7b987482aad836fd68bb6e74c6c8614"
     }
   },
   {
@@ -248,7 +250,8 @@
     "size": 48,
     "offset": 7482656,
     "inputs": [
-      "src/campaign_sentinel_list_cleanup.c"
+      "src/campaign_sentinel_list_cleanup.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@destroy_list_722d20@4",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -259,10 +262,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "3887b8eac705f4c2423773b2414dab8fb695496ef7908d6f6e4dc61c4ea584d4",
-      "inputs_sha256": "cf09b3bbb8f740f9144816f63d0ab2e20b9b581bffeed6a2255731a339725fa9"
+      "inputs_sha256": "19ef1d2055ca1bbf0cbc89596fcdd51040695fc8877b3df4a349e57516bcec2a"
     }
   },
   {
@@ -356,7 +359,8 @@
     "size": 48,
     "offset": 7483056,
     "inputs": [
-      "src/campaign_sentinel_list_cleanup.c"
+      "src/campaign_sentinel_list_cleanup.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@destroy_list_722eb0@4",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -367,10 +371,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "fcf54acfad722393631070edd294e9bbdd31097f438940984e4f9a790f3f82ab",
-      "inputs_sha256": "122d44a83eab5c0401ce3e733cbc568402e89daa32d06d26846ac771455ac431"
+      "inputs_sha256": "7a9531ead01e3188ea931fc23e6b25dba37f5e099c3a9f3fd8d38cb36d4295e4"
     }
   },
   {
@@ -471,7 +475,8 @@
     "offset": 7483328,
     "size": 62,
     "inputs": [
-      "src/campaign_tree_head_construction.c"
+      "src/campaign_tree_head_construction.c",
+      "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_722fc0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -482,10 +487,10 @@
         "basis": "Retail call allocating the 24-byte tree head."
       }
     },
-    "identification": "Direct retail caller at VA 0x11021200. Creates an empty tree with a null root and both extreme links pointing at the head.",
+    "identification": "Direct retail caller at VA 0x11021200. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "10b27862ba245b173e0be849ce17c4034155fcee27e42d8c199c0f1f42943b98",
-      "inputs_sha256": "e0f1d0812c987ba496a35ac33764941c5554a09914e40e98716fe872a6be84a6"
+      "inputs_sha256": "7e20f982e7d2e0e40806a30beba3bf78cfc51a272723b4abd02dbe03bf3a9aee"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

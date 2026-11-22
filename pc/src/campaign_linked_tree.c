@@ -1,8 +1,8 @@
-struct Node { unsigned char color; struct Node *parent, *left, *right; };
+#include "campaign_color_node.h"
 
-struct Node *next_node_5ed860(struct Node *node)
+struct ColorNode *next_node_5ed860(struct ColorNode *node)
 {
-    struct Node *parent;
+    struct ColorNode *parent;
     if (node->right) {
         node = node->right;
         while (node->left) node = node->left;
@@ -16,9 +16,9 @@ struct Node *next_node_5ed860(struct Node *node)
     return node->right != parent ? parent : node;
 }
 
-struct Node *prev_node_5edfe0(struct Node *node)
+struct ColorNode *prev_node_5edfe0(struct ColorNode *node)
 {
-    struct Node *parent;
+    struct ColorNode *parent;
     if (!node->color && node->parent->parent == node) return node->right;
     if (node->left) {
         node = node->left;
@@ -34,9 +34,9 @@ struct Node *prev_node_5edfe0(struct Node *node)
 }
 
 #define ROTATE(Name, Near, Far) \
-    void Name(struct Node *node, struct Node **root) \
+    void Name(struct ColorNode *node, struct ColorNode **root) \
     { \
-        struct Node *pivot = node->Near; \
+        struct ColorNode *pivot = node->Near; \
         node->Near = pivot->Far; \
         if (pivot->Far) pivot->Far->parent = node; \
         pivot->parent = node->parent; \

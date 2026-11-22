@@ -1,7 +1,7 @@
-struct Node { struct Node *next; };
-struct Container { unsigned reserved; struct Node *head; unsigned count; };
-struct Pointer { struct Node *ptr; };
-struct Result { struct Node **ptr; };
+#include "campaign_list_link.h"
+struct Container { unsigned reserved; struct ListLink *head; unsigned count; };
+struct Pointer { struct ListLink *ptr; };
+struct Result { struct ListLink **ptr; };
 extern void __fastcall erase_48a6c0(struct Container *, struct Result, struct Pointer, struct Pointer);
 extern void __fastcall erase_48d990(struct Container *, struct Result, struct Pointer, struct Pointer);
 extern void __fastcall erase_497030(struct Container *, struct Result, struct Pointer, struct Pointer);
@@ -28,7 +28,7 @@ extern void __cdecl release_prepared(void *);
 #define DESTROY_CONTAINER(Entry, Erase) \
     void __fastcall Entry(struct Container *self) \
     { \
-        struct Node *unused; \
+        struct ListLink *unused; \
         struct Result result; \
         struct Pointer first, end; \
         end.ptr = self->head; \

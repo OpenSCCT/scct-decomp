@@ -74,7 +74,8 @@
     "size": 48,
     "offset": 6297952,
     "inputs": [
-      "src/campaign_sentinel_list_cleanup.c"
+      "src/campaign_sentinel_list_cleanup.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@destroy_list_601960@4",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -85,10 +86,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "0225f12b01cd70ee099ebb4bb2407933ff1909dc14cb58a0dc67bdd174d919c1",
-      "inputs_sha256": "35621496b912dc653cd1daeb52f6950d7cd146f7ff8ac734b7db0503b6671219"
+      "inputs_sha256": "359d79e85094fe6fa0303c2c2264c2571fc1c0e772dc11e3616d52a64c0523f7"
     }
   },
   {
@@ -507,15 +508,16 @@
     "offset": 6308320,
     "size": 14,
     "inputs": [
-      "src/campaign_tree_positions.c"
+      "src/campaign_tree_positions.c",
+      "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_6041e0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_tree_positions.obj src/campaign_tree_positions.c",
-    "identification": "Tree routine at RVA 0x603a60 calls this position accessor at RVA 0x603aa0 and a tree operation at RVA 0x603acc. Returns the leftmost node through the supplied iterator.",
+    "identification": "Tree routine at RVA 0x603a60 calls this position accessor at RVA 0x603aa0 and a tree operation at RVA 0x603acc. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "cf6239c154b5674a248fac4952e2fd9c9a4db0a0d107c95a1c778143342fb39d"
+      "inputs_sha256": "0ae8f7af48a730d99d0e5293710a699ee058beb5f7f2e643a1a7226f8f10469e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -548,15 +550,16 @@
     "offset": 6308592,
     "size": 14,
     "inputs": [
-      "src/campaign_tree_positions.c"
+      "src/campaign_tree_positions.c",
+      "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_6042f0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_tree_positions.obj src/campaign_tree_positions.c",
-    "identification": "Tree routine at RVA 0x603e00 calls this position accessor at RVA 0x603e40 and a tree operation at RVA 0x603e6c. Returns the leftmost node through the supplied iterator.",
+    "identification": "Tree routine at RVA 0x603e00 calls this position accessor at RVA 0x603e40 and a tree operation at RVA 0x603e6c. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "d642dc513dddc1b37f866d584664299d12712cdca3930a6a9d387b62b2ea394b"
+      "inputs_sha256": "e48d5eb2ebd8d377389f3f6b68ce67c74af1e189a089ac8532b7353e8da87c97"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -651,7 +654,8 @@
     "offset": 6308912,
     "size": 62,
     "inputs": [
-      "src/campaign_tree_head_construction.c"
+      "src/campaign_tree_head_construction.c",
+      "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_604430@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -662,10 +666,10 @@
         "basis": "Retail call allocating the 24-byte tree head."
       }
     },
-    "identification": "Direct retail caller at VA 0x10f02129. Creates an empty tree with a null root and both extreme links pointing at the head.",
+    "identification": "Direct retail caller at VA 0x10f02129. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "330cc0403915c38498fc66516ed54fae1448064e17199e3acd8295cec96d1777",
-      "inputs_sha256": "2cc610a7f14b924520f831e37f18aa6b8923b226c693aa794a6b06dcc5ed03c5"
+      "inputs_sha256": "788549292f5827a4a9971fd8a2891385f563b273ff140deb57e567859c5bb72a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -712,7 +716,8 @@
     "offset": 6309056,
     "size": 62,
     "inputs": [
-      "src/campaign_tree_head_construction.c"
+      "src/campaign_tree_head_construction.c",
+      "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_6044c0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -723,10 +728,10 @@
         "basis": "Retail call allocating the 48-byte tree head."
       }
     },
-    "identification": "Direct retail caller at VA 0x10f02185. Creates an empty tree with a null root and both extreme links pointing at the head.",
+    "identification": "Direct retail caller at VA 0x10f02185. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "c2bdd1a491969c168cfada99cd90a00dc0e8944a99fb9982b59fdda06146100b",
-      "inputs_sha256": "d3f8979dad5e832830b365c270186b0f4e43a2b6567b816720b3c522b22836dc"
+      "inputs_sha256": "cc3efa3250d46eddbd09ada64ab183b6d1c53ee64e2e3e1e799836a6a08dbc5d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -925,7 +930,8 @@
     "size": 48,
     "offset": 6354416,
     "inputs": [
-      "src/campaign_sentinel_list_cleanup.c"
+      "src/campaign_sentinel_list_cleanup.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@destroy_list_60f5f0@4",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -936,10 +942,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "757edaaa4537e743fa5adc455b0aa64e8aadd32dbb886b7c60bfbc89caff0834",
-      "inputs_sha256": "cb060cf9f3b2b0bb3be5f7ae802104ef8eb11f7c9a5ccd2faad853a65f487a4d"
+      "inputs_sha256": "5b96940b62d7aa899963858601181cbfddafa44ea5d500a9c7349743e94fb20a"
     }
   },
   {

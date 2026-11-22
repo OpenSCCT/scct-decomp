@@ -1,17 +1,17 @@
-struct Node { struct Node *next, *prev; };
-struct List { unsigned reserved; struct Node *head; unsigned count; };
+#include "campaign_list_link.h"
+struct List { unsigned reserved; struct ListLink *head; unsigned count; };
 extern void *__cdecl get_manager(void);
 extern void __cdecl release_allocation(void *, void *, unsigned);
 
 #define CLEAR_LIST(Entry, Category) \
     void __fastcall Entry(struct List *list) \
     { \
-        struct Node *node = list->head->next; \
+        struct ListLink *node = list->head->next; \
         list->head->next = list->head; \
-        list->head->prev = list->head; \
+        list->head->previous = list->head; \
         list->count = 0; \
         while (node != list->head) { \
-            struct Node *next = node->next; \
+            struct ListLink *next = node->next; \
             release_allocation(get_manager(), node, Category); \
             node = next; \
         } \

@@ -1,18 +1,18 @@
-struct Node { struct Node *next, *previous; };
-struct List { unsigned reserved; struct Node *head; unsigned count; };
-struct Cursor { struct Node *position; };
+#include "campaign_list_link.h"
+struct List { unsigned reserved; struct ListLink *head; unsigned count; };
+struct Cursor { struct ListLink *position; };
 
-extern struct Node *__fastcall construct_node(struct List *, unsigned unused_edx,
-                                               struct Node *next, struct Node *previous,
+extern struct ListLink *__fastcall construct_node(struct List *, unsigned unused_edx,
+                                               struct ListLink *next, struct ListLink *previous,
                                                const void *value);
 extern void __fastcall grow_list(struct List *, float increment_bits);
 extern void *__cdecl allocation_context(void);
-extern void __cdecl release_node(void *context, struct Node *node, unsigned kind);
+extern void __cdecl release_node(void *context, struct ListLink *node, unsigned kind);
 
 void __fastcall append_node(struct List *list, unsigned unused_edx, const void *value)
 {
-    struct Node *head = list->head;
-    struct Node *node = construct_node(list, unused_edx, head, head->previous, value);
+    struct ListLink *head = list->head;
+    struct ListLink *node = construct_node(list, unused_edx, head, head->previous, value);
     /* The low bit represents a one-element increment in the original stack argument. */
     grow_list(list, 1.40129846e-45f);
     head->previous = node;
@@ -20,10 +20,10 @@ void __fastcall append_node(struct List *list, unsigned unused_edx, const void *
 }
 
 struct Cursor *__fastcall erase_node(struct List *list, unsigned unused_edx,
-                                     struct Cursor *result, struct Node *node)
+                                     struct Cursor *result, struct ListLink *node)
 {
     /* Save the successor independently of the link reads used for unlinking. */
-    struct Node *next = ((const volatile struct Node *)node)->next;
+    struct ListLink *next = ((const volatile struct ListLink *)node)->next;
     if (node != list->head) {
         node->previous->next = node->next;
         node->next->previous = node->previous;

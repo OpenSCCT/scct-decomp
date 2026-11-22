@@ -299,7 +299,8 @@
     "size": 48,
     "offset": 7561472,
     "inputs": [
-      "src/campaign_sentinel_list_cleanup.c"
+      "src/campaign_sentinel_list_cleanup.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@destroy_list_736100@4",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -310,10 +311,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "cc850a84095eb0b22224ee2973b82b0f41e276c825c9427ba1743094752bcdf7",
-      "inputs_sha256": "ffa5158808fa8547fc19fcd792b7030c54a5935e426cf9925e4b9a3adce53f16"
+      "inputs_sha256": "359ba7f2937424a45ebd88fa2a052ae2d27371badc2495aa473bd20630543f91"
     }
   },
   {
@@ -1111,7 +1112,8 @@
     "size": 22,
     "offset": 7580656,
     "inputs": [
-      "src/campaign_list_initializers.c"
+      "src/campaign_list_initializers.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@init_list_73abf0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1122,10 +1124,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x73aa40, stores the returned head at receiver offset four, and zeros the count at offset eight.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x73aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "b46e9c9d0629509187d8cd68f75867c5dd6e7f546b44a7185c776602c72cd358",
-      "inputs_sha256": "7207a938ffbd2ae41b959daf54fbcc234f26fd353797e247f242793c9714165d"
+      "inputs_sha256": "e22ef11ff0b7d6e5bfb16169c36147bc97f3aeb139ae81e6236eac8666f9fc4b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1175,7 +1177,8 @@
     "size": 63,
     "offset": 7580768,
     "inputs": [
-      "src/campaign_managed_list_clear.c"
+      "src/campaign_managed_list_clear.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@clear_list_73ac60@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1190,10 +1193,10 @@
         "basis": "Releases the node allocation through the shared allocator."
       }
     },
-    "identification": "Direct call at RVA 0x73aca3. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7.",
+    "identification": "Direct call at RVA 0x73aca3. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "12b2b760456b0d74f66150270e2a818989aa63a7b071869b49d7339e30ec5f77",
-      "inputs_sha256": "b0c0576bc39eb0456c891f5dc59b3c0587f6e37a2036db2ca4b7e66a80dc7d17"
+      "inputs_sha256": "2664e03b991eab09c43fd447bc77c5664482d4b696d56c3483822e216782ac75"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1247,7 +1250,8 @@
     "size": 65,
     "offset": 7580880,
     "inputs": [
-      "src/campaign_container_methods.c"
+      "src/campaign_container_methods.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@erase_node@16",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1262,10 +1266,10 @@
         "basis": "Context-aware node release."
       }
     },
-    "identification": "Aligned container method at RVA 0x73acd0. Preserves the successor, unlinks and releases a non-sentinel node and returns the successor cursor.",
+    "identification": "Aligned container method at RVA 0x73acd0. Preserves the successor, unlinks and releases a non-sentinel node and returns the successor cursor. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "e5c151950c44bf2afa19d7d3c569901168785f3e89234ce44ac3641bdc977615",
-      "inputs_sha256": "5537ce2cdf7b967f24d73a9e3902b1040f8333aa73b625427b6ab21b14b7ec96"
+      "inputs_sha256": "250e5401aa3ad2a2812d499e40a1957a92f4703d4c024b95958b3bce17d57c24"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1353,7 +1357,8 @@
     "size": 22,
     "offset": 7581136,
     "inputs": [
-      "src/campaign_list_initializers.c"
+      "src/campaign_list_initializers.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@init_list_73add0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1364,10 +1369,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x73aa40, stores the returned head at receiver offset four, and zeros the count at offset eight.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x73aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "b61a0bb7ea27fb0506bbc4ab91d2744c7f4a5231179db76508defc9299c214d3",
-      "inputs_sha256": "3ce3d97b8093a989f9ad2a00681db78ff488b096a18b9c262ce554bf2c373ab3"
+      "inputs_sha256": "24138413ec5b4631b8916c40ddb4429e89a609e3c7e2012ea6e44b5c7f169c5b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1588,7 +1593,8 @@
     "size": 51,
     "offset": 7584016,
     "inputs": [
-      "src/campaign_list_insert.c"
+      "src/campaign_list_insert.c",
+      "src/campaign_list_link.h"
     ],
     "rebuilt_symbol": "@insert_before@16",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1603,10 +1609,10 @@
         "basis": "Byte-identical capacity check and size increment for this list type."
       }
     },
-    "identification": "List insertion before the supplied node at RVA 0x73b910; creates a node, increments the list size and updates both adjacent links.",
+    "identification": "List insertion before the supplied node at RVA 0x73b910; creates a node, increments the list size and updates both adjacent links. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
     "match": {
       "bytes_sha256": "57f2f368dab36e8dd78c3c2a0f0376f1cd2b7cc5fd3e8d9e33406ded204832a3",
-      "inputs_sha256": "151e09aadb61056107a3920d635ff031a69d665343ccbaf812d0d449f1bfc14b"
+      "inputs_sha256": "4b1a24ec0a9bc652539b836d5f8353ad2ea87bb9099d83e3232c699e3db9b744"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

@@ -1,14 +1,14 @@
-struct Node { struct Node *next, *previous; };
-struct List { struct Node *head; };
+#include "campaign_list_link.h"
+struct List { struct ListLink *head; };
 
-extern void __stdcall release_739a40(struct Node *);
+extern void __stdcall release_739a40(struct ListLink *);
 
 #define DESTROY_LIST(Entry, Release) \
     void __fastcall Entry(struct List *list) \
     { \
-        struct Node *node = list->head->next; \
+        struct ListLink *node = list->head->next; \
         while (node != list->head) { \
-            struct Node *removed = node; \
+            struct ListLink *removed = node; \
             node = node->next; \
             Release(removed); \
         } \

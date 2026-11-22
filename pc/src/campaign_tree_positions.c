@@ -1,6 +1,6 @@
-struct Node { unsigned char color; struct Node *parent, *left, *right; };
-struct Tree { struct Node *head; unsigned count; };
-struct Position { struct Node *node; };
+#include "campaign_color_node.h"
+struct Tree { struct ColorNode *head; unsigned count; };
+struct Position { struct ColorNode *node; };
 struct Output { struct Position *out; };
 #define TREE_EDGE(Name, Value) \
     struct Position *__fastcall Name(struct Tree *tree, struct Output result) \
