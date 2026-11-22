@@ -53,6 +53,24 @@ diff -u "$fixtures/expected/synthetic-vtable.json" "$out/vtable.json"
 tr -d '\r' < "$out/multibase.raw" > "$out/multibase.json"
 diff -u "$fixtures/expected/synthetic-vtable-multibase.json" "$out/multibase.json"
 
+# A function-local static's storage slot and guard word are bound from their retail operands.
+base64 -d "$fixtures/fixtures/synthetic_static.obj.b64" > "$out/synthetic_static.obj"
+base64 -d "$fixtures/fixtures/synthetic_static_readonly.obj.b64" > "$out/synthetic_static_readonly.obj"
+"$bindgen" --object "$out/synthetic_static.obj" --image "$out/image.bin" "$manifest" synthetic-static \
+	> "$out/static.raw" 2> /dev/null
+tr -d '\r' < "$out/static.raw" > "$out/static.json"
+diff -u "$fixtures/expected/synthetic-static.json" "$out/static.json"
+
+# The same function with its guard word in read-only data is not a static this verifier links: refused.
+status=0
+"$bindgen" --object "$out/synthetic_static_readonly.obj" --image "$out/image.bin" "$manifest" \
+	synthetic-static-readonly > /dev/null 2> "$out/static_ro.err" || status=$?
+if [ "$status" -ne 1 ] || ! grep -q "refers to static data" "$out/static_ro.err"; then
+	echo "read-only static: expected a refusal, got status $status" >&2
+	cat "$out/static_ro.err" >&2
+	exit 1
+fi
+
 # The same operand, when the retail table does not begin with a code address, is refused.
 rm -rf "$out/notcode" && mkdir -p "$out/notcode" && cp -r "$fixtures/pc" "$out/notcode/pc"
 cp "$out/image.bin" "$out/notcode/image.bin"

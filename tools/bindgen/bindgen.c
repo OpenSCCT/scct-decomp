@@ -1288,6 +1288,20 @@ static int class_vtable(const Symbol *sym, const Coff *c, u32 type, u32 addend)
     return !(s.characteristics & 0x20) && (s.characteristics & 0x40) && !(s.characteristics & 0x80000000u);
 }
 
+/* A function-local static is private data: its storage slot or guard word starts a writable .bss or
+   .data contribution of its own, and the code reaches it by an absolute DIR32 reference. This is the
+   shape tools/link_x86.py resolves from its binding. Anything else stays refused. */
+static int static_object(const Symbol *sym, const Coff *c, u32 type, u32 section_number)
+{
+    Section s;
+    if (type != REL_DIR32 || sym->value != 0 || sym->section <= 0 || (u32)sym->section == section_number
+        || sym->name[0] == '$')
+        return 0;
+    coff_section(c, (u32)sym->section, &s);
+    return !(s.characteristics & 0x20) && (s.characteristics & 0xc0) != 0
+        && (s.characteristics & 0x40000000) && (s.characteristics & 0x80000000u);
+}
+
 static void check_vtable_table(const Unit *unit, const char *name, u32 target)
 {
     size_t file, range;
@@ -1360,7 +1374,7 @@ static void derive_bindings(const Unit *unit, const Coff *c, const Section *sect
         u32 site = rd32(r), index = rd32(r + 4), type = rd16(r + 8);
         u32 addend, retail_value, target;
         const Symbol *sym;
-        int listed = 0, tib, vtable = 0;
+        int listed = 0, tib, vtable = 0, static_obj = 0;
         char basis[640];
         if (type != REL_DIR32 && type != REL_REL32)
             fail("%s uses relocation type 0x%x, which bindgen does not decode", unit->symbol, (unsigned)type);
@@ -1394,9 +1408,12 @@ static void derive_bindings(const Unit *unit, const Coff *c, const Section *sect
                 fail("external %s is a common or unusual symbol", sym->name);
         } else {
             if (sym->storage == SYM_STATIC && sym->type != SYM_FUNCTION) {
-                if (!class_vtable(sym, c, type, addend))
+                if (class_vtable(sym, c, type, addend))
+                    vtable = 1;
+                else if (static_object(sym, c, type, section_number))
+                    static_obj = 1;
+                else
                     fail("%s refers to static data, which the verifier cannot link", sym->name);
-                vtable = 1;
             }
             if (!vtable && class_vtable(sym, c, type, addend))
                 vtable = 1;
@@ -1404,7 +1421,7 @@ static void derive_bindings(const Unit *unit, const Coff *c, const Section *sect
                 fail("%s has an unsupported storage class", sym->name);
             if (sym->storage == SYM_EXTERNAL && sym->value != 0)
                 fail("%s is not at the start of its section", sym->name);
-            if (sym->storage == SYM_STATIC && addend != 0)
+            if (sym->storage == SYM_STATIC && addend != 0 && !static_obj)
                 fail("%s is a private function referenced with an addend", sym->name);
         }
         if (type == REL_REL32) {
@@ -1431,6 +1448,13 @@ static void derive_bindings(const Unit *unit, const Coff *c, const Section *sect
             if (target != 0)
                 fail("%s is referenced at VA 0x%08" PRIx32 ", not the thread information block offset 0",
                      sym->name, target);
+        } else if (static_obj) {
+            size_t range;
+            if (target < IMAGE_BASE || !in_image(unit->image, unit->image_size, target))
+                fail("%s is referenced at VA 0x%08" PRIx32 ", outside the image", sym->name, target);
+            for (range = 0; range < unit->ncode; range++)
+                if (target >= unit->code[range].start && target < unit->code[range].end)
+                    fail("%s is referenced at VA 0x%08" PRIx32 ", inside code", sym->name, target);
         } else if (vtable) {
             check_vtable_table(unit, sym->name, target);
         } else if (target < IMAGE_BASE || !in_image(unit->image, unit->image_size, target)) {
@@ -1455,6 +1479,11 @@ static void derive_bindings(const Unit *unit, const Coff *c, const Section *sect
             snprintf(basis, sizeof basis,
                      "Absolute thread-information-block offset at +0x%x of %s, read through FS "
                      "(the C runtime's __except_list).", (unsigned)site, unit->symbol);
+        else if (static_obj)
+            snprintf(basis, sizeof basis,
+                     "Function-local static at +0x%x of %s: the retail operand gives VA 0x%08" PRIx32
+                     " (file offset 0x%" PRIx32 "), its own writable contribution (storage slot or guard word).",
+                     (unsigned)site, unit->symbol, target, target - IMAGE_BASE);
         else if (vtable)
             snprintf(basis, sizeof basis,
                      "A class vtable at VA 0x%08" PRIx32 " (file offset 0x%" PRIx32 "), named by the "
