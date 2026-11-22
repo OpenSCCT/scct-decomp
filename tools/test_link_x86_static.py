@@ -75,5 +75,52 @@ class StaticDataTests(unittest.TestCase):
             link_function(static_object(), "_unit", 11, 0x10904000, extra)
 
 
+VTABLE = b"??_7UnkType_1@@6B@"
+VTABLE_VA = 0x110BC1B8
+
+
+def vtable_object(*, value=0, flags=0x40301040, storage=3, relocation=6):
+    """A COFF object whose function _unit stores the address of a class vtable it defines itself.
+
+    The vtable is a COMDAT in a read-only section, storage class 3 as a private contribution."""
+    code = b"\xb8" + bytes(4) + b"\xc3"
+    strings = bytearray(4)
+    strings += VTABLE + b"\0"
+    struct.pack_into("<I", strings, 0, len(strings))
+    names = [b"_unit".ljust(8, b"\0"), struct.pack("<II", 0, 4)]
+    symbols = [(names[0], 0, 1, 0x20, 2), (names[1], value, 2, 0, storage)]
+    code_at = 20 + 2 * 40
+    reloc_at = code_at + len(code)
+    table = reloc_at + 10
+    header = struct.pack("<HHIIIHH", 0x14C, 2, 0, table, len(symbols), 0, 0)
+    text = struct.pack("<8sIIIIIIHHI", b".text", 0, 0, len(code), code_at, reloc_at, 0, 1, 0, 0x60000020)
+    rdata = struct.pack("<8sIIIIIIHHI", b".rdata", 0, 0, 4, 0, 0, 0, 0, 0, flags)
+    relocations = struct.pack("<IIH", 1, 1, relocation)
+    symbol_bytes = b"".join(struct.pack("<8sIhHBB", n, v, sec, kind, st, 0)
+                            for n, v, sec, kind, st in symbols)
+    return header + text + rdata + code + relocations + symbol_bytes + bytes(strings)
+
+
+class ClassVtableTests(unittest.TestCase):
+    def binding(self):
+        return {VTABLE.decode(): {"va": VTABLE_VA, "basis": "the class's vtable at its retail VA"}}
+
+    def test_defined_vtable_binds_to_the_retail_table(self):
+        linked = link_function(vtable_object(), "_unit", 6, 0x10904000, self.binding())
+        self.assertEqual(linked, b"\xb8" + struct.pack("<I", VTABLE_VA) + b"\xc3")
+
+    def test_vtable_must_start_its_contribution(self):
+        with self.assertRaisesRegex(ValueError, "start its own contribution"):
+            link_function(vtable_object(value=4), "_unit", 6, 0x10904000, self.binding())
+
+    def test_vtable_must_be_read_only(self):
+        with self.assertRaisesRegex(ValueError, "read-only virtual function table"):
+            link_function(vtable_object(flags=0xC0301080), "_unit", 6, 0x10904000, self.binding())
+
+    def test_vtable_needs_a_binding(self):
+        with self.assertRaisesRegex(ValueError, "missing link address for"):
+            link_function(vtable_object(), "_unit", 6, 0x10904000, {})
+
+
 if __name__ == "__main__":
     unittest.main()

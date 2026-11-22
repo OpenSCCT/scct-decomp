@@ -30,6 +30,7 @@ esac
 
 base64 -d "$fixtures/fixtures/image.bin.b64" > "$out/image.bin"
 base64 -d "$fixtures/fixtures/synthetic_unit.obj.b64" > "$out/synthetic_unit.obj"
+base64 -d "$fixtures/fixtures/synthetic_vtable.obj.b64" > "$out/synthetic_vtable.obj"
 
 # The fragment, and the note that the function map does not list the unlisted callee.
 "$bindgen" --object "$out/synthetic_unit.obj" --image "$out/image.bin" "$manifest" synthetic-unit \
@@ -38,6 +39,27 @@ tr -d '\r' < "$out/unit.raw" > "$out/unit.json"
 tr -d '\r' < "$out/unit.err.raw" > "$out/unit.err"
 diff -u "$fixtures/expected/synthetic-unit.json" "$out/unit.json"
 diff -u "$fixtures/expected/synthetic-unit.stderr" "$out/unit.err"
+
+# A class vtable named by a DIR32 operand, defined by the object as a read-only COMDAT: its retail
+# address is bound, and its first retail entry must point into code.
+"$bindgen" --object "$out/synthetic_vtable.obj" --image "$out/image.bin" "$manifest" synthetic-vtable 	> "$out/vtable.raw" 2> /dev/null
+tr -d '\r' < "$out/vtable.raw" > "$out/vtable.json"
+diff -u "$fixtures/expected/synthetic-vtable.json" "$out/vtable.json"
+
+# The same operand, when the retail table does not begin with a code address, is refused.
+rm -rf "$out/notcode" && mkdir -p "$out/notcode" && cp -r "$fixtures/pc" "$out/notcode/pc"
+cp "$out/image.bin" "$out/notcode/image.bin"
+printf '\0\0\0\0' | dd of="$out/notcode/image.bin" bs=1 seek=1536 conv=notrunc 2> /dev/null
+sum=$(sha256sum "$out/notcode/image.bin" | cut -d' ' -f1)
+sed "s/\"sha256\": \"[0-9a-f]*\"/\"sha256\": \"$sum\"/" "$fixtures/pc/config/synthetic-campaign.json" 	> "$out/notcode/pc/config/synthetic-campaign.json"
+sed -i "s/^# Image SHA-256 [0-9a-f]*/# Image SHA-256 $sum/" "$out/notcode/pc/function_maps/synthetic-campaign.txt"
+status=0
+"$bindgen" --object "$out/synthetic_vtable.obj" --image "$out/notcode/image.bin" 	"$out/notcode/pc/config/synthetic-campaign.json" synthetic-vtable > /dev/null 2> "$out/notcode.err" || status=$?
+if [ "$status" -ne 1 ] || ! grep -q "does not start with a pointer into code" "$out/notcode.err"; then
+	echo "vtable without code entry: expected a refusal, got status $status" >&2
+	cat "$out/notcode.err" >&2
+	exit 1
+fi
 
 # --check against a record that agrees, and against one that does not (which must exit 1).
 "$bindgen" --check --object "$out/synthetic_unit.obj" --image "$out/image.bin" "$manifest" \

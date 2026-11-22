@@ -71,6 +71,14 @@ def writable_data(obj, section):
             and bool(flags & 0x80000000))
 
 
+def readonly_data(obj, section):
+    """True when the section is initialized, read-only, non-executable data."""
+    header = 20 + (section - 1) * 40
+    flags, = struct.unpack_from("<I", obj, header + 36)
+    return (not flags & 0x20 and bool(flags & 0x40) and bool(flags & 0x40000000)
+            and not flags & 0x80000000)
+
+
 def switch_arms(obj, body, section, size, symbols, relocation_data):
     """Return the symbol indices of the switch arm labels that this section's jump tables name.
 
@@ -162,6 +170,12 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
         private_data = (private and relocation == 6 and storage == 3 and kind == 0
                         and 1 <= sym_section <= sections and sym_section != section
                         and not symbol.startswith(b"$") and writable_data(obj, sym_section))
+        # A class's virtual function table is a read-only COMDAT that the object defines, and the code
+        # stores its address. A binding names the retail table; the local copy is not compared.
+        class_vtable = (private and relocation == 6 and storage == 3 and kind == 0
+                        and 1 <= sym_section <= sections and sym_section != section
+                        and symbol.startswith(b"??_7") and symbol.endswith(b"@@6B@")
+                        and readonly_data(obj, sym_section))
         if local:
             if relocation != 6 or value >= size:
                 raise ValueError("invalid section-local switch label")
@@ -174,6 +188,9 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
                 dest_flags, = struct.unpack_from("<I", obj, dest_header + 36)
                 if dest_name.rstrip(b"\0") != b".text$x" or dest_flags & 0x20000020 != 0x20000020 or value >= dest_size:
                     raise ValueError("frame handler must be a label in the unwind code section")
+            elif class_vtable:
+                if value != 0:
+                    raise ValueError("a class vtable must start its own contribution")
             elif private_data:
                 if value != 0:
                     raise ValueError("private data must start its own contribution")
@@ -228,7 +245,7 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
         addend, = struct.unpack_from("<I", body, position)
         if local and addend:
             raise ValueError("switch label relocation has a nonzero addend")
-        if private and addend and not funcinfo and not private_data:
+        if private and addend and not funcinfo and not private_data and not class_vtable:
             raise ValueError("private function relocation has a nonzero addend")
         if relocation == 0x14:  # IMAGE_REL_I386_REL32
             dest -= address + position + 4
