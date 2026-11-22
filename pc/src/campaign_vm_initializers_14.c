@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Echelon_ESRA_AnimNotify, 2311)
 REGISTER_CAMPAIGN_NATIVE(Echelon_ESRA_GetFocus, 2310)

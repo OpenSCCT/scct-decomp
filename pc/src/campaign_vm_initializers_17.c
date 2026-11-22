@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Echelon_EBaseDoor_DoClose, 1086)
 REGISTER_CAMPAIGN_NATIVE(Echelon_EBaseDoor_FinishedOpening, 1085)

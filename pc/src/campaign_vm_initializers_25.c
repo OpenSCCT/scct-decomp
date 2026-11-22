@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Core_Object_Bias, 1524)
 REGISTER_CAMPAIGN_NATIVE(Core_Object_RandBias, 1525)

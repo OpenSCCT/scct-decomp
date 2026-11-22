@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(EchelonAI_BaseCivilian_ReachedSearchSpotStressed, 3051)
 REGISTER_CAMPAIGN_NATIVE(EchelonAI_BaseCivilian_ReachedSearchLook, 3458)

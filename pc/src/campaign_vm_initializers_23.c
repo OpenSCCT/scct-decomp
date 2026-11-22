@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(UObject_RotatorToVector, -1)
 REGISTER_CAMPAIGN_NATIVE(UObject_RotatorToString, -1)

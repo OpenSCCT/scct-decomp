@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Echelon_EGoggle_IsInCamMode, 1033)
 REGISTER_CAMPAIGN_NATIVE(Echelon_EGoggle_SwitchCam, 1032)

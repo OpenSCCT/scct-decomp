@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(EchelonAI_BaseCivilian_Help, 1683)
 REGISTER_CAMPAIGN_NATIVE(EchelonAI_BaseCivilian_NPCIsCrouched, 1679)

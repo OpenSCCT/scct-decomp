@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Engine_Pawn_SetIKCompFlag, 1128)
 REGISTER_CAMPAIGN_NATIVE(Engine_Pawn_SetIKWalkZValues, 1127)

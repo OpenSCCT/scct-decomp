@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Engine_NavMeshActor_ChangeTriangleState, 2224)
 REGISTER_CAMPAIGN_NATIVE(Engine_ESoftBodyActor_StepClimb, 1186)

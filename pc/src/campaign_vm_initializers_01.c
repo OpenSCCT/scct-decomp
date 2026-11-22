@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(slot_1475, 1475)
 REGISTER_CAMPAIGN_NATIVE(slot_1477, 1477)

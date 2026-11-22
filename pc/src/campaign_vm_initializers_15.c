@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Echelon_EPattern_SetEnemy, 2338)
 REGISTER_CAMPAIGN_NATIVE(Echelon_EPattern_AttachObjectToBone, 2337)

@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(AActor_AttachToBone, -1)
 REGISTER_CAMPAIGN_NATIVE(Engine_Actor_ClearDummyAttach, 3972)

@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Echelon_EPawn_RollPawn, 1126)
 REGISTER_CAMPAIGN_NATIVE(Echelon_EPawn_Recoil, 1113)

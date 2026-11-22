@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Echelon_EPlayerController_DuckRelease, 1297)
 REGISTER_CAMPAIGN_NATIVE(Echelon_EPlayerController_CheckPreHoist, 1111)

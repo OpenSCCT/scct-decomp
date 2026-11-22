@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(slot_1044, 1044)
 REGISTER_CAMPAIGN_NATIVE(EchelonIngredient_ESwitchObject_MalfunctionAll, 1046)

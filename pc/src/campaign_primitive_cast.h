@@ -3,7 +3,7 @@
 
 #include "campaign_native_initializer.h"
 
-extern void __fastcall campaign_undefined_native(ScriptObject *, unsigned, ScriptFrame *, void *);
+extern void __fastcall campaign_undefined_native(struct ScriptObject *, unsigned, ScriptFrame *, void *);
 extern CampaignNative campaign_cast_table[255];
 extern int campaign_cast_initialized;
 extern int campaign_cast_duplicate;

@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Engine_Weather_SetWeatherFromIdx, 2901)
 REGISTER_CAMPAIGN_NATIVE(Engine_KeyboardManager_ClearMask, 2506)

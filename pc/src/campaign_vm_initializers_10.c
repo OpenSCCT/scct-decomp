@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(AController_CanSee, 533)
 REGISTER_CAMPAIGN_NATIVE(AController_FinishRotation, 508)

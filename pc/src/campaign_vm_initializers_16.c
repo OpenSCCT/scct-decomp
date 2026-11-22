@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(Echelon_EAIManager_GetNPCLastKnownLoc, 1812)
 REGISTER_CAMPAIGN_NATIVE(Echelon_EAIManager_GetFinalApproachNPC, 1811)

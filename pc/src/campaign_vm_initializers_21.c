@@ -1,4 +1,5 @@
 #include "campaign_native_initializer.h"
+#include "campaign_native_callbacks.h"
 
 REGISTER_CAMPAIGN_NATIVE(UObject_ObjectToBool, -1)
 REGISTER_CAMPAIGN_NATIVE(UObject_ObjectToString, -1)

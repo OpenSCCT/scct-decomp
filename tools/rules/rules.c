@@ -1599,6 +1599,12 @@ static void AddDeclaration( int fileIndex, int begin, int end ) {
 				name = i + 2;
 				break;
 			}
+			/* "(__fastcall *name)": a calling convention keyword sits between the parenthesis and the star */
+			if ( tokens[i].symbol == sLParen && i + 3 < end && tokens[i + 1].kind == T_ID
+				&& tokens[i + 2].symbol == sStar && tokens[i + 3].kind == T_ID ) {
+				name = i + 3;
+				break;
+			}
 		}
 		if ( name >= 0 ) {
 			node = AddNode( N_TYPE, tokens[name].symbol, fileIndex, tokens[name].line, begin, end, 0 );
