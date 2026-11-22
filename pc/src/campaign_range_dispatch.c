@@ -1,6 +1,8 @@
 /* The retail dispatch adds an empty category object as the last stack
    argument. The unnamed bit-field reserves its byte without introducing
    a value that the range or fill operation would have to initialize. */
+/* FAKEMATCH: a one-member struct passed by value as a dummy argument; the original tag value is
+   not recovered, so this struct only steers the stack argument. */
 struct Category { unsigned char : 8; };
 
 extern void *copy_range(const void *first, const void *last, void *output,

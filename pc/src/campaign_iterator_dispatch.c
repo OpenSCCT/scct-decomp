@@ -1,4 +1,6 @@
 /* The fourth argument occupies a stack slot for an empty iterator tag. */
+/* FAKEMATCH: a one-member struct passed by value as a dummy argument; the original tag value is
+   not recovered, so this struct only steers the stack argument. */
 struct IteratorTag { unsigned char : 8; };
 
 extern void *copy_forward(const void *, const void *, void *, struct IteratorTag);
