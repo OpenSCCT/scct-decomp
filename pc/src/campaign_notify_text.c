@@ -1,5 +1,7 @@
 typedef unsigned short WChar;
 struct NameEntry { unsigned header[3]; unsigned char text[1]; };
+/* FAKEMATCH: the original passes a name as a stack argument; this one-member struct only steers
+   that stack slot. */
 struct Name { int index; };
 struct Notify { float time; struct Name name; unsigned remaining[2]; };
 struct Clip { unsigned char reserved[0x1c]; struct Notify *notifies; };

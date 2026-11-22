@@ -3,7 +3,11 @@ struct Node {
     unsigned value, color;
 };
 struct Tree { unsigned reserved; struct Node *head; };
+/* FAKEMATCH: the original passes a node reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct NodeRef { struct Node *ptr; };
+/* FAKEMATCH: the original passes a color word as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Color { unsigned value; };
 extern struct Node *nil;
 extern void *allocate_node(unsigned size);

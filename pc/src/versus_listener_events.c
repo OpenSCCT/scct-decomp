@@ -1,6 +1,10 @@
 struct Owner;
 struct Listener;
+/* FAKEMATCH: the original passes an owner as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct OwnerArgument { struct Owner *owner; };
+/* FAKEMATCH: the original passes a word as a stack argument; this one-member struct only steers
+   that stack slot. */
 struct Word { unsigned value; };
 typedef unsigned char (__fastcall *Event)(struct Listener *, struct OwnerArgument);
 typedef unsigned char (__fastcall *ValueEvent)(struct Listener *, struct OwnerArgument, struct Word);

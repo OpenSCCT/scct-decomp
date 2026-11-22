@@ -10,6 +10,8 @@ struct Context {
     struct Mutex mutex;
     unsigned field_38;
 };
+/* FAKEMATCH: the original passes a label as a stack argument; this one-member struct only steers
+   that stack slot. */
 struct Label { const unsigned short *ptr; };
 union StackWord { unsigned value; float argument; };
 extern const void *const manager_methods[];

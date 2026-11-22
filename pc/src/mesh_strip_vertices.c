@@ -1,5 +1,7 @@
 struct Face { int vertex[3], strip, experiment_strip, experiment; };
 struct Strip { unsigned reserved[7]; int id, experiment; };
+/* FAKEMATCH: the original passes a face reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct FaceRef { struct Face *ptr; };
 
 static __forceinline int has_vertex(const struct Face *face, int v)
@@ -49,6 +51,8 @@ void __fastcall mark_face(const struct Strip *strip, struct FaceRef face)
 }
 
 struct WordVector { unsigned char allocator; unsigned short *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a word position as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct WordPosition { unsigned short *ptr; };
 
 int __fastcall word_count(const struct WordVector *v)

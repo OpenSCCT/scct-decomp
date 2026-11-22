@@ -55,6 +55,8 @@ void __fastcall versus_texture_advance(struct Texture *self) {
         self->anim_current = self;
     }
 }
+/* FAKEMATCH: the original passes a viewport as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct ViewportArg { void *viewport; };
 struct Texture *__fastcall versus_texture_frame(struct Texture *self, union UpdateTime now, struct ViewportArg viewport) {
     self->methods->update(self, now);

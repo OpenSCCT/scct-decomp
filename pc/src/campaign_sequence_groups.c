@@ -4,9 +4,17 @@ struct GroupList {
     int capacity;
 };
 struct Clip { int name; struct GroupList groups; };
+/* FAKEMATCH: the original passes a clip reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct ClipRef { struct Clip *ptr; };
+/* FAKEMATCH: the original passes a name as a stack argument; this one-member struct only steers
+   that stack slot. */
 struct Name { int value; };
+/* FAKEMATCH: the original passes a name reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct NameRef { const int *ptr; };
+/* FAKEMATCH: the original passes an index reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct IndexRef { int *ptr; };
 
 __declspec(noinline) int __fastcall find_group(struct GroupList *groups, struct NameRef name, struct IndexRef index)

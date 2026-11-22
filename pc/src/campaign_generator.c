@@ -2,6 +2,8 @@ struct Generator;
 struct Actor;
 /* A one-word struct is stack-passed even in x86 fastcall. This gives the
    actor method its observed ECX receiver and single stack argument. */
+/* FAKEMATCH: the original passes a generator reference as a stack argument; this one-member
+   struct only steers that stack slot. */
 struct GeneratorReference { struct Generator *value; };
 
 struct Generator {

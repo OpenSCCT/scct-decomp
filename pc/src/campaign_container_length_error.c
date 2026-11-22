@@ -5,6 +5,8 @@
    range argument holds start in its low word and count in its high word. */
 
 #include "campaign_globals.h"
+/* FAKEMATCH: the original passes a text as a stack argument; this one-member struct only steers
+   that stack slot. */
 struct TextArgument { const void *value; };
 struct Text {
     unsigned reserved;

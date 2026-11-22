@@ -1,4 +1,6 @@
 struct Receiver;
+/* FAKEMATCH: the original passes a word as a stack argument; this one-member struct only steers
+   that stack slot. */
 struct Word { unsigned value; };
 /* The receiver is in ECX and the command is on the stack. EDX carries
    the displacement at this virtual call site. */

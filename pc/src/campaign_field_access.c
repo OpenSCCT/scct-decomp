@@ -1,4 +1,6 @@
 /* Offsets are relative to the receiver. Its original type is unknown. */
+/* FAKEMATCH: the original passes a field word as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Argument { unsigned value; };
 
 unsigned __fastcall read_word_09d840(const unsigned char *self)

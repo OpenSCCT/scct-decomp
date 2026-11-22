@@ -1,5 +1,7 @@
 struct NamedRecord;
 struct RecordList { struct NamedRecord **begin, **end; };
+/* FAKEMATCH: the original passes an identifier as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Identifier { unsigned value; };
 
 #define FIND_RECORD(Entry, Offset, NameOffset) \

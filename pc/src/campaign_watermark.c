@@ -7,7 +7,11 @@ struct Watermark {
     unsigned reserved;
     float scale;
 };
+/* FAKEMATCH: the original passes a label as a stack argument; this one-member struct only steers
+   that stack slot. */
 struct Label { const unsigned short *name; };
+/* FAKEMATCH: the original passes an interval word as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Interval { unsigned value; };
 struct Node {
     struct Node *next, *previous;
@@ -21,6 +25,8 @@ struct Registry {
 struct Context;
 extern struct Context *__cdecl get_context(void);
 extern void __cdecl release_block(struct Context *, void *, unsigned);
+/* FAKEMATCH: the original passes a member reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct MemberRef { struct Watermark **ptr; };
 void __fastcall remove_member(struct Registry *list, struct MemberRef reference)
 {

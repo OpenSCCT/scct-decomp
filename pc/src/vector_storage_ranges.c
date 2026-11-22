@@ -1,5 +1,7 @@
 struct DwordVector { unsigned char allocator; unsigned *begin, *end, *limit; };
 struct WordVector { unsigned char allocator; unsigned short *begin, *end, *limit; };
+/* FAKEMATCH: the original passes a byte reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct ByteRef { const unsigned char *ptr; };
 /* FAKEMATCH: the original passes a position as a stack argument; this one-member struct only
    steers that stack slot. */

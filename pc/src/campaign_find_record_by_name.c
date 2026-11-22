@@ -1,4 +1,6 @@
 struct NamedRecord;
+/* FAKEMATCH: the original passes an identifier as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct Identifier { unsigned value; };
 extern unsigned *__cdecl name_crc(unsigned *, const char *);
 extern struct NamedRecord *__fastcall find_421780(void *, struct Identifier);

@@ -1,3 +1,5 @@
+/* FAKEMATCH: the original passes a buffer as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct buffer_argument { void *value; };
 struct engine_allocator;
 struct allocator_methods {

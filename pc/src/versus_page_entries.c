@@ -49,6 +49,8 @@ struct Widget {
     unsigned char gap[8];
     int visible_count, first_visible;
 };
+/* FAKEMATCH: the original passes a bounds reference as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct BoundsRef { struct Bounds *bounds; };
 extern void __fastcall measure(void *, struct BoundsRef);
 /* EDX contains x at the retail call site. The positioning routine reads

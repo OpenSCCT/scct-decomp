@@ -3,6 +3,8 @@ struct Archive {
     unsigned char before_mode[0x14];
     int mode;
 };
+/* FAKEMATCH: the original passes an archive as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct ArchiveArg { struct Archive *archive; };
 struct Sequence {
     unsigned char before_selected[0x4c];

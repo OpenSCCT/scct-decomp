@@ -1,4 +1,6 @@
 struct word_array { unsigned int *data; int count; unsigned int capacity_and_flags; };
+/* FAKEMATCH: the original passes an item word as a stack argument; this one-member struct only
+   steers that stack slot. */
 struct item_argument { const unsigned int *source; };
 extern void __cdecl reserve_words(struct word_array *array, int item_size);
 static __forceinline void append_word(struct word_array *array, struct item_argument item)

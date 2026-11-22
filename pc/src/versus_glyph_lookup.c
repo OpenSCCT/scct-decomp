@@ -1,3 +1,5 @@
+/* FAKEMATCH: the original passes a character code as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Character { unsigned value; };
 struct GlyphMap { unsigned short *pages[256]; };
 struct Glyph { unsigned char prefix[6], width, remainder[17]; };

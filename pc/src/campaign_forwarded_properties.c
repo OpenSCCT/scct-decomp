@@ -1,3 +1,5 @@
+/* FAKEMATCH: the original passes a property word as a stack argument; this one-member struct
+   only steers that stack slot. */
 struct Property { unsigned value; };
 struct Target;
 typedef unsigned (__fastcall *Setter)(struct Target *, struct Property);
