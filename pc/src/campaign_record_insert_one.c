@@ -1,5 +1,5 @@
 union StackWord { unsigned value; float stack; };
-struct Record4 { unsigned char bytes[4]; };
+struct Record4 { unsigned int data[1]; };
 struct Vector4 { void *allocator; struct Record4 *begin, *end, *limit; };
 struct Position4 { struct Record4 *ptr; };
 struct Output4 { struct Position4 *ptr; };
@@ -17,7 +17,7 @@ struct Position12 { struct Record12 *ptr; };
 struct Output12 { struct Position12 *ptr; };
 struct Item12 { const struct Record12 *ptr; };
 
-struct Record16 { unsigned char bytes[16]; };
+struct Record16 { unsigned int word[4]; };
 struct Vector16 { void *allocator; struct Record16 *begin, *end, *limit; };
 struct Position16 { struct Record16 *ptr; };
 struct Output16 { struct Position16 *ptr; };

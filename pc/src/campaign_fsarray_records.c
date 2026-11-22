@@ -25,7 +25,7 @@ extern void *__cdecl memset(void *destination, int value, unsigned int bytes);
 
 struct Record12 { unsigned int words[3]; };
 struct Ref_Record12 { const struct Record12 *ptr; };
-struct Record16 { unsigned int words[4]; };
+struct Record16 { unsigned int word[4]; };
 struct Ref_Record16 { const struct Record16 *ptr; };
 struct Record36 { unsigned int words[9]; };
 struct Ref_Record36 { const struct Record36 *ptr; };

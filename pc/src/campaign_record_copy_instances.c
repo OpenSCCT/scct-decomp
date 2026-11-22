@@ -1,7 +1,7 @@
 #include "record_copy.h"
 
 struct Record4 { unsigned int data[1]; };
-struct Record16 { unsigned int data[4]; };
+struct Record16 { unsigned int word[4]; };
 
 ASSIGN_RANGE(r10df00, Record4)
 ASSIGN_RANGE(r4943d0, Record4)

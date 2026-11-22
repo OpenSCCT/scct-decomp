@@ -2,7 +2,7 @@
 
 struct Record4 { unsigned int data[1]; };
 struct Record8 { unsigned int data[2]; };
-struct Record16 { unsigned int data[4]; };
+struct Record16 { unsigned int word[4]; };
 struct Record32 { unsigned int data[8]; };
 
 ASSIGN_RANGE(r4210d0, Record4)

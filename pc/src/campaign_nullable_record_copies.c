@@ -1,8 +1,8 @@
 /* The element types are identified only by their copied storage widths. */
 
-struct Record4 { unsigned word[1]; };
+struct Record4 { unsigned int data[1]; };
 struct Record12 { unsigned word[3]; };
-struct Record16 { unsigned word[4]; };
+struct Record16 { unsigned int word[4]; };
 
 #define CONSTRUCT_RECORD(Entry, T) \
     void __stdcall Entry(struct T *destination, const struct T *source) \
