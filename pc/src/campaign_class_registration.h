@@ -1,3 +1,5 @@
+#include "campaign_class_singletons.h"
+
 struct RuntimeClass;
 struct ClassMethods {
     void *prefix[0x50 / 4];
@@ -15,9 +17,6 @@ struct RuntimeClass {
 extern int object_system_initialized(void);
 
 #define CLASS_GETTER(Type, Package) \
-    extern struct RuntimeClass *class_##Type; \
-    extern struct RuntimeClass *create_##Type(const unsigned short *); \
-    extern void register_##Type(void); \
     static __forceinline struct RuntimeClass *get_##Type(void) \
     { \
         if (!class_##Type) { \
@@ -28,7 +27,6 @@ extern int object_system_initialized(void);
     }
 
 #define REGISTER_RUNTIME_CLASS(Type, Parent, Within) \
-    extern struct RuntimeClass *class_##Type; \
     void register_##Type(void) \
     { \
         struct RuntimeClass *parent = get_##Parent(); \

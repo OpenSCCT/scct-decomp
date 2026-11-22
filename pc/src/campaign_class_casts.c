@@ -1,10 +1,8 @@
 /* The retail class casts are template instantiations. Their class singletons
    are initialized on first use and then tested against the superclass chain. */
-struct RuntimeClass {
-    unsigned char object_fields[0x28];
-    struct RuntimeClass *super_class;
-};
 
+#include "campaign_class_singletons.h"
+#include "campaign_class_registration.h"
 struct EngineObject {
     unsigned char object_fields[0x24];
     struct RuntimeClass *type;
@@ -22,9 +20,6 @@ static int has_class(const struct EngineObject *object, const struct RuntimeClas
 
 #define DEFINE_CLASS_CAST(Type, Package)                                      \
     struct Type;                                                              \
-    extern struct RuntimeClass *class_##Type;                                 \
-    extern struct RuntimeClass *create_##Type(const unsigned short *package); \
-    extern void register_##Type(void);                                        \
     struct Type *cast_##Type(struct EngineObject *object)                      \
     {                                                                         \
         if (object) {                                                         \
@@ -37,11 +32,6 @@ static int has_class(const struct EngineObject *object, const struct RuntimeClas
         }                                                                     \
         return 0;                                                             \
     }
-
-extern const unsigned short package_Core[];
-extern const unsigned short package_Echelon[];
-extern const unsigned short package_EchelonIngredient[];
-extern const unsigned short package_Engine[];
 
 DEFINE_CLASS_CAST(UArrayProperty, Core)
 DEFINE_CLASS_CAST(UBoolProperty, Core)

@@ -1,11 +1,9 @@
 /* Every runtime class keeps a lazily initialized singleton. Each class has a
    constructor for its descriptor and a registration routine for metadata. */
-struct RuntimeClass;
+
+#include "campaign_class_singletons.h"
 
 #define DEFINE_CLASS_SINGLETON(Type, Package)                                 \
-    extern struct RuntimeClass *class_##Type;                                 \
-    extern struct RuntimeClass *create_##Type(const unsigned short *package); \
-    extern void register_##Type(void);                                        \
     struct RuntimeClass *get_class_##Type(void)                               \
     {                                                                         \
         if (!class_##Type) {                                                  \
@@ -14,17 +12,6 @@ struct RuntimeClass;
         }                                                                     \
         return class_##Type;                                                  \
     }
-
-extern const unsigned short package_Core[];
-extern const unsigned short package_D3DDrv[];
-extern const unsigned short package_DareAudio[];
-extern const unsigned short package_Echelon[];
-extern const unsigned short package_EchelonAI[];
-extern const unsigned short package_EchelonIngredient[];
-extern const unsigned short package_EchelonMenus[];
-extern const unsigned short package_Engine[];
-extern const unsigned short package_WinDrv[];
-extern const unsigned short package_Window[];
 
 DEFINE_CLASS_SINGLETON(UArrayProperty, Core)
 DEFINE_CLASS_SINGLETON(UBoolProperty, Core)
