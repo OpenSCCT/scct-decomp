@@ -1,4 +1,6 @@
 #include "campaign_array_storage.h"
+/* FAKEMATCH: the original passes a request count as a stack argument whose type is not
+   recovered; this one-member struct only steers that stack slot. */
 struct Request { int count; };
 extern void __cdecl grow(struct Array *, int, int);
 

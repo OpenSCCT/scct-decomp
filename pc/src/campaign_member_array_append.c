@@ -2,6 +2,8 @@
 extern void __cdecl grow_array(struct Array *array, unsigned element_size);
 
 #define APPEND_METHOD(Offset) \
+    /* FAKEMATCH: the original's members before this array are not recovered; */ \
+    /* prefix only pushes the Array to its offset. */ \
     struct Owner##Offset { unsigned char prefix[Offset]; struct Array array; }; \
     void __fastcall append_##Offset(struct Owner##Offset *owner, unsigned unused_edx, unsigned value) \
     { \

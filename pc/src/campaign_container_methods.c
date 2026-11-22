@@ -9,6 +9,8 @@ extern void __fastcall grow_list(struct List *, float increment_bits);
 extern void *__cdecl allocation_context(void);
 extern void __cdecl release_node(void *context, struct ListLink *node, unsigned kind);
 
+/* FAKEMATCH: the original passes the integer increment of one as a stack word; the
+   float literal in the body is that bit pattern (1.40129846e-45f is 0x00000001). */
 void __fastcall append_node(struct List *list, unsigned unused_edx, const void *value)
 {
     struct ListLink *head = list->head;
@@ -19,6 +21,8 @@ void __fastcall append_node(struct List *list, unsigned unused_edx, const void *
     node->previous->next = node;
 }
 
+/* FAKEMATCH: the original reads the successor before the unlinking stores; the
+   volatile cast only forces that load order, and the original's statements are not recovered. */
 struct Cursor *__fastcall erase_node(struct List *list, unsigned unused_edx,
                                      struct Cursor *result, struct ListLink *node)
 {
@@ -34,6 +38,8 @@ struct Cursor *__fastcall erase_node(struct List *list, unsigned unused_edx,
     return result;
 }
 
+/* FAKEMATCH: a one-member struct passed by value as a dummy argument; the original's tag
+   value is not recovered, so this struct only steers the stack argument. */
 struct Category { unsigned char : 8; };
 struct Vector { unsigned reserved; void *first, *end, *limit; };
 extern void __cdecl destroy_range(void *, void *, struct Vector *, struct Category);

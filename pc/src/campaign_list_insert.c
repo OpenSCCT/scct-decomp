@@ -8,6 +8,8 @@ extern struct ListLink *__fastcall construct_node(struct List *, unsigned unused
                                                const void *value);
 extern void __fastcall grow_list(struct List *, float count_bits);
 
+/* FAKEMATCH: the original passes the integer increment of one as a stack word; the
+   float literal in the body is that bit pattern (1.40129846e-45f is 0x00000001). */
 void __fastcall insert_before(struct List *list, unsigned unused_edx,
                               struct ListLink *position, const void *value)
 {
