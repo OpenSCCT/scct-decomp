@@ -6,7 +6,7 @@ typedef unsigned char BYTE;
 typedef int INT;
 typedef unsigned long DWORD;
 typedef float FLOAT;
-typedef int UBOOL;
+typedef DWORD UBOOL;
 
 struct FVector {
     FLOAT X, Y, Z;

@@ -7,7 +7,7 @@ typedef int INT;
 typedef unsigned long DWORD;
 typedef float FLOAT;
 typedef double DOUBLE;
-typedef int UBOOL;
+typedef DWORD UBOOL;
 
 #define INDEX_NONE (-1)
 

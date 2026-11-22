@@ -5,7 +5,7 @@ typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned long DWORD;
 typedef float FLOAT;
-typedef int UBOOL;
+typedef DWORD UBOOL;
 typedef DWORD BITFIELD;
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);

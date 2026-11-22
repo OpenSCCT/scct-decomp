@@ -7,7 +7,7 @@ typedef unsigned long DWORD;
 typedef unsigned __int64 QWORD;
 typedef float FLOAT;
 typedef double DOUBLE;
-typedef int UBOOL;
+typedef DWORD UBOOL;
 typedef DWORD BITFIELD;
 typedef char ANSICHAR;
 typedef unsigned short TCHAR;

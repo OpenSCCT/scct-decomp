@@ -5,7 +5,7 @@ typedef unsigned short _WORD;
 typedef int INT;
 typedef unsigned long DWORD;
 typedef float FLOAT;
-typedef int UBOOL;
+typedef DWORD UBOOL;
 typedef unsigned short TCHAR;
 
 struct FGuid;

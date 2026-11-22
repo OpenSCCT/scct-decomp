@@ -50,7 +50,7 @@ public:
 };
 class UClass : public UField {};
 
-inline INT UObject::IsA(UClass *SomeBase) const
+inline UBOOL UObject::IsA(UClass *SomeBase) const
 {
     for (UClass *TempClass = Class; TempClass; TempClass = (UClass *)TempClass->SuperField)
         if (TempClass == SomeBase)

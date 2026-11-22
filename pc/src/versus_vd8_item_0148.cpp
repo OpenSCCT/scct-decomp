@@ -3,7 +3,7 @@
 typedef unsigned char BYTE;
 typedef int INT;
 typedef unsigned long DWORD;
-typedef int UBOOL;
+typedef DWORD UBOOL;
 typedef unsigned short TCHAR;
 
 extern "C" __declspec(dllimport) INT __cdecl _wcsicmp(const TCHAR *String1, const TCHAR *String2);

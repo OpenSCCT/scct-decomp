@@ -5,7 +5,7 @@ typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned int UINT;
 typedef unsigned long DWORD;
-typedef int UBOOL;
+typedef DWORD UBOOL;
 
 // Engine allocator (from unreal_containers.h).
 class FMalloc {

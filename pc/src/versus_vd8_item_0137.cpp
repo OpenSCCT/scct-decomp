@@ -6,7 +6,7 @@ typedef int                INT;
 typedef unsigned long      DWORD;
 typedef unsigned __int64   QWORD;
 typedef float              FLOAT;
-typedef int                UBOOL;
+typedef DWORD                UBOOL;
 typedef DWORD              BITFIELD;
 
 enum EName {

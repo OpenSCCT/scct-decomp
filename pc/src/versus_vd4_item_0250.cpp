@@ -5,7 +5,7 @@
 typedef unsigned long DWORD;
 typedef int INT;
 typedef long HRESULT;
-typedef unsigned long UBOOL;
+typedef DWORD UBOOL;
 
 struct GUID { DWORD Data1; unsigned short Data2, Data3; unsigned char Data4[8]; };
 

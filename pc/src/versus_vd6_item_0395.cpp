@@ -11,7 +11,7 @@ typedef int INT;
 typedef unsigned int UINT;
 typedef unsigned long DWORD;
 typedef float FLOAT;
-typedef int UBOOL;
+typedef DWORD UBOOL;
 typedef unsigned short TCHAR;
 
 extern "C" void *__cdecl memset(void *Dest, int Value, unsigned int Count);
