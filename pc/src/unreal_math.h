@@ -58,6 +58,10 @@ struct FVector {
     }
     FLOAT Size() const { return (FLOAT)appSqrt(X * X + Y * Y + Z * Z); }
     UBOOL IsZero() const { return X == 0.0f && Y == 0.0f && Z == 0.0f; }
+#ifndef SCCT_VERSUS
+    FLOAT SizeSquared() const { return X * X + Y * Y + Z * Z; }
+    UBOOL operator==(const FVector &V) const { return X == V.X && Y == V.Y && Z == V.Z; }
+#endif
     FVector SafeNormal() const;
     FRotator Rotation();
 };

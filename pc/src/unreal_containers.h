@@ -89,6 +89,14 @@ public:
     ~TArray() { Remove(0, ArrayNum, sizeof(T)); }
     T &operator()(INT i) { return ((T *)Data)[i]; }
     T &Last() { return ((T *)Data)[ArrayNum - 1]; }
+    // Whether Item is in the array; Index receives the position of its first copy.
+    UBOOL FindItem(const T &Item, INT &Index) const
+    {
+        for (Index = 0; Index < ArrayNum; Index++)
+            if (((T *)Data)[Index] == Item)
+                return 1;
+        return 0;
+    }
     // Appends Count zeroed elements; returns the index of the first.
     INT AddZeroed(INT Count = 1)
     {

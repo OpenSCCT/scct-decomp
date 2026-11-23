@@ -257,7 +257,8 @@ public:
     BITFIELD             unk_30_26 : 6;
     BYTE                 unk_34[0x18];
     BYTE                 unk_4c;        // movement mode: WaitForLanding waits while it is 2
-    BYTE                 unk_4d[0x7];
+    BYTE                 unk_4d[0x3];
+    FLOAT                unk_50;        // a level time: execPlayerCanSeeMe tests it is under a second old
     FName                Tag;
     BYTE                 unk_58[0xc];
     class UMeshInstance *MeshInstance;
@@ -385,6 +386,7 @@ public:
     DECLARE_NATIVE(execLinkSkelAnim)
     DECLARE_NATIVE(execSetMesh)
     DECLARE_NATIVE(execGetSoundDuration)
+    DECLARE_NATIVE(execPlayerCanSeeMe)
     DECLARE_NATIVE(execSetIKFade)
     DECLARE_NATIVE(execSetCollisionSize)
     DECLARE_NATIVE(execAdd_ColorColor)
