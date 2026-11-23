@@ -37,6 +37,13 @@ Without `--check` it prints the record fragment `{ "id", "inputs", "link_binding
 `--cl` to use an object already built from the recorded command. The compiler runs in
 `local/bindgen-build/<unit id>/`, which git ignores, and its log is kept there as `cl.log`.
 
+Inputs are the source and the quoted includes that name project files. An angle-bracket include
+is a system header and never an input. A record with `system_headers` compiles with `INCLUDE` set
+to its toolchain's include folder (the nearest `include/yvals.h` above `--cl`); any other record
+compiles with an empty `INCLUDE`. Calls into the library's out-of-line functions (template
+instantiations, `memmove`) are ordinary relocations and get bindings like any other.
+`pc/verify_build.py --update-receipts` records which system headers the compile read.
+
 `--check` lists each difference from the record and exits 1 when there is one. Notes do not count:
 the inputs listed in a different order, and a name whose address suffix differs from its retail
 target. A call target the function map omits is reported on standard error only.

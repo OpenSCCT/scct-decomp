@@ -503,7 +503,7 @@ static void AddInclude( const char *editionDir, int fileIndex, const char *name,
 	path[dirLength + length] = 0;
 	target = LoadFile( editionDir, path );
 	if ( target < 0 ) {
-		return;		/* a system or SDK header: outside the project */
+		return;		/* a quoted name the project lacks: the compiler finds it through INCLUDE */
 	}
 	file = &files[fileIndex];
 	file->includes = Grow( file->includes, &file->includeCapacity, file->numIncludes + 1, sizeof( int ) );
@@ -661,6 +661,9 @@ static void LexFile( const char *editionDir, int fileIndex, const char *text, in
 				while ( p < end && ( *p == ' ' || *p == '\t' ) ) {
 					p++;
 				}
+				/* Only a quoted include can name a project file. An angle-bracket include
+				   (<vector>) is the toolchain's own header, which a unit with system_headers
+				   compiles against; it is never read, so nothing in it becomes a finding. */
 				if ( p < end && *p == '"' ) {
 					const char *name = ++p;
 

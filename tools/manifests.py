@@ -42,8 +42,11 @@ def save_receipt(path, unit, write):
     raise ValueError(f"unit missing while saving receipt: {unit['id']}")
 
 
-def save_receipts(path, units, write):
-    """Update many receipts at once, rewriting each owning file a single time."""
+def save_receipts(path, units, write, fields=("match",)):
+    """Update many receipts at once, rewriting each owning file a single time.
+
+    Only the named fields may differ from the stored unit; the verifier also records the
+    system headers a unit's compile read."""
     config = json.loads(path.read_text(encoding="utf-8"))
     pending = {unit["id"]: unit for unit in units}
     for file, rows in groups(path, config):
@@ -52,11 +55,13 @@ def save_receipts(path, units, write):
             unit = pending.pop(stored["id"], None)
             if unit is None:
                 continue
-            if {k: v for k, v in stored.items() if k != "match"} != {k: v for k, v in unit.items() if k != "match"}:
+            if ({k: v for k, v in stored.items() if k not in fields}
+                    != {k: v for k, v in unit.items() if k not in fields}):
                 raise ValueError(f"{unit['id']}: unit definition changed during verification")
-            if stored.get("match") != unit["match"]:
-                stored["match"] = unit["match"]
-                changed = True
+            for field in fields:
+                if field in unit and stored.get(field) != unit[field]:
+                    stored[field] = unit[field]
+                    changed = True
         if changed:
             write(file, config if file == path else rows)
     if pending:

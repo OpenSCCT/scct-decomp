@@ -102,6 +102,17 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
         raise ValueError("a matching unit requires its independently written C or C++ source")
     if not unit["toolchain"].strip() or not unit["build_command"].strip():
         raise ValueError("record the compiler version and reproducible build command")
+    headers = unit.get("system_headers")
+    if headers is not None:
+        # The toolchain's own headers that the compile reads, by path under its include folder.
+        # They are not project files, so the record carries their hashes and the recipe binds them.
+        if not isinstance(headers, dict) or not unit["toolchain"].startswith("Microsoft C/C++ "):
+            raise ValueError("system_headers maps a Microsoft C/C++ unit's headers to their SHA-256")
+        for relative, value in headers.items():
+            parts = relative.split("/")
+            if not relative or "\\" in relative or ":" in relative or any(p in ("", ".", "..") for p in parts):
+                raise ValueError(f"invalid system header path: {relative!r}")
+            digest(value)
     evidence = unit.get("recipe_evidence")
     if evidence is not None:
         if (evidence["compiler"] != unit["toolchain"] or not isinstance(evidence["flags"], list)

@@ -65,8 +65,75 @@ def run_tool(command, streams, *, cwd, env, stdout=subprocess.PIPE):
         raise subprocess.CalledProcessError(completed.returncode, command, completed.stdout, completed.stderr)
 
 
-def compile_unit(unit, cl, env, build_dir, streams):
-    """Compile a unit with its recorded command in build_dir, and return the object it writes."""
+SHOW_INCLUDES = "Note: including file:"
+LINE_DIRECTIVE = re.compile(r'^#line \d+ "(.*)"\s*$')
+
+
+def system_include_dir(cl):
+    """The toolchain's own header folder: the nearest include folder above the compiler.
+
+    It is beside the bin folder in the Toolkit 2003 and VC6 layouts, and three folders up from
+    MSVC 19.x's bin/Host*/x86. The folder must hold yvals.h, which every Microsoft C++ library has."""
+    for parent in Path(cl).resolve().parents[:4]:
+        if (parent / "include" / "yvals.h").is_file():
+            return parent / "include"
+    raise ValueError(f"no system header folder (include/yvals.h) above {cl}")
+
+
+def header_digest(path):
+    """The SHA-256 of a header, with CRLF line ends read as LF, as unit inputs are hashed."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
+def reports_includes(toolchain):
+    """True when the compiler prints the headers it reads (/showIncludes, from 13.00 on); VC6 does not."""
+    return not toolchain.startswith("Microsoft C/C++ 12.")
+
+
+def stage_system_headers(unit, cl, stage):
+    """Copy the system headers a unit records into stage, after checking each recorded hash.
+
+    The compile then sees only these headers through INCLUDE, so a header the record does not
+    name cannot be read."""
+    include = system_include_dir(cl)
+    for relative, expected in unit["system_headers"].items():
+        source = include / relative
+        if not source.is_file():
+            raise ValueError(f"{unit['id']}: system header {relative} is not in {include}")
+        if header_digest(source) != expected:
+            raise ValueError(f"{unit['id']}: system header {relative} differs from the one recorded")
+        destination = stage / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+
+
+def system_headers_read(paths, include, build_dir):
+    """The headers under include among the paths a compile read, as {relative path: SHA-256}.
+
+    Paths are keyed in lower case, as Windows resolves them. A header that is neither a system
+    header nor one of the unit's inputs is refused."""
+    read = {}
+    for text in paths:
+        path = (build_dir / text).resolve()
+        if path.is_relative_to(include):
+            read[path.relative_to(include).as_posix().lower()] = header_digest(path)
+        elif not path.is_relative_to(build_dir):
+            raise ValueError(f"the compile read {path}, outside its inputs and system headers")
+    return dict(sorted(read.items()))
+
+
+def decode(output):
+    return output.decode("mbcs" if os.name == "nt" else "utf-8", "replace")
+
+
+def compile_unit(unit, cl, env, build_dir, streams, found=None):
+    """Compile a unit with its recorded command in build_dir, and return the object it writes.
+
+    A unit with a system_headers record compiles against its toolchain's own headers through
+    INCLUDE, and the headers the compile reads must be exactly the recorded ones: a compiler from
+    13.00 on lists them with /showIncludes, and for VC6 a preprocessing run (/E) names them in its
+    #line directives. With found, a dictionary, the compile reads the whole include folder and
+    found receives the headers it read; otherwise only the recorded headers are staged."""
     # Recipes use relative forward-slash paths, even on Windows.
     program, *args = shlex.split(unit["build_command"])
     if "rebuilt_symbol" not in unit:
@@ -90,7 +157,48 @@ def compile_unit(unit, cl, env, build_dir, streams):
     obj.parent.mkdir(parents=True, exist_ok=True)
     if obj.exists():
         raise ValueError("the expected object already exists in the fresh build directory")
-    run_tool([cl, *args], streams, cwd=build_dir, env=env)
+    if "system_headers" not in unit:
+        run_tool([cl, *args], streams, cwd=build_dir, env=env)
+    else:
+        if not unit["toolchain"].startswith("Microsoft C/C++ "):
+            raise ValueError(f"{unit['id']}: system headers are recorded for Microsoft C/C++ units only")
+        if found is not None:
+            include = system_include_dir(cl)
+        else:
+            include = build_dir / "local" / "system-include"
+            include.mkdir(parents=True)
+            stage_system_headers(unit, cl, include)
+        include_env = dict(env, INCLUDE=str(include))
+        reported = reports_includes(unit["toolchain"])
+        local = []
+        try:
+            run_tool([cl, *args, *(["/showIncludes"] if reported else [])], local, cwd=build_dir, env=include_env)
+            if not reported:
+                # Preprocess with the same options, without /c and /Fo, to list what was read.
+                options = [a for i, a in enumerate(args) if a != "/c" and not a.startswith("/Fo")
+                           and not (i and args[i - 1] == "/Fo")]
+                run_tool([cl, *options, "/E"], local, cwd=build_dir, env=include_env)
+        except subprocess.CalledProcessError:
+            streams.extend(local)
+            raise
+        stdout, stderr = local[0]
+        if reported:
+            paths = [line[len(SHOW_INCLUDES):].strip() for line in decode(stdout).splitlines()
+                     if line.startswith(SHOW_INCLUDES)]
+            # The include notes are long; the replayed output keeps the compiler's other lines.
+            stdout = b"".join(line for line in stdout.splitlines(keepends=True)
+                              if not line.startswith(SHOW_INCLUDES.encode()))
+        else:
+            lines = decode(local[1][0]).splitlines()
+            paths = [m[1].replace("\\\\", "\\") for m in map(LINE_DIRECTIVE.match, lines) if m]
+        read = system_headers_read(paths, include.resolve(), build_dir.resolve())
+        if found is not None:
+            found.update(read)
+        elif read != unit["system_headers"]:
+            extra = sorted(set(read) ^ set(unit["system_headers"]))
+            raise ValueError(f"{unit['id']}: the compile reads other system headers than the record names "
+                             f"({', '.join(extra)}); rerun with --update-receipts")
+        streams.append((stdout, stderr))
     if not obj.is_file():
         raise ValueError(f"compiler produced no object at {outputs[0]}")
     return obj
@@ -158,8 +266,8 @@ def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, st
     return dll
 
 
-def rebuild_unit(unit, cl, env, build_dir, streams, callees=()):
-    obj = compile_unit(unit, cl, env, build_dir, streams)
+def rebuild_unit(unit, cl, env, build_dir, streams, callees=(), found=None):
+    obj = compile_unit(unit, cl, env, build_dir, streams, found)
     if "ltcg_link" in unit:
         # Link-time code generation: link the object, its scaffolding roots and stubs
         # for undefined externals into a DLL with the LINK.EXE beside the compiler.
@@ -181,30 +289,35 @@ def rebuild_unit(unit, cl, env, build_dir, streams, callees=()):
     return obj
 
 
-def build_recipe(units, compilers, callees=()):
+def build_recipe(units, compilers, callees=(), discover=False):
     """Rebuild one recipe's object in a directory of its own, and return (object, error, output).
 
     A failure is returned rather than raised, so the caller can print the tools' output in
-    recipe order before it reports the error."""
+    recipe order before it reports the error. With discover, a unit with a system_headers
+    record compiles against the whole include folder and the record receives the headers read."""
     unit = units[0]
     cl, env = compilers[unit["toolchain"]]
     streams = []
+    found = {} if discover and "system_headers" in unit else None
     try:
         with tempfile.TemporaryDirectory(prefix="scct-decomp-") as tmp:
-            obj = rebuild_unit(unit, cl, env, Path(tmp).resolve(), streams, callees).read_bytes()
+            obj = rebuild_unit(unit, cl, env, Path(tmp).resolve(), streams, callees, found).read_bytes()
     except Exception as error:
         return None, error, streams
+    if found is not None:
+        for each in units:
+            each["system_headers"] = found
     return obj, None, streams
 
 
-def build_recipes(recipes, compilers, jobs):
+def build_recipes(recipes, compilers, jobs, discover=False):
     """Yield (units, (object, error, output)) for each (units, callees) recipe, in order.
 
     With jobs=1 each recipe is built when its turn comes, as the gate always did. With more
     jobs, the builds run concurrently in threads and are still yielded in recipe order."""
     def build(recipe):
         units, callees = recipe
-        return units, build_recipe(units, compilers, callees)
+        return units, build_recipe(units, compilers, callees, discover)
 
     if jobs == 1:
         for recipe in recipes:
@@ -238,7 +351,8 @@ def main():
     parser.add_argument("--source", action="append", default=[], metavar="PATTERN",
                         help="gate only units with an input matching this pattern, such as 'src/sound_*'; repeatable")
     parser.add_argument("--update-receipts", action="store_true",
-                        help="after a unit's edited inputs rebuild every retail byte, record its new receipt")
+                        help="after a unit's edited inputs rebuild every retail byte, record its new receipt "
+                             "(or its first one), and the system headers it reads")
     parser.add_argument("--jobs", type=int, default=os.cpu_count() or 1,
                         help="recipes to build at once (default: one per core); 1 builds them one at a time")
     args = parser.parse_args()
@@ -248,6 +362,8 @@ def main():
     # cl prepends CL and appends _CL_ to the command line.
     env.pop("CL", None)
     env.pop("_CL_", None)
+    # A compile sees no headers but its inputs, and its recorded system headers through INCLUDE.
+    env.pop("INCLUDE", None)
     env["VSLANG"] = "1033"
     compilers = {}
     requests = [(path, False) for path in (args.cl or ["cl.exe"])]
@@ -277,7 +393,7 @@ def main():
         skipped = Counter()
         skipped_bytes = 0
         for unit in target["units"]:
-            if "match" not in unit:
+            if "match" not in unit and not args.update_receipts:
                 raise ValueError(f"{unit['id']}: missing checked-in match receipt")
             if args.source and not any(fnmatch(path, pattern) for path in unit["inputs"] for pattern in args.source):
                 continue
@@ -290,8 +406,10 @@ def main():
                 raise ValueError(f"{unit['id']}: pass {option} for {unit['toolchain']}")
             link = unit.get("ltcg_link")
             callees = callee_units(target["units"], unit)
+            headers = unit.get("system_headers")
             key = (unit["toolchain"], unit["build_command"], tuple(sorted(unit["inputs"])),
-                   link and (tuple(link["roots"]), tuple(link["stubs"])))
+                   link and (tuple(link["roots"]), tuple(link["stubs"])),
+                   headers is not None and tuple(sorted(headers.items())))
             if callees:
                 # A unit linked with callees has a recipe of its own, since the callees are part of its build.
                 key += (unit["id"],)
@@ -299,7 +417,8 @@ def main():
             callees_of[key] = callees
         gated = 0
         updated = []
-        builds = build_recipes([(units, callees_of[key]) for key, units in recipes.items()], compilers, args.jobs)
+        builds = build_recipes([(units, callees_of[key]) for key, units in recipes.items()], compilers, args.jobs,
+                               discover=args.update_receipts)
         try:
             for units, (obj, error, streams) in builds:
                 replay(streams)
@@ -307,10 +426,10 @@ def main():
                     raise error
                 for unit in units:
                     receipt = compare_unit(PC, target, unit, original, obj)
-                    if receipt != unit["match"]:
+                    if receipt != unit.get("match"):
                         # compare_unit has already required every rebuilt byte to equal retail,
                         # so only the fingerprint of the edited inputs can differ here.
-                        if not args.update_receipts or receipt["bytes_sha256"] != unit["match"]["bytes_sha256"]:
+                        if not args.update_receipts or receipt["bytes_sha256"] != unit.get("match", receipt)["bytes_sha256"]:
                             raise ValueError(f"{unit['id']}: rebuilt receipt differs from checked-in receipt")
                         unit["match"] = receipt
                         updated.append(unit)
@@ -320,7 +439,7 @@ def main():
         finally:
             builds.close()
         if updated:
-            save_receipts(manifest, updated, write)
+            save_receipts(manifest, updated, write, fields=("match", "system_headers"))
             print(f"{target_id}: recorded {len(updated)} new receipts")
         totals = summary(PC, load_target(manifest))
         for toolchain, count in sorted(skipped.items()):

@@ -31,6 +31,10 @@ is charged with everything in its source files. `source_found_by` in the report 
 
 - **One executable at a time.** Campaign and Versus are two programs. Two declarations
   conflict (R1, R2) only when some unit of the same executable can see both.
+- **Project files only.** Quoted includes are followed when they name a project file. An
+  angle-bracket include (`#include <vector>`) is the toolchain's own header, which a unit
+  whose record has `system_headers` compiles against; the checker never reads it, so nothing
+  in it is a finding. The fixture `system_includes.cpp` keeps a decoy `src/vector` to prove it.
 - **One side of a build conditional.** Tokens and declarations inside a plain `#ifdef NAME`
   or `#ifndef NAME` are followed only for units whose inputs define, or do not define,
   `NAME`. Include guards and `#if` expressions are not treated as conditionals.

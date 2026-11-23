@@ -1,7 +1,9 @@
 /* bindgen.c -- derive a unit's inputs and link_bindings from its compiled object.
 
    For one unit record of a Campaign-layout target manifest this tool:
-     1. collects the unit's inputs: its source file, then every quoted #include it reaches;
+     1. collects the unit's inputs: its source file, then every quoted #include it reaches; an
+        angle-bracket #include is a system header, never an input (a record with system_headers
+        compiles against its toolchain's include folder, and verify_build.py hashes what it reads);
      2. compiles the source with the record's build_command and toolchain (--cl), or reads an
         object already built from that source (--object);
      3. finds the record's function in the object and walks its relocations;
@@ -1159,11 +1161,33 @@ static void check_compiler(const char *cl, const char *toolchain, const char *bu
     free(cmd.s);
 }
 
+/* The toolchain's own header folder, as verify_build.py finds it: the nearest include folder above
+   the compiler that holds yvals.h (beside bin for the Toolkit 2003 and VC6, three folders up from
+   MSVC 19.x bin\Hostx64\x86). */
+static void system_include_dir(const char *cl, char *out)
+{
+    char dir[PATH_CAP], up[PATH_CAP], probe[PATH_CAP];
+    int level;
+    parent_of(cl, dir);
+    for (level = 0; level < 4; level++) {
+        join_path(dir, "include", out);
+        join_path(out, "yvals.h", probe);
+        if (file_exists(probe)) {
+            backslashes(out);
+            return;
+        }
+        parent_of(dir, up);
+        strcpy(dir, up);
+    }
+    fail("no system header folder (include/yvals.h) above %s", cl);
+}
+
 /* Compiles the unit as its record says, in a fresh folder under local/ (git ignores it). The
    inputs are copied in first, as verify_build.py does, so the compiler sees only what the record
-   names plus what it reaches. */
+   names plus what it reaches. A record with system_headers also sees its toolchain's own headers
+   through INCLUDE; any other record sees an empty INCLUDE. verify_build.py records and checks which of those headers the compile reads. */
 static u8 *compile_unit(const char *pc_root, const char *id, const char *cl, const char *command,
-                        const char *toolchain, const List *inputs, size_t *size)
+                        const char *toolchain, const List *inputs, int system_headers, size_t *size)
 {
     char **words;
     size_t count, i;
@@ -1236,7 +1260,13 @@ static u8 *compile_unit(const char *pc_root, const char *id, const char *cl, con
     cmd.cap = 0;
     buf_puts(&cmd, "cd /d \"");
     buf_puts(&cmd, build_win);
-    buf_puts(&cmd, "\" && set \"VSLANG=1033\" && set \"CL=\" && set \"_CL_=\" && set \"PATH=");
+    buf_puts(&cmd, "\" && set \"VSLANG=1033\" && set \"CL=\" && set \"_CL_=\" && set \"INCLUDE=");
+    if (system_headers) {
+        char include[PATH_CAP];
+        system_include_dir(cl, include);
+        buf_puts(&cmd, include);
+    }
+    buf_puts(&cmd, "\" && set \"PATH=");
     buf_puts(&cmd, cl_dir);
     buf_puts(&cmd, ";%PATH%\" && \"");
     buf_puts(&cmd, cl);
@@ -1790,7 +1820,8 @@ int main(int argc, char **argv)
     if (object_path)
         object = read_file(object_path, &object_len);
     else
-        object = compile_unit(pc_root, unit_id, cl, command, toolchain, &inputs, &object_len);
+        object = compile_unit(pc_root, unit_id, cl, command, toolchain, &inputs,
+                              jget(unit_json, "system_headers") != NULL, &object_len);
     coff = coff_open(object, object_len);
     section_number = find_function(&coff, symbol);
     coff_section(&coff, section_number, &section);
