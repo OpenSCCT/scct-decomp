@@ -87,6 +87,12 @@ public:
     class UClass *Class;
 
     // Destroys the object once: marks it, then calls Destroy.
+#ifndef SCCT_VERSUS
+    // Out of line in Campaign: every destructor calls it.
+    INT ConditionalDestroy();
+    // Objects return their memory to GMalloc (defined in unreal_class.h).
+    void operator delete(void *Object);
+#else
     INT ConditionalDestroy()
     {
         if (Index != -1 && !(ObjectFlags & ObjectFlag_00800000)) {
@@ -97,6 +103,7 @@ public:
         }
         return 0;
     }
+#endif
 
     const TCHAR *GetName() const;
     class UClass *GetClass() const { return Class; }

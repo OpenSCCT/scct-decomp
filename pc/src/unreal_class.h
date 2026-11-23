@@ -51,6 +51,11 @@ inline UBOOL UObject::IsA(UClass *SomeBase) const
     return SomeBase == 0;
 }
 
+inline void UObject::operator delete(void *Object)
+{
+    GMalloc->Free(Object);
+}
+
 // The object as a T, or 0 when it is not one.
 template<class T> T *Cast(UObject *Src)
 {

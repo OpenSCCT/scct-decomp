@@ -14,12 +14,6 @@ extern void __fastcall destroy_base_of_members_06a820(struct members_06a820 *sel
 struct members_073320 { const void *vtable; };
 extern const void *const vtable_members_073320[];
 extern void __fastcall destroy_base_of_members_073320(struct members_073320 *self);
-struct AController { const void *vtable; };
-extern const void *const vtable_AController[];
-extern void __fastcall destroy_base_of_AController(struct AController *self);
-struct AInfo { const void *vtable; };
-extern const void *const vtable_AInfo[];
-extern void __fastcall destroy_base_of_AInfo(struct AInfo *self);
 struct AKeypoint { const void *vtable; };
 extern const void *const vtable_AKeypoint[];
 extern void __fastcall destroy_base_of_AKeypoint(struct AKeypoint *self);
@@ -93,8 +87,6 @@ void __fastcall destroy_AESRA(struct AESRA *self);
 void __fastcall destroy_members_067ea0(struct members_067ea0 *self);
 void __fastcall destroy_members_06a820(struct members_06a820 *self);
 void __fastcall destroy_members_073320(struct members_073320 *self);
-void __fastcall destroy_AController(struct AController *self);
-void __fastcall destroy_AInfo(struct AInfo *self);
 void __fastcall destroy_AKeypoint(struct AKeypoint *self);
 void __fastcall destroy_ATriggers(struct ATriggers *self);
 void __fastcall destroy_AEHkConstraint(struct AEHkConstraint *self);
@@ -145,20 +137,6 @@ void __fastcall destroy_members_073320(struct members_073320 *self)
     self->vtable = vtable_members_073320;
     conditional_destroy(self);
     destroy_base_of_members_073320(self);
-}
-
-void __fastcall destroy_AController(struct AController *self)
-{
-    self->vtable = vtable_AController;
-    conditional_destroy(self);
-    destroy_base_of_AController(self);
-}
-
-void __fastcall destroy_AInfo(struct AInfo *self)
-{
-    self->vtable = vtable_AInfo;
-    conditional_destroy(self);
-    destroy_base_of_AInfo(self);
 }
 
 void __fastcall destroy_AKeypoint(struct AKeypoint *self)

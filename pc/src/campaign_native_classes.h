@@ -4,6 +4,7 @@
 
 #include "unreal_object.h"
 #include "unreal_actor.h"
+#include "unreal_containers.h"
 
 // Engine.Sound: 0x54 bytes
 class USound : public UObject {
@@ -11,7 +12,9 @@ public:
     virtual ~USound();
     virtual FLOAT GetDuration();    // named after AActor::execGetSoundDuration, its caller
 
-    BYTE unk_28[0x2c];
+    BYTE    unk_28[0x1c];
+    FString unk_44;     // destroyed by the destructor
+    BYTE    unk_50[0x4];
 };
 
 // Engine.Brush: 0x340 bytes

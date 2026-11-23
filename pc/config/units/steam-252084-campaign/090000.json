@@ -78,7 +78,7 @@
     },
     "match": {
       "bytes_sha256": "52825b7f6ddb7fe339c1393b4e46675947988eb764594bb44ca3997995ad9021",
-      "inputs_sha256": "8cdb42fe2a904dc3b4e4beacb367ce6454624bb837784733b0e6ce7629716ad5"
+      "inputs_sha256": "be1cc19dbd75ccf9c15d740a5cbe11ded064fb46b2f07e700a51777b098cb55c"
     }
   },
   {
@@ -118,7 +118,7 @@
     },
     "match": {
       "bytes_sha256": "8ee2a77e23d826e6fff5af1eb644e53fa4b7ce80bfb629556f2bcfe344e802ec",
-      "inputs_sha256": "8c71f8786fbca439f3942df4efb24568d2a8fd6d6320229672225d599e64230c"
+      "inputs_sha256": "33957742daedf24682bb276319748ca5060a203e61425a19b75d724eed1998e2"
     }
   },
   {
@@ -3450,7 +3450,7 @@
     },
     "match": {
       "bytes_sha256": "e475f93f2b76d907cdcc36d6bbb2e202e8da052ef95902481a38cdb419a8a262",
-      "inputs_sha256": "5d6b1c65aebabca7ac229ee3915a5a0ac1df05e003b2ad0f4cab49dc78d84027"
+      "inputs_sha256": "1701ac89ddade024f46c40afa40081192fb6601e973755fd8389d70be5822a96"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3539,34 +3539,24 @@
     "offset": 607024,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_engine_destructors.cpp",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_class.h",
+      "src/unreal_field.h",
+      "src/versus_ltcg.h",
+      "src/unreal_actor.h",
+      "src/unreal_pawn.h",
+      "src/campaign_level_info.h",
+      "src/campaign_native_classes.h"
     ],
-    "rebuilt_symbol": "@delete_ABrush@8",
+    "rebuilt_symbol": "??_GABrush@@UAEPAXI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_destruction.obj src/campaign_class_destruction.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_engine_destructors.obj src/campaign_engine_destructors.cpp",
     "identification": "Stock ABrush UClass factory at RVA 0x96eb0 references the named placement constructor at RVA 0x95d90. That constructor installs the vtable at RVA 0x7c4470, whose slot 3 points to this deleting destructor at RVA 0x94330. Both paths converge before the final RET 4.",
-    "link_bindings": {
-      "_vtable_ABrush": {
-        "va": 286016624,
-        "basis": "The placement constructor at RVA 0x95d90 installs this same vtable at RVA 0x95dc8."
-      },
-      "@conditional_destroy@4": {
-        "va": 281901616,
-        "basis": "Shared UObject helper checks the object index and destruction flag before dispatching virtual slot 9."
-      },
-      "@destroy_base_ABrush@4": {
-        "va": 278048032,
-        "basis": "Second direct destruction call receives the same object, immediately before the release-flag test."
-      },
-      "_engine_allocator": {
-        "va": 287082656,
-        "basis": "Global allocator read on the conditional release path; slot 2 takes the original receiver."
-      }
-    },
-    "match": {
-      "bytes_sha256": "20bd6b1664c8126ad945d09669ec560da1c791d56df9b57bd6adcd215e201e5b",
-      "inputs_sha256": "20c49f2bbcfec8e8179ada7909ae72f5e1390b05ad53b9376ba5a14559c1cbf2"
-    },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
       "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
@@ -3574,6 +3564,28 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "??_7ABrush@@6B@": {
+        "va": 286016624,
+        "basis": "A class vtable at VA 0x110c4470 (file offset 0x7c4470), named by the DIR32 operand at +0x5 of ??_GABrush@@UAEPAXI@Z; its first entry points into code."
+      },
+      "?ConditionalDestroy@UObject@@QAEHXZ": {
+        "va": 281901616,
+        "basis": "Call or jump at +0xa of ??_GABrush@@UAEPAXI@Z; the retail operand gives VA 0x10cd7a30 (file offset 0x3d7a30), a function entry in the function map."
+      },
+      "??1AActor@@UAE@XZ": {
+        "va": 278048032,
+        "basis": "Call or jump at +0x11 of ??_GABrush@@UAEPAXI@Z; the retail operand gives VA 0x1092ad20 (file offset 0x2ad20), a function entry in the function map."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 287082656,
+        "basis": "Absolute operand at +0x1e of ??_GABrush@@UAEPAXI@Z; the retail operand gives VA 0x111c88a0."
+      }
+    },
+    "match": {
+      "bytes_sha256": "20bd6b1664c8126ad945d09669ec560da1c791d56df9b57bd6adcd215e201e5b",
+      "inputs_sha256": "17f6975e0e635b122d4e9064a06788c430713fa734a5881e3bed94d0e8fb08eb"
     }
   },
   {
@@ -3916,7 +3928,7 @@
     },
     "match": {
       "bytes_sha256": "cc0acf04d2d366dcdab4424644ded2634f6daeba1b97262d598e6a8c74eb3868",
-      "inputs_sha256": "28a9b812083af3ccd1cf3252dde3b1b6c126baf3b2b9905fcb255fcb26077ff3"
+      "inputs_sha256": "3079172b22a4ae49dfed24b490c1f0eba9562a5784ef5cdf8c59f8136f6e1dea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4064,25 +4076,23 @@
     "size": 22,
     "offset": 607824,
     "inputs": [
-      "src/campaign_class_destructors.c"
+      "src/campaign_engine_destructors.cpp",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_class.h",
+      "src/unreal_field.h",
+      "src/versus_ltcg.h",
+      "src/unreal_actor.h",
+      "src/unreal_pawn.h",
+      "src/campaign_level_info.h",
+      "src/campaign_native_classes.h"
     ],
-    "rebuilt_symbol": "@destroy_AController@4",
+    "rebuilt_symbol": "??1AController@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_class_destructors.obj src/campaign_class_destructors.c",
-    "link_bindings": {
-      "_vtable_AController": {
-        "va": 286020008,
-        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
-      },
-      "@conditional_destroy@4": {
-        "va": 281901616,
-        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
-      },
-      "@destroy_base_of_AController@4": {
-        "va": 278048032,
-        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
-      }
-    },
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_engine_destructors.obj src/campaign_engine_destructors.cpp",
     "identification": "Complete indexed Campaign function at RVA 0x94650. Direct call at RVA 0x94780 in the published unit delete-aaicontroller. It installs the vtable at RVA 0x7c51a8, which the published deleting destructor delete_AController also installs; identified as the complete AController destructor.",
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4092,9 +4102,23 @@
       ],
       "basis": "evidence/campaign-vc71-o2.md"
     },
+    "link_bindings": {
+      "??_7AController@@6B@": {
+        "va": 286020008,
+        "basis": "A class vtable at VA 0x110c51a8 (file offset 0x7c51a8), named by the DIR32 operand at +0x5 of ??1AController@@UAE@XZ; its first entry points into code."
+      },
+      "?ConditionalDestroy@UObject@@QAEHXZ": {
+        "va": 281901616,
+        "basis": "Call or jump at +0xa of ??1AController@@UAE@XZ; the retail operand gives VA 0x10cd7a30 (file offset 0x3d7a30), a function entry in the function map."
+      },
+      "??1AActor@@UAE@XZ": {
+        "va": 278048032,
+        "basis": "Call or jump at +0x12 of ??1AController@@UAE@XZ; the retail operand gives VA 0x1092ad20 (file offset 0x2ad20), a function entry in the function map."
+      }
+    },
     "match": {
       "bytes_sha256": "2f7202713ed5fb45759b09321031c915d5e87f2a4ae1bc631ddc8e2aae86fb8b",
-      "inputs_sha256": "03677080f1fead09aa5e488fd6f8452651aa41c282d8c7b15b03b055dd4dfd8c"
+      "inputs_sha256": "9b8705c153772798189826fcc9123a908e9d5970d834551bbedd3569b40a4761"
     }
   },
   {
@@ -4198,34 +4222,24 @@
     "offset": 607936,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_engine_destructors.cpp",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_class.h",
+      "src/unreal_field.h",
+      "src/versus_ltcg.h",
+      "src/unreal_actor.h",
+      "src/unreal_pawn.h",
+      "src/campaign_level_info.h",
+      "src/campaign_native_classes.h"
     ],
-    "rebuilt_symbol": "@delete_AController@8",
+    "rebuilt_symbol": "??_GAController@@UAEPAXI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_destruction.obj src/campaign_class_destruction.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_engine_destructors.obj src/campaign_engine_destructors.cpp",
     "identification": "Stock AController UClass factory at RVA 0x96d60 references the named placement constructor at RVA 0x95ef0. That constructor installs the vtable at RVA 0x7c51a8, whose slot 3 points to this deleting destructor at RVA 0x946c0. Both paths converge before the final RET 4.",
-    "link_bindings": {
-      "_vtable_AController": {
-        "va": 286020008,
-        "basis": "The placement constructor at RVA 0x95ef0 installs this same vtable at RVA 0x95f28."
-      },
-      "@conditional_destroy@4": {
-        "va": 281901616,
-        "basis": "Shared UObject helper checks the object index and destruction flag before dispatching virtual slot 9."
-      },
-      "@destroy_base_AController@4": {
-        "va": 278048032,
-        "basis": "Second direct destruction call receives the same object, immediately before the release-flag test."
-      },
-      "_engine_allocator": {
-        "va": 287082656,
-        "basis": "Global allocator read on the conditional release path; slot 2 takes the original receiver."
-      }
-    },
-    "match": {
-      "bytes_sha256": "9b9fdcaaacaaf55411c0c58a6b60ab81e358658f87ceb999a6343ea94d3993c9",
-      "inputs_sha256": "68d14fc618ab336c0c8af537f3be4b09ef04e35e9848d3478f37395970e9e972"
-    },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
       "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
@@ -4233,6 +4247,28 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "??_7AController@@6B@": {
+        "va": 286020008,
+        "basis": "A class vtable at VA 0x110c51a8 (file offset 0x7c51a8), named by the DIR32 operand at +0x5 of ??_GAController@@UAEPAXI@Z; its first entry points into code."
+      },
+      "?ConditionalDestroy@UObject@@QAEHXZ": {
+        "va": 281901616,
+        "basis": "Call or jump at +0xa of ??_GAController@@UAEPAXI@Z; the retail operand gives VA 0x10cd7a30 (file offset 0x3d7a30), a function entry in the function map."
+      },
+      "??1AActor@@UAE@XZ": {
+        "va": 278048032,
+        "basis": "Call or jump at +0x11 of ??_GAController@@UAEPAXI@Z; the retail operand gives VA 0x1092ad20 (file offset 0x2ad20), a function entry in the function map."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 287082656,
+        "basis": "Absolute operand at +0x1e of ??_GAController@@UAEPAXI@Z; the retail operand gives VA 0x111c88a0."
+      }
+    },
+    "match": {
+      "bytes_sha256": "9b9fdcaaacaaf55411c0c58a6b60ab81e358658f87ceb999a6343ea94d3993c9",
+      "inputs_sha256": "b9a3251358ac3766234b198a21a34c5d05e823f0373c4ec504256bd4d594b9d8"
     }
   },
   {
@@ -4384,7 +4420,7 @@
     },
     "match": {
       "bytes_sha256": "04c6d10582934e88e44301edbb0f365b3a00cefc12b471fe08d2aba1ee7e7fcb",
-      "inputs_sha256": "4388c69a03ab57d9c0523bf1bbba2ad6aac9b4bc8aae43050ed6dfe6da12f6f5"
+      "inputs_sha256": "552a6cd5ccad24c7bea92ae230761e39e87685047d1fc3b39fe07364e2219066"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4802,7 +4838,7 @@
     },
     "match": {
       "bytes_sha256": "a4846872d14b500120d1cf4a6f989272019a44143ed84f7b6fc6e35c4498dc03",
-      "inputs_sha256": "2965e39e5242ae92bb31f522b454cb4676a215c88392ee0f300cbc9da4c32572"
+      "inputs_sha256": "b2ecea8fdef81c11cdca629c435ce041d24be1ad62e52e623f176ad2acb90b1c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4879,7 +4915,7 @@
     },
     "match": {
       "bytes_sha256": "75b1860fdc17c6b71c7956ed1e20a0583bf6e7c16845fd6f68faff8e355f29b9",
-      "inputs_sha256": "196b08fe4af7dcc251c9096c54de4617b012e6ec1d0b016e98972bc4a848aa8e"
+      "inputs_sha256": "80b132cf3d31ef1f3de4a7ab12ca5fb3fe40751ff892a4d134253d96efbfc899"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4960,7 +4996,7 @@
     },
     "match": {
       "bytes_sha256": "d224432cbaa22b94ea98f10928447b7bbf0b46f7d965b051dd7bec299a02868f",
-      "inputs_sha256": "388585612e3ba543d46d8cbbdc46fb2079ad8269a73ff7201eaef5201d0312a1"
+      "inputs_sha256": "0540e528d4150c07bb37def2e91144d7ce40e3cee779b1b539e5431d3fd6d0a8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4976,25 +5012,23 @@
     "size": 22,
     "offset": 608768,
     "inputs": [
-      "src/campaign_class_destructors.c"
+      "src/campaign_engine_destructors.cpp",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_class.h",
+      "src/unreal_field.h",
+      "src/versus_ltcg.h",
+      "src/unreal_actor.h",
+      "src/unreal_pawn.h",
+      "src/campaign_level_info.h",
+      "src/campaign_native_classes.h"
     ],
-    "rebuilt_symbol": "@destroy_AInfo@4",
+    "rebuilt_symbol": "??1AInfo@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_class_destructors.obj src/campaign_class_destructors.c",
-    "link_bindings": {
-      "_vtable_AInfo": {
-        "va": 286024240,
-        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
-      },
-      "@conditional_destroy@4": {
-        "va": 281901616,
-        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
-      },
-      "@destroy_base_of_AInfo@4": {
-        "va": 278048032,
-        "basis": "Retail vtable, cleanup routine or base destructor referenced by the complete destructor."
-      }
-    },
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_engine_destructors.obj src/campaign_engine_destructors.cpp",
     "identification": "Complete indexed Campaign function at RVA 0x94a00. Direct call at RVA 0x94bb0 in the published unit delete-areflectionreferinfo. It installs the vtable at RVA 0x7c6230, which the published deleting destructor delete_AInfo also installs; identified as the complete AInfo destructor.",
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5004,9 +5038,23 @@
       ],
       "basis": "evidence/campaign-vc71-o2.md"
     },
+    "link_bindings": {
+      "??_7AInfo@@6B@": {
+        "va": 286024240,
+        "basis": "A class vtable at VA 0x110c6230 (file offset 0x7c6230), named by the DIR32 operand at +0x5 of ??1AInfo@@UAE@XZ; its first entry points into code."
+      },
+      "?ConditionalDestroy@UObject@@QAEHXZ": {
+        "va": 281901616,
+        "basis": "Call or jump at +0xa of ??1AInfo@@UAE@XZ; the retail operand gives VA 0x10cd7a30 (file offset 0x3d7a30), a function entry in the function map."
+      },
+      "??1AActor@@UAE@XZ": {
+        "va": 278048032,
+        "basis": "Call or jump at +0x12 of ??1AInfo@@UAE@XZ; the retail operand gives VA 0x1092ad20 (file offset 0x2ad20), a function entry in the function map."
+      }
+    },
     "match": {
       "bytes_sha256": "98909f9353f6b5a7f54da411207e06ae6d4e72e7c5432b6e17ea30ad6c1e6a7d",
-      "inputs_sha256": "bf4f74eb28ee3fae8559c02016dbd4e313d3dae89edc052640ce1423db0d0520"
+      "inputs_sha256": "6a092360db9bb11eb9349dd8e71e5ca0b1fc80a3b3ce1fa5c322b755a3db69fb"
     }
   },
   {
@@ -5049,34 +5097,24 @@
     "offset": 608848,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_engine_destructors.cpp",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_class.h",
+      "src/unreal_field.h",
+      "src/versus_ltcg.h",
+      "src/unreal_actor.h",
+      "src/unreal_pawn.h",
+      "src/campaign_level_info.h",
+      "src/campaign_native_classes.h"
     ],
-    "rebuilt_symbol": "@delete_AInfo@8",
+    "rebuilt_symbol": "??_GAInfo@@UAEPAXI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_destruction.obj src/campaign_class_destruction.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_engine_destructors.obj src/campaign_engine_destructors.cpp",
     "identification": "Stock AInfo UClass factory at RVA 0x96cf0 references the named placement constructor at RVA 0x96070. That constructor installs the vtable at RVA 0x7c6230, whose slot 3 points to this deleting destructor at RVA 0x94a50. Both paths converge before the final RET 4.",
-    "link_bindings": {
-      "_vtable_AInfo": {
-        "va": 286024240,
-        "basis": "The placement constructor at RVA 0x96070 installs this same vtable at RVA 0x960a8."
-      },
-      "@conditional_destroy@4": {
-        "va": 281901616,
-        "basis": "Shared UObject helper checks the object index and destruction flag before dispatching virtual slot 9."
-      },
-      "@destroy_base_AInfo@4": {
-        "va": 278048032,
-        "basis": "Second direct destruction call receives the same object, immediately before the release-flag test."
-      },
-      "_engine_allocator": {
-        "va": 287082656,
-        "basis": "Global allocator read on the conditional release path; slot 2 takes the original receiver."
-      }
-    },
-    "match": {
-      "bytes_sha256": "36a345bd1d8df6ed9c09b67c157d823759e0c88242e9c7f67bf62564bc3f1e18",
-      "inputs_sha256": "7fa8456045bd62cb4dd05811a9705cf9d9c2a986b8ee79d0f229563777cc5ce7"
-    },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
       "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
@@ -5084,6 +5122,28 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "??_7AInfo@@6B@": {
+        "va": 286024240,
+        "basis": "A class vtable at VA 0x110c6230 (file offset 0x7c6230), named by the DIR32 operand at +0x5 of ??_GAInfo@@UAEPAXI@Z; its first entry points into code."
+      },
+      "?ConditionalDestroy@UObject@@QAEHXZ": {
+        "va": 281901616,
+        "basis": "Call or jump at +0xa of ??_GAInfo@@UAEPAXI@Z; the retail operand gives VA 0x10cd7a30 (file offset 0x3d7a30), a function entry in the function map."
+      },
+      "??1AActor@@UAE@XZ": {
+        "va": 278048032,
+        "basis": "Call or jump at +0x11 of ??_GAInfo@@UAEPAXI@Z; the retail operand gives VA 0x1092ad20 (file offset 0x2ad20), a function entry in the function map."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 287082656,
+        "basis": "Absolute operand at +0x1e of ??_GAInfo@@UAEPAXI@Z; the retail operand gives VA 0x111c88a0."
+      }
+    },
+    "match": {
+      "bytes_sha256": "36a345bd1d8df6ed9c09b67c157d823759e0c88242e9c7f67bf62564bc3f1e18",
+      "inputs_sha256": "d5ed18ab9207a2aeacbe20a240e24cde089901d2ed3bd678ea67ae18e73a150f"
     }
   },
   {
@@ -5300,7 +5360,7 @@
     },
     "match": {
       "bytes_sha256": "23f96c7d02fcf6a5f4b75b1b6ddad8dc92065169d88049a9075b18b5dd4b4c33",
-      "inputs_sha256": "c0131204cee100c83d68fba73db78322bcc285206ed83f9ad04eb2e66b4ed714"
+      "inputs_sha256": "84a211ac22f0dfafe340a1e28ff622074ce5db61103e7dbef2b1700c85ae8e04"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5537,7 +5597,7 @@
     },
     "match": {
       "bytes_sha256": "832d4580369cd889da570814e1713dbaabf57c76f7e9fab5ffd404fec184ee5b",
-      "inputs_sha256": "e22cc69e6cf789c8f144464d998226aff1eb1251de5e55ad194dadc7bf22dfdf"
+      "inputs_sha256": "acf86471003f33daad2738369cc8d319f220cfe2de5c31ed6fbc15baea60b80a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5583,7 +5643,7 @@
     },
     "match": {
       "bytes_sha256": "e89871892ab8534c02cecc01c24f5442ddbb2c533e4029ddae353a353e45544d",
-      "inputs_sha256": "a5f5c5243a804ab195ade670aca418c21916c25bbc18110a818b7443683e39c0"
+      "inputs_sha256": "773169afd3a810587876f3b532614db226b6f9dc7ced4f83371ee0b53dee0740"
     }
   },
   {
@@ -5652,7 +5712,7 @@
     },
     "match": {
       "bytes_sha256": "2de318caea824be9958d8b915c540bd5d2d56320113e27c05cfd4e3c65e4d42f",
-      "inputs_sha256": "e894b18cf07738c4e2bca050fb9c6b37062048052eca150a199f317aa82ee414"
+      "inputs_sha256": "fd7c207a9e6678f83e10363111ec69faf2a18736ccc0fde5b4d931b81c82519e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6084,7 +6144,7 @@
     },
     "match": {
       "bytes_sha256": "c55e703290cd774f5f5da454adcf293f57f2ba7862382c409a2087d317ad4a29",
-      "inputs_sha256": "f393d994410b5b4c018115d4e5544c44930819c407ff84d6456cf177b1952d65"
+      "inputs_sha256": "0d6975935a2a3cbe3bc4a545d16c0500efcf11f6d5ac1fc3849992a94c5cbab1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6161,7 +6221,7 @@
     },
     "match": {
       "bytes_sha256": "db38bb9ae03febdea64f1b225ea8f41a5ed3232d407d8d9c81d6d314aba784f5",
-      "inputs_sha256": "e06d895821c1f4750d3a69edeeda46f7ce722b2758f13a14f5537bb9980f386c"
+      "inputs_sha256": "2192a58bc961fb4d6d6b3c10e5e91bfd187b48bb557232128864a78daa2d5ec3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6242,7 +6302,7 @@
     },
     "match": {
       "bytes_sha256": "57663ee26e56ebdabaf554af79786734ba9eeb77422b82411b89148f108b2df5",
-      "inputs_sha256": "8458b6389452e30216529c39b1ffc48a4bce0bcc2c96baaa1746d728455af87c"
+      "inputs_sha256": "5c4421a4f75db3a2d52b419cecd394ab60595ca57c0b033f9101d0f1500ddb21"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6791,7 +6851,7 @@
     },
     "match": {
       "bytes_sha256": "f267abe4e919199bce87d3a35535801abf3ca3cc9bb5c5a28b199639693091a3",
-      "inputs_sha256": "512b85ede1c97b9ec79fa8216614dd61a0ce51503714f941a06611110a1d0f10"
+      "inputs_sha256": "e6cf951e416e7a1ed1f0bb22358071d6f9be3173c021e151585081662ba2d1f6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6837,7 +6897,7 @@
     },
     "match": {
       "bytes_sha256": "e0acc0208a69a0c910da010a6a93781c46b9a9304b4f4f4ff3ee80ea9b2084cd",
-      "inputs_sha256": "ca8da4dea4f6c944750187fc3db482978a9d903ad2d816fb87049279015444a7"
+      "inputs_sha256": "193918768a260b4daf9b29cc5f12a338c253005f703ab1e90716a3bf312fee16"
     }
   },
   {
@@ -6906,7 +6966,7 @@
     },
     "match": {
       "bytes_sha256": "6d71fe4865b089381c3e1a7f80db8c624299248caf693ac0e07aa97e6fb1b7a1",
-      "inputs_sha256": "2a8c60b1ba41dc941dfab7270c4729155652004ba46a8e80b17f069aa2cfc10f"
+      "inputs_sha256": "f5a6be02984ad1cdbb63a4f8f85d98b15d9e350e46d332b1908fd23b7440d3be"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6987,7 +7047,7 @@
     },
     "match": {
       "bytes_sha256": "b55d31a5ad1374516b8335b84d9392eeee8216a397843f087ddb7da6cdf38881",
-      "inputs_sha256": "bc9f0bde07e6026303f3a548b649b887f99b0cf465e24fe1aa216076d17e110d"
+      "inputs_sha256": "343b35fa6cb2c4cefec735de6c0bf498347a749c6abd93056c6c38c14b3220c7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7067,7 +7127,7 @@
     },
     "match": {
       "bytes_sha256": "e33182b7534cb8b528cccb38fd5c750a15b691c2fc0364a9c14b76c433bd2bc4",
-      "inputs_sha256": "731a4395bdb7946b98585287fecc3e38f850ecf6627b52e7de6b612663951348"
+      "inputs_sha256": "d99c347939450c6e29f4c674fcd2724d803eff9fdcbf57657f53460154fbe004"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7115,7 +7175,7 @@
     },
     "match": {
       "bytes_sha256": "05cbae1a27c56120ad03b31a0ab10033aac0f2e9fc6a7c9729bfb204b91fbb19",
-      "inputs_sha256": "b04eb7e71c5028395ad2633aaf2b732c2ab40b518acb5d660732b5aeb77a10a0"
+      "inputs_sha256": "4939df79a92cf90a553103aa1e35bfb0911d5b68224576db749b82158f3443b1"
     }
   },
   {
@@ -12418,7 +12478,7 @@
     },
     "match": {
       "bytes_sha256": "a66da1e0e4062d3ecfb6f80899e2c988d5b956656d5201182a4694710566931d",
-      "inputs_sha256": "699316f9dd8031bc843cb32c4e3a23f6980fd6cf2c97771e4152a7bb3f1e192c"
+      "inputs_sha256": "ee8cc4b112622d2547459b862983911cd7801eee5bfc56a49df0977499697169"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14348,7 +14408,7 @@
     },
     "match": {
       "bytes_sha256": "9154b8373a9c34ff626ffb03fda2371e6c93d4acc8b98411fe266f9e21af552b",
-      "inputs_sha256": "3ed5ee34fe0bef2a3d353d43d94212084c3dec0720315a484e56e287d803b4e8"
+      "inputs_sha256": "379daf36e5761b53f1b196a721927e35984c7d4a7327663ffb0af16977eccb5d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -15752,7 +15812,7 @@
     },
     "match": {
       "bytes_sha256": "86b91d18b0875c7861650b9962f4dcedf4a9c57877663e3fd6299e8b42bc0384",
-      "inputs_sha256": "79bb7ff89b74c6c0adb9f2c452bdc89aa874c346e68a4c12a4eadbbf0c24f227"
+      "inputs_sha256": "5619fa1b41003ec3abb633e0ea7b1b38d581b84b17cf561ec155b1f6aac992f8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -15925,7 +15985,7 @@
     },
     "match": {
       "bytes_sha256": "1f2bb796d628d4bfeb490cf2c5ee92973ed4f52832e1df1489203e111e220c76",
-      "inputs_sha256": "8fd9cb9026b0ea7881de44fc7a7f2d71e2482f1704cd1da8b2abd4ef1ec45abb"
+      "inputs_sha256": "795baa61dd67e45ee9fff03bad52ed5d307195a69a92d9c8e2f167b2779d6348"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -15971,7 +16031,7 @@
     },
     "match": {
       "bytes_sha256": "8d45c8641f736863f6d2a26fb3d3fe7849771856947f0b75f34ef5d46c587ff1",
-      "inputs_sha256": "9daf0cf1f9ee9277fcb262a9beefb694e58e44adbc55dad379d157a78acacbd2"
+      "inputs_sha256": "5be9fe37536d6f72996ae63d068ef0ba886f3f6df591369c0fd0403796e8ecc3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
