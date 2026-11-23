@@ -382,6 +382,8 @@ public:
     DECLARE_NATIVE(execLockRootTrack)
     DECLARE_NATIVE(execEnableChannelNotify)
     DECLARE_NATIVE(execAnimIsInGroup)
+    DECLARE_NATIVE(execLinkSkelAnim)
+    DECLARE_NATIVE(execSetMesh)
     DECLARE_NATIVE(execSetIKFade)
     DECLARE_NATIVE(execSetCollisionSize)
     DECLARE_NATIVE(execAdd_ColorColor)

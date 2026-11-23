@@ -53,7 +53,9 @@ public:
 
     BYTE              unk_118[0x30];
     TArray<FMeshBone> RefSkeleton;
-    BYTE              unk_154[0x25c];
+    BYTE              unk_154[0xbc];
+    class UMeshAnimation *unk_210;  // linked by execLinkSkelAnim when it is given none
+    BYTE              unk_214[0x19c];
     TArray<FName>     TagAliases;
     TArray<FName>     TagNames;
     BYTE              unk_3c8[0x18];
@@ -68,7 +70,7 @@ public:
     virtual void VirtualSlot32();
     virtual void VirtualSlot33();
     virtual UMesh *GetMesh();
-    virtual void VirtualSlot35();
+    virtual void SetMesh(UMesh *NewMesh);      // named after AActor::execSetMesh, its caller
     virtual void VirtualSlot36();
     virtual void VirtualSlot37();
     virtual void VirtualSlot38();
@@ -155,6 +157,7 @@ public:
     // Named after the natives that call them.
     void LockRootTrack(INT Option);
     void EnableChannelNotify(INT Channel, INT Switch);
+    void LinkSkelAnim(class UMeshAnimation *Anim);
 };
 
 #endif // CAMPAIGN_MESH_CLASSES_H

@@ -211,22 +211,29 @@ public:
     DECLARE_NATIVE(execDivideEqual_FloatFloat)
     DECLARE_NATIVE(execDivideEqual_IntFloat)
     DECLARE_NATIVE(execClassIsChildOf)
+    DECLARE_NATIVE(execIntToString)
+    DECLARE_NATIVE(execByteToString)
+    DECLARE_NATIVE(execRotRand)
+    DECLARE_NATIVE(execMetaCast)
 #endif
 };
 
-// A class whose class object is created on first use.
-#define DECLARE_LAZY_CLASS(Name)                                                    \
+// A class of package Package whose class object is created on first use.
+#define DECLARE_LAZY_CLASS_IN(Name, Package)                                        \
     static class UClass *PrivateStaticClass;                                        \
-    static class UClass *GetPrivateStaticClass##Name(const TCHAR *Package);         \
+    static class UClass *GetPrivateStaticClass##Name(const TCHAR *InPackage);       \
     static void InitializePrivateStaticClass##Name();                               \
     static class UClass *StaticClass()                                              \
     {                                                                               \
         if (!PrivateStaticClass)                                                    \
         {                                                                           \
-            PrivateStaticClass = GetPrivateStaticClass##Name(L"Engine");            \
+            PrivateStaticClass = GetPrivateStaticClass##Name(Package);              \
             InitializePrivateStaticClass##Name();                                   \
         }                                                                           \
         return PrivateStaticClass;                                                  \
     }
+
+// A class of the Engine package whose class object is created on first use.
+#define DECLARE_LAZY_CLASS(Name) DECLARE_LAZY_CLASS_IN(Name, L"Engine")
 
 #endif // UNREAL_OBJECT_H
