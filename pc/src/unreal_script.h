@@ -55,7 +55,13 @@ struct FFrame : public FOutputDevice {
 
 // The frame of an object that runs state code.
 struct FStateFrame : public FFrame {
+#ifdef SCCT_VERSUS
     BYTE unk_14[0x14];
+#else
+    BYTE          unk_14[0x8];
+    class UState *StateNode;    // the state the object is in
+    BYTE          unk_20[0x8];
+#endif
     INT  LatentAction;          // native index of the latent function in progress, or 0
 };
 

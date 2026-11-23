@@ -73,7 +73,11 @@ public:
     FStateFrame  *StateFrame;   // script execution state, when the object runs state code
     BYTE          unk_10[0xc];
     DWORD         ObjectFlags;  // ObjectFlag_ bits
+#ifdef SCCT_VERSUS
     BYTE          unk_20[0x4];
+#else
+    FName         Name;         // the object's name; execGetStateName returns the state's
+#endif
     class UClass *Class;
 
     // Destroys the object once: marks it, then calls Destroy.
@@ -153,6 +157,30 @@ public:
     DECLARE_NATIVE(execStructCmpNe)
     DECLARE_NATIVE(execDynamicLoadObject)
     DECLARE_NATIVE(execFindObject)
+#ifndef SCCT_VERSUS
+    // Campaign-only declarations: keeping them out of the Versus build leaves its translation
+    // units, and the compiler's numbering of their EH data, unchanged.
+    FName GetFName() const { return Name; }
+    // Named after the natives that call them; no symbol evidence names these.
+    void SaveConfig(DWORD Flags = 0x1000, const TCHAR *Filename = 0);
+    static void ResetConfig(class UClass *Class, const TCHAR *Section, INT Option3);
+
+    DECLARE_NATIVE(execNothing)
+    DECLARE_NATIVE(execIterator)
+    DECLARE_NATIVE(execEndFunctionParms)
+    DECLARE_NATIVE(execFinalFunction)
+    DECLARE_NATIVE(execFRand)
+    DECLARE_NATIVE(execLocalFRand)
+    DECLARE_NATIVE(execSaveConfig)
+    DECLARE_NATIVE(execResetConfig)
+    DECLARE_NATIVE(execVRand)
+    DECLARE_NATIVE(execLocalVariable)
+    DECLARE_NATIVE(execNativeParm)
+    DECLARE_NATIVE(execDynArrayLength)
+    DECLARE_NATIVE(execSubtract_PreFloat)
+    DECLARE_NATIVE(execBoolVariable)
+    DECLARE_NATIVE(execGetStateName)
+#endif
 };
 
 // A class whose class object is created on first use.
