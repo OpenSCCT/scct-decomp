@@ -1,5 +1,7 @@
-// campaign_leaf_76c8f0.cpp -- thiscall method at VA 0x1106c8f0: calls the method at VA 0x1106cdf0 on the object
-// at 0x30, then the method at VA 0x110712d0 on the object at 0x24. All names are invented.
+// campaign_leaf_76c8f0.cpp -- one function at file offset 0x76c8f0, preferred VA 0x1106c8f0. It
+// calls the method at VA 0x1106cdf0 on the object at 0x30 and the method at VA 0x110712d0 on the
+// object at 0x24. The class, method and member names are invented; the offset and the addresses
+// are the binary's.
 
 class UnkType_1106cdf0
 {
@@ -18,11 +20,9 @@ class UnkType_1106c8f0
 public:
     void Unk_1106c8f0();
 
-private:
-    int unk_00[9];
+    unsigned char unk_0[0x24];
     UnkType_110712d0* unk_24;
-    int unk_28;
-    int unk_2c;
+    unsigned char unk_28[0x30 - 0x28];
     UnkType_1106cdf0* unk_30;
 };
 

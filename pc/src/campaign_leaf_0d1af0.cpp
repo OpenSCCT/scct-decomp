@@ -1,13 +1,13 @@
-// campaign_leaf_0d1af0.cpp -- method at VA 0x109d1af0 taking an index: when the index is inside the
-// array of 0x80-byte records at 0x94 (count at 0x98), reads the byte at 0x44 of that record as a
-// second index into the pointer array at 0x78 (count at 0x7c) and returns the pointer found there
-// when it is set; otherwise returns the pointer at 0x210 of the object virtual slot 34 returns. The
-// class, member and method names are invented; the offsets and the slot are the binary's.
+// campaign_leaf_0d1af0.cpp -- method at VA 0x109d1af0: for an index within the 128-byte entry array
+// at 0x94 (count at 0x98), reads the byte at 0x44 of that entry as a second index and, when it is
+// within the pointer array at 0x78 (count at 0x7c) and the pointer there is set, returns it;
+// otherwise returns the value at 0x210 of the object virtual slot 34 (vtable offset 0x88) returns.
+// The class, member and method names are invented; the offsets, the sizes and the slot are the
+// binary's.
 
-class UnkType_109d1af0_Item;
-
-struct UnkType_109d1af0_Record
+class UnkType_109d1af0_Entry
 {
+public:
     unsigned char unk_00[0x44];
     unsigned char unk_44;
     unsigned char unk_45[0x80 - 0x45];
@@ -16,8 +16,8 @@ struct UnkType_109d1af0_Record
 class UnkType_109d1af0_Default
 {
 public:
-    unsigned char unk_00[0x210];
-    UnkType_109d1af0_Item* unk_210;
+    unsigned char unk_000[0x210];
+    void* unk_210;
 };
 
 class UnkType_109d1af0
@@ -59,19 +59,19 @@ public:
     virtual void VirtualSlot33();
     virtual UnkType_109d1af0_Default* VirtualSlot34();
 
-    UnkType_109d1af0_Item* Unk_109d1af0(int Index);
+    void* Unk_109d1af0(int Index);
 
 private:
-    unsigned char unk_04[0x78 - 0x04];
-    UnkType_109d1af0_Item** unk_78;
+    unsigned char unk_04[0x74];
+    void** unk_78;
     int unk_7c;
-    unsigned char unk_80[0x94 - 0x80];
-    UnkType_109d1af0_Record* unk_94;
+    unsigned char unk_80[0x14];
+    UnkType_109d1af0_Entry* unk_94;
     int unk_98;
 };
 
 // UnkType_109d1af0::Unk_109d1af0
-UnkType_109d1af0_Item* UnkType_109d1af0::Unk_109d1af0(int Index)
+void* UnkType_109d1af0::Unk_109d1af0(int Index)
 {
     if ( Index >= 0 && Index < unk_98 )
     {

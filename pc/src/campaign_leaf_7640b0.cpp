@@ -1,8 +1,8 @@
-// campaign_leaf_7640b0.cpp -- thiscall method at VA 0x110640b0: returns 0 when the pointer at 0x70 is
-// null, otherwise whether the thirteenth virtual method of that object returns 0. The class and
-// method names are invented.
+// campaign_leaf_7640b0.cpp -- one function at file offset 0x7640b0, preferred VA 0x110640b0. It
+// returns whether virtual slot 12 of the object at 0x70 returns zero, or 0 when there is no
+// object. The class, method and member names are invented; the offset is the binary's.
 
-class UnkType_110640b0_70
+class UnkType_110640b0_Object
 {
 public:
     virtual void VirtualSlot0();
@@ -25,15 +25,14 @@ class UnkType_110640b0
 public:
     int Unk_110640b0();
 
-private:
-    int unk_00[28];
-    UnkType_110640b0_70* unk_70;
+    unsigned char unk_0[0x70];
+    UnkType_110640b0_Object* unk_70;
 };
 
 // UnkType_110640b0::Unk_110640b0
 int UnkType_110640b0::Unk_110640b0()
 {
-    if ( unk_70 )
+    if ( unk_70 != 0 )
     {
         return unk_70->VirtualSlot12() == 0;
     }

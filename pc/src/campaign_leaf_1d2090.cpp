@@ -2,21 +2,10 @@
 // global at VA 0x1120aa44, made with the 12-byte class's copy constructor at VA 0x1090b9a0. The
 // class, function and global names are invented; the addresses are the binary's.
 
-class UnkType_10ad2090_1090b9a0
-{
-public:
-    UnkType_10ad2090_1090b9a0(const UnkType_10ad2090_1090b9a0& Other);
-
-private:
-    int unk_00;
-    int unk_04;
-    int unk_08;
-};
-
-extern UnkType_10ad2090_1090b9a0 GUnk_1120aa44;
+#include "campaign_global_1120aa44.h"
 
 // Unk_10ad2090
-UnkType_10ad2090_1090b9a0 Unk_10ad2090()
+UnkType_1120aa44 Unk_10ad2090()
 {
     return GUnk_1120aa44;
 }

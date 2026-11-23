@@ -1,34 +1,35 @@
-// campaign_leaf_73bc40.cpp -- thiscall method at VA 0x1103bc40: stores 0x11 in the byte at 0x15 and
-// the result of the method at VA 0x1103bc60 at 0x18 of the object at 0x04, then returns the member
-// at 0x00. The class and method names are invented.
+// campaign_leaf_73bc40.cpp -- one function at file offset 0x73bc40, preferred VA 0x1103bc40. It
+// stores 0x11 in the byte at 0x15 and the result of the method at VA 0x1103bc60 in the word at
+// 0x18 of the record at 0x4, and returns the word at 0x0. The class, method and member names are
+// invented; the offset and the callee's address are the binary's.
 
-struct UnkType_1103bc40_04
+struct UnkType_1103bc40_Record
 {
-    int unk_00[5];
-    unsigned char unk_14;
+    unsigned char unk_0[0x15];
     unsigned char unk_15;
-    unsigned char unk_16;
-    unsigned char unk_17;
+    unsigned char unk_16[0x18 - 0x16];
     int unk_18;
 };
 
 class UnkType_1103bc40
 {
 public:
-    int Unk_1103bc60();
     int Unk_1103bc40();
+    int Unk_1103bc60();
 
-private:
-    int unk_00;
-    UnkType_1103bc40_04* unk_04;
+    int unk_0;
+    UnkType_1103bc40_Record* unk_4;
 };
 
 // UnkType_1103bc40::Unk_1103bc40
 int UnkType_1103bc40::Unk_1103bc40()
 {
-    int Value = Unk_1103bc60();
-    UnkType_1103bc40_04* Object = unk_04;
-    Object->unk_15 = 0x11;
-    Object->unk_18 = Value;
-    return unk_00;
+    UnkType_1103bc40_Record* Record;
+    int Value;
+
+    Value = Unk_1103bc60();
+    Record = unk_4;
+    Record->unk_15 = 0x11;
+    Record->unk_18 = Value;
+    return unk_0;
 }
