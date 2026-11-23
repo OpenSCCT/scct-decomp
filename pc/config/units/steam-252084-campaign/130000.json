@@ -2921,7 +2921,7 @@
     },
     "match": {
       "bytes_sha256": "de09b1f7ef5ef38c58d3456a992fd7db098d7c876d0515bb8d27489df44e56d0",
-      "inputs_sha256": "b93e16019f261e36103687c37b27aef6b7e5af05d69f92490dfd383afade6578"
+      "inputs_sha256": "7ac5e9150c3b3f616d22de462aa6e417921d50fe4b21df9f3ac8393902a3c4b9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3056,7 +3056,7 @@
     },
     "match": {
       "bytes_sha256": "c6ee4ae321249a51309302efbe53fd5298d9aed6383f40b37dab2d7f866c07df",
-      "inputs_sha256": "fa87f09f7c44222db9711f52d90a58c97b1bd50eaec9f154c86ac86cd3b9193d"
+      "inputs_sha256": "3507cac50ebe86cb17263bf03ae89eb199f08e81afb5b387f7c6e861cd0008c4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4619,7 +4619,7 @@
     },
     "match": {
       "bytes_sha256": "236e6325ad309b2ec5a32676dfa1878a355c8bd519b72c74e4a531f2fcd4194b",
-      "inputs_sha256": "4025b973b1b44e84c5bf578dd19aa2a0ead7319a4580d6f1d6905723fbeaebf7"
+      "inputs_sha256": "4eabd94c676d0765124f5a22e278f437312e60706fd3d0c29f335ce46030d2a7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4728,34 +4728,25 @@
     "offset": 1285024,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_engine_destructors.cpp",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_class.h",
+      "src/unreal_field.h",
+      "src/versus_ltcg.h",
+      "src/unreal_property.h",
+      "src/unreal_actor.h",
+      "src/unreal_pawn.h",
+      "src/campaign_level_info.h",
+      "src/campaign_native_classes.h"
     ],
-    "rebuilt_symbol": "@delete_UBoolProperty@8",
+    "rebuilt_symbol": "??_GUBoolProperty@@UAEPAXI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_destruction.obj src/campaign_class_destruction.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_engine_destructors.obj src/campaign_engine_destructors.cpp",
     "identification": "Stock UBoolProperty UClass factory at RVA 0x3ec5c0 references the named placement constructor at RVA 0x3ec300. That constructor installs the vtable at RVA 0x7d4818, whose slot 3 points to this deleting destructor at RVA 0x139ba0. Both paths converge before the final RET 4.",
-    "link_bindings": {
-      "_vtable_UBoolProperty": {
-        "va": 286083096,
-        "basis": "The placement constructor at RVA 0x3ec300 installs this same vtable at RVA 0x3ec31f."
-      },
-      "@conditional_destroy@4": {
-        "va": 281901616,
-        "basis": "Shared UObject helper checks the object index and destruction flag before dispatching virtual slot 9."
-      },
-      "@destroy_base_UBoolProperty@4": {
-        "va": 278616464,
-        "basis": "Second direct destruction call receives the same object, immediately before the release-flag test."
-      },
-      "_engine_allocator": {
-        "va": 287082656,
-        "basis": "Global allocator read on the conditional release path; slot 2 takes the original receiver."
-      }
-    },
-    "match": {
-      "bytes_sha256": "7eb7f8b80fad420bc082784f1a17b930b847c4866f4471f6af567343c4c42735",
-      "inputs_sha256": "eb8b87387a17d6c6b2863e7103c1df05ba745c5ad72d36b47b1d8d88823c58a7"
-    },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
       "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
@@ -4763,6 +4754,28 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "??_7UBoolProperty@@6B@": {
+        "va": 286083096,
+        "basis": "A class vtable at VA 0x110d4818 (file offset 0x7d4818), named by the DIR32 operand at +0x5 of ??_GUBoolProperty@@UAEPAXI@Z; its first entry points into code."
+      },
+      "?ConditionalDestroy@UObject@@QAEHXZ": {
+        "va": 281901616,
+        "basis": "Call or jump at +0xa of ??_GUBoolProperty@@UAEPAXI@Z; the retail operand gives VA 0x10cd7a30 (file offset 0x3d7a30), a function entry in the function map."
+      },
+      "??1UProperty@@UAE@XZ": {
+        "va": 278616464,
+        "basis": "Call or jump at +0x11 of ??_GUBoolProperty@@UAEPAXI@Z; the retail operand gives VA 0x109b5990 (file offset 0xb5990), a function entry in the function map."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 287082656,
+        "basis": "Absolute operand at +0x1e of ??_GUBoolProperty@@UAEPAXI@Z; the retail operand gives VA 0x111c88a0."
+      }
+    },
+    "match": {
+      "bytes_sha256": "7eb7f8b80fad420bc082784f1a17b930b847c4866f4471f6af567343c4c42735",
+      "inputs_sha256": "a348a7e305886774a5eaa562cccaf4c409d53137c4802ca0c3fd7689d5ff7fa3"
     }
   },
   {
@@ -5615,7 +5628,7 @@
     },
     "match": {
       "bytes_sha256": "220e19619029e16c07949f4b3f1b9b72f8d4dc55b009a82ecf9a6674df790e88",
-      "inputs_sha256": "b512d12c644a11bf8f38905ec346c6fc87960c1b5a1ec0829c3c5a62450e3ccd"
+      "inputs_sha256": "419fc5fd10904933e62b943ab12770bace6d7dfe9333d24b90cfc3af7bb33ecf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

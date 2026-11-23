@@ -2,6 +2,7 @@
 #include "unreal_object.h"
 #include "unreal_containers.h"
 #include "unreal_class.h"
+#include "unreal_property.h"
 #include "unreal_actor.h"
 #include "unreal_pawn.h"
 #include "campaign_level_info.h"
@@ -9,6 +10,12 @@
 
 // UState::~UState
 UState::~UState()
+{
+    ConditionalDestroy();
+}
+
+// UBoolProperty::~UBoolProperty
+UBoolProperty::~UBoolProperty()
 {
     ConditionalDestroy();
 }
