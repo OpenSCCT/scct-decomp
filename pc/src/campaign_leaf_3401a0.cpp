@@ -19,7 +19,10 @@ class UnkType_1090ba70
 public:
     ~UnkType_1090ba70();
 
-    unsigned char unk_0[0xc];
+private:
+    int unk_00;
+    int unk_04;
+    int unk_08;
 };
 
 class UnkType_10c401a0_Middle : public UnkType_10c401a0_Base

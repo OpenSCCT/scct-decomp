@@ -20,13 +20,16 @@ class UnkType_1090ba70
 public:
     ~UnkType_1090ba70();
 
-    unsigned char unk_0[0xc];
+private:
+    int unk_00;
+    int unk_04;
+    int unk_08;
 };
 
-class UnkType_1090d050
+class UnkType_10ce8560_1090d050
 {
 public:
-    ~UnkType_1090d050()
+    ~UnkType_10ce8560_1090d050()
     {
         Unk_1090d050(0, unk_4);
         if ( unk_0 != 0 )
@@ -52,7 +55,7 @@ public:
     void Unk_10cd7a30();
 
     UnkType_1090ba70 unk_2c;
-    UnkType_1090d050 unk_38;
+    UnkType_10ce8560_1090d050 unk_38;
 };
 
 // UnkType_10ce8560::~UnkType_10ce8560

@@ -40,10 +40,22 @@ public:
 class UnkType_10c06b80
 {
 public:
+    ~UnkType_10c06b80()
+    {
+        Unk_10c06b80(0, unk_4);
+        if ( unk_0 != 0 )
+        {
+            GUnk_111c88a0->Free(unk_0);
+        }
+        unk_0 = 0;
+        unk_8 = 0;
+        unk_4 = 0;
+    }
+
     void Unk_10c05e70(int Index, int Count, int Size);
     void Unk_10c06b80(int Index, int Count);
 
-    UnkType_10c06b80_Element* unk_0;
+    void* unk_0;
     int unk_4;
     int unk_8;
 };
@@ -55,7 +67,7 @@ void UnkType_10c06b80::Unk_10c06b80(int Index, int Count)
 
     for ( Element = Index; Element < Index + Count; Element++ )
     {
-        unk_0[Element].~UnkType_10c06b80_Element();
+        ((UnkType_10c06b80_Element*)unk_0)[Element].~UnkType_10c06b80_Element();
     }
     Unk_10c05e70(Index, Count, sizeof(UnkType_10c06b80_Element));
 }
