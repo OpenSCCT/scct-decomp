@@ -2,14 +2,7 @@
 // passes it to the second virtual method of the object the global at VA 0x1131b3d8 points to. The
 // class, method and global names are invented.
 
-class UnkType_1131b3d8
-{
-public:
-    virtual void VirtualSlot0();
-    virtual void VirtualSlot1(void* Pointer);
-};
-
-extern UnkType_1131b3d8* GUnk_1131b3d8;
+#include "campaign_global_1131b3d8.h"
 
 class UnkType_10e80e30
 {

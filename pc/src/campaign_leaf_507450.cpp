@@ -3,14 +3,7 @@
 // virtual method in slot 1 of the global object at 0x1131b3d8. The class, method, member and
 // global names are invented; the offset and the bytes are the binary's.
 
-class UnkType_1131b3d8
-{
-public:
-    virtual void VirtualSlot0();
-    virtual void VirtualSlot1(void* Pointer);
-};
-
-extern UnkType_1131b3d8* GUnk_1131b3d8;
+#include "campaign_global_1131b3d8.h"
 
 class UnkType_10e07450
 {
