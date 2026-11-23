@@ -84,6 +84,8 @@ public:
     virtual ~UState();
 
     BYTE unk_6c[0x218];
+
+    UState *GetSuperState() const { return (UState *)SuperField; }
 };
 
 #endif // SCCT_VERSUS

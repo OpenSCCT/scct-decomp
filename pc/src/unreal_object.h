@@ -49,7 +49,13 @@ public:
     virtual void VirtualSlot10();
     virtual void VirtualSlot11();
     virtual void VirtualSlot12();
+#ifdef SCCT_VERSUS
     virtual void VirtualSlot13();
+#else
+    // Jumps to a label of the state code. Named from execGotoLabel's error message; the other
+    // two parameters are not identified.
+    virtual UBOOL GotoLabel(FName Label, INT Option2, INT Option3);
+#endif
     virtual void VirtualSlot14();
     virtual void VirtualSlot15();
     virtual void VirtualSlot16();
@@ -180,6 +186,27 @@ public:
     DECLARE_NATIVE(execSubtract_PreFloat)
     DECLARE_NATIVE(execBoolVariable)
     DECLARE_NATIVE(execGetStateName)
+    DECLARE_NATIVE(execNotEqual_ObjectObject)
+    DECLARE_NATIVE(execEqualEqual_ObjectObject)
+    DECLARE_NATIVE(execNotEqual_NameName)
+    DECLARE_NATIVE(execEqualEqual_NameName)
+    DECLARE_NATIVE(execNotEqual_FloatFloat)
+    DECLARE_NATIVE(execEqualEqual_FloatFloat)
+    DECLARE_NATIVE(execPow)
+    DECLARE_NATIVE(execMultiplyMultiply_FloatFloat)
+    DECLARE_NATIVE(execPercent_FloatFloat)
+    DECLARE_NATIVE(execDivide_FloatFloat)
+    DECLARE_NATIVE(execXorXor_BoolBool)
+    DECLARE_NATIVE(execAcos)
+    DECLARE_NATIVE(execAbs)
+    DECLARE_NATIVE(execRand)
+    DECLARE_NATIVE(execRotatorToBool)
+    DECLARE_NATIVE(execChr)
+    DECLARE_NATIVE(execDynamicCast)
+    DECLARE_NATIVE(execIsA)
+    DECLARE_NATIVE(execIsInState)
+    DECLARE_NATIVE(execNameToString)
+    DECLARE_NATIVE(execGotoLabel)
 #endif
 };
 
