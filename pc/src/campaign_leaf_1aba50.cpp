@@ -3,15 +3,7 @@
 // object the global at VA 0x111c88a0 points to. The class, member and global names are invented;
 // the offsets and the addresses are the binary's.
 
-class UnkType_10aaba50_111c88a0
-{
-public:
-    virtual void VirtualSlot0();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2(void* Data);
-};
-
-extern UnkType_10aaba50_111c88a0* GUnk_111c88a0;
+#include "campaign_global_111c88a0.h"
 
 class UnkType_10aaba50
 {
@@ -26,5 +18,5 @@ private:
 // UnkType_10aaba50::~UnkType_10aaba50
 UnkType_10aaba50::~UnkType_10aaba50()
 {
-    GUnk_111c88a0->VirtualSlot2(unk_08);
+    GUnk_111c88a0->Free(unk_08);
 }

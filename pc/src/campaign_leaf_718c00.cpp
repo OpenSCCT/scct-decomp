@@ -1,27 +1,30 @@
-// campaign_leaf_718c00.cpp -- one function at file offset 0x718c00, preferred VA 0x11018c00. A
-// constructor: it runs the base constructor at VA 0x10e681e0 and zeroes the words at 0x4 and 0x8.
-// The class names are invented; the offset and the addresses are the binary's.
+// campaign_leaf_718c00.cpp -- constructor at VA 0x11018c00: constructs the 4-byte member at 0x00 with the
+// constructor at VA 0x10e681e0, then clears the members at 0x04 and 0x08. The class names are invented; the offsets
+// and addresses are the binary's.
 
 class UnkType_10e681e0
 {
 public:
     UnkType_10e681e0();
 
-    int unk_0;
+private:
+    int unk_00;
 };
 
-class UnkType_11018c00 : public UnkType_10e681e0
+class UnkType_11018c00
 {
 public:
     UnkType_11018c00();
 
-    int unk_4;
-    int unk_8;
+private:
+    UnkType_10e681e0 unk_00;
+    int unk_04;
+    int unk_08;
 };
 
 // UnkType_11018c00::UnkType_11018c00
 UnkType_11018c00::UnkType_11018c00()
 {
-    unk_4 = 0;
-    unk_8 = 0;
+    unk_04 = 0;
+    unk_08 = 0;
 }

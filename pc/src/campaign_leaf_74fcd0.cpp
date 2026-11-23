@@ -1,7 +1,5 @@
-// campaign_leaf_74fcd0.cpp -- one function at file offset 0x74fcd0, preferred VA 0x1104fcd0. It
-// calls the method at VA 0x11056950 with its two arguments on the object returned by the function
-// at VA 0x11056900. The class and function names are invented; the offset and the addresses are
-// the binary's.
+// campaign_leaf_74fcd0.cpp -- free function at VA 0x1104fcd0: calls the method at VA 0x11056950 with its two
+// arguments on the object returned by VA 0x11056900. All names are invented.
 
 class UnkType_11056900
 {
@@ -9,6 +7,7 @@ public:
     void Unk_11056950(int First, int Second);
     void Unk_11056d70(int Value);
     void Unk_11056db0(int Value);
+    void Unk_11057270();
     void Unk_11057640(int Value);
     void Unk_11057680(int Value);
     void Unk_11057790(int Value);
