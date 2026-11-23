@@ -94,6 +94,9 @@ extern class UProperty *GProperty;
 #define P_GET_FLOAT_REF(Var) \
     FLOAT Var##T = 0.0f; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
     FLOAT *Var = GPropAddr ? (FLOAT *)GPropAddr : &Var##T
+#define P_GET_INT_REF(Var) \
+    INT Var##T = 0; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
+    INT *Var = GPropAddr ? (INT *)GPropAddr : &Var##T
 #define P_GET_NAME_REF(Var) \
     FName Var##T; Var##T.Index = 0; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
     FName *Var = GPropAddr ? (FName *)GPropAddr : &Var##T

@@ -78,11 +78,13 @@ public:
     virtual void VirtualSlot42();
     virtual void VirtualSlot43();
     virtual void VirtualSlot44();
-    virtual UBOOL HasAnim(FName Sequence);     // named after AActor::execHasAnim, its caller
+    // Returns the animation named Sequence, or 0 (execHasAnim tests it, execAnimIsInGroup passes it
+    // to AnimIsInGroup). Name invented.
+    virtual void *FindAnim(FName Sequence);
     virtual void VirtualSlot46();
     virtual void VirtualSlot47();
     virtual void VirtualSlot48();
-    virtual void VirtualSlot49();
+    virtual UBOOL AnimIsInGroup(void *Anim, FName Group); // named after AActor::execAnimIsInGroup
     virtual void VirtualSlot50();
     virtual void VirtualSlot51();
     virtual void VirtualSlot52();
@@ -90,7 +92,7 @@ public:
     virtual void VirtualSlot54();
     virtual void VirtualSlot55();
     virtual void VirtualSlot56();
-    virtual void VirtualSlot57();
+    virtual void StopAnimating();              // named after AActor::execStopAnimating, its caller
     virtual void VirtualSlot58();
     virtual void VirtualSlot59();
     virtual UBOOL IsAnimTweening(INT Channel); // named after AActor::execIsTweening, its caller
@@ -138,7 +140,9 @@ public:
 
     BYTE                unk_78[0x24];
     TArray<FBoneScaler> Scalers;
-    BYTE                unk_a8[0x2f4];
+    BYTE                unk_a8[0x14];
+    INT                 unk_bc;     // read by AActor::execGetNotifyChannel
+    BYTE                unk_c0[0x2dc];
 
     UBOOL SetBoneScale(INT Slot, FLOAT BoneScale, FName BoneName);
     void SetBoneDirection(FName BoneName, FRotator BoneTurn, FVector BoneTrans, FLOAT Alpha, INT Space);
@@ -148,6 +152,9 @@ public:
     void SetBoneLocation(FName BoneName, FVector BoneTrans, FLOAT Alpha, FLOAT BlendTime, INT Space);
     void SetBoneRotation(FName BoneName, FRotator BoneTurn, INT Space, FLOAT Alpha, FLOAT BlendTime,
                          INT bAdditive, INT bExtra);
+    // Named after the natives that call them.
+    void LockRootTrack(INT Option);
+    void EnableChannelNotify(INT Channel, INT Switch);
 };
 
 #endif // CAMPAIGN_MESH_CLASSES_H

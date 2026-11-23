@@ -207,6 +207,10 @@ public:
     DECLARE_NATIVE(execIsInState)
     DECLARE_NATIVE(execNameToString)
     DECLARE_NATIVE(execGotoLabel)
+    DECLARE_NATIVE(execComplementEqual_FloatFloat)
+    DECLARE_NATIVE(execDivideEqual_FloatFloat)
+    DECLARE_NATIVE(execDivideEqual_IntFloat)
+    DECLARE_NATIVE(execClassIsChildOf)
 #endif
 };
 

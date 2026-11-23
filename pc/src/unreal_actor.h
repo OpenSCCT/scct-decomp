@@ -186,7 +186,7 @@ public:
     virtual void VirtualSlot102();
     virtual void PlayAnim(INT Channel, FName Sequence, FLOAT Rate, FLOAT TweenTime, INT bLoop,
                           INT A, INT B, INT C);
-    virtual void VirtualSlot104();
+    virtual void AnimBlendToAlpha(INT Channel, FLOAT DestAlpha, FLOAT TweenTime);
     virtual void VirtualSlot105();
     virtual void VirtualSlot106();
     virtual void VirtualSlot107();
@@ -376,6 +376,12 @@ public:
     DECLARE_NATIVE(execSetVolumeLineValue)
     DECLARE_NATIVE(execIsTweening)
     DECLARE_NATIVE(execHasAnim)
+    DECLARE_NATIVE(execStopAnimating)
+    DECLARE_NATIVE(execGetNotifyChannel)
+    DECLARE_NATIVE(execAnimBlendToAlpha)
+    DECLARE_NATIVE(execLockRootTrack)
+    DECLARE_NATIVE(execEnableChannelNotify)
+    DECLARE_NATIVE(execAnimIsInGroup)
     DECLARE_NATIVE(execSetIKFade)
     DECLARE_NATIVE(execSetCollisionSize)
     DECLARE_NATIVE(execAdd_ColorColor)

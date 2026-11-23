@@ -11,7 +11,7 @@ void AActor::execHasAnim(FFrame &Stack, RESULT_DECL)
     if (Mesh)
     {
         Mesh->MeshGetInstance(this);
-        *(DWORD *)Result = MeshInstance->HasAnim(Sequence) != 0;
+        *(DWORD *)Result = MeshInstance->FindAnim(Sequence) != 0;
     }
     else
         Stack.Logf(L"HasAnim: No mesh");
