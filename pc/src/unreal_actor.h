@@ -90,6 +90,17 @@ public:
 #else // Campaign
 #include "unreal_math.h"
 
+// Native indices of the latent poll functions that a latent native leaves in
+// FStateFrame::LatentAction, from the Campaign native registration.
+enum EPollSlowFuncs {
+    EPOLL_FinishInterpolation = 302,    // AActor::execPollFinishInterpolation
+    EPOLL_Sleep               = 384,    // AActor::execPollSleep
+    EPOLL_FinishAnim          = 385,    // AActor::execPollFinishAnim
+    EPOLL_FinishSequence      = 386,    // AActor::execPollFinishSequence
+    EPOLL_509                 = 509,    // registered without a name; set by FinishRotation
+    EPOLL_528                 = 528     // registered without a name; set by WaitForLanding
+};
+
 // Engine.Actor: 0x2b4 bytes, 166 virtual functions
 class AActor : public UObject {
 public:
@@ -175,7 +186,7 @@ public:
     virtual void VirtualSlot102();
     virtual void PlayAnim(INT Channel, FName Sequence, FLOAT Rate, FLOAT TweenTime, INT bLoop,
                           INT A, INT B, INT C);
-    virtual void VirtualSlot104();
+    virtual void AnimBlendToAlpha(INT Channel, FLOAT DestAlpha, FLOAT TweenTime);
     virtual void VirtualSlot105();
     virtual void VirtualSlot106();
     virtual void VirtualSlot107();
@@ -244,13 +255,16 @@ public:
     BITFIELD             unk_30_0 : 25;
     BITFIELD             bCollideActors : 1;    // the actor is in the level's collision hash
     BITFIELD             unk_30_26 : 6;
-    BYTE                 unk_34[0x20];
+    BYTE                 unk_34[0x18];
+    BYTE                 unk_4c;        // movement mode: WaitForLanding waits while it is 2
+    BYTE                 unk_4d[0x7];
     FName                Tag;
     BYTE                 unk_58[0xc];
     class UMeshInstance *MeshInstance;
     BYTE                 unk_68[0x4];
     AActor              *Owner;
-    BYTE                 unk_70[0xc];
+    BYTE                 unk_70[0x8];
+    class ALevelInfo    *Level;         // the level's info actor (name invented)
     class ULevel        *XLevel;        // the level the actor is in
     BYTE                 unk_80[0x4];
     class APawn         *Instigator;
@@ -288,6 +302,12 @@ public:
     UBOOL AttachToBone(AActor *Attachment, const FName &BoneName, INT Slot, INT Option4, INT Option5,
                        INT Option6, INT Option7, FVector RelLocation, FRotator RelRotation);
     class ULevel *GetLevel() const { return XLevel; }
+    // Named after execSetDrawType, its caller. The parameter is passed as a full word (an
+    // enumeration, most likely), although the script passes a byte.
+    void SetDrawType(INT NewDrawType);
+    // Named after the natives that call them.
+    void SetIKFade(FLOAT Option1, FLOAT Option2);
+    void SetCollisionSize(FLOAT NewRadius, FLOAT NewHeight, INT Option3);
 
     DECLARE_NATIVE(execPollFinishAnim)
     DECLARE_NATIVE(execSetRotation)
@@ -328,6 +348,47 @@ public:
     DECLARE_NATIVE(execPlaySound)
     DECLARE_NATIVE(execTraceBone)
     DECLARE_NATIVE(execTrace)
+    DECLARE_NATIVE(execPollFinishSequence)
+    DECLARE_NATIVE(execPollSleep)
+    DECLARE_NATIVE(execFinishInterpolation)
+    DECLARE_NATIVE(execDestroy)
+    DECLARE_NATIVE(execStopAllSounds)
+    DECLARE_NATIVE(execVerifyOcclusion)
+    DECLARE_NATIVE(execFlushRequests)
+    DECLARE_NATIVE(execAddMaskingFadeOut)
+    DECLARE_NATIVE(execNotifyAudioEndConversation)
+    DECLARE_NATIVE(execIsGameOver)
+    DECLARE_NATIVE(execIsAConversationPlaying)
+    DECLARE_NATIVE(execStopAllSoundsType)
+    DECLARE_NATIVE(execStartFadeOut)
+    DECLARE_NATIVE(execSetLaserMicSession)
+    DECLARE_NATIVE(execSetReverbEffect)
+    DECLARE_NATIVE(execResumeSound)
+    DECLARE_NATIVE(execPauseSound)
+    DECLARE_NATIVE(execGetVolumeLineValue)
+    DECLARE_NATIVE(execSleep)
+    DECLARE_NATIVE(execFinishAnim)
+    DECLARE_NATIVE(execSetDrawType)
+    DECLARE_NATIVE(execStopAllVoicesActor)
+    DECLARE_NATIVE(execIsPlayingAnyActor)
+    DECLARE_NATIVE(execIsPlaying)
+    DECLARE_NATIVE(execGetSoundPosition)
+    DECLARE_NATIVE(execSetVolumeLineValue)
+    DECLARE_NATIVE(execIsTweening)
+    DECLARE_NATIVE(execHasAnim)
+    DECLARE_NATIVE(execStopAnimating)
+    DECLARE_NATIVE(execGetNotifyChannel)
+    DECLARE_NATIVE(execAnimBlendToAlpha)
+    DECLARE_NATIVE(execLockRootTrack)
+    DECLARE_NATIVE(execEnableChannelNotify)
+    DECLARE_NATIVE(execAnimIsInGroup)
+    DECLARE_NATIVE(execLinkSkelAnim)
+    DECLARE_NATIVE(execSetMesh)
+    DECLARE_NATIVE(execGetSoundDuration)
+    DECLARE_NATIVE(execSetIKFade)
+    DECLARE_NATIVE(execSetCollisionSize)
+    DECLARE_NATIVE(execAdd_ColorColor)
+    DECLARE_NATIVE(execSubtract_ColorColor)
 };
 
 #endif // SCCT_VERSUS

@@ -53,7 +53,9 @@ public:
 
     BYTE              unk_118[0x30];
     TArray<FMeshBone> RefSkeleton;
-    BYTE              unk_154[0x25c];
+    BYTE              unk_154[0xbc];
+    class UMeshAnimation *unk_210;  // linked by execLinkSkelAnim when it is given none
+    BYTE              unk_214[0x19c];
     TArray<FName>     TagAliases;
     TArray<FName>     TagNames;
     BYTE              unk_3c8[0x18];
@@ -68,7 +70,7 @@ public:
     virtual void VirtualSlot32();
     virtual void VirtualSlot33();
     virtual UMesh *GetMesh();
-    virtual void VirtualSlot35();
+    virtual void SetMesh(UMesh *NewMesh);      // named after AActor::execSetMesh, its caller
     virtual void VirtualSlot36();
     virtual void VirtualSlot37();
     virtual void VirtualSlot38();
@@ -78,11 +80,13 @@ public:
     virtual void VirtualSlot42();
     virtual void VirtualSlot43();
     virtual void VirtualSlot44();
-    virtual void VirtualSlot45();
+    // Returns the animation named Sequence, or 0 (execHasAnim tests it, execAnimIsInGroup passes it
+    // to AnimIsInGroup). Name invented.
+    virtual void *FindAnim(FName Sequence);
     virtual void VirtualSlot46();
     virtual void VirtualSlot47();
     virtual void VirtualSlot48();
-    virtual void VirtualSlot49();
+    virtual UBOOL AnimIsInGroup(void *Anim, FName Group); // named after AActor::execAnimIsInGroup
     virtual void VirtualSlot50();
     virtual void VirtualSlot51();
     virtual void VirtualSlot52();
@@ -90,10 +94,10 @@ public:
     virtual void VirtualSlot54();
     virtual void VirtualSlot55();
     virtual void VirtualSlot56();
-    virtual void VirtualSlot57();
+    virtual void StopAnimating();              // named after AActor::execStopAnimating, its caller
     virtual void VirtualSlot58();
     virtual void VirtualSlot59();
-    virtual void VirtualSlot60();
+    virtual UBOOL IsAnimTweening(INT Channel); // named after AActor::execIsTweening, its caller
     virtual void VirtualSlot61();
     virtual void VirtualSlot62();
     virtual void VirtualSlot63();
@@ -138,7 +142,9 @@ public:
 
     BYTE                unk_78[0x24];
     TArray<FBoneScaler> Scalers;
-    BYTE                unk_a8[0x2f4];
+    BYTE                unk_a8[0x14];
+    INT                 unk_bc;     // read by AActor::execGetNotifyChannel
+    BYTE                unk_c0[0x2dc];
 
     UBOOL SetBoneScale(INT Slot, FLOAT BoneScale, FName BoneName);
     void SetBoneDirection(FName BoneName, FRotator BoneTurn, FVector BoneTrans, FLOAT Alpha, INT Space);
@@ -148,6 +154,10 @@ public:
     void SetBoneLocation(FName BoneName, FVector BoneTrans, FLOAT Alpha, FLOAT BlendTime, INT Space);
     void SetBoneRotation(FName BoneName, FRotator BoneTurn, INT Space, FLOAT Alpha, FLOAT BlendTime,
                          INT bAdditive, INT bExtra);
+    // Named after the natives that call them.
+    void LockRootTrack(INT Option);
+    void EnableChannelNotify(INT Channel, INT Switch);
+    void LinkSkelAnim(class UMeshAnimation *Anim);
 };
 
 #endif // CAMPAIGN_MESH_CLASSES_H

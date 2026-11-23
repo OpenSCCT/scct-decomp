@@ -49,7 +49,13 @@ public:
     virtual void VirtualSlot10();
     virtual void VirtualSlot11();
     virtual void VirtualSlot12();
+#ifdef SCCT_VERSUS
     virtual void VirtualSlot13();
+#else
+    // Jumps to a label of the state code. Named from execGotoLabel's error message; the other
+    // two parameters are not identified.
+    virtual UBOOL GotoLabel(FName Label, INT Option2, INT Option3);
+#endif
     virtual void VirtualSlot14();
     virtual void VirtualSlot15();
     virtual void VirtualSlot16();
@@ -73,7 +79,11 @@ public:
     FStateFrame  *StateFrame;   // script execution state, when the object runs state code
     BYTE          unk_10[0xc];
     DWORD         ObjectFlags;  // ObjectFlag_ bits
+#ifdef SCCT_VERSUS
     BYTE          unk_20[0x4];
+#else
+    FName         Name;         // the object's name; execGetStateName returns the state's
+#endif
     class UClass *Class;
 
     // Destroys the object once: marks it, then calls Destroy.
@@ -153,21 +163,77 @@ public:
     DECLARE_NATIVE(execStructCmpNe)
     DECLARE_NATIVE(execDynamicLoadObject)
     DECLARE_NATIVE(execFindObject)
+#ifndef SCCT_VERSUS
+    // Campaign-only declarations: keeping them out of the Versus build leaves its translation
+    // units, and the compiler's numbering of their EH data, unchanged.
+    FName GetFName() const { return Name; }
+    // Named after the natives that call them; no symbol evidence names these.
+    void SaveConfig(DWORD Flags = 0x1000, const TCHAR *Filename = 0);
+    static void ResetConfig(class UClass *Class, const TCHAR *Section, INT Option3);
+
+    DECLARE_NATIVE(execNothing)
+    DECLARE_NATIVE(execIterator)
+    DECLARE_NATIVE(execEndFunctionParms)
+    DECLARE_NATIVE(execFinalFunction)
+    DECLARE_NATIVE(execFRand)
+    DECLARE_NATIVE(execLocalFRand)
+    DECLARE_NATIVE(execSaveConfig)
+    DECLARE_NATIVE(execResetConfig)
+    DECLARE_NATIVE(execVRand)
+    DECLARE_NATIVE(execLocalVariable)
+    DECLARE_NATIVE(execNativeParm)
+    DECLARE_NATIVE(execDynArrayLength)
+    DECLARE_NATIVE(execSubtract_PreFloat)
+    DECLARE_NATIVE(execBoolVariable)
+    DECLARE_NATIVE(execGetStateName)
+    DECLARE_NATIVE(execNotEqual_ObjectObject)
+    DECLARE_NATIVE(execEqualEqual_ObjectObject)
+    DECLARE_NATIVE(execNotEqual_NameName)
+    DECLARE_NATIVE(execEqualEqual_NameName)
+    DECLARE_NATIVE(execNotEqual_FloatFloat)
+    DECLARE_NATIVE(execEqualEqual_FloatFloat)
+    DECLARE_NATIVE(execPow)
+    DECLARE_NATIVE(execMultiplyMultiply_FloatFloat)
+    DECLARE_NATIVE(execPercent_FloatFloat)
+    DECLARE_NATIVE(execDivide_FloatFloat)
+    DECLARE_NATIVE(execXorXor_BoolBool)
+    DECLARE_NATIVE(execAcos)
+    DECLARE_NATIVE(execAbs)
+    DECLARE_NATIVE(execRand)
+    DECLARE_NATIVE(execRotatorToBool)
+    DECLARE_NATIVE(execChr)
+    DECLARE_NATIVE(execDynamicCast)
+    DECLARE_NATIVE(execIsA)
+    DECLARE_NATIVE(execIsInState)
+    DECLARE_NATIVE(execNameToString)
+    DECLARE_NATIVE(execGotoLabel)
+    DECLARE_NATIVE(execComplementEqual_FloatFloat)
+    DECLARE_NATIVE(execDivideEqual_FloatFloat)
+    DECLARE_NATIVE(execDivideEqual_IntFloat)
+    DECLARE_NATIVE(execClassIsChildOf)
+    DECLARE_NATIVE(execIntToString)
+    DECLARE_NATIVE(execByteToString)
+    DECLARE_NATIVE(execRotRand)
+    DECLARE_NATIVE(execMetaCast)
+#endif
 };
 
-// A class whose class object is created on first use.
-#define DECLARE_LAZY_CLASS(Name)                                                    \
+// A class of package Package whose class object is created on first use.
+#define DECLARE_LAZY_CLASS_IN(Name, Package)                                        \
     static class UClass *PrivateStaticClass;                                        \
-    static class UClass *GetPrivateStaticClass##Name(const TCHAR *Package);         \
+    static class UClass *GetPrivateStaticClass##Name(const TCHAR *InPackage);       \
     static void InitializePrivateStaticClass##Name();                               \
     static class UClass *StaticClass()                                              \
     {                                                                               \
         if (!PrivateStaticClass)                                                    \
         {                                                                           \
-            PrivateStaticClass = GetPrivateStaticClass##Name(L"Engine");            \
+            PrivateStaticClass = GetPrivateStaticClass##Name(Package);              \
             InitializePrivateStaticClass##Name();                                   \
         }                                                                           \
         return PrivateStaticClass;                                                  \
     }
+
+// A class of the Engine package whose class object is created on first use.
+#define DECLARE_LAZY_CLASS(Name) DECLARE_LAZY_CLASS_IN(Name, L"Engine")
 
 #endif // UNREAL_OBJECT_H

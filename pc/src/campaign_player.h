@@ -68,7 +68,11 @@ public:
     virtual void VirtualSlot69();
     virtual void VirtualSlot70();
 
-    BYTE unk_58[0x198];
+    BYTE     unk_58[0x4];
+    UObject *unk_5c;    // execResetKeyboard resets the configuration of its class
+    BYTE     unk_60[0x190];
+
+    DECLARE_LAZY_CLASS(UViewport)
 };
 
 #endif // CAMPAIGN_PLAYER_H

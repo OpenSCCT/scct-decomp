@@ -55,7 +55,13 @@ struct FFrame : public FOutputDevice {
 
 // The frame of an object that runs state code.
 struct FStateFrame : public FFrame {
+#ifdef SCCT_VERSUS
     BYTE unk_14[0x14];
+#else
+    BYTE          unk_14[0x8];
+    class UState *StateNode;    // the state the object is in
+    BYTE          unk_20[0x8];
+#endif
     INT  LatentAction;          // native index of the latent function in progress, or 0
 };
 
@@ -88,6 +94,9 @@ extern class UProperty *GProperty;
 #define P_GET_FLOAT_REF(Var) \
     FLOAT Var##T = 0.0f; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
     FLOAT *Var = GPropAddr ? (FLOAT *)GPropAddr : &Var##T
+#define P_GET_INT_REF(Var) \
+    INT Var##T = 0; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
+    INT *Var = GPropAddr ? (INT *)GPropAddr : &Var##T
 #define P_GET_NAME_REF(Var) \
     FName Var##T; Var##T.Index = 0; GPropAddr = 0; Stack.Step(Stack.Object, &Var##T); \
     FName *Var = GPropAddr ? (FName *)GPropAddr : &Var##T

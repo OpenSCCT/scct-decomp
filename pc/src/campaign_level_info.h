@@ -37,7 +37,9 @@ public:
 
     BYTE  unk_3b4[0xf0];
     DWORD unk_4a4;              // flag word: execSpawn tests it
-    BYTE  unk_4a8[0x3d8];
+    BYTE  unk_4a8[0x138];
+    class AController *ControllerList;  // first of the level's controllers (name invented)
+    BYTE  unk_5e4[0x29c];
 };
 
 #endif // CAMPAIGN_LEVEL_INFO_H

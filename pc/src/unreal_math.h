@@ -105,6 +105,12 @@ struct FRotator {
             Angle -= 0x10000;
         return Angle;
     }
+#ifndef SCCT_VERSUS
+    UBOOL IsZero() const
+    {
+        return ((Pitch & 65535) == 0) && ((Yaw & 65535) == 0) && ((Roll & 65535) == 0);
+    }
+#endif
     __forceinline FRotator Normalize() const
     {
         return FRotator(NormalizeAxis(Pitch), NormalizeAxis(Yaw), NormalizeAxis(Roll));

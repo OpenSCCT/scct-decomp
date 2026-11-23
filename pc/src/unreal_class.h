@@ -38,6 +38,8 @@ public:
     BYTE         unk_2a8[0x38];
 
     UClass *GetSuperClass() const { return (UClass *)SuperField; }
+
+    DECLARE_LAZY_CLASS_IN(UClass, L"Core")
 };
 
 // UObject::IsA: whether the object's class is SomeBase or derives from it
@@ -47,6 +49,12 @@ inline UBOOL UObject::IsA(UClass *SomeBase) const
         if (TempClass == SomeBase)
             return 1;
     return SomeBase == 0;
+}
+
+// The object as a T, or 0 when it is not one.
+template<class T> T *Cast(UObject *Src)
+{
+    return Src && Src->IsA(T::StaticClass()) ? (T *)Src : 0;
 }
 
 #endif // SCCT_VERSUS

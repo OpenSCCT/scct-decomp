@@ -76,6 +76,14 @@ public:
     BYTE         unk_5c[0x10];
 
     UBOOL StructCompare(const void *A, const void *B);
+    // Whether this struct is SomeBase or extends it.
+    UBOOL IsChildOf(const UStruct *SomeBase) const
+    {
+        for (const UStruct *Struct = this; Struct; Struct = (const UStruct *)Struct->SuperField)
+            if (Struct == SomeBase)
+                return 1;
+        return 0;
+    }
 };
 
 // Core.State: 0x284 bytes, 35 virtual functions
@@ -84,6 +92,8 @@ public:
     virtual ~UState();
 
     BYTE unk_6c[0x218];
+
+    UState *GetSuperState() const { return (UState *)SuperField; }
 };
 
 #endif // SCCT_VERSUS
