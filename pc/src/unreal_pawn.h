@@ -69,7 +69,9 @@ public:
     virtual void VirtualSlot175();
 
     class APawn *Pawn;          // the pawn this controller drives
-    BYTE         unk_2b8[0x30];
+    BYTE         unk_2b8[0x1c];
+    AController *NextController;    // the next controller in the level's list (name invented)
+    BYTE         unk_2d8[0x10];
     FVector      Destination;
     BYTE         unk_2f4[0xa0];
 
@@ -77,6 +79,15 @@ public:
     DECLARE_NATIVE(execpointReachable)
     DECLARE_NATIVE(execFindPathTo)
     DECLARE_NATIVE(execEAdjustJump)
+    DECLARE_NATIVE(execAddController)
+    DECLARE_NATIVE(execStopWaiting)
+    DECLARE_NATIVE(execFinishRotation)
+    DECLARE_NATIVE(execWaitForLanding)
+    DECLARE_NATIVE(execClearPaths)
+    DECLARE_NATIVE(execRemoveController)
+    DECLARE_NATIVE(execCanSee)
+
+    UBOOL CanSee(class APawn *Other, INT Option2);  // named after execCanSee, its caller
 };
 
 // Engine.Pawn: 0x6d8 bytes, 190 virtual functions
@@ -116,6 +127,7 @@ public:
     UBOOL pointReachable(FVector aPoint, INT bKnowVisible, INT bExtra);
     FLOAT findPathToward(AActor *Goal, FVector Dest, void *NodeEval, UBOOL bClearPaths, INT bExtra);
     FVector SuggestJumpVelocity(FVector Dest, FLOAT XYSpeed, FLOAT BaseZ);
+    void ClearPaths();          // named after AController::execClearPaths, its caller
 };
 
 // Engine.PlayerController: 0x494 bytes, 186 virtual functions
@@ -134,9 +146,12 @@ public:
     virtual void VirtualSlot185();
 
     class UPlayer *Player;      // the viewport or connection that controls this actor
-    BYTE           unk_398[0xfc];
+    BYTE           unk_398[0x9c];
+    AActor        *ViewTarget;  // the actor the view follows (name invented)
+    BYTE           unk_438[0x5c];
 
     DECLARE_NATIVE(execCopyToClipboard)
+    DECLARE_NATIVE(execSetViewTarget)
 };
 
 #endif // SCCT_VERSUS
