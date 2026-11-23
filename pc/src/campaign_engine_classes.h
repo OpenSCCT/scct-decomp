@@ -181,6 +181,8 @@ public:
 };
 
 // Engine.Level: 0x3ad0 bytes, 58 virtual functions
+// The engine packs its classes to 4 bytes, which puts TimeSeconds at 0xc4.
+#pragma pack(push, 4)
 class ULevel : public ULevelBase {
 public:
     virtual ~ULevel();
@@ -227,11 +229,15 @@ public:
     virtual void VirtualSlot56();
     virtual void VirtualSlot57();
 
-    BYTE                unk_80[0x3990];
+    BYTE                unk_80[0x44];
+    DOUBLE              TimeSeconds;    // game time; execPlayerCanSeeMe subtracts from it (name
+                                        // invented). 4-aligned: see the pack around the class
+    BYTE                unk_cc[0x3944];
     FCollisionHashBase *Hash;
     BYTE                unk_3a14[0xbc];
 
     class ALevelInfo *GetLevelInfo() { return (class ALevelInfo *)Actors(0); }
 };
+#pragma pack(pop)
 
 #endif // CAMPAIGN_ENGINE_CLASSES_H

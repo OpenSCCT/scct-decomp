@@ -70,7 +70,10 @@ public:
 
     BYTE     unk_58[0x4];
     UObject *unk_5c;    // execResetKeyboard resets the configuration of its class
-    BYTE     unk_60[0x190];
+    BYTE     unk_60[0x2c];
+    INT      SizeX;     // width in pixels (execViewportSizeX)
+    INT      SizeY;     // height in pixels (execViewportSizeY)
+    BYTE     unk_94[0x15c];
 
     DECLARE_LAZY_CLASS(UViewport)
 };

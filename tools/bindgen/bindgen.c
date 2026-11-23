@@ -995,7 +995,9 @@ static u32 find_function(const Coff *c, const char *name)
         const Symbol *s = &c->symbols[k];
         if (!s->name || strcmp(s->name, name) != 0 || s->type != SYM_FUNCTION)
             continue;
-        if (s->value != 0 || s->section <= 0 || (s->storage != SYM_EXTERNAL && s->storage != SYM_STATIC))
+        if (s->section == 0)    /* a reference, such as the one a ??_E weak alias makes */
+            continue;
+        if (s->value != 0 || s->section < 0 || (s->storage != SYM_EXTERNAL && s->storage != SYM_STATIC))
             fail("%s is not a complete function at the start of its section", name);
         if (found)
             fail("%s is defined twice in the object", name);
