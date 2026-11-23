@@ -384,6 +384,7 @@ public:
     DECLARE_NATIVE(execAnimIsInGroup)
     DECLARE_NATIVE(execLinkSkelAnim)
     DECLARE_NATIVE(execSetMesh)
+    DECLARE_NATIVE(execGetSoundDuration)
     DECLARE_NATIVE(execSetIKFade)
     DECLARE_NATIVE(execSetCollisionSize)
     DECLARE_NATIVE(execAdd_ColorColor)
