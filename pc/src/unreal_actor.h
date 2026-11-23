@@ -305,6 +305,9 @@ public:
     // Named after execSetDrawType, its caller. The parameter is passed as a full word (an
     // enumeration, most likely), although the script passes a byte.
     void SetDrawType(INT NewDrawType);
+    // Named after the natives that call them.
+    void SetIKFade(FLOAT Option1, FLOAT Option2);
+    void SetCollisionSize(FLOAT NewRadius, FLOAT NewHeight, INT Option3);
 
     DECLARE_NATIVE(execPollFinishAnim)
     DECLARE_NATIVE(execSetRotation)
@@ -366,6 +369,17 @@ public:
     DECLARE_NATIVE(execSleep)
     DECLARE_NATIVE(execFinishAnim)
     DECLARE_NATIVE(execSetDrawType)
+    DECLARE_NATIVE(execStopAllVoicesActor)
+    DECLARE_NATIVE(execIsPlayingAnyActor)
+    DECLARE_NATIVE(execIsPlaying)
+    DECLARE_NATIVE(execGetSoundPosition)
+    DECLARE_NATIVE(execSetVolumeLineValue)
+    DECLARE_NATIVE(execIsTweening)
+    DECLARE_NATIVE(execHasAnim)
+    DECLARE_NATIVE(execSetIKFade)
+    DECLARE_NATIVE(execSetCollisionSize)
+    DECLARE_NATIVE(execAdd_ColorColor)
+    DECLARE_NATIVE(execSubtract_ColorColor)
 };
 
 #endif // SCCT_VERSUS

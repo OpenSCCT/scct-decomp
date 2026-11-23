@@ -51,21 +51,21 @@ public:
     virtual void VirtualSlot30();
     virtual UBOOL PlaySound(AActor *Actor, class USound *Sound, BYTE Slot, FLOAT Volume, INT Option4,
                             FLOAT Option5, FLOAT Option6);
-    virtual void VirtualSlot32();
-    virtual void VirtualSlot33();
+    virtual UBOOL IsPlaying(AActor *Actor, class USound *Sound);
+    virtual UBOOL IsPlayingAnyActor(AActor *Actor);
     virtual void VirtualSlot34();
     virtual void VirtualSlot35();
     virtual void ChangeSoundVolume(AActor *Actor, class USound *Sound, FLOAT Volume, INT Slot);
     virtual void VirtualSlot37();
-    virtual void VirtualSlot38();
+    virtual INT StopAllVoicesActor(AActor *Actor, INT Option2);
     virtual void StopAllSoundsType(BYTE Type);
     virtual void StopAllSounds();
     virtual void VirtualSlot41();
     virtual void VirtualSlot42();
     virtual void VirtualSlot43();
     virtual void VirtualSlot44();
-    virtual void VirtualSlot45();
-    virtual void VirtualSlot46();
+    virtual FLOAT GetSoundPosition(AActor *Actor, class USound *Sound);
+    virtual void SetVolumeLineValue(INT Line, FLOAT Value);
     virtual FLOAT GetVolumeLineValue(INT Line);
     virtual void VirtualSlot48();
     virtual void AddSoundRequest(AActor *Actor, class USound *Sound, BYTE Slot, FLOAT Value1,

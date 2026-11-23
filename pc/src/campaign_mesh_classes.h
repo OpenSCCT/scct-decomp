@@ -78,7 +78,7 @@ public:
     virtual void VirtualSlot42();
     virtual void VirtualSlot43();
     virtual void VirtualSlot44();
-    virtual void VirtualSlot45();
+    virtual UBOOL HasAnim(FName Sequence);     // named after AActor::execHasAnim, its caller
     virtual void VirtualSlot46();
     virtual void VirtualSlot47();
     virtual void VirtualSlot48();
@@ -93,7 +93,7 @@ public:
     virtual void VirtualSlot57();
     virtual void VirtualSlot58();
     virtual void VirtualSlot59();
-    virtual void VirtualSlot60();
+    virtual UBOOL IsAnimTweening(INT Channel); // named after AActor::execIsTweening, its caller
     virtual void VirtualSlot61();
     virtual void VirtualSlot62();
     virtual void VirtualSlot63();
