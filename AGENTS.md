@@ -175,6 +175,19 @@ The verifier rebuilds each affected unit, requires every rebuilt byte to equal r
 then records the new receipt. A unit whose compiler was not supplied is skipped and keeps its
 stale receipt, which CI rejects: never edit a source whose units you cannot rebuild.
 
+### System headers
+
+A unit that uses the compiler's own library (`#include <vector>`, `<map>`, `<list>`, `<string>`)
+says so with `"system_headers": {}` in its record. Its build then sees the toolchain's own
+`include` folder through `INCLUDE` (the nearest `include/yvals.h` above the recorded `cl.exe`;
+for VC6 and VC7.0 put the period headers beside `local/toolchain/<toolset>/bin`). The first
+`--update-receipts` run (which also records a unit that has no receipt yet) fills the field with
+the headers the compile read and their SHA-256; later gates stage only those headers and require
+the compile to read exactly them (`/showIncludes`, or `/E` for VC6), so another header set fails.
+bindgen never lists a system header as an input and binds the library's out-of-line calls like
+any other. Write the library as the original did: `std::` types, explicit instantiation for a
+library function emitted on its own, no retyped containers.
+
 ## Lanes and merging
 
 - Lanes are disjoint by source file. A lane that renames or retypes something shared owns the
@@ -275,8 +288,10 @@ them changes the checker.
    lane, to run after the shared-header R1 and R2 work.
 7. **Link-time convention stand-ins:** `TArrayLtcg` stays, marked `FAKEMATCH`, until each class has an
    `ltcg_link` replacement. That is a lane of its own.
-8. **Standard library code typed in again:** R6 is the target. The verifier first needs the Toolkit's include
-   directory, which is a tooling change, scheduled after the matching lanes.
+8. **Standard library code typed in again:** R6 is the target. The verifier now takes the toolchain's include
+   directory for units with `system_headers` (see "System headers"); retyped containers are replaced as lanes
+   reach them. The engine's node allocators (`container_nodes.cpp`) do not yet build from `<xtree>`/`<list>`:
+   the Toolkit's placement `new` is `throw()`, which adds a null check the retail nodes lack.
 
 ## Tooling
 
