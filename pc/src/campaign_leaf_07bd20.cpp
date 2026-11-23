@@ -1,0 +1,70 @@
+// campaign_leaf_07bd20.cpp -- free function at VA 0x1097bd20: serialises the array of 4-byte values
+// its second argument refers to (data at 0x00, count at 0x04, capacity at 0x08) through the archive
+// its first argument refers to: virtual slot 5 (vtable offset 0x14) with the byte sizes of the
+// count and the capacity; when the archive's value at 0x18 is set, reads a count through the free
+// function at VA 0x10cd80b0, empties the array to it with the method at VA 0x1097bdd0, adds that
+// many 4-byte elements with the method at VA 0x10917460 and reads each through virtual slot 6
+// (vtable offset 0x18); otherwise writes the count and each element the same way. Returns the
+// archive. The class, member and function names are invented; the offsets, the slots, the size and
+// the addresses are the binary's.
+
+class UnkType_1097bd20_Name
+{
+public:
+    int unk_00;
+};
+
+class UnkType_1097bd20_Archive
+{
+public:
+    virtual void VirtualSlot0();
+    virtual void VirtualSlot1();
+    virtual void VirtualSlot2();
+    virtual void VirtualSlot3();
+    virtual void VirtualSlot4();
+    virtual void VirtualSlot5(int Size, int MaxSize);
+    virtual void VirtualSlot6();
+    virtual UnkType_1097bd20_Archive& VirtualSlot7(UnkType_1097bd20_Name& Value);
+
+    unsigned char unk_04[0x14];
+    int unk_18;
+};
+
+class UnkType_1097bd20
+{
+public:
+    void Unk_1097bdd0(int Slack);
+    int Unk_10917460(int Count, int ElementSize);
+
+    UnkType_1097bd20_Name* unk_00;
+    int unk_04;
+    int unk_08;
+};
+
+void Unk_10cd80b0(UnkType_1097bd20_Archive& Archive, int& Count);
+
+// Unk_1097bd20
+UnkType_1097bd20_Archive& Unk_1097bd20(UnkType_1097bd20_Archive& Archive, UnkType_1097bd20& Array)
+{
+    Archive.VirtualSlot5(Array.unk_04 * 4, Array.unk_08 * 4);
+    if ( Archive.unk_18 )
+    {
+        int Count;
+        Unk_10cd80b0(Archive, Count);
+        Array.Unk_1097bdd0(Count);
+        Array.Unk_10917460(Count, 4);
+        for ( int i = 0; i < Count; i++ )
+        {
+            Archive.VirtualSlot7(Array.unk_00[i]);
+        }
+    }
+    else
+    {
+        Unk_10cd80b0(Archive, Array.unk_04);
+        for ( int i = 0; i < Array.unk_04; i++ )
+        {
+            Archive.VirtualSlot7(Array.unk_00[i]);
+        }
+    }
+    return Archive;
+}

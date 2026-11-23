@@ -1,0 +1,45 @@
+// campaign_leaf_5335c0.cpp -- cdecl function at VA 0x10e335c0: registers two sets of four handler
+// functions with the object it is given (method at VA 0x10e38960), one for the pair of kinds
+// (-1, 0x15) and one for (0x15, -1). guess: fills the pairwise dispatch tables. The
+// handlers' signatures are not recovered; all names are invented.
+
+typedef void (*UnkType_10e335c0_Handler)();
+
+void Unk_10e32900();
+void Unk_10e32a60();
+void Unk_10e32bb0();
+void Unk_10e32d00();
+void Unk_10e32d40();
+void Unk_10e32f10();
+void Unk_10e32fe0();
+void Unk_10e334f0();
+
+struct UnkType_10e335c0_Handlers
+{
+    UnkType_10e335c0_Handler unk_00;
+    UnkType_10e335c0_Handler unk_04;
+    UnkType_10e335c0_Handler unk_08;
+    UnkType_10e335c0_Handler unk_0c;
+};
+
+class UnkType_10e335c0_Dispatcher
+{
+public:
+    void Unk_10e38960(UnkType_10e335c0_Handlers* Handlers, int First, int Second);
+};
+
+// Unk_10e335c0
+void Unk_10e335c0(UnkType_10e335c0_Dispatcher* Dispatcher)
+{
+    UnkType_10e335c0_Handlers Handlers;
+    Handlers.unk_00 = Unk_10e334f0;
+    Handlers.unk_04 = Unk_10e32d00;
+    Handlers.unk_08 = Unk_10e32d40;
+    Handlers.unk_0c = Unk_10e32fe0;
+    Dispatcher->Unk_10e38960(&Handlers, -1, 0x15);
+    Handlers.unk_00 = Unk_10e32f10;
+    Handlers.unk_04 = Unk_10e32bb0;
+    Handlers.unk_08 = Unk_10e32a60;
+    Handlers.unk_0c = Unk_10e32900;
+    Dispatcher->Unk_10e38960(&Handlers, 0x15, -1);
+}

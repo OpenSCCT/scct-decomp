@@ -1,0 +1,26 @@
+// campaign_global_111f6870.h -- the global at VA 0x111f6870: a pointer to a reference-counted
+// object (16-bit count at 0x06) that deletes itself through its virtual destructor (slot 0) when
+// released to 0. Names and types invented from its uses.
+#ifndef CAMPAIGN_GLOBAL_111F6870_H
+#define CAMPAIGN_GLOBAL_111F6870_H
+
+class UnkType_111f6870
+{
+public:
+    virtual ~UnkType_111f6870();
+
+    void Release()
+    {
+        if ( --unk_06 == 0 )
+        {
+            delete this;
+        }
+    }
+
+    unsigned short unk_04;
+    unsigned short unk_06;
+};
+
+extern UnkType_111f6870* GUnk_111f6870;
+
+#endif
