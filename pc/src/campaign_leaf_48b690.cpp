@@ -2,17 +2,17 @@
 // VA 0x1113cdec; runs the base constructor at VA 0x10dbf2c0 and sets the dword at offset 0x20
 // to 0. All names are invented.
 
-class UnkType_10dbf2c0
+class UnkType_10d8b690_Base
 {
 public:
-    UnkType_10dbf2c0();
+    UnkType_10d8b690_Base();
     virtual void VirtualSlot0();
 
 private:
     unsigned char unk_04[0x1c];
 };
 
-class UnkType_10d8b690 : public UnkType_10dbf2c0
+class UnkType_10d8b690 : public UnkType_10d8b690_Base
 {
 public:
     UnkType_10d8b690();

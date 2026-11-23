@@ -2,7 +2,7 @@
 // 0x10be9960 and then, when the global at VA 0x11232794 is not zero, the member at VA 0x10c5d5b0.
 // The class, method and global names are invented; the addresses are the binary's.
 
-extern int GUnk_11232794;
+#include "campaign_global_11232794.h"
 
 class UnkType_10c5d740
 {

@@ -1,6 +1,6 @@
-// campaign_leaf_6fded0.cpp -- constructor at VA 0x10ffded0: constructs the 4-byte member at 0x00 with the
-// constructor at VA 0x10e10d90, clears the members at 0x04 and 0x08 and sets the one at 0x0c to
-// 0x80000000. The class names are invented; the offsets and addresses are the binary's.
+// campaign_leaf_6fded0.cpp -- constructor at VA 0x10ffded0: constructs the 4-byte member at 0x00
+// with the constructor at VA 0x10e10d90, clears the members at 0x04 and 0x08 and sets the one at
+// 0x0c to 0x80000000. The class names are invented; the offsets and addresses are the binary's.
 
 class UnkType_10e10d90
 {

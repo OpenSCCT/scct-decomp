@@ -1,5 +1,5 @@
-// campaign_leaf_7640d0.cpp -- thiscall method at VA 0x110640d0: returns 0 when the pointer at 0x74 is
-// null, otherwise whether the thirteenth virtual method of that object returns 0. The class and
+// campaign_leaf_7640d0.cpp -- thiscall method at VA 0x110640d0: returns 0 when the pointer at 0x74
+// is null, otherwise whether the thirteenth virtual method of that object returns 0. The class and
 // method names are invented.
 
 class UnkType_110640d0_74

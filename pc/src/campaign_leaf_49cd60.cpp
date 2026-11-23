@@ -1,16 +1,16 @@
 // campaign_leaf_49cd60.cpp -- constructor at VA 0x10d9cd60: runs the base constructor at
 // VA 0x10dcd730 and clears the dwords at offsets 0x14 and 0x18. All names are invented.
 
-class UnkType_10dcd730
+class UnkType_10d9cd60_Base
 {
 public:
-    UnkType_10dcd730();
+    UnkType_10d9cd60_Base();
 
 private:
     unsigned char unk_00[0x14];
 };
 
-class UnkType_10d9cd60 : public UnkType_10dcd730
+class UnkType_10d9cd60 : public UnkType_10d9cd60_Base
 {
 public:
     UnkType_10d9cd60();

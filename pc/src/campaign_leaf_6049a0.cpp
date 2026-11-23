@@ -1,6 +1,6 @@
-// campaign_leaf_6049a0.cpp -- thiscall method at VA 0x10f049a0: returns false when the pointer at 0x10 is
-// null, otherwise whether the method at VA 0x10f1e960 on it returns true. The class and method names
-// are invented.
+// campaign_leaf_6049a0.cpp -- thiscall method at VA 0x10f049a0: returns false when the pointer at
+// 0x10 is null, otherwise whether the method at VA 0x10f1e960 on it returns true. The class and
+// method names are invented.
 
 class UnkType_10f1e960
 {

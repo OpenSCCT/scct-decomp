@@ -3,6 +3,8 @@
 // refers to with 1. The class, method, member and global names are invented; the offsets, addresses
 // and slot are the binary's.
 
+#include "campaign_global_111f55dc.h"
+
 class UnkType_10b4b970_Item
 {
 public:
@@ -23,8 +25,6 @@ public:
     virtual void VirtualSlot14();
     virtual void VirtualSlot15(int Value);
 };
-
-extern int GUnk_111f55dc;
 
 class UnkType_10b4b970
 {

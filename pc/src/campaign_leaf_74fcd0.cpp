@@ -1,5 +1,5 @@
-// campaign_leaf_74fcd0.cpp -- free function at VA 0x1104fcd0: calls the method at VA 0x11056950 with its two
-// arguments on the object returned by VA 0x11056900. All names are invented.
+// campaign_leaf_74fcd0.cpp -- free function at VA 0x1104fcd0: calls the method at VA 0x11056950
+// with its two arguments on the object returned by VA 0x11056900. All names are invented.
 
 class UnkType_11056900
 {

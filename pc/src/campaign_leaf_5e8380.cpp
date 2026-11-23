@@ -2,13 +2,7 @@
 // VA 0x1131fb20 points to through its virtual destructor and clears the global. All names are
 // invented.
 
-class UnkType_1131fb20
-{
-public:
-    virtual ~UnkType_1131fb20();
-};
-
-extern UnkType_1131fb20* GUnk_1131fb20;
+#include "campaign_global_1131fb20.h"
 
 // Unk_10ee8380
 void Unk_10ee8380()

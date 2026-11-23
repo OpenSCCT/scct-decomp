@@ -1,6 +1,6 @@
-// campaign_leaf_5a0980.cpp -- thiscall method at VA 0x10ea0980: passes its argument to the method at
-// VA 0x10ea43d0, then to the method at VA 0x10ea0600, both on the same object. The class and method
-// names are invented.
+// campaign_leaf_5a0980.cpp -- thiscall method at VA 0x10ea0980: passes its argument to the method
+// at VA 0x10ea43d0, then to the method at VA 0x10ea0600, both on the same object. The class and
+// method names are invented.
 
 class UnkType_10ea0980
 {

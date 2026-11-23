@@ -2,13 +2,7 @@
 // pointer at VA 0x1122f8a8 refers to, through its virtual destructor, and clears the pointer. The
 // class, function and global names are invented; the address is the binary's.
 
-class UnkType_1122f8a8
-{
-public:
-    virtual ~UnkType_1122f8a8();
-};
-
-extern UnkType_1122f8a8* GUnk_1122f8a8;
+#include "campaign_global_1122f8a8.h"
 
 // Unk_10c38450
 void Unk_10c38450()

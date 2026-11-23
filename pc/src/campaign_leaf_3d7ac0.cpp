@@ -3,15 +3,7 @@
 // global's object with this. The class, method, member and global names are invented; the offsets,
 // addresses and slot are the binary's.
 
-class UnkType_10cd7ac0;
-
-class UnkType_11230560
-{
-public:
-    virtual void VirtualSlot0(UnkType_10cd7ac0* Item);
-};
-
-extern UnkType_11230560* GUnk_11230560;
+#include "campaign_global_11230560.h"
 
 class UnkType_10cd7ac0
 {

@@ -1,5 +1,5 @@
-// campaign_leaf_64ba20.cpp -- cdecl function at VA 0x10f4ba20: ignores its first argument and passes the
-// other two to the cdecl function at VA 0x10974400. All names are invented.
+// campaign_leaf_64ba20.cpp -- cdecl function at VA 0x10f4ba20: ignores its first argument and
+// passes the other two to the cdecl function at VA 0x10974400. All names are invented.
 
 int Unk_10974400(int First, int Second);
 

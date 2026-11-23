@@ -2,9 +2,8 @@
 // calls the Win32 ExitProcess with 1; it then sets the global at VA 0x112327bc to 1. The function,
 // parameter and global names are invented; ExitProcess is the import's name.
 
-extern "C" __declspec(dllimport) void __stdcall ExitProcess(unsigned int ExitCode);
-
-extern int GUnk_112327bc;
+#include "campaign_global_112327bc.h"
+#include "campaign_import_ExitProcess.h"
 
 // Unk_10cd0df0
 void Unk_10cd0df0(int Value)

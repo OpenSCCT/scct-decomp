@@ -1,0 +1,47 @@
+// campaign_leaf_219910.cpp -- a member function at VA 0x10b19910: it clears the byte at 0x23ec;
+// when the byte at 0x23e9 is set it sets the int at 0x16f0 to 1 and calls the member at VA
+// 0x10efe000; otherwise, inside the critical section the global at VA 0x112238a4 holds (entered
+// and left with the Win32 EnterCriticalSection and LeaveCriticalSection), it passes the global at
+// VA 0x110dc79c, the narrow strings at 0x2406 and 0x2416 and four empty strings to the member at
+// VA 0x10efe080. The class, method, member and global names are invented; the offsets and
+// addresses are the binary's, and the two imports are named by the import table.
+
+#include "campaign_global_112238a4.h"
+#include "campaign_global_110dc79c.h"
+#include "campaign_import_EnterCriticalSection.h"
+#include "campaign_import_LeaveCriticalSection.h"
+
+class UnkType_10b19910
+{
+public:
+    void Unk_10efe000();
+    void Unk_10efe080(int Value, const char* First, const char* Second, const char* Third,
+        const char* Fourth, const char* Fifth, const char* Sixth);
+    void Unk_10b19910();
+
+private:
+    unsigned char unk_0000[0x16f0];
+    int unk_16f0;
+    unsigned char unk_16f4[0x23e9 - 0x16f4];
+    bool unk_23e9;
+    unsigned char unk_23ea[0x23ec - 0x23ea];
+    bool unk_23ec;
+    unsigned char unk_23ed[0x2406 - 0x23ed];
+    char unk_2406[0x10];
+    char unk_2416[0x10];
+};
+
+// UnkType_10b19910::Unk_10b19910
+void UnkType_10b19910::Unk_10b19910()
+{
+    unk_23ec = false;
+    if ( unk_23e9 )
+    {
+        unk_16f0 = 1;
+        Unk_10efe000();
+        return;
+    }
+    EnterCriticalSection(&GUnk_112238a4);
+    Unk_10efe080(GUnk_110dc79c, unk_2406, unk_2416, "", "", "", "");
+    LeaveCriticalSection(&GUnk_112238a4);
+}

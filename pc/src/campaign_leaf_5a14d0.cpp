@@ -1,5 +1,5 @@
-// campaign_leaf_5a14d0.cpp -- free function at VA 0x10ea14d0: when its argument is not null, calls the
-// method at VA 0x10e9a2a0 on it and clears its first byte. All names are invented.
+// campaign_leaf_5a14d0.cpp -- free function at VA 0x10ea14d0: when its argument is not null, calls
+// the method at VA 0x10e9a2a0 on it and clears its first byte. All names are invented.
 
 class UnkType_10e9a2a0
 {

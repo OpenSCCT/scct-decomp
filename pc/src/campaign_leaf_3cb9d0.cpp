@@ -3,7 +3,7 @@
 // function at VA 0x10ccada0. guess: formats a message into a global buffer. The function, parameter
 // and global names are invented; the addresses are the binary's.
 
-extern unsigned short GUnk_112d5158[0x1000];
+#include "campaign_global_112d5158.h"
 
 void Unk_10ccada0(unsigned short* Dest, int Count, const unsigned short** Args);
 

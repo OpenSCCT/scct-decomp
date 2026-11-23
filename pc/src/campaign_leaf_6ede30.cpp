@@ -1,5 +1,6 @@
-// campaign_leaf_6ede30.cpp -- thiscall method at VA 0x10fede30: passes its argument to the second virtual
-// method of the object at 0x08 and returns the argument. The class and method names are invented.
+// campaign_leaf_6ede30.cpp -- thiscall method at VA 0x10fede30: passes its argument to the second
+// virtual method of the object at 0x08 and returns the argument. The class and method names are
+// invented.
 
 class UnkType_10fede30_08
 {

@@ -1,6 +1,6 @@
-// campaign_leaf_5a4500.cpp -- thiscall method at VA 0x10ea4500: passes its argument to the method at
-// VA 0x10ea4470 on the same object, then clears the member at 0x10. The class and method names are
-// invented.
+// campaign_leaf_5a4500.cpp -- thiscall method at VA 0x10ea4500: passes its argument to the method
+// at VA 0x10ea4470 on the same object, then clears the member at 0x10. The class and method names
+// are invented.
 
 class UnkType_10ea4500
 {

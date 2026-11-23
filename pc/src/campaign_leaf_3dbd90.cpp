@@ -3,15 +3,7 @@
 // the object to a global list. The class, method and global names are invented; the addresses are
 // the binary's.
 
-class UnkType_10cdbd90;
-
-class UnkType_10cd9e20
-{
-public:
-    void Unk_10cd9e20(UnkType_10cdbd90* const& Item);
-};
-
-extern UnkType_10cd9e20 GUnk_113120a8;
+#include "campaign_global_113120a8.h"
 
 class UnkType_10cdbd90
 {

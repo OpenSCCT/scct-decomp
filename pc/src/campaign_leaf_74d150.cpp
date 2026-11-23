@@ -2,7 +2,7 @@
 // set, passes it to the imported stdcall function whose address sits at VA 0x110b7330. All names
 // are invented.
 
-extern void* GUnk_1132eab0;
+#include "campaign_global_1132eab0.h"
 extern "C" __declspec(dllimport) int __stdcall Unk_110b7330(void* Handle);
 
 // Unk_1104d150

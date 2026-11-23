@@ -1,5 +1,5 @@
-// campaign_leaf_53b1e0.cpp -- thiscall method at VA 0x10e3b1e0: calls the sixth virtual method of the
-// object at 0x0c, then deletes this object through its virtual destructor. The class and method
+// campaign_leaf_53b1e0.cpp -- thiscall method at VA 0x10e3b1e0: calls the sixth virtual method of
+// the object at 0x0c, then deletes this object through its virtual destructor. The class and method
 // names are invented.
 
 class UnkType_10e3b1e0_0c

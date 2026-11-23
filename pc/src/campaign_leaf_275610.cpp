@@ -3,27 +3,7 @@
 // 0x1122e72c refers to; it returns true. The class, method, member and global names are invented;
 // the offsets, addresses and slot are the binary's.
 
-class UnkType_1122e72c
-{
-public:
-    virtual void VirtualSlot0();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
-    virtual void VirtualSlot7();
-    virtual void VirtualSlot8();
-    virtual void VirtualSlot9();
-    virtual void VirtualSlot10();
-    virtual void VirtualSlot11();
-    virtual void VirtualSlot12();
-    virtual void VirtualSlot13();
-    virtual void VirtualSlot14();
-};
-
-extern UnkType_1122e72c* GUnk_1122e72c;
+#include "campaign_global_1122e72c.h"
 
 class UnkType_10b75610
 {

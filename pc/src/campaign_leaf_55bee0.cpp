@@ -1,6 +1,6 @@
-// campaign_leaf_55bee0.cpp -- constructor at VA 0x10e5bee0: runs the constructor of the empty base class
-// at VA 0x10e6d280, then clears the members at 0x00 and 0x04. The class names are invented; the offsets and addresses are the
-// binary's.
+// campaign_leaf_55bee0.cpp -- constructor at VA 0x10e5bee0: runs the constructor of the empty base
+// class at VA 0x10e6d280, then clears the members at 0x00 and 0x04. The class names are invented;
+// the offsets and addresses are the binary's.
 
 class UnkType_10e6d280
 {

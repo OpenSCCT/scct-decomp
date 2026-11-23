@@ -1,5 +1,6 @@
-// campaign_leaf_76c8f0.cpp -- thiscall method at VA 0x1106c8f0: calls the method at VA 0x1106cdf0 on the object
-// at 0x30, then the method at VA 0x110712d0 on the object at 0x24. All names are invented.
+// campaign_leaf_76c8f0.cpp -- thiscall method at VA 0x1106c8f0: calls the method at VA 0x1106cdf0
+// on the object at 0x30, then the method at VA 0x110712d0 on the object at 0x24. All names are
+// invented.
 
 class UnkType_1106cdf0
 {

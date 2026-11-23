@@ -2,14 +2,7 @@
 // virtual method of the object the global at VA 0x1131a6b8 points to, and returns the argument.
 // All names are invented.
 
-class UnkType_1131a6b8
-{
-public:
-    virtual void VirtualSlot0();
-    virtual void VirtualSlot1(void* Value);
-};
-
-extern UnkType_1131a6b8* GUnk_1131a6b8;
+#include "campaign_global_1131a6b8.h"
 
 // Unk_10d96260
 void* Unk_10d96260(void* Value)
