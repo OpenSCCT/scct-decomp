@@ -64,7 +64,7 @@ public:
     virtual void VirtualSlot34();
     virtual void VirtualSlot35();
     virtual void VirtualSlot36();
-    virtual void VirtualSlot37();
+    virtual void VideoStop(INT Option);        // named after execVideoStop, its caller
     virtual void VirtualSlot38();
     virtual void VirtualSlot39();
     virtual void VirtualSlot40();
@@ -77,11 +77,14 @@ public:
     FLOAT  CurX, CurY;          // pen position
     BYTE   unk_58[0xc];
     FColor Color;               // draw colour
-    BYTE   unk_68[0x38];
+    BYTE   unk_68[0x14];
+    class UViewport *Viewport;  // the viewport the canvas draws to
+    BYTE   unk_80[0x20];
 
     DECLARE_NATIVE(execDrawText)
     DECLARE_NATIVE(execTextSize)
     DECLARE_NATIVE(execSetDrawColor)
+    DECLARE_NATIVE(execVideoStop)
 };
 
 // Echelon.ECanvas: 0xb0 bytes, 45 virtual functions
@@ -101,6 +104,8 @@ public:
     DECLARE_NATIVE(execCreateDepthMask)
     DECLARE_NATIVE(execDrawRectangle)
     DECLARE_NATIVE(execDrawLine)
+    DECLARE_NATIVE(execViewportSizeX)
+    DECLARE_NATIVE(execViewportSizeY)
 };
 
 #endif // CAMPAIGN_CANVAS_H
