@@ -1,8 +1,15 @@
 // campaign_canvas_render_state.cpp -- ECanvas render commands consumed by the PC interpreter
 #include "unreal_script.h"
 #include "campaign_canvas.h"
+#include "unreal_class.h"
 
 class APlayerController;
+
+// UECanvas::~UECanvas
+UECanvas::~UECanvas()
+{
+    ConditionalDestroy();
+}
 
 // UECanvas::execDrawPlayerPortal
 void UECanvas::execDrawPlayerPortal(FFrame &Stack, RESULT_DECL)
