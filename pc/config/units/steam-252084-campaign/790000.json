@@ -1127,6 +1127,38 @@
     }
   },
   {
+    "id": "sound-file-open-read",
+    "offset": 7947648,
+    "size": 36,
+    "rebuilt_symbol": "_SND_fn_hOpenFileReadSnd@4",
+    "inputs": [
+      "src/sound_file_handles.c",
+      "src/sound_file.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_file_handles.obj src/sound_file_handles.c",
+    "identification": "Named Campaign export _SND_fn_hOpenFileReadSnd@4 at VA 0x11094580. Uses CreateFileA to open an existing file for reading, with shared readers. The return test converts the Win32 invalid handle into the sound file error sentinel.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "__imp__CreateFileA@28": {
+        "va": 285963196,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!CreateFileA."
+      }
+    },
+    "match": {
+      "bytes_sha256": "a69e6faffbbd6ab97fc4197d9950227eb46a249fedb12ff89ec2865b7f4fc071",
+      "inputs_sha256": "a0855fda210948e150a9426491f67e0b4dbba747109ab92e8d52bc3d7a3323e5"
+    }
+  },
+  {
     "id": "sound-file-read",
     "offset": 7947696,
     "size": 60,
@@ -1151,7 +1183,7 @@
     "identification": "Steam PE export _SND_fn_ulReadFileSnd@12 at RVA 0x7945b0. Passes file, buffer and count to the named ReadFile import. Both success and failure branches return a byte count, with GetLastError called before returning zero on failure. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "f9acbd2cf825496be0c60f1e154de8686db858d2a3861e028dd230e0f2e4efc1",
-      "inputs_sha256": "616a3c87930e2c5e6b0f12afcbbe699752b0faf5790946144dba6501eeb8db14"
+      "inputs_sha256": "4f5ce7d79acf3572ce7e1d54855170db27a74b7114aa72448eb2715bee7eed71"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1192,7 +1224,7 @@
     },
     "match": {
       "bytes_sha256": "15b47c42b5e55441c928377f7a98685d7e09b2bf5bacb1908cc40b8e853f86cb",
-      "inputs_sha256": "3939ccdf1eb0a768023fcc2153fc23ec888d48c5a7150a1d7796a9b4cb7d1ac4"
+      "inputs_sha256": "d61d2e54b5348dbc0b3f9d29cb07f38c18c9abe5e54bb191a24a725e170ac4ad"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1224,7 +1256,7 @@
     "identification": "The named export is a single terminal indirect jump through the KERNEL32 CloseHandle import at VA 0x110b738c. The next bytes are alignment. The caller already supplied the handle on the stack.",
     "match": {
       "bytes_sha256": "130bca5d2a3c2ca69c636b7ee88752f201f4be9977500395b60faff6d61f8672",
-      "inputs_sha256": "911f37d9fa94c96217481e2fbb5e223bcc82934ff2880b1b66a047b1a8cf7acd"
+      "inputs_sha256": "904696debe098ce5c9d3cb9fb30ea54ea7170d3889203b25cfcc8fca61d5e7a2"
     }
   },
   {
@@ -1278,7 +1310,7 @@
     },
     "match": {
       "bytes_sha256": "9af0e15ffedd09803f22ca0c9e71b482dd9f7d49f35715d2e925ed0322fae980",
-      "inputs_sha256": "211e153ce75619665080b6652c279b6a99d864517e9eb0c92aa10c2ad55487b8"
+      "inputs_sha256": "fd9c87f5668a84717caa94a9b3622227c16eac127d7845a86adb6b569a689047"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1288,6 +1320,38 @@
         "/GS"
       ],
       "basis": "evidence/campaign-vc71-o2-gs.md"
+    }
+  },
+  {
+    "id": "sound-file-open-write",
+    "offset": 7947984,
+    "size": 36,
+    "rebuilt_symbol": "_SND_fn_hOpenFileWriteSnd@4",
+    "inputs": [
+      "src/sound_file_handles.c",
+      "src/sound_file.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_file_handles.obj src/sound_file_handles.c",
+    "identification": "Named Campaign export _SND_fn_hOpenFileWriteSnd@4 at VA 0x110946d0. Uses CreateFileA with read and write access, exclusive sharing and CREATE_ALWAYS. The same invalid-handle test appears in the read export.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "__imp__CreateFileA@28": {
+        "va": 285963196,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!CreateFileA."
+      }
+    },
+    "match": {
+      "bytes_sha256": "dce4cc9178560c357b9e99dd5f5db560559883f123cfcf99456c28bba5a44821",
+      "inputs_sha256": "3cb419063eb343f4a622b00e29eaf8dfcaedcc8b43436658ea21f36ad262b97b"
     }
   },
   {
@@ -1315,7 +1379,7 @@
     "identification": "Steam PE export _SND_fn_ulWriteFileSnd@12 at RVA 0x794700. Passes file, buffer and count to the named WriteFile import. The success path returns the written count and the failure path calls GetLastError before returning zero. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "e416902619fd4b8615916bc6a29b60ecd923be2414a89c228b15ebd712bad00a",
-      "inputs_sha256": "141c02870cbabb0ca5bd4265fb865d6181ed18543a58584b8128f2d37a7474d9"
+      "inputs_sha256": "73a574a7c0b8ff5148866770328ae5d3353b2085623d77a16683039b1bd37d8c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1347,7 +1411,7 @@
     "identification": "Steam PE export _SND_fn_ulGetFileSize@4 at RVA 0x794740. Calls the named GetFileSize import with the file handle and a null high-word output. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "b9e62b4613836259d794a02c6fa15785fef069c21ce34002379b0168ad8ac4eb",
-      "inputs_sha256": "b78fe7741071d567ddaca1d19731b613b78c192c3907b33c2d7c385fbe68707c"
+      "inputs_sha256": "adb3aa4529c4b6d7d727b024b67197e1fef85ce017890cbd6d18cf2bebc6ba06"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1379,7 +1443,7 @@
     "identification": "The named export is a single terminal indirect jump through KERNEL32 DeleteFileA at VA 0x110b7378. Alignment follows the jump. The single path argument is forwarded on the stack.",
     "match": {
       "bytes_sha256": "4d1ada4aae7132fb1bcec215d2de3d33db9804c95d7531de843c88fc708509c9",
-      "inputs_sha256": "8ed2a673bdb07b961d938615a29fd04911aa102b2f7f3b109359f9ff04f3538b"
+      "inputs_sha256": "c4e62f2b1659f765dac1375e2b9647ef48be088dc165bb9f17c84f941fb2aaf3"
     }
   },
   {
@@ -1437,7 +1501,7 @@
     },
     "match": {
       "bytes_sha256": "9f9db1f88d6e3bddce24866706421eb3f715c57cc98b1ae1d7b1eaa7ef62a12c",
-      "inputs_sha256": "8593a6f0ca6a64b95aac608c60c43a457d78a8d6a2582370c66db882ad943f5a"
+      "inputs_sha256": "48df7ee570b5f4840ba92647381c0d92059f08fcfbba858b3a69ca8e22197e67"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1470,7 +1534,7 @@
     },
     "match": {
       "bytes_sha256": "ffeced9d36c2a89eafdbd53d41d269f78260d817da6ad45e29bd4be591aca658",
-      "inputs_sha256": "554d8596d651840ff89cfc5769489a4fdbc049e1d3385b29603e9322ac9d18d3"
+      "inputs_sha256": "eecebe6e801a2a189fb53fdd1e95a41960fa670483e6f31b1c8df3172393b93a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1666,7 +1730,7 @@
     },
     "match": {
       "bytes_sha256": "cb6eff573ccfed9d6711e0a8abf43f3acc394fa42405d93bb46fdc9d6d88899f",
-      "inputs_sha256": "6ca4add53cb65af883549f2bbb158e09e38d8739dfc5c1880931a7b6c64e7a8c"
+      "inputs_sha256": "9d3571620e0d02edae3129f6e815082974b8a927fae159bc35a70727af08d283"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1703,7 +1767,7 @@
     },
     "match": {
       "bytes_sha256": "5bcfdf0772f3ddd0b92af2a9e182b4bdf211ef25a3d02e70afe96e4aefd91a6c",
-      "inputs_sha256": "546798b6c98a448338289c7aaffcd914e9cf17500b785b2771e6f344bbeac186"
+      "inputs_sha256": "28c2235f339d47f01ac8b5f284501fe801a213006897df087a0bef8a9ab9996f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1752,7 +1816,7 @@
     },
     "match": {
       "bytes_sha256": "36d0cc63fbdfda2f7a7ec36b08d5ab7069e588461991322760b5892b23d252f3",
-      "inputs_sha256": "a64fa4662b3f73d9dfd677fe7c140d44451a90b66dd9d6a58f793d5c5964cd08"
+      "inputs_sha256": "c5deb3488bebbaca22c95c264938257f07e6e2de468623e1e630ea5d70a1bd8f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

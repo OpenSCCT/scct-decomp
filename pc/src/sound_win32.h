@@ -11,6 +11,12 @@
 #define INVALID_SET_FILE_POINTER ((unsigned long)-1)
 #define ERROR_NEGATIVE_SEEK 131
 
+#define GENERIC_READ    0x80000000UL
+#define GENERIC_WRITE   0x40000000UL
+#define FILE_SHARE_READ 1
+#define CREATE_ALWAYS   2
+#define OPEN_EXISTING   3
+
 #define INFINITE      0xffffffff
 #define WAIT_OBJECT_0 0
 
@@ -85,6 +91,10 @@ typedef struct tWAVEFORMATEX {
     unsigned short cbSize;
 } WAVEFORMATEX;
 
+__declspec(dllimport) void *__stdcall CreateFileA(
+    const char *lpFileName, unsigned long dwDesiredAccess, unsigned long dwShareMode,
+    void *lpSecurityAttributes, unsigned long dwCreationDisposition, unsigned long dwFlagsAndAttributes,
+    void *hTemplateFile);
 __declspec(dllimport) int __stdcall ReadFile(void *hFile, void *lpBuffer,
                                              unsigned long nNumberOfBytesToRead,
                                              unsigned long *lpNumberOfBytesRead, void *lpOverlapped);
