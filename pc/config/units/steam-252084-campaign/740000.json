@@ -1178,6 +1178,157 @@
     }
   },
   {
+    "id": "sound-thread-initialize",
+    "offset": 7631808,
+    "size": 69,
+    "rebuilt_symbol": "_SND_fn_vInitThreadSnd@0",
+    "inputs": [
+      "src/sound_thread_lifetime.c",
+      "src/sound_string.h",
+      "src/sound_thread.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_thread_lifetime.obj src/sound_thread_lifetime.c",
+    "identification": "Campaign export _SND_fn_vInitThreadSnd@0 at VA 0x110473c0. Creates the two initially owned mutexes and increments both ownership counts before setting the initialization flag.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "__imp__CreateMutexA@12": {
+        "va": 285962492,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!CreateMutexA."
+      },
+      "_g_hMutexSnd": {
+        "va": 288540032,
+        "basis": "Mutex handle waited on by the export SND_fn_vEnterCriticalSectionThreadSnd_ and released by SND_fn_vQuitCriticalSectionThreadSnd; named by the library's own error message \"g_hMutexSnd is NULL; maybe DARE is currenlty not initialized.\"."
+      },
+      "_g_lMutexSndCount": {
+        "va": 288540036,
+        "basis": "Counter incremented after a successful wait by SND_fn_vEnterCriticalSectionThreadSnd_ and decremented by SND_fn_vQuitCriticalSectionThreadSnd. Invented name."
+      },
+      "_g_hMutexTool": {
+        "va": 288540436,
+        "basis": "Mutex handle waited on by the export EnterCriticalSectionTool_ and released by QuitCriticalSectionTool; named by the library's own error message \"g_hMutexTool is NULL; maybe DARE is currenlty not initialized.\"."
+      },
+      "_g_lMutexToolCount": {
+        "va": 288540440,
+        "basis": "Counter incremented after a successful wait by EnterCriticalSectionTool_ and decremented by QuitCriticalSectionTool. Invented name."
+      },
+      "_g_bSndThreadInitDone": {
+        "va": 288540448,
+        "basis": "Flag both enter functions test before reporting that the library is not initialised. Invented name."
+      }
+    },
+    "match": {
+      "bytes_sha256": "451f0b8e46d902db9809fd3635b47a26e555e92ad8484f201a5783aefbd4ca42",
+      "inputs_sha256": "0609edfeddcb3b736dad220cd3bc1ae324dbbff83515c2fa8095c0bf8b4014f6"
+    }
+  },
+  {
+    "id": "sound-thread-shutdown",
+    "offset": 7631888,
+    "size": 61,
+    "rebuilt_symbol": "_SND_fn_vDesInitThreadSnd@0",
+    "inputs": [
+      "src/sound_thread_lifetime.c",
+      "src/sound_string.h",
+      "src/sound_thread.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_thread_lifetime.obj src/sound_thread_lifetime.c",
+    "identification": "Campaign export _SND_fn_vDesInitThreadSnd@0 at VA 0x11047410. Clears both global handles, releases the sound mutex, decrements its count and closes both saved handles.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "_g_hMutexSnd": {
+        "va": 288540032,
+        "basis": "Mutex handle waited on by the export SND_fn_vEnterCriticalSectionThreadSnd_ and released by SND_fn_vQuitCriticalSectionThreadSnd; named by the library's own error message \"g_hMutexSnd is NULL; maybe DARE is currenlty not initialized.\"."
+      },
+      "_g_hMutexTool": {
+        "va": 288540436,
+        "basis": "Mutex handle waited on by the export EnterCriticalSectionTool_ and released by QuitCriticalSectionTool; named by the library's own error message \"g_hMutexTool is NULL; maybe DARE is currenlty not initialized.\"."
+      },
+      "__imp__ReleaseMutex@4": {
+        "va": 285963068,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!ReleaseMutex."
+      },
+      "_g_lMutexSndCount": {
+        "va": 288540036,
+        "basis": "Counter incremented after a successful wait by SND_fn_vEnterCriticalSectionThreadSnd_ and decremented by SND_fn_vQuitCriticalSectionThreadSnd. Invented name."
+      },
+      "__imp__CloseHandle@4": {
+        "va": 285963148,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!CloseHandle."
+      }
+    },
+    "match": {
+      "bytes_sha256": "8f7755d7252c097d11614a2f363b3102178b1f5921740db8ea55579610177c5a",
+      "inputs_sha256": "709d8c77d43741629c9729e155e4a82aa8e80761b491bcf8df099fe933056b19"
+    }
+  },
+  {
+    "id": "sound-thread-watch",
+    "offset": 7631952,
+    "size": 47,
+    "rebuilt_symbol": "_SND_fn_vMouchardThreadsnd@8",
+    "inputs": [
+      "src/sound_thread_lifetime.c",
+      "src/sound_string.h",
+      "src/sound_thread.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_thread_lifetime.obj src/sound_thread_lifetime.c",
+    "identification": "Campaign export _SND_fn_vMouchardThreadsnd@8 at VA 0x11047450. Records the source file, line and Win32 thread ID used in the engine lock diagnostic.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "_g_szMouchardFile": {
+        "va": 288540040,
+        "basis": "128-byte buffer the export SND_fn_vMouchardThreadsnd copies its file argument into; printed as the %s of the lock's failure message. Invented name."
+      },
+      "_strncpy": {
+        "va": 284367408,
+        "basis": "Direct target of the named Steam bounded-string wrapper at VA 0x10f31a30; the callee copies at most count bytes and zero-pads the remainder."
+      },
+      "_g_ulMouchardLine": {
+        "va": 288540168,
+        "basis": "Line the export SND_fn_vMouchardThreadsnd stores; printed as the %d of the lock's failure message. Invented name."
+      },
+      "__imp__GetCurrentThreadId@0": {
+        "va": 285962924,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!GetCurrentThreadId."
+      },
+      "_g_ulMouchardThread": {
+        "va": 288540172,
+        "basis": "Thread identifier the export SND_fn_vMouchardThreadsnd stores; printed as the %x of the lock's failure message. Invented name."
+      }
+    },
+    "match": {
+      "bytes_sha256": "23841af2dd10505704ceeef2a4a28d7cbf03ff56ada4a329950b50481994a30e",
+      "inputs_sha256": "99fe93b174058c303ecbfdc68c82b1550033b40ee25bb39c6e0b334f3baf5347"
+    }
+  },
+  {
     "id": "campaign-sound-lock-747480",
     "size": 206,
     "offset": 7632000,
@@ -1265,7 +1416,48 @@
     },
     "match": {
       "bytes_sha256": "c5588999456583de064ce45bec792b16123a084df679d7b72195ab8802bc4eca",
-      "inputs_sha256": "cd65b7a3204c3761ad5a92baddf2693c5314bb1cd44d970c73488f23484ec74c"
+      "inputs_sha256": "bdaf1b7e68e6a62b74660e1c9ac3e9802b7516e6ad807353d90bb9c6204fb1c8"
+    }
+  },
+  {
+    "id": "sound-thread-release",
+    "offset": 7632208,
+    "size": 26,
+    "rebuilt_symbol": "_SND_fn_vQuitCriticalSectionThreadSnd@0",
+    "inputs": [
+      "src/sound_thread_lifetime.c",
+      "src/sound_string.h",
+      "src/sound_thread.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_thread_lifetime.obj src/sound_thread_lifetime.c",
+    "identification": "Campaign export _SND_fn_vQuitCriticalSectionThreadSnd@0 at VA 0x11047550. Decrements the engine lock count and releases the same mutex that SND_fn_vEnterCriticalSectionThreadSnd_ waits on.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "_g_lMutexSndCount": {
+        "va": 288540036,
+        "basis": "Counter incremented after a successful wait by SND_fn_vEnterCriticalSectionThreadSnd_ and decremented by SND_fn_vQuitCriticalSectionThreadSnd. Invented name."
+      },
+      "_g_hMutexSnd": {
+        "va": 288540032,
+        "basis": "Mutex handle waited on by the export SND_fn_vEnterCriticalSectionThreadSnd_ and released by SND_fn_vQuitCriticalSectionThreadSnd; named by the library's own error message \"g_hMutexSnd is NULL; maybe DARE is currenlty not initialized.\"."
+      },
+      "__imp__ReleaseMutex@4": {
+        "va": 285963068,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!ReleaseMutex."
+      }
+    },
+    "match": {
+      "bytes_sha256": "b5fe813bc5bcd49ac7d056711fe538ee4462aa9678a0f51080d9396e0bafe7a8",
+      "inputs_sha256": "e3ea018454a404235acb0b835ee090c137bc829fbbbaa9a7e4a1cd47b3fb6781"
     }
   },
   {
@@ -1356,7 +1548,93 @@
     },
     "match": {
       "bytes_sha256": "102092dbf8814d946d243a9990d43a85ee6b8346a575a7b171edd899de373047",
-      "inputs_sha256": "83b146cb6c3b05ad8e7e21c2073043ef6602b6bfca741562622432e3f8b0b527"
+      "inputs_sha256": "77ec4ceb72212e5ece18f832c6fce8ff04e24e00fcb3d53e9bed9c5e397a97b8"
+    }
+  },
+  {
+    "id": "sound-tool-thread-release",
+    "offset": 7632448,
+    "size": 26,
+    "rebuilt_symbol": "_QuitCriticalSectionTool@0",
+    "inputs": [
+      "src/sound_thread_lifetime.c",
+      "src/sound_string.h",
+      "src/sound_thread.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_thread_lifetime.obj src/sound_thread_lifetime.c",
+    "identification": "Campaign export _QuitCriticalSectionTool@0 at VA 0x11047640. The resource and renderer functions that call EnterCriticalSectionTool_ end with this call. It decrements the tool lock count and releases the tool mutex. Its descriptive name comes from the existing sound_thread.h model.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "_g_lMutexToolCount": {
+        "va": 288540440,
+        "basis": "Counter incremented after a successful wait by EnterCriticalSectionTool_ and decremented by QuitCriticalSectionTool. Invented name."
+      },
+      "_g_hMutexTool": {
+        "va": 288540436,
+        "basis": "Mutex handle waited on by the export EnterCriticalSectionTool_ and released by QuitCriticalSectionTool; named by the library's own error message \"g_hMutexTool is NULL; maybe DARE is currenlty not initialized.\"."
+      },
+      "__imp__ReleaseMutex@4": {
+        "va": 285963068,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!ReleaseMutex."
+      }
+    },
+    "match": {
+      "bytes_sha256": "9331d42f1ae315af0ef1470672c23c0bea4f90866c63b1937155f37b071b5d0f",
+      "inputs_sha256": "56b520f525ab795f3ddba27e73103a502b42d2f22ab2512ad847a36b05776b18"
+    }
+  },
+  {
+    "id": "sound-tool-thread-watch",
+    "offset": 7632480,
+    "size": 39,
+    "rebuilt_symbol": "_MouchardThreadTool@8",
+    "inputs": [
+      "src/sound_thread_lifetime.c",
+      "src/sound_string.h",
+      "src/sound_thread.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_thread_lifetime.obj src/sound_thread_lifetime.c",
+    "identification": "Campaign export _MouchardThreadTool@8 at VA 0x11047660. The resource and renderer functions call this watcher with their source path and line after EnterCriticalSectionTool_. It formats both into the diagnostic text and stores the line number. Its descriptive name comes from the existing sound_thread.h model.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "??_C@_0BD@KHNDAIHH@Enter?3?5?$CFs?5Line?5?$CFd?6?$AA@": {
+        "va": 286733980,
+        "basis": "The read-only sprintf format for the tool lock watcher gives the file and line; its compiler-emitted bytes are compared with retail."
+      },
+      "_g_szMouchardToolFile": {
+        "va": 288540176,
+        "basis": "Buffer the export MouchardThreadTool formats its file and line into; printed as the %s of the tool lock's failure message. Invented name."
+      },
+      "_sprintf": {
+        "va": 284369247,
+        "basis": "The formatting call targets sprintf, the same entry used for the watcher diagnostics in campaign-sound-lock-747480 and campaign-sound-lock-747570."
+      },
+      "_g_ulMouchardToolLine": {
+        "va": 288540432,
+        "basis": "Line the export MouchardThreadTool stores; printed as the %d of the tool lock's failure message. Invented name."
+      }
+    },
+    "match": {
+      "bytes_sha256": "d85b5577bebc8af16df41f2fb81c6b1b86b900955d225c80f249bfcec734a591",
+      "inputs_sha256": "1e15247f4c6397c1a8bdb14a9c80b23f026b23c04188ac94cdb959db4af0c812"
     }
   },
   {
@@ -1427,7 +1705,7 @@
     "identification": "Steam PE export _SND_fn_fGetCurrentTime@4 at RVA 0x747810. Reads QueryPerformanceFrequency and either the saved pause counter or QueryPerformanceCounter, subtracts the origin, and divides the elapsed ticks by the frequency. Invalid or failed queries return the float at VA 0x110b8220 (zero). All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "f30fbae51c9729856e62d6ca0abd952797c20fd4f97602fe6c121dac809919b0",
-      "inputs_sha256": "aa2405f7e52a3f03e907344aa7936751708519c80528ec65c7d67b97cb82a3b0"
+      "inputs_sha256": "0a5f6c5e24f3c3ca3c2602cc2b9bbbe7e6adadc8930a4d864a15fe5fdc1dbdba"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1459,7 +1737,7 @@
     "identification": "Named retail export at RVA 0x7478c0. The complete function ends before alignment.",
     "match": {
       "bytes_sha256": "6780b1a2acf48da7c66a5e12a1c9c4fc982d634681eb41b98c6b9bb5a255788e",
-      "inputs_sha256": "a30886a839ed4703784356a517f5afbe6cf56e70606ed7f14bace89bb4657d34"
+      "inputs_sha256": "6a5fb6f838622ae881d4d29b9ffbf082d5dee93078228041614aab7dfcfde2b0"
     }
   },
   {
@@ -1483,7 +1761,7 @@
     "identification": "Named retail export at RVA 0x747900. The complete function ends before alignment.",
     "match": {
       "bytes_sha256": "d42c1c68a99f2cae7a92619c20986bec818396a042ffceaa53d2c752bd540a15",
-      "inputs_sha256": "315e1bd45425efbab8181153a446c16f634431be1ad86a86629980972d336051"
+      "inputs_sha256": "6d5a70a209a82bd23c395076f428247959e165513a7102426f96a133e8b5f64b"
     }
   },
   {
@@ -1507,7 +1785,7 @@
     "identification": "Steam PE export _SND_fn_vResumeTimer@4 at RVA 0x747930. Rejects null, -2 and running handles. On resume the pause flag clears; if QueryPerformanceCounter succeeds the paused interval is added to the timer origin. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "6d40b46781d525cd6852720886cb834c0534d7cb3eb490ccc0d44c999f774f10",
-      "inputs_sha256": "3ad263ac6cbeb232f135b94894aa152e74b807f6a7fda4699d768a73c5c09ff1"
+      "inputs_sha256": "d00b338eb98599af93fae4635ab019281c2b5ba7993da1c71e4c84cb4019f960"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4340,6 +4618,102 @@
     "match": {
       "bytes_sha256": "904afa9efb0521106c334de4ca6189dffc50ea91c99e380b33873d6cb34d7d96",
       "inputs_sha256": "d6cc8e8ace3e46335e8cdaeacbc4197cd7494a34ff3c0fb8a3875da4a62d6a18"
+    }
+  },
+  {
+    "id": "sound-options-read",
+    "offset": 7655792,
+    "size": 61,
+    "rebuilt_symbol": "_SND_fn_bGetOptions@16",
+    "inputs": [
+      "src/sound_options.c",
+      "src/sound_error.h",
+      "src/sound_options.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_options.obj src/sound_options.c",
+    "identification": "Campaign export _SND_fn_bGetOptions@16 at VA 0x1104d170. Reads section and key through GetPrivateProfileStringA. Returns whether the value differs from the writable default string None, ignoring case. The INI path and sentinel identifiers are descriptive.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "string.h": "bfbc7e7f3e14e539a060a2034ad6dbe37a32ea324c12f9def57ca925687609e8"
+    },
+    "link_bindings": {
+      "_sound_ini_path": {
+        "va": 288548896,
+        "basis": "Both option exports pass this global buffer as the file name to the Win32 profile API. The initializer at 0x1104cf90 appends the path separator and DARE.INI within a 255-character limit."
+      },
+      "_sound_missing_option": {
+        "va": 287212940,
+        "basis": "The initialized writable data at this address holds None and its terminator. It is both the default argument of GetPrivateProfileStringA and the string used to test the result."
+      },
+      "__imp__GetPrivateProfileStringA@24": {
+        "va": 285963080,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!GetPrivateProfileStringA."
+      },
+      "__stricmp": {
+        "va": 284380746,
+        "basis": "The call reaches the VS .NET 2003 stricmp.obj function _stricmp identified independently in pc/evidence/library-functions.tsv and recorded as crt-stricmp."
+      }
+    },
+    "match": {
+      "bytes_sha256": "503792741485ad5038873a41347bcf0a3ea5668ce9432b7bf16ba831c7f93733",
+      "inputs_sha256": "3d66b941b23cb26168c7e253875a5407ff70a37c6dd9438170670ce9e48265f0"
+    }
+  },
+  {
+    "id": "sound-options-write",
+    "offset": 7655856,
+    "size": 45,
+    "rebuilt_symbol": "_SND_fn_vSetOptions@12",
+    "inputs": [
+      "src/sound_options.c",
+      "src/sound_error.h",
+      "src/sound_options.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_options.obj src/sound_options.c",
+    "identification": "Campaign export _SND_fn_vSetOptions@12 at VA 0x1104d1b0. Writes section, key and value through WritePrivateProfileStringA. On failure the library reports a generic warning naming DARE.INI. The path identifier is descriptive.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "string.h": "bfbc7e7f3e14e539a060a2034ad6dbe37a32ea324c12f9def57ca925687609e8"
+    },
+    "link_bindings": {
+      "_sound_ini_path": {
+        "va": 288548896,
+        "basis": "Both option exports pass this global buffer as the file name to the Win32 profile API. The initializer at 0x1104cf90 appends the path separator and DARE.INI within a 255-character limit."
+      },
+      "__imp__WritePrivateProfileStringA@16": {
+        "va": 285962512,
+        "basis": "The retail import directory names this IAT entry KERNEL32.dll!WritePrivateProfileStringA."
+      },
+      "??_C@_0EE@PANCKCMA@Cannot?5change?5options?5in?5DARE?4IN@": {
+        "va": 286735440,
+        "basis": "The read-only warning string passed to SND_fn_vDisplayError on a failed WritePrivateProfileStringA; the compiler-emitted string is compared with retail."
+      },
+      "_SND_fn_vDisplayError@8": {
+        "va": 285460432,
+        "basis": "Retail operand of the complete function."
+      }
+    },
+    "match": {
+      "bytes_sha256": "7a972fe3e7ed44f9c5f56f5ea296d9daf9c699b120ed2fadb279baa4a7dd1c71",
+      "inputs_sha256": "9031b439048ec9e62fa8a7a46a45f9bd1e8428489d0c0dc37637e1179bc4a161"
     }
   },
   {

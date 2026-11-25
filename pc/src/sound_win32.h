@@ -106,6 +106,13 @@ __declspec(dllimport) void *__stdcall FindFirstFileA(const char *lpFileName,
 __declspec(dllimport) int __stdcall FindClose(void *hFindFile);
 __declspec(dllimport) void *__stdcall CreateMutexA(void *lpMutexAttributes, int bInitialOwner,
                                                    const char *lpName);
+__declspec(dllimport) int __stdcall ReleaseMutex(void *hMutex);
+__declspec(dllimport) unsigned long __stdcall GetCurrentThreadId(void);
+__declspec(dllimport) unsigned long __stdcall GetPrivateProfileStringA(
+    const char *lpAppName, const char *lpKeyName, const char *lpDefault, char *lpReturnedString,
+    unsigned long nSize, const char *lpFileName);
+__declspec(dllimport) int __stdcall WritePrivateProfileStringA(
+    const char *lpAppName, const char *lpKeyName, const char *lpString, const char *lpFileName);
 __declspec(dllimport) void __stdcall EnterCriticalSection(CRITICAL_SECTION *lpCriticalSection);
 __declspec(dllimport) void __stdcall LeaveCriticalSection(CRITICAL_SECTION *lpCriticalSection);
 __declspec(dllimport) int __stdcall QueryPerformanceCounter(__int64 *lpPerformanceCount);
