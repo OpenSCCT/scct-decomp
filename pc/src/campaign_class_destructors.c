@@ -38,9 +38,6 @@ extern void __fastcall destroy_base_of_UAnimNotify(struct UAnimNotify *self);
 struct UEHkObject { const void *vtable; };
 extern const void *const vtable_UEHkObject[];
 extern void __fastcall destroy_base_of_UEHkObject(struct UEHkObject *self);
-struct UInteractions { const void *vtable; };
-extern const void *const vtable_UInteractions[];
-extern void __fastcall destroy_base_of_UInteractions(struct UInteractions *self);
 struct UProceduralShader { const void *vtable; };
 extern const void *const vtable_UProceduralShader[];
 extern void __fastcall destroy_base_of_UProceduralShader(struct UProceduralShader *self);
@@ -56,9 +53,6 @@ extern void __fastcall destroy_base_of_AETwoHandedWeapon(struct AETwoHandedWeapo
 struct AEOneHandedWeapon { const void *vtable; };
 extern const void *const vtable_AEOneHandedWeapon[];
 extern void __fastcall destroy_base_of_AEOneHandedWeapon(struct AEOneHandedWeapon *self);
-struct UCanvas { const void *vtable; };
-extern const void *const vtable_UCanvas[];
-extern void __fastcall destroy_base_of_UCanvas(struct UCanvas *self);
 struct AEAccessory { const void *vtable; };
 extern const void *const vtable_AEAccessory[];
 extern void __fastcall destroy_base_of_AEAccessory(struct AEAccessory *self);
@@ -95,13 +89,11 @@ void __fastcall destroy_members_0b58d0(struct members_0b58d0 *self);
 void __fastcall destroy_AStaticMeshActor(struct AStaticMeshActor *self);
 void __fastcall destroy_UAnimNotify(struct UAnimNotify *self);
 void __fastcall destroy_UEHkObject(struct UEHkObject *self);
-void __fastcall destroy_UInteractions(struct UInteractions *self);
 void __fastcall destroy_UProceduralShader(struct UProceduralShader *self);
 void __fastcall destroy_UTexTransform(struct UTexTransform *self);
 void __fastcall destroy_AMover(struct AMover *self);
 void __fastcall destroy_AETwoHandedWeapon(struct AETwoHandedWeapon *self);
 void __fastcall destroy_AEOneHandedWeapon(struct AEOneHandedWeapon *self);
-void __fastcall destroy_UCanvas(struct UCanvas *self);
 void __fastcall destroy_AEAccessory(struct AEAccessory *self);
 void __fastcall destroy_AESwingingDoor(struct AESwingingDoor *self);
 void __fastcall destroy_AEGlass(struct AEGlass *self);
@@ -195,13 +187,6 @@ void __fastcall destroy_UEHkObject(struct UEHkObject *self)
     destroy_base_of_UEHkObject(self);
 }
 
-void __fastcall destroy_UInteractions(struct UInteractions *self)
-{
-    self->vtable = vtable_UInteractions;
-    conditional_destroy(self);
-    destroy_base_of_UInteractions(self);
-}
-
 void __fastcall destroy_UProceduralShader(struct UProceduralShader *self)
 {
     self->vtable = vtable_UProceduralShader;
@@ -235,13 +220,6 @@ void __fastcall destroy_AEOneHandedWeapon(struct AEOneHandedWeapon *self)
     self->vtable = vtable_AEOneHandedWeapon;
     conditional_destroy(self);
     destroy_base_of_AEOneHandedWeapon(self);
-}
-
-void __fastcall destroy_UCanvas(struct UCanvas *self)
-{
-    self->vtable = vtable_UCanvas;
-    conditional_destroy(self);
-    destroy_base_of_UCanvas(self);
 }
 
 void __fastcall destroy_AEAccessory(struct AEAccessory *self)

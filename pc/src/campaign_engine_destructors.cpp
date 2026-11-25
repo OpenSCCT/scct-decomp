@@ -7,6 +7,20 @@
 #include "unreal_pawn.h"
 #include "campaign_level_info.h"
 #include "campaign_native_classes.h"
+#include "unreal_interaction.h"
+#include "campaign_canvas.h"
+
+// UInteractions::~UInteractions
+UInteractions::~UInteractions()
+{
+    ConditionalDestroy();
+}
+
+// UCanvas::~UCanvas
+UCanvas::~UCanvas()
+{
+    ConditionalDestroy();
+}
 
 // UState::~UState
 UState::~UState()
