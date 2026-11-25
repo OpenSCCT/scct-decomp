@@ -142,14 +142,20 @@ The table data is outside the measured ranges.
 
 ## Versus data objects
 
-The Versus payload has no export directory. Its C++ runtime type information
-identifies the virtual tables for `clDataLong`, `clDataBin`, `clDataStr`
-and `clDataRef`. The [Versus manifest](config/steam-252084-versus.json)
-records the table RVA, zero-based slot and function boundary for each match.
+Retail C++ type information identifies the `clData` hierarchy and its virtual
+`ExtAlloc::OverrideAllocOperators` base. It also identifies the same virtual
+base for `clDataSerialize`. Their constructors install the corresponding
+virtual-base tables when constructing a complete object.
 
-Two functions return the byte size of a long and of a pointer range. A third
-dispatches a formatting call through another slot on the same object. Five
-more forward operations to the referenced object held by `clDataRef`.
-Shared implementations count once. The C names describe the recovered
-operations. The C calling conventions put the object in ECX and preserve
-the retail layout of arguments passed on the stack.
+The five `clDataRef` methods forward formatting, printing and size queries to
+the referenced object. `clDataStrRef` prints a quoted string and measures its
+length. `clDataLong` keeps both the network-order integer and the result of
+`ntohl`, which it prints in decimal. Several virtual tables share a function
+body, and each address counts once. Class names come from RTTI. Method and field
+names describe the observed behavior. [C++ source](src/versus_cldata.cpp) ·
+[Integer conversion](src/versus_cldata_long.cpp)
+
+Visual C++ 6 reproduces these bodies, their alignment and both printf format
+strings. The verifier compares the complete writable string literals with the
+retail executable's initialized data. The units remain candidates pending
+independent evidence of their original compiler and switches.
