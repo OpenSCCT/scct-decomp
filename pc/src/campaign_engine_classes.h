@@ -169,6 +169,14 @@ public:
     BYTE             unk_4c[0x130];
 };
 
+// Engine.GameEngine: 0x1e0 bytes. Engine.u lists both level object properties.
+class UGameEngine : public UEngine {
+public:
+    class ULevel *GLevel;
+    class ULevel *GEntry;
+    BYTE          unk_184[0x5c];
+};
+
 // Engine.LevelBase: 0x80 bytes, 24 virtual functions
 class ULevelBase : public UObject {
 public:

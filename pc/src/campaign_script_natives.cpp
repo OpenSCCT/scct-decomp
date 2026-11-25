@@ -155,7 +155,7 @@ void AActor::execMoveSmooth(FFrame &Stack, RESULT_DECL)
 {
     P_GET_VECTOR(Delta);
     P_FINISH;
-    unk_2c &= ~0x02000000;
+    bJustTeleported = 0;
     *(DWORD *)Result = MoveSmooth(Delta);
 }
 

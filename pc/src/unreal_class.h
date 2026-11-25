@@ -29,15 +29,22 @@ public:
 #else // Campaign
 
 // Core.Class: 0x2e0 bytes, 35 virtual functions
+enum { ClassFlag_00004000 = 0x4000 };   // suppresses the class default object
+
 class UClass : public UState {
 public:
     virtual ~UClass();
 
-    BYTE         unk_284[0x18];
+    DWORD        ClassFlags;
+    BYTE         unk_288[0x14];
     TArray<BYTE> Defaults;      // the class's default property values
     BYTE         unk_2a8[0x38];
 
     UClass *GetSuperClass() const { return (UClass *)SuperField; }
+    UObject *GetDefaultObject() const
+    {
+        return (ClassFlags & ClassFlag_00004000) ? 0 : (UObject *)Defaults.Data;
+    }
 
     DECLARE_LAZY_CLASS_IN(UClass, L"Core")
 };

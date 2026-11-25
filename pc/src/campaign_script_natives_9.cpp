@@ -58,7 +58,7 @@ void AActor::execPlaySound(FFrame &Stack, RESULT_DECL)
     UAudioSubsystem *Audio = XLevel->Engine->Audio;
     if (!Audio || !Audio->GetViewport()->Actor)
         return;
-    if (bOwned && (unk_2c & 0x10))
+    if (bOwned && bIsPawn)
     {
         PlayOwnedSound(Sound, Slot);
         return;
