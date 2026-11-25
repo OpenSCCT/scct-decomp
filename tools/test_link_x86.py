@@ -55,3 +55,30 @@ class LinkTests(unittest.TestCase):
                 link_function(obj, "_unit", 8, 0x41000, bindings)
         with self.assertRaises(ValueError):
             link_function(object_file(), "_unit", 7, 0x41000, self.bindings)
+
+    def test_vc6_writable_string_comdat(self):
+        # One absolute reference to the start of a two-byte narrow literal.
+        literal = b"??_C@_01A@x?$AA@"
+        header = struct.pack("<HHIIIHH", 0x14c, 2, 0, 116, 2, 0, 0)
+        code = struct.pack("<8sIIIIIIHHI", b".text", 0, 0, 4, 100, 104, 0, 1, 0, 0x60000020)
+        data = struct.pack("<8sIIIIIIHHI", b".data", 0, 0, 2, 114, 0, 0, 0, 0, 0xc0301040)
+        symbols = struct.pack("<8sIhHBB", b"_unit", 0, 1, 0x20, 2, 0)
+        symbols += struct.pack("<IIIhHBB", 0, 4, 0, 2, 0, 2, 0)
+        names = struct.pack("<I", 5 + len(literal)) + literal + b"\0"
+        obj = bytearray(header + code + data + bytes(4) + struct.pack("<IIH", 0, 1, 6)
+                        + b"x\0" + symbols + names)
+        bindings = {literal.decode(): {"va": 0x450000, "basis": "fixture string"}}
+
+        def read(va, size):
+            self.assertEqual((va, size), (0x450000, 2))
+            return b"x\0"
+
+        def rebuild(obj):
+            return link_function(obj, "_unit", 4, 0x41000, bindings, read_writable_string=read)
+
+        self.assertEqual(rebuild(obj), struct.pack("<I", 0x450000))
+        for pos, value in ((114, ord("y")), (115, ord("z")), (100, 1), (97, 0)):
+            with self.subTest(pos=pos), self.assertRaises(ValueError):
+                changed = obj.copy()
+                changed[pos] = value
+                rebuild(changed)

@@ -41,14 +41,20 @@ def pe_sections(data):
             yield section(name.strip(b"\0").decode("ascii"), offset, size, address, code, data)
 
 
-def readonly_pe_data(data, address, size):
-    """Read a complete constant from file-backed, non-executable, read-only PE data."""
+def initialized_pe_data(data, address, size, *, writable):
+    """Read file-backed initialized data with the requested PE section permissions."""
+    required = 0xc0000040 if writable else 0x40000040
     for _, offset, length, base, flags in pe_file_sections(data):
         relative = address - base
-        if 0 <= relative and relative + size <= length and flags & 0xe0000040 == 0x40000040:
+        if 0 <= relative and relative + size <= length and flags & 0xe00000e0 == required:
             first, end = span(offset + relative, size, len(data))
             return data[first:end]
-    raise ValueError("constant lies outside a file-backed read-only data section")
+    access = "writable" if writable else "read-only"
+    raise ValueError(f"constant lies outside a file-backed {access} data section")
+
+
+def readonly_pe_data(data, address, size):
+    return initialized_pe_data(data, address, size, writable=False)
 
 
 def file_pe_data(data, address, size):

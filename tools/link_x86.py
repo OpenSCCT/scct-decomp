@@ -122,7 +122,7 @@ def switch_arms(obj, body, section, size, symbols, relocation_data):
     return arms
 
 
-def link_function(obj, name, length, address, bindings, *, read_constant=None):
+def link_function(obj, name, length, address, bindings, *, read_constant=None, read_writable_string=None):
     """Return the fully linked section. The retail function bytes are never an input."""
     sections, symbols, functions, section_functions, handlers = symbol_index(bytes(obj))
     matches = functions.get(name.encode("ascii"), ())
@@ -239,10 +239,22 @@ def link_function(obj, name, length, address, bindings, *, read_constant=None):
                 const_header = 20 + (sym_section - 1) * 40
                 const_size, const_start = struct.unpack_from("<II", obj, const_header + 16)
                 const_relocs, _, const_flags = struct.unpack_from("<HHI", obj, const_header + 32)
-                if (kind != 0 or not const_size or const_relocs or const_flags & 0xe0000040 != 0x40000040
-                        or read_constant is None):
+                if kind != 0 or not const_size or const_relocs:
                     raise ValueError(f"expected an initialized read-only constant for {symbol}")
-                if region(obj, const_start, const_size) != read_constant(dest, const_size):
+                contents = region(obj, const_start, const_size)
+                reader = read_constant
+                if const_flags & 0xe0000040 != 0x40000040:
+                    # VC6 pools narrow literals in writable .data COMDATs. Check the entire
+                    # string, including its terminator, against the same kind of retail data.
+                    if (const_flags & 0xe00010e0 != 0xc0001040 or relocation != 6
+                            or body[position:position + 4] != bytes(4)
+                            or not symbol.startswith("??_C@_0") or not symbol.endswith("@")
+                            or not contents.endswith(b"\0")):
+                        raise ValueError(f"expected an initialized read-only constant for {symbol}")
+                    reader = read_writable_string
+                if reader is None:
+                    raise ValueError(f"missing retail data for {symbol}")
+                if contents != reader(dest, const_size):
                     raise ValueError(f"compiled constant differs from retail for {symbol}")
             used.add(symbol)
         field = set(range(position, position + 4))

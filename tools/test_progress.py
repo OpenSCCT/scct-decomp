@@ -6,7 +6,7 @@ import struct
 import tempfile
 import unittest
 
-from images import coff_symbol_offset, inspect, readonly_pe_data
+from images import coff_symbol_offset, initialized_pe_data, inspect, readonly_pe_data
 from progress import match, summary, verify
 
 
@@ -124,6 +124,17 @@ class ProgressTests(unittest.TestCase):
         self.assertEqual(readonly_pe_data(data, 4096, 4), b"TEST")
         with self.assertRaises(ValueError):
             readonly_pe_data(data, 4195, 2)
+
+    def test_writable_string_data_must_be_initialized_and_file_backed(self):
+        data = pe()
+        for flags in (0x40000040, 0xe0000040, 0xc0000080):
+            struct.pack_into("<I", data, 412, flags)
+            with self.assertRaises(ValueError):
+                initialized_pe_data(data, 4096, 4, writable=True)
+        struct.pack_into("<I", data, 412, 0xc0000040)
+        self.assertEqual(initialized_pe_data(data, 4096, 4, writable=True), b"TEST")
+        with self.assertRaises(ValueError):
+            initialized_pe_data(data, 4195, 2, writable=True)
 
     def test_coff_function_bounds_and_relocations(self):
         data = bytearray(110)

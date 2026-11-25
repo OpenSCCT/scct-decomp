@@ -9,7 +9,7 @@ import struct
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from images import coff_symbol_offset, file_pe_data, inspect, readonly_pe_data, span
+from images import coff_symbol_offset, file_pe_data, initialized_pe_data, inspect, readonly_pe_data, span
 from link_image import place_function
 from link_x86 import link_function
 from manifests import load_target, save_receipt
@@ -253,6 +253,12 @@ def built_unit_bytes(target, unit, output, original=None):
                                       read_constant=lambda va, size: readonly_pe_data(original, va, size),
                                       read_table=lambda va, size: file_pe_data(original, va, size))
         raise ValueError("link address outside a measured code section")
+    readers = {}
+    if original is not None and "link_bindings" in unit:
+        readers = {
+            "read_constant": lambda va, size: readonly_pe_data(original, va, size),
+            "read_writable_string": lambda va, size: initialized_pe_data(original, va, size, writable=True),
+        }
     if "coff_alignment" in unit:
         alignment = unit["coff_alignment"]
         if (type(alignment) is not int or alignment != 16 or original is None
@@ -267,8 +273,8 @@ def built_unit_bytes(target, unit, output, original=None):
                     raise ValueError("COFF alignment extends beyond the code section or has invalid bounds")
                 length = unit["size"] + tail
                 if "link_bindings" in unit:
-                    contribution = link_function(output, unit["rebuilt_symbol"], length, address, unit["link_bindings"],
-                                                 read_constant=lambda va, size: readonly_pe_data(original, va, size))
+                    contribution = link_function(output, unit["rebuilt_symbol"], length, address,
+                                                 unit["link_bindings"], **readers)
                 else:
                     offset = coff_symbol_offset(output, unit["rebuilt_symbol"], length)
                     contribution = output[offset:offset + length]
@@ -282,9 +288,8 @@ def built_unit_bytes(target, unit, output, original=None):
         for s in target["image"]["executable_sections"]:
             if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
                 address = s["address"] + a - s["offset"]
-                read_constant = None if original is None else lambda va, size: readonly_pe_data(original, va, size)
                 return link_function(output, unit["rebuilt_symbol"], unit["size"], address, unit["link_bindings"],
-                                     read_constant=read_constant)
+                                     **readers)
         raise ValueError("link address outside a measured code section")
     offset = (coff_symbol_offset(output, unit["rebuilt_symbol"], unit["size"])
               if "rebuilt_symbol" in unit else unit["rebuilt_offset"])
