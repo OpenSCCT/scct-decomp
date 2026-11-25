@@ -39,6 +39,16 @@ struct FFrame : public FOutputDevice {
         Code += sizeof(_WORD);
         return Result;
     }
+#ifndef SCCT_VERSUS
+    // The EX_Skip token and the byte count of its optional operand.
+    _WORD ReadSkipCount()
+    {
+        Code++;
+        _WORD Count = *(_WORD *)Code;
+        Code += sizeof(Count);
+        return Count;
+    }
+#endif
     UObject *ReadObject()
     {
         UObject *Result = *(UObject **)Code;

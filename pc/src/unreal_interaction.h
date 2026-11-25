@@ -29,6 +29,8 @@ public:
 #else // Campaign
 #include "unreal_containers.h"
 
+extern FName name_Initialized;     // constructed from the retail name "Initialized"
+
 // Engine.Interactions: 0x28 bytes, 24 virtual functions
 class UInteractions : public UObject {
 public:
@@ -43,8 +45,10 @@ public:
     BYTE unk_28[0xc];
 
     UBOOL ConsoleCommand(FString S);
+    void eventInitialized();
 
     DECLARE_NATIVE(execConsoleCommand)
+    DECLARE_NATIVE(execInitialize)
 };
 
 #endif // SCCT_VERSUS

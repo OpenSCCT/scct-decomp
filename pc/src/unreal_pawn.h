@@ -153,6 +153,7 @@ public:
     DECLARE_NATIVE(execCopyToClipboard)
     DECLARE_NATIVE(execSetViewTarget)
     DECLARE_NATIVE(execResetKeyboard)
+    DECLARE_NATIVE(execGetEntryLevel)
 };
 
 #endif // SCCT_VERSUS

@@ -92,6 +92,8 @@ class UECanvas : public UCanvas {
 public:
     virtual ~UECanvas();
 
+    enum EPortalTarget { CBUFFER, TEX_0 };
+
     BYTE unk_a0[0x10];
 
     void DrawLine(INT X, INT Y, INT XL, INT YL, const FColor &InColor, INT Alpha, UMaterial *Material);
@@ -106,6 +108,9 @@ public:
     DECLARE_NATIVE(execDrawLine)
     DECLARE_NATIVE(execViewportSizeX)
     DECLARE_NATIVE(execViewportSizeY)
+    DECLARE_NATIVE(execDrawPlayerPortal)
+    DECLARE_NATIVE(execSetRenderState)
+    DECLARE_NATIVE(execSetRenderTarget)
 };
 
 #endif // CAMPAIGN_CANVAS_H

@@ -251,7 +251,15 @@ public:
     virtual void VirtualSlot165();
 
     DWORD                unk_28;        // flag word: PlayActorSound tests 4
-    DWORD                unk_2c;        // flag word: MoveSmooth clears 0x02000000, bone traces test 0x40
+    // Engine.u's Actor BoolProperty chain places bIsPawn twenty flags before bInterpolating
+    // and bJustTeleported immediately after it. PlaySound, the interpolation poll and
+    // MoveSmooth access those three bits.
+    BITFIELD             unk_2c_0 : 4;
+    BITFIELD             bIsPawn : 1;
+    BITFIELD             unk_2c_5 : 19;
+    BITFIELD             bInterpolating : 1;
+    BITFIELD             bJustTeleported : 1;
+    BITFIELD             unk_2c_26 : 6;
     BITFIELD             unk_30_0 : 25;
     BITFIELD             bCollideActors : 1;    // the actor is in the level's collision hash
     BITFIELD             unk_30_26 : 6;
@@ -352,6 +360,7 @@ public:
     DECLARE_NATIVE(execPollFinishSequence)
     DECLARE_NATIVE(execPollSleep)
     DECLARE_NATIVE(execFinishInterpolation)
+    DECLARE_NATIVE(execPollFinishInterpolation)
     DECLARE_NATIVE(execDestroy)
     DECLARE_NATIVE(execStopAllSounds)
     DECLARE_NATIVE(execVerifyOcclusion)

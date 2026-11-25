@@ -88,7 +88,6 @@ extern ScriptEventName name_GetVent;
 extern ScriptEventName name_GoConveyor;
 extern ScriptEventName name_HitFakeBackDrop;
 extern ScriptEventName name_InitInputSystem;
-extern ScriptEventName name_Initialized;
 extern ScriptEventName name_KeyFrameReached;
 extern ScriptEventName name_LedgeToLadder;
 extern ScriptEventName name_LongFall;

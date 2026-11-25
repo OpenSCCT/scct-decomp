@@ -40,7 +40,11 @@ public:
 class UObject : public FUnknown {
 public:
     virtual ~UObject();
+#ifdef SCCT_VERSUS
     virtual void VirtualSlot4();
+#else
+    virtual void ProcessEvent(class UFunction *Function, void *Parms, void *Result = 0);
+#endif
     virtual void VirtualSlot5();
     virtual void VirtualSlot6();
     virtual void VirtualSlot7();
@@ -56,7 +60,11 @@ public:
     // two parameters are not identified.
     virtual UBOOL GotoLabel(FName Label, INT Option2, INT Option3);
 #endif
+#ifdef SCCT_VERSUS
     virtual void VirtualSlot14();
+#else
+    virtual void InitExecution();
+#endif
     virtual void VirtualSlot15();
     virtual void VirtualSlot16();
     virtual void VirtualSlot17();
@@ -222,6 +230,13 @@ public:
     DECLARE_NATIVE(execByteToString)
     DECLARE_NATIVE(execRotRand)
     DECLARE_NATIVE(execMetaCast)
+    DECLARE_NATIVE(execAndAnd_BoolBool)
+    DECLARE_NATIVE(execOrOr_BoolBool)
+    DECLARE_NATIVE(execMid)
+    DECLARE_NATIVE(execCase)
+    DECLARE_NATIVE(execContext)
+    DECLARE_NATIVE(execClassContext)
+    DECLARE_NATIVE(execStaticSaveConfig)
 #endif
 };
 
