@@ -1,12 +1,12 @@
 #include "campaign_allocation_kind.h"
 
-struct Size { unsigned value; };
-struct Vector { unsigned reserved; unsigned char *first, *end, *limit; };
+struct VectorInitializationCount { unsigned value; };
+struct VectorInitializationStorage { unsigned reserved; unsigned char *first, *end, *limit; };
 extern void *__cdecl allocate_buffer(unsigned, unsigned);
 
 #define INITIALIZE_VECTOR(Stride) \
     struct Element##Stride { unsigned char bytes[Stride]; }; \
-    unsigned char __fastcall initialize_##Stride(struct Vector *v, struct Size count) \
+    unsigned char __fastcall initialize_##Stride(struct VectorInitializationStorage *v, struct VectorInitializationCount count) \
     { \
         v->first = 0; \
         v->end = 0; \
