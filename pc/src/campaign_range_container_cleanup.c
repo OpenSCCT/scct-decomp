@@ -1,36 +1,36 @@
 #include "campaign_list_link.h"
-struct Container { unsigned reserved; struct ListLink *head; unsigned count; };
-struct Pointer { struct ListLink *ptr; };
+struct RangeCleanupContainer { unsigned reserved; struct ListLink *head; unsigned count; };
+struct RangeCleanupPointer { struct ListLink *ptr; };
 struct Result { struct ListLink **ptr; };
-extern void __fastcall erase_48a6c0(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_48d990(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_497030(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_499e10(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4a0150(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4a3e90(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4a6890(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4ac700(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4afff0(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4b0bd0(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4c07f0(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4c6390(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4cb790(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4cb890(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4d06e0(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4d4a50(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4d83f0(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4dee30(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4eceb0(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void __fastcall erase_4ee800(struct Container *, struct Result, struct Pointer, struct Pointer);
-extern void *__cdecl prepare_release(struct Pointer, unsigned);
+extern void __fastcall erase_48a6c0(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_48d990(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_497030(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_499e10(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4a0150(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4a3e90(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4a6890(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4ac700(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4afff0(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4b0bd0(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4c07f0(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4c6390(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4cb790(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4cb890(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4d06e0(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4d4a50(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4d83f0(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4dee30(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4eceb0(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void __fastcall erase_4ee800(struct RangeCleanupContainer *, struct Result, struct RangeCleanupPointer, struct RangeCleanupPointer);
+extern void *__cdecl prepare_release(struct RangeCleanupPointer, unsigned);
 extern void __cdecl release_prepared(void *);
 
 #define DESTROY_CONTAINER(Entry, Erase) \
-    void __fastcall Entry(struct Container *self) \
+    void __fastcall Entry(struct RangeCleanupContainer *self) \
     { \
         struct ListLink *unused; \
         struct Result result; \
-        struct Pointer first, end; \
+        struct RangeCleanupPointer first, end; \
         end.ptr = self->head; \
         first.ptr = end.ptr->next; \
         result.ptr = &unused; \
