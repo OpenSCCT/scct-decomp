@@ -1,3 +1,4 @@
+#include "campaign_channel_constants.h"
 struct Index { int value; };
 struct ChannelActivityMesh;
 struct ChannelActivityMethods {
@@ -21,8 +22,6 @@ struct ChannelActivityMesh {
     struct AnimationPlaybackChannel *channels;
     int count;
 };
-extern const float zero_rate;
-extern const double zero_position;
 
 int __fastcall channel_active(struct ChannelActivityMesh *mesh, struct Index index)
 {

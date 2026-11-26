@@ -1,38 +1,37 @@
+#include "campaign_channel_constants.h"
 struct Index { int value; };
 struct Bit { unsigned value; };
-union Flags {
+union PlaybackTransitionFlags {
     unsigned value;
     struct { unsigned lower : 6, sixth : 1, upper : 25; } bits;
 };
-struct Channel {
+struct PlaybackTransitionChannel {
     unsigned char reserved_00[8];
     float rate, position, end_position, blend_rate, field_18;
     unsigned char reserved_1c[8];
     float rate_scale;
-    union Flags flags;
+    union PlaybackTransitionFlags flags;
     unsigned reserved_2c;
     float weight;
     unsigned char reserved_34[8];
     float field_3c;
     unsigned char reserved_40[0x40];
 };
-struct Mesh {
+struct PlaybackTransitionMesh {
     unsigned char reserved_00[0x94];
-    struct Channel *channels;
+    struct PlaybackTransitionChannel *channels;
     int count;
     unsigned char reserved_9c[0x248];
     float step;
 };
-extern const float zero_value;
-extern const double zero_position;
-static __forceinline int valid(const struct Mesh *mesh, int index)
+static __forceinline int valid(const struct PlaybackTransitionMesh *mesh, int index)
 {
     return index >= 0 && index < mesh->count;
 }
-void __fastcall update_position(struct Mesh *mesh, struct Index index, float position, struct Bit bit)
+void __fastcall update_position(struct PlaybackTransitionMesh *mesh, struct Index index, float position, struct Bit bit)
 {
     if (valid(mesh, index.value)) {
-        struct Channel *channel = &mesh->channels[index.value];
+        struct PlaybackTransitionChannel *channel = &mesh->channels[index.value];
         if (channel->position < zero_position) {
             if (position < zero_value)
                 channel->position = position;
@@ -44,10 +43,10 @@ void __fastcall update_position(struct Mesh *mesh, struct Index index, float pos
         channel->flags.bits.sixth = bit.value;
     }
 }
-void __fastcall approach_weight(struct Mesh *mesh, struct Index index, float target, float step)
+void __fastcall approach_weight(struct PlaybackTransitionMesh *mesh, struct Index index, float target, float step)
 {
     if (valid(mesh, index.value)) {
-        struct Channel *channel = &mesh->channels[index.value];
+        struct PlaybackTransitionChannel *channel = &mesh->channels[index.value];
         float delta = channel->weight - target;
         if ((delta >= zero_value ? delta : -delta) <= step)
             channel->weight = target;
