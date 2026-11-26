@@ -1,18 +1,18 @@
 struct Tree;
-struct Node {
+struct EraseBranchNode {
     unsigned reserved[2];
-    struct Node *left, *right;
+    struct EraseBranchNode *left, *right;
     unsigned char value[1];
 };
-struct Branch { struct Node *node; };
-extern void __stdcall release_node(struct Node *node);
+struct Branch { struct EraseBranchNode *node; };
+extern void __stdcall release_node(struct EraseBranchNode *node);
 #define KEEP_VALUE(node) ((void)0)
 #define ERASE_BRANCH(Entry, Destroy) \
     void __fastcall Entry(struct Tree *tree, struct Branch branch) \
     { \
-        struct Node *node = branch.node; \
+        struct EraseBranchNode *node = branch.node; \
         while (node) { \
-            struct Node *left; \
+            struct EraseBranchNode *left; \
             struct Branch right; \
             right.node = node->right; \
             Entry(tree, right); \
