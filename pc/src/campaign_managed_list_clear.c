@@ -1,10 +1,10 @@
 #include "campaign_list_link.h"
-struct List { unsigned reserved; struct ListLink *head; unsigned count; };
+struct ManagedList { unsigned reserved; struct ListLink *head; unsigned count; };
 extern void *__cdecl get_manager(void);
 extern void __cdecl release_allocation(void *, void *, unsigned);
 
 #define CLEAR_LIST(Entry, Category) \
-    void __fastcall Entry(struct List *list) \
+    void __fastcall Entry(struct ManagedList *list) \
     { \
         struct ListLink *node = list->head->next; \
         list->head->next = list->head; \
