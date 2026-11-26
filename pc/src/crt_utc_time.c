@@ -1,3 +1,4 @@
+#include "crt_calendar_globals.h"
 typedef unsigned __int64 FileTime;
 __declspec(dllimport) void __stdcall GetSystemTimeAsFileTime(FileTime *);
 
@@ -26,7 +27,6 @@ struct ThreadData {
 };
 extern struct ThreadData *_getptd(void);
 extern struct CalendarTime tb;
-extern int _days[], _lpdays[];
 void *malloc(unsigned);
 
 struct CalendarTime *__cdecl steam_gmtime(const long *seconds)
