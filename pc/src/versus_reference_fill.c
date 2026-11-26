@@ -1,7 +1,4 @@
-struct SharedObject {
-    unsigned first_word;
-    unsigned references;
-};
+#include "versus_shared_object.h"
 
 void __cdecl fill_references(struct SharedObject **destination, unsigned count,
                              struct SharedObject *const *source, void *allocator,
@@ -17,9 +14,10 @@ void __cdecl fill_references(struct SharedObject **destination, unsigned count,
     }
 }
 
-struct Iterator { struct SharedObject *const *position; };
+struct SharedObjectIterator { struct SharedObject *const *position; };
 
-struct SharedObject **__cdecl copy_references(struct Iterator first, struct Iterator last,
+struct SharedObject **__cdecl copy_references(struct SharedObjectIterator first,
+                                              struct SharedObjectIterator last,
                                               struct SharedObject **destination, void *allocator,
                                               struct SharedObject *const *type_hint)
 {
