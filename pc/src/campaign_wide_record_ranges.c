@@ -4,13 +4,13 @@ struct WideText {
     unsigned length, capacity;
 };
 struct WideRecord { struct WideText text; unsigned value; };
-struct Argument { const void *address; };
+struct WideRecordArgument { const void *address; };
 /* The range stack argument packs a zero start and an all-elements count. */
-extern void __fastcall copy_text(struct WideText *, struct Argument, unsigned __int64 range);
+extern void __fastcall copy_text(struct WideText *, struct WideRecordArgument, unsigned __int64 range);
 
 static __forceinline void assign_record(struct WideRecord *output, const struct WideRecord *input)
 {
-    struct Argument argument;
+    struct WideRecordArgument argument;
     argument.address = &input->text;
     copy_text(&output->text, argument, (unsigned __int64)~0u << 32);
     output->value = input->value;
