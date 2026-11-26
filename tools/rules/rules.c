@@ -334,6 +334,7 @@ typedef struct {
 	unsigned char *reach;	/* reach[f]: this file sees file f through its includes */
 	unsigned targets;		/* bit per executable whose units compile this file */
 	int condition;			/* while lexing: the build conditional the next token sits in */
+	int scope;				/* current namespace while parsing declarations */
 } file_t;
 
 typedef enum {
@@ -355,6 +356,8 @@ typedef struct {
 	int kind;				/* nodeKind_t */
 	int name;				/* symbol */
 	int file;
+	int scope;				/* enclosing namespace, 0 for global scope */
+	int qualifier;			/* first token of an out-of-line type definition's qualifier */
 	int line;
 	int begin, end;			/* token range, in code or macro tokens (NF_IN_MACRO) */
 	int flags;
@@ -384,6 +387,64 @@ static int numNodes, nodeCapacity;
 static finding_t *findings;
 static int numFindings, findingCapacity;
 static int currentEditionFirstFile;	/* files of other editions are never visible */
+
+typedef struct {
+	int parent;
+	int name;
+	const char *qualified;
+	int internal;
+} namespace_t;
+
+static namespace_t *namespaces;
+static int numNamespaces, namespaceCapacity;
+
+/* Namespace blocks can be reopened in any file. A nested name belongs to its parent. */
+static int FindNamespace( int parent, int name ) {
+	int i;
+
+	for ( i = 1; i <= numNamespaces; i++ ) {
+		if ( namespaces[i].parent == parent && namespaces[i].name == name ) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+static int EnterNamespace( int parent, int name ) {
+	int scope = FindNamespace( parent, name );
+
+	if ( scope < 0 ) {
+		const char *part = name ? symbolText[name] : "(anonymous)";
+
+		scope = ++numNamespaces;
+		namespaces = Grow( namespaces, &namespaceCapacity, scope + 1, sizeof( *namespaces ) );
+		namespaces[scope].parent = parent;
+		namespaces[scope].name = name;
+		namespaces[scope].qualified = parent ? Format( "%s::%s", namespaces[parent].qualified, part ) : part;
+		namespaces[scope].internal = !name || ( parent && namespaces[parent].internal );
+	}
+	return scope;
+}
+
+/* Resolve the namespace qualifier before a type name, including a leading "::". */
+static int QualifiedNamespace( const token_t *tokens, int first, int name, int scope ) {
+	if ( first < name && tokens[first].symbol == sScope ) {
+		scope = 0;
+		first++;
+	}
+	do {
+		int i, path = scope;
+
+		for ( i = first; i < name && path >= 0; i += 2 ) {
+			path = FindNamespace( path, tokens[i].symbol );
+		}
+		if ( path >= 0 ) {
+			return path;
+		}
+		scope = scope ? namespaces[scope].parent : -1;
+	} while ( scope >= 0 );
+	return -1;
+}
 
 /* Records a finding against a node (or the file, when node is -1). */
 static void Report( int file, int line, int rule, int node, const char *message ) {
@@ -415,6 +476,7 @@ static int AddNode( int kind, int name, int file, int line, int begin, int end, 
 	node->kind = kind;
 	node->name = name;
 	node->file = file;
+	node->scope = files[file].scope;
 	node->line = line;
 	node->begin = begin;
 	node->end = end;
@@ -1222,12 +1284,14 @@ DECLARATION PARSER
 ===============================================================================
 */
 
-static unsigned char *typeNameSeen;		/* by symbol: names a struct, class, union, enum or typedef */
+#define TYPE_GLOBAL 1
+#define TYPE_NAMESPACED 2
+static unsigned char *typeNameSeen;
 static int typeNameCapacity;
 
-static void MarkTypeName( int symbol ) {
+static void MarkTypeName( int symbol, int inNamespace ) {
 	typeNameSeen = Grow( typeNameSeen, &typeNameCapacity, numSymbols + 1, 1 );
-	typeNameSeen[symbol] = 1;
+	typeNameSeen[symbol] |= inNamespace ? TYPE_NAMESPACED : TYPE_GLOBAL;
 }
 
 static int IsTypeName( int symbol ) {
@@ -1626,7 +1690,7 @@ static void AddDeclaration( int fileIndex, int begin, int end ) {
 			node = AddNode( N_TYPE, tokens[name].symbol, fileIndex, tokens[name].line, begin, end, 0 );
 			nodes[node].keyword = sTypedef;
 			nodes[node].bodyHash = HashTokens( tokens, begin, end, 0 );
-			MarkTypeName( tokens[name].symbol );
+			MarkTypeName( tokens[name].symbol, file->scope );
 		}
 		return;
 	}
@@ -1634,7 +1698,7 @@ static void AddDeclaration( int fileIndex, int begin, int end ) {
 		&& ( tokens[begin].symbol == sStruct || tokens[begin].symbol == sClass || tokens[begin].symbol == sUnion ) ) {
 		node = AddNode( N_FORWARD, tokens[begin + 1].symbol, fileIndex, tokens[begin].line, begin, end, 0 );
 		nodes[node].keyword = tokens[begin].symbol;
-		MarkTypeName( tokens[begin + 1].symbol );
+		MarkTypeName( tokens[begin + 1].symbol, file->scope );
 		return;
 	}
 	paren = DeclaratorParen( tokens, file->mates, begin, end );
@@ -1722,6 +1786,7 @@ static void AddType( int fileIndex, int begin, int open, int end ) {
 	const token_t *tokens = file->tokens;
 	int keyword = 0, name = 0, i, node;
 	int close = file->mates[open];
+	int qualifier = 0;
 
 	for ( i = begin; i < open; i++ ) {
 		int symbol = tokens[i].symbol;
@@ -1729,7 +1794,15 @@ static void AddType( int fileIndex, int begin, int open, int end ) {
 		if ( symbol == sStruct || symbol == sClass || symbol == sUnion || symbol == sEnum ) {
 			keyword = symbol;
 			if ( i + 1 < open && tokens[i + 1].kind == T_ID ) {
-				name = tokens[i + 1].symbol;
+				int last = i + 1;
+
+				while ( last + 2 < open && tokens[last + 1].symbol == sScope && tokens[last + 2].kind == T_ID ) {
+					last += 2;
+				}
+				if ( last > i + 1 ) {
+					qualifier = i + 1;
+				}
+				name = tokens[last].symbol;
 			}
 			break;
 		}
@@ -1746,9 +1819,10 @@ static void AddType( int fileIndex, int begin, int open, int end ) {
 		return;
 	}
 	node = AddNode( N_TYPE, name, fileIndex, tokens[begin].line, begin, end, 0 );
+	nodes[node].qualifier = qualifier;
 	nodes[node].keyword = keyword;
 	nodes[node].bodyHash = HashTokens( tokens, open, close + 1, 0 );
-	MarkTypeName( name );
+	MarkTypeName( name, file->scope || qualifier );
 	CheckName( fileIndex, tokens[begin].line, node, "type", symbolText[name] );
 	if ( keyword != sEnum ) {
 		ScanMembers( fileIndex, tokens, file->mates, open + 1, close, node );
@@ -1761,7 +1835,7 @@ static void AddType( int fileIndex, int begin, int open, int end ) {
 
 				nodes[alias].keyword = sTypedef;
 				nodes[alias].bodyHash = nodes[node].bodyHash;
-				MarkTypeName( tokens[i].symbol );
+				MarkTypeName( tokens[i].symbol, file->scope );
 			}
 		}
 	}
@@ -1865,7 +1939,7 @@ static void AddGenerated( int fileIndex, int begin, int end, const macro_t *macr
 					j = AddNode( N_TYPE, name, fileIndex, tokens[begin].line, begin, end, NF_GENERATED );
 					nodes[j].keyword = symbol;
 					nodes[j].bodyHash = HashExpansion( body, last + 1, bodyMates[last + 1], macro, tokens, args, numArgs );
-					MarkTypeName( name );
+					MarkTypeName( name, file->scope );
 					created[numCreated++] = j;
 				}
 				i = bodyMates[last + 1];
@@ -1909,13 +1983,13 @@ static void AddGenerated( int fileIndex, int begin, int end, const macro_t *macr
 	}
 }
 
-/* Walks a file's code tokens at file scope and adds a node for every declaration. */
-static void ParseFile( int fileIndex ) {
+/* Adds the declarations in a file, a namespace block or an extern "C" block. */
+static void ParseScope( int fileIndex, int i, int count, int scope ) {
 	file_t *file = &files[fileIndex];
 	const token_t *tokens = file->tokens;
-	int count = file->numTokens;
-	int i = 0;
+	int outerScope = file->scope;
 
+	file->scope = scope;
 	while ( i < count ) {
 		int begin = i;
 		int j = i;
@@ -1923,7 +1997,7 @@ static void ParseFile( int fileIndex ) {
 		int macroFile;
 
 		if ( tokens[i].symbol == sRBrace || tokens[i].symbol == sSemi ) {
-			i++;		/* the end of a namespace or extern "C" block, or a stray ";" */
+			i++;
 			continue;
 		}
 		/* a template header is not part of the declaration it introduces: in
@@ -1994,9 +2068,23 @@ static void ParseFile( int fileIndex ) {
 					hasTag = 1;
 				}
 			}
-			if ( tokens[begin].symbol == sNamespace || ( tokens[begin].symbol == sExtern && j == begin + 2
-				&& tokens[begin + 1].kind == T_STR ) ) {
-				i = j + 1;		/* step inside the block */
+			if ( tokens[begin].symbol == sNamespace ) {
+				int child = scope;
+
+				if ( begin + 1 == j ) {
+					child = EnterNamespace( scope, 0 );
+				} else {
+					for ( k = begin + 1; k < j; k++ ) {
+						if ( tokens[k].kind == T_ID ) {
+							child = EnterNamespace( child, tokens[k].symbol );
+						}
+					}
+				}
+				ParseScope( fileIndex, j + 1, file->mates[j], child );
+				i = file->mates[j] + 1;
+			} else if ( tokens[begin].symbol == sExtern && j == begin + 2 && tokens[begin + 1].kind == T_STR ) {
+				ParseScope( fileIndex, j + 1, file->mates[j], scope );
+				i = file->mates[j] + 1;
 			} else if ( paren >= 0 && !hasAssign ) {
 				AddFunction( fileIndex, begin, paren, j );
 				i = file->mates[j] + 1;
@@ -2019,6 +2107,37 @@ static void ParseFile( int fileIndex ) {
 				i = end + 1;
 			}
 		}
+	}
+	file->scope = outerScope;
+}
+
+/* The qualifier of an out-of-line definition may be declared in a header
+   parsed after the source. Resolve it once all named namespaces are known. */
+static void ResolveTypeScopes( int firstNode ) {
+	int i;
+
+	for ( i = firstNode; i < numNodes; i++ ) {
+		node_t *node = &nodes[i];
+		const token_t *tokens = files[node->file].tokens;
+		int name = node->qualifier, scope;
+
+		if ( !name ) {
+			continue;
+		}
+		while ( name + 2 < node->end && tokens[name + 1].symbol == sScope ) {
+			name += 2;
+		}
+		scope = QualifiedNamespace( tokens, node->qualifier, name, node->scope );
+		if ( scope < 0 ) {
+			/* A qualified nested class has its own enclosing name as well. */
+			int part;
+
+			scope = node->scope;
+			for ( part = node->qualifier; part < name; part += 2 ) {
+				scope = EnterNamespace( scope, tokens[part].symbol );
+			}
+		}
+		node->scope = scope;
 	}
 }
 
@@ -2117,6 +2236,24 @@ CROSS-FILE CHECKS
 ===============================================================================
 */
 
+/* Unnamed namespaces are shared only in a translation unit that includes both files. */
+static unsigned SharedDeclarationTargets( const node_t *a, const node_t *b ) {
+	unsigned shared = files[a->file].targets & files[b->file].targets;
+	int i;
+
+	if ( shared && a->kind != N_GLOBAL && a->scope && namespaces[a->scope].internal ) {
+		unsigned owners = 0;
+
+		for ( i = currentEditionFirstFile; i < numFiles; i++ ) {
+			if ( !files[i].isHeader && files[i].reach[a->file] && files[i].reach[b->file] ) {
+				owners |= files[i].targets;
+			}
+		}
+		shared &= owners;
+	}
+	return shared;
+}
+
 /* R1: one type name, several files, different bodies; struct/class keyword mismatch.
    R2: one global declared with different types. */
 static void CheckDuplicates( int firstNode ) {
@@ -2128,17 +2265,22 @@ static void CheckDuplicates( int firstNode ) {
 		for ( node = symbolFirstNode[symbol]; node >= 0; node = nodes[node].nextSameName ) {
 			int definitions = 0, distinct = 0, conflict = -1;
 			unsigned shared = 0, own = nodes[node].matchMask;
+			const char *name;
 
 			if ( node < firstNode ) {
 				continue;
 			}
 			for ( other = symbolFirstNode[symbol]; other >= 0; other = nodes[other].nextSameName ) {
-				if ( other < firstNode || other == node || nodes[other].file == nodes[node].file ) {
+				unsigned common;
+
+				if ( other < firstNode || other == node || nodes[other].file == nodes[node].file
+					|| ( nodes[node].kind != N_GLOBAL && nodes[other].scope != nodes[node].scope ) ) {
 					continue;
 				}
 				/* two executables are two programs: a declaration conflicts only with
 				   one that some unit of the same executable can also see */
-				if ( !( files[nodes[other].file].targets & files[nodes[node].file].targets ) ) {
+				common = SharedDeclarationTargets( &nodes[node], &nodes[other] );
+				if ( !common ) {
 					continue;
 				}
 				if ( nodes[node].kind == N_TYPE && nodes[other].kind == N_TYPE ) {
@@ -2146,24 +2288,27 @@ static void CheckDuplicates( int firstNode ) {
 					if ( nodes[other].bodyHash != nodes[node].bodyHash ) {
 						distinct++;
 						conflict = other;
-						shared |= files[nodes[other].file].targets & files[nodes[node].file].targets;
+						shared |= common;
 					}
 				} else if ( nodes[node].kind == N_FORWARD && nodes[other].kind == N_TYPE
 					&& nodes[other].keyword != sTypedef && nodes[other].keyword != sEnum
 					&& ( nodes[node].keyword == sClass ) != ( nodes[other].keyword == sClass ) ) {
 					conflict = other;
 					distinct = -1;
-					shared |= files[nodes[other].file].targets & files[nodes[node].file].targets;
+					shared |= common;
 				} else if ( nodes[node].kind == N_GLOBAL && nodes[other].kind == N_GLOBAL
 					&& nodes[other].bodyHash != nodes[node].bodyHash ) {
 					distinct++;
 					conflict = other;
-					shared |= files[nodes[other].file].targets & files[nodes[node].file].targets;
+					shared |= common;
 				}
 			}
 			if ( conflict < 0 ) {
 				continue;
 			}
+			name = nodes[node].kind != N_GLOBAL && nodes[node].scope
+				? Format( "%s::%s", namespaces[nodes[node].scope].qualified, symbolText[symbol] )
+				: symbolText[symbol];
 			/* the finding holds only in the executables where both declarations are compiled */
 			if ( nodes[node].kind == N_GLOBAL ) {
 				nodes[node].r2Targets |= shared;
@@ -2173,14 +2318,14 @@ static void CheckDuplicates( int firstNode ) {
 			if ( nodes[node].kind == N_TYPE ) {
 				Report( nodes[node].file, nodes[node].line, RULE_R1, node,
 					Format( "type `%s` has %d other definitions, %d with a different body (one in %s)",
-						symbolText[symbol], definitions, distinct, files[nodes[conflict].file].path ) );
+						name, definitions, distinct, files[nodes[conflict].file].path ) );
 			} else if ( nodes[node].kind == N_FORWARD ) {
 				Report( nodes[node].file, nodes[node].line, RULE_R1, node,
 					Format( "`%s %s` is declared with the other keyword in %s", symbolText[nodes[node].keyword],
-						symbolText[symbol], files[nodes[conflict].file].path ) );
+						name, files[nodes[conflict].file].path ) );
 			} else {
 				Report( nodes[node].file, nodes[node].line, RULE_R2, node,
-					Format( "global `%s` is declared with a different type in %s", symbolText[symbol],
+					Format( "global `%s` is declared with a different type in %s", name,
 						files[nodes[conflict].file].path ) );
 			}
 			nodes[node].matchMask = own;
@@ -2509,6 +2654,43 @@ static int NodeCondition( const node_t *node ) {
 	return ( ( node->flags & NF_IN_MACRO ) ? file->macroTokens : file->tokens )[node->begin].condition;
 }
 
+/* Resolve a type spelled in more than one scope. Unqualified lookup starts with
+   the enclosing namespace. Only project namespaces can resolve a prefix; uses
+   through a dependent type or an unmodelled using-declaration stay conservative. */
+static int TypeReferenceScope( const token_t *tokens, int begin, int pos, int scope,
+	const unsigned char *visible ) {
+	int first = pos;
+	int other;
+
+	if ( pos > begin && tokens[pos - 1].symbol == sScope ) {
+		static const char *const keywords[] = {
+			"class", "struct", "union", "enum", "typename", "const", "volatile", "typedef",
+			"extern", "static", "inline", "return", "new", "delete", "public", "protected", "private", NULL
+		};
+
+		while ( first >= begin + 2 && tokens[first - 1].symbol == sScope && tokens[first - 2].kind == T_ID
+			&& !InList( Text( &tokens[first - 2] ), keywords ) ) {
+			first -= 2;
+		}
+		if ( first > begin && tokens[first - 1].symbol == sScope ) {
+			first--;
+		}
+		return QualifiedNamespace( tokens, first, pos, scope );
+	}
+	do {
+		for ( other = symbolFirstNode[tokens[pos].symbol]; other >= 0; other = nodes[other].nextSameName ) {
+			const node_t *type = &nodes[other];
+
+			if ( ( type->kind == N_TYPE || type->kind == N_FORWARD ) && type->scope == scope
+				&& visible[type->file] && Compiled( NodeCondition( type ), visible ) ) {
+				return scope;
+			}
+		}
+		scope = scope ? namespaces[scope].parent : -1;
+	} while ( scope >= 0 );
+	return -1;
+}
+
 /* Collects the [match] rules a node breaks, with those of everything it names. */
 static unsigned Closure( int start, const unsigned char *visible, int explain, unsigned targetBit ) {
 	int *stack = NULL;
@@ -2538,13 +2720,16 @@ static unsigned Closure( int start, const unsigned char *visible, int explain, u
 			}
 		}
 		for ( i = node->begin - node->numRefs; i < node->end; i++ ) {
-			int other, symbol;
+			int other, symbol, typeScope = -1;
 
 			/* the pasted names first, then the node's own tokens */
 			if ( i < node->begin ) {
 				symbol = node->refs[i - ( node->begin - node->numRefs )];
 			} else if ( tokens[i].kind == T_ID && Compiled( tokens[i].condition, visible ) ) {
 				symbol = tokens[i].symbol;
+				if ( symbol < typeNameCapacity && ( typeNameSeen[symbol] & TYPE_NAMESPACED ) ) {
+					typeScope = TypeReferenceScope( tokens, node->begin, i, node->scope, visible );
+				}
 			} else {
 				continue;
 			}
@@ -2553,6 +2738,10 @@ static unsigned Closure( int start, const unsigned char *visible, int explain, u
 
 				if ( candidate->stamp == closureStamp || !visible[candidate->file]
 					|| !Compiled( NodeCondition( candidate ), visible ) ) {
+					continue;
+				}
+				if ( typeScope >= 0 && ( candidate->kind == N_TYPE || candidate->kind == N_FORWARD )
+					&& candidate->scope != typeScope ) {
 					continue;
 				}
 				/* another unit's function is that unit's business; a helper compiled into
@@ -2841,8 +3030,9 @@ static void CheckEdition( const char *root, const char *edition ) {
 		ParseMacros( i );
 	}
 	for ( i = firstFile; i < numFiles; i++ ) {
-		ParseFile( i );
+		ParseScope( i, 0, files[i].numTokens, 0 );
 	}
+	ResolveTypeScopes( firstNode );
 	ComputeReach( firstFile );
 	for ( i = 0; i < count; i++ ) {
 		MarkTargetFiles( JsonMember( configs[i], "units" ), 1u << ( i & 31 ) );

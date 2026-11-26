@@ -18,10 +18,13 @@ src/vtable.cpp:5: R13 [match] padding virtual `pad1`
 src/generated.c:10: R7 advisory placeholder function name `get_sub_401000`: open naming work
 src/record_b.c:2: R1 [match] type `Record` has 1 other definitions, 1 with a different body (one in src/record_a.c)
 src/record_a.c:2: R1 [match] type `Record` has 1 other definitions, 1 with a different body (one in src/record_b.c)
+src/namespace_definitions.cpp:12: R1 [match] type `ExtAlloc::Detail::Entry` has 1 other definitions, 1 with a different body (one in src/namespace_types.h)
+src/namespace_types.h:8: R1 [match] type `ExtAlloc::Detail::Entry` has 1 other definitions, 1 with a different body (one in src/namespace_definitions.cpp)
+src/namespace_types.h:9: R1 [match] `class ExtAlloc::Detail::Handle` is declared with the other keyword in src/namespace_definitions.cpp
 src/marked.cpp:24: R17 [match] marked as a probe or a fakematch
 src/variant.h:7: R17 [match] marked as a probe or a fakematch
-17 source files, 22 findings
-  R1   [match]       2
+20 source files, 25 findings
+  R1   [match]       5
   R2   [match]       2
   R4   [match]       1
   R13  [match]       1
@@ -37,11 +40,11 @@ src/variant.h:7: R17 [match] marked as a probe or a fakematch
   R35  advisory      0
   R37  advisory      0
 synthetic
-  bytes matched:                21 functions       336 bytes
-  verified:                     19 functions       304 bytes
-  verified under the rules:      9 functions       144 bytes
-  MATCH-PENDING:                11 functions       176 bytes
-    R1        2 functions        32 bytes
+  bytes matched:                25 functions       400 bytes
+  verified:                     23 functions       368 bytes
+  verified under the rules:     11 functions       176 bytes
+  MATCH-PENDING:                13 functions       208 bytes
+    R1        4 functions        64 bytes
     R2        3 functions        48 bytes
     R4        1 functions        16 bytes
     R13       1 functions        16 bytes
@@ -69,3 +72,7 @@ synthetic	variant-a-first	16	verified	matched	function
 synthetic	variant-b-first	16	verified	MATCH-PENDING	function	R17 
 synthetic	member-typedef-handler	16	verified	matched	file	
 synthetic	system-includes-count	16	verified	matched	function	
+synthetic	namespace-distinct	16	verified	matched	function	
+synthetic	namespace-reopened	16	verified	MATCH-PENDING	function	R1 
+synthetic	namespace-forward	16	verified	MATCH-PENDING	function	R1 
+synthetic	namespace-global	16	verified	matched	function	
