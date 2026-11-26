@@ -5,7 +5,7 @@ struct AllocatorOps {
     void (__fastcall *free)(struct Allocator *, struct Allocation);
 };
 struct Allocator { const struct AllocatorOps *ops; };
-extern struct Allocator *engine_allocator;
+#include "campaign_engine_allocator.h"
 #include "campaign_array_storage.h"
 
 struct Flags { unsigned value; };
@@ -33,7 +33,7 @@ static __forceinline void free_allocation(void *pointer)
 {
     struct Allocation allocation;
     allocation.object = pointer;
-    engine_allocator->ops->free(engine_allocator, allocation);
+    ((struct Allocator *)engine_allocator)->ops->free((struct Allocator *)engine_allocator, allocation);
 }
 
 #define DELETE_ARRAY_MEMBER(Entry, MemberOffset, ElementBytes, Remove) \

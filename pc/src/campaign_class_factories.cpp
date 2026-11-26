@@ -4,6 +4,7 @@ struct RuntimeClass;
 extern "C" {
 #include "campaign_class_factory_symbols.h"
 }
+#include "campaign_engine_allocator.h"
 
 struct EngineGuid { unsigned int a, b, c, d; };
 
@@ -11,8 +12,6 @@ class ClassFactoryAllocator {
 public:
     virtual void *Allocate(unsigned size, const unsigned short *tag) = 0;
 };
-extern "C" ClassFactoryAllocator *engine_allocator;
-
 class RuntimeClassBuilder {
 public:
     RuntimeClass *Construct(unsigned native, unsigned instance_size, unsigned class_flags,
@@ -26,7 +25,7 @@ public:
 #define DEFINE_CLASS_FACTORY(Type, InstanceSize, Flags, Config)                \
     extern "C" struct RuntimeClass *create_##Type(const unsigned short *package) \
     {                                                                         \
-        void *memory = engine_allocator->Allocate(0x2e0, native_name_##Type); \
+        void *memory = reinterpret_cast<ClassFactoryAllocator *>(engine_allocator)->Allocate(0x2e0, native_name_##Type); \
         if (memory) {                                                         \
             struct EngineGuid guid = { 0, 0, 0, 0 };                          \
             return ((struct RuntimeClassBuilder *)memory)->Construct(        \

@@ -7,7 +7,7 @@ struct AllocatorOps {
     void (__fastcall *free)(struct Allocator *, struct Allocation);
 };
 struct Allocator { const struct AllocatorOps *ops; };
-extern struct Allocator *engine_allocator;
+#include "campaign_engine_allocator.h"
 struct DeleteFlags { unsigned value; };
 extern int __fastcall conditional_destroy(void *object);
 
@@ -23,7 +23,8 @@ extern int __fastcall conditional_destroy(void *object);
         if (flags.value & 1) {                                                \
             struct Allocation allocation;                                    \
             allocation.object = self;                                         \
-            engine_allocator->ops->free(engine_allocator, allocation);       \
+            ((struct Allocator *)engine_allocator)->ops->free(                \
+                (struct Allocator *)engine_allocator, allocation);           \
         }                                                                     \
         return self;                                                          \
     }

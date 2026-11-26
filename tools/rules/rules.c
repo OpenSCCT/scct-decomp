@@ -2000,6 +2000,19 @@ static void ParseScope( int fileIndex, int i, int count, int scope ) {
 			i++;
 			continue;
 		}
+		/* An explicit template instantiation is a declaration, but it does not
+		   declare the identifiers used as non-type template arguments. */
+		if ( tokens[i].symbol == sTemplate && i + 1 < count && tokens[i + 1].symbol != sLess ) {
+			for ( j = i + 1; j < count && tokens[j].symbol != sSemi; j++ ) {
+				if ( ( tokens[j].symbol == sLParen || tokens[j].symbol == sLBracket ) && file->mates[j] > 0 ) {
+					j = file->mates[j];
+				}
+			}
+			if ( j < count ) {
+				i = j + 1;
+				continue;
+			}
+		}
 		/* a template header is not part of the declaration it introduces: in
 		   "template<class T> class TArray", the class is TArray, not T */
 		if ( tokens[i].symbol == sTemplate && i + 1 < count && tokens[i + 1].symbol == sLess ) {

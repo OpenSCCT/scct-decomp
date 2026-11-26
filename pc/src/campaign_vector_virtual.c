@@ -10,7 +10,7 @@ struct Allocator;
 struct Tag { const unsigned short *name; };
 struct Methods { void *(__fastcall *allocate)(struct Allocator *, struct Size, struct Tag); };
 struct Allocator { struct Methods *methods; };
-extern struct Allocator *engine_allocator;
+#include "campaign_engine_allocator.h"
 extern const unsigned short new_tag[];
 
 unsigned char __fastcall initialize_12(struct Vector *v, struct Size count)
@@ -29,7 +29,7 @@ unsigned char __fastcall initialize_12(struct Vector *v, struct Size count)
 
     bytes.value = count.value * sizeof(*first);
     tag.name = new_tag;
-    first = engine_allocator->methods->allocate(engine_allocator, bytes, tag);
+    first = ((struct Allocator *)engine_allocator)->methods->allocate((struct Allocator *)engine_allocator, bytes, tag);
     v->limit = first + count.value;
     v->first = first;
     v->end = first;

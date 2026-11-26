@@ -7,7 +7,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r330120@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -25,7 +27,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x330120 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "a9bffe44dd313193a817ad4b946c5520003d6127575bf733bfeae99fa0a06851"
+      "inputs_sha256": "d334fd2ee83e3a6bc51028290d8d8d6e813f7c3639983c71973cc6a9259132eb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -44,7 +46,9 @@
       "src/campaign_aligned_array_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_330eb0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -62,7 +66,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Resets the count and resizes the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "c92ec39039b40cef4edbe972b1e3cf4255142b9709fb68d13f6698d040a02a68",
-      "inputs_sha256": "ff3c968105c32e3881e90239183928c74097151c495c56efd724de8286221215"
+      "inputs_sha256": "70104909309fa8947b97a9504d0bc54e0a5effe5714bd9d73bf2f798cfdd9f98"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -80,7 +84,9 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_330ef0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -98,7 +104,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "e21be2047a862afee4ecf549084906b26c0865a69519eda5281cb26af6018505"
+      "inputs_sha256": "1f32212b3f85006d915f012bb6a6b942998ef2db56d2ca4ec01f75e2665b5a6b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -113,13 +119,14 @@
     "id": "array-remove-330f40",
     "size": 138,
     "offset": 3346240,
-    "rebuilt_symbol": "@array_remove_r330f40@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -138,7 +145,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x330f40, including RET. Incoming transfer decoded within analyzed function code at RVA 0x33168b, 0x331f1b. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "05a0974c5de03b00e3377d9ed4a9bb390dcf31861e74e43a0ecac9ebe910ef31",
-      "inputs_sha256": "2e81b60f27bc0c5b94c4069f1ab43fabd2d4c1d49989c23253926f9264407826"
+      "inputs_sha256": "5464c14f69bd27e7af0d91880e6f852b51ed57b7e80ba3ea8c5e2258184f1bf6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -156,7 +163,9 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_331280@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -174,7 +183,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with 120-byte elements and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "d2996133218c29e087bcb939f373c5cba47833a86e5bd6188e685b501f70e8ee",
-      "inputs_sha256": "2a1b8706c678baa84baeb51ee9544ae74b9928cf5b818b2e3d2e615c2dc3b78c"
+      "inputs_sha256": "7df6666561cb096ab956cd2cdab39bb79dce1bc8e9cd909e2d0f4539fe911010"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -224,7 +233,9 @@
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_record_arrays.obj src/campaign_record_arrays.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -242,7 +253,7 @@
     "identification": "Stock FArray operation at RVA 0x331620. Its independent function extent agrees with the compiler contribution and the allocation tag is shared with other matched operations. Record size is 120 bytes. Appends a copy of the input record and returns its index.",
     "match": {
       "bytes_sha256": "8cb5b834043c28daf2225f9623e6ee45e0ff12d9012dda6060c2e3d94be2910d",
-      "inputs_sha256": "057349bbf7458e29e0e20f4af8c8dc8d96d06712a4bae7959d809521c35ce451"
+      "inputs_sha256": "60bb7edaf8226be59c4fbeb5a0765b100d7e6f5afd7b4dd255779a60681793ab"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -260,7 +271,9 @@
     "rebuilt_symbol": "@array_destroy_r331680@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -277,7 +290,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x331680, 0x3316b8). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x330f40. Removes every element with stride 120 and releases remaining storage.",
     "match": {
       "bytes_sha256": "f22a21f8cad85918d4eb382c8752adbc454237fb54f7f789519251eedcb516b0",
-      "inputs_sha256": "2dbd5f75ddb5ad03680a75df1540448e57a98cf60ae6785de6a0cda919b7d20d"
+      "inputs_sha256": "399f074d96c458da3cb8cf05e44fbd78c1c8d4fd5012603392c6ecaa35d7646c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -423,7 +436,9 @@
     "rebuilt_symbol": "@array_destroy_r331f10@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -440,7 +455,7 @@
     "identification": "Complete stock array destructor at RVA 0x331f10, called from decoded game code at RVA 0x331fd1. Removes every element with stride 120 and releases remaining storage.",
     "match": {
       "bytes_sha256": "6b09a70e50e184b071e53126722f79deb67f985d3ffaa436479a7fb2d5271dbf",
-      "inputs_sha256": "211c7983e844c2e6e6d7499813e2a19bb23728669cceb98a35f498b1c833a05f"
+      "inputs_sha256": "63bd320e84d1f092076d5518f6bd4c6fd0ebe0e08e91e68914750e30176848c1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -492,7 +507,8 @@
     "offset": 3350464,
     "size": 54,
     "inputs": [
-      "src/campaign_member_destruction.c"
+      "src/campaign_member_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_UETransitionController@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -522,7 +538,7 @@
     },
     "match": {
       "bytes_sha256": "f2b4cd7d7f49c510a80854f8e1b94b63f384efac6635ac983fcd771f3b68c37d",
-      "inputs_sha256": "d5c4b9b3bece5cdb07fec9b6c289f2dfe283326c820f4e1d2f4d2c93bd2961ce"
+      "inputs_sha256": "d57c23e03a35107d4228bb270741351ca02532464c9c8f60d52c2bbb30a56403"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -575,7 +591,8 @@
     "rebuilt_symbol": "_create_UETransitionController",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -608,7 +625,7 @@
     "identification": "Native class factory at RVA 0x332020; its allocation tag and reflected class name identify UETransitionController. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "b30cfd2beae352baf794926a9b15408ecf8b50d34964f5a1043a52f91edd2ab1",
-      "inputs_sha256": "c1c7fa96d29fa791120107e7c6c92171468664c281cce5803b371837296ff6df"
+      "inputs_sha256": "3f9494b571f3e874c7f9a0403d565431ee9f9da1c9dc26bb7211c5976683577f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -734,7 +751,9 @@
     "offset": 3351136,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r332260@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -748,7 +767,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "18faeec6a79b06faa7576ed101f31740a9ae7e29a943c8abc799884c7bdce5a5"
+      "inputs_sha256": "453d25a10a4f424578e4f3b6a99cebd21dc616f77516ed194fb3115f500d7414"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1467,7 +1486,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r332f70@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1485,7 +1506,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x332f70 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "36e6686161097010e1e43dd2648794e58890932e2f7c55b631ebe2b86e52745b"
+      "inputs_sha256": "28d13e50602ad9b21f6265751901f3779efd94dad5db1182cb4099f93580c1a3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1503,7 +1524,9 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_332fa0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1521,7 +1544,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "77ee47367cf16c1d6fcdb192fc08b7a1112110d08f36e8483fbaaba77ceae49d"
+      "inputs_sha256": "543b6786ab690dec4e6cd6e8a31943c800e5259886a5814e6df6ec87b411dc93"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1574,7 +1597,8 @@
     "rebuilt_symbol": "_create_UECanvas",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -1607,7 +1631,7 @@
     "identification": "Native class factory at RVA 0x333010; its allocation tag and reflected class name identify UECanvas. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "277de0bac77e4187a5ae59d38a36d2937ad60b52489dc0b50474aa32178b14a3",
-      "inputs_sha256": "0f7797484918df151b66310ea565f92a2323ea60fd5bca1b81226774772bae99"
+      "inputs_sha256": "787719d6196b7d9dc2d76267d037f07ac3c4ec19d7dba4bc95f796b4183342e8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1622,13 +1646,14 @@
     "id": "array-remove-333080",
     "size": 138,
     "offset": 3354752,
-    "rebuilt_symbol": "@array_remove_r333080@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -1647,7 +1672,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x333080, including RET. Incoming transfer decoded within analyzed function code at RVA 0x3334e1, 0x334524. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "99fdb96e893f47a7d10ca9c05177ee83866f19b6da2aad625e8e2366e9bcb596",
-      "inputs_sha256": "0d2e8124004a07546550af2a57a175e758b745105176b8437b52fb7752c2f4b5"
+      "inputs_sha256": "8e94f29b9b2e29dafd744489122f73621aa4f8c327cb1134e8db08d991e088b3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1665,7 +1690,9 @@
     "rebuilt_symbol": "@destroy_typed_r333740@4",
     "inputs": [
       "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
@@ -1682,7 +1709,7 @@
     "identification": "Complete array destructor at RVA 0x333740; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 188 to the matched FArray::Remove.",
     "match": {
       "bytes_sha256": "1de4b4dd13e31b5a13c6c3f72c33e5e693c7f95557ce98506d56d45e9af2a79a",
-      "inputs_sha256": "9592f6c3f42f746ffbd9d5bf13cbc3d058ca3dbfa182254fdf4aa52d6a0307f3"
+      "inputs_sha256": "60fed54eedd06c40ccc475029488351bc9d5c4af7e607fc0731194258559ebed"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1830,7 +1857,8 @@
     "offset": 3362560,
     "size": 54,
     "inputs": [
-      "src/campaign_member_destruction.c"
+      "src/campaign_member_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_UEGlobalMissionManager@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1860,7 +1888,7 @@
     },
     "match": {
       "bytes_sha256": "c36c7714529dc7d0646f48c3a8d1e75cf576bda709d90bbd0ae6cf2f7864248a",
-      "inputs_sha256": "88b257b797a8da9680ba10f0b937d0db440cedc4ab50a179d3db62ba2fa34f3c"
+      "inputs_sha256": "d2242c338226c95652777e29ae22c1d4d52d22f1cf76712fcb9e4f0316bb2a98"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1878,7 +1906,8 @@
     "rebuilt_symbol": "_create_UEGlobalMissionManager",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -1911,7 +1940,7 @@
     "identification": "Native class factory at RVA 0x334f40; its allocation tag and reflected class name identify UEGlobalMissionManager. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "cd2935e118e5e5b69870ffd77c51a1901b7520f8ed93e11ae5c57db0e1029300",
-      "inputs_sha256": "fced5f08b4bf4bd74de2c266790ec2e96780e1ecd0852f85affa29f45a49adda"
+      "inputs_sha256": "4c96542aa2a3ef068eff53f0af083f1edda281ff8542578d65807c0625cca44b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2700,7 +2729,9 @@
     "offset": 3380208,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r3393f0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2714,7 +2745,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "4aa67ba4148e4bc709873d50daa6622abce97d1c7c3fcb6fa92fa020909117fd"
+      "inputs_sha256": "108bad9394da52ebe5416f210b2829727d769c7662bdaf5b112ecde3e0072a9c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3563,7 +3594,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r33a4f0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3581,7 +3614,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x33a4f0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "c55de0887c7a19c1e2438da03396e36cea8cce5c1fc18f2f86e675224a63f9e3"
+      "inputs_sha256": "ce133ed3fa757f4d3227f7a4f91b791c9765f4b5e6565d909e01161709f7a57e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3596,13 +3629,14 @@
     "id": "array-remove-33a520",
     "size": 138,
     "offset": 3384608,
-    "rebuilt_symbol": "@array_remove_r33a520@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -3621,7 +3655,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x33a520, including RET. Incoming transfer decoded within analyzed function code at RVA 0x33a5db, 0x33a61b. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "bc750ef6bb09fa0972d6a6c4d9183f9f3a9ac7a1795b00f31f8e1b9abe3b3071",
-      "inputs_sha256": "3b30a018f967773615fc31033ebbd228ed291d8b18ea1b03eae6393e3c0d2fff"
+      "inputs_sha256": "b7e01d66d723fd7fcaee8634d101149827aff926c0c8b9a6287518c720c20130"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3669,7 +3703,9 @@
     "rebuilt_symbol": "@array_destroy_r33a5d0@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3686,7 +3722,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x33a5d0, 0x33a608). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x33a520. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "a9d86b0d9452986bc93d16f678df348a9d813d1f9ab3c675637cd61408a8c7aa",
-      "inputs_sha256": "cd733d5c2dd2b5261058fad83da61fbd1a8cee5a9b5bd8aad05dcdc5567b382e"
+      "inputs_sha256": "1ab1bfec15322a12cba73e301b72b2ae83b54ca18652bd74066962381b12492f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3704,7 +3740,9 @@
     "rebuilt_symbol": "@array_destroy_r33a610@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3721,7 +3759,7 @@
     "identification": "Complete stock array destructor at RVA 0x33a610, called from decoded game code at RVA 0x33a754. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "3100d9851287898172a4cb6efd190e5471c0730a160c56b2c870842d13bee9ff",
-      "inputs_sha256": "8fe2d735b2c8adbe0737b8112d936872a44eb5e1fbda55abfd2c9674f637b5b3"
+      "inputs_sha256": "60fcf57a8ea6786f01933267845024542f59c7c77100d9e839addf1f126b9f68"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3859,7 +3897,8 @@
     "offset": 3385152,
     "size": 57,
     "inputs": [
-      "src/campaign_member_destruction.c"
+      "src/campaign_member_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEFireVolume@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3889,7 +3928,7 @@
     },
     "match": {
       "bytes_sha256": "2f6eaa7828250aa48eec160ebe118ecd45e94c1529c9c5aa78a9bd01be82983e",
-      "inputs_sha256": "590569ec1e47b06c2aa55e689a8c5b6ab4f5f96a57e61f704fdd897d5ca585c9"
+      "inputs_sha256": "6fd1b3cd958d00aaf29e22c2beab7f9001e697a2776f2ba4e5b31360c6cac2de"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3940,7 +3979,8 @@
     "offset": 3385264,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEMope@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3966,7 +4006,7 @@
     },
     "match": {
       "bytes_sha256": "a35ff0ad954314508dabfc908aadf334db92733f0fa32bbd07c89e8abfbec95d",
-      "inputs_sha256": "fb7e1854d48d2eefa7ac20e5178e0eed392c3bfacda54729d068802c0d5e7155"
+      "inputs_sha256": "c79830204e8308d9374e25ac91922f87fc0332d215514edee1c158e90914c356"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4017,7 +4057,8 @@
     "offset": 3385392,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEGameplayObjectDisplay@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4043,7 +4084,7 @@
     },
     "match": {
       "bytes_sha256": "7965ae3bdd8fcf7145f1e16bf7de8f64e46b5f5d6c66f2109c9f0b4ea2cb9ea2",
-      "inputs_sha256": "882795ae376b01f598b9142da1cf525e66feea0e7afe28786e12fafb51246ae9"
+      "inputs_sha256": "e374de7156daa16ce198ae29ccd75b90c3d5a51b61c482f638a9863b003ce39e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4094,7 +4135,8 @@
     "offset": 3385488,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEGameplayObjectPickup@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4120,7 +4162,7 @@
     },
     "match": {
       "bytes_sha256": "09b980464a540046547858d5e87ef27352d547e211ed27b8b4cbde65d6ff3293",
-      "inputs_sha256": "3fb1f027d6a2ae14b7e69bf3d9fcbcf6e54796f1cc44cf559d66ed6bca83dbf6"
+      "inputs_sha256": "5b35187eb257df3320b370b933128a9a5f851de6523804517cfe8558fae78407"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4171,7 +4213,8 @@
     "offset": 3385584,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEFlare@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4197,7 +4240,7 @@
     },
     "match": {
       "bytes_sha256": "f728b5d579e1ee549192dc437e729cfea4b30669a7cc8b0ce924c9c428a8222c",
-      "inputs_sha256": "23db256732d2fb12c69a6139cd18adc29e753a4b091e4b330bb23eb2fcf75327"
+      "inputs_sha256": "b9130d78442b403c9662dc28fab863ad845b1de08f2dcb38d74f594ec868fb74"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4248,7 +4291,8 @@
     "offset": 3385680,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEWallMine@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4274,7 +4318,7 @@
     },
     "match": {
       "bytes_sha256": "430b67c5baeeb4268f6b837af7e45d4aba275d43d424221ecfbedc38ab7b8a76",
-      "inputs_sha256": "e558155ccd8d0dff8405098ff9b4824cb06da4a14c5e79f6e42fb1307cba413c"
+      "inputs_sha256": "fd0f20d0c4143d4fc74b4fc572b78aa957060167844cd29f704af022ac6bbda7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4325,7 +4369,8 @@
     "offset": 3385776,
     "size": 57,
     "inputs": [
-      "src/campaign_member_destruction.c"
+      "src/campaign_member_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEProjectorScreen@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4355,7 +4400,7 @@
     },
     "match": {
       "bytes_sha256": "1822021f633ba11d73249e262f967e66ac290b628f7e6e81e1f7ffe742f93c15",
-      "inputs_sha256": "d2b14f56975f011b7d204f9b9a1ffa622ad4eff6f45f6669c98a883e710d899d"
+      "inputs_sha256": "c888d12702d988e8f7ee7ebfca179afa5f4d6213a40204df4a4b5fa3ee240971"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4406,7 +4451,8 @@
     "offset": 3385888,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AETracer@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4432,7 +4478,7 @@
     },
     "match": {
       "bytes_sha256": "b16138298e1fb62a0bf20f8ce93eb1b6bc0a2731d579f8a8d30b2ee1e141e04a",
-      "inputs_sha256": "413c874135d0fb088b2c6d869fb63439b97413e6cbb6978adef6d9e46017ac0a"
+      "inputs_sha256": "f2689ee7f2d45e021ac295f49afa4368f1298bb3a28f2106d416ec2e6405eeb1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4507,7 +4553,8 @@
     "offset": 3386048,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEBed@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4533,7 +4580,7 @@
     },
     "match": {
       "bytes_sha256": "fb5c5566d589588d89babab2ad81682b88f18d1498fc366d45f04602e56660fc",
-      "inputs_sha256": "80dbef81fedcac2f44256abb79ce516dd0689f406d9552eeba0c8e2722cbb710"
+      "inputs_sha256": "25fd4a31d82bfa884bb7079a74c282e8b4fdd17e1285b7324255303a309b90aa"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4608,7 +4655,8 @@
     "offset": 3386176,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEChair@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4634,7 +4682,7 @@
     },
     "match": {
       "bytes_sha256": "0d0ec5868e6bfd0663895d667dd6892ddfd8bbd49a920f6b1c915365b1d365bf",
-      "inputs_sha256": "853f5a5a186515a3e93e34cbfb897bd5ae91e056a8c9b16d3058afb88d58f48d"
+      "inputs_sha256": "36ad6e35c943fbdfc61f88169aa875c529020c5a34e159d3f9de0129b3c0b853"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5002,7 +5050,8 @@
     "rebuilt_symbol": "_create_AEWallMine",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5035,7 +5084,7 @@
     "identification": "Native class factory at RVA 0x33adf0; its allocation tag and reflected class name identify AEWallMine. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "59ba4d13992f22fb3b79be3e4d7bd49b1a0695d7634331815c815f51a66ca188",
-      "inputs_sha256": "211de4054cb70b75a3c2022c0c0d74361eb9d51ab2c74ba5a82a8b979254e86a"
+      "inputs_sha256": "45403be141c586dae14788c54e43e65a0d3e2a58ab5d4e55e19ab48b466ea791"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5053,7 +5102,8 @@
     "rebuilt_symbol": "_create_AEFlare",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5086,7 +5136,7 @@
     "identification": "Native class factory at RVA 0x33ae60; its allocation tag and reflected class name identify AEFlare. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "7c17d6796e18a6ba205de49d119b7d024b8f4d1de58405e6c6d2cb2a1725c9b2",
-      "inputs_sha256": "2ee3fc99ee724162f8083c8594825e43f9039b09fbd9794d1016700394003142"
+      "inputs_sha256": "2dc05c239cf27c67438572b77df7918e5d25fecf8251e7b9ebc81b7f8745606e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5104,7 +5154,8 @@
     "rebuilt_symbol": "_create_AEMope",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5137,7 +5188,7 @@
     "identification": "Native class factory at RVA 0x33aed0; its allocation tag and reflected class name identify AEMope. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "84b0a8ddf540e7bb43d8d5c8aff504eba380a04a9a861c6b50c47e5e90a7667d",
-      "inputs_sha256": "dea749d9183acc2e805767ca5fd78e9a8ce2ee9edfc335d470e7c9e995cfcb05"
+      "inputs_sha256": "fc791a2f956ddaa923b8724dfd5fcd76eba912a12e76f4210b9afa675d5a4084"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5155,7 +5206,8 @@
     "rebuilt_symbol": "_create_AEBed",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5188,7 +5240,7 @@
     "identification": "Native class factory at RVA 0x33af40; its allocation tag and reflected class name identify AEBed. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "a6e7b65cb2600c0ef534d6eb202b9b591a7e3ffc8af98c3281f538b7fe3ddd81",
-      "inputs_sha256": "0e1098f57b1ab56d83f5a608e35566fba58de073d5e9091c21e2e7332db9192b"
+      "inputs_sha256": "54b7241901749f7eb951a49670d270d9765309f762c0b10b0262557bc96ea59c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5206,7 +5258,8 @@
     "rebuilt_symbol": "_create_AEChair",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5239,7 +5292,7 @@
     "identification": "Native class factory at RVA 0x33afb0; its allocation tag and reflected class name identify AEChair. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "ec7d17124bbd50df75cbebabda1070a65f3e7a7909e1a19cc7019e4210a3afb0",
-      "inputs_sha256": "cfe5fb816b3d0c712dd865e3a3d67cec7d50895b2aec17f348c0c0aaaa37e73e"
+      "inputs_sha256": "1ad2280616d1957d9398113ba38bd325a8765fb3fb50fd19f02aae5122b13b1d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5257,7 +5310,8 @@
     "rebuilt_symbol": "_create_AEProjectorScreen",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5290,7 +5344,7 @@
     "identification": "Native class factory at RVA 0x33b020; its allocation tag and reflected class name identify AEProjectorScreen. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "f7e2a33df00d8f882139cadbc2aa66dea8dee73ba824d0861104843d9ff10f51",
-      "inputs_sha256": "736fa2238b1ef46343d774e89a4c57cfe1f61c7ddc48d2eadc1b8ab3e575cf27"
+      "inputs_sha256": "3541b8616a9fa1d340f655f79b11311fff15d15941c2a4f0f88bb599dcb9afc7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5308,7 +5362,8 @@
     "rebuilt_symbol": "_create_AEGameplayObjectDisplay",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5341,7 +5396,7 @@
     "identification": "Native class factory at RVA 0x33b090; its allocation tag and reflected class name identify AEGameplayObjectDisplay. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "2c39ee81040b3700127b13b6219dd2086c3de30f8f487d48204a11191d120407",
-      "inputs_sha256": "216eb6ecc1ae87c37e452b5f7d66caf467a2b74c41b8bc19ee54fa643519e4d2"
+      "inputs_sha256": "0974bcf68d8e2d53af4d618af69cdf1ac9696f9dc06c314257b6991571102467"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5359,7 +5414,8 @@
     "rebuilt_symbol": "_create_AEGameplayObjectPickup",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5392,7 +5448,7 @@
     "identification": "Native class factory at RVA 0x33b100; its allocation tag and reflected class name identify AEGameplayObjectPickup. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "f1ef54c553f871faa0b87b2aff021837ee9621e529947c9ac217cd08d6a9cf05",
-      "inputs_sha256": "a13d17d27cc19ba751a6261e9dc35cf178b22df7f87f21bc5ea26cade5b7a22e"
+      "inputs_sha256": "a63e3a40c26380482498c50833e4b733a5534ce809d8c00b724c34b56a2afc45"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5410,7 +5466,8 @@
     "rebuilt_symbol": "_create_AETracer",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5443,7 +5500,7 @@
     "identification": "Native class factory at RVA 0x33b170; its allocation tag and reflected class name identify AETracer. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "8446c984f820fbb82fd3584eda44e824f6a55b847d33bfa11a3821c21f8c0555",
-      "inputs_sha256": "3dcdf2ee5e298ea6c9dc79016a51568d6fa32c4977a737abfa86eab35c9798e7"
+      "inputs_sha256": "f76a016f52bcbf89b17c5c32acccc6cf318c7ce806dd5ed64515fa670ef0eb60"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5461,7 +5518,8 @@
     "rebuilt_symbol": "_create_AEFireVolume",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -5494,7 +5552,7 @@
     "identification": "Native class factory at RVA 0x33b1e0; its allocation tag and reflected class name identify AEFireVolume. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "bbf3f903eb9a0d989a634168a65fcc5bbaf8635e46dbec3e5275eee9466352d3",
-      "inputs_sha256": "50fae8465caf1172ba453da54c39f3902c2f79bcd0f2196ab18c644b28f6c41e"
+      "inputs_sha256": "ae8abbcd9d5487110850113863ba555bb8e025a4a519709b419f69c6e1cbdadc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5535,7 +5593,9 @@
     "offset": 3388032,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r33b280@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5549,7 +5609,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "aabc8d448b430e10e0c43cd0aa60fc9a21ac897dcc8a8f16bc4ebc9aaa02f966"
+      "inputs_sha256": "6d337d6ab74a56adc109d9006f81becc91832bf3c0dc94f6f772eb6550ce5f85"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5648,7 +5708,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r33b800@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5666,7 +5728,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x33b800 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "4eaa62be8c3de0ad49000a2651f68066dae7657827df6b083db08456ae9e1688"
+      "inputs_sha256": "eb1cbae0a2af67f8844eb5fb1b03ffa37b541b5849b3ef1371343e74b0e7464c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5681,13 +5743,14 @@
     "id": "array-remove-33b830",
     "size": 138,
     "offset": 3389488,
-    "rebuilt_symbol": "@array_remove_r33b830@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -5706,7 +5769,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x33b830, including RET. Incoming transfer decoded within analyzed function code at RVA 0x33b8eb, 0x33b92b, 0x33b9f4. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "cc3a25a920299bfa49b1fb2ba02b1a99d0a401bf9ad9f0ff5ab3dc703679a4d5",
-      "inputs_sha256": "f3d3ed2de9fa4c3c486722a1eac5f8f816386f90466ec12db067fd0290b8e61f"
+      "inputs_sha256": "617d41b410f6644fc3a01e4d5bb8d7bcd7060d6fa7630a7242af6f9802e158c2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5754,7 +5817,9 @@
     "rebuilt_symbol": "@array_destroy_r33b8e0@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5771,7 +5836,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x33b8e0, 0x33b918). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x33b830. Removes every element with stride 32 and releases remaining storage.",
     "match": {
       "bytes_sha256": "3c8ebe3c4acc6690e2f1c7efd758b4dfdf81f6b4ed7d2d81cd61d69c84ee3672",
-      "inputs_sha256": "1a5b6a3447ebf98bde0c4a38c8906cf97003c7ce136929b57fb927217a28f1e9"
+      "inputs_sha256": "5f0012bb76c887d187554ff2a93c7e31140d6ac5b3023caba630b96c9c13fdb2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5789,7 +5854,9 @@
     "rebuilt_symbol": "@array_destroy_r33b920@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5806,7 +5873,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x33b920, 0x33b958). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x33b830. Removes every element with stride 32 and releases remaining storage.",
     "match": {
       "bytes_sha256": "eab56817a55e8cedbf99e29210b47d71c636842444d98bbe9682c8f24821e2a2",
-      "inputs_sha256": "bf3f86ed4aec5e439f162ee7a6bb2da5999e6ade5e7510a2395cb8c05630618f"
+      "inputs_sha256": "577e66afd8b34ea82611a525866d0c9cae65b0eb49bebd8e5533fe742f5673a9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5857,7 +5924,8 @@
     "offset": 3389856,
     "size": 33,
     "inputs": [
-      "src/campaign_deleting_destructors.c"
+      "src/campaign_deleting_destructors.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEAnimatedObject@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5875,7 +5943,7 @@
     },
     "match": {
       "bytes_sha256": "02df6e269ab907fa6c1ce35d9acd246a7fd54e3510f6bd369851da9175482aa0",
-      "inputs_sha256": "68ecdb9591ffcce21155254cee970ebbc7da9bd143e78a845f7ffec63a1f8a61"
+      "inputs_sha256": "a07e48dea8a11a1700ca4596863ec01569f7ead393906d6fe2f951bf162e3fc5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5979,7 +6047,8 @@
     "rebuilt_symbol": "_create_AEAnimatedObject",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -6012,7 +6081,7 @@
     "identification": "Native class factory at RVA 0x33bac0; its allocation tag and reflected class name identify AEAnimatedObject. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "bb65f9039a90a00cfd58a08916a7bcf34e64c41476c0adb1f926f5403e73fde3",
-      "inputs_sha256": "3d4ac5fccb6f16e4b24ff381dbda1cf8275265d80e82e86cdcd2d4da1e1056e7"
+      "inputs_sha256": "c3dc45616a625f7f804a7e47f7471f9192df97d6025dc77566e91e318727b7f9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6353,7 +6422,8 @@
     "offset": 3391824,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESlidingDoor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6379,7 +6449,7 @@
     },
     "match": {
       "bytes_sha256": "1f1d962aa4ca4e6549fdb77c094ddbd90ee1d269153b3b7c74f8a5d1ec16041b",
-      "inputs_sha256": "3ff418ad1d9f5670d186318c9db4ca92cd8541450f49c66472de70baaa9a806e"
+      "inputs_sha256": "8041142d94c44caff5a6def64e758f14d0d27cd13d1a2ca798c4b09e5ab33bdf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6432,7 +6502,8 @@
     "rebuilt_symbol": "_create_AESlidingDoor",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -6465,7 +6536,7 @@
     "identification": "Native class factory at RVA 0x33c1c0; its allocation tag and reflected class name identify AESlidingDoor. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "de800e023ac40ce977a0832b4156f2b779eddb694ffa2c1159a8247fd4197cdb",
-      "inputs_sha256": "511a73627ae9e7bf9988a682f2dd9f1c0817bd2da3e8d667b317817523e8e8c4"
+      "inputs_sha256": "b43255d4870ffa0f80d62bfc479ccac9fcb9ba353e1236854b4a1a40a87fb71d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7037,7 +7108,8 @@
     "offset": 3397504,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESwingingDoor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7063,7 +7135,7 @@
     },
     "match": {
       "bytes_sha256": "8ee301e6da5bdc188fa4617e606464a1eba9b2b7ddda7374baa56ae98bb3043d",
-      "inputs_sha256": "a1d1b316d1fbbdc80fc6600a2ec0851c886235954d7ace4f255963542fe08b67"
+      "inputs_sha256": "05733fc43a3bf1648992ab259d996ec6a08bd5cbbb05afd80ae883692da404d6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7114,7 +7186,8 @@
     "offset": 3397600,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEKnob@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7140,7 +7213,7 @@
     },
     "match": {
       "bytes_sha256": "0f85a0213afc32976b19a26f40f47b8b9b79fc0229f4e6ff2599ee7574c78506",
-      "inputs_sha256": "863ca5b476de5ea9ae954ae7dd6811e0dcac7500171659144bfd04480a65ade3"
+      "inputs_sha256": "19543ea5490169c06b0d64492a59e01a066434aa8a6af78570310ee701739a41"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7228,7 +7301,8 @@
     "rebuilt_symbol": "_create_AESwingingDoor",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -7261,7 +7335,7 @@
     "identification": "Native class factory at RVA 0x33d930; its allocation tag and reflected class name identify AESwingingDoor. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "e9e51552661def465484d212c21fc7a5150f86f9785649971b52b9b197e13c5c",
-      "inputs_sha256": "aab185c947c20469799b165f0e9ebc44cb624998c083b9c3bcd2e7af882f1ac7"
+      "inputs_sha256": "6fe4d11a1486e509866930952e9a5d69218244c25590ff0fc4784c527ec60fc9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7279,7 +7353,8 @@
     "rebuilt_symbol": "_create_AEKnob",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -7312,7 +7387,7 @@
     "identification": "Native class factory at RVA 0x33d9a0; its allocation tag and reflected class name identify AEKnob. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "33c063f9a0e2177bf879e31a354b36f4de1aa60faa815ba7a4453ef5472dee5a",
-      "inputs_sha256": "9246e80211802579bfc61d8e45ba41ca4f97224d42c02ac903a0631a09ae98c5"
+      "inputs_sha256": "385a94e4f2ec9912e533756e8ef0d2e7678f68d69e13c37b59f9b45d0b0abd57"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7483,7 +7558,8 @@
     "offset": 3399168,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEFireDoor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7509,7 +7585,7 @@
     },
     "match": {
       "bytes_sha256": "20f9b1cbc665d180dc19180a944963ec83d2a0826af8c92bc08ad92d332559ed",
-      "inputs_sha256": "d87b45412a67e24b5dd71b2eafac10d43c3a5449048fff9a53a538d275483a6b"
+      "inputs_sha256": "dcd6dafe7b9bfdecfccd72d0a0b42866973f17f63424b53d99f596fc545aecb9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7562,7 +7638,8 @@
     "rebuilt_symbol": "_create_AEFireDoor",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -7595,7 +7672,7 @@
     "identification": "Native class factory at RVA 0x33de70; its allocation tag and reflected class name identify AEFireDoor. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "8b7ad251523ce6a40d00aa7242a55dd5cf0e684ebc4d1663fa13ec428e09aa1a",
-      "inputs_sha256": "5254bbee4941ffac8930446e0f4c6f2ad60fbbd10a025a213880f77c56f0a2f7"
+      "inputs_sha256": "9e8d6f39f2b4d37ba1cb7f091c916d076ac7c3a31b2dd113b4ce3b37779e61e0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7612,7 +7689,9 @@
     "offset": 3399440,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r33df10@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7626,7 +7705,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "bb0ee9bc1d8a8bb0c065798f3a72be98b617ce56b8e5e75ce6492ec65dcda949"
+      "inputs_sha256": "0db8f80a1515c24213e857bb37dcbb9887dd63a4886c17fab58d8695b1f4652e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7725,7 +7804,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r33e230@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7743,7 +7824,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x33e230 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "8c0699bfe8e5dc8b18ae76eb1659aa137a604cb646d09d3cdb2fa58266046357"
+      "inputs_sha256": "062688dbb8bc14c5c6488368734cad19125e7136f467f0f85004d35c4056768d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7762,7 +7843,9 @@
       "src/campaign_array_insert_range.c",
       "src/campaign_array_growth.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_insert_range.obj src/campaign_array_insert_range.c",
@@ -7784,7 +7867,7 @@
     "identification": "Complete FArray range insertion at default-analysis RVA 0x33e370. Grows the element count and capacity as required, then moves the existing suffix to make space at the requested index. The stock UTF-16 allocator tag corroborates the array operation.",
     "match": {
       "bytes_sha256": "8495288d60a7d55739e2ba9f1a883609f187a93a554a59ca360bca71d7f505a8",
-      "inputs_sha256": "6d7c439f43a716940f2f652da737f7de371537f3718aac1c07108ae04c85bae7"
+      "inputs_sha256": "01d5e82ce5ef11a0481da5cc7a395c3b183e898910aa13b8984b97417701a8f8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7799,13 +7882,14 @@
     "id": "array-remove-33e3f0",
     "size": 138,
     "offset": 3400688,
-    "rebuilt_symbol": "@array_remove_r33e3f0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -7824,7 +7908,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x33e3f0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x33e7ab, 0x33eaab, 0x33edd5. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "7a2121abb7b4b0b8f3f14ff2a4e03fca1b3a2285e79996c137e4d09ec6f94eb2",
-      "inputs_sha256": "55085c72c290075a093086922196684e5714ad8094a886810f8747bdda0c2cac"
+      "inputs_sha256": "8f226a5d3604efd9d7b222933355400742e4752aaef3995a437cb1088c7f1a24"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7872,7 +7956,9 @@
     "rebuilt_symbol": "@array_destroy_r33e7a0@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7889,7 +7975,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x33e7a0, 0x33e7d8). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x33e3f0. Removes every element with stride 32 and releases remaining storage.",
     "match": {
       "bytes_sha256": "b041952fd99db9c52220ec64a72f58c1cef731ced5075e1b7363e8cf59b198a0",
-      "inputs_sha256": "8dbf1f04432dfe72be1d9b632ee326cd70142c623aff3c6120c9b891a498f536"
+      "inputs_sha256": "eb1db7165afc1e313214070020fc237a385dc45a3bca49fa39cc75178bec1edb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7907,7 +7993,9 @@
     "rebuilt_symbol": "@array_destroy_r33eaa0@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7924,7 +8012,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x33eaa0, 0x33ead8). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x33e3f0. Removes every element with stride 32 and releases remaining storage.",
     "match": {
       "bytes_sha256": "cc8e352463646d089f105b933d0256ad7b53e6d718b48dbcc1936bd30148106a",
-      "inputs_sha256": "134c3f22532419a8353582ccd9eb2554ce8b0fc65314c64b9ecd37367651e4ed"
+      "inputs_sha256": "2cf0624d9ff15e9625361b1a4340399ebd3c1508a9a63e64addd5a1e43b5b549"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7975,7 +8063,8 @@
     "offset": 3403088,
     "size": 33,
     "inputs": [
-      "src/campaign_deleting_destructors.c"
+      "src/campaign_deleting_destructors.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AECar@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7993,7 +8082,7 @@
     },
     "match": {
       "bytes_sha256": "02df6e269ab907fa6c1ce35d9acd246a7fd54e3510f6bd369851da9175482aa0",
-      "inputs_sha256": "9345222dc1129553e0ac9727be9e73b59a80e1133e5ec69415093dddae2f2a80"
+      "inputs_sha256": "8fe3651b0451684789c5a49aa71d9fd6c12c7c1caeeb49bc27dfc450bc593c71"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8097,7 +8186,8 @@
     "rebuilt_symbol": "_create_AECar",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -8130,7 +8220,7 @@
     "identification": "Native class factory at RVA 0x33ee40; its allocation tag and reflected class name identify AECar. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "1d1306ebcdd82aaca88018626c6926fea52613481112561ad831b65072b9ed3a",
-      "inputs_sha256": "1d832b574b8155e3a5cc962223dff5f078f6419c815ab286628eaf235f6f4c75"
+      "inputs_sha256": "a7db740aecb50817f9ccda824adfb1171b9cc25480ef0aa1130bed83c775adf7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8261,7 +8351,8 @@
     "offset": 3403792,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEComputerKbrd@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8287,7 +8378,7 @@
     },
     "match": {
       "bytes_sha256": "3d7e90be745d9ae3b700e629e2495281c7953f4bfa85d3dbf46f6fe06fb1940b",
-      "inputs_sha256": "b7963e62dfabbbef3013ea9727016503fe87ad3bb88ddafd258519f194e78116"
+      "inputs_sha256": "2650d76b8f12ab1dd1b0ff40272f209c95f686838951704933bf38928cccc042"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8340,7 +8431,8 @@
     "rebuilt_symbol": "_create_AEComputerKbrd",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -8373,7 +8465,7 @@
     "identification": "Native class factory at RVA 0x33f080; its allocation tag and reflected class name identify AEComputerKbrd. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "eaa6500543d0f76ccc62b1e00614956492288b4a491c2a6be887dc4601a90ecc",
-      "inputs_sha256": "ff7eaf934e379116ee341288f0b65b62cc5feed08d4e33cd76644eb030d24514"
+      "inputs_sha256": "3a388deb3a5ed7228d17bddcc294aef996f5afb85ce15029f7c13d46a5c77057"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8544,7 +8636,9 @@
     "offset": 3404736,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r33f3c0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8558,7 +8652,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "f647d1e9ccd77d1aa400cec8410c1f13e23c675f102a3a09128d6f937666f074"
+      "inputs_sha256": "f300094c0f3b76979505047ec33adf66b19486468af4a452a5c978d6b2be8df9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8575,7 +8669,9 @@
     "offset": 3404784,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r33f3f0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8589,7 +8685,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "da1c00b513d4094ef56ace4b82915858af93449a65fc3ab0f5fa16a7c81c3936"
+      "inputs_sha256": "bda9a34cfdc66b52ed6a2ec061c2450711f092768faa96847c1b0dc348e30b5e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8606,7 +8702,9 @@
     "offset": 3404832,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r33f420@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8620,7 +8718,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "4ba05d2e03498f56680bdbafc529481f82eac41ce5c5e8ddef0dc04099465423"
+      "inputs_sha256": "3433687f3348bd0f7a4f9c0f45a615644dbd5520ad9b786906e3fc1c61521c08"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8851,7 +8949,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r33f990@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8869,7 +8969,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x33f990 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "4e11ebc8a5cd6e670dc81bf56f23a7c958f1b0affa2b809c31e91bfd5c6d603a"
+      "inputs_sha256": "b9506447824c91d200431fe688c01aa8f20a0f56afa99122181b935b95a9507f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8888,7 +8988,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r33f9c0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8906,7 +9008,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x33f9c0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "156e2abc44eb7a37f977aa7556d4d510b2333bbccb1b51fc21b76428fc6f0874"
+      "inputs_sha256": "0d4e8c105ec579f6ba95b1b22cd632f7426ab270de9467988c205124edb0eb82"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8925,7 +9027,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r33f9f0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8943,7 +9047,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x33f9f0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "63699dd41a7c0d61de29902f15e8cda4cc5ee699969966f13e8dc1f294b27e59"
+      "inputs_sha256": "84549eb2bb84d7e8e0f4a513d961fa10273b034c59b1220a3a3b0101de0019ac"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8962,7 +9066,9 @@
       "src/campaign_aligned_array_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_33fdd0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8980,7 +9086,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Resets the count and resizes the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "c92ec39039b40cef4edbe972b1e3cf4255142b9709fb68d13f6698d040a02a68",
-      "inputs_sha256": "27e5b315557ad506f9f36167ac701a572566024a0935affe8f39db460d452586"
+      "inputs_sha256": "63ab78bb8a49706ff8d3c6512976768c1877634f42b294db625db4c1fd821db9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8995,13 +9101,14 @@
     "id": "array-remove-33fe10",
     "size": 138,
     "offset": 3407376,
-    "rebuilt_symbol": "@array_remove_r33fe10@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -9020,7 +9127,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x33fe10, including RET. Incoming transfer decoded within analyzed function code at RVA 0x3405fb, 0x340c0b, 0x341797. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "c6f73b93c9818a2b017eec8a034404a293263f3981b61da2bf65263ac7b082d3",
-      "inputs_sha256": "8ab1dc7c74335db71c7ab3a4a1c61b8f7b4b5e2c8e40eb22726ef31a8a65f643"
+      "inputs_sha256": "a5337eff34413ef7e3738f16643cb90e67ae3fec0f70a5527ee9fc7351e2e4a2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9035,13 +9142,14 @@
     "id": "array-remove-33fea0",
     "size": 138,
     "offset": 3407520,
-    "rebuilt_symbol": "@array_remove_r33fea0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -9060,7 +9168,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x33fea0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x34063b, 0x340c4b, 0x341704. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "4ab0ccfd67abcc5cd8ad2667d0d81e78809891f0cd22ef8350890d2a785f7c77",
-      "inputs_sha256": "88003f994e523a46285ff742768c40b7d773d47ae34f9d4bbeae18f900e97bc1"
+      "inputs_sha256": "ffcb786e98ce2631a80c459d5042c71f8b0405302d04f346ee0d512efb11d5ea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9075,13 +9183,14 @@
     "id": "array-remove-33ff30",
     "size": 138,
     "offset": 3407664,
-    "rebuilt_symbol": "@array_remove_r33ff30@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -9100,7 +9209,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x33ff30, including RET. Incoming transfer decoded within analyzed function code at RVA 0x34067b, 0x340d4b. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "0d5d7f70b0db284cbc7e32a79872bbb5f795479c877c0318db841bdf852b545a",
-      "inputs_sha256": "a697bc440967109e859e0a73962d6d366681af0eac4f893f35ec90bd41101bc2"
+      "inputs_sha256": "06e3d721b0795d566c29975c0cbd7570903292b8198e347ea2cc8bda38dcdecd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

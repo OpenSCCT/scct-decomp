@@ -36,7 +36,7 @@ struct AllocatorMethods {
     void (__fastcall *release)(struct Allocator *, WideBuffer);
 };
 struct Allocator { const struct AllocatorMethods *methods; };
-extern struct Allocator *engine_allocator;
+#include "campaign_engine_allocator.h"
 extern const unsigned short word_array_tag[];
 
 void __fastcall copy_wide_string(struct WideString *to, StringPointer from);
@@ -61,12 +61,14 @@ void __fastcall remove_wide_elements(struct WideString *array, float start, Elem
         copy_wide_string(destination.value, source); \
         result.capacity = result.count = 0; \
         old.value = result.data; \
-        result.data = engine_allocator->methods->resize(engine_allocator, old, 0.0f, tag); \
+        result.data = ((struct Allocator *)engine_allocator)->methods->resize(              \
+            (struct Allocator *)engine_allocator, old, 0.0f, tag);                         \
         count.value = result.count; \
         remove_wide_elements(&result, 0.0f, count, element_size.stack); \
         if (result.data) { \
             old.value = result.data; \
-            engine_allocator->methods->release(engine_allocator, old); \
+            ((struct Allocator *)engine_allocator)->methods->release(  \
+                (struct Allocator *)engine_allocator, old);             \
         } \
         return destination.value; \
     }

@@ -235,7 +235,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r011de0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -253,7 +255,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x11de0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "a524e66a03ed1a443f588ddb994a91e74dc476f286f1600e1aeb16a65f46df26",
-      "inputs_sha256": "d01939bd42154e4a2fc9650d873887c569ea0808fd57c2c1fa965b531bf62f51"
+      "inputs_sha256": "7a6a6054bbc5cde9810b4866d22d27d0f4a542891f81894ae7198bfdd6c5d56f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -271,7 +273,9 @@
     "inputs": [
       "src/campaign_named_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_011e10@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -289,7 +293,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7b8f84, and returns the previous count.",
     "match": {
       "bytes_sha256": "75a49311375202d5bee5a789bf896d567393adb12e1114ac5fce708f53d6a578",
-      "inputs_sha256": "80db9b4d273f4f0d58c6325e6ad8d69f2a51351c77dd5189146bad1ee71dac9d"
+      "inputs_sha256": "ebb7231a387bd1f7f42cfb57e4fde248e50d59cadd7ba37f7b6bb5c06093a7b5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -306,7 +310,9 @@
     "offset": 73424,
     "inputs": [
       "src/campaign_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_release.obj src/campaign_array_release.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -320,7 +326,7 @@
     "identification": "Complete FArray storage release at RVA 0x11ed0. Microsoft C++ frame handler RVA 0x7961a8 uses FuncInfo RVA 0x87b45c. State 0 in unwind map RVA 0x87b454 selects cleanup thunk RVA 0x7961a0, which loads the receiver from the frame and jumps to this specific release function.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "6f3db13b1977f0092ebc99a231b2390c2b2b3f379243beece360b09621f911a1"
+      "inputs_sha256": "0cad7d8c8b039a3ec5f3392b38ea731c29ec33802c28cd2896eaed00e941a779"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -335,13 +341,14 @@
     "id": "array-remove-011f00",
     "size": 138,
     "offset": 73472,
-    "rebuilt_symbol": "@array_remove_r011f00@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b8f84@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -360,7 +367,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x11f00, including RET. Incoming transfer decoded within analyzed function code at RVA 0x11e8d, 0x3cf179, 0x3cf2d7. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "362aa0620155d19b4be5b0a10e3afd656584130289406da486ab5201f590043a",
-      "inputs_sha256": "93136db03583c44c300cfc8fa7d4deaeea4114871b15033b23c4f5ccb4fa9e44"
+      "inputs_sha256": "546aaa7e30c8c2e3947d399dedb650bb3d27877de9b37398f67a5f6ca3887ade"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -817,7 +824,9 @@
     "inputs": [
       "src/campaign_named_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_015560@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -835,7 +844,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7b9b70, and returns the previous count.",
     "match": {
       "bytes_sha256": "14b40e8a5740e5410d8e0015355d2fe6cd03f0c263d6a1804e73085993d41cd4",
-      "inputs_sha256": "f2e1ca75a91b2194631e886691bf9a302bb6d0dc3488a3b586d23ddf958f7880"
+      "inputs_sha256": "4d8c6f501ea46a792d6d3b0af75c8d6aeeccde72f90bdf7425f68c4f82d4f93e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -854,7 +863,9 @@
       "src/campaign_typed_capacity_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_0155b0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -872,7 +883,7 @@
     "identification": "Default Ghidra extent. Sets capacity, zeros the count and resizes the buffer in units of 8 bytes. Heap slot one receives the UTF-16 tag FArray::QWORD at RVA 0x7b9b70.",
     "match": {
       "bytes_sha256": "7c117f935ea6c1d4f0d8814e3dec9891edae1d550b93403de5fd3a48715370a7",
-      "inputs_sha256": "97e999a8e8eaf0c6b0a2a52ec5c4a0d97af2a121ee1c209506878acc7d883201"
+      "inputs_sha256": "7aebfebb78731748817633e31fbb018774953aa1cff989d5520ca0f105286afd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -921,7 +932,9 @@
       "src/campaign_typed_capacity_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_015620@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -939,7 +952,7 @@
     "identification": "Default Ghidra extent. Sets capacity, zeros the count and resizes the buffer in units of 4 bytes. Heap slot one receives the UTF-16 tag FArray at RVA 0x7b7b08.",
     "match": {
       "bytes_sha256": "17414bca608bc286f70f28bbc104c6629f3724178cea9a1ee1e15d9b6e8bd8a2",
-      "inputs_sha256": "e398efea48cf51f2e807ccebc97445712d72cdc55ca27e6afa6ada0d64ccc106"
+      "inputs_sha256": "71f183507b3d031cc2d43bc7f82f75df18fc78b8ebdb00bf8c95421a716509b5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -956,7 +969,9 @@
     "offset": 88016,
     "inputs": [
       "src/campaign_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_release.obj src/campaign_array_release.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -970,7 +985,7 @@
     "identification": "Complete FArray storage release at RVA 0x157d0. Microsoft C++ frame handler RVA 0x7965a8 uses FuncInfo RVA 0x87b83c. State 0 in unwind map RVA 0x87b834 selects cleanup thunk RVA 0x7965a0, which loads the receiver from the frame and jumps to this specific release function.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "b35b61be327fa9ce9083e3f66bfc226f9269f003439adf3fe7fb5dff87d66d55"
+      "inputs_sha256": "419317b849b472f3467152c2c6625bd18e33988e4b2eebd584ff647979eef362"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -985,13 +1000,14 @@
     "id": "array-remove-015800",
     "size": 138,
     "offset": 88064,
-    "rebuilt_symbol": "@array_remove_r015800@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b9b70@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -1010,7 +1026,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x15800, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1578d. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "1ee9e7269c8db1546178e8a3d59d4e69957cd8d71f21ae3ed54b03957cbe4892",
-      "inputs_sha256": "30113f4c8eda7d81e962b8900c4d589abb5773849695d270f9d75988b336e516"
+      "inputs_sha256": "60481864ee97fab55c7a9b73df41d1f6aacbf6d6b315e74e580e3a941d19c6de"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1064,7 +1080,9 @@
     "inputs": [
       "src/campaign_variable_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_015b20@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1082,7 +1100,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7b7b08, and returns the previous count.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "7c3ace5c735c74ccb20e8c636a3aa37dcde97f194b54570f6190f0adc152a566"
+      "inputs_sha256": "dd02f62c1dcd6990ef80aaeae9df20e6f8b2306296ec7f909da50d2422384d58"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1127,13 +1145,14 @@
     "id": "array-remove-015cf0",
     "size": 138,
     "offset": 89328,
-    "rebuilt_symbol": "@array_remove_r015cf0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -1152,7 +1171,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x15cf0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x15cd3, 0x407eab, 0x7b39df. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "10cb74dd122bb2f4098e35a292fe46066e9e8bfee53ae225e1a121d8cfc509d7",
-      "inputs_sha256": "a96b2c3500203306801d9ba230562ca78d856d353e0bc18e7c562cfd9e5c3d7e"
+      "inputs_sha256": "9aab00ea904f554e50b628e133158705d3b8cdd914b275fb2d651679ed24ca98"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1442,7 +1461,9 @@
     "inputs": [
       "src/campaign_named_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_017460@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1460,7 +1481,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7ba13c, and returns the previous count.",
     "match": {
       "bytes_sha256": "ae09f5c7022a9588282017862da24d9e9648d8bc6da1bc864e8a8dfe03fb6536",
-      "inputs_sha256": "ea764e98f0e349da6e2665d2cd89fd7856c4633e39aa02ec9426e2b6ed965af6"
+      "inputs_sha256": "51c96a2d51315929e138920ad2d92422cfd0240a500fea3e4f6f8fde237ef3c9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1478,7 +1499,9 @@
     "inputs": [
       "src/campaign_named_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_0176d0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1496,7 +1519,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7ba17c, and returns the previous count.",
     "match": {
       "bytes_sha256": "f8379f078160a1378136e6802313fc83a0bb236fd39263bb15064c5a61a3336d",
-      "inputs_sha256": "7f5cee0a7a56d5f765ddbeaf65445a59a8306eb7f7c5d8de11376df6a69dd6d7"
+      "inputs_sha256": "03aeb1e558573a5d6c9dad9c915c3930fdeb82721873c38881333d36347d9597"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1515,7 +1538,9 @@
       "src/campaign_typed_capacity_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_017720@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1533,7 +1558,7 @@
     "identification": "Default Ghidra extent. Sets capacity, zeros the count and resizes the buffer in units of 4 bytes. Heap slot one receives the UTF-16 tag FArray::UObject* at RVA 0x7ba17c.",
     "match": {
       "bytes_sha256": "dcc387150e1cc03f1106d97d27a993aab4e0fbc314eb34587c9c1d7c58daf61e",
-      "inputs_sha256": "0cbc0cc4fd9ce2f04646b738dbf84570f2e233ccdf7ae1fe0e0fb5f63952d3f7"
+      "inputs_sha256": "b2148b748d0093685ea11924e96c0fa9d06c97007e870fd555d702e891bccd4b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1626,7 +1651,9 @@
       "src/campaign_typed_capacity_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_018cd0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1644,7 +1671,7 @@
     "identification": "Default Ghidra extent. Sets capacity, zeros the count and resizes the buffer in units of 4 bytes. Heap slot one receives the UTF-16 tag FArray at RVA 0x7b7b08.",
     "match": {
       "bytes_sha256": "17414bca608bc286f70f28bbc104c6629f3724178cea9a1ee1e15d9b6e8bd8a2",
-      "inputs_sha256": "52c2f49702e7f780d86caf4dfa8b483fa5ec0d675c20aaa5f96c9e1ad3e9ce49"
+      "inputs_sha256": "badf02b74cd2c59108a6e366006f80726c763902f103c30ad1c8b85cd899676c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1769,7 +1796,9 @@
     "inputs": [
       "src/campaign_variable_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_019190@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1787,7 +1816,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7b7b08, and returns the previous count.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "8412c4a1361bce26d52fe6aff8c097de801b60c4b0ff55c9c37e3ae272f900a8"
+      "inputs_sha256": "37431c13c2c9d643c559c7835e72e343c901c04735f8bf5d829a3187c4efbda2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1840,7 +1869,9 @@
     "offset": 103152,
     "inputs": [
       "src/campaign_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_release.obj src/campaign_array_release.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1854,7 +1885,7 @@
     "identification": "Complete FArray storage release at RVA 0x192f0. Microsoft C++ frame handler RVA 0x796918 uses FuncInfo RVA 0x87bbcc. State 0 in unwind map RVA 0x87bbc4 selects cleanup thunk RVA 0x796910, which loads the receiver from the frame and jumps to this specific release function.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "6bb89ed421312191d0cc2cf4266044c6ab2e3a37e015239b171d12a196125367"
+      "inputs_sha256": "fcec1a1aaa7352c444df48466f1be6e50d3cb5574da59f6a8dd3fd4187447efd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1869,13 +1900,14 @@
     "id": "array-remove-019320",
     "size": 138,
     "offset": 103200,
-    "rebuilt_symbol": "@array_remove_r019320@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -1894,7 +1926,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x19320, including RET. Incoming transfer decoded within analyzed function code at RVA 0x192ad. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "1da2dd8443631843c1d407af723cf24bd9e1fb8fc5bbb0a29942e1e2ed0540e4",
-      "inputs_sha256": "0559567d8b2f47a1ccfe9f340d2e39af39a22a600b45b44eb418e62af88ba0b3"
+      "inputs_sha256": "2dad730e73a8b737e7ac085489e2b0aedd1f548a1cc840998be249cb0d3c8772"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1911,7 +1943,9 @@
     "offset": 103456,
     "inputs": [
       "src/campaign_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_release.obj src/campaign_array_release.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1925,7 +1959,7 @@
     "identification": "Complete FArray storage release at RVA 0x19420. Microsoft C++ frame handler RVA 0x796938 uses FuncInfo RVA 0x87bbf0. State 0 in unwind map RVA 0x87bbe8 selects cleanup thunk RVA 0x796930, which loads the receiver from the frame and jumps to this specific release function.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "127899dc10ad3a523e94ab972704bf0dc837063faf1b362cbb1af3f9c90bc6b9"
+      "inputs_sha256": "de2c734d04bb14f103059dff37de387ba43ef9d95cc03c33ac15b608f5dc84ab"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1940,13 +1974,14 @@
     "id": "array-remove-019450",
     "size": 138,
     "offset": 103504,
-    "rebuilt_symbol": "@array_remove_r019450@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -1965,7 +2000,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x19450, including RET. Incoming transfer decoded within analyzed function code at RVA 0x193dd. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "593d57742048d9249c615fd7c6fd1749a0bd34f8ed8fa0af2827367068b6b47b",
-      "inputs_sha256": "38997389a48ad677b026ba375ec328677f0d9dacddc366d9433c824a824253e6"
+      "inputs_sha256": "5f7e7cb04efa2496e5f8aa0b7c5772c53d0d62e87cc88e170169d455bcc2fa82"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1983,7 +2018,9 @@
     "rebuilt_symbol": "@array_release_r019960@4",
     "inputs": [
       "src/campaign_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_release.obj src/campaign_array_release.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1996,7 +2033,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x19960, including RET. Incoming transfer decoded within analyzed function code at RVA 0x196c4. Releases non-null storage through the engine allocator and clears the pointer, capacity and count.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "087b993965276db5d16d3ed530ba470d0d33f822beb0ece67d3a615d0fa41579"
+      "inputs_sha256": "3ed72441c5ece2ab7b013431c6191c3ba310bb0eea1f6978bac665b9f9a8d4ab"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2065,13 +2102,14 @@
     "id": "array-remove-019a00",
     "size": 138,
     "offset": 104960,
-    "rebuilt_symbol": "@array_remove_r019a00@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7ba13c@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -2090,7 +2128,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x19a00, including RET. Incoming transfer decoded within analyzed function code at RVA 0x199ec, 0x19b3d, 0x1b113. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "a059d331d8bd47fa0163d4f5546b9e4c132892048344dd9276d8ac724afa6792",
-      "inputs_sha256": "de7ca582b21a65ca6d930faf2a130b96b08621dee0e22bb960b1dccba436432c"
+      "inputs_sha256": "bb13c9a7aab8feb45351ec104bf7ad719ce797c25ce5d5653573233f3acb3e5c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2108,7 +2146,9 @@
     "inputs": [
       "src/campaign_variable_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_019b80@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2126,7 +2166,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7b7b08, and returns the previous count.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "d48f3b90a31cc8b4c388a365be5603bb9720b117548b0cc4140e315b910e0539"
+      "inputs_sha256": "45e5ed18a91857bf26fe9fea59da462c1a1ac49d1b1161ff12cf05e7220c5398"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2505,7 +2545,9 @@
     "offset": 111248,
     "inputs": [
       "src/campaign_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_release.obj src/campaign_array_release.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2519,7 +2561,7 @@
     "identification": "Complete FArray storage release at RVA 0x1b290. Microsoft C++ frame handler RVA 0x796a38 uses FuncInfo RVA 0x87bd2c. State 0 in unwind map RVA 0x87bd24 selects cleanup thunk RVA 0x796a30, which loads the receiver from the frame and jumps to this specific release function.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "f6646e59d4f07f7f4c768e0ea96fda7c37c018a9014850eea76719f5c65bb30d"
+      "inputs_sha256": "bd21750800ac3b49dcbad51c2cabf1d32bd3f77305952f3ba12beb58883e499e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2534,13 +2576,14 @@
     "id": "array-remove-01b2c0",
     "size": 138,
     "offset": 111296,
-    "rebuilt_symbol": "@array_remove_r01b2c0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7ba17c@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -2559,7 +2602,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1b2c0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1b24d, 0x1a9c8b, 0x1ab1a6. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "3217b63e2e1cb23f71a81d8e8b2305cd84f6e5ca19af3a16537d56a86d3ed8d8",
-      "inputs_sha256": "5027d86290ecdcf2abd75b7506843eb6f33cf6d53b463aed72edc5b3d1a5d6c4"
+      "inputs_sha256": "0ce625224831bf604154104554618afab1dcce1e46c2038e979bd203f76f6323"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3145,7 +3188,9 @@
     "offset": 119536,
     "inputs": [
       "src/campaign_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_release.obj src/campaign_array_release.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3159,7 +3204,7 @@
     "identification": "Complete FArray storage release at RVA 0x1d2f0. Microsoft C++ frame handler RVA 0x796e88 uses FuncInfo RVA 0x87c204. State 0 in unwind map RVA 0x87c1fc selects cleanup thunk RVA 0x796e80, which loads the receiver from the frame and jumps to this specific release function.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "cca3278f1a86099cc8debd5288dbe34ad90c1489b20e87d3b4ea1e4469619021"
+      "inputs_sha256": "1c16a6aa1ae1a44468a5af9ec6abe1f4f965bc96ef9acd7954f94eebaf3810ff"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3208,13 +3253,14 @@
     "id": "array-remove-01d370",
     "size": 138,
     "offset": 119664,
-    "rebuilt_symbol": "@array_remove_r01d370@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -3233,7 +3279,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1d370, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1d35b. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "b1872cb1890c987f9df6315a9d8f9a9379b09b1ca9dd034022e17f03e4368949",
-      "inputs_sha256": "9c8b34b587baf3e37d6b2fe5fdfd252db9e16364f7771d34ef20ca708ea88bd3"
+      "inputs_sha256": "6ab2a6b9d3b12dd78b6aaaaf2b7fa994b712ef5cbd27659c8d6063e91dcf39ea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3535,7 +3581,9 @@
     "inputs": [
       "src/campaign_variable_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_01f2d0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3553,7 +3601,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7b7b08, and returns the previous count.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "4a0845eaae2d045aa35b34478691b640bb3e34b7febf5c3ee57b4ae40a6a2ecb"
+      "inputs_sha256": "994f8b9c05872e5dd2e8f49acc5771c931c4764a8d37b5fedc2a2cd32e5780df"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3644,7 +3692,9 @@
       "src/campaign_array_insert_range.c",
       "src/campaign_array_growth.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_insert_range.obj src/campaign_array_insert_range.c",
@@ -3666,7 +3716,7 @@
     "identification": "Complete FArray range insertion at default-analysis RVA 0x1f6d0. Grows the element count and capacity as required, then moves the existing suffix to make space at the requested index. The stock UTF-16 allocator tag corroborates the array operation.",
     "match": {
       "bytes_sha256": "ef505aa02d8687a5df4a8c042ecb8516a82555a4606a4680fb72a21c900c2443",
-      "inputs_sha256": "85b04deebff944488b8bc591e6aaf081b97d83509bc6aa5442c6405906662bfa"
+      "inputs_sha256": "5fa6b73b54dd02cdcf23d6efa629601b1d134d6300300103f9a70dd1dc45042d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3684,7 +3734,9 @@
     "inputs": [
       "src/campaign_variable_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_01f750@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3702,7 +3754,7 @@
     "identification": "Default Ghidra extent. Extends an FArray using the requested count and element width, calls heap slot one with its tag at RVA 0x7b7b08, and returns the previous count.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "688861b6e92980a657c1592e17c123896a6a310c017499d85fc4ffffc4d31577"
+      "inputs_sha256": "f564f2fb62fa8f3445469b0d2e96d34748dc67ed67530cb47b87754971d0faff"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3721,7 +3773,9 @@
       "src/campaign_typed_capacity_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_01f7a0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3739,7 +3793,7 @@
     "identification": "Default Ghidra extent. Sets capacity, zeros the count and resizes the buffer in units of 4 bytes. Heap slot one receives the UTF-16 tag FArray at RVA 0x7b7b08.",
     "match": {
       "bytes_sha256": "17414bca608bc286f70f28bbc104c6629f3724178cea9a1ee1e15d9b6e8bd8a2",
-      "inputs_sha256": "8db97c7d139c28a973b1a81c707e8f3aee7314bdfdb1746d49f96e638843d224"
+      "inputs_sha256": "f4b7fd67230f71332e75e05b15023999b0c5ffd91276c6e4c3fa320c941b35b6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3756,7 +3810,9 @@
     "offset": 129088,
     "inputs": [
       "src/campaign_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_release.obj src/campaign_array_release.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3770,7 +3826,7 @@
     "identification": "Complete FArray storage release at RVA 0x1f840. Microsoft C++ frame handler RVA 0x7970a8 uses FuncInfo RVA 0x87c424. State 0 in unwind map RVA 0x87c41c selects cleanup thunk RVA 0x7970a0, which loads the receiver from the frame and jumps to this specific release function.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "de7db104f8e33c6506daba3fd7a63513c39794a9457964426aab99bd2173c3b3"
+      "inputs_sha256": "6c81685ef8dd83079fc895a9bd99d68386c5fab2f1dc47376731add93712f6c4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3785,13 +3841,14 @@
     "id": "array-remove-01f870",
     "size": 138,
     "offset": 129136,
-    "rebuilt_symbol": "@array_remove_r01f870@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -3810,7 +3867,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1f870, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1f7fd. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "9fdad441da7987d7974b09774f6ffd1ceb1ca9d3499e27aacbeca4f77eba810d",
-      "inputs_sha256": "f6249be4d2e0d41172f06e88e2b578b55bbf823c37ef8fd2f0aa077fb183ac9f"
+      "inputs_sha256": "e0b73a19ffa2c449d963f0b11ed26c2ac78002e208c8d27fa7a3a7a9ac897347"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3825,13 +3882,14 @@
     "id": "array-remove-01fa20",
     "size": 138,
     "offset": 129568,
-    "rebuilt_symbol": "@array_remove_r01fa20@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -3850,7 +3908,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1fa20, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1f99d, 0x3f5501, 0x3f7d62. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "08302da7b31b00fc3c83691d0cfd2e299a3978d822636cbf39790dca311c9ce8",
-      "inputs_sha256": "56a6f6d7e282abc0473e90ceda7cb3c5f4c45c0fd7e6542105f0b416ab691108"
+      "inputs_sha256": "66fbde8e51e6ff64ddc67e650fdc48603cef8343953343f41f99f7ff1e494f25"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

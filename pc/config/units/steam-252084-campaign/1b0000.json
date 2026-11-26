@@ -50,7 +50,9 @@
     "offset": 1770192,
     "inputs": [
       "src/campaign_array_owner_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@cleanup_1b02d0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -68,7 +70,7 @@
     "identification": "Default Ghidra range. Clears 12-byte elements through the independently rebuilt removal routine at RVA 0x1ae2a0. Both storage releases dispatch through the engine heap. Majority choice, not evidence: the StackWord union here takes the majority body unsigned value and float argument from the other copies; this source had int integer, and its code reads only the float member.",
     "match": {
       "bytes_sha256": "2fe50d6e4758f613ae385e4dec5233110b75eb5b294456f04cb3e1807ad66018",
-      "inputs_sha256": "338a736107fdf7a5bfbcaf2947ec61d9229b1015c3df560e4abe021258cbdd4b"
+      "inputs_sha256": "ebf75cf7aef35b6dec42b88ff4bf44222bda123934c0601ab6767fe3a5ae42c3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -117,7 +119,8 @@
     "rebuilt_symbol": "_create_UTextureStreamer",
     "inputs": [
       "src/campaign_class_factories.cpp",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factory_symbols.h",
+      "src/campaign_engine_allocator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
@@ -150,7 +153,7 @@
     "identification": "Native class factory at RVA 0x1b0a80; its allocation tag and reflected class name identify UTextureStreamer. The successful construction and null-allocation returns both belong to this complete symbol. ClassFactoryAllocator and RuntimeClassBuilder are analyst-invented C++ type names for the allocator virtual call and the stock descriptor construction boundary; Construct is an analyst-invented method label. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "d82926cfb9c9e4e7f725d79483faa87c793b6e1c7a46af5e5807e1e78c3c8a5b",
-      "inputs_sha256": "8aad505188370de62bf5a672f6746b093f05281e13082c13da2640c35de215cb"
+      "inputs_sha256": "88ed34fb990ac5c7cf7d08ee2c8715b3a6138b609eac09006de217d539e50ead"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -320,7 +323,9 @@
     "rebuilt_symbol": "@destroy_typed_r1b1f10@4",
     "inputs": [
       "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
@@ -337,7 +342,7 @@
     "identification": "Complete array destructor at RVA 0x1b1f10; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 112 to the matched FArray::Remove.",
     "match": {
       "bytes_sha256": "28e51dd6c72e5c6497f8974f3d2ec7fd00568138ad822c20f80532597628fefe",
-      "inputs_sha256": "c74da0c0ae89c1e1debec90bacc33a19b8ed66c0cf7e238b0e95f333e30b13d4"
+      "inputs_sha256": "edd63df1ef1ae55f1db6fa7324f3c0fe341337f2b9dea8b5532b44d37db07b6d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -432,7 +437,9 @@
     "offset": 1783696,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r1b3790@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -446,7 +453,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "8d48b527311a7c75fb93cbcb5222a8a382bb8cb7a44d56aca300dc4a034ae88e"
+      "inputs_sha256": "8ae53ad943a3665237785f6ddbc9c85aa675fb5a1553219fa0be3c085456afd2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -505,7 +512,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r1b42e0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -523,7 +532,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x1b42e0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "67f6119d8fdcb9f68d1054d5bfd0fa63d96ba6231a65d6b908d6730bdc113b93"
+      "inputs_sha256": "d36ec037602890a9ba8f7ae3388087bdae7a5c12cc5d93a43aab276882702637"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -541,7 +550,9 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_1b4310@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -559,7 +570,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "bb73d84afb2ba1992fd24a7745163ba35d2e3b2172df3b67ef946b50c0118899"
+      "inputs_sha256": "aec6bd398a1ed5e9502e8b928faed7bab00375adc0724874554d26cda01e709b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -646,13 +657,14 @@
     "id": "array-remove-1b5780",
     "size": 138,
     "offset": 1791872,
-    "rebuilt_symbol": "@array_remove_r1b5780@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -671,7 +683,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1b5780, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1b63bb. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "0b7fe02c59e5cc541c5d44769ba380768ca6b498a9fe701b1917afe0dd6d65d4",
-      "inputs_sha256": "efbb2df78ccf6fd27930976f1b01ea622549e5f749a2db14d3516572e5affc47"
+      "inputs_sha256": "17c52820675d296f767652be3948f301b7d25deb96f2ac8c217f07992d0082ec"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -719,7 +731,9 @@
     "rebuilt_symbol": "@array_destroy_r1b5fb0@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -736,7 +750,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x1b5fb0, 0x1b5fe8). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x29a90. Removes every element with stride 4 and releases remaining storage.",
     "match": {
       "bytes_sha256": "8989fdb47aaa0dc42ac63d81bab3a7159586fa88d1fc71a404b191c7da406ed1",
-      "inputs_sha256": "534dd7d3384bf193922252d6f3a384b98903f89022d666cbba1767e80d73b833"
+      "inputs_sha256": "0fc2b69b6aa4581aeb4a5e421456e18a030171f7ac47d19f7c0c2cd7e8b63400"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -753,7 +767,9 @@
     "offset": 1794064,
     "inputs": [
       "src/campaign_array_owner_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@cleanup_1b6010@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -771,7 +787,7 @@
     "identification": "Default Ghidra range. Clears 4-byte elements through the independently rebuilt removal routine at RVA 0x29a90. Both storage releases dispatch through the engine heap. Majority choice, not evidence: the StackWord union here takes the majority body unsigned value and float argument from the other copies; this source had int integer, and its code reads only the float member.",
     "match": {
       "bytes_sha256": "7ce178f816c9843b7d140bb0d99df084819d3764326dd6b843ca3f30d4d5dc7f",
-      "inputs_sha256": "ff6ae058d982e3ab3e291f5d93b3cc5ae9586ac04eb13b2095a4effe1bf1a6d2"
+      "inputs_sha256": "54ea1c9bd1ce023b9eaeff6602db8db1b1afb7a4c4c67ed2bb4d0b676fce729f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -789,7 +805,9 @@
     "rebuilt_symbol": "@destroy_typed_r1b63d0@4",
     "inputs": [
       "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
@@ -806,7 +824,7 @@
     "identification": "Complete array destructor at RVA 0x1b63d0; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 12 to the matched FArray::Remove.",
     "match": {
       "bytes_sha256": "fbc533c3a852ee3d81db16db2403c91ea67824c27caa02d52345856c6a79b8e8",
-      "inputs_sha256": "28df9eee7856b527f5a013d7893e8b37f602a11c5785bada4abf769115aec920"
+      "inputs_sha256": "ebf351ab88999c9c6e250b5b7358c56cb2f177517aa143f449657e270b6a5b7f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -870,7 +888,9 @@
     "offset": 1796272,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r1b68b0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -884,7 +904,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "4861fdc926765c3b4b7294e22635b1d87c6cd66dc754461489bd81dcf35eb323"
+      "inputs_sha256": "744260926574cce9572d5455de106ee702ccebfcb5514c6c95a146ddab7f7507"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -975,7 +995,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r1b6a10@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -993,7 +1015,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x1b6a10 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "16b1a334de6b04dd0b886bf9255fb758594c3cf715c645f39e9b9cc7fc0df98b"
+      "inputs_sha256": "85f7fbbe4d3102d736e0005385aad6f0aa7aab895b917a837480d47929e39001"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1012,7 +1034,9 @@
       "src/campaign_aligned_array_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_1b6a40@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1030,7 +1054,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Resets the count and resizes the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "c92ec39039b40cef4edbe972b1e3cf4255142b9709fb68d13f6698d040a02a68",
-      "inputs_sha256": "790722dd932c138012aede136494a656b97754f63b6af8fa87592a03a2aef15b"
+      "inputs_sha256": "aec8ada4b121df016ee92bb38644a1ca6cefb9ad1ef1f46dfc189a0cfba3128a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1048,7 +1072,9 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_1b6a80@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1066,7 +1092,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "c4727d06ba877c63a6a461d2806cb2ab53c2171659bfd120aa740ff4746cef30"
+      "inputs_sha256": "fc5af5a6318f9e8db36e01404dd68e974b565bf1ce8b57585a9607910640c9ad"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1081,13 +1107,14 @@
     "id": "array-remove-1b6ad0",
     "size": 138,
     "offset": 1796816,
-    "rebuilt_symbol": "@array_remove_r1b6ad0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -1106,7 +1133,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1b6ad0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1b6c6b, 0x7b0d9f. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "d85833bc5799b7ebeca07abefac2a6738fef09f4bcb78ae8a6823d034967eead",
-      "inputs_sha256": "9b90f90744ca65bac3123e248fb893758908d8270b1d98a0f2be371d70a6f11c"
+      "inputs_sha256": "9a94abb730e386fee429607625e89ee541567f284a915298dc5132233438fb59"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1125,7 +1152,9 @@
       "src/campaign_aligned_array_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_1b6b60@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1143,7 +1172,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Resets the count and resizes the array with 4-byte elements and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "17414bca608bc286f70f28bbc104c6629f3724178cea9a1ee1e15d9b6e8bd8a2",
-      "inputs_sha256": "cdeaa138a18c6093ffe544e8362918017b19da5f964535bbb202054b4653713c"
+      "inputs_sha256": "c546fefa6255767d269a15d26e790e4c94e7a7160587d4848c28bddf21b4f069"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1162,7 +1191,9 @@
       "src/campaign_aligned_record_growth.c",
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_1b6b90@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1180,7 +1211,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with 4-byte elements and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "28fee31e18dd0e250ddea8f4807cd55f5d645af2d53cc12f7d6bde72f835e857",
-      "inputs_sha256": "62f67081a1dfda507b445c8eaac4160b1a4d6ac8783121fe08c51cbee5d3a99b"
+      "inputs_sha256": "cd4a1547be06aaa6f8142a91348f7f30f4eea05ac607db9b4cad51fc544fb3fe"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1268,7 +1299,9 @@
     "rebuilt_symbol": "@array_destroy_r1b6c60@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1285,7 +1318,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x1b6c60, 0x1b6c98). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x1b6ad0. Removes every element with stride 4 and releases remaining storage.",
     "match": {
       "bytes_sha256": "cdf94313623b3191f2fd58c5241dc303eb48e8676ae9d9c73877e0cb740cf90f",
-      "inputs_sha256": "92478f2f336e3d76b7cc0a0243962d0c80add9b331da8c2b2c2b6017adeee755"
+      "inputs_sha256": "1b0d9ac5fc5d1814d12c14011bcaaa40b5b8e451e806ce262ca4a0c80de10eb2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1305,7 +1338,9 @@
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@append_array_item_r1b6ca0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1323,7 +1358,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x1b6ca0 through its RET. Grows the allocation if required, stores the incoming four-byte element and returns its original insertion index. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "a30eb2ed2fb4d27a0d8a0ca6ad1cd005f7b706779845ef80dc3d020481cfa641",
-      "inputs_sha256": "3c34d8226e46634d77a8359082b75d7a1ff355a4b060065dc5feb4fe33a6bdf4"
+      "inputs_sha256": "b29647215811dc2f80aaead94c07fa7411fa8c6a24537fc9807f9321d09ac578"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1405,7 +1440,9 @@
     "offset": 1798304,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r1b70a0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1419,7 +1456,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "d1a27d8db0fd8ee2108d3420911308c4db1786a8b04c65d227664c06599f6773"
+      "inputs_sha256": "eaff0931b7136d1a2ed1258ba1017821e45d2f562ff5d8556e5049a807a0b36d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1436,7 +1473,9 @@
     "offset": 1798368,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r1b70e0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1450,7 +1489,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "94649bbb4c0c48bf6694d27f5436eba4236c195094b56252c53a25fb5b7bc54b"
+      "inputs_sha256": "8ba201ba7fbd37c8723af54b9df5e04a7a9389e3d6bd7d360ba7937cc8cfddb0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1467,7 +1506,9 @@
     "offset": 1798432,
     "inputs": [
       "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@array_release_r1b7120@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1481,7 +1522,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "f33d1d11712857e7dabbfcc7fbae6db30e6adcb9a89bd9f8e9ab7cf636e02287"
+      "inputs_sha256": "ef1c6745ced2e1d657cf6ead97fff5016088e56d273fbc1e9a412e4617a6c4f8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1498,7 +1539,9 @@
     "offset": 1798624,
     "inputs": [
       "src/campaign_empty_physics_array.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_array@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1506,7 +1549,7 @@
     "identification": "Aligned entry bounded by a previous return and compiler padding. Initializes a physics array with a null buffer, zero count and the high capacity bit set. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "82830a7097035643fa51b56e948587147e0e537510d4c0e154c0e73ec5871934",
-      "inputs_sha256": "10520282518e499548c93daef0c4e21f5894cdb8305698bccbff7751f1ea7c2f"
+      "inputs_sha256": "0d0ba3a4cc098124e0683b10bd815bfbf5dbe4e4223154841be45a0f0a995801"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1523,7 +1566,9 @@
     "offset": 1798672,
     "inputs": [
       "src/campaign_empty_physics_array.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_array@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1531,7 +1576,7 @@
     "identification": "Aligned entry bounded by a previous return and compiler padding. Initializes a physics array with a null buffer, zero count and the high capacity bit set. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "82830a7097035643fa51b56e948587147e0e537510d4c0e154c0e73ec5871934",
-      "inputs_sha256": "3c7e12ccde9e56cd4af45cc4f2360bcfc2982e9bb1c6f2f0fec1d63ff6b56581"
+      "inputs_sha256": "6f18347bebee4e67fa18fb53996dc73c8164d51af0904ae8612ba013bd4a391a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1748,7 +1793,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r1b7fc0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1766,7 +1813,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x1b7fc0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "8df2f9d2ea255e56ac4e4bfcfe5eb064f66ee0692788a9ff1d65faa8852363f0"
+      "inputs_sha256": "e42f6781fc6fd76adf132a4bc797e0c794cf043a71d1d7235bd2e8d7b63f2ff3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1785,7 +1832,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r1b7ff0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1803,7 +1852,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x1b7ff0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "128afb42f19b70d782d5512372693a0d953477e1632969765e36d82d98b76e1b"
+      "inputs_sha256": "5d7d27eb6d4ba7dcd70552bc453f0808b3a9956de6cf2549da5e82b7825c280e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1822,7 +1871,9 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r1b8020@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1840,7 +1891,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x1b8020 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "201b230c9d0991be068c6dc67fc01b2f131f6365db1b4255611fb253291fd190"
+      "inputs_sha256": "a0d258e5d94d852b62c82b2cff7c79a3e040c785ca2bca81dd59a2a1438a1621"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1935,7 +1986,9 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_1b80d0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1953,7 +2006,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "c0c9b9bab6b0dd317c65b25b25ec56d9948889e7fb4f31b7b2626edc5308ca9b"
+      "inputs_sha256": "881ec3a16f05da5699baa652152fee9e95403b814da86e32129895c571aa9e4a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1971,7 +2024,9 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_1b8120@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1989,7 +2044,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "99c6375d50055abd0eff00e33135ff58dbb50efcbd93d679c53dc75dd201365e"
+      "inputs_sha256": "83eab09e36de61fb0b5935c336f4cbe62fbc441a224c12cf50810fc5cd4a97b4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2007,7 +2062,9 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_1b8170@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2025,7 +2082,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "f0da6c98f357b12792cecc21aea531c7bba5ceeacba95ecda1569749619ca568"
+      "inputs_sha256": "9a4cd96a21c39459c20c67582f1a238df6f2ac07468a6f2dd849a596a6225939"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2042,7 +2099,9 @@
     "offset": 1802688,
     "inputs": [
       "src/campaign_physics_array_reserve.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reserve_1b81c0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2056,7 +2115,7 @@
     "identification": "Aligned entry bounded by a previous return and INT3 padding. Grows capacity to the greater of the requested count and double the current capacity, using 16-byte elements. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "058ccab4ca59336ac637d12bea2703b166944b6abbb1570910585d062a3f7f4b",
-      "inputs_sha256": "3b1c04a36bbb02e5a38fd6114b3a40b260367e41c10af82c0164133b8bbd0b09"
+      "inputs_sha256": "dec4415ff25e6c7158c0257e90276225ff546a94b45e86b52f14a8e8c391e70a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2073,7 +2132,9 @@
     "offset": 1802736,
     "inputs": [
       "src/campaign_physics_array_reserve.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reserve_1b81f0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2087,7 +2148,7 @@
     "identification": "Aligned entry bounded by a previous return and INT3 padding. Grows capacity to the greater of the requested count and double the current capacity, using 16-byte elements. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "82f27d256e0ad0eaca5af7ac39c9daed3fcac174152ed8b6bec13336bb3bcf83",
-      "inputs_sha256": "13bcd6f6049e82968f45ba8751fdba5b1efef7105d9596d52acbcc4c48b35a0a"
+      "inputs_sha256": "d10fe4bf5be9251d5be69600e84ce16f60230db68bcb3f47f50dc30e143d3702"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2162,13 +2223,14 @@
     "id": "array-remove-1b8e90",
     "size": 138,
     "offset": 1805968,
-    "rebuilt_symbol": "@array_remove_r1b8e90@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -2187,7 +2249,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1b8e90, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1b96ab. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "8f957773387e6b8e9510402d207a1bd98a7bd31d499b4a8ec0c80139d10f04eb",
-      "inputs_sha256": "0dd47d29be61f7ac57103c87a364bc9f97e74681e23786eae3c89b1741d31a85"
+      "inputs_sha256": "0781cf629461db2ba49c42d5fbe30d3593565761a38ed716489e8982b0bbc5df"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2202,13 +2264,14 @@
     "id": "array-remove-1b8f20",
     "size": 138,
     "offset": 1806112,
-    "rebuilt_symbol": "@array_remove_r1b8f20@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -2227,7 +2290,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1b8f20, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1b96eb, 0x1bbcc0. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "28981c25c7e733eb2abaff815e4bd24fc38adb175b3eb5ae5d567b638146bea5",
-      "inputs_sha256": "c60f673ef79a363b6327d623343d9b1ffe6cc916822008314888ebd8b2a408fc"
+      "inputs_sha256": "f87d6aebb8e00ad3b6f158ff5702a230b1889562389f874efad9d65372cfea67"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2242,13 +2305,14 @@
     "id": "array-remove-1b8fb0",
     "size": 138,
     "offset": 1806256,
-    "rebuilt_symbol": "@array_remove_r1b8fb0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_array_allocator.h",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
@@ -2267,7 +2331,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x1b8fb0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x1b972b. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "9a86fb6da354b3cb7a5d75fda02e584f5528882c0798789aba096f3a0070b688",
-      "inputs_sha256": "0f47b6334c82068e893afea87b95bfabc9c227fcfd3e0b95e65e9a90914df84b"
+      "inputs_sha256": "ea34fabd383cd733df3e8c3cbfc237197e92fb4a2efb69120fd0ebe97b36d9d2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2284,7 +2348,9 @@
     "offset": 1806736,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_1b9190@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2298,7 +2364,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 4-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d47cb30c172d601f64754ebab20ad1587ff1b99aac997e5f21183d6b1d24d0a2",
-      "inputs_sha256": "b555a7f8b684a109d14ca47d1906c3d8677fdff537a5d83a3a43632e32590171"
+      "inputs_sha256": "a44e20e3c4cf9929ece7affc1bcc1f08a72e595787c26a88ef210f0399ac445c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2315,7 +2381,9 @@
     "offset": 1806784,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_1b91c0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2329,7 +2397,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 16-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "8e7c978c211b562172d90429c54801dc6807cb9025a5d4c53482ef525899b8f9",
-      "inputs_sha256": "5e9f547d26966e614cfaf85c45aa76dda07226049d99dadd56064625c1b8778e"
+      "inputs_sha256": "693958cf5899ba51e6ddd0c672da5e547972d3c4ae7ae4780fb436f83927b4a7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2436,7 +2504,9 @@
     "offset": 1807360,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_1b9400@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2450,7 +2520,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 4-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d47cb30c172d601f64754ebab20ad1587ff1b99aac997e5f21183d6b1d24d0a2",
-      "inputs_sha256": "a5701bf2e26224e00aaa1529da8f1d1f66bcdb94dfd2ea13ffab2910bb8f679c"
+      "inputs_sha256": "0fe6a13d4dbc3a33807e6fd21e7135b1222dd41904e931b408b72cde517a03c6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2467,7 +2537,9 @@
     "offset": 1807408,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_1b9430@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2481,7 +2553,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 16-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "8e7c978c211b562172d90429c54801dc6807cb9025a5d4c53482ef525899b8f9",
-      "inputs_sha256": "22c2b80cf404f470397ac861590ea9cd63beee19a1c44a4507594539471ed289"
+      "inputs_sha256": "88fafb4c2053a2deb2c3e23c683e038921250cd61e99a521726863b7fbed1131"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2499,7 +2571,9 @@
     "rebuilt_symbol": "@array_destroy_r1b96a0@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2516,7 +2590,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x1b96a0, 0x1b96d8). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x1b8e90. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "8e3d43e1c7751cc45c0c85a84b13e9c5ac59a1778b26747401070d716ebb0d3b",
-      "inputs_sha256": "e9b138e7f69ceec9228ef9b88a7ed533bf4737cbe167c1e6bb50f3aebe8c7110"
+      "inputs_sha256": "935e20451b39550cc0107473b0ee64eca83a4117991e760a30086433b28b794c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2534,7 +2608,9 @@
     "rebuilt_symbol": "@array_destroy_r1b96e0@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2551,7 +2627,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x1b96e0, 0x1b9718). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x1b8f20. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "a1cebf4b7c1f47afc40df757122835e890f9dc3c91a2fd7e1a7085ffbf8b9337",
-      "inputs_sha256": "8b67b0ee9f520a53fddd874bf900a4ca33a11c8ca897515e5b3841d476ba3305"
+      "inputs_sha256": "0a8072bdf80722ba6389824fa4b09da751fe11b3505780778215ae708f9af632"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2569,7 +2645,9 @@
     "rebuilt_symbol": "@array_destroy_r1b9720@4",
     "inputs": [
       "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_allocator.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2586,7 +2664,7 @@
     "identification": "Default Ghidra analysis independently identified the isolated range [0x1b9720, 0x1b9758). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x1b8fb0. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "bbca64112271f246cd5dc07119a37e334339ae7bc334b8ce62830556d7aef995",
-      "inputs_sha256": "c75ab58c96f9cc6b8fdd633eb6255a73c0272e1bcc0fdb3f0548964a553ff40c"
+      "inputs_sha256": "1ecaae1f1676c70ffa06ff44f38fe13039b4b68f2bcc2228de11171ac1652261"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
