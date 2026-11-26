@@ -409,6 +409,8 @@ public:
 };
 
 // Engine.Canvas: 0x80 bytes, 22 virtual functions
+class UFont;
+
 class UCanvas : public UObject {
 public:
     virtual ~UCanvas();
@@ -417,6 +419,7 @@ public:
 
     DECLARE_NATIVE(execRenderMotionTracking)
     void RenderMotionTracking(INT A0, INT A1, INT A2);
+    void StrLen(UFont *InFont, FLOAT ScaleX, FLOAT ScaleY, INT &XL, INT &YL, const TCHAR *Text);
 };
 
 // Engine.Channel: 0x58 bytes, 28 virtual functions
