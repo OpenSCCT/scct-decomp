@@ -1,50 +1,50 @@
-struct Record { unsigned int first_word; void *storage; };
+struct MemberStorageRecord { unsigned int first_word; void *storage; };
 extern void *__cdecl get_release_context(void);
 extern void __cdecl release_record_storage(void *context, void *storage, unsigned int kind);
 
 #define CLEAR_RECORD(Entry, Clear, Kind) \
-    void __fastcall Entry(struct Record *record) \
+    void __fastcall Entry(struct MemberStorageRecord *record) \
     { \
         Clear(record); \
         release_record_storage(get_release_context(), record->storage, Kind); \
         record->storage = 0; \
     }
 
-extern void __fastcall clear_contents_060600(struct Record *record);
-extern void __fastcall clear_contents_060740(struct Record *record);
-extern void __fastcall clear_contents_1bca40(struct Record *record);
-extern void __fastcall clear_contents_204540(struct Record *record);
-extern void __fastcall clear_contents_47eb20(struct Record *record);
-extern void __fastcall clear_contents_481300(struct Record *record);
-extern void __fastcall clear_contents_48c120(struct Record *record);
-extern void __fastcall clear_contents_48c520(struct Record *record);
-extern void __fastcall clear_contents_494500(struct Record *record);
-extern void __fastcall clear_contents_494c50(struct Record *record);
-extern void __fastcall clear_contents_49a6e0(struct Record *record);
-extern void __fastcall clear_contents_4a14f0(struct Record *record);
-extern void __fastcall clear_contents_4a15d0(struct Record *record);
-extern void __fastcall clear_contents_4a7f90(struct Record *record);
-extern void __fastcall clear_contents_4b1950(struct Record *record);
-extern void __fastcall clear_contents_4b68f0(struct Record *record);
-extern void __fastcall clear_contents_4b92d0(struct Record *record);
-extern void __fastcall clear_contents_4b9760(struct Record *record);
-extern void __fastcall clear_contents_4ba430(struct Record *record);
-extern void __fastcall clear_contents_4bdfb0(struct Record *record);
-extern void __fastcall clear_contents_4c28b0(struct Record *record);
-extern void __fastcall clear_contents_4c57c0(struct Record *record);
-extern void __fastcall clear_contents_4c6c60(struct Record *record);
-extern void __fastcall clear_contents_4cd100(struct Record *record);
-extern void __fastcall clear_contents_4cf350(struct Record *record);
-extern void __fastcall clear_contents_4d5e50(struct Record *record);
-extern void __fastcall clear_contents_4db7e0(struct Record *record);
-extern void __fastcall clear_contents_4dd0d0(struct Record *record);
-extern void __fastcall clear_contents_4de400(struct Record *record);
-extern void __fastcall clear_contents_4e2f60(struct Record *record);
-extern void __fastcall clear_contents_4e3040(struct Record *record);
-extern void __fastcall clear_contents_4e4a30(struct Record *record);
-extern void __fastcall clear_contents_4e6ae0(struct Record *record);
-extern void __fastcall clear_contents_4f7900(struct Record *record);
-extern void __fastcall clear_contents_73ac60(struct Record *record);
+extern void __fastcall clear_contents_060600(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_060740(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_1bca40(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_204540(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_47eb20(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_481300(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_48c120(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_48c520(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_494500(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_494c50(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_49a6e0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4a14f0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4a15d0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4a7f90(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4b1950(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4b68f0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4b92d0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4b9760(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4ba430(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4bdfb0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4c28b0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4c57c0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4c6c60(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4cd100(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4cf350(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4d5e50(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4db7e0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4dd0d0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4de400(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4e2f60(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4e3040(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4e4a30(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4e6ae0(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_4f7900(struct MemberStorageRecord *record);
+extern void __fastcall clear_contents_73ac60(struct MemberStorageRecord *record);
 
 CLEAR_RECORD(clear_record_060870, clear_contents_060600, 7)
 CLEAR_RECORD(clear_record_0617f0, clear_contents_060600, 7)
