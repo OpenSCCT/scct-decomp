@@ -1,9 +1,9 @@
 #include "campaign_color_node.h"
-struct Tree { struct ColorNode *head; unsigned count; };
-struct Position { struct ColorNode *node; };
-struct Output { struct Position *out; };
+struct ColorTree { struct ColorNode *head; unsigned count; };
+struct ColorTreePosition { struct ColorNode *node; };
+struct ColorTreeOutput { struct ColorTreePosition *out; };
 #define TREE_EDGE(Name, Value) \
-    struct Position *__fastcall Name(struct Tree *tree, struct Output result) \
+    struct ColorTreePosition *__fastcall Name(struct ColorTree *tree, struct ColorTreeOutput result) \
     { \
         result.out->node = Value; \
         return result.out; \
