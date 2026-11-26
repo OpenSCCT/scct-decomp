@@ -14,6 +14,7 @@
 #ifdef max
 #undef max
 #endif
+#include "campaign_vorbis2_smallft_statics.h"
 
 /* Function-local initialized statics (drfti1_ntryh, drfti1_tpi, dradf4_hsqt2, dradfg_tpi, dradb3_taur, dradb3_taui, dradb4_sqrt2, dradbg_tpi) are
    declared extern at file scope, named after their function, and bound to
@@ -644,8 +645,6 @@ extern void _VDBG_free(void *ptr,char *file,long line);
 
 /* ---- end misc.h ---- */
 
-extern int drfti1_ntryh[4]; /* library value: { 4,2,3,5 } */
-extern float drfti1_tpi; /* library value: 6.28318530717958648f */
 static void drfti1(int n, float *wa, int *ifac){
   float arg,argh,argld,fi;
   int ntry=0,i,j=-1;
@@ -775,7 +774,6 @@ static void dradf2(int ido,int l1,float *cc,float *ch,float *wa1){
   }
 }
 
-extern float dradf4_hsqt2; /* library value: .70710678118654752f */
 static void dradf4(int ido,int l1,float *cc,float *ch,float *wa1,
             float *wa2,float *wa3){
   int i,k,t0,t1,t2,t3,t4,t5,t6;
@@ -877,7 +875,6 @@ static void dradf4(int ido,int l1,float *cc,float *ch,float *wa1,
   }
 }
 
-extern float dradfg_tpi; /* library value: 6.283185307179586f */
 static void dradfg(int ido,int ip,int l1,int idl1,float *cc,float *c1,
                           float *c2,float *ch,float *ch2,float *wa){
 
@@ -1292,8 +1289,6 @@ L105:
   }
 }
 
-extern float dradb3_taur; /* library value: -.5f */
-extern float dradb3_taui; /* library value: .8660254037844386f */
 static void dradb3(int ido,int l1,float *cc,float *ch,float *wa1,
                           float *wa2){
   int i,k,t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10;
@@ -1355,7 +1350,6 @@ static void dradb3(int ido,int l1,float *cc,float *ch,float *wa1,
   }
 }
 
-extern float dradb4_sqrt2; /* library value: 1.414213562373095f */
 static void dradb4(int ido,int l1,float *cc,float *ch,float *wa1,
                           float *wa2,float *wa3){
   int i,k,t0,t1,t2,t3,t4,t5,t6,t7,t8;
@@ -1446,7 +1440,6 @@ static void dradb4(int ido,int l1,float *cc,float *ch,float *wa1,
   }
 }
 
-extern float dradbg_tpi; /* library value: 6.283185307179586f */
 static void dradbg(int ido,int ip,int l1,int idl1,float *cc,float *c1,
             float *c2,float *ch,float *ch2,float *wa){
   int idij,ipph,i,j,k,l,ik,is,t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,
