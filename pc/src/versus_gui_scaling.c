@@ -1,11 +1,7 @@
 /* The stock layout uses the first active viewport. A normalized dimension
    scales with its parent when requested, or with the viewport otherwise. */
-struct gui_component;
-typedef float (__fastcall *dimension_query)(struct gui_component *);
-struct gui_methods {
-    void *earlier[26];
-    dimension_query width, height, left, top;
-};
+#include "versus_gui_component.h"
+
 struct display_viewport {
     unsigned char prefix[0xa0];
     int width, height;
@@ -22,17 +18,6 @@ struct gui_session {
 struct gui_context {
     unsigned char prefix[0x30];
     const struct gui_session *session;
-};
-struct gui_component {
-    const struct gui_methods *methods;
-    unsigned char before_context[0x24];
-    const struct gui_context *context;
-    struct gui_component *parent;
-    unsigned char before_flags[0x2c];
-    unsigned int bound_to_parent : 1;
-    unsigned int scale_to_parent : 1;
-    unsigned char before_placement[0x10];
-    float top, left, width, height;
 };
 
 /* Link addresses of the pooled 0.0f and 1.0f constants in Steam build 252084. */

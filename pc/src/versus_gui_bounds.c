@@ -1,21 +1,8 @@
-struct gui_component;
-typedef float (__fastcall *dimension_query)(struct gui_component *);
-struct component_methods {
-    void *earlier[26];
-    dimension_query width, height, left, top;
-};
+#include "versus_gui_component.h"
+
 struct style_border {
     unsigned char prefix[0x98];
     int left, top, right, bottom;
-};
-struct rectangle { float left, top, right, bottom; };
-struct gui_component {
-    const struct component_methods *methods;
-    unsigned char before_placement[0x6c];
-    float top, left, width, height;
-    unsigned char before_style[0x1c];
-    const struct style_border *style;
-    struct rectangle bounds, client;
 };
 
 void __fastcall gui_clone_dimensions(struct gui_component *self, void *unused, struct gui_component *from)
