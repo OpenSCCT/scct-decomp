@@ -17,6 +17,8 @@ struct Array {
     void Remove(int index, int amount, int element_size);
     template<const unsigned short *Tag, int ElementSize>
     void Empty();
+    template<const unsigned short *Tag, int ElementSize>
+    void RemoveTyped(int index, int amount);
 #endif
 };
 
