@@ -1,8 +1,8 @@
-struct Vector { unsigned reserved; void *first, *end, *limit; };
+struct ManagedVector { unsigned reserved; void *first, *end, *limit; };
 extern void *__cdecl get_manager(void);
 extern void __cdecl release_buffer(void *, void *, unsigned);
 #define RELEASE_VECTOR(Entry, Category) \
-    void __fastcall Entry(struct Vector *vector) \
+    void __fastcall Entry(struct ManagedVector *vector) \
     { \
         if (vector->first) release_buffer(get_manager(), vector->first, Category); \
         vector->first = 0; \
