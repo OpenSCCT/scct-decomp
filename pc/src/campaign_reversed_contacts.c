@@ -5,9 +5,9 @@ struct Contact {
     unsigned extra[4];
 };
 struct ContactArray { struct Contact *data; int count; };
-struct Output { struct ContactArray *contacts; };
+struct ContactOutput { struct ContactArray *contacts; };
 struct PairArgument { const void *value; };
-struct OutputArgument { struct Output *value; };
+struct OutputArgument { struct ContactOutput *value; };
 
 extern void __fastcall collide(void *agent, struct PairArgument first, struct PairArgument second,
                                struct PairArgument input, struct OutputArgument output);
