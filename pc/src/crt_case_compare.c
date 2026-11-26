@@ -1,5 +1,5 @@
 typedef unsigned short WideChar;
-struct LocaleInfo {
+struct CaseCompareLocaleInfo {
     int reference_count;
     unsigned codepage;
     unsigned collation_codepage;
@@ -7,20 +7,20 @@ struct LocaleInfo {
 };
 struct ThreadData {
     char before_locale[0x64];
-    struct LocaleInfo *locale;
+    struct CaseCompareLocaleInfo *locale;
 };
-extern struct LocaleInfo *__ptlocinfo;
+extern struct CaseCompareLocaleInfo *__ptlocinfo;
 struct ThreadData *_getptd(void);
-struct LocaleInfo *__updatetlocinfo(void);
+struct CaseCompareLocaleInfo *__updatetlocinfo(void);
 int __ascii_stricmp(const char *, const char *);
 int __ascii_strnicmp(const char *, const char *, unsigned);
-int __tolower_mt(struct LocaleInfo *, int);
-int __iswctype_mt(struct LocaleInfo *, WideChar, WideChar);
+int __tolower_mt(struct CaseCompareLocaleInfo *, int);
+int __iswctype_mt(struct CaseCompareLocaleInfo *, WideChar, WideChar);
 int __crtLCMapStringW(unsigned, unsigned, const WideChar *, int, WideChar *, int, unsigned);
-WideChar __towlower_mt(struct LocaleInfo *, WideChar);
+WideChar __towlower_mt(struct CaseCompareLocaleInfo *, WideChar);
 
 #define GET_LOCALE() \
-    struct LocaleInfo *locale = _getptd()->locale; \
+    struct CaseCompareLocaleInfo *locale = _getptd()->locale; \
     if (locale != __ptlocinfo) locale = __updatetlocinfo()
 
 int steam_stricmp(const char *left, const char *right) {
@@ -50,7 +50,7 @@ int steam_strnicmp(const char *left, const char *right, unsigned n) {
 }
 
 #define WIDE_CASE(function, type, transformation) \
-WideChar function(struct LocaleInfo *locale, WideChar value) { \
+WideChar function(struct CaseCompareLocaleInfo *locale, WideChar value) { \
     WideChar result; \
     if (value == 0xffff) return 0xffff; \
     if (value < 256 && !__iswctype_mt(locale, value, type)) return value; \
