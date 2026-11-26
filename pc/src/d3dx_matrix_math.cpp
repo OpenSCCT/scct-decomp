@@ -6,6 +6,23 @@ struct D3DXMATRIX {
     FLOAT m[4][4];
 };
 
+struct D3DXQUATERNION {
+    FLOAT x;
+    FLOAT y;
+    FLOAT z;
+    FLOAT w;
+};
+
+extern "C" D3DXQUATERNION *__stdcall D3DXQuaternionRotationYawPitchRoll(
+    D3DXQUATERNION *pOut,
+    FLOAT yaw,
+    FLOAT pitch,
+    FLOAT roll);
+
+extern "C" D3DXMATRIX *__stdcall D3DXMatrixRotationQuaternion(
+    D3DXMATRIX *pOut,
+    const D3DXQUATERNION *pQ);
+
 /* D3DXMatrixTranspose */
 extern "C" D3DXMATRIX *__stdcall D3DXMatrixTranspose(
     D3DXMATRIX *pOut,
@@ -89,5 +106,19 @@ extern "C" D3DXMATRIX *__stdcall D3DXMatrixTranslation(
     pOut->m[2][2] = 1.0f;
     pOut->m[1][1] = 1.0f;
     pOut->m[0][0] = 1.0f;
+    return pOut;
+}
+
+/* D3DXMatrixRotationYawPitchRoll */
+extern "C" D3DXMATRIX *__stdcall D3DXMatrixRotationYawPitchRoll(
+    D3DXMATRIX *pOut,
+    FLOAT yaw,
+    FLOAT pitch,
+    FLOAT roll)
+{
+    D3DXQUATERNION quaternion;
+
+    D3DXQuaternionRotationYawPitchRoll(&quaternion, yaw, pitch, roll);
+    D3DXMatrixRotationQuaternion(pOut, &quaternion);
     return pOut;
 }
