@@ -1707,7 +1707,7 @@ static long BINBYTES(bitrate_manager_state *bm,long pos,long bin){
   return(bm->queue_binned[pos*bins+bin]);
 }
 
-#define LIMITBYTES(pos,bin) (bm->minmax_binstack[(pos)*bins*2+((bin)+bins)])
+#define LIMITBYTES(bm,pos,bin,bins) ((bm)->minmax_binstack[(pos)*(bins)*2+((bin)+(bins))])
 
 static long LACING_ADJUST(long bytes){
   int addto=bytes/255+1;
@@ -1739,13 +1739,13 @@ static long limit_sum(bitrate_manager_state *bm,int limit){
   long acc=bm->minmax_acctotal;
   long bins=bm->queue_bins;
 
-  acc-=LIMITBYTES(i,0);
-  acc+=LIMITBYTES(i,limit);
+  acc-=LIMITBYTES(bm,i,0,bins);
+  acc+=LIMITBYTES(bm,i,limit,bins);
 
   while(i-->0){
     if(bm->minmax_limitstack[i]<=limit)break;
-    acc-=LIMITBYTES(i,bm->minmax_limitstack[i]);
-    acc+=LIMITBYTES(i,limit);
+    acc-=LIMITBYTES(bm,i,bm->minmax_limitstack[i],bins);
+    acc+=LIMITBYTES(bm,i,limit,bins);
   }
   return(acc);
 }
@@ -2086,8 +2086,8 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
         stackctr=bm->minmax_stackptr;
         while(stackctr>newstack){
           bm->minmax_acctotal-=
-            LIMITBYTES(stackctr,bm->minmax_limitstack[stackctr]);
-          bm->minmax_acctotal+=LIMITBYTES(stackctr,limit);
+            LIMITBYTES(bm,stackctr,bm->minmax_limitstack[stackctr],bins);
+          bm->minmax_acctotal+=LIMITBYTES(bm,stackctr,limit,bins);
 
           if(stackctr<bm->minmax_stackptr)
             for(i=0;i<bins*2;i++)
