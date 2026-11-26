@@ -1,6 +1,6 @@
 #include "campaign_vm_frame.h"
 
-typedef struct Vector {float x,y,z;} Vector;
+typedef struct VmVector {float x,y,z;} VmVector;
 typedef struct Rotator {int pitch,yaw,roll;} Rotator;
 typedef struct ScriptNode {
     unsigned char opaque[0x50];
@@ -42,10 +42,10 @@ HANDLER(execFloatConst, float)
     *result = value;
 }
 
-HANDLER(execVectorConst, Vector)
+HANDLER(execVectorConst, VmVector)
 {
-    *result = *(const Vector *)frame->code;
-    frame->code += sizeof(Vector);
+    *result = *(const VmVector *)frame->code;
+    frame->code += sizeof(VmVector);
 }
 
 HANDLER(execRotationConst, Rotator)
