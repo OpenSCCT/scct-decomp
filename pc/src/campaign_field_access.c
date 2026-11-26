@@ -25,67 +25,67 @@ unsigned __fastcall read_word_1d2f10(const unsigned char *self)
 
 void __fastcall write_word_1e6500(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_1e6510(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_1fdbc0(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_1ffa10(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_1ffa20(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_1ffc90(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_1ffca0(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_2001f0(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_200200(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_201090(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_2010a0(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_202ca0(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_202cb0(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_226c40(const unsigned char *self)
@@ -185,12 +185,12 @@ unsigned __fastcall read_word_488cb0(const unsigned char *self)
 
 unsigned __fastcall read_word_490e60(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_491090(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_493fb0(unsigned char *self, struct Argument arg)
@@ -240,7 +240,7 @@ unsigned __fastcall read_word_49bed0(const unsigned char *self)
 
 unsigned __fastcall read_word_49d680(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned char * __fastcall field_address_49e1a0(unsigned char *self)
@@ -310,7 +310,7 @@ unsigned __fastcall read_word_4b77e0(const unsigned char *self)
 
 unsigned __fastcall read_word_4bda90(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_4c8090(const unsigned char *self)
@@ -430,12 +430,12 @@ unsigned __fastcall read_word_4e0ac0(const unsigned char *self)
 
 unsigned __fastcall read_word_4e5810(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_4e5ae0(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 void __fastcall write_word_4e5af0(unsigned char *self, struct Argument arg)
@@ -455,7 +455,7 @@ void __fastcall write_word_4e5b10(unsigned char *self, struct Argument arg)
 
 unsigned __fastcall read_word_4e5cb0(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_4e5ce0(const unsigned char *self)
@@ -470,7 +470,7 @@ unsigned __fastcall read_word_4e6780(const unsigned char *self)
 
 unsigned __fastcall read_word_4e67c0(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_4e6800(const unsigned char *self)
@@ -490,7 +490,7 @@ unsigned char * __fastcall field_address_4e7980(unsigned char *self)
 
 void __fastcall write_word_4eb9a0(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_4ebc10(const unsigned char *self)
@@ -540,22 +540,22 @@ void __fastcall write_word_4f70b0(unsigned char *self, struct Argument arg)
 
 void __fastcall write_word_4f8a20(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_4f8a30(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_4f9c10(unsigned char *self, struct Argument arg)
 {
-    *(unsigned *)(self + 0) = arg.value;
+    *(unsigned *)(self) = arg.value;
 }
 
 unsigned __fastcall read_word_4f9c20(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_4ff0e0(const unsigned char *self)
@@ -635,7 +635,7 @@ void __fastcall write_word_568d90(unsigned char *self, struct Argument arg)
 
 unsigned __fastcall read_word_580c40(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_580c50(const unsigned char *self)
@@ -705,7 +705,7 @@ unsigned __fastcall read_word_75cc30(const unsigned char *self)
 
 unsigned __fastcall read_word_7608d0(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 void __fastcall write_word_764800(unsigned char *self, struct Argument arg)
@@ -720,7 +720,7 @@ unsigned __fastcall read_word_7662c0(const unsigned char *self)
 
 unsigned __fastcall read_word_7662d0(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
 
 unsigned __fastcall read_word_767180(const unsigned char *self)
@@ -765,5 +765,5 @@ unsigned __fastcall read_word_767e90(const unsigned char *self)
 
 unsigned __fastcall read_word_793000(const unsigned char *self)
 {
-    return *(const unsigned *)(self + 0);
+    return *(const unsigned *)(self);
 }
