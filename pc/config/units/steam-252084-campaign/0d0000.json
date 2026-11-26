@@ -406,7 +406,7 @@
     "identification": "Campaign animation method pointer at RVA 0x7cfce0. Checks the sequence and selects the rate field based on playback position. The local type names AnimationPlaybackChannel, ChannelActivityMethods, and ChannelActivityMesh are analyst-invented labels for the playback state, its mesh owner, and the active-method table. The shared declarations in campaign_channel_constants.h use analyst-invented scalar names zero_rate, zero_position, and zero_value for the channel playback zero values.",
     "match": {
       "bytes_sha256": "a840d9f790149407427657a694b6d5e08d9f63e26e2cf4fababb35c539cd8cf4",
-      "inputs_sha256": "192ef490ea0581e01ab448fc985eeb82dd768b02a1a73fd853a2e69175fcf77e"
+      "inputs_sha256": "07f34d6d2481a31b52e6a31476f5960411297ddc708fe5ccb18ca1d4e78e809c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -431,7 +431,7 @@
     "identification": "Campaign animation method pointer at RVA 0x7cfce4. Clears three playback fields on every channel. The local type names AnimationPlaybackChannel, ChannelActivityMethods, and ChannelActivityMesh are analyst-invented labels for the playback state, its mesh owner, and the active-method table. The shared declarations in campaign_channel_constants.h use analyst-invented scalar names zero_rate, zero_position, and zero_value for the channel playback zero values.",
     "match": {
       "bytes_sha256": "aede423b5bf5988d7f414159b96ea88a38f28aa3029ce34af19b6799f420ce8b",
-      "inputs_sha256": "8a3315322d61b87a185cf3c4f6fb7d0250beb7b3c119ad25defcf745db46df5c"
+      "inputs_sha256": "edf97020333d1ab007c8fdd61f4e98df461a21f3ca97cec25422b61189daec4b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -462,7 +462,7 @@
     "identification": "Campaign animation method pointer at RVA 0x7cfcf0. Tests for a negative playback position and checks channel activity. The local type names AnimationPlaybackChannel, ChannelActivityMethods, and ChannelActivityMesh are analyst-invented labels for the playback state, its mesh owner, and the active-method table. The shared declarations in campaign_channel_constants.h use analyst-invented scalar names zero_rate, zero_position, and zero_value for the channel playback zero values.",
     "match": {
       "bytes_sha256": "53e5bc021ce6f89ce1100cf96016e86ccc6ab5f72354dee361d837a9597d3a40",
-      "inputs_sha256": "e65bf549b6f4342113eda54b3e3d376ebd35fe3e0cb960a17ebc05f65770d35b"
+      "inputs_sha256": "bb19280d27a38c5624bdae1c6e729675cf7fe119bef3678f166c915f41d0c0d8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -541,7 +541,7 @@
     "identification": "Indexed playback threshold routine and its caller at method pointer RVA 0x7cfcfc. Uses the channel end when the threshold is negative or exceeds the end, then compares playback position. The local type names PlaybackThresholdChannel and PlaybackThresholdMesh and macro POSITION_ZERO_AS_FLOAT are analyst-invented; they label the indexed threshold records and preserve its 32-bit load of zero_position. The shared declarations in campaign_channel_constants.h use analyst-invented scalar names zero_rate, zero_position, and zero_value for the channel playback zero values.",
     "match": {
       "bytes_sha256": "20ef534e8f2cd2e21365aa45c1074f59fefb9289de57e9be8a53ea316e25f85c",
-      "inputs_sha256": "f90ba99baeee473bf75cca3aa19704ebfc8882e93a04024db5827c806364953b"
+      "inputs_sha256": "3cedb41c10024e4988fc8bdc9bc0a6f73cf72186536bd75c853053320210252a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -757,15 +757,16 @@
     "offset": 859232,
     "inputs": [
       "src/campaign_channel_sequence.c",
-      "src/campaign_name_index.h"
+      "src/campaign_name_index.h",
+      "src/campaign_channel_constants.h"
     ],
     "rebuilt_symbol": "@channel_clip@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_channel_sequence.obj src/campaign_channel_sequence.c",
-    "identification": "Animation method pointer at RVA 0x7cfcb0. Selects the channel animation bank and passes the sequence name to its lookup method.",
+    "identification": "Animation method pointer at RVA 0x7cfcb0. Selects the channel animation bank and passes the sequence name to its lookup method. The local types ChannelSequenceEntry, ChannelSequenceMesh, and ChannelSequenceMethods are analyst-invented names for the sequence entry, mesh, and method table. The shared constants zero_frames and missing_rate in campaign_channel_constants.h are analyst-invented names for the missing-sequence fallback values.",
     "match": {
       "bytes_sha256": "6d2bb92ec7dd332dd105213d05d55d8a93f78ca3956d4fbd1e09ef3b1f5b19b5",
-      "inputs_sha256": "ba44e8f218152d595087b9da6894a2d1da3f39d65982fd68b9021e61d39a95e6"
+      "inputs_sha256": "224be502a946394c5d152427e42bd9e48dc35d64c7b47d05d5bc772b2a8da144"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -807,7 +808,8 @@
     "offset": 859328,
     "inputs": [
       "src/campaign_channel_sequence.c",
-      "src/campaign_name_index.h"
+      "src/campaign_name_index.h",
+      "src/campaign_channel_constants.h"
     ],
     "rebuilt_symbol": "@channel_frames@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -818,10 +820,10 @@
         "basis": "Stock operand for zero frames."
       }
     },
-    "identification": "Aligned Campaign entry with adjacent returns and compiler padding. Looks up the channel sequence and reads its frame count, returning zero when absent.",
+    "identification": "Aligned Campaign entry with adjacent returns and compiler padding. Looks up the channel sequence and reads its frame count, returning zero when absent. The local types ChannelSequenceEntry, ChannelSequenceMesh, and ChannelSequenceMethods are analyst-invented names for the sequence entry, mesh, and method table. The shared constants zero_frames and missing_rate in campaign_channel_constants.h are analyst-invented names for the missing-sequence fallback values.",
     "match": {
       "bytes_sha256": "3d7c4b7696d6ee2e5628db38224b1715aad0e9a9c74caf3b3a31685e61ccf3de",
-      "inputs_sha256": "222fc7f79dcd88da4f5214a04c31b9d3c6f008ac175bfa5fda34030e8b3d5544"
+      "inputs_sha256": "13e5ffbcc698df1e1c5c27e9a45a736977587b7ae19cfc3203a366df7164f042"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -838,7 +840,8 @@
     "offset": 859392,
     "inputs": [
       "src/campaign_channel_sequence.c",
-      "src/campaign_name_index.h"
+      "src/campaign_name_index.h",
+      "src/campaign_channel_constants.h"
     ],
     "rebuilt_symbol": "@channel_rate@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -849,10 +852,10 @@
         "basis": "Stock operand for missing rate."
       }
     },
-    "identification": "Aligned Campaign entry with adjacent returns and compiler padding. Looks up the channel sequence and reads its rate, returning minus one when absent.",
+    "identification": "Aligned Campaign entry with adjacent returns and compiler padding. Looks up the channel sequence and reads its rate, returning minus one when absent. The local types ChannelSequenceEntry, ChannelSequenceMesh, and ChannelSequenceMethods are analyst-invented names for the sequence entry, mesh, and method table. The shared constants zero_frames and missing_rate in campaign_channel_constants.h are analyst-invented names for the missing-sequence fallback values.",
     "match": {
       "bytes_sha256": "129f4d18e9dac0fdcc4724e10521c4157177e6f6c7d394cd092d17d04cb8c356",
-      "inputs_sha256": "b343bcca6416cfd575e5eb59d57b5c4b04a908c4f8ff7e12be849bd9116b72bb"
+      "inputs_sha256": "d15699d5d0ee8d85df930da8a981136d18e0adf9fe8caede1e130809896f61a5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1031,7 +1034,7 @@
     "identification": "Indexed whole function checks the channel index and uses a 128-byte stride. Stores the requested rate multiplied by the channel scale. The local type names PlaybackControlChannel, PlaybackControlFlags, and PlaybackControlMesh are analyst-invented labels for the playback fields, flag word, and mesh owner. The shared scalar names zero_value and unit_value in campaign_channel_constants.h are analyst-invented labels for the playback zero and one values.",
     "match": {
       "bytes_sha256": "28f779b707764282d0b279997cbd46cb4b0e92c32dffe896de7ccc25a0fbc168",
-      "inputs_sha256": "afdf28d0627f24125e9b54048f2ffc50ee4c8760ffee47b168dca72990088d39"
+      "inputs_sha256": "f07cc0c0a580eb15b5aa41ec4bfc034e5a680cda262620cb59c3b0d825293de4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1096,7 +1099,7 @@
     "identification": "Indexed whole function checks the channel index and uses a 128-byte stride. Clamps the requested weight before storing it. The local type names PlaybackControlChannel, PlaybackControlFlags, and PlaybackControlMesh are analyst-invented labels for the playback fields, flag word, and mesh owner. The shared scalar names zero_value and unit_value in campaign_channel_constants.h are analyst-invented labels for the playback zero and one values.",
     "match": {
       "bytes_sha256": "709c27c70b26cb053517bbc75fba9825475915e13c6856073173d3c20a82f2fa",
-      "inputs_sha256": "1778614b1bb914c66a700b346e9bb0a08e236968166a6c294cf50bac3b248079"
+      "inputs_sha256": "11bb3b199f809ed19ae0a7f6274f9e812ce4e55d56ff5df57ef23bc54681b022"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1187,7 +1190,7 @@
     "identification": "Indexed whole function checks the channel index and uses a 128-byte stride. Reads the field at offset 60 when bit ten is set. The local type names PlaybackControlChannel, PlaybackControlFlags, and PlaybackControlMesh are analyst-invented labels for the playback fields, flag word, and mesh owner. The shared scalar names zero_value and unit_value in campaign_channel_constants.h are analyst-invented labels for the playback zero and one values.",
     "match": {
       "bytes_sha256": "7566b3b1d9eb99c18814ed74d2ec4630484c7d90a0f4377a855d837198ff7415",
-      "inputs_sha256": "1d65864da914ae51f84e6191551b0181357ff7695f6ee4040b50b0151857b9fc"
+      "inputs_sha256": "60fde52811d9ec6d89bcf4e2fc95303f236a9f6124b555d501b209785f9f96a4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1212,7 +1215,7 @@
     "identification": "Indexed whole function checks the channel index and uses a 128-byte stride. Adds a rate-scaled step to the position unless either disabling bit is set. The local type names PlaybackControlChannel, PlaybackControlFlags, and PlaybackControlMesh are analyst-invented labels for the playback fields, flag word, and mesh owner. The shared scalar names zero_value and unit_value in campaign_channel_constants.h are analyst-invented labels for the playback zero and one values.",
     "match": {
       "bytes_sha256": "8aa8121ccc7910cc37a23d0467136668bb9a16c64f81b480f98eb5158c3b320e",
-      "inputs_sha256": "b1040e4f5a4e0e57174acf641f6095f6efc08ca9678cbd293db79b56de24c552"
+      "inputs_sha256": "6d1cc68e78b16021be7f2520599bd00a4605fd2e8e57080d1d4935de303a5e8b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1237,7 +1240,7 @@
     "identification": "Indexed whole function checks the channel index and uses a 128-byte stride. Sets bit four from the low bit of the argument. The local type names PlaybackControlChannel, PlaybackControlFlags, and PlaybackControlMesh are analyst-invented labels for the playback fields, flag word, and mesh owner. The shared scalar names zero_value and unit_value in campaign_channel_constants.h are analyst-invented labels for the playback zero and one values.",
     "match": {
       "bytes_sha256": "df94412cb4abd30d16a0466e025cbea7b92a1190203b893cbe2818c1a679ecf2",
-      "inputs_sha256": "a2dd5c852a10d81e8d4568262b04cfb68a6cb7563382039363a099617b185743"
+      "inputs_sha256": "e8c88d3024d3f0a114d1d4727c84cb7b09756465ab53c1f578927416e34197f8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1296,7 +1299,7 @@
     "identification": "Indexed whole function. Updates the playback position or its alternate field according to sign and writes bit six. The local type names PlaybackTransitionChannel, PlaybackTransitionFlags, and PlaybackTransitionMesh are analyst-invented labels for the transition channel, its one-bit update flags, and the owning mesh. The shared declarations in campaign_channel_constants.h use analyst-invented scalar names zero_rate, zero_position, and zero_value for the channel playback zero values.",
     "match": {
       "bytes_sha256": "e5c5ba21fd6907fc5a51c03939365f19385fc2fc98a8658d7b2246561997c9a0",
-      "inputs_sha256": "6f3974a7ba9796b4116450aaa90f1ef07b46f22acdce944e777017e6b843de4c"
+      "inputs_sha256": "237545a1cd63749eb7196e3451acd2250e5b995c9706959d97da9bb669359e9f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1441,7 +1444,7 @@
     "identification": "Aligned entry bounded by a preceding return and compiler padding. Moves the channel weight toward a target by a step, snapping within the step distance. The local type names PlaybackTransitionChannel, PlaybackTransitionFlags, and PlaybackTransitionMesh are analyst-invented labels for the transition channel, its one-bit update flags, and the owning mesh. The shared declarations in campaign_channel_constants.h use analyst-invented scalar names zero_rate, zero_position, and zero_value for the channel playback zero values.",
     "match": {
       "bytes_sha256": "57ae3a7ed71de5c567fb0ec8db27efe70927dbb28b8ad90d02b496113abbd198",
-      "inputs_sha256": "6514129cc401f0922d3386a9a5ce7003d06666ca189aebe593a90e46a48753dd"
+      "inputs_sha256": "be254dc246adef8512c4638744556c08ad4c0618e852cb0cbda547421a0e6e89"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6911,7 +6914,7 @@
     "identification": "Indexed playback threshold routine and its caller at method pointer RVA 0x7cfcfc. Queries the channel end using the minus-one threshold. The local type names PlaybackThresholdChannel and PlaybackThresholdMesh and macro POSITION_ZERO_AS_FLOAT are analyst-invented; they label the indexed threshold records and preserve its 32-bit load of zero_position. The shared declarations in campaign_channel_constants.h use analyst-invented scalar names zero_rate, zero_position, and zero_value for the channel playback zero values.",
     "match": {
       "bytes_sha256": "1d646d35ab34becc52da073e1ff20b2df39fe4168ae7a52d489281fb2d5422b5",
-      "inputs_sha256": "12585e60a8218ca8f977af13b0c3372e5faf493dc8a7b8e7755238772a8bf4c9"
+      "inputs_sha256": "38584b1856e9be26196934555f6db38117417cab39bc9cc29ec73b42ed379c70"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
