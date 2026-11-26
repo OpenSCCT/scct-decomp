@@ -1,13 +1,19 @@
-/* C runtime declarations the library takes from the standard headers. Published
-   builds have no include path, so they are written out here with the runtime's
-   own __cdecl convention (the library itself is built with /Gz, stdcall). */
-typedef unsigned int size_t;
-void *__cdecl memcpy(void *Dest, const void *Src, size_t Count);
-void *__cdecl memset(void *Dest, int Value, size_t Count);
-int __cdecl memcmp(const void *A, const void *B, size_t Count);
-void *__cdecl malloc(size_t Size);
-void *__cdecl calloc(size_t Count, size_t Size);
-void __cdecl free(void *Ptr);
+/* C runtime declarations come from the Visual C++ standard headers. */
+#include <ctype.h>
+#include <errno.h>
+#include <math.h>
+#include <malloc.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+/* Disable the CRT's non-standard min/max macros. */
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
 
 /* adler32.c -- compute the Adler-32 checksum of a data stream
  * Copyright (C) 1995-2002 Mark Adler

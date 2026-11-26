@@ -1,60 +1,19 @@
-/* C runtime declarations the library takes from the standard headers. Published
-   builds have no include path, so the prototypes the library uses are written
-   out here as the runtime declares them. */
-typedef unsigned int size_t;
-typedef struct _iobuf FILE;
-extern FILE _iob[];
-#define stderr (&_iob[2])
-#ifndef NULL
-#define NULL ((void *)0)
+/* C runtime declarations come from the Visual C++ standard headers. */
+#include <ctype.h>
+#include <errno.h>
+#include <math.h>
+#include <malloc.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+/* Disable the CRT's non-standard min/max macros. */
+#ifdef min
+#undef min
 #endif
-void *__cdecl memcpy(void *Dest, const void *Src, size_t Count);
-void *__cdecl memmove(void *Dest, const void *Src, size_t Count);
-void *__cdecl memset(void *Dest, int Value, size_t Count);
-int __cdecl memcmp(const void *A, const void *B, size_t Count);
-size_t __cdecl strlen(const char *Str);
-char *__cdecl strcpy(char *Dest, const char *Src);
-char *__cdecl strcat(char *Dest, const char *Src);
-int __cdecl strcmp(const char *A, const char *B);
-void *__cdecl malloc(size_t Size);
-void *__cdecl calloc(size_t Count, size_t Size);
-void *__cdecl realloc(void *Ptr, size_t Size);
-void __cdecl free(void *Ptr);
-void *__cdecl _alloca(size_t Size);
-#define alloca _alloca
-void __cdecl qsort(void *Base, size_t Count, size_t Width, int (__cdecl *Compare)(const void *, const void *));
-int __cdecl abs(int Value);
-long __cdecl labs(long Value);
-void __cdecl exit(int Code);
-int __cdecl toupper(int C);
-int __cdecl fprintf(FILE *Stream, const char *Format, ...);
-int __cdecl sprintf(char *Dest, const char *Format, ...);
-FILE *__cdecl fopen(const char *Name, const char *Mode);
-int __cdecl fclose(FILE *Stream);
-size_t __cdecl fread(void *Buffer, size_t Size, size_t Count, FILE *Stream);
-size_t __cdecl fwrite(const void *Buffer, size_t Size, size_t Count, FILE *Stream);
-int __cdecl fseek(FILE *Stream, long Offset, int Origin);
-long __cdecl ftell(FILE *Stream);
-double __cdecl sin(double X);
-double __cdecl cos(double X);
-double __cdecl tan(double X);
-double __cdecl atan(double X);
-double __cdecl atan2(double Y, double X);
-double __cdecl exp(double X);
-double __cdecl log(double X);
-double __cdecl log10(double X);
-double __cdecl pow(double X, double Y);
-double __cdecl sqrt(double X);
-double __cdecl floor(double X);
-double __cdecl ceil(double X);
-double __cdecl fabs(double X);
-double __cdecl ldexp(double X, int Exp);
-double __cdecl frexp(double X, int *Exp);
-int *__cdecl _errno(void);
-#define errno (*_errno())
-#define SEEK_SET 0
-#define SEEK_CUR 1
-#define SEEK_END 2
+#ifdef max
+#undef max
+#endif
 
 /* Initialized file-scope tables are declared __declspec(selectany) instead of
    static, so each is its own external contribution bound to the retail table. */
@@ -77,9 +36,9 @@ int *__cdecl _errno(void);
 
  ********************************************************************/
 
-/* #include <stdlib.h> : declarations supplied by the prelude */
-/* #include <string.h> : declarations supplied by the prelude */
-/* #include <math.h> : declarations supplied by the prelude */
+/* #include <stdlib.h> : included above */
+/* #include <string.h> : included above */
+/* #include <math.h> : included above */
 /* ---- ogg/ogg.h ---- */
 /********************************************************************
  *                                                                  *
@@ -1382,7 +1341,7 @@ extern int **_vp_quantize_couple_sort(vorbis_block *vb,
 
  ********************************************************************/
 
-/* #include <math.h> : declarations supplied by the prelude */
+/* #include <math.h> : included above */
 
 /* ---- misc.h ---- */
 /********************************************************************
@@ -1455,7 +1414,7 @@ extern void _VDBG_free(void *ptr,char *file,long line);
 #endif
 
 #ifdef _WIN32
-/* #  include <malloc.h> : declarations supplied by the prelude */
+/* #include <malloc.h> : included above */
 #  define rint(x)   (floor((x)+0.5f))
 #  define NO_FLOAT_MATH_LIB
 #  define FAST_HYPOT(a, b) sqrt((a)*(a) + (b)*(b))
@@ -1818,7 +1777,7 @@ extern vorbis_func_mapping   *_mapping_P[];
 #ifndef _V_SCALES_H_
 #define _V_SCALES_H_
 
-/* #include <math.h> : declarations supplied by the prelude */
+/* #include <math.h> : included above */
 
 /* 20log10(x) */
 #define VORBIS_IEEE_FLOAT32 1
@@ -1888,7 +1847,7 @@ static float unitnorm(float x){
 
 /* ---- end scales.h ---- */
 
-/* #include <stdio.h> : declarations supplied by the prelude */
+/* #include <stdio.h> : included above */
 
 #define floor1_rangedB 140 /* floor 1 fixed at -140dB to 0dB range */
 

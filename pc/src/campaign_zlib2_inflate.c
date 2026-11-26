@@ -1,13 +1,19 @@
-/* C runtime declarations the library takes from the standard headers. Published
-   builds have no include path, so they are written out here with the runtime's
-   own __cdecl convention (the library itself is built with /Gz, stdcall). */
-typedef unsigned int size_t;
-void *__cdecl memcpy(void *Dest, const void *Src, size_t Count);
-void *__cdecl memset(void *Dest, int Value, size_t Count);
-int __cdecl memcmp(const void *A, const void *B, size_t Count);
-void *__cdecl malloc(size_t Size);
-void *__cdecl calloc(size_t Count, size_t Size);
-void __cdecl free(void *Ptr);
+/* C runtime declarations come from the Visual C++ standard headers. */
+#include <ctype.h>
+#include <errno.h>
+#include <math.h>
+#include <malloc.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+/* Disable the CRT's non-standard min/max macros. */
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
 
 /* Function-local initialized statics (inflateSync_mark) are
    declared extern at file scope, named after their function, and bound to
@@ -1212,14 +1218,14 @@ ZEXTERN const uLongf * ZEXPORT get_crc_table    OF((void));
 /* ---- end zlib.h ---- */
 
 #ifdef STDC
-/* #  include <stddef.h> : declarations supplied by the prelude */
-/* #  include <string.h> : declarations supplied by the prelude */
-/* #  include <stdlib.h> : declarations supplied by the prelude */
+/* #include <stddef.h> : included above */
+/* #include <string.h> : included above */
+/* #include <stdlib.h> : included above */
 #endif
 #ifdef NO_ERRNO_H
     extern int errno;
 #else
-/* #   include <errno.h> : declarations supplied by the prelude */
+/* #include <errno.h> : included above */
 #endif
 
 #ifndef local
@@ -1280,7 +1286,7 @@ extern const char *z_errmsg[10]; /* indexed by 2-zlib_error */
 /* #     include <alloc.h> : declarations supplied by the prelude */
 #    endif
 #  else /* MSC or DJGPP */
-/* #    include <malloc.h> : declarations supplied by the prelude */
+/* #include <malloc.h> : included above */
 #  endif
 #endif
 
@@ -1384,7 +1390,7 @@ extern const char *z_errmsg[10]; /* indexed by 2-zlib_error */
 
 /* Diagnostic functions */
 #ifdef DEBUG
-/* #  include <stdio.h> : declarations supplied by the prelude */
+/* #include <stdio.h> : included above */
    extern int z_verbose;
    extern void z_error    OF((char *m));
 #  define Assert(cond,msg) {if(!(cond)) z_error(msg);}
