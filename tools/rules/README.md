@@ -31,6 +31,10 @@ is charged with everything in its source files. `source_found_by` in the report 
 
 - **One executable at a time.** Campaign and Versus are two programs. Two declarations
   conflict (R1, R2) only when some unit of the same executable can see both.
+- **C++ type identity.** R1 compares declarations within their enclosing namespace. Reopened
+  blocks share the same namespace, and unnamed namespaces are shared within a translation unit.
+  A unit that uses a qualified type follows that type's declarations. Unqualified lookup starts
+  in the enclosing namespace and works outwards.
 - **Project files only.** Quoted includes are followed when they name a project file. An
   angle-bracket include (`#include <vector>`) is the toolchain's own header, which a unit
   whose record has `system_headers` compiles against; the checker never reads it, so nothing
