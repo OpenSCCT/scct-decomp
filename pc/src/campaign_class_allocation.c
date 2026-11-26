@@ -1,14 +1,12 @@
-struct RuntimeClass;
+#include "campaign_class_singletons.h"
+#include "campaign_globals.h"
+#include "campaign_name_index.h"
+
 struct Object;
-struct Name { unsigned index; };
-extern void *allocation_context;
 extern struct Object *allocate_object(struct RuntimeClass *, struct Object *, struct Name,
                                       unsigned, struct Object *, void *, void *, void *);
 
 #define DEFINE_CLASS_ALLOCATION(Type, Package) \
-    extern struct RuntimeClass *class_##Type; \
-    extern struct RuntimeClass *create_##Type(const unsigned short *); \
-    extern void register_##Type(void); \
     struct Object *allocate_##Type(unsigned size, struct Object *outer, struct Name name, unsigned flags) \
     { \
         if (!class_##Type) { \
@@ -18,11 +16,6 @@ extern struct Object *allocate_object(struct RuntimeClass *, struct Object *, st
         return allocate_object(class_##Type, outer, name, flags, 0, allocation_context, 0, 0); \
     }
 
-extern const unsigned short package_Core[];
-extern const unsigned short package_Echelon[];
-extern const unsigned short package_Engine[];
-extern const unsigned short package_WinDrv[];
-extern const unsigned short package_Window[];
 DEFINE_CLASS_ALLOCATION(UAnimInfo, Engine)
 DEFINE_CLASS_ALLOCATION(UArrayProperty, Core)
 DEFINE_CLASS_ALLOCATION(UBoolProperty, Core)

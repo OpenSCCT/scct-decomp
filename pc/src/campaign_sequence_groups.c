@@ -9,7 +9,7 @@ struct Clip { int name; struct GroupList groups; };
 struct ClipRef { struct Clip *ptr; };
 /* FAKEMATCH: the original passes a name as a stack argument; this one-member struct only steers
    that stack slot. */
-struct Name { int value; };
+struct NameArgument { int value; };
 /* FAKEMATCH: the original passes a name reference as a stack argument; this one-member struct
    only steers that stack slot. */
 struct NameRef { const int *ptr; };
@@ -26,7 +26,7 @@ __declspec(noinline) int __fastcall find_group(struct GroupList *groups, struct 
     return 0;
 }
 
-int __fastcall has_sequence_group(void *mesh, struct ClipRef clip, struct Name name)
+int __fastcall has_sequence_group(void *mesh, struct ClipRef clip, struct NameArgument name)
 {
     int found = 0;
     struct IndexRef index;

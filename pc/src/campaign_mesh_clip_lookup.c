@@ -1,4 +1,5 @@
-struct Name { int value; };
+#include "campaign_name_index.h"
+
 struct Clip { struct Name name; unsigned char reserved[0x44]; };
 struct Bank {
     unsigned char reserved[0x44];

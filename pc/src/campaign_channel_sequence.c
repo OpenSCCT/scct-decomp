@@ -1,5 +1,6 @@
+#include "campaign_name_index.h"
+
 struct Index { int value; };
-struct Name { int value; };
 struct Clip;
 struct ClipRef { struct Clip *ptr; };
 struct Mesh;
