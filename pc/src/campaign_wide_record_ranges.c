@@ -3,12 +3,12 @@ struct WideText {
     union { unsigned short storage[8]; void *heap; } buffer;
     unsigned length, capacity;
 };
-struct Record { struct WideText text; unsigned value; };
+struct WideRecord { struct WideText text; unsigned value; };
 struct Argument { const void *address; };
 /* The range stack argument packs a zero start and an all-elements count. */
 extern void __fastcall copy_text(struct WideText *, struct Argument, unsigned __int64 range);
 
-static __forceinline void assign_record(struct Record *output, const struct Record *input)
+static __forceinline void assign_record(struct WideRecord *output, const struct WideRecord *input)
 {
     struct Argument argument;
     argument.address = &input->text;
@@ -16,16 +16,16 @@ static __forceinline void assign_record(struct Record *output, const struct Reco
     output->value = input->value;
 }
 
-struct Record *copy_records(const struct Record *first, const struct Record *last,
-                            struct Record *output)
+struct WideRecord *copy_records(const struct WideRecord *first, const struct WideRecord *last,
+                            struct WideRecord *output)
 {
     for (; first != last; ++first, ++output)
         assign_record(output, first);
     return output;
 }
 
-struct Record *copy_backward(const struct Record *first, const struct Record *last,
-                             struct Record *output_end)
+struct WideRecord *copy_backward(const struct WideRecord *first, const struct WideRecord *last,
+                             struct WideRecord *output_end)
 {
     if (first != last) {
         do {
@@ -37,7 +37,7 @@ struct Record *copy_backward(const struct Record *first, const struct Record *la
 
 extern void __cdecl free_buffer(void *buffer);
 
-void destroy_records(struct Record *first, struct Record *last)
+void destroy_records(struct WideRecord *first, struct WideRecord *last)
 {
     for (; first != last; ++first) {
         if (first->text.capacity >= 8)
