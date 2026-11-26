@@ -3,7 +3,7 @@
 // built through the allocator's out-of-line construct inside a catch-all region;
 // destroying the built prefix is trivial for these element types, so the catch
 // block only rethrows.
-typedef unsigned int size_t;
+#include <stddef.h>
 
 template<class T> struct ElementAllocator
 {
