@@ -1,25 +1,22 @@
-struct Block { void *base, *cursor; unsigned used, capacity; };
-struct Pool { unsigned reserved; struct Block *first, *end, *limit; unsigned char active; };
-struct Word { unsigned value; };
-struct BlockArg { struct Block *value; };
+#include "campaign_pool_reserve_types.h"
 extern void *__cdecl allocate_block(unsigned bytes, unsigned mode);
 
-extern void __fastcall append_21e9b0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a0e0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a1c0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a3f0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a700(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a8c0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44ab60(struct Pool *, struct BlockArg);
-extern void __fastcall append_44ac40(struct Pool *, struct BlockArg);
-extern void __fastcall append_44aee0(struct Pool *, struct BlockArg);
+extern void __fastcall append_21e9b0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a0e0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a1c0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a3f0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a700(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a8c0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44ab60(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44ac40(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44aee0(struct ReservationPool *, struct ReservationBlockArg);
 
 #define RESERVE_GLOBAL(Entry, Append, Stride, GlobalPool) \
     void __stdcall Entry(unsigned count) \
     { \
         if (count > 0) { \
-            struct Block block; \
-            struct BlockArg arg; \
+            struct ReservationBlock block; \
+            struct ReservationBlockArg arg; \
             block.base = allocate_block(count * Stride, 0); \
             block.cursor = block.base; \
             block.used = 0; \
@@ -31,11 +28,11 @@ extern void __fastcall append_44aee0(struct Pool *, struct BlockArg);
     }
 
 #define RESERVE_MEMBER(Entry, Append, Stride) \
-    void __fastcall Entry(struct Pool *self, struct Word count, struct Word mode) \
+    void __fastcall Entry(struct ReservationPool *self, struct PoolParameterWord count, struct PoolParameterWord mode) \
     { \
         if (count.value > 0) { \
-            struct Block block; \
-            struct BlockArg arg; \
+            struct ReservationBlock block; \
+            struct ReservationBlockArg arg; \
             block.base = allocate_block(count.value * Stride, mode.value); \
             block.cursor = block.base; \
             block.used = 0; \
