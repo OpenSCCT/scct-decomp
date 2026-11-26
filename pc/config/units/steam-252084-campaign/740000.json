@@ -75,7 +75,7 @@
     },
     "match": {
       "bytes_sha256": "50d41c9bd1091a383152088dd6950f5d50a2e8d6341d884e9caf2b1b9c99a801",
-      "inputs_sha256": "062e052923d053eac2dff92af5c8433d2334a0c9e3ac97a8d15fdb981af466a2"
+      "inputs_sha256": "9109c693db4a505683c4a886fcadbad728ea387e6360a66d6d50c73856224797"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -132,7 +132,7 @@
     },
     "match": {
       "bytes_sha256": "7a0bd9593d0ac9e30eef56c850b46cb79ccc0b4004d584373b734aa49400811a",
-      "inputs_sha256": "fd79076468752e7c4ff23619788f755cf02dd36594e51e9303b0e3dba04eaaef"
+      "inputs_sha256": "6b012fd81418c3fcec3ccd43bed8488c0a4b07724a715a44ddb04ef07893876c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -189,7 +189,7 @@
     },
     "match": {
       "bytes_sha256": "d54ee3187288a4e31d0e732284b706b229d04fe453c942e58c7f87fe4d6c8771",
-      "inputs_sha256": "a0406054348c467b0f33f9b1a5fc2cbc134b6a0ddbe8fe89d3aa3031b7de009f"
+      "inputs_sha256": "7c088c4c2f8ebb57875fb379b3aada8daec2322a03e06396bbc49490d1cd4a8e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -238,7 +238,7 @@
     },
     "match": {
       "bytes_sha256": "40f65a22d7f230936082838f8b412e82f8a18ae6db6568aeac38d4ce7d869b19",
-      "inputs_sha256": "a289218b684f2d74b3e85fcba080f4c07dffeba4d4b9af0e2e4d8aeb0751e4dd"
+      "inputs_sha256": "8ebe1328907d69ed209c77c54cda519579eb5752266961e8fb74a54b2f105352"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -247,6 +247,32 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "id": "sound-event-section-handle",
+    "offset": 7626944,
+    "size": 5,
+    "rebuilt_symbol": "_SND_fn_hGetSoundEventHandleFromSectionName@4",
+    "inputs": [
+      "src/sound_event_section_handle.c",
+      "src/sound_bank_layout.h",
+      "src/sound_resource.h"
+    ],
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_event_section_handle.obj src/sound_event_section_handle.c",
+    "identification": "Steam PE named export _SND_fn_hGetSoundEventHandleFromSectionName@4 at RVA 0x7460c0. The export name identifies a sound event handle query by section name, and the neighboring editor-ID lookup confirms the result is an event pointer. Retail returns null for every section name. The 5-byte body ends before alignment.",
+    "match": {
+      "bytes_sha256": "5fed5afb29946811bf02359627a94bc01d08d31b779528feaadde3866af9c855",
+      "inputs_sha256": "e0e232db61d818703191e79a5ba05e99b2f5369016c24381a259a0de27f5853b"
     }
   },
   {
@@ -318,7 +344,7 @@
     },
     "match": {
       "bytes_sha256": "a40d4bd283c858794c80683f628cd5d5764ee9e24fae17fc85effc7fc5f98050",
-      "inputs_sha256": "252dab35869bc3d91e2a6717ba8dccaa57df6881bf66794a1cff85d8efb63b6f"
+      "inputs_sha256": "bdfb30c757b9755f7e8320900e7199424f4556a6b468ca3e5761da90dba61f89"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1763,7 +1789,7 @@
     "identification": "Steam PE export _SND_fn_fGetCurrentTime@4 at RVA 0x747810. Reads QueryPerformanceFrequency and either the saved pause counter or QueryPerformanceCounter, subtracts the origin, and divides the elapsed ticks by the frequency. Invalid or failed queries return the float at VA 0x110b8220 (zero). All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "f30fbae51c9729856e62d6ca0abd952797c20fd4f97602fe6c121dac809919b0",
-      "inputs_sha256": "620aaabc550c0c2e8c0074a965a106ce512714c51695b0347b4a0e41b3ab448a"
+      "inputs_sha256": "72c87824ffc64b754cd02618038e79a7008c95335a36ba0ac5caa22f00e66064"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1772,6 +1798,43 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "id": "sound-timer-create",
+    "offset": 7633040,
+    "size": 45,
+    "rebuilt_symbol": "_SND_fn_lCreateTimer@0",
+    "inputs": [
+      "src/sound_timer_create.c",
+      "src/sound_memory.h",
+      "src/sound_timer.h",
+      "src/sound_win32.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_timer_create.obj src/sound_timer_create.c",
+    "identification": "Steam PE export _SND_fn_lCreateTimer@0 at RVA 0x747890. Allocates the 0x18-byte timer, queries its initial performance-counter value, clears the paused flag, and returns the timer address. Allocation or counter failure returns -2; a counter failure leaves the allocated timer unreleased. The 45-byte function ends before alignment.",
+    "link_bindings": {
+      "_SND_fn_pvMallocSnd@4": {
+        "va": 285460528,
+        "basis": "Steam campaign PE named export _SND_fn_pvMallocSnd@4 at RVA 0x73c830."
+      },
+      "__imp__QueryPerformanceCounter@4": {
+        "va": 285962980,
+        "basis": "KERNEL32 import slot called by the timer exports."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "4fc61796250631012b4951d74ba14cc9e186f3e5e74a2adcfcff26f6caa79fc7",
+      "inputs_sha256": "6a642414648b158274f780b58fab8cba42cc4e134cafa4ef8f1e5dce94ce89ca"
     }
   },
   {
@@ -1795,7 +1858,32 @@
     "identification": "Named retail export at RVA 0x7478c0. The complete function ends before alignment.",
     "match": {
       "bytes_sha256": "6780b1a2acf48da7c66a5e12a1c9c4fc982d634681eb41b98c6b9bb5a255788e",
-      "inputs_sha256": "b1ac9eb802b35bc002b6f9d7a9a9f6008c36448386fa51e37aebda96aa548f08"
+      "inputs_sha256": "1273008af3d34d98758b92b4876f2830b9c4c39063404a9cf044a403a9ebb4dc"
+    }
+  },
+  {
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "id": "sound-timer-synchro",
+    "offset": 7633136,
+    "size": 1,
+    "rebuilt_symbol": "_SND_fn_vSynchroTimer@0",
+    "inputs": [
+      "src/sound_timer_sync.c",
+      "src/sound_timer.h"
+    ],
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_timer_sync.obj src/sound_timer_sync.c",
+    "identification": "Steam PE named export _SND_fn_vSynchroTimer@0 at RVA 0x7478f0. The function returns immediately. Its one-byte body ends before alignment.",
+    "match": {
+      "bytes_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "inputs_sha256": "e6f0f501c909317d00dae982ab1de86a16c649ea98d685a244a89cf11b1c0d4a"
     }
   },
   {
@@ -1819,7 +1907,7 @@
     "identification": "Named retail export at RVA 0x747900. The complete function ends before alignment.",
     "match": {
       "bytes_sha256": "d42c1c68a99f2cae7a92619c20986bec818396a042ffceaa53d2c752bd540a15",
-      "inputs_sha256": "6c7ec1269cc807d2fa8fab85209feaaabd7d8559f8d0cf7faeb9d8580fae55ad"
+      "inputs_sha256": "0aa3ade147d8eb98a5189b0ccd745df35383c4613296f8371f4df299e3eaff6c"
     }
   },
   {
@@ -1843,7 +1931,7 @@
     "identification": "Steam PE export _SND_fn_vResumeTimer@4 at RVA 0x747930. Rejects null, -2 and running handles. On resume the pause flag clears; if QueryPerformanceCounter succeeds the paused interval is added to the timer origin. All reachable return paths are included; the following alignment is excluded.",
     "match": {
       "bytes_sha256": "6d40b46781d525cd6852720886cb834c0534d7cb3eb490ccc0d44c999f774f10",
-      "inputs_sha256": "d4534da41cd34717ad75daf616f5a8497f1ea14ca9d29e67dc7c4b8afd4406da"
+      "inputs_sha256": "9402f3745b818cd6d5e3a2ad96552b06d7f85260d45305c92417aff6a0fdac23"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1875,7 +1963,7 @@
     },
     "match": {
       "bytes_sha256": "b2b3aa99d41f862b9bb9e2a84ec81a4fd6fca0a0582980c3b98d697ee13003f6",
-      "inputs_sha256": "9c2a338808b5606f00937e6888f92506aed57f41bc89422711f3e21864f868e9"
+      "inputs_sha256": "142370a3973fcadafdd7aedc41ce864eadbd2447fa113f2c5bfea3945ff3e100"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4871,7 +4959,7 @@
     },
     "match": {
       "bytes_sha256": "1cfa92b5707419c4b4755287d3d6b7a91748525c1da5c92f50c5497b2abf9936",
-      "inputs_sha256": "a5355a04af6f3aeb31621bcec2ae0dae8df5be30a8b0c3f3cc53abc2e63d546c"
+      "inputs_sha256": "1029ab5173361b3788114adc02f99cb130e3e4d62fb494a2b6f15889c3a54972"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4907,7 +4995,7 @@
     },
     "match": {
       "bytes_sha256": "b838ad6168a2fde6734d0e9f5c59edb9ad7635efeee38de19564cb675de3975d",
-      "inputs_sha256": "0952c970031a3c23784e290b5af326069ce526c16cdfa8f51741820b972c438e"
+      "inputs_sha256": "450930143f272b0236eb54a66087dfd8b2fe6ae6b743b2884adf65bdc16a6fae"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5187,7 +5275,7 @@
     "identification": "Direct mode-zero tail target of SND_fn_pstGetResFromEdIdSnd from RVA 0x746003. Traverses active banks and returns the first resource matching the editor ID. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "match": {
       "bytes_sha256": "9045c54857dbe90a72a84d48b1d0d875d509d8e0bb0939fc100da69b06528a0d",
-      "inputs_sha256": "3be939393a2fd7e5ad1966873b14fa7acef6520c8597c99229189ab82e86e552"
+      "inputs_sha256": "4499c93bf6647b31e2f8ce2f6fad1f0211a0d746373009749b688ecc1713b76b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
