@@ -117,7 +117,11 @@ public:
     const TCHAR *GetName() const;
     class UClass *GetClass() const { return Class; }
     UBOOL IsA(class UClass *SomeBase) const;
+#ifdef SCCT_VERSUS
+    class UFunction *FindFunctionChecked(FName InName, INT Global);
+#else
     class UFunction *FindFunctionChecked(FName InName, UBOOL Global);
+#endif
     static UObject *StaticLoadObject(class UClass *Class, UObject *InOuter, const TCHAR *Name,
                                      const TCHAR *Filename, DWORD LoadFlags, void *Sandbox);
     static UObject *StaticFindObject(class UClass *Class, UObject *InOuter, const TCHAR *Name,

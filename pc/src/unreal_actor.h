@@ -71,7 +71,9 @@ public:
 
     BYTE                  unk_28[0xe4 - 0x28];
     DWORD                 unk_e4;       // observed 32-bit scalar access; meaning unknown
-    BYTE                  unk_e8[0x138 - 0xe8];
+    BYTE                  unk_e8[0x104 - 0xe8];
+    void                 *unk_104;
+    BYTE                  unk_108[0x138 - 0x108];
     TArrayLtcg<UnkType_8> unk_138;
     BYTE                  unk_144[0x80];
     TArray<UnkType_4>     unk_1c4;

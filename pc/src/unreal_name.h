@@ -37,7 +37,12 @@ extern INT   GUnk_1130dfbc;
 TCHAR *Unk_10cccde0(TCHAR *Dest, const ANSICHAR *Src);
 #endif
 
+#ifdef SCCT_VERSUS
+class FName {
+public:
+#else
 struct FName {
+#endif
     INT Index;
 
     FName() {}

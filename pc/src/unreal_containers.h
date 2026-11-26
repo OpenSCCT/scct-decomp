@@ -33,6 +33,7 @@ public:
     FString(const FString &Other);
     ~FString();
     FString &operator=(const FString &Other);
+    static FString __cdecl Printf(const TCHAR *Fmt, ...);
 };
 
 #else // Campaign

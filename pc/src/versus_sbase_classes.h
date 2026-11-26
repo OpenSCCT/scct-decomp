@@ -46,15 +46,16 @@ public:
 class ASInteractObject : public AActor {
 public:
     virtual ~ASInteractObject();
-    virtual void VirtualSlot78();
+    virtual UBOOL VirtualSlot78(void *Argument);
     virtual void VirtualSlot79();
 
     BYTE    unk_2f8[8];
     INT     Priority;
     FString unk_304;
     BYTE    unk_310[0x1c];
-    BYTE    unk_32c;
-    BYTE    unk_32d[0x37];
+    BYTE    unk_32c[0x2c];
+    DWORD   unk_358;
+    BYTE    unk_35c[0x8];
 
     DECLARE_NATIVE(execDoTouch)
     DECLARE_NATIVE(execTriggerEventServer)
@@ -651,7 +652,15 @@ class ASInteractionManager : public AActor {
 public:
     virtual ~ASInteractionManager();
 
-    BYTE unk_2f8[0x48];
+    void Unk_10abf400(INT Index, ASInteractObject *Item);
+    void Unk_10abf4c0(ASInteractObject *Item);
+    UBOOL Unk_10abee10();
+    UBOOL Unk_10abeed0();
+
+    ASInteractObject *InteractionList[15];
+    INT                InteractionCount;
+    INT                CurrentInteractionIndex;
+    DWORD              unk_33c;
 };
 
 // SBase.SInterrupteur: 0x37c bytes, 78 virtual functions
@@ -669,7 +678,8 @@ class ASLANClientLink : public AUdpLink {
 public:
     virtual ~ASLANClientLink();
 
-    BYTE unk_32c[0x2c];
+    INT  NbServers;
+    BYTE unk_330[0x28];
 };
 
 // SBase.SLaserBeam: 0x2fc bytes, 78 virtual functions
