@@ -1,5 +1,6 @@
+#include "campaign_allocation_kind.h"
+
 struct Count { unsigned value; };
-extern unsigned allocation_kind;
 extern void *__cdecl allocate_buffer(unsigned bytes, unsigned kind);
 
 #define ELEMENT_ALLOCATOR(Stride) \

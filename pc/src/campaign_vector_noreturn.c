@@ -1,3 +1,5 @@
+#include "campaign_allocation_kind.h"
+
 struct Size { unsigned value; };
 struct Element16 { unsigned char bytes[16]; };
 struct Vector {
@@ -6,7 +8,6 @@ struct Vector {
 };
 
 __declspec(noreturn) void __fastcall vector_length_error(struct Vector *);
-extern unsigned allocation_kind;
 extern void *__cdecl allocate_buffer(unsigned bytes, unsigned kind);
 
 unsigned char __fastcall initialize_16(struct Vector *v, struct Size count)

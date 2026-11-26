@@ -1,6 +1,7 @@
+#include "campaign_allocation_kind.h"
+
 struct Size { unsigned value; };
 struct Vector { unsigned reserved; unsigned char *first, *end, *limit; };
-extern unsigned allocation_kind;
 extern void *__cdecl allocate_buffer(unsigned, unsigned);
 
 #define INITIALIZE_VECTOR(Stride) \
