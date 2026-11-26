@@ -7,6 +7,7 @@
 
 #ifdef SCCT_VERSUS
 #include "versus_ltcg.h"
+class APawn;
 
 // Engine.Controller: 0x3c4 bytes, 83 virtual functions
 class AController : public AActor {
@@ -18,7 +19,9 @@ public:
     virtual void VirtualSlot81();
     virtual void VirtualSlot82();
 
-    BYTE    unk_2f8[0x7c];
+    BYTE    unk_2f8[0x4];
+    APawn  *Pawn;                 // +0x2fc; registered Engine.Controller hierarchy
+    BYTE    unk_300[0x74];
     FString unk_374;
     BYTE    unk_380[0x44];
 };

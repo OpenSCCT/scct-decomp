@@ -61,6 +61,9 @@ struct FVector {
 #ifndef SCCT_VERSUS
     FLOAT SizeSquared() const { return X * X + Y * Y + Z * Z; }
     UBOOL operator==(const FVector &V) const { return X == V.X && Y == V.Y && Z == V.Z; }
+#else
+    FVector RotateAngleAxis(const INT Angle, const FVector &Axis) const;
+    FVector TransformVectorBy(const FCoords &Coords) const;
 #endif
     FVector SafeNormal() const;
     FRotator Rotation();
@@ -133,11 +136,31 @@ struct FCoords {
     FVector ZAxis;
 
     FCoords &operator/=(const FRotator &R);
+#ifdef SCCT_VERSUS
+    FCoords operator/(const FRotator &R) const; // out-of-line Versus helper at RVA 0x40f40
+    FCoords operator*(const FRotator &R) const; // Versus helper at RVA 0x411a0
+#else
     FCoords operator/(const FRotator &R) const { return FCoords(*this) /= R; }
+#endif
 };
+
+#ifdef SCCT_VERSUS
+// UnMath.h helper used by the inline vector transform in the Versus build.
+void ASMTransformVector(const FCoords &Coords, const FVector &InVector, FVector &OutVector);
+
+inline FVector FVector::TransformVectorBy(const FCoords &Coords) const
+{
+    FVector Temp;
+    ASMTransformVector(Coords, *this, Temp);
+    return Temp;
+}
+#endif
 
 struct FGlobalMath {
     FCoords UnitCoords;
+#ifdef SCCT_VERSUS
+    void SinCos(INT Angle, FLOAT *OutSin, FLOAT *OutCos);
+#endif
 };
 
 extern FGlobalMath GMath;

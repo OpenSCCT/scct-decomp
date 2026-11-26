@@ -49,9 +49,17 @@ public:
     virtual void VirtualSlot78();
     virtual void VirtualSlot79();
 
-    BYTE    unk_2f8[0xc];
+    BYTE    unk_2f8[8];
+    INT     Priority;
     FString unk_304;
-    BYTE    unk_310[0x54];
+    BYTE    unk_310[0x1c];
+    BYTE    unk_32c;
+    BYTE    unk_32d[0x37];
+
+    DECLARE_NATIVE(execDoTouch)
+    DECLARE_NATIVE(execTriggerEventServer)
+    DECLARE_NATIVE(execUnTriggerEventServer)
+    DECLARE_NATIVE(execSetPriority)
 };
 
 // SBase.SMineProxInteraction: 0x364 bytes, 80 virtual functions
@@ -77,7 +85,8 @@ class ASGadget : public AInventory {
 public:
     virtual ~ASGadget();
 
-    BYTE unk_338[0x18];
+    ASGadget *MyGadget; // linked by SBasePawn.AddGadget and followed by FindGadgetType
+    BYTE      unk_33c[0x14];
 
     DECLARE_NATIVE(execGetUniqueIDByClass)
     INT GetUniqueIDByClass();
@@ -457,7 +466,16 @@ public:
 
     BYTE                  unk_4b0[0x214];
     TArrayLtcg<UnkType_4> unk_6c4;
-    BYTE                  unk_6d0[0x490];
+    BYTE                  unk_6d0[0x720 - 0x6d0];
+    INT                   sAction; // script field correlated with the helper store at +0x720
+    INT                   AllActions[6]; // helper copies six unpacked dwords beginning at +0x724
+    INT                   iNbAction; // script-correlated count written at +0x73c
+    BYTE                  unk_740[0x4];
+    INT                   iNbActionForDistantClient; // script-correlated count written at +0x744
+    BYTE                  unk_748[0xa84 - 0x748];
+    ASWeapon             *MyWeapon; // script-correlated field; native class check uses +0xa84
+    ASGadget             *MyGadget; // list head followed by FindGadgetType and AddGadget
+    BYTE                  unk_a8c[0xb60 - 0xa8c];
 
     DECLARE_NATIVE(execExecuteAction)
     void ExecuteAction(INT A0);

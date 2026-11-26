@@ -69,11 +69,15 @@ public:
     virtual void VirtualSlot76();
     virtual void VirtualSlot77();
 
-    BYTE                  unk_28[0x110];
+    BYTE                  unk_28[0xe4 - 0x28];
+    DWORD                 unk_e4;       // observed 32-bit scalar access; meaning unknown
+    BYTE                  unk_e8[0x138 - 0xe8];
     TArrayLtcg<UnkType_8> unk_138;
     BYTE                  unk_144[0x80];
     TArray<UnkType_4>     unk_1c4;
-    BYTE                  unk_1d0[0xc];
+    BYTE                  unk_1d0[0x4];
+    void                 *unk_1d4;      // observed pointer access; pointee unknown
+    BYTE                  unk_1d8[0x4];
     TArrayLtcg<UnkType_4> unk_1dc;
     TArray<UnkType_4>     unk_1e8;
     BYTE                  unk_1f4[0x10];
@@ -84,7 +88,20 @@ public:
     TArrayLtcg<UnkType_4> unk_240;
     BYTE                  unk_24c[0x10];
     TArrayLtcg<UnkType_4> unk_25c;
-    BYTE                  unk_268[0x90];
+    BYTE                  unk_268[0x76];
+    BYTE                  unk_2de;
+    BYTE                  unk_2df[0x11];
+    DWORD                 unk_2f0_0 : 12;
+    DWORD                 bCollideActors : 1;
+    DWORD                 unk_2f0_b13 : 1;
+    DWORD                 bBlockActors : 1;
+    DWORD                 bBlockPlayers : 1;
+    DWORD                 unk_2f0_16 : 16;
+    BYTE                  unk_2f4[4];
+
+    void SetCollision(UBOOL NewCollideActors, UBOOL NewBlockActors, UBOOL NewBlockPlayers);
+    void SetDrawType(INT NewDrawType);
+    DECLARE_NATIVE(execCheckSignature)
 };
 
 #else // Campaign

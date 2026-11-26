@@ -14,6 +14,9 @@ public:
     INT   ArrayMax;
 
     FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
+
+    void Insert(INT Index, INT Count, INT ElementSize);
+    void Remove(INT Index, INT Count, INT ElementSize);
 };
 
 // A dynamic array of T. Its destructor removes the elements, then frees the storage. The

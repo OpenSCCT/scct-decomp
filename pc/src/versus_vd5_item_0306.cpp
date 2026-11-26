@@ -101,7 +101,7 @@ public:
     virtual void VirtualSlot18();
     virtual void VirtualSlot19();
     virtual void VirtualSlot20();
-    virtual void VirtualSlot21();
+    virtual void NetDirty(UProperty *Property);
     virtual void VirtualSlot22();
     virtual void VirtualSlot23();
     virtual void VirtualSlot24();

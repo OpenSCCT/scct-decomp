@@ -8,6 +8,7 @@
 struct FGuid;
 struct FFrame;
 struct FStateFrame;
+class UProperty;
 
 // UObject::ObjectFlags bits. The names are open: no symbol evidence names these bits.
 enum {
@@ -41,7 +42,7 @@ class UObject : public FUnknown {
 public:
     virtual ~UObject();
 #ifdef SCCT_VERSUS
-    virtual void VirtualSlot4();
+    virtual void ProcessEvent(class UFunction *Function, void *Parms, void *Result);
 #else
     virtual void ProcessEvent(class UFunction *Function, void *Parms, void *Result = 0);
 #endif
@@ -72,7 +73,7 @@ public:
     virtual void VirtualSlot18();
     virtual void VirtualSlot19();
     virtual void VirtualSlot20();
-    virtual void VirtualSlot21();
+    virtual void NetDirty(UProperty *Property); // slot 21, vtable offset +0x54
 #else
     virtual void CallFunction(FFrame &Stack, RESULT_DECL, class UFunction *Function);
     virtual void VirtualSlot19();
