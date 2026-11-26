@@ -1,4 +1,5 @@
 #include "versus_native_registration.h"
+#include "versus_native_handlers.h"
 
 void register_core_natives(void)
 {

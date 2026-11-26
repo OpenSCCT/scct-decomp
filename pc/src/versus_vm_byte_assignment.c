@@ -1,36 +1,25 @@
 /* The x86 native handler ABI passes the receiver in ecx, followed by
    the script frame and result pointer on the stack. */
-typedef struct Frame Frame;
-typedef struct Object Object;
-typedef void (__fastcall *Native)(Object *, unsigned int, Frame *, void *);
-struct Frame {
-    void *frame_prefix[2];
-    Object *object;
-    unsigned char *code;
-};
+#include "versus_native_registration.h"
+#include "versus_vm_property_context.h"
 #define HANDLER(name, result_type) \
-    void __fastcall name(Object *self, void *unused_edx, Frame *frame, result_type *result)
-extern Native const native_table[];
+    void __fastcall name(struct ScriptObject *self, void *unused_edx, struct ScriptFrame *frame, result_type *result)
 #define DISPATCH native_table
 
 
-extern void *property_address;
-extern Object *property_owner;
-extern void *property_descriptor;
-
-static __forceinline void step(Frame *frame, void *result)
+static __forceinline void step(struct ScriptFrame *frame, void *result)
 {
-    Object *receiver = frame->object;
+    struct ScriptObject *receiver = frame->object;
     unsigned int opcode = *frame->code++;
     DISPATCH[opcode](receiver, opcode, frame, result);
 }
 
-typedef void (__fastcall *OnPropertyWrite)(Object *, const void *, void *);
-static __forceinline void *write_address(Frame *frame, void *fallback)
+typedef void (__fastcall *OnPropertyWrite)(struct ScriptObject *, const void *, void *);
+static __forceinline void *write_address(struct ScriptFrame *frame, void *fallback)
 {
-    Object *owner;
+    struct ScriptObject *owner;
     void *address;
-    Object *receiver = frame->object;
+    struct ScriptObject *receiver = frame->object;
     unsigned int opcode = *frame->code++;
     property_address = 0;
     DISPATCH[opcode](receiver, opcode, frame, fallback);

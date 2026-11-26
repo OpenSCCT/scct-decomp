@@ -1,23 +1,15 @@
 /* The x86 native handler ABI passes the receiver in ecx, followed by
    the script frame and result pointer on the stack. */
-typedef struct Frame Frame;
-typedef struct Object Object;
-typedef void (__fastcall *Native)(Object *, unsigned int, Frame *, void *);
-struct Frame {
-    void *frame_prefix;
-    void *node;
-    Object *object;
-    unsigned char *code;
-};
+#include "versus_native_registration.h"
 typedef struct Vector { float x, y, z; } Vector;
 typedef struct Rotator { int pitch, yaw, roll; } Rotator;
 #define HANDLER(name, result_type) \
-    void __fastcall name(Object *self, void *unused_edx, Frame *frame, result_type *result)
-#define DISPATCH ((Native const *)0x10c819d8u)
+    void __fastcall name(struct ScriptObject *self, void *unused_edx, struct ScriptFrame *frame, result_type *result)
+#define DISPATCH ((VmHandler * const *)0x10c819d8u)
 
-static __forceinline void step(Frame *frame, void *result)
+static __forceinline void step(struct ScriptFrame *frame, void *result)
 {
-    Object *receiver = frame->object;
+    struct ScriptObject *receiver = frame->object;
     unsigned int opcode = *frame->code++;
     DISPATCH[opcode](receiver, opcode, frame, result);
 }
@@ -27,7 +19,7 @@ typedef struct ScriptNode {
     unsigned char opaque[0x3c];
     unsigned char *script;
 } ScriptNode;
-static __forceinline int read_int(Frame *frame)
+static __forceinline int read_int(struct ScriptFrame *frame)
 {
     int value = *(const int *)frame->code;
     frame->code += sizeof(int);
@@ -41,7 +33,7 @@ static __forceinline int read_int(Frame *frame)
         *result = (conversion); \
     }
 
-HANDLER(execSelf, Object *)
+HANDLER(execSelf, struct ScriptObject *)
 {
     *result = self;
 }
@@ -101,7 +93,7 @@ HANDLER(execIntOne, int)
 HANDLER(execPrimitiveCast, void)
 {
     unsigned int cast = *frame->code++;
-    ((Native const *)0x10c815d8u)[cast](frame->object, cast, frame, result);
+    ((VmHandler * const *)0x10c815d8u)[cast](frame->object, cast, frame, result);
 }
 
 CAST_VALUE(execByteToInt, unsigned char, int, (int)value)
@@ -114,5 +106,5 @@ HANDLER(execJump, void)
 {
     int offset = *(const unsigned short *)frame->code;
     frame->code += sizeof(unsigned short);
-    frame->code = ((ScriptNode *)frame->node)->script + offset;
+    frame->code = frame->node->script + offset;
 }
