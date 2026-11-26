@@ -1,5 +1,5 @@
-typedef unsigned long Word;
-typedef long Result;
+typedef unsigned long SoundDword;
+typedef long SoundResult;
 /* The float formal occupies a stack word; the retail signature consumes its raw bits. */
 typedef union {
     unsigned value;
@@ -8,14 +8,14 @@ typedef union {
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
-    Word value;
+    SoundDword value;
 } WordArg;
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
-    Word *value;
+    SoundDword *value;
 } OutArg;
-typedef struct Buffer Buffer;
+typedef struct DirectSoundBuffer DirectSoundBuffer;
 typedef struct Spatial Spatial;
 typedef struct Unknown Unknown;
 
@@ -23,32 +23,32 @@ typedef struct Unknown Unknown;
 typedef struct
 {
     void *query_interface, *add_ref;
-    Word(__stdcall *release)(Buffer *);
+    SoundDword(__stdcall *release)(DirectSoundBuffer *);
     void *get_caps;
-    Result(__stdcall *get_position)(Buffer *, Word *, Word *);
+    SoundResult(__stdcall *get_position)(DirectSoundBuffer *, SoundDword *, SoundDword *);
     void *get_format, *get_volume, *get_pan, *get_frequency;
-    Result(__stdcall *get_status)(Buffer *, Word *);
+    SoundResult(__stdcall *get_status)(DirectSoundBuffer *, SoundDword *);
     void *initialize, *lock;
-    Result(__stdcall *play)(Buffer *, Word, Word, Word);
-    Result(__stdcall *set_position)(Buffer *, Word);
+    SoundResult(__stdcall *play)(DirectSoundBuffer *, SoundDword, SoundDword, SoundDword);
+    SoundResult(__stdcall *set_position)(DirectSoundBuffer *, SoundDword);
     void *set_format;
-    Result(__stdcall *set_volume)(Buffer *, long);
-    Result(__stdcall *set_pan)(Buffer *, long);
-    Result(__stdcall *set_frequency)(Buffer *, Word);
-    Result(__stdcall *stop)(Buffer *);
+    SoundResult(__stdcall *set_volume)(DirectSoundBuffer *, long);
+    SoundResult(__stdcall *set_pan)(DirectSoundBuffer *, long);
+    SoundResult(__stdcall *set_frequency)(DirectSoundBuffer *, SoundDword);
+    SoundResult(__stdcall *stop)(DirectSoundBuffer *);
     void *unlock, *restore, *set_fx;
-    Result(__stdcall *acquire_resources)(Buffer *, Word, Word, Word *);
+    SoundResult(__stdcall *acquire_resources)(DirectSoundBuffer *, SoundDword, SoundDword, SoundDword *);
 } BufferMethods;
-struct Buffer
+struct DirectSoundBuffer
 {
     const BufferMethods *methods;
 };
 typedef struct
 {
     void *query_interface, *add_ref;
-    Word(__stdcall *release)(Spatial *);
+    SoundDword(__stdcall *release)(Spatial *);
     void *parameters[15];
-    Result(__stdcall *set_mode)(Spatial *, Word, Word);
+    SoundResult(__stdcall *set_mode)(Spatial *, SoundDword, SoundDword);
 } SpatialMethods;
 struct Spatial
 {
@@ -57,7 +57,7 @@ struct Spatial
 typedef struct
 {
     void *query_interface, *add_ref;
-    Word(__stdcall *release)(Unknown *);
+    SoundDword(__stdcall *release)(Unknown *);
 } UnknownMethods;
 struct Unknown
 {
@@ -66,13 +66,13 @@ struct Unknown
 typedef struct
 {
     const void *vtable;
-    Word played, has_spatial, spatial_enabled, field10;
-    Buffer *buffer;
+    SoundDword played, has_spatial, spatial_enabled, field10;
+    DirectSoundBuffer *buffer;
     Spatial *spatial;
-    Word field1c, field20, field24, field28, field2c, field30, field34, field38, field3c;
+    SoundDword field1c, field20, field24, field28, field2c, field30, field34, field38, field3c;
     Unknown *other_interface;
     long timer;
-    Word field48, field4c;
+    SoundDword field48, field4c;
 } SoundBuffer;
 extern const char SoundBufferMethods[];
 extern void __stdcall SND_fn_vDestroyTimer(long timer);
@@ -83,7 +83,7 @@ enum
     DS3D_DEFERRED = 1,
     DS_NO_VIRTUALIZATION = 0x0878000a
 };
-#define DSERR_INVALIDCALL ((Result)0x88780032)
+#define DSERR_INVALIDCALL ((SoundResult)0x88780032)
 
 #pragma code_seg(".text$V75e000")
 SoundBuffer *__fastcall initialize_sound_buffer(SoundBuffer *self)
@@ -136,7 +136,7 @@ void __fastcall release_sound_buffer(SoundBuffer *self)
 }
 
 #pragma code_seg(".text$V75e0b0")
-Word __fastcall buffer_spatial_mode(SoundBuffer *self)
+SoundDword __fastcall buffer_spatial_mode(SoundBuffer *self)
 {
     return self->spatial_enabled;
 }
@@ -144,7 +144,7 @@ Word __fastcall buffer_spatial_mode(SoundBuffer *self)
 #pragma code_seg(".text$V75e0c0")
 void __fastcall set_buffer_spatial_mode(SoundBuffer *self, float mode_word)
 {
-    Word enabled = ((const StackWord *)&mode_word)->value;
+    SoundDword enabled = ((const StackWord *)&mode_word)->value;
     if (self->spatial_enabled != enabled)
     {
         self->spatial_enabled = enabled;
@@ -156,10 +156,10 @@ void __fastcall set_buffer_spatial_mode(SoundBuffer *self, float mode_word)
 }
 
 #pragma code_seg(".text$V75e0f0")
-Result __fastcall play_sound_buffer(SoundBuffer *self, WordArg reserved, WordArg priority,
+SoundResult __fastcall play_sound_buffer(SoundBuffer *self, WordArg reserved, WordArg priority,
                                     WordArg flags)
 {
-    Result hr;
+    SoundResult hr;
     if (self->buffer)
     {
         hr = self->buffer->methods->play(self->buffer, reserved.value, priority.value, flags.value);
@@ -174,44 +174,44 @@ Result __fastcall play_sound_buffer(SoundBuffer *self, WordArg reserved, WordArg
 }
 
 #pragma code_seg(".text$V75e130")
-Result __fastcall set_buffer_pan(SoundBuffer *self, WordArg value)
+SoundResult __fastcall set_buffer_pan(SoundBuffer *self, WordArg value)
 {
     return self->buffer->methods->set_pan(self->buffer, value.value);
 }
 
 #pragma code_seg(".text$V75e150")
-Result __fastcall set_buffer_volume(SoundBuffer *self, WordArg value)
+SoundResult __fastcall set_buffer_volume(SoundBuffer *self, WordArg value)
 {
     return self->buffer->methods->set_volume(self->buffer, value.value);
 }
 
 #pragma code_seg(".text$V75e170")
-Result __fastcall set_buffer_frequency(SoundBuffer *self, WordArg value)
+SoundResult __fastcall set_buffer_frequency(SoundBuffer *self, WordArg value)
 {
     return self->buffer->methods->set_frequency(self->buffer, value.value);
 }
 
 #pragma code_seg(".text$V75e190")
-Result __fastcall set_buffer_position(SoundBuffer *self, float position_word)
+SoundResult __fastcall set_buffer_position(SoundBuffer *self, float position_word)
 {
-    Word position = ((const StackWord *)&position_word)->value;
+    SoundDword position = ((const StackWord *)&position_word)->value;
     return self->buffer->methods->set_position(self->buffer, position);
 }
 
 #pragma code_seg(".text$V75e1b0")
-Result __fastcall get_buffer_cursors(SoundBuffer *self, OutArg play, OutArg write)
+SoundResult __fastcall get_buffer_cursors(SoundBuffer *self, OutArg play, OutArg write)
 {
     return self->buffer->methods->get_position(self->buffer, play.value, write.value);
 }
 
 #pragma code_seg(".text$V75e1d0")
-Result __fastcall stop_sound_buffer(SoundBuffer *self)
+SoundResult __fastcall stop_sound_buffer(SoundBuffer *self)
 {
     return self->buffer->methods->stop(self->buffer);
 }
 
 #pragma code_seg(".text$V75e1e0")
-Result __fastcall acquire_buffer_resources(SoundBuffer *self, WordArg flags, WordArg count,
+SoundResult __fastcall acquire_buffer_resources(SoundBuffer *self, WordArg flags, WordArg count,
                                            OutArg result)
 {
     return self->buffer->methods->acquire_resources(self->buffer, flags.value, count.value,
@@ -219,7 +219,7 @@ Result __fastcall acquire_buffer_resources(SoundBuffer *self, WordArg flags, Wor
 }
 
 #pragma code_seg(".text$V75e200")
-Result __fastcall get_buffer_status(SoundBuffer *self, OutArg status)
+SoundResult __fastcall get_buffer_status(SoundBuffer *self, OutArg status)
 {
     return self->buffer->methods->get_status(self->buffer, status.value);
 }
