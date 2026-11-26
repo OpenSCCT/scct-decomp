@@ -1,3 +1,5 @@
+#include "sound_buffer_methods.h"
+
 typedef unsigned long SoundDword;
 typedef long SoundResult;
 /* The float formal occupies a stack word; the retail signature consumes its raw bits. */
@@ -65,7 +67,7 @@ struct Unknown
 };
 typedef struct
 {
-    const void *vtable;
+    const void *const *vtable;
     SoundDword played, has_spatial, spatial_enabled, field10;
     DirectSoundBuffer *buffer;
     Spatial *spatial;
@@ -74,7 +76,6 @@ typedef struct
     long timer;
     SoundDword field48, field4c;
 } SoundBuffer;
-extern const char SoundBufferMethods[];
 extern void __stdcall SND_fn_vDestroyTimer(long timer);
 enum
 {
