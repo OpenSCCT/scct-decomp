@@ -88,3 +88,110 @@ extern "C" D3DXVECTOR3 *__stdcall D3DXVec3Hermite(
     pOut->z = h1 * pV1->z + h2 * pT1->z + h3 * pV2->z + h4 * pT2->z;
     return pOut;
 }
+
+/* D3DXVECTOR4 */
+struct D3DXVECTOR4 {
+    float x;
+    float y;
+    float z;
+    float w;
+};
+
+/* D3DXVec3CatmullRom */
+extern "C" D3DXVECTOR3 *__stdcall D3DXVec3CatmullRom(
+    D3DXVECTOR3 *pOut,
+    const D3DXVECTOR3 *pV1,
+    const D3DXVECTOR3 *pV2,
+    const D3DXVECTOR3 *pV3,
+    const D3DXVECTOR3 *pV4,
+    float s)
+{
+    float s2 = s * s;
+    float s3 = s2 * s;
+    float w1 = 2.0f * s2 - s3 - s;
+    float w2 = 3.0f * s3 - 5.0f * s2 + 2.0f;
+    float w3 = 4.0f * s2 - 3.0f * s3 + s;
+    float w4 = s3 - s2;
+
+    pOut->x = (w1 * pV1->x + w2 * pV2->x + w3 * pV3->x + w4 * pV4->x) * 0.5f;
+    pOut->y = (w1 * pV1->y + w2 * pV2->y + w3 * pV3->y + w4 * pV4->y) * 0.5f;
+    pOut->z = (w1 * pV1->z + w2 * pV2->z + w3 * pV3->z + w4 * pV4->z) * 0.5f;
+    return pOut;
+}
+
+/* D3DXVec3BaryCentric */
+extern "C" D3DXVECTOR3 *__stdcall D3DXVec3BaryCentric(
+    D3DXVECTOR3 *pOut,
+    const D3DXVECTOR3 *pV1,
+    const D3DXVECTOR3 *pV2,
+    const D3DXVECTOR3 *pV3,
+    float f,
+    float g)
+{
+    pOut->x = f * (pV2->x - pV1->x) + g * (pV3->x - pV1->x) + pV1->x;
+    pOut->y = f * (pV2->y - pV1->y) + g * (pV3->y - pV1->y) + pV1->y;
+    pOut->z = f * (pV2->z - pV1->z) + g * (pV3->z - pV1->z) + pV1->z;
+    return pOut;
+}
+
+/* D3DXVec4Hermite */
+extern "C" D3DXVECTOR4 *__stdcall D3DXVec4Hermite(
+    D3DXVECTOR4 *pOut,
+    const D3DXVECTOR4 *pV1,
+    const D3DXVECTOR4 *pT1,
+    const D3DXVECTOR4 *pV2,
+    const D3DXVECTOR4 *pT2,
+    float s)
+{
+    float s2 = s * s;
+    float s3 = s2 * s;
+    float h1 = 2.0f * s3 - 3.0f * s2 + 1.0f;
+    float h2 = s3 - 2.0f * s2 + s;
+    float h3 = -2.0f * s3 + 3.0f * s2;
+    float h4 = s3 - s2;
+
+    pOut->x = h1 * pV1->x + h2 * pT1->x + h3 * pV2->x + h4 * pT2->x;
+    pOut->y = h1 * pV1->y + h2 * pT1->y + h3 * pV2->y + h4 * pT2->y;
+    pOut->z = h1 * pV1->z + h2 * pT1->z + h3 * pV2->z + h4 * pT2->z;
+    pOut->w = h1 * pV1->w + h2 * pT1->w + h3 * pV2->w + h4 * pT2->w;
+    return pOut;
+}
+
+/* D3DXVec4CatmullRom */
+extern "C" D3DXVECTOR4 *__stdcall D3DXVec4CatmullRom(
+    D3DXVECTOR4 *pOut,
+    const D3DXVECTOR4 *pV1,
+    const D3DXVECTOR4 *pV2,
+    const D3DXVECTOR4 *pV3,
+    const D3DXVECTOR4 *pV4,
+    float s)
+{
+    float s2 = s * s;
+    float s3 = s2 * s;
+    float w1 = 2.0f * s2 - s3 - s;
+    float w2 = 3.0f * s3 - 5.0f * s2 + 2.0f;
+    float w3 = 4.0f * s2 - 3.0f * s3 + s;
+    float w4 = s3 - s2;
+
+    pOut->x = (w1 * pV1->x + w2 * pV2->x + w3 * pV3->x + w4 * pV4->x) * 0.5f;
+    pOut->y = (w1 * pV1->y + w2 * pV2->y + w3 * pV3->y + w4 * pV4->y) * 0.5f;
+    pOut->z = (w1 * pV1->z + w2 * pV2->z + w3 * pV3->z + w4 * pV4->z) * 0.5f;
+    pOut->w = (w1 * pV1->w + w2 * pV2->w + w3 * pV3->w + w4 * pV4->w) * 0.5f;
+    return pOut;
+}
+
+/* D3DXVec4BaryCentric */
+extern "C" D3DXVECTOR4 *__stdcall D3DXVec4BaryCentric(
+    D3DXVECTOR4 *pOut,
+    const D3DXVECTOR4 *pV1,
+    const D3DXVECTOR4 *pV2,
+    const D3DXVECTOR4 *pV3,
+    float f,
+    float g)
+{
+    pOut->x = f * (pV2->x - pV1->x) + g * (pV3->x - pV1->x) + pV1->x;
+    pOut->y = f * (pV2->y - pV1->y) + g * (pV3->y - pV1->y) + pV1->y;
+    pOut->z = f * (pV2->z - pV1->z) + g * (pV3->z - pV1->z) + pV1->z;
+    pOut->w = f * (pV2->w - pV1->w) + g * (pV3->w - pV1->w) + pV1->w;
+    return pOut;
+}
