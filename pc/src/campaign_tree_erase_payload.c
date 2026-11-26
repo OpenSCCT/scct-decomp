@@ -1,6 +1,6 @@
 struct Tree;
 #include "campaign_three_link_node.h"
-struct Child { struct ThreeLinkNode *ptr; };
+struct PayloadChild { struct ThreeLinkNode *ptr; };
 
 extern void __fastcall destroy_47cf40(void *);
 extern void __fastcall destroy_4acf90(void *);
@@ -8,11 +8,11 @@ extern void *__cdecl prepare_48b460(struct ThreeLinkNode *, unsigned);
 extern void __cdecl release_48b550(void *);
 
 #define ERASE_NODES(Entry, SentinelOffset, Category, Prepare, Release, Destroy) \
-    void __fastcall Entry(struct Tree *tree, struct Child child) \
+    void __fastcall Entry(struct Tree *tree, struct PayloadChild child) \
     { \
         struct ThreeLinkNode *node = child.ptr; \
         while (!*((const unsigned char *)child.ptr + SentinelOffset)) { \
-            struct Child right; \
+            struct PayloadChild right; \
             right.ptr = node->right; \
             Entry(tree,right); \
             node = node->left; \
