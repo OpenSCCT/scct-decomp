@@ -2048,6 +2048,42 @@
     }
   },
   {
+    "id": "app-atoi-3caea0",
+    "offset": 3976864,
+    "size": 5,
+    "rebuilt_symbol": "?appAtoi@@YAHPBG@Z",
+    "inputs": [
+      "src/campaign_app_atoi.cpp",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_app_atoi.obj src/campaign_app_atoi.cpp",
+    "identification": "Function at file offset 0x3caea0, preferred VA 0x10ccaea0. Its five retail bytes tail-jump to VA 0x10f3296f, a CRT forwarder that jumps to the matched __wtol implementation at VA 0x10f32910. The Campaign header declares INT appAtoi(const TCHAR *); four matched script callers bind ?appAtoi@@YAHPBG@Z here, and a matched text parser calls the same entry. Toolkit stdlib.h declares _wtoi, whose 32-bit signed result follows the CRT parser: locale whitespace, one optional sign, decimal wide digits, stop at the first nondigit, zero when no digits, and two's-complement wrap on overflow with no saturation check.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "link_bindings": {
+      "__wtoi": {
+        "va": 284371311,
+        "basis": "Call or jump at +0x1 of ?appAtoi@@YAHPBG@Z gives VA 0x10f3296f, a function-map entry whose five bytes jump to the matched __wtol function at VA 0x10f32910. Toolkit stdlib.h declares _wtoi and its object reference is __wtoi."
+      }
+    },
+    "system_headers": {
+      "stdlib.h": "ae33cc3377ae49f5ca9f711a03ca09c4d53dc30002f4045ef3f025b2ed19d205"
+    },
+    "match": {
+      "bytes_sha256": "2c7956230e4e2b7c69c8c53032956e8dbd421660a6d09fd835ef0614878d14dc",
+      "inputs_sha256": "2ceba88c84f127fe32dbe7fb23b168beb8317171e17bd48bbe46d8f4b35937d2"
+    }
+  },
+  {
     "id": "campaign-leaf-3caec0",
     "offset": 3976896,
     "size": 22,
