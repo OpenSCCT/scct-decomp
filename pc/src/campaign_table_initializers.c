@@ -1,38 +1,38 @@
 #include "campaign_globals.h"
 #include "campaign_table_method_globals.h"
 
-struct Object { const void *const *methods; };
+struct TableInitializerObject { const void *const *methods; };
 
-extern void __fastcall initialize_06a190(struct Object *self);
-extern void __fastcall initialize_0732b0(struct Object *self);
-extern void __fastcall initialize_0b02a0(struct Object *self);
-extern void __fastcall initialize_19fdd0(struct Object *self);
-extern void __fastcall initialize_1a0590(struct Object *self);
-extern void __fastcall initialize_1aabc0(struct Object *self);
-extern void __fastcall initialize_299150(struct Object *self);
-extern void __fastcall initialize_378690(struct Object *self);
-extern void __fastcall initialize_37d200(struct Object *self);
-extern void __fastcall initialize_3d7930(struct Object *self);
-extern void __fastcall initialize_3dc8d0(struct Object *self);
-extern void __fastcall initialize_3e9f70(struct Object *self);
-extern void __fastcall initialize_401c30(struct Object *self);
-extern void __fastcall initialize_4395c0(struct Object *self);
-extern void __fastcall initialize_439660(struct Object *self);
-extern void __fastcall initialize_44e060(struct Object *self);
-extern void __fastcall initialize_44ecc0(struct Object *self);
-extern void __fastcall initialize_461fb0(struct Object *self);
-extern void __fastcall initialize_467460(struct Object *self);
-extern void __fastcall initialize_4a0de0(struct Object *self);
-extern void __fastcall initialize_4a4680(struct Object *self);
-extern void __fastcall initialize_4bd740(struct Object *self);
-extern void __fastcall initialize_4c7f90(struct Object *self);
-extern void __fastcall initialize_4e93b0(struct Object *self);
-extern void __fastcall initialize_4f4710(struct Object *self);
-extern void __fastcall initialize_73a0d0(struct Object *self);
+extern void __fastcall initialize_06a190(struct TableInitializerObject *self);
+extern void __fastcall initialize_0732b0(struct TableInitializerObject *self);
+extern void __fastcall initialize_0b02a0(struct TableInitializerObject *self);
+extern void __fastcall initialize_19fdd0(struct TableInitializerObject *self);
+extern void __fastcall initialize_1a0590(struct TableInitializerObject *self);
+extern void __fastcall initialize_1aabc0(struct TableInitializerObject *self);
+extern void __fastcall initialize_299150(struct TableInitializerObject *self);
+extern void __fastcall initialize_378690(struct TableInitializerObject *self);
+extern void __fastcall initialize_37d200(struct TableInitializerObject *self);
+extern void __fastcall initialize_3d7930(struct TableInitializerObject *self);
+extern void __fastcall initialize_3dc8d0(struct TableInitializerObject *self);
+extern void __fastcall initialize_3e9f70(struct TableInitializerObject *self);
+extern void __fastcall initialize_401c30(struct TableInitializerObject *self);
+extern void __fastcall initialize_4395c0(struct TableInitializerObject *self);
+extern void __fastcall initialize_439660(struct TableInitializerObject *self);
+extern void __fastcall initialize_44e060(struct TableInitializerObject *self);
+extern void __fastcall initialize_44ecc0(struct TableInitializerObject *self);
+extern void __fastcall initialize_461fb0(struct TableInitializerObject *self);
+extern void __fastcall initialize_467460(struct TableInitializerObject *self);
+extern void __fastcall initialize_4a0de0(struct TableInitializerObject *self);
+extern void __fastcall initialize_4a4680(struct TableInitializerObject *self);
+extern void __fastcall initialize_4bd740(struct TableInitializerObject *self);
+extern void __fastcall initialize_4c7f90(struct TableInitializerObject *self);
+extern void __fastcall initialize_4e93b0(struct TableInitializerObject *self);
+extern void __fastcall initialize_4f4710(struct TableInitializerObject *self);
+extern void __fastcall initialize_73a0d0(struct TableInitializerObject *self);
 
 
 #define INITIALIZE(Entry, Base, Methods) \
-    struct Object *__fastcall Entry(struct Object *self) \
+    struct TableInitializerObject *__fastcall Entry(struct TableInitializerObject *self) \
     { \
         Base(self); \
         self->methods = Methods; \
