@@ -11,7 +11,7 @@ struct NamedRecord {
     unsigned header[3];
     struct StringStorage name;
 };
-struct Flags { unsigned value; };
+struct StringDeleteFlags { unsigned value; };
 extern void __cdecl release(void *);
 extern void __cdecl release_record(void *);
 
@@ -23,14 +23,14 @@ static __inline void tidy(struct StringStorage *text)
     *(text->reserved < 16 ? text->bx.buffer : text->bx.pointer) = 0;
 }
 
-struct StringStorage *__fastcall delete_string(struct StringStorage *self, struct Flags flags)
+struct StringStorage *__fastcall delete_string(struct StringStorage *self, struct StringDeleteFlags flags)
 {
     tidy(self);
     if (flags.value & 1) release(self);
     return self;
 }
 
-struct NamedRecord *__fastcall delete_named_record(struct NamedRecord *self, struct Flags flags)
+struct NamedRecord *__fastcall delete_named_record(struct NamedRecord *self, struct StringDeleteFlags flags)
 {
     tidy(&self->name);
     if (flags.value & 1) release_record(self);
