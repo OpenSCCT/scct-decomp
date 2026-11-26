@@ -811,7 +811,10 @@ class ASPAWNDEFENSE : public ASBasePawn {
 public:
     virtual ~ASPAWNDEFENSE();
 
-    BYTE unk_b60[0x20];
+    BYTE  unk_b60[0x0c];
+    FLOAT unk_b6c;
+    FLOAT unk_b70;
+    BYTE  unk_b74[0x0c];
 };
 
 // SBase.SPhosphoEmitter: 0x37c bytes, 81 virtual functions
