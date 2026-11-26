@@ -49,12 +49,12 @@ class SystemHeaderTests(unittest.TestCase):
 
     def test_headers_read_are_keyed_under_include_and_hashed_as_inputs(self):
         with tempfile.TemporaryDirectory() as tmp:
-            tool = Toolchain(Path(tmp) / "tk", {"vector": b"v\r\n", "sys/types.h": b"t\n"})
+            tool = Toolchain(Path(tmp) / "tk", {"VECTOR": b"v\r\n", "sys/types.h": b"t\n"})
             build = Path(tmp) / "build"
             (build / "src").mkdir(parents=True)
             (build / "src" / "a.h").write_bytes(b"")
             read = verify_build.system_headers_read(
-                [str(tool.include / "VECTOR"), str(tool.include) + "\\sys\\types.h", "src/a.h"],
+                [str(tool.include / "VECTOR"), str(tool.include / "sys" / "types.h"), "src/a.h"],
                 tool.include.resolve(), build.resolve())
             self.assertEqual(read, {"sys/types.h": sha(b"t\n"), "vector": sha(b"v\n")})
 
