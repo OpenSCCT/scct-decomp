@@ -137,23 +137,17 @@ struct FCoords {
 
     FCoords &operator/=(const FRotator &R);
 #ifdef SCCT_VERSUS
-    FCoords operator/(const FRotator &R) const; // out-of-line Versus helper at RVA 0x40f40
-    FCoords operator*(const FRotator &R) const; // Versus helper at RVA 0x411a0
+    FCoords operator*(const FRotator &R) const; // Versus helper at RVA 0x40f40
+    FCoords operator/(const FRotator &R) const; // Versus helper at RVA 0x411a0
 #else
     FCoords operator/(const FRotator &R) const { return FCoords(*this) /= R; }
 #endif
 };
 
 #ifdef SCCT_VERSUS
-// UnMath.h helper used by the inline vector transform in the Versus build.
+// UnMath.h helper used by Versus vector transformations.
 void ASMTransformVector(const FCoords &Coords, const FVector &InVector, FVector &OutVector);
 
-inline FVector FVector::TransformVectorBy(const FCoords &Coords) const
-{
-    FVector Temp;
-    ASMTransformVector(Coords, *this, Temp);
-    return Temp;
-}
 #endif
 
 struct FGlobalMath {
