@@ -1,50 +1,50 @@
 #include "campaign_list_link.h"
-struct List { unsigned reserved; struct ListLink *head; unsigned count; };
+struct ListInitializationTarget { unsigned reserved; struct ListLink *head; unsigned count; };
 
-extern struct ListLink *__fastcall make_head_05f4c0(struct List *self);
-extern struct ListLink *__fastcall make_head_1dbdd0(struct List *self);
-extern struct ListLink *__fastcall make_head_2042a0(struct List *self);
-extern struct ListLink *__fastcall make_head_204340(struct List *self);
-extern struct ListLink *__fastcall make_head_2082f0(struct List *self);
-extern struct ListLink *__fastcall make_head_208390(struct List *self);
-extern struct ListLink *__fastcall make_head_208440(struct List *self);
-extern struct ListLink *__fastcall make_head_2084e0(struct List *self);
-extern struct ListLink *__fastcall make_head_23cae0(struct List *self);
-extern struct ListLink *__fastcall make_head_480c50(struct List *self);
-extern struct ListLink *__fastcall make_head_480cf0(struct List *self);
-extern struct ListLink *__fastcall make_head_480d90(struct List *self);
-extern struct ListLink *__fastcall make_head_48c210(struct List *self);
-extern struct ListLink *__fastcall make_head_48c340(struct List *self);
-extern struct ListLink *__fastcall make_head_494580(struct List *self);
-extern struct ListLink *__fastcall make_head_494650(struct List *self);
-extern struct ListLink *__fastcall make_head_49aa40(struct List *self);
-extern struct ListLink *__fastcall make_head_4a1350(struct List *self);
-extern struct ListLink *__fastcall make_head_4a13f0(struct List *self);
-extern struct ListLink *__fastcall make_head_4a7ef0(struct List *self);
-extern struct ListLink *__fastcall make_head_4b1af0(struct List *self);
-extern struct ListLink *__fastcall make_head_4b6820(struct List *self);
-extern struct ListLink *__fastcall make_head_4b94d0(struct List *self);
-extern struct ListLink *__fastcall make_head_4b95b0(struct List *self);
-extern struct ListLink *__fastcall make_head_4ba130(struct List *self);
-extern struct ListLink *__fastcall make_head_4bdef0(struct List *self);
-extern struct ListLink *__fastcall make_head_4c2a10(struct List *self);
-extern struct ListLink *__fastcall make_head_4c56a0(struct List *self);
-extern struct ListLink *__fastcall make_head_4c6b90(struct List *self);
-extern struct ListLink *__fastcall make_head_4cd270(struct List *self);
-extern struct ListLink *__fastcall make_head_4cf200(struct List *self);
-extern struct ListLink *__fastcall make_head_4d6030(struct List *self);
-extern struct ListLink *__fastcall make_head_4db5a0(struct List *self);
-extern struct ListLink *__fastcall make_head_4dd000(struct List *self);
-extern struct ListLink *__fastcall make_head_4dde10(struct List *self);
-extern struct ListLink *__fastcall make_head_4e2df0(struct List *self);
-extern struct ListLink *__fastcall make_head_4e2ec0(struct List *self);
-extern struct ListLink *__fastcall make_head_4e4980(struct List *self);
-extern struct ListLink *__fastcall make_head_4e6c40(struct List *self);
-extern struct ListLink *__fastcall make_head_4f7830(struct List *self);
-extern struct ListLink *__fastcall make_head_73aa40(struct List *self);
+extern struct ListLink *__fastcall make_head_05f4c0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_1dbdd0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_2042a0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_204340(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_2082f0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_208390(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_208440(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_2084e0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_23cae0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_480c50(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_480cf0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_480d90(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_48c210(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_48c340(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_494580(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_494650(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_49aa40(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4a1350(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4a13f0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4a7ef0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4b1af0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4b6820(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4b94d0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4b95b0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4ba130(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4bdef0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4c2a10(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4c56a0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4c6b90(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4cd270(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4cf200(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4d6030(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4db5a0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4dd000(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4dde10(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4e2df0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4e2ec0(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4e4980(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4e6c40(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_4f7830(struct ListInitializationTarget *self);
+extern struct ListLink *__fastcall make_head_73aa40(struct ListInitializationTarget *self);
 
 #define INITIALIZE_LIST(Entry, MakeHead) \
-    struct List *__fastcall Entry(struct List *self) \
+    struct ListInitializationTarget *__fastcall Entry(struct ListInitializationTarget *self) \
     { \
         self->head = MakeHead(self); \
         self->count = 0; \
