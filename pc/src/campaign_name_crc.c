@@ -1,6 +1,8 @@
+/* campaign_name_crc.c -- reflected CRC-32 for Campaign names */
 #include "campaign_globals.h"
 #include "campaign_name_crc.h"
 
+/* name_crc */
 unsigned *__cdecl name_crc(unsigned *destination, const char *name)
 {
     unsigned checksum;
