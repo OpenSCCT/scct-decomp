@@ -1,7 +1,7 @@
+#include "campaign_global_1131a5d0.h"
+
 // campaign_leaf_469640.cpp -- thiscall at VA 0x10d69640: calls the stdcall function pointer at
 // VA 0x1131a5d0 with the dword at offset 0 and its argument. All names are invented.
-
-extern int (__stdcall* GUnk_1131a5d0)(int, int);
 
 class UnkType_10d69640
 {
