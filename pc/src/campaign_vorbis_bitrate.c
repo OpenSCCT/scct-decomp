@@ -88,57 +88,8 @@ extern "C" {
 #define _ogg_free    free
 #include "campaign_ogg_integer_types.h"
 
-#ifdef _WIN32
-
-#  ifndef __GNUC__
-   /* MSVC/Borland */
-   typedef __int32 ogg_int32_t;
-   typedef __int16 ogg_int16_t;
-#  else
-   /* Cygwin */
-/* #include <_G_config.h> : declarations supplied by the prelude */
-   typedef _G_int32_t ogg_int32_t;
-   typedef _G_int16_t ogg_int16_t;
-#  endif
-
-#elif defined(__MACOS__)
-
-/* #  include <sys/types.h> : declarations supplied by the prelude */
-   typedef SInt16 ogg_int16_t;
-   typedef SInt32 ogg_int32_t;
-#elif defined(__MACOSX__) /* MacOS X Framework build */
-
-/* #  include <sys/types.h> : declarations supplied by the prelude */
-   typedef int16_t ogg_int16_t;
-   typedef int32_t ogg_int32_t;
-#elif defined(__BEOS__)
-
-   /* Be */
-/* #  include <inttypes.h> : declarations supplied by the prelude */
-   typedef int16_t ogg_int16_t;
-   typedef int32_t ogg_int32_t;
-#elif defined (__EMX__)
-
-   /* OS/2 GCC */
-   typedef short ogg_int16_t;
-   typedef int ogg_int32_t;
-#else
-
-/* #  include <sys/types.h> : declarations supplied by the prelude */
-/* ---- ogg/config_types.h ---- */
-#ifndef __CONFIG_TYPES_H__
-#define __CONFIG_TYPES_H__
-
-/* these are filled in by configure */
-typedef int16_t ogg_int16_t;
-typedef int32_t ogg_int32_t;
-#endif
-
-/* ---- end ogg/config_types.h ---- */
-
-#endif
-
 #endif  /* _OS_TYPES_H */
+#include "campaign_vorbis_fpu_types.h"
 
 /* ---- end ogg/os_types.h ---- */
 
@@ -1430,7 +1381,6 @@ extern void _VDBG_free(void *ptr,char *file,long line);
 
 /* we must set up the fpu before this works!! */
 
-typedef ogg_int16_t vorbis_fpu_control;
 
 static inline void vorbis_fpu_setround(vorbis_fpu_control *fpu){
   ogg_int16_t ret;
@@ -1461,7 +1411,6 @@ static inline int vorbis_ftoi(double f){  /* yes, double!  Otherwise,
 #if defined(_WIN32) && !defined(__GNUC__) && !defined(__BORLANDC__)
 #  define VORBIS_FPU_CONTROL
 
-typedef ogg_int16_t vorbis_fpu_control;
 
 static __inline int vorbis_ftoi(double f){
         int i;
@@ -1483,7 +1432,6 @@ static __inline void vorbis_fpu_restore(vorbis_fpu_control fpu){
 
 #ifndef VORBIS_FPU_CONTROL
 
-typedef int vorbis_fpu_control;
 
 static int vorbis_ftoi(double f){
   return (int)(f+.5);
