@@ -1,20 +1,20 @@
 #include "campaign_class_singletons.h"
 
 struct RuntimeClass;
-/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
-   named by offset and only push later members into place. */
+/* FAKEMATCH: this C vtable view skips the first twenty UObject slots, including
+   ProcessEvent and Destroy, to reach the registration call at +0x50. */
 struct ClassMethods {
-    void *prefix[0x50 / 4];
+    void *unk_0000[0x50 / 4];
     void (__fastcall *register_class)(struct RuntimeClass *);
 };
-/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
-   named by offset and only push later members into place. */
+/* FAKEMATCH: these byte arrays hide known UObject fields and UClass::ClassFlags
+   within the abbreviated C view of the class descriptor. */
 struct RuntimeClass {
     const struct ClassMethods *methods;
-    unsigned char object_fields[0x24 - 4];
+    unsigned char unk_0004[0x24 - 4];
     struct RuntimeClass *object_class;
     struct RuntimeClass *super_class;
-    unsigned char class_fields[0x28c - 0x2c];
+    unsigned char unk_002c[0x28c - 0x2c];
     struct RuntimeClass *within;
 };
 

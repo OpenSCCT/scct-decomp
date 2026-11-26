@@ -1,6 +1,8 @@
 // Work item 0320: UWindowsViewport methods (RVA 0x10aaa0-0x10aee3).
 // Names follow Unreal Engine 2 (UWindowsViewport vtable slots 10 and 37);
 // fields without evidence for a name keep their offset.
+#include "versus_render_device.h"
+
 typedef int INT;
 typedef unsigned long DWORD;
 typedef DWORD UBOOL;
@@ -77,48 +79,6 @@ public:
     virtual void Slot47();
     virtual void Slot48();
     virtual class UViewport *GetViewport();
-};
-
-// Render device: slot 3 is the virtual destructor.
-class URenderDevice
-{
-public:
-    virtual void Slot00();
-    virtual void Slot01();
-    virtual void Slot02();
-    virtual ~URenderDevice();
-    virtual void Slot04();
-    virtual void Slot05();
-    virtual void Slot06();
-    virtual void Slot07();
-    virtual void Slot08();
-    virtual void Slot09();
-    virtual void Slot10();
-    virtual void Slot11();
-    virtual void Slot12();
-    virtual void Slot13();
-    virtual void Slot14();
-    virtual void Slot15();
-    virtual void Slot16();
-    virtual void Slot17();
-    virtual void Slot18();
-    virtual void Slot19();
-    virtual void Slot20();
-    virtual void Slot21();
-    virtual void Slot22();
-    virtual void Slot23();
-    virtual void Slot24();
-    virtual void Slot25();
-    virtual void Slot26();
-    virtual void Slot27();
-    virtual void Slot28();
-    virtual void UnSetRes(class UViewport *Viewport);
-    virtual void Slot30();
-    virtual void Slot31();
-    virtual void Slot32();
-    virtual void Slot33();
-    virtual void Slot34();
-    virtual INT Lock(class UViewport *Viewport, BYTE *HitData, INT *HitSize);
 };
 
 class UDeletable
@@ -302,7 +262,7 @@ public:
     BYTE Padcc[0x130 - 0xcc];
     DOUBLE LastLockTime;           // 0x130
     BYTE Pad138[0x140 - 0x138];
-    INT LockResult;                // 0x140
+    FRenderInterface *RenderInterface; // 0x140, returned by the render device's Lock
     BYTE Pad144[0x148 - 0x144];
     BYTE bLocked;                  // 0x148
     BYTE Pad149[0x154 - 0x149];
@@ -375,9 +335,9 @@ UBOOL UWindowsViewport::Lock(BYTE *HitData, INT *HitSize)
     LastLockTime = appSeconds();
     bHitTesting = HitData != 0;
     LockCount++;
-    LockResult = RenDev->Lock(this, HitData, HitSize);
+    RenderInterface = RenDev->Lock(this, HitData, HitSize);
     bLocked = 1;
-    return LockResult != 0;
+    return RenderInterface != 0;
 }
 
 // Scaffolding for the link, not part of the unit: the local object emits the

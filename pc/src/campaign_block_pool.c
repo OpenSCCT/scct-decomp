@@ -1,21 +1,23 @@
-struct Block { void *first, *limit; unsigned references, reserved; };
-struct Blocks { unsigned reserved; struct Block *begin, *end, *capacity; };
-struct Pointer { void *value; };
-static __forceinline unsigned count(const struct Blocks *blocks)
+struct BlockPoolBlock { void *first, *limit; unsigned references, reserved; };
+struct BlockPoolRanges { unsigned reserved; struct BlockPoolBlock *begin, *end, *capacity; };
+/* FAKEMATCH: the pool method takes the address on the stack with its receiver in ECX.
+   This one-member aggregate forces that calling convention in the C declaration. */
+struct BlockPoolPointer { void *value; };
+static __forceinline unsigned count(const struct BlockPoolRanges *blocks)
 {
     return blocks->begin ? (unsigned)(blocks->end - blocks->begin) : 0;
 }
 
 #define POP_BLOCK(Entry) \
-void __fastcall Entry(struct Blocks *blocks) \
+void __fastcall Entry(struct BlockPoolRanges *blocks) \
 { \
     if (count(blocks)) --blocks->end; \
 }
 
 #define CONTAINS_POINTER(Entry) \
-unsigned char __fastcall Entry(struct Blocks *blocks, struct Pointer pointer) \
+unsigned char __fastcall Entry(struct BlockPoolRanges *blocks, struct BlockPoolPointer pointer) \
 { \
-    struct Block *last; \
+    struct BlockPoolBlock *last; \
     if (!count(blocks)) return 0; \
     last = blocks->end - 1; \
     return (unsigned)pointer.value >= (unsigned)last->first && (unsigned)pointer.value < (unsigned)last->limit; \
@@ -24,100 +26,100 @@ unsigned char __fastcall Entry(struct Blocks *blocks, struct Pointer pointer) \
 #define RELEASE_ADDRESS(Entry, Pool, Contains, Drop, Free) \
     void __cdecl Entry(void *address) \
     { \
-        struct Pointer pointer; \
+        struct BlockPoolPointer pointer; \
         pointer.value = address; \
         if (Contains(&Pool, pointer)) Drop(&Pool, pointer); \
         else Free(address); \
     }
 
-extern struct Blocks pool_90b6c4;
-extern struct Blocks pool_923a04;
-extern struct Blocks pool_a17b08;
-extern struct Blocks pool_a17b44;
-extern struct Blocks pool_a17b80;
-extern struct Blocks pool_a17bbc;
-extern struct Blocks pool_a17c24;
-extern struct Blocks pool_a17c60;
-extern struct Blocks pool_a17e64;
-extern struct Blocks pool_a17ea0;
-extern struct Blocks pool_a17eb4;
-extern struct Blocks pool_a17ec8;
-extern struct Blocks pool_a17edc;
-extern struct Blocks pool_a18020;
-extern struct Blocks pool_a1a0b0;
-extern struct Blocks pool_a1a0ec;
-extern struct Blocks pool_a1a128;
-extern struct Blocks pool_a1a1e0;
-extern struct Blocks pool_a1a21c;
-extern struct Blocks pool_a1a258;
-extern struct Blocks pool_a1a294;
-extern struct Blocks pool_a1a2d0;
-extern struct Blocks pool_a1a30c;
-extern struct Blocks pool_a1a348;
-extern struct Blocks pool_a1a384;
-extern struct Blocks pool_a1a3fc;
-extern struct Blocks pool_a1a488;
-extern struct Blocks pool_a1a4c4;
-extern struct Blocks pool_a1a500;
-extern unsigned char __fastcall test_block_2133f0(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_213f90(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_427c40(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_427e20(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_428020(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_42fab0(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_430fd0(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_432b10(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_434200(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_435400(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_437dd0(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_43a4d0(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_43a620(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_43a770(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_44e210(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_44ed40(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_45b920(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_45d870(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_460710(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_461190(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_462140(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_462480(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_463b70(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_463e70(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_4641e0(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_465050(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_465e60(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_466140(struct Blocks *, struct Pointer);
-extern unsigned char __fastcall test_block_4666d0(struct Blocks *, struct Pointer);
+extern struct BlockPoolRanges pool_90b6c4;
+extern struct BlockPoolRanges pool_923a04;
+extern struct BlockPoolRanges pool_a17b08;
+extern struct BlockPoolRanges pool_a17b44;
+extern struct BlockPoolRanges pool_a17b80;
+extern struct BlockPoolRanges pool_a17bbc;
+extern struct BlockPoolRanges pool_a17c24;
+extern struct BlockPoolRanges pool_a17c60;
+extern struct BlockPoolRanges pool_a17e64;
+extern struct BlockPoolRanges pool_a17ea0;
+extern struct BlockPoolRanges pool_a17eb4;
+extern struct BlockPoolRanges pool_a17ec8;
+extern struct BlockPoolRanges pool_a17edc;
+extern struct BlockPoolRanges pool_a18020;
+extern struct BlockPoolRanges pool_a1a0b0;
+extern struct BlockPoolRanges pool_a1a0ec;
+extern struct BlockPoolRanges pool_a1a128;
+extern struct BlockPoolRanges pool_a1a1e0;
+extern struct BlockPoolRanges pool_a1a21c;
+extern struct BlockPoolRanges pool_a1a258;
+extern struct BlockPoolRanges pool_a1a294;
+extern struct BlockPoolRanges pool_a1a2d0;
+extern struct BlockPoolRanges pool_a1a30c;
+extern struct BlockPoolRanges pool_a1a348;
+extern struct BlockPoolRanges pool_a1a384;
+extern struct BlockPoolRanges pool_a1a3fc;
+extern struct BlockPoolRanges pool_a1a488;
+extern struct BlockPoolRanges pool_a1a4c4;
+extern struct BlockPoolRanges pool_a1a500;
+extern unsigned char __fastcall test_block_2133f0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_213f90(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_427c40(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_427e20(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_428020(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_42fab0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_430fd0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_432b10(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_434200(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_435400(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_437dd0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_43a4d0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_43a620(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_43a770(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_44e210(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_44ed40(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_45b920(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_45d870(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_460710(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_461190(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_462140(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_462480(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_463b70(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_463e70(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_4641e0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_465050(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_465e60(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_466140(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern unsigned char __fastcall test_block_4666d0(struct BlockPoolRanges *, struct BlockPoolPointer);
 extern void __cdecl free_1dd0d0(void *);
-extern void __fastcall drop_213430(struct Blocks *, struct Pointer);
-extern void __fastcall drop_213fd0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_427c80(struct Blocks *, struct Pointer);
-extern void __fastcall drop_427e60(struct Blocks *, struct Pointer);
-extern void __fastcall drop_428060(struct Blocks *, struct Pointer);
-extern void __fastcall drop_42faf0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_431010(struct Blocks *, struct Pointer);
-extern void __fastcall drop_432b50(struct Blocks *, struct Pointer);
-extern void __fastcall drop_434240(struct Blocks *, struct Pointer);
-extern void __fastcall drop_435440(struct Blocks *, struct Pointer);
-extern void __fastcall drop_437e10(struct Blocks *, struct Pointer);
-extern void __fastcall drop_43a510(struct Blocks *, struct Pointer);
-extern void __fastcall drop_43a660(struct Blocks *, struct Pointer);
-extern void __fastcall drop_43a7b0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_44e250(struct Blocks *, struct Pointer);
-extern void __fastcall drop_44ed80(struct Blocks *, struct Pointer);
-extern void __fastcall drop_45b960(struct Blocks *, struct Pointer);
-extern void __fastcall drop_45d8b0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_460750(struct Blocks *, struct Pointer);
-extern void __fastcall drop_4611d0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_462180(struct Blocks *, struct Pointer);
-extern void __fastcall drop_4624c0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_463bb0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_463eb0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_464220(struct Blocks *, struct Pointer);
-extern void __fastcall drop_465090(struct Blocks *, struct Pointer);
-extern void __fastcall drop_465ea0(struct Blocks *, struct Pointer);
-extern void __fastcall drop_466180(struct Blocks *, struct Pointer);
-extern void __fastcall drop_466710(struct Blocks *, struct Pointer);
+extern void __fastcall drop_213430(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_213fd0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_427c80(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_427e60(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_428060(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_42faf0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_431010(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_432b50(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_434240(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_435440(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_437e10(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_43a510(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_43a660(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_43a7b0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_44e250(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_44ed80(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_45b960(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_45d8b0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_460750(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_4611d0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_462180(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_4624c0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_463bb0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_463eb0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_464220(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_465090(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_465ea0(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_466180(struct BlockPoolRanges *, struct BlockPoolPointer);
+extern void __fastcall drop_466710(struct BlockPoolRanges *, struct BlockPoolPointer);
 
 CONTAINS_POINTER(contains_1dd8e0)
 POP_BLOCK(pop_1dd960)

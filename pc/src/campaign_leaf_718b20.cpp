@@ -4,16 +4,12 @@
 // 0x10, the float 0.01 at 0x0 and a zero byte at 0x4. The class and function names are invented;
 // the offsets and the callee's address are the binary's.
 
+#include "campaign_leaf_718b20_base.h"
+
 inline void* operator new(unsigned int Size, void* Place)
 {
     return Place;
 }
-
-class UnkType_11018b20_Base
-{
-public:
-    UnkType_11018b20_Base();
-};
 
 class UnkType_11018b20 : public UnkType_11018b20_Base
 {

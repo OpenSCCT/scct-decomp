@@ -1,9 +1,9 @@
-#include "campaign_color_node.h"
-struct Tree { struct ColorNode *head; unsigned count; };
-struct Position { struct ColorNode *node; };
-struct Output { struct Position *out; };
+#include "campaign_color_tree.h"
+struct ColorTreePosition { struct ColorNode *node; };
+/* FAKEMATCH: this C wrapper passes the hidden result address of the member returning an iterator. */
+struct ColorTreeOutput { struct ColorTreePosition *out; };
 #define TREE_EDGE(Name, Value) \
-    struct Position *__fastcall Name(struct Tree *tree, struct Output result) \
+    struct ColorTreePosition *__fastcall Name(struct ColorTree *tree, struct ColorTreeOutput result) \
     { \
         result.out->node = Value; \
         return result.out; \

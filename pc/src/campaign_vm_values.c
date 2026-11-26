@@ -1,6 +1,6 @@
 #include "campaign_vm_frame.h"
 
-typedef struct Vector {float x,y,z;} Vector;
+typedef struct VmVector {float x,y,z;} VmVector;
 typedef struct Rotator {int pitch,yaw,roll;} Rotator;
 typedef struct ScriptNode {
     unsigned char opaque[0x50];
@@ -20,7 +20,7 @@ static __forceinline int read_int(Frame *frame)
         *result = (conversion); \
     }
 
-HANDLER(execSelf, Object *)
+HANDLER(execSelf, struct ScriptObject *)
 {
     *result = self;
 }
@@ -42,10 +42,10 @@ HANDLER(execFloatConst, float)
     *result = value;
 }
 
-HANDLER(execVectorConst, Vector)
+HANDLER(execVectorConst, VmVector)
 {
-    *result = *(const Vector *)frame->code;
-    frame->code += sizeof(Vector);
+    *result = *(const VmVector *)frame->code;
+    frame->code += sizeof(VmVector);
 }
 
 HANDLER(execRotationConst, Rotator)
@@ -98,7 +98,7 @@ CAST_VALUE(execBoolToFloat, int, float, (float)(value & 1))
 CAST_VALUE(execFloatToByte, float, unsigned char, (unsigned char)value)
 CAST_VALUE(execFloatToInt, float, int, (int)value)
 CAST_VALUE(execFloatToBool, float, int, value != 0.0f)
-CAST_VALUE(execObjectToBool, Object *, int, value != 0)
+CAST_VALUE(execObjectToBool, struct ScriptObject *, int, value != 0)
 CAST_VALUE(execNameToBool, int, int, value != 0)
 
 HANDLER(execJump, void)

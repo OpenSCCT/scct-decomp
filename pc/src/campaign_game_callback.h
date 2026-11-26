@@ -1,10 +1,10 @@
 #include "campaign_vm_frame.h"
 
-typedef void (__fastcall *ObjectMethod)(Object *);
+typedef void (__fastcall *ObjectMethod)(struct ScriptObject *);
 typedef void (__cdecl *StaticMethod)(void);
 
 #define SCRIPT_COMMAND(name)                                            \
-    void __fastcall native_##name(Object *);                            \
+    void __fastcall native_##name(struct ScriptObject *);                \
     HANDLER(exec_##name, void)                                          \
     {                                                                   \
         finish_arguments(frame);                                        \
@@ -12,7 +12,7 @@ typedef void (__cdecl *StaticMethod)(void);
     }
 
 #define SCRIPT_QUERY(name, type)                                        \
-    type __fastcall native_##name(Object *);                            \
+    type __fastcall native_##name(struct ScriptObject *);                \
     HANDLER(exec_##name, type)                                          \
     {                                                                   \
         finish_arguments(frame);                                        \

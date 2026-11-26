@@ -39,7 +39,8 @@
     "offset": 5441680,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_530890@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -53,7 +54,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 2-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "41079970d3c7c27ac4359630e2726ff40a8ed895519ca35c756e2d8f226bc77e",
-      "inputs_sha256": "d7e2ae5c46941e52770a05f03a87f2d828930bfe02a5e38d36e553f58d2730a0"
+      "inputs_sha256": "3ed53ef3ba9658ff7185b1ce63ba546c71c47a36cdccafebaefeb6b6ab0736f1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -105,7 +106,8 @@
     "offset": 5441952,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_5309a0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -127,7 +129,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 2-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "8b2bd30d6099bb2fcda02d2b4934b248000da948cf6760a1e3543560c642e9bd",
-      "inputs_sha256": "3f4dd1100e1697bb21fd5df9dd7142c9f1625a788ac258e39779aade127c1156"
+      "inputs_sha256": "a7a09d57b43a3ad08a18bcac2b9804fe0fd2140b55758cfcddd8dcc8d8c1064c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -144,7 +146,8 @@
     "offset": 5443872,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_531120@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -166,7 +169,7 @@
     "identification": "Read-only method pointer at RVA 0x84b024. Releases owned storage at member offset 12 for 2-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "83d0753e7c02b21cfbcc0d51856b0166818b7dbf3c39cc120fff03fb587b4225",
-      "inputs_sha256": "2e3e4537420004da49e724c972ef810295c3f9540b82f1808be286a46f3cbfc4"
+      "inputs_sha256": "232ec4aba73ec9b750172acb627897f03e976bed29767100ddd3d6a8cfb5e4ac"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -183,7 +186,8 @@
     "offset": 5444512,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_5313a0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -205,7 +209,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 2-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "8b2bd30d6099bb2fcda02d2b4934b248000da948cf6760a1e3543560c642e9bd",
-      "inputs_sha256": "e9fc1011bd30e5340b4fd540dafe1a5a37ab6039c4cef74ecf0f77c99d8cb0b6"
+      "inputs_sha256": "6573168641676b46e0178ee8948f8e1dfc90efc27e460bb9da32f7d4b3cf5a0b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -232,10 +236,10 @@
         "basis": "Direct call to indexed forward-order method at RVA 0x5309e0; outer method exchanges the first two arguments."
       }
     },
-    "identification": "Aligned reversed collision method at RVA 0x531420; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16.",
+    "identification": "Aligned reversed collision method at RVA 0x531420; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16. The local type name ContactOutput is analyst-invented; it describes the wrapper holding the contact array.",
     "match": {
       "bytes_sha256": "840ac85a0b33ae58e32e1d5d77f83624243c81d2c6bb6d1443d6beb92691496e",
-      "inputs_sha256": "67ff70ce59d3997b5be65db78ef3e2605bb6ef30b32b72979b1b3a8200969e3f"
+      "inputs_sha256": "e42a291fa1c9bebbae7085a2075bbd9a98dbe22537fdabeda6fe9be3f2ea31f6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -252,7 +256,8 @@
     "offset": 5444880,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_531510@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -274,7 +279,7 @@
     "identification": "Read-only method pointer at RVA 0x84b044. Releases owned storage at member offset 12 for 2-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "83d0753e7c02b21cfbcc0d51856b0166818b7dbf3c39cc120fff03fb587b4225",
-      "inputs_sha256": "0255e1f51f0059af6d7aa4aad5eae079e71227611ea9e8fb178847a0e4a6540f"
+      "inputs_sha256": "c4247798eecaa23da0c9fc77e46b34a6eaf018addbc1cabefc6c71c7b31a438f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -387,7 +392,8 @@
     "offset": 5445584,
     "inputs": [
       "src/campaign_array_storage_binding.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@use_buffer@20",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -395,7 +401,7 @@
     "identification": "Complete Campaign method at RVA 0x5317d0. Sets the data pointer and size, and marks the supplied capacity as externally owned. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "b87abc9aa220dba7b3a9c8741ecd0fc59ecb279624b5e472d975b8f04d3f1abd",
-      "inputs_sha256": "52155ed401771e794927053f035ddb33d70db84a1d61a858b995f7c4592e9ad8"
+      "inputs_sha256": "07178d3fbfed3f79652e9e9323f3a0189a5110e94efb5003eb31b684789a584e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -573,7 +579,8 @@
     "offset": 5446656,
     "inputs": [
       "src/campaign_physics_array_reserve.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reserve_531c00@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -587,7 +594,7 @@
     "identification": "Aligned entry bounded by a previous return and INT3 padding. Grows capacity to the greater of the requested count and double the current capacity, using 4-byte elements. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "658481f31e3baa709fd0f5f3dd69950b278cd1bcc65eb187e54e3c75cdc258bf",
-      "inputs_sha256": "7fa269bf553b8aa5b120bfa6f1427921b7b20f76f2d363036a6d8118036b968f"
+      "inputs_sha256": "dc736d1dffcd73cc61cd90f1e318bf8586d4ea99a5e9cbb84cff34392a147715"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -604,7 +611,8 @@
     "offset": 5446704,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_531c30@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -618,7 +626,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 4-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d47cb30c172d601f64754ebab20ad1587ff1b99aac997e5f21183d6b1d24d0a2",
-      "inputs_sha256": "59060284f6dfd781efe5513b515946a9033884bf829088aa6f28245e86f79c78"
+      "inputs_sha256": "5cc448e9d8440c6f53822adc5d44e150df4996936f72fee130dfd26dc993c99d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -635,7 +643,8 @@
     "offset": 5446752,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_531c60@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -649,7 +658,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 4-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d47cb30c172d601f64754ebab20ad1587ff1b99aac997e5f21183d6b1d24d0a2",
-      "inputs_sha256": "35490f77fb5abd2ba5ef04ced0a047a183af3f36081f30783512f9f43bdbbf91"
+      "inputs_sha256": "683c4d6b8c57bcd376ed9cbfdc65feb8f5b9d22ffd0a033c211853cfcfad51b4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -666,7 +675,8 @@
     "offset": 5446848,
     "inputs": [
       "src/campaign_array_storage_binding.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@use_inline_4@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -674,7 +684,7 @@
     "identification": "Complete Campaign method at RVA 0x531cc0. Sets the data pointer to inline storage, saves the size, and marks the 4-element capacity as externally owned. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "2b40184ecee6943840ddcfa76913f5175a3b29eeff660254da99332cd6197b35",
-      "inputs_sha256": "20efad1ede0ee93e2ae5043b54ad0cf3366863de296eef82dc3930544637fd11"
+      "inputs_sha256": "425550594d664bcbc6c4ead33ad09e199a1ed792c8a3e668a68e10f385c2886d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -691,7 +701,8 @@
     "offset": 5446880,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_531ce0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -705,7 +716,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 4-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d47cb30c172d601f64754ebab20ad1587ff1b99aac997e5f21183d6b1d24d0a2",
-      "inputs_sha256": "09c6d276c6f3d0748b6dd1bc132b1f5588262b1d28f5f59587abd1bacd83f50a"
+      "inputs_sha256": "cf0055b31a5c70437e4825529b621116d116f3deb9bc97fbf6599a292fb17e99"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -722,7 +733,8 @@
     "offset": 5447520,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_531f60@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -740,7 +752,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 4-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "defd6f6d65a5ca1f52c893a78e7f0a15040c21da7cb5fe88849352217d33b7fe",
-      "inputs_sha256": "0e89d7a7732f3b3bb83e3220ce3dc3a5a0f737f62fb62bd1d1f465397cddaff2"
+      "inputs_sha256": "0947c80aff5961e54897254639c650f1d5831ba2f00acd496e1399195326f758"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -757,7 +769,8 @@
     "offset": 5447568,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_531f90@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -775,7 +788,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 4-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "defd6f6d65a5ca1f52c893a78e7f0a15040c21da7cb5fe88849352217d33b7fe",
-      "inputs_sha256": "d39b0bb4f85ab1552abf3a86dc8e84ca80ee25c3f83c50f7ea59e47833602a19"
+      "inputs_sha256": "0b06fcacda523d96332d0ae22c37b85ef224ec24e9a60fc0a4cf6343e4b1a5fc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -837,10 +850,10 @@
         "basis": "Direct call to indexed forward-order method at RVA 0x5318b0; outer method exchanges the first two arguments."
       }
     },
-    "identification": "Aligned reversed collision method at RVA 0x532070; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16.",
+    "identification": "Aligned reversed collision method at RVA 0x532070; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16. The local type name ContactOutput is analyst-invented; it describes the wrapper holding the contact array.",
     "match": {
       "bytes_sha256": "4c53532bfe882057dbf6a5a108456e43d64e28a39be9baa47dad5c57073d5bd0",
-      "inputs_sha256": "6065fe5224408f12230e3780dc88429327bd4ecd2a5fd57fe915a73f7f7efe2b"
+      "inputs_sha256": "16c1cd4204b47a2a24dbfbfd2f3e4a329bf260da2c37563fa7343f4aa0dad174"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -857,7 +870,8 @@
     "offset": 5447936,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_532100@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -875,7 +889,7 @@
     "identification": "Read-only method pointer at RVA 0x84b0a8. Releases owned storage at member offset 12 for 4-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "e2f24e301655b6f269e87d52323630d817a0b12199387a4f0a4a832d705bf81a",
-      "inputs_sha256": "480444fc87c54294ea298424612c1ec1001d2437dbe698bdf766045c24777585"
+      "inputs_sha256": "edb7588e2fa80cbb8cff7850c9086e9f36874246f8cf2c994d381c324984aa08"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -892,7 +906,8 @@
     "offset": 5448080,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_532190@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -910,7 +925,7 @@
     "identification": "Read-only method pointer at RVA 0x84b088. Releases owned storage at member offset 12 for 4-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "e2f24e301655b6f269e87d52323630d817a0b12199387a4f0a4a832d705bf81a",
-      "inputs_sha256": "f3dbdcdd34415a0db1b5fc5df198adce23a729633d666ad3c5057440fbb40cb8"
+      "inputs_sha256": "d380d1beaa166fcff6ddc3a2f0e59bd659a88fa81c6af678ee1b9a4ae1052f1d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1241,10 +1256,10 @@
         "basis": "Direct call to indexed forward-order method at RVA 0x5327b0; outer method exchanges the first two arguments."
       }
     },
-    "identification": "Aligned reversed collision method at RVA 0x533230; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16.",
+    "identification": "Aligned reversed collision method at RVA 0x533230; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16. The local type name ContactOutput is analyst-invented; it describes the wrapper holding the contact array.",
     "match": {
       "bytes_sha256": "6d116d00b622ca89e5b9bdf52f545e4a005eddcc64988f6c2f7d3b774eec9123",
-      "inputs_sha256": "834e69a35b049b66bacf066dd62db36bc7c25f7df4f80c6ccbf5a45e955cbd0b"
+      "inputs_sha256": "b0b8dd5ef4a7c5dc3800f68249fe67893a64facfd9f98ba1321bdf0759962d34"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1391,7 +1406,8 @@
     "offset": 5453456,
     "inputs": [
       "src/campaign_array_storage_binding.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@use_buffer@20",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1399,7 +1415,7 @@
     "identification": "Complete Campaign method at RVA 0x533690. Sets the data pointer and size, and marks the supplied capacity as externally owned. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "b87abc9aa220dba7b3a9c8741ecd0fc59ecb279624b5e472d975b8f04d3f1abd",
-      "inputs_sha256": "ee4efa1be01cd166f85ad1918327ab465752b5e32332df34f02af43c8dba0fd8"
+      "inputs_sha256": "0ca7976af0e58d4e77af606b51897b3038c49d1142d9ac3ebf4193843261e6d3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1446,7 +1462,8 @@
     "offset": 5455312,
     "inputs": [
       "src/campaign_physics_array_reserve.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reserve_533dd0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1460,7 +1477,7 @@
     "identification": "Aligned entry bounded by a previous return and INT3 padding. Grows capacity to the greater of the requested count and double the current capacity, using 8-byte elements. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "e7f977157fa228c949cfd72b1bd1a18e051a794e6ef20e9ad8940beab7b706af",
-      "inputs_sha256": "8348f8f7b0129d612c5224fad789f41f1e6b7aedf063497037e6207be65cc0e6"
+      "inputs_sha256": "654b9c996071bf52c7eb5b8cac3226379a28e23296e6af83db58ebe16f012ec3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1477,7 +1494,8 @@
     "offset": 5455408,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_533e30@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1491,7 +1509,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 8-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d0048e1a68d64fb61162ccef11ac2688db0ad9fe574bc40c82c46f4fff1c7104",
-      "inputs_sha256": "ff120724b653a8272f7fbd6bc8af0f8557786ecac23d274c3e64359a44d0fce3"
+      "inputs_sha256": "f890ca50e40140e9a0ec42c2b696b9c9817fee046977f974e2e7158e38dfc33f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1508,7 +1526,8 @@
     "offset": 5455888,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_534010@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1522,7 +1541,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 8-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d0048e1a68d64fb61162ccef11ac2688db0ad9fe574bc40c82c46f4fff1c7104",
-      "inputs_sha256": "c6ec49a4d34dcbe7a3ec654437e261f5d5e757c0ed94b6e49449c7f91b90b730"
+      "inputs_sha256": "7e875084f91fe29a135958bd31b85fc0c4b6096d952b79e22568fe4249cb49e4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1539,7 +1558,8 @@
     "offset": 5455936,
     "inputs": [
       "src/campaign_array_storage_binding.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@use_inline_4@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1547,7 +1567,7 @@
     "identification": "Complete Campaign method at RVA 0x534040. Sets the data pointer to inline storage, saves the size, and marks the 4-element capacity as externally owned. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "2b40184ecee6943840ddcfa76913f5175a3b29eeff660254da99332cd6197b35",
-      "inputs_sha256": "5c85e1897c55f96e1d68f026e9b117c5e5267b01b01e6e79e536d8a174acacc6"
+      "inputs_sha256": "0e812d5576c5ac782049663f95350cc17597cdb96fc681fb0ab73d73ed4ae70b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1564,7 +1584,8 @@
     "offset": 5455968,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_534060@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1578,7 +1599,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 8-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d0048e1a68d64fb61162ccef11ac2688db0ad9fe574bc40c82c46f4fff1c7104",
-      "inputs_sha256": "fa2afcd098a991a7746e2827bfd829b2e753c379e62b4b209614042d7efca764"
+      "inputs_sha256": "46671c99f3c04a2aae7bfd03a1de4a3f018a2813e954b6cecbf0b1091fdbbeb9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1595,7 +1616,8 @@
     "offset": 5456384,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_534200@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1613,7 +1635,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 8-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "59096bd1e0e14a13f587934c45ff8ec82eb4891077be32c46cc6fb59bbb0d73f",
-      "inputs_sha256": "73c298ab8871bfa0a0dff64cc40484050dd644678fd4f06c9e7ac51ea9d8bb71"
+      "inputs_sha256": "48c098c38f2ea67bca9fe304b6a4fac3ec42ff6283fb270f6daed649d00a6e70"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1630,7 +1652,8 @@
     "offset": 5456432,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_534230@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1648,7 +1671,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 8-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "59096bd1e0e14a13f587934c45ff8ec82eb4891077be32c46cc6fb59bbb0d73f",
-      "inputs_sha256": "e33011caeeba7bdbd5b164084be61d26c6bc32ff71ab5d74458b14ea03a7c8e5"
+      "inputs_sha256": "472a22e2c4f8e3c44ca8fb8252fa986fa35eb5b170a96a99501f1fb809549a31"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1710,10 +1733,10 @@
         "basis": "Direct call to indexed forward-order method at RVA 0x533710; outer method exchanges the first two arguments."
       }
     },
-    "identification": "Aligned reversed collision method at RVA 0x534310; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16.",
+    "identification": "Aligned reversed collision method at RVA 0x534310; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16. The local type name ContactOutput is analyst-invented; it describes the wrapper holding the contact array.",
     "match": {
       "bytes_sha256": "a65d76d9989a5a4bfb84aee12295edf36fb409d2e70b17272b24d14d24889a11",
-      "inputs_sha256": "fd13723f51580f54dc08296345716cce8686d1697d9daccd8ba895a5ba3ffcab"
+      "inputs_sha256": "55ad99a9efd0566552366a51d961654abe984cc57843e5f2431e260cdfdbcdb9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1730,7 +1753,8 @@
     "offset": 5456800,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_5343a0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1748,7 +1772,7 @@
     "identification": "Read-only method pointer at RVA 0x84b1a4. Releases owned storage at member offset 12 for 8-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "c9cc3facca828ac9ee7130c8bec733d48ad8de03ee0f91b4552c0998239bed0e",
-      "inputs_sha256": "c1563a73ed570d770327ed18325da904a98f9e214808afecfb2b86fa9577a122"
+      "inputs_sha256": "8e95dc3657b84fcadb2031441b0f3f41a9878f26fcdf90373e1e369b05880062"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1765,7 +1789,8 @@
     "offset": 5456944,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_534430@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1783,7 +1808,7 @@
     "identification": "Read-only method pointer at RVA 0x84b184. Releases owned storage at member offset 12 for 8-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "c9cc3facca828ac9ee7130c8bec733d48ad8de03ee0f91b4552c0998239bed0e",
-      "inputs_sha256": "9d78100b346f56eadd99655afeac4b6d0c117c4655757a2dcdb37aff1aadaf89"
+      "inputs_sha256": "374ec26b3e3fb3ba86c76df688a1d67c84041205b658916174191d805e3db7cf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1931,7 +1956,8 @@
     "offset": 5458288,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_534970@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1953,7 +1979,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 12-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "5455b10df6de3322f9fa436552790a7c094583b659b5b8ee6329e95145748b98",
-      "inputs_sha256": "2f1e52f2e6505d82e81117a249e220fb42cb2423f1c73490214a35d6e4be2cac"
+      "inputs_sha256": "faebee9a5a1b21702ac2175fa5c738ca944e41a0f645cfdd1b65785311f9c53b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1970,7 +1996,8 @@
     "offset": 5458352,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_5349b0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1992,7 +2019,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 12-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "5455b10df6de3322f9fa436552790a7c094583b659b5b8ee6329e95145748b98",
-      "inputs_sha256": "39ee1c9ce4dc347aaa084362348583f8d62c5d6e2a4e7c90ccaa04138e72796e"
+      "inputs_sha256": "a73b9b972a5a32aac8ad5c2d7e899963e75515c081f1bf5a47c8c4c1e36be22c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2054,10 +2081,10 @@
         "basis": "Direct call to indexed forward-order method at RVA 0x5370d0; outer method exchanges the first two arguments."
       }
     },
-    "identification": "Aligned reversed collision method at RVA 0x534ab0; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16.",
+    "identification": "Aligned reversed collision method at RVA 0x534ab0; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16. The local type name ContactOutput is analyst-invented; it describes the wrapper holding the contact array.",
     "match": {
       "bytes_sha256": "32115f9a5e83d4eb2b9f9cbb575002ed2fdaa3722e8fdf598155221af8c704a5",
-      "inputs_sha256": "eb7f4116ae5502b5faceed193fa006ed0c25c5dcb79c8d0a909021885d52c95d"
+      "inputs_sha256": "95137f2c411bda813117c167254f3d45654d34716d26fac1dcb18218de40860f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2074,7 +2101,8 @@
     "offset": 5458720,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_534b20@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2096,7 +2124,7 @@
     "identification": "Read-only method pointer at RVA 0x84b210. Releases owned storage at member offset 12 for 12-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "0fde202d5d75c57f4532e19c25a2bedf813107fa3cef1609ec5064d4d6845f05",
-      "inputs_sha256": "2ce8f72b6047be708a40f57bc29061315e123c1661b087332aca0f07509ee2eb"
+      "inputs_sha256": "8c0882ce7e1d9f5c12eddb04498ce372f8b65e825e759ea8932e00e252681b47"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2113,7 +2141,8 @@
     "offset": 5459088,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_534c90@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2135,7 +2164,7 @@
     "identification": "Read-only method pointer at RVA 0x84b1f0. Releases owned storage at member offset 12 for 12-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "0fde202d5d75c57f4532e19c25a2bedf813107fa3cef1609ec5064d4d6845f05",
-      "inputs_sha256": "d8533987fe7b8acbd9ac9fe17e75d40b4a1b16a6ae00d0a6a15396f1f0c99ddf"
+      "inputs_sha256": "b9d33e4977ce38209ba26720a9912bf3efca669a2eda7a4628e6a242d46cd7bb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2186,7 +2215,8 @@
     "offset": 5459952,
     "inputs": [
       "src/campaign_empty_physics_array.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_array@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2194,7 +2224,7 @@
     "identification": "Aligned entry bounded by a previous return and compiler padding. Initializes a physics array with a null buffer, zero count and the high capacity bit set. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "82830a7097035643fa51b56e948587147e0e537510d4c0e154c0e73ec5871934",
-      "inputs_sha256": "b8810720e7f24b1a02abf08029622ad398a718def56eb30a8038a26301615e00"
+      "inputs_sha256": "84fcb53072f018d28632e524ca42c20b87f46b904cb94b996b255063a2dc7969"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2211,7 +2241,8 @@
     "offset": 5460128,
     "inputs": [
       "src/campaign_array_storage_binding.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@use_buffer@20",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2219,7 +2250,7 @@
     "identification": "Complete Campaign method at RVA 0x5350a0. Sets the data pointer and size, and marks the supplied capacity as externally owned. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "b87abc9aa220dba7b3a9c8741ecd0fc59ecb279624b5e472d975b8f04d3f1abd",
-      "inputs_sha256": "bbca915d19afdc6f6dc1e39a2548b7b8ffdd14ce9ea207c4b948c47075df9a2f"
+      "inputs_sha256": "84a61af35d38733ae1dc0664e489a2ffb16f63715904a8d14c2503d4646da00b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2236,7 +2267,8 @@
     "offset": 5460304,
     "inputs": [
       "src/campaign_physics_array_reserve.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reserve_535150@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2250,7 +2282,7 @@
     "identification": "Aligned entry bounded by a previous return and INT3 padding. Grows capacity to the greater of the requested count and double the current capacity, using 12-byte elements. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "8a437f10a096eb6a096023ca64a56a79e45f61192dbf919c646155013a9818e8",
-      "inputs_sha256": "24f5aa3183a145805ca7b5a6df9a3369a52be4e7b6d26c4ee11ea99fa2e51690"
+      "inputs_sha256": "79ef86cdabc668a28de9873d6236e112bbe9200e5868e60d88a6869886527b17"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2297,7 +2329,8 @@
     "offset": 5462096,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_535850@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2311,7 +2344,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 4-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d47cb30c172d601f64754ebab20ad1587ff1b99aac997e5f21183d6b1d24d0a2",
-      "inputs_sha256": "83268a296fe070b46bd9ca160281c677475da119ca64127703e1de4d062afbea"
+      "inputs_sha256": "7cd56aef0ae22be8a050f71e1c9fe93a34504f52051e2c2714da04b89a679864"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2328,7 +2361,8 @@
     "offset": 5462272,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_535900@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2342,7 +2376,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 4-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d47cb30c172d601f64754ebab20ad1587ff1b99aac997e5f21183d6b1d24d0a2",
-      "inputs_sha256": "5ca4d92b55d47189df482817c7903176e037a3b8061f84b27dc1a33fb2f595c7"
+      "inputs_sha256": "7c90c0eb949fe92294a28262b096a4adda407b7af42f2ffccfbcaea48e966c2a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2359,7 +2393,8 @@
     "offset": 5462320,
     "inputs": [
       "src/campaign_array_storage_binding.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@use_inline_128@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2367,7 +2402,7 @@
     "identification": "Complete Campaign method at RVA 0x535930. Sets the data pointer to inline storage, saves the size, and marks the 128-element capacity as externally owned. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "9a332567ec6ad2fcab51ede72e2ad41a880c3c280db3b2c0a08a1669af753795",
-      "inputs_sha256": "9f55d901e057fed4034d71b725f71307a05ab6fd5ff0a7820b0116bba7687c2f"
+      "inputs_sha256": "ae4ebc2eec68d4615b720f56a1a36f8eeea1183ea4b451f97c9a46b25cd4b690"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2385,7 +2420,8 @@
     "inputs": [
       "src/campaign_scratch_array_construct.c",
       "src/campaign_array_storage.h",
-      "src/campaign_array_with_original.h"
+      "src/campaign_array_with_original.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@construct_535bc0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2399,7 +2435,7 @@
     "identification": "Indexed scratch array constructor for 12-byte elements. Rounds the allocation to 16 bytes, advances the allocator cursor or calls its allocation method, and stores the original pointer and element count. Majority choice, not evidence: the Count member here takes unsigned from the other copies, where this source had int.",
     "match": {
       "bytes_sha256": "449362281f00787f87ef07aebc0a1d06100604444da54b698eadb4fbd4235641",
-      "inputs_sha256": "14439c5e4504017965b478b00ff026b471580424a7a82d7bf5dc1fec65fef6e3"
+      "inputs_sha256": "f1a79bffd839503cbffd86f229e0eb014365f857180ea85286a687dc04b945f3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2417,7 +2453,8 @@
     "inputs": [
       "src/campaign_scratch_array_destroy.c",
       "src/campaign_array_storage.h",
-      "src/campaign_array_with_original.h"
+      "src/campaign_array_with_original.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_535c30@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2431,7 +2468,7 @@
     "identification": "Indexed scratch array destructor for 12-byte elements. Releases the original aligned stack allocation and conditionally frees separately owned storage. Majority choice, not evidence: the 20-byte scratch layout is the shared struct ArrayWithOriginal of campaign_array_with_original.h (an Array, then original and original_count); those names are invented.",
     "match": {
       "bytes_sha256": "3d65798be08629f8c57182e0993c6f799baa8d21098cfae8c3b5227d46eadd7b",
-      "inputs_sha256": "f17f58ce0f62bebb58fbdf9fac2d869d2544127876f1991d317862285a38839c"
+      "inputs_sha256": "066d51e90b55aa23008e42288d9359be4878017e6cb54b99b1cdde3d588e1419"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2448,7 +2485,8 @@
     "offset": 5463520,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_535de0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2462,7 +2500,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 4-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d47cb30c172d601f64754ebab20ad1587ff1b99aac997e5f21183d6b1d24d0a2",
-      "inputs_sha256": "408ee56a0d76ac7c234a4e8429f700444be15811ac4300d974c015705e1338a4"
+      "inputs_sha256": "9cf3565d37f7051478926a7813bea2c86af6e1f7468b2ef9d1ac8db134d408cf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2479,7 +2517,8 @@
     "offset": 5463568,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_535e10@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2501,7 +2540,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 12-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "5455b10df6de3322f9fa436552790a7c094583b659b5b8ee6329e95145748b98",
-      "inputs_sha256": "509f5a8058f91726253a1a0825475bc5084314a7092bc163b6f8ee0dcb33fde1"
+      "inputs_sha256": "4c0a4576f0395a494e0c008094b6ff5c72d862786ba1259d5c8d91415005cf07"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2518,7 +2557,8 @@
     "offset": 5463728,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_535eb0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2540,7 +2580,7 @@
     "identification": "Read-only method pointer at RVA 0x84b254. Releases owned storage at member offset 12 for 12-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "0fde202d5d75c57f4532e19c25a2bedf813107fa3cef1609ec5064d4d6845f05",
-      "inputs_sha256": "a6e2b87e5c62a874af5902b6f082653e3b81a98d89b6f2072721866acf637c8c"
+      "inputs_sha256": "4a79b0503d5c1dfef7e18704c83d4f2bf2f2864f2b4997031f9115f3e36aa958"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2671,10 +2711,10 @@
         "basis": "Direct call to indexed forward-order method at RVA 0x5370d0; outer method exchanges the first two arguments."
       }
     },
-    "identification": "Aligned reversed collision method at RVA 0x537ff0; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16.",
+    "identification": "Aligned reversed collision method at RVA 0x537ff0; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16. The local type name ContactOutput is analyst-invented; it describes the wrapper holding the contact array.",
     "match": {
       "bytes_sha256": "9201de41305ec1dadc9a53d974aebe621df17f30d6ba94a124d4b8d43532f02d",
-      "inputs_sha256": "183cecb59e05a6eac29a4451c26eeba935cca8dc0f15d002a614a203b68d01fd"
+      "inputs_sha256": "5a51be23cc60ea65d140fe87915b02c117f85bbb31fde312d7a541f3d01e7ed3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2777,7 +2817,8 @@
     "offset": 5473232,
     "inputs": [
       "src/campaign_empty_physics_array.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_array@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2785,7 +2826,7 @@
     "identification": "Aligned entry bounded by a previous return and compiler padding. Initializes a physics array with a null buffer, zero count and the high capacity bit set. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "82830a7097035643fa51b56e948587147e0e537510d4c0e154c0e73ec5871934",
-      "inputs_sha256": "327306246628957f6e7b52c2621e07fc60b2ca9242495dadd0e59c4df921014b"
+      "inputs_sha256": "c056b3da4d593d9f829320bccaee132313c7d185be440859a1bb4a0064ea86fc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2802,7 +2843,8 @@
     "offset": 5473344,
     "inputs": [
       "src/campaign_empty_physics_array.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_array@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2810,7 +2852,7 @@
     "identification": "Aligned entry bounded by a previous return and compiler padding. Initializes a physics array with a null buffer, zero count and the high capacity bit set. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "82830a7097035643fa51b56e948587147e0e537510d4c0e154c0e73ec5871934",
-      "inputs_sha256": "b1994da46389f77e1bb4c04d7d921513f5e6b8fc3b9de280e7d4b981e5db69a3"
+      "inputs_sha256": "59fd29b45450c5333eda94188a21c8aa35adbf53959c8dba5d854e9453a0c404"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2917,7 +2959,8 @@
     "offset": 5474560,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_538900@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2931,7 +2974,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 8-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d0048e1a68d64fb61162ccef11ac2688db0ad9fe574bc40c82c46f4fff1c7104",
-      "inputs_sha256": "25f6c1172b31a8840ae54acd2c8b4b7d200f3263325d247eed950f980801953a"
+      "inputs_sha256": "724437fb37c11843a1f41a5cad58ccc9056a866e67194d8ffff56c12997456a1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2948,7 +2991,8 @@
     "offset": 5474608,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_538930@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2962,7 +3006,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 28-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "49e26089bf1a0baa7024de0cf26ea45ef04159815bbb9618c537e2c71eaaf5d9",
-      "inputs_sha256": "6c96a249182770d8b6702b91a7bd8ab6be8d8c36ef4461d1f7c2a2657c3a2aec"
+      "inputs_sha256": "7cc39642c0328d90f177920d8cd25732b540681217b2e9a3ae1a66dc5ca0bd5d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2979,7 +3023,8 @@
     "offset": 5475248,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_538bb0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2993,7 +3038,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 8-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d0048e1a68d64fb61162ccef11ac2688db0ad9fe574bc40c82c46f4fff1c7104",
-      "inputs_sha256": "d6796b5a3e59ab608219231828ccf9af99d60e9481c7be026867df1dd7624853"
+      "inputs_sha256": "fddca61078058f406bb82cb22ce2b88d21c8abd492001d4803d30d18a4568d2b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3010,7 +3055,8 @@
     "offset": 5475296,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_538be0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3024,7 +3070,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 28-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "49e26089bf1a0baa7024de0cf26ea45ef04159815bbb9618c537e2c71eaaf5d9",
-      "inputs_sha256": "618d345e3fee4863bc61c6a1e67335085c45dcdf37011e934b9f1e8b6da1901e"
+      "inputs_sha256": "7591708e4a4402fefec1fc900a37f7cf99798f1265cec1dda2b83714f1a76dcf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3075,7 +3121,8 @@
     "offset": 5475776,
     "inputs": [
       "src/campaign_array_storage_binding.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@use_buffer@20",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3083,7 +3130,7 @@
     "identification": "Complete Campaign method at RVA 0x538dc0. Sets the data pointer and size, and marks the supplied capacity as externally owned. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "b87abc9aa220dba7b3a9c8741ecd0fc59ecb279624b5e472d975b8f04d3f1abd",
-      "inputs_sha256": "54dd2aeda8861dfa3e9d30914b446b17aec1bf5f0220d64815fd9494ed1415c9"
+      "inputs_sha256": "19eecde3a7217eef108450141e39821e3ea6ce8bf3c93941ef87d9729ce4849e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3130,7 +3177,8 @@
     "offset": 5475904,
     "inputs": [
       "src/campaign_physics_array_reserve.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reserve_538e40@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3144,7 +3192,7 @@
     "identification": "Aligned entry bounded by a previous return and INT3 padding. Grows capacity to the greater of the requested count and double the current capacity, using 8-byte elements. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "470608a53ed01c2740cad578d4dc18f176f3b15d7051caf58c8e7245ec87881b",
-      "inputs_sha256": "19f1a281ed8f2f1b5cb036ad82986711d86f82948c0f0c937b6ac161ee262a54"
+      "inputs_sha256": "1754c51d2fc4b242c435e800b44e7b07996a4e504afbfbb0a12851d6d7880a84"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3161,7 +3209,8 @@
     "offset": 5476000,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_538ea0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3175,7 +3224,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 8-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d0048e1a68d64fb61162ccef11ac2688db0ad9fe574bc40c82c46f4fff1c7104",
-      "inputs_sha256": "6917ef4f3422f6694405199a6ae1701e91297e2776b6738d37913532cdf0881d"
+      "inputs_sha256": "995e11f50b79c752da1cd56b391f5616e2a0e0b53651b7006802efeff1cd89b6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3192,7 +3241,8 @@
     "offset": 5478624,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_5398e0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3206,7 +3256,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 8-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d0048e1a68d64fb61162ccef11ac2688db0ad9fe574bc40c82c46f4fff1c7104",
-      "inputs_sha256": "db38d6ea5d63a0e517508ff5cc430a789d5b6e9383319375e48dc6e84829e6bb"
+      "inputs_sha256": "b19569cd73f914437a9e3c1a107a8f9b4e0165ec836ab54ad7b9dedda94adfa4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3223,7 +3273,8 @@
     "offset": 5478672,
     "inputs": [
       "src/campaign_array_storage_binding.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@use_inline_4@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3231,7 +3282,7 @@
     "identification": "Complete Campaign method at RVA 0x539910. Sets the data pointer to inline storage, saves the size, and marks the 4-element capacity as externally owned. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "2b40184ecee6943840ddcfa76913f5175a3b29eeff660254da99332cd6197b35",
-      "inputs_sha256": "d80e07fc823ab1b21519a99c48525907f069dd6e64ba5c3dbd8e4cc3f109caaa"
+      "inputs_sha256": "8430fde8e52ddde0e387218118eccfdbf44642a00baee2031fdf5abae65ed65a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3283,7 +3334,8 @@
     "offset": 5478832,
     "inputs": [
       "src/campaign_owned_array_storage.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_5399b0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3297,7 +3349,7 @@
     "identification": "Aligned entry between INT3 padding runs, following a preceding return. Frees owned storage for 8-byte elements via allocator slot five. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "d0048e1a68d64fb61162ccef11ac2688db0ad9fe574bc40c82c46f4fff1c7104",
-      "inputs_sha256": "d0e8c169deeaa79df2f2e55acecbaf38d984a556bff2c9f2029f75f745038e36"
+      "inputs_sha256": "5ad2044772a8c006535729c7fa9a633ae72c421b22906a25da84f3d820d29e9e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3314,7 +3366,8 @@
     "offset": 5479696,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_539d10@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3332,7 +3385,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 8-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "59096bd1e0e14a13f587934c45ff8ec82eb4891077be32c46cc6fb59bbb0d73f",
-      "inputs_sha256": "47b12d218263db5e0b270c8b442b43e55e7d523edd256dd57022e0e38c9c02b9"
+      "inputs_sha256": "85c81cdb8a5fc15846491ed47c6375899da28eb982839c1b89708ffed87ddc03"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3349,7 +3402,8 @@
     "offset": 5479744,
     "inputs": [
       "src/campaign_embedded_array_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_539d40@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3367,7 +3421,7 @@
     "identification": "Indexed destructor checks ownership of the array at offset 12, releases 8-byte elements and installs the base method table. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "59096bd1e0e14a13f587934c45ff8ec82eb4891077be32c46cc6fb59bbb0d73f",
-      "inputs_sha256": "3b3b5b065860814068a044edcc91e3356c924d012dd9875039ca83ceb08ce911"
+      "inputs_sha256": "d3fcbf1a6a1011c5ec336aa35bd182d4394c61e83fb8357d2cd2b8610dc987ea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3429,10 +3483,10 @@
         "basis": "Direct call to indexed forward-order method at RVA 0x538ed0; outer method exchanges the first two arguments."
       }
     },
-    "identification": "Aligned reversed collision method at RVA 0x539e30; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16.",
+    "identification": "Aligned reversed collision method at RVA 0x539e30; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16. The local type name ContactOutput is analyst-invented; it describes the wrapper holding the contact array.",
     "match": {
       "bytes_sha256": "6e1e7348b5c8cb8a0b7f36c9980534063afe8e8832653dde127560834ae372af",
-      "inputs_sha256": "92ecc0463343c5359a759f6d6534a30db82d53c3a89abbe6bf98af621d9ef4c4"
+      "inputs_sha256": "c7df6e4c85a2c154a1c1cdad5cbfbd9b29276b2edb3ffcec7008ae49ea40d118"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3449,7 +3503,8 @@
     "offset": 5480096,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_539ea0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3467,7 +3522,7 @@
     "identification": "Read-only method pointer at RVA 0x84b3d0. Releases owned storage at member offset 12 for 8-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "c9cc3facca828ac9ee7130c8bec733d48ad8de03ee0f91b4552c0998239bed0e",
-      "inputs_sha256": "b10884967ed1804b3097d7160b216a968baba654b610ef268d3e5e3dc95b340b"
+      "inputs_sha256": "02f1d5559b92cacf5c29189118bfa8380b56ed22520ee641fe93da62fabd67eb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3484,7 +3539,8 @@
     "offset": 5480240,
     "inputs": [
       "src/campaign_physics_array_release.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@release_539f30@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3502,7 +3558,7 @@
     "identification": "Read-only method pointer at RVA 0x84b3b0. Releases owned storage at member offset 12 for 8-byte elements before checking the deletion flag. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "c9cc3facca828ac9ee7130c8bec733d48ad8de03ee0f91b4552c0998239bed0e",
-      "inputs_sha256": "6b4fc19cfde3c4614fade23de279d54ba5103e057ec16e884eb70edec3956a3d"
+      "inputs_sha256": "3bf245894eeb1e9431c079df9cf8007262263da36bd35d843d5aa04217bab82b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3759,10 +3815,10 @@
         "basis": "Direct call to indexed forward-order method at RVA 0x53a370; outer method exchanges the first two arguments."
       }
     },
-    "identification": "Aligned reversed collision method at RVA 0x53ad90; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16.",
+    "identification": "Aligned reversed collision method at RVA 0x53ad90; captures initial count, swaps pair arguments, and negates four floats in each new 48-byte contact. Full body ends in ret 16. The local type name ContactOutput is analyst-invented; it describes the wrapper holding the contact array.",
     "match": {
       "bytes_sha256": "33667fbc8214987d839027928a4999997e77c9dc78e520ee531b2cadbc79cef7",
-      "inputs_sha256": "ce260afb1d0ca1fc56b2e2ec9c78456176c2866a6b7f5907c680a4fd8f59f7ea"
+      "inputs_sha256": "7684f47085bde6433b9891ebc8a433643407ff5caa46160b57a12721f6a9473b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4370,7 +4426,8 @@
     "offset": 5488816,
     "inputs": [
       "src/campaign_array_block_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_53c0b0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4384,7 +4441,7 @@
     "identification": "Indexed deleting destructor checks ownership and releases 2 embedded array(s) before optional receiver block deallocation. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "cdb029e9c974ae61cc57ed7bb9e5c4341c3f24bac5153e933746a00094299c1e",
-      "inputs_sha256": "021c219b0b3e1afd1d2581e48e9fa38aad09cda0904734f76fc6f17fb67ea87d"
+      "inputs_sha256": "71f9769bf9564a877ae07255181b13a49b75bbba37389636fe6d95a478d0a2c2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4500,7 +4557,8 @@
     "offset": 5489616,
     "inputs": [
       "src/campaign_empty_physics_array.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_array@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4508,7 +4566,7 @@
     "identification": "Aligned entry bounded by a previous return and compiler padding. Initializes a physics array with a null buffer, zero count and the high capacity bit set. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "82830a7097035643fa51b56e948587147e0e537510d4c0e154c0e73ec5871934",
-      "inputs_sha256": "070f9df7190b4d4a98dc779a8cd054316d8dce010e1d9040d055e0450369f3bd"
+      "inputs_sha256": "49d884c723f811493fd6b123df75c3921304b5e478ac31c565e9e78ff217b4c5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4559,7 +4617,8 @@
     "offset": 5489872,
     "inputs": [
       "src/campaign_array_block_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@destroy_53c4d0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4573,7 +4632,7 @@
     "identification": "Indexed deleting destructor checks ownership and releases 2 embedded array(s) before optional receiver block deallocation. Majority choice, not evidence: this copy of struct Array is replaced by the shared declaration in campaign_array_storage.h; the names Array, buffer, count and capacity are invented.",
     "match": {
       "bytes_sha256": "b85032760c952574e6d5ee915b6cd8a317b1d0726abcae12ceef1f4aa33200c1",
-      "inputs_sha256": "1e074180af9ae53245ee37f34976f1898cd5bef00a71c0cecd38a52392264e82"
+      "inputs_sha256": "df0748641098b3def92090269a7f38a8d14d1f77279999c84ef04b363ed2815d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

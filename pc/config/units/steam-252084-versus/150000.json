@@ -76,13 +76,16 @@
     "offset": 1378432,
     "size": 17,
     "inputs": [
-      "src/campaign_release_buffer.c"
+      "src/campaign_release_buffer.cpp",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_release_buffer.obj src/campaign_release_buffer.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_release_buffer.obj src/campaign_release_buffer.cpp",
     "rebuilt_symbol": "_release_engine_buffer",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 281492464,
         "basis": "Shared engine heap used by the independently identified registered string finalizers."
       }
@@ -90,7 +93,7 @@
     "identification": "Direct call at retail VA 0x10b8c2d8. The engine heap wrapper has the same complete extent in default Ghidra analysis and the rebuilt object.",
     "match": {
       "bytes_sha256": "81c12a4563e380536f2439d8d64dd6131fe42fd5484eac55c1b73c18b333f430",
-      "inputs_sha256": "bcfa6fed958c4b780b0d2ac4be02f13053f809f37adad9068d75eb46e5dc0ef9"
+      "inputs_sha256": "a0a308e96e4f827c2ed9f9d44a6a0d76fee619583e25c58cc6410ae350ef50fa"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2382,14 +2385,15 @@
     "rebuilt_symbol": "@versus_cause_input_event@16",
     "inputs": [
       "src/versus_gui_input.c",
-      "src/versus_vm_argument.h"
+      "src/versus_vm_argument.h",
+      "src/versus_viewport.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_gui_input.obj src/versus_gui_input.c",
     "identification": "Retail registration at RVA 0x169a6e assigns GNatives[1664] to RVA 0x1553e0. The project inventory identifies slot 1664 as GUIController.CauseInputEvent. The body ends at its return before alignment.",
     "match": {
       "bytes_sha256": "5eab67a72c0f77c9d4c5d5d0630458cf10a2d8d689eb729a2a6725949ecc25fa",
-      "inputs_sha256": "e920baad1ef63fafd9d49920f392985ab10cea81947cab11f03e2eb06d838cc4"
+      "inputs_sha256": "d554563078445454bc7a3da85c255982e585deda126fbfd4f2b1fd584536d7c7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4110,14 +4114,15 @@
     "rebuilt_symbol": "@versus_gui_online_available@16",
     "inputs": [
       "src/versus_level_queries.c",
-      "src/versus_script_frame.h"
+      "src/versus_script_frame.h",
+      "src/versus_viewport.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_level_queries.obj src/versus_level_queries.c",
     "identification": "Retail registration at RVA 0x16a6e4 assigns GNatives[1835] to RVA 0x158250. The class and function name GUIController.IsOnlineAvailable agree with the project inventory at this native index. The complete body ends before alignment.",
     "match": {
       "bytes_sha256": "337f811a5a4a6423e5b741bd2ffa249174a4080f58c027ee243d357b7e063965",
-      "inputs_sha256": "f1121d5ba165b4b677fa3e09e293a238df8fa0514f473c2042a9d286a48b56b3"
+      "inputs_sha256": "a62fa0e06855d497db73b1e7338b2d386a015f4dd92a0299318adc2c5f800a9e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5420,14 +5425,15 @@
     "size": 212,
     "rebuilt_symbol": "@gui_update_bounds@4",
     "inputs": [
-      "src/versus_gui_bounds.c"
+      "src/versus_gui_bounds.c",
+      "src/versus_gui_component.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_gui_bounds.obj src/versus_gui_bounds.c",
     "identification": "The project reflection annotations identify UGUIImage vftable RVA 0x300788. Its constructor store, table through zero-based slot 25, and the complete body at RVA 0x158e90 agree between the locked Enhanced and Steam images. The stock GUI.u interface names UGUIComponent::UpdateBounds at decoded offset 0x7c420. The complete body covers every reachable basic block through its returns.",
     "match": {
       "bytes_sha256": "5f4949c1197892052be6f1e6362c225ed51f1295a3644f9b24702911c82cbbd9",
-      "inputs_sha256": "46e1b02c0296ee17b2c345dc0130c95568a8ae904515d69bf5a25e115deab87e"
+      "inputs_sha256": "c7327add0c532d2474eb773021014e8dfa37ae9626e60b14c4be7b367af71c79"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5474,14 +5480,25 @@
     "size": 103,
     "rebuilt_symbol": "@gui_actual_width@4",
     "inputs": [
-      "src/versus_gui_scaling.c"
+      "src/versus_gui_scaling.c",
+      "src/versus_gui_component.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_gui_scaling.obj src/versus_gui_scaling.c",
     "identification": "The project reflection annotations identify UGUIImage vftable RVA 0x300788. Its constructor store, table through zero-based slot 26, and the complete body at RVA 0x159000 agree between the locked Enhanced and Steam images. The stock GUI.u declaration names UGUIComponent::ActualWidth at decoded offset 0x7c478. The four return paths cover missing viewports, pixel dimensions, and parent or viewport scaling. The pooled 0.0f and 1.0f floats at RVAs 0x3109f8 and 0x3109fc were checked separately.",
+    "link_bindings": {
+      "__real@00000000": {
+        "va": 281086456,
+        "basis": "The fallback path loads the pooled single-precision 0.0f at VA 0x10c109f8."
+      },
+      "__real@3f800000": {
+        "va": 281086460,
+        "basis": "The normalization test compares the dimension with the pooled single-precision 1.0f at VA 0x10c109fc."
+      }
+    },
     "match": {
       "bytes_sha256": "cd395bc63f89416bd29420ec97154b4b5b07651b043a1b604be3864e638119d0",
-      "inputs_sha256": "d42f2430ce658278d38f25d16e3d7c0c206267a49fda0229047b35443fdbc0d4"
+      "inputs_sha256": "a9ac3927367e6604511c253c9b34a7d9e49871d7aab99154668c9a2971eb1960"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5523,14 +5540,25 @@
     "size": 103,
     "rebuilt_symbol": "@gui_actual_height@4",
     "inputs": [
-      "src/versus_gui_scaling.c"
+      "src/versus_gui_scaling.c",
+      "src/versus_gui_component.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_gui_scaling.obj src/versus_gui_scaling.c",
     "identification": "The project reflection annotations identify UGUIImage vftable RVA 0x300788. Its constructor store, table through zero-based slot 27, and the complete body at RVA 0x159090 agree between the locked Enhanced and Steam images. The stock GUI.u declaration names UGUIComponent::ActualHeight at decoded offset 0x7c4e1. The four return paths cover missing viewports, pixel dimensions, and parent or viewport scaling. The pooled 0.0f and 1.0f floats at RVAs 0x3109f8 and 0x3109fc were checked separately.",
+    "link_bindings": {
+      "__real@00000000": {
+        "va": 281086456,
+        "basis": "The fallback path loads the pooled single-precision 0.0f at VA 0x10c109f8."
+      },
+      "__real@3f800000": {
+        "va": 281086460,
+        "basis": "The normalization test compares the dimension with the pooled single-precision 1.0f at VA 0x10c109fc."
+      }
+    },
     "match": {
       "bytes_sha256": "d33ead7981cd07b58e847bf3fe022caa68749dfcb3c248b028f0dd76d576fbfb",
-      "inputs_sha256": "952da227fbd4ecd54bd6c58d9e0444badbb0fb2ff8c728dab258e5de75cde523"
+      "inputs_sha256": "0d542288e77db55d23f3332ba204e7054daf5dd0216e27af8c746e91bcbe7057"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5690,14 +5718,15 @@
     "size": 52,
     "rebuilt_symbol": "@gui_save_canvas_state@12",
     "inputs": [
-      "src/versus_gui_drawing.c"
+      "src/versus_gui_drawing.c",
+      "src/versus_gui_component.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_gui_drawing.obj src/versus_gui_drawing.c",
     "identification": "The project reflection annotations identify UGUIImage vftable RVA 0x300788. Its constructor store, table through zero-based slot 30, and the complete body at RVA 0x1592a0 agree between the locked Enhanced and Steam images. The Steam GUI.u package declares UGUIComponent::SaveCanvasState at decoded offset 0x7c61a.",
     "match": {
       "bytes_sha256": "95ac274d563c716a87e247a506403367566071515a37c644114e7a0fd6be3016",
-      "inputs_sha256": "61ee81fdab8067b1a937435a86f52126a7c76fdf5b0f981ed2973a0be0c7f614"
+      "inputs_sha256": "cb7caf323fa3837918721c331f86e25a3517024250cbeec91d0e5c8d5ecf6e2f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5714,14 +5743,15 @@
     "size": 52,
     "rebuilt_symbol": "@gui_restore_canvas_state@12",
     "inputs": [
-      "src/versus_gui_drawing.c"
+      "src/versus_gui_drawing.c",
+      "src/versus_gui_component.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_gui_drawing.obj src/versus_gui_drawing.c",
     "identification": "The project reflection annotations identify UGUIImage vftable RVA 0x300788. Its constructor store, table through zero-based slot 31, and the complete body at RVA 0x1592e0 agree between the locked Enhanced and Steam images. The Steam GUI.u package declares UGUIComponent::RestoreCanvasState at decoded offset 0x7c67b.",
     "match": {
       "bytes_sha256": "311b82dc2d2a3e881fc72b22c4e66e1afabdabc767a2325d0d5a8178800a5807",
-      "inputs_sha256": "09c612704ee1e4b20d285fd280231960eb7928e639329bc86d31da396e7e8a11"
+      "inputs_sha256": "d311543d1de74f1d2db45802f01485fb429ee489b6c3ee290389bcc981d3c69a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6100,14 +6130,15 @@
     "size": 57,
     "rebuilt_symbol": "@gui_clone_dimensions@12",
     "inputs": [
-      "src/versus_gui_bounds.c"
+      "src/versus_gui_bounds.c",
+      "src/versus_gui_component.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_gui_bounds.obj src/versus_gui_bounds.c",
     "identification": "The project reflection annotations identify UGUIImage vftable RVA 0x300788. Its constructor store, table through zero-based slot 40, and the complete body at RVA 0x1597a0 agree between the locked Enhanced and Steam images. The stock GUI.u interface names UGUIComponent::CloneDims at decoded offset 0x7c965. The complete body covers every reachable basic block through its returns.",
     "match": {
       "bytes_sha256": "b80855a787f91092ad9f530919379c9bc1685c718bb6d04460731543c39a19f8",
-      "inputs_sha256": "4f1de78a2599c8b7b78ef737baa99f5795f2953e38b64b37781d878faf4849d2"
+      "inputs_sha256": "c099c77c7f71fa5ef76e19d9f2657bac8cc9eea288580f5c151816249a8f158c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6124,14 +6155,15 @@
     "size": 31,
     "rebuilt_symbol": "@gui_set_dimensions@24",
     "inputs": [
-      "src/versus_gui_drawing.c"
+      "src/versus_gui_drawing.c",
+      "src/versus_gui_component.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_gui_drawing.obj src/versus_gui_drawing.c",
     "identification": "The project reflection annotations identify UGUIImage vftable RVA 0x300788. Its constructor store, table through zero-based slot 39, and the complete body at RVA 0x1597e0 agree between the locked Enhanced and Steam images. The Steam GUI.u package declares UGUIComponent::SetDims at decoded offset 0x7c901.",
     "match": {
       "bytes_sha256": "a1ca7379c08354dbabad0e9ff04e98219c9681abdc551d79ddd93da28247631d",
-      "inputs_sha256": "459771a25cee21d28c68608ed6166fd5b9b6277c1d2c4180d49b7636973e2fd5"
+      "inputs_sha256": "3dc2641dfcad027e5d4f426da6eb2b1489fe467b6108d0c208c0995988a893c5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

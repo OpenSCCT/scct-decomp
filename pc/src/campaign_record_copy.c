@@ -1,12 +1,12 @@
 #include "record_copy.h"
 
 struct Record4 { unsigned int data[1]; };
-struct Record8 { unsigned int data[2]; };
+struct CopyRangeRecord8 { unsigned int data[2]; };
 struct Record16 { unsigned int word[4]; };
-struct Record32 { unsigned int data[8]; };
+struct CopyRangeRecord32 { unsigned int data[8]; };
 
 ASSIGN_RANGE(r4210d0, Record4)
-ASSIGN_RANGE(r423640, Record8)
+ASSIGN_RANGE(r423640, CopyRangeRecord8)
 ASSIGN_RANGE(r428bd0, Record4)
 ASSIGN_RANGE(r428bf0, Record4)
 ASSIGN_RANGE(r4301e0, Record4)
@@ -155,9 +155,9 @@ CONSTRUCT_COPIES(r442490, Record16)
 CONSTRUCT_COPIES(r4424e0, Record16)
 CONSTRUCT_COPIES(r442530, Record16)
 CONSTRUCT_COPIES(r442570, Record16)
-ASSIGN_RANGE(r455060, Record32)
-COPY_BACKWARD(r455390, Record32)
-ASSIGN_RANGE(r459e80, Record8)
+ASSIGN_RANGE(r455060, CopyRangeRecord32)
+COPY_BACKWARD(r455390, CopyRangeRecord32)
+ASSIGN_RANGE(r459e80, CopyRangeRecord8)
 ASSIGN_RANGE(r460890, Record4)
 ASSIGN_RANGE(r462a10, Record4)
 ASSIGN_RANGE(r464820, Record4)

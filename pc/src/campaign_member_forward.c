@@ -1,5 +1,9 @@
-struct Word { unsigned value; };
-struct Pointer { const unsigned *value; };
+/* FAKEMATCH: the member receives scalar words on the stack. This aggregate prevents
+   the C __fastcall declaration from passing the first word in EDX. */
+struct MemberForwardWord { unsigned value; };
+/* FAKEMATCH: the embedded member receives the key address on the stack. This
+   aggregate forces the pointer onto the stack in its C __fastcall declaration. */
+struct MemberForwardPointer { const unsigned *value; };
 
 extern void *__fastcall owner_1e6510(void *);
 extern void *__fastcall owner_1ffa20(void *);
@@ -8,15 +12,15 @@ extern void *__fastcall owner_202cb0(void *);
 extern void *__fastcall owner_4f8a30(void *);
 extern void *__fastcall owner_4f9c20(void *);
 extern unsigned char __fastcall active_4844e0(void *);
-extern unsigned char __fastcall dispatch_137b10(void *, struct Pointer, struct Word, struct Word);
-extern unsigned char __fastcall dispatch_1a2740(void *, struct Pointer, struct Word, struct Word);
-extern unsigned char __fastcall dispatch_4f2e70(void *, struct Pointer, struct Word, struct Word);
-extern unsigned char __fastcall dispatch_4f7d80(void *, struct Pointer, struct Word, struct Word);
+extern unsigned char __fastcall dispatch_137b10(void *, struct MemberForwardPointer, struct MemberForwardWord, struct MemberForwardWord);
+extern unsigned char __fastcall dispatch_1a2740(void *, struct MemberForwardPointer, struct MemberForwardWord, struct MemberForwardWord);
+extern unsigned char __fastcall dispatch_4f2e70(void *, struct MemberForwardPointer, struct MemberForwardWord, struct MemberForwardWord);
+extern unsigned char __fastcall dispatch_4f7d80(void *, struct MemberForwardPointer, struct MemberForwardWord, struct MemberForwardWord);
 
 #define FORWARD_IF_ACTIVE(Entry, MemberOffset, Owner, Active, Dispatch) \
-    unsigned char __fastcall Entry(void *self, struct Word first, struct Word key, struct Word flags) \
+    unsigned char __fastcall Entry(void *self, struct MemberForwardWord first, struct MemberForwardWord key, struct MemberForwardWord flags) \
     { \
-        struct Pointer address; \
+        struct MemberForwardPointer address; \
         unsigned char enabled = Active(Owner(self)); \
         if (enabled) { \
             address.value = &key.value; \

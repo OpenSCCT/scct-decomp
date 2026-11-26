@@ -157,42 +157,42 @@ public:
         T Copy = Value; // Value may live inside the array.
         size_t NewCapacity = Capacity();
 
-        if (Count == 0)
-            ;
-        else if (MaxSize() - Size() < Count)
-            LengthError();
-        else if (NewCapacity < Size() + Count) {
-            // Grow by half again, or to the exact size when that is larger.
-            NewCapacity = MaxSize() - NewCapacity / 2 < NewCapacity ? 0 : NewCapacity + NewCapacity / 2;
-            if (NewCapacity < Size() + Count)
-                NewCapacity = Size() + Count;
-            Pointer NewArray = this->Allocator.Allocate(NewCapacity);
-            Pointer Ptr = NewArray;
+        if (Count != 0) {
+            if (MaxSize() - Size() < Count)
+                LengthError();
+            else if (NewCapacity < Size() + Count) {
+                // Grow by half again, or to the exact size when that is larger.
+                NewCapacity = MaxSize() - NewCapacity / 2 < NewCapacity ? 0 : NewCapacity + NewCapacity / 2;
+                if (NewCapacity < Size() + Count)
+                    NewCapacity = Size() + Count;
+                Pointer NewArray = this->Allocator.Allocate(NewCapacity);
+                Pointer Ptr = NewArray;
 
-            Ptr = UCopy(First, Where.Ptr, NewArray);
-            Ptr = UFill(Ptr, Count, Copy);
-            UCopy(Where.Ptr, Last, Ptr);
+                Ptr = UCopy(First, Where.Ptr, NewArray);
+                Ptr = UFill(Ptr, Count, Copy);
+                UCopy(Where.Ptr, Last, Ptr);
 
-            Count += Size();
-            if (First != 0) {
-                Destroy(First, Last);
-                this->Allocator.Deallocate(First, End_ - First);
+                Count += Size();
+                if (First != 0) {
+                    Destroy(First, Last);
+                    this->Allocator.Deallocate(First, End_ - First);
+                }
+                End_ = NewArray + NewCapacity;
+                Last = NewArray + Count;
+                First = NewArray;
+            } else if ((size_t)(Last - Where.Ptr) < Count) {
+                // The new elements run past the old end.
+                UCopy(Where.Ptr, Last, Where.Ptr + Count);
+                UFill(Last, Count - (Last - Where.Ptr), Copy);
+                Last += Count;
+                Fill(Where.Ptr, Last - Count, Copy);
+            } else {
+                // The new elements fit inside the old range.
+                Pointer OldEnd = Last;
+                Last = UCopy(OldEnd - Count, OldEnd, Last);
+                CopyBackward(Where.Ptr, OldEnd - Count, OldEnd);
+                Fill(Where.Ptr, Where.Ptr + Count, Copy);
             }
-            End_ = NewArray + NewCapacity;
-            Last = NewArray + Count;
-            First = NewArray;
-        } else if ((size_t)(Last - Where.Ptr) < Count) {
-            // The new elements run past the old end.
-            UCopy(Where.Ptr, Last, Where.Ptr + Count);
-            UFill(Last, Count - (Last - Where.Ptr), Copy);
-            Last += Count;
-            Fill(Where.Ptr, Last - Count, Copy);
-        } else {
-            // The new elements fit inside the old range.
-            Pointer OldEnd = Last;
-            Last = UCopy(OldEnd - Count, OldEnd, Last);
-            CopyBackward(Where.Ptr, OldEnd - Count, OldEnd);
-            Fill(Where.Ptr, Where.Ptr + Count, Copy);
         }
     }
 

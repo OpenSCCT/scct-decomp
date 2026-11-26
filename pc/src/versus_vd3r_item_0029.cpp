@@ -17,11 +17,10 @@ typedef unsigned long DWORD;
 typedef unsigned short WORD;
 typedef DWORD UBOOL;
 typedef DWORD BITFIELD;
-typedef void *HWND;
-typedef long LRESULT;
-typedef unsigned int WPARAM;
-typedef long LPARAM;
-typedef LRESULT (__stdcall *WNDPROC)(HWND, unsigned int, WPARAM, LPARAM);
+typedef struct HWND__ *HWND;
+typedef unsigned int UINT, WPARAM;
+typedef long LONG, LPARAM, LRESULT;
+typedef LRESULT (__stdcall *WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 
 inline void *operator new(unsigned int, void *Mem) { return Mem; }
 

@@ -4,8 +4,8 @@ struct RangeState {
     void *context;
 };
 
-struct Record { unsigned a, b, c, d; };
-struct Cursor { const void *position; };
+struct RangeRecord { unsigned a, b, c, d; };
+struct RangeCursor { const void *position; };
 
 struct RangeState *__fastcall initialize_range(struct RangeState *state, unsigned unused_edx,
                                                void *first, void *context)
@@ -17,7 +17,7 @@ struct RangeState *__fastcall initialize_range(struct RangeState *state, unsigne
     return state;
 }
 
-void __stdcall construct_record(struct Record *output, const struct Record *source)
+void __stdcall construct_record(struct RangeRecord *output, const struct RangeRecord *source)
 {
     if (output) {
         output->a = source->a;
@@ -27,8 +27,8 @@ void __stdcall construct_record(struct Record *output, const struct Record *sour
     }
 }
 
-unsigned char __fastcall cursor_differs(const struct Cursor *left, unsigned unused_edx,
-                                        const struct Cursor *right)
+unsigned char __fastcall cursor_differs(const struct RangeCursor *left, unsigned unused_edx,
+                                        const struct RangeCursor *right)
 {
     return left->position != right->position;
 }

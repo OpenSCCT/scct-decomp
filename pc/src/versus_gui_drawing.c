@@ -1,6 +1,5 @@
 /* The component caches the canvas pen state while a widget draws itself. */
-struct font;
-struct color { unsigned char blue, green, red, alpha; };
+#include "versus_gui_component.h"
 
 struct canvas_pen {
     unsigned char object_fields[0x28];
@@ -10,16 +9,6 @@ struct canvas_pen {
     unsigned char style;
     unsigned char before_color[7];
     struct color color;
-};
-
-struct gui_component {
-    unsigned char object_fields[0x70];
-    float top, left, width, height;
-    unsigned char component_fields[0x54];
-    float saved_x, saved_y;
-    struct color saved_color;
-    struct font *saved_font;
-    unsigned char saved_style;
 };
 
 void __fastcall gui_save_canvas_state(struct gui_component *self, void *unused, const struct canvas_pen *canvas)

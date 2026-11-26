@@ -2,11 +2,11 @@
 // (Dinkumware VC7.1 list::_Buynode and _Tree::_Buynode) over the engine heap.
 // Each routine allocates a node, builds its links inside a catch-all region,
 // and returns the block to the allocator before rethrowing.
+#include "container_nodes.h"
+
 typedef unsigned int size_t;
 inline void *operator new(size_t, void *where) { return where; }
 
-struct HeapTag;
-extern const HeapTag ListNodeTag;
 extern "C" void *CurrentHeap();
 extern "C" void *HeapAllocate(void *heap, size_t size, const HeapTag *tag, int line, int kind);
 

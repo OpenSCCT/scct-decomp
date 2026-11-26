@@ -18,10 +18,9 @@ typedef int INT;
 typedef unsigned long DWORD;
 typedef unsigned short WORD;
 typedef DWORD UBOOL;
-typedef void *HWND;
-typedef long LRESULT;
-typedef unsigned int WPARAM;
-typedef long LPARAM;
+typedef struct HWND__ *HWND;
+typedef unsigned int UINT, WPARAM;
+typedef long LONG, LPARAM, LRESULT;
 typedef void *HINSTANCE;
 #define BM_GETCHECK 0x00F0
 #define BM_SETCHECK 0x00F1

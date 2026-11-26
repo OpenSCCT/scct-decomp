@@ -1,8 +1,7 @@
+#include "campaign_name_index.h"
+
 typedef unsigned short WChar;
 struct NameEntry { unsigned header[3]; unsigned char text[1]; };
-/* FAKEMATCH: the original passes a name as a stack argument; this one-member struct only steers
-   that stack slot. */
-struct Name { int index; };
 struct Notify { float time; struct Name name; unsigned remaining[2]; };
 /* FAKEMATCH: the original members in this range are not recovered; these padding members are not
    named by offset and only push later members into place. */
@@ -26,7 +25,7 @@ static __forceinline WChar *render_name(const struct Name *name)
 {
     WChar *out = name_buffers[next_buffer];
     next_buffer = (next_buffer + 1) % 1024;
-    return widen_name(out, name_entries[name->index]->text);
+    return widen_name(out, name_entries[name->value]->text);
 }
 
 WChar *__fastcall notify_text(void *self, void *unused, const struct Clip *clip, int index)

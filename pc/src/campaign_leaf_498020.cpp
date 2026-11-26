@@ -2,19 +2,7 @@
 // global object at VA 0x1131a714 returns an object, calls its method at VA 0x10dc2140 with the
 // dword at offset 0. All names are invented.
 
-class UnkType_10dc2140
-{
-public:
-    void Unk_10dc2140(int Value);
-};
-
-class UnkType_1131a714
-{
-public:
-    UnkType_10dc2140* Unk_10d97e40();
-};
-
-extern UnkType_1131a714 GUnk_1131a714;
+#include "campaign_global_1131a714.h"
 
 class UnkType_10d98020
 {
@@ -28,7 +16,7 @@ private:
 // UnkType_10d98020::Unk_10d98020
 void UnkType_10d98020::Unk_10d98020()
 {
-    UnkType_10dc2140* Object = GUnk_1131a714.Unk_10d97e40();
+    UnkType_1131a714_Item* Object = GUnk_1131a714.Unk_10d97e40();
     if (Object) {
         Object->Unk_10dc2140(unk_00);
     }

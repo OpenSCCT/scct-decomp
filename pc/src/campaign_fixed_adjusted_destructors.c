@@ -1,4 +1,6 @@
 /* x86 addresses and virtual-base displacements are 32 bits in this build. */
+/* FAKEMATCH: the C fastcall signature passes the adjusted destructor's flags
+   as a one-word aggregate to reproduce its stack argument. */
 struct Flags { unsigned value; };
 extern void *__fastcall destroy_adjusted(unsigned char *self, struct Flags flags);
 

@@ -3,10 +3,10 @@
 
 #include "campaign_class_singletons.h"
 #include "campaign_class_registration.h"
-/* FAKEMATCH: the original members in this range are not recovered; these padding members are not
-   named by offset and only push later members into place. */
+/* FAKEMATCH: this C view skips the recovered UObject prefix, including Index,
+   StateFrame, ObjectFlags and Name, to reach Class at +0x24. */
 struct EngineObject {
-    unsigned char object_fields[0x24];
+    unsigned char unk_0000[0x24];
     struct RuntimeClass *type;
 };
 

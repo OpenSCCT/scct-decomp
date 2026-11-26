@@ -18,7 +18,7 @@
     "identification": "Complete dispatch adapter at RVA 0x4901a0. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x48ffe0.",
     "match": {
       "bytes_sha256": "edb0a9037788b8759ac1556744d5ccee3d201d93a2d2f673b87dfd519e8428c0",
-      "inputs_sha256": "c0ee1984362c3f6e9f7ff4f811a0b84d3739bfb0eb7c0fcd598f10268938d00e"
+      "inputs_sha256": "11c36e81520bfa7eb786fa1a4f23831d20dfc8eacf5804acb005dee79b477904"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -249,7 +249,8 @@
     "size": 29,
     "rebuilt_symbol": "?Unk_10d90c90@@YAXXZ",
     "inputs": [
-      "src/campaign_leaf_490c90.cpp"
+      "src/campaign_leaf_490c90.cpp",
+      "src/campaign_global_1131a6b0.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_490c90.obj src/campaign_leaf_490c90.cpp",
@@ -274,7 +275,7 @@
     },
     "match": {
       "bytes_sha256": "70f92078b2edacbd85eefde9e1b07712302caed1bec7344f133f95e79da406da",
-      "inputs_sha256": "ffeccf833a08f91c3feab3db973164be58b8b03b8ba20b88985fab67568113a6"
+      "inputs_sha256": "e62ce7859d72dd7396699333b61582109f26f8a77fff73d410eed0c1beefbda3"
     }
   },
   {
@@ -290,7 +291,7 @@
     "identification": "Direct call at RVA 0x4a4615 in the independently delineated function at RVA 0x4a4610. The receiver field is at byte offset 0.",
     "match": {
       "bytes_sha256": "19d200194d49b34530548575f37a1bb4203ee60f18d42f0084e86b7a8c899faa",
-      "inputs_sha256": "3db22cb7f408e03eaed724bba65e96e7e94a9764e4b1f7b5585cc585dfaffa49"
+      "inputs_sha256": "7056d7a3bb024303a7e081d58d0c7a05c0568eb9df008ee62149ad88ba449ea6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -336,6 +337,31 @@
     }
   },
   {
+    "id": "campaign-leaf-491080",
+    "offset": 4788352,
+    "size": 3,
+    "rebuilt_symbol": "?Unk_10d91080@UnkType_10dd6340_Item@@QAEXH@Z",
+    "inputs": [
+      "src/campaign_leaf_491080.cpp",
+      "src/campaign_leaf_4d6340_item.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_491080.obj src/campaign_leaf_491080.cpp",
+    "identification": "Empty one-argument thiscall method at VA 0x10d91080. The matched list walker at 0x10dd6340 calls it on each embedded item with its input value. The retail body is ret 4, which only removes the explicit stack argument.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "e598d0c3ba86d917b177d7adde0556aa99bc355543c57aee0a3e50b684dd7e99",
+      "inputs_sha256": "97255051a665c82fe217869f237b0ea73a9de5cfc80db9f9a3dd1464ba362687"
+    }
+  },
+  {
     "id": "read-word-491090",
     "offset": 4788368,
     "size": 3,
@@ -348,7 +374,7 @@
     "identification": "Direct call at RVA 0x5d2f6 in the independently delineated function at RVA 0x5d250. The receiver field is at byte offset 0.",
     "match": {
       "bytes_sha256": "19d200194d49b34530548575f37a1bb4203ee60f18d42f0084e86b7a8c899faa",
-      "inputs_sha256": "f91bd6e2dedd486df1fa56569b6e7216cb242a13dfdc9d0f665331a050c9d8b4"
+      "inputs_sha256": "25017cb68db26c87d40fcc0e39953274fc363a51722bf8230a3af7ea9482661a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -822,7 +848,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x492e60. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "58dc20d7462d3e0ae6161610a4106f847cc8515b6540c8b88053b1915a421483"
+      "inputs_sha256": "10f1f7ca0eb7a9c0b3b75cd54387e49693873d42a613bde96898e96d6c6b9e4a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -853,10 +879,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "8a784fe67df332fc9f8e6a042c1afce3fe48e8a85022d31479f43eb15ba83103",
-      "inputs_sha256": "3e7b4f0cfcb0fe80d268a394658c4a5cc0279536ab4379704c8ba9baf714a403"
+      "inputs_sha256": "c4b531a70c1c371c7437cc16b194d58c77d05a9ec8e84f6cd7b8b7034b6cd8f9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -917,10 +943,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "61c4661e514bb9481630c33d08f25c93c41713f466d6d7509d64f6c730d56a34",
-      "inputs_sha256": "c94ba018911b176636648f3f13159b827f760beaee65feb04dfd2f4d15864002"
+      "inputs_sha256": "0de4656bffdb5c0f3a1ef204d78b885c34b1274798fe0ac836265b669f80b72d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -951,10 +977,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "b9d99af15b42855f47e484141b5672cd55a908ad583e5b0690db1de8cc6a8b9a",
-      "inputs_sha256": "d7445c23f4f709650b54d8c6981e35ad77d4587bba076463ab5dfb128bab861c"
+      "inputs_sha256": "bccb6065b0043cd4484d5642240370540b8295e2ed89a4a16a29099a597d65d3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1015,10 +1041,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "493621662b1975812de2f7610cd1aec7b1b8903f7007912a13a48404311a60e1",
-      "inputs_sha256": "0a81b3621c67c57695b5c309c01bd04915c7e9553b9e996f3174d4b1b0a54278"
+      "inputs_sha256": "5913f40363dbc54a4d5e69bda38407ba6dbc703bcbf7fc4a9cc24e49d0f57dc4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1131,7 +1157,7 @@
     "identification": "Direct call at RVA 0x4b711e in the independently delineated function at RVA 0x4b7070. The receiver field is at byte offset 88.",
     "match": {
       "bytes_sha256": "f87302fd3333696d3a1a0f1e643f5bcb1b736f0882df0334509eb54f32c13c3d",
-      "inputs_sha256": "e6fb775b5af5854aea6207e5f5d1ddf28480b4db69b865ed11c2f29495bc5c0a"
+      "inputs_sha256": "e6c53da08dc9929ca58eb97ffbc27b9f57f44cad713f67c4481a1a02e359fdd9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1524,7 +1550,7 @@
     "identification": "Direct call at RVA 0x494a29 in the independently delineated function at RVA 0x4949f0. Copies a 4-byte record into a non-null destination. Majority choice, not evidence: Record4 takes the majority name data and spelling unsigned int, and Record16 takes the majority spelling unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "8de44ff1239c5800f279e2142606ecdbaea9d748bc08545bdc7362b505481d8c",
-      "inputs_sha256": "55cfa6845867e75af3104af2ec4d80bda98d59add444ef5f3bf2130bd0a3c4fa"
+      "inputs_sha256": "257d587d3330298877890a83c38b960cb00186b7825d3f7dbc857b10d8c53bee"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1556,10 +1582,10 @@
         "basis": "Releases the node allocation through the shared allocator."
       }
     },
-    "identification": "Direct call at RVA 0x494623. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Direct call at RVA 0x494623. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type name ManagedList is analyst-invented for the list wrapper with a sentinel head and count.",
     "match": {
       "bytes_sha256": "e73e225169847faf121db008b957c51ea54b117c0657a067e81d75ed885957b8",
-      "inputs_sha256": "6de909941b9c606a2353531e6db21e663bb613b366b87015a01eab454d279c43"
+      "inputs_sha256": "327a46877d3077540d90cb316654f4ffa12ef7231e9f126d63c8eac66bca89bf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1583,7 +1609,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x494540. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "c55f4fc1bac236d2a6e6dc1f74b95d1d7f88d103011e01da0d1864a0e8d1f65d"
+      "inputs_sha256": "e1141b9f4ce65d73039734af4faa56f91e959df7a469af262acc23fd987308ac"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1623,7 +1649,8 @@
     "size": 153,
     "offset": 4801920,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyHeadNode@?$ListStorage@U?$ListNode@$03@@U?$Element@$03@@@@QAEPAU?$ListNode@$03@@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1661,7 +1688,7 @@
     "identification": "Engine container list head node: allocate, link the node to itself in a catch-all region; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "bcc6eec0c835cedc4bdd05de3e6bb6dc6a55fea94219a380d33dbd595e29fdbd",
-      "inputs_sha256": "8630b5257c5c71b34fac626c91c1080fcad7688db6d24b0b54142fc515e0b830"
+      "inputs_sha256": "cf4ef6c99ccc50ed16311f89c70e6a8ed6df4ad64184dbdeb524e66dc1e45c52"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1700,7 +1727,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x494620. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "a9de082d56382f266e135ecda28a7259929b86fe74bf92723e368e1ba41bd2aa",
-      "inputs_sha256": "da42de1c05500203a790f105bc6925b32c0263fe0f8e3e8281cec650f8ed2690"
+      "inputs_sha256": "1364c8ce9cb172c0730d56e40dd3c5e30864e7a10ce2f4d263c8b325919cce1b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1716,7 +1743,8 @@
     "size": 153,
     "offset": 4802128,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyHeadNode@?$ListStorage@U?$ListNode@$03@@U?$Element@$03@@@@QAEPAU?$ListNode@$03@@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1754,7 +1782,7 @@
     "identification": "Engine container list head node: allocate, link the node to itself in a catch-all region; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "b9768e0b04ad0276e6448f09d8bbf8b720c5079e8d79f60026f84dd381610269",
-      "inputs_sha256": "1f85092e0ca6784b77ba465bb71a85f69d0ca21b6fcaaebb85ed9d2eb2b62fb1"
+      "inputs_sha256": "3bd203e57a8f0fd4baf5c1555f593293ce712596732e5648912d310b14068cec"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1819,7 +1847,8 @@
     "size": 147,
     "offset": 4802496,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyNode@?$ListStorage@UWordListNode@@H@@QAEPAUWordListNode@@PAU2@0ABH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1857,7 +1886,7 @@
     "identification": "Engine container list node of one word: allocate and construct links and value in place; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "2e3f6fb554b549983385aae17cc2659a90b78c418c053690ec973e2be05a1906",
-      "inputs_sha256": "92060055b12bb950a631162d8325c79c55f3c96b716bb66529a570685f927429"
+      "inputs_sha256": "f9a5d2b68b76af1da13849881c6d5081cfb3e7c22bcc1a3d2b68622c8e51de96"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1874,7 +1903,8 @@
     "size": 147,
     "offset": 4802656,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyNode@?$ListStorage@UWordListNode@@H@@QAEPAUWordListNode@@PAU2@0ABH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1912,7 +1942,7 @@
     "identification": "Engine container list node of one word: allocate and construct links and value in place; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "022928732ce1d84f6ce3de58b13501e6a6b24f7539b1c0f709225c590521b713",
-      "inputs_sha256": "62ea6cbf524ca0513fdefdcc8b6855c0362437cb0dff124f4005997b4170e820"
+      "inputs_sha256": "3ef3e32ab6f3e3c8f8b5a3874e8c2634bd620c158e100d0562faa9a68a798c6b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1937,7 +1967,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x494960. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "b0aef4281004536b8aef2048310817456fc70730dd0b99c322fd803e8659a495"
+      "inputs_sha256": "78f00a3b9b1f0477e2051ea69f7b52a3dfc7d2fde2b288e347483fc2b956256a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1979,7 +2009,7 @@
     "identification": "Uninitialized copy into vector storage: build each element from the source range through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "bd027bd4befacd0e4a1fa2653d128ef5f505e76a5d34b3615f297c6a464db880",
-      "inputs_sha256": "ae824da7d4a0a444be347985616cf7dad4a893e54f15a6fcf843018969df24ee"
+      "inputs_sha256": "81fe2c0313b06f71d5dcd700b8936d3e1f53cc93db3847e8bdba80f816283014"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1989,6 +2019,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -2018,7 +2051,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x494a60. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "1d1c8c49a643095855559abb1438048bf62fa2db3b8b0a0c2a8bccfa3b8c47b3",
-      "inputs_sha256": "cfa3c0adb83ddf19fbea7238aa388f5889656a52a0628763ad3635c175dd5ed9"
+      "inputs_sha256": "91b9a7dd86098c3f30ac06a34b857fdbf139728f2a1bbbeb0f285b021939cce5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2090,7 +2123,7 @@
     "identification": "Uninitialized fill of vector storage: build each element through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "c6ba1f645533cf491369e0ad0b3a7e7b1392aabdcc83a0984ff226fe919cd35d",
-      "inputs_sha256": "d659238ad8314f527bfcea1f886ea3e5df98246526662c36fc15bd4eeeaac738"
+      "inputs_sha256": "046d7934c179abc2d814ee248e24d20aac86bb3a0b9b59c92ddd3ee361883847"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2100,6 +2133,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -2129,7 +2165,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x494c10. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "307e16d04455375a07ee0b9768dfc7ca0b0a9289d8144fa3767ed522ddd67cb6",
-      "inputs_sha256": "52b287aa09a1f1ecfa45396f0f8a8c38eec30a0c7cffdca5a68c37d9053b1188"
+      "inputs_sha256": "a24fc45aefda58bc69f8998b5f7b120d3e9fb57ac0a0a808d6eaf59fef8084a2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2161,10 +2197,10 @@
         "basis": "Releases the node allocation through the shared allocator."
       }
     },
-    "identification": "Direct call at RVA 0x494ca3. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Direct call at RVA 0x494ca3. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type name ManagedList is analyst-invented for the list wrapper with a sentinel head and count.",
     "match": {
       "bytes_sha256": "876913d97c4398755a611b4d257512ca0b7731a0bbc6c62c9a0068155baf08d3",
-      "inputs_sha256": "90335b2543d9ea57f32be7f068c2105482c88e5d403874b6ae4fdf4d34322ddf"
+      "inputs_sha256": "29eb83c2d4d6ce60fd72f4ab6c3d8fe48e98a4aad43a7fbfa41bc75b8bb38c1a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2202,7 +2238,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x494ca0. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "ab3e6518ad9f47119da4ecf515c02f08290280a7aeff71ff597ee97446f0716f",
-      "inputs_sha256": "387bf12dd979a091991900380a963a68ac908d24ea31d04e9538425d5ec45f57"
+      "inputs_sha256": "42aac645196d8cce7c20d31edbf415e2376bb6f28489c0e2d2bd57b85ebc2f69"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2290,10 +2326,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x494580, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x494580, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. ListInitializationTarget is an analyst-invented local name for the list object whose head and count fields are initialized here.",
     "match": {
       "bytes_sha256": "20a01bb2b3ffca937ae4f4fb8bc25edd36188f77d742654f072a270c19d64bae",
-      "inputs_sha256": "026df065b90051a0e91ca106ee8ca07405f7430679e12bdf312b85f0e06c4127"
+      "inputs_sha256": "a281d4ec9118490efc45c83ebcb1cd3c372fd572736b7de0eb34304862a5c479"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2321,10 +2357,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x494650, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x494650, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. ListInitializationTarget is an analyst-invented local name for the list object whose head and count fields are initialized here.",
     "match": {
       "bytes_sha256": "763bc61180ee5378f998f1a5177cfe1b07bcb1ea9a2e820dc6229c02e9ffc535",
-      "inputs_sha256": "63b6296bf630fde39237567c5d0c2dfd2078921ecd31db3946804545a7b72036"
+      "inputs_sha256": "8e2dc52d089610ceb100d0913051d53a892f5d00ffbb34db074a237d5c43d070"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2362,7 +2398,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x494fe0. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "f0c0cd23efd9de1186467178de974e1689f26980552d99137d70a3704f1fdb50",
-      "inputs_sha256": "28c6091a5f2ef55d63f48676c0b2d31d23c5d637120056691bc07f3551877038"
+      "inputs_sha256": "213a9f73ad7adbdf63ba47d29814e6d7bdf64ef5517f5cda492c92ec883d7d88"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2390,10 +2426,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x494580, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x494580, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. ListInitializationTarget is an analyst-invented local name for the list object whose head and count fields are initialized here.",
     "match": {
       "bytes_sha256": "5bf17a2d36d7981932e23acef6bed74ccebfa18759bc36c0e3e51f91eadcea2a",
-      "inputs_sha256": "73bedfd3d4c38fae5b339da409aab8263c4a5d01c5b76ac40328715c000ccfe2"
+      "inputs_sha256": "d4282483800525fb5d03b00d860b5cfc199a671f46e6e74e840b0c9d3852f8eb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2421,10 +2457,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x494650, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x494650, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. ListInitializationTarget is an analyst-invented local name for the list object whose head and count fields are initialized here.",
     "match": {
       "bytes_sha256": "20a01bb2b3ffca937ae4f4fb8bc25edd36188f77d742654f072a270c19d64bae",
-      "inputs_sha256": "3e8ea87695c965351d1ab4432658cc8978f50e2ac2e3ad4ace4b9e7fb826e0de"
+      "inputs_sha256": "a54133848eeff0858fb88212272d4d1da7a2f05b04baeefc98c1e95a98c1c5f8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2462,7 +2498,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x495090. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "da96ecfc8f20d5087ed28863449f2ec8cb418e48d86d3c27f1b95fc4188d639d",
-      "inputs_sha256": "cc4daa76362dabcf11dd5370386b66fc5d2fa54d05df53bc1118204898c142de"
+      "inputs_sha256": "f8e7d400fc1672be0eddc7e6bea8d67573be5b200dc20eb6f0ad903c6b9843fc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2493,10 +2529,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "ca87ac642f3c2bce51329cd4fa3c1a723c497c242c18e0b80327bf6fc11fc541",
-      "inputs_sha256": "b4465e799bbd1584a619f5b042a200b2de4e9d877a5e9527512aa7e38b8fd8b8"
+      "inputs_sha256": "6bdfe9be9c44bf685ed86e934aaf7d71e9a713e8da7d4d988248132e39fc5711"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2527,10 +2563,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "529e7b97cd898e9de8f8f0d2300b48f00500ba70dee3ca3f7c6dd6245365a46b",
-      "inputs_sha256": "d01c8eaf58ef8b3eab1525eb913174ce31ec104314dc1b7d8df2f91f09a59c25"
+      "inputs_sha256": "811e21f9c5b68715644b161a85eafb2718187b970a36324129eda9c5df76f289"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3008,7 +3044,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x496520. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "2fa4179d102582e4cd8684e30703c142ecbf515ba3ac3ae1d740be082df308f7"
+      "inputs_sha256": "d857082623b47c992f8e04ba9fff904a4403575b42747490bfe793fd9f502507"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3160,7 +3196,8 @@
     "offset": 4810688,
     "inputs": [
       "src/campaign_tree_erase_nodes.c",
-      "src/campaign_three_link_node.h"
+      "src/campaign_three_link_node.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@erase_4967c0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3170,19 +3207,19 @@
         "va": 282683328,
         "basis": "Recursive erasure of the right subtree."
       },
-      "_prepare_48b460": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Prepares the removed node with its allocation category."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_48b550": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
     "identification": "Indexed recursive tree erasure with sentinel byte at offset 21, right subtree recursion, left subtree iteration and allocation category 7. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
     "match": {
       "bytes_sha256": "d86b287eecc6371e12ec3ccd9a3a4b75ac7e187931fa7d2e28d988cac411f88a",
-      "inputs_sha256": "d13cc2c930bbc9f2bf754b0100ecb0325d0055219dc2eed7abc00fa829a4eda9"
+      "inputs_sha256": "518b3b086464f63c7ea7f2a4cfcdd29bee44a59fb738d46c409abc79a0e725a2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3353,10 +3390,10 @@
         "basis": "Called with the root before resetting the tree sentinel."
       }
     },
-    "identification": "Default Ghidra extent. Erases the subtree via RVA 0x4967c0, clears the count and restores three sentinel links.",
+    "identification": "Default Ghidra extent. Erases the subtree via RVA 0x4967c0, clears the count and restores three sentinel links. The local type names ManagedTreeNode and ManagedTree are analyst-invented labels for the three-link tree node and its head/count wrapper.",
     "match": {
       "bytes_sha256": "316890125fc172f0353a62f81265d17d9b67cd9561c464814dac69bac29018b2",
-      "inputs_sha256": "92d443ab1aca5a25f315a0e092ab431154243049dd50f9efa7ce5851f9b7e93d"
+      "inputs_sha256": "d9c0f021c4ca2015efc09ddaa15cb521b50888c80df6efec2607dbdd7a168d4c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3372,7 +3409,8 @@
     "size": 180,
     "offset": 4811344,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyHeadNode@?$TreeStorage@U?$Element@$07@@@@QAEPAU?$TreeNode@U?$Element@$07@@@@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3410,7 +3448,7 @@
     "identification": "Engine container tree head node: allocate, null three links, mark black and not nil; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "eee45c28804409dde20adb42ec37df20fb615ed61ad4724714994573d0994d95",
-      "inputs_sha256": "5b87848d66565fa2347d1c87e3d0bcc9ae798378b7b50ef0f43143b8da6768b5"
+      "inputs_sha256": "328a78df95ebcba82de28a50adb848ef5c4805be76767b4ce59d7388114ce6ea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3427,7 +3465,8 @@
     "size": 160,
     "offset": 4811536,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyNode@?$TreeStorage@U?$Element@$07@@@@QAEPAU?$TreeNode@U?$Element@$07@@@@PAU2@00ABU?$Element@$07@@D@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3469,7 +3508,7 @@
     "identification": "Engine container tree node: allocate and run the out-of-line node constructor with links, value and colour; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "c4c73cf4a24a95f74008ac812c52305ca6086d9ef1ca634d3dba2cdd484f2884",
-      "inputs_sha256": "ba9025145cc1575f405c7ac06864f88fad2577b70e8b76816e912a7920d2b836"
+      "inputs_sha256": "b89f27ab458bd818a200c1b3a91982c1bd442d899e11b9397825129842f89b5a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3560,10 +3599,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x496a50, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x496a50, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "5da3ac7f21d674063065b1eeaf1cf9182b4126d2a4d652420ce161786a215caa",
-      "inputs_sha256": "938a4fec08c3c3eba8fd668de706296f6251f500fa59bcfab74c1bc449fd8905"
+      "inputs_sha256": "efa029779323c2394ade4ccb0fec4887522b76b46cd1a9f877200b9e4db6c2cb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3622,10 +3661,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x496a50, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x496a50, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "b78ce59f7cf1987bff1c03a44d4977b9dd79efaac7f03eab8a4e9f695c78c4f2",
-      "inputs_sha256": "24f7bf942a042fdd94daadfa133078929fa38e036b37b05b56339a212831faf4"
+      "inputs_sha256": "f453f64eb94db7e2c21666ae27eb4ab624a972e0ac76e3ac3d99d7ec7abe471f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3676,7 +3715,8 @@
     "offset": 4813568,
     "inputs": [
       "src/campaign_range_container_cleanup.c",
-      "src/campaign_list_link.h"
+      "src/campaign_list_link.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@cleanup_497300@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3686,19 +3726,19 @@
         "va": 282685488,
         "basis": "Indexed range erasure called with first and sentinel iterators."
       },
-      "_prepare_release": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Shared allocation preparation with category seven."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_prepared": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared sentinel allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
-    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type names RangeCleanupContainer and RangeCleanupPointer are analyst-invented labels for the list head/count wrapper and its one-link pointer wrapper.",
     "match": {
       "bytes_sha256": "d7b8abb5f80962c15076fcf92e27e241083e68226bc92eac5a5c8f315e513031",
-      "inputs_sha256": "10e3a017ef2e805f426fbbf61937191026720868b26e7ef3046d78ae3896aafe"
+      "inputs_sha256": "6a3eae578f3e622a6d5520332f9ba0b143530b7fbef0b9c7ffe9f4507ba018b1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3715,7 +3755,8 @@
     "offset": 4813824,
     "inputs": [
       "src/campaign_range_container_cleanup.c",
-      "src/campaign_list_link.h"
+      "src/campaign_list_link.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@cleanup_497400@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3725,19 +3766,19 @@
         "va": 282685488,
         "basis": "Indexed range erasure called with first and sentinel iterators."
       },
-      "_prepare_release": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Shared allocation preparation with category seven."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_prepared": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared sentinel allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
-    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type names RangeCleanupContainer and RangeCleanupPointer are analyst-invented labels for the list head/count wrapper and its one-link pointer wrapper.",
     "match": {
       "bytes_sha256": "f23ed0922f75b1b04dfb59470f87a92699c4d74c9be08d2fcb9264c054627934",
-      "inputs_sha256": "fdac866becce9ff8a92abfad267c645bfcba38ac65a91fa2b6c12ffb401718dd"
+      "inputs_sha256": "d731d4d2f488a3d170f090cc5414eb019d24ca9bd62702e9281400bdafc4520d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3754,7 +3795,8 @@
     "offset": 4814256,
     "inputs": [
       "src/campaign_range_container_cleanup.c",
-      "src/campaign_list_link.h"
+      "src/campaign_list_link.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@cleanup_4975b0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3764,19 +3806,19 @@
         "va": 282685488,
         "basis": "Indexed range erasure called with first and sentinel iterators."
       },
-      "_prepare_release": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Shared allocation preparation with category seven."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_prepared": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared sentinel allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
-    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type names RangeCleanupContainer and RangeCleanupPointer are analyst-invented labels for the list head/count wrapper and its one-link pointer wrapper.",
     "match": {
       "bytes_sha256": "9da1cf0139930cadb052a5920e0e465b4d62faed7379f6c224acda9b73610ae0",
-      "inputs_sha256": "f06996d1c600bbf2649e32467547dff0aa050b5bd97a480b6645df4bd8d6cd0f"
+      "inputs_sha256": "91de1dd0d1d998bf9eef5bb2e3f2a0fadaaf48903d5d4c15a2d6adc3a0ce1378"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3804,10 +3846,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x496a50, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x496a50, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "752756ae9de62ec239c3eda46f2352a9bcdb062cc5b2009e59caf32c2ef0e92e",
-      "inputs_sha256": "6609a5306968c97e6924978114a4b5a2bee9bae97288cf519816208a98cf841f"
+      "inputs_sha256": "3d02dc8796f28c2acbde53a5c1ea996acde21fd9544e285d9621464a460dc194"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3835,10 +3877,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x496a50, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x496a50, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "68063313efec1b0299f479ad3db1f323b384792bf9ec5e38f5460b5e13963afe",
-      "inputs_sha256": "a9f5c6369e38a5a02d7b3fd28664d4bd82fa5ef0aa38de596e183845532972d6"
+      "inputs_sha256": "5d8982e349fc1c3ddd1c3f08a26c9d5248336520a445c3a9db1336b82cd770a2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3855,7 +3897,8 @@
     "offset": 4814768,
     "inputs": [
       "src/campaign_range_container_cleanup.c",
-      "src/campaign_list_link.h"
+      "src/campaign_list_link.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@cleanup_4977b0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3865,19 +3908,19 @@
         "va": 282685488,
         "basis": "Indexed range erasure called with first and sentinel iterators."
       },
-      "_prepare_release": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Shared allocation preparation with category seven."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_prepared": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared sentinel allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
-    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type names RangeCleanupContainer and RangeCleanupPointer are analyst-invented labels for the list head/count wrapper and its one-link pointer wrapper.",
     "match": {
       "bytes_sha256": "8bb1992dac582e8cc76cc3243b0a9e3e776029b23f569889c3fdfeee889a3302",
-      "inputs_sha256": "5058135950ff38cbd7b7402ac13892806072c7e3d841089b784acbb7d07ddaea"
+      "inputs_sha256": "e779196aad12c7fa3a9394582c104792d547f25f5709c410d1e77e2bd1a364e9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3992,11 +4035,14 @@
     "size": 20,
     "rebuilt_symbol": "?Unk_10d978c0@@YAXXZ",
     "inputs": [
-      "src/campaign_leaf_4978c0.cpp"
+      "src/campaign_leaf_4978c0.cpp",
+      "src/campaign_global_1131a6cc.h",
+      "src/campaign_global_1131a6e4.h",
+      "src/campaign_type_10d976f0.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_4978c0.obj src/campaign_leaf_4978c0.cpp",
-    "identification": "Free function at VA 0x10d978c0; calls the method at VA 0x10d976f0 on the global objects at VA 0x1131a6cc and 0x1131a6e4. All names invented.",
+    "identification": "Free function at VA 0x10d978c0; calls the same method at VA 0x10d976f0 on the global objects at VA 0x1131a6cc and 0x1131a6e4. The shared class and pointer return are inferred from the common method entry and its use at 0x10d978a0. All names invented.",
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
       "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
@@ -4010,9 +4056,9 @@
         "va": 288466636,
         "basis": "Absolute operand at +0x1 of ?Unk_10d978c0@@YAXXZ; the retail operand gives VA 0x1131a6cc."
       },
-      "?Unk_10d976f0@UnkType_10d976f0@@QAEXXZ": {
+      "?Unk_10d976f0@UnkType_10d976f0@@QAEPAXXZ": {
         "va": 282687216,
-        "basis": "Call or jump at +0x6 of ?Unk_10d978c0@@YAXXZ; the retail operand gives VA 0x10d976f0 (file offset 0x4976f0), a function entry in the function map."
+        "basis": "Call or jump at +0x6 of ?Unk_10d978c0@@YAXXZ; the retail operand gives VA 0x10d976f0 (file offset 0x4976f0), a function entry in the function map. Its result is consumed as a pointer by the caller at VA 0x10d978a0."
       },
       "?GUnk_1131a6e4@@3VUnkType_10d976f0@@A": {
         "va": 288466660,
@@ -4021,7 +4067,7 @@
     },
     "match": {
       "bytes_sha256": "69e033009ce122e41f98d8a6017cded02b83e4453f8b2bde5b37412b10ec5d30",
-      "inputs_sha256": "71e0ea7274c663f99a6b6fc23c7ad40fbac8197bb287b273c242715a0920ddac"
+      "inputs_sha256": "56ff3e145e71cfbee150f74caa59a2f7d4bd9abe6004985ec39091dc046a1f63"
     }
   },
   {
@@ -4181,7 +4227,7 @@
     "identification": "Direct call at RVA 0x490457 in the independently delineated function at RVA 0x4903d0. The receiver field is at byte offset 8.",
     "match": {
       "bytes_sha256": "916ae10aa3fd76a4d5b25b2fb66e9df0fd04957c7ab10930268d1ed7808be689",
-      "inputs_sha256": "4284213aabdd7aa1be6485633dcab90e6a8921d99bab1c1da6d5c9bd791d7131"
+      "inputs_sha256": "59c133467cada84db35e9f186bfc4c0c83ddc4d850db02c12e33908759ed9316"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4306,7 +4352,8 @@
     "size": 29,
     "rebuilt_symbol": "?Unk_10d98020@UnkType_10d98020@@QAEXXZ",
     "inputs": [
-      "src/campaign_leaf_498020.cpp"
+      "src/campaign_leaf_498020.cpp",
+      "src/campaign_global_1131a714.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_498020.obj src/campaign_leaf_498020.cpp",
@@ -4324,18 +4371,18 @@
         "va": 288466708,
         "basis": "Absolute operand at +0x4 of ?Unk_10d98020@UnkType_10d98020@@QAEXXZ; the retail operand gives VA 0x1131a714."
       },
-      "?Unk_10d97e40@UnkType_1131a714@@QAEPAVUnkType_10dc2140@@XZ": {
+      "?Unk_10d97e40@UnkType_1131a714@@QAEPAVUnkType_1131a714_Item@@XZ": {
         "va": 282689088,
         "basis": "Call or jump at +0x9 of ?Unk_10d98020@UnkType_10d98020@@QAEXXZ; the retail operand gives VA 0x10d97e40 (file offset 0x497e40), a function entry in the function map."
       },
-      "?Unk_10dc2140@UnkType_10dc2140@@QAEXH@Z": {
+      "?Unk_10dc2140@UnkType_1131a714_Item@@QAEXH@Z": {
         "va": 282861888,
         "basis": "Call or jump at +0x17 of ?Unk_10d98020@UnkType_10d98020@@QAEXXZ; the retail operand gives VA 0x10dc2140 (file offset 0x4c2140), a function entry in the function map."
       }
     },
     "match": {
       "bytes_sha256": "ba93cf800b29982dbd94993273e6de0bf0e91ca47d6597b01fd21f4033857e2e",
-      "inputs_sha256": "bcfde299cc000ba90fc6cd10b741b0b54af65270cd87fa06f18dc425e59e4dea"
+      "inputs_sha256": "0178252d8dacd7b00596448edc64e3830d8eb94dfc13399baaa82da549b35071"
     }
   },
   {
@@ -4403,6 +4450,7 @@
     "size": 16,
     "rebuilt_symbol": "?Unk_10d98200@@YAXH@Z",
     "inputs": [
+      "src/campaign_global_1131a730.h",
       "src/campaign_leaf_498200.cpp"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4428,7 +4476,7 @@
     },
     "match": {
       "bytes_sha256": "a4ee8f844864345958d9948ede0184835eec7b3e686f5e4ba5c8529fd541a44d",
-      "inputs_sha256": "f8246184df0d50a13e888c889468893d322554b0542fb03c6c5e4df663d68bec"
+      "inputs_sha256": "f92337b2d6c1f35ff9d4d422afe46d3bbceb26e49f3343931aa71390c4b2f316"
     }
   },
   {
@@ -4437,6 +4485,7 @@
     "size": 16,
     "rebuilt_symbol": "?Unk_10d98210@@YAXH@Z",
     "inputs": [
+      "src/campaign_global_1131a730.h",
       "src/campaign_leaf_498210.cpp"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4462,7 +4511,7 @@
     },
     "match": {
       "bytes_sha256": "cab6cb1c93b6a15edbbfbc263a67649ae50b7031651d699b1b754dee41456d45",
-      "inputs_sha256": "f8823019b2f1ecb564eeabfd0d229e2a843e23724b6fd24d5b94f9d2380558d6"
+      "inputs_sha256": "618340561e420c5001c37ae6587cf9d2289d27b61f36a9b80712d97f2cd9c2ba"
     }
   },
   {
@@ -4647,6 +4696,54 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "id": "campaign-leaf-498f20",
+    "offset": 4820768,
+    "size": 1,
+    "rebuilt_symbol": "?Unk_10d98f20@@YAXH@Z",
+    "inputs": [
+      "src/campaign_leaf_498f20.cpp"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_498f20.obj src/campaign_leaf_498f20.cpp",
+    "identification": "Empty cdecl helper at VA 0x10d98f20. The matched constructor at 0x10da76c0 calls it with its member value from offset 0x40 before initializing another member. The retail body is a one-byte ret; the local symbol remains an address-based placeholder.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "inputs_sha256": "5b5b59cb8545597ec8c858da8b23252397392132b886d3c86903fa9ad8313c58"
+    }
+  },
+  {
+    "id": "campaign-leaf-498f30",
+    "offset": 4820784,
+    "size": 3,
+    "inputs": [
+      "src/campaign_leaf_498f30.cpp"
+    ],
+    "rebuilt_symbol": "?Unk_10d98f30@@YAHXZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_498f30.obj src/campaign_leaf_498f30.cpp",
+    "identification": "Free function at VA 0x10d98f30; its retail body always returns 0. Eleven matched callers use the result in index or selection paths; zero selects each observed primary singleton slot. No stronger function name is established.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "4bc724f3b1d0caf4fe369c18cba3102e6c4ea057f63fe1587e3973134a7f755e",
+      "inputs_sha256": "582058383dc81ff316df871e910a5a440720c4e389f016a4417bf23c7c5f8772"
     }
   },
   {
@@ -4885,7 +4982,7 @@
     "identification": "Direct call at RVA 0x4a1df2 in the independently delineated function at RVA 0x4a1c60. The receiver field is at byte offset 12.",
     "match": {
       "bytes_sha256": "2e339cdc5de837ec151dbde90057caeabba18ac3ea32e7c2cffc8f95df41a6ff",
-      "inputs_sha256": "eaff6614a79f39a3d1808e7662a655b312bbb40e17716cf3ac8fa43df6907208"
+      "inputs_sha256": "822d8cb6b0e5784fda7c7cb9c9c3602a65a9fb562da4e4242fa82db3ab50ced9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4957,7 +5054,8 @@
     "size": 180,
     "offset": 4822032,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyHeadNode@?$TreeStorage@U?$Element@$07@@@@QAEPAU?$TreeNode@U?$Element@$07@@@@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4995,7 +5093,7 @@
     "identification": "Engine container tree head node: allocate, null three links, mark black and not nil; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "70464a2f4c2ab722f56349c036eff9655c2ff107baa86a6eb1866e23f163b674",
-      "inputs_sha256": "19577a2a0cbaf8d829c342b50750522ecfa6e96a269babe569e9e1c5b6017a13"
+      "inputs_sha256": "ec46fac839f5ce8868d6a5e51f262a117962d79520fb51a14018b788ac888264"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5110,10 +5208,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x499410, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x499410, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "0367c88bae07f05d20f82212971adb72befc81d59724530c57df2acb5e771bf4",
-      "inputs_sha256": "468628685ce842b7a4ad10de82021074e5b35afd7caad028de54d663e22bd590"
+      "inputs_sha256": "15ba73b7b5737f131011e6295c7e9d2641e3bb1057b3fc14eb4ea41d36c345eb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5129,7 +5227,8 @@
     "size": 160,
     "offset": 4822560,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyNode@?$TreeStorage@U?$Element@$07@@@@QAEPAU?$TreeNode@U?$Element@$07@@@@PAU2@00ABU?$Element@$07@@D@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5171,7 +5270,7 @@
     "identification": "Engine container tree node: allocate and run the out-of-line node constructor with links, value and colour; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "b7d5747563271786196904dbc74a983b5b790dfb7ef0b60c0568f246939ae5b3",
-      "inputs_sha256": "6e6b10a08bfd4e4eb66bfe11e483f0747db9bef9769bdf9d75a9b047e32c0dbd"
+      "inputs_sha256": "4b0855590b15244ff2eb67a315ce82997cac0cc1c16b176b0e5cccee94445803"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5189,7 +5288,8 @@
     "offset": 4823040,
     "inputs": [
       "src/campaign_tree_erase_nodes.c",
-      "src/campaign_three_link_node.h"
+      "src/campaign_three_link_node.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@erase_499800@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5199,19 +5299,19 @@
         "va": 282695680,
         "basis": "Recursive erasure of the right subtree."
       },
-      "_prepare_48b460": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Prepares the removed node with its allocation category."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_48b550": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
     "identification": "Indexed recursive tree erasure with sentinel byte at offset 21, right subtree recursion, left subtree iteration and allocation category 7. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
     "match": {
       "bytes_sha256": "80ab2817e377e1e4eca18f6118388a2188d23837ce76c9d8cfad2a35c6405e48",
-      "inputs_sha256": "ed9d8470418755958d04577ef4fabd79916fc3a02e2d6ff2104d220d7dab1b0b"
+      "inputs_sha256": "e59d638e6031d2d466ebe6fe56b2e18ea60be733d60c2de6a02ed61e555c9180"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5238,10 +5338,10 @@
         "basis": "Called with the root before resetting the tree sentinel."
       }
     },
-    "identification": "Default Ghidra extent. Erases the subtree via RVA 0x499800, clears the count and restores three sentinel links.",
+    "identification": "Default Ghidra extent. Erases the subtree via RVA 0x499800, clears the count and restores three sentinel links. The local type names ManagedTreeNode and ManagedTree are analyst-invented labels for the three-link tree node and its head/count wrapper.",
     "match": {
       "bytes_sha256": "f0698a82e808caa597c779d1930b32ed26e7e0ed2735c7f3ca62964207fdb3f8",
-      "inputs_sha256": "2350753390593835dc350f7b29d893463bb2b401a1de10e6e988fd88f1da98fa"
+      "inputs_sha256": "d65eb8b987bd72adea167fbf7ae58385fdbb09e835395ba8c5a358b2f2544565"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5269,10 +5369,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x499410, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x499410, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "9391834bda4cca18cebb0e7812a415bcfa56483a54001ab5cdeab07c347f2d6f",
-      "inputs_sha256": "d8110e78f6b1a9b1c829da350d0536cefbfa4a38871c42075503187a234b26b1"
+      "inputs_sha256": "23b7895a7499211853af26e1c854d267db5245dbdc94317dfe6cf2ace5401626"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5323,7 +5423,8 @@
     "offset": 4825296,
     "inputs": [
       "src/campaign_range_container_cleanup.c",
-      "src/campaign_list_link.h"
+      "src/campaign_list_link.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@cleanup_49a0d0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5333,19 +5434,19 @@
         "va": 282697232,
         "basis": "Indexed range erasure called with first and sentinel iterators."
       },
-      "_prepare_release": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Shared allocation preparation with category seven."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_prepared": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared sentinel allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
-    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type names RangeCleanupContainer and RangeCleanupPointer are analyst-invented labels for the list head/count wrapper and its one-link pointer wrapper.",
     "match": {
       "bytes_sha256": "334712876e1d1a90294ef4f92511b2bb553cee805b2808dd34866309dc2d2955",
-      "inputs_sha256": "8828d003df099b957c8375398e7f5f8e86c1907de508205defaf0f5e00078673"
+      "inputs_sha256": "b87d976a76fc22df2cba2f952aa806b3822a0e93aa94f2dfe541d06424b3ce44"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5362,7 +5463,8 @@
     "offset": 4825760,
     "inputs": [
       "src/campaign_range_container_cleanup.c",
-      "src/campaign_list_link.h"
+      "src/campaign_list_link.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@cleanup_49a2a0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5372,19 +5474,19 @@
         "va": 282697232,
         "basis": "Indexed range erasure called with first and sentinel iterators."
       },
-      "_prepare_release": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Shared allocation preparation with category seven."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_prepared": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared sentinel allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
-    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type names RangeCleanupContainer and RangeCleanupPointer are analyst-invented labels for the list head/count wrapper and its one-link pointer wrapper.",
     "match": {
       "bytes_sha256": "dcac59d955795fa219b7f9fecc2b8aeb2b15d7d7dfa61a8aa0eda52949cf157c",
-      "inputs_sha256": "0e10012740115c03e34c058a77bc10b4e6c66966f7034d30e7a2042128466eac"
+      "inputs_sha256": "2f59b65086b6ce989f16800645ecb38efcaaffb4894b784350de47b3d8d5f5f3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5401,7 +5503,8 @@
     "offset": 4825824,
     "inputs": [
       "src/campaign_range_container_cleanup.c",
-      "src/campaign_list_link.h"
+      "src/campaign_list_link.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@cleanup_49a2e0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5411,19 +5514,19 @@
         "va": 282697232,
         "basis": "Indexed range erasure called with first and sentinel iterators."
       },
-      "_prepare_release": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Shared allocation preparation with category seven."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_prepared": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared sentinel allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
-    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type names RangeCleanupContainer and RangeCleanupPointer are analyst-invented labels for the list head/count wrapper and its one-link pointer wrapper.",
     "match": {
       "bytes_sha256": "3aba7393473e77330a00ef0456f4b29fe6cb5c2b1e25a76cd79458a86c83ec0d",
-      "inputs_sha256": "ec8dad87ba36ff8383177eb12c059079921954234f3a6cd6b212ee7dc390284c"
+      "inputs_sha256": "ca60c4be5dd0db601afc0552d30ad50fbf3722eaf7885a4cc9bb6469bd98c9dc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5451,10 +5554,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x499410, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x499410, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "9800cdbd48a170aea3401c252f3d9db8c71dfbf36d927eab9ba61c0b9793f0a5",
-      "inputs_sha256": "b80484351f1828a53d19ff0ee4b9639a5ffd4713fcfcc2ae479054dbdf3f85d5"
+      "inputs_sha256": "d4542a6cca0d157744f36285546c38448de6157c90d220296634047dfc23925c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5482,10 +5585,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x499410, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x499410, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "9c106453d2fbf80419c388624e70dd1673bfc23a5b80887b8b713309c6d23aee",
-      "inputs_sha256": "f30769d54433259068136ee33abae322ffe8050998fd1a086972049e1af77888"
+      "inputs_sha256": "1c4364c8412b5fa40dec3e7f0416af462055f72de60eb63e1f488b557a0a02ba"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5502,7 +5605,8 @@
     "offset": 4826064,
     "inputs": [
       "src/campaign_range_container_cleanup.c",
-      "src/campaign_list_link.h"
+      "src/campaign_list_link.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@cleanup_49a3d0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5512,19 +5616,19 @@
         "va": 282697232,
         "basis": "Indexed range erasure called with first and sentinel iterators."
       },
-      "_prepare_release": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Shared allocation preparation with category seven."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_prepared": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared sentinel allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
-    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Aligned entry between INT3 padding runs following a preceding return. Erases the full range, releases its sentinel and clears the container head and element count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type names RangeCleanupContainer and RangeCleanupPointer are analyst-invented labels for the list head/count wrapper and its one-link pointer wrapper.",
     "match": {
       "bytes_sha256": "e9f6ce7f629d963a5adb82ce25a1d69d729f93a98b5409a43e486ae6b03f4315",
-      "inputs_sha256": "7cf87af75b491df4ad83ba3f18e8ae1195c09531ca9876dc7ef85053b1b4d96f"
+      "inputs_sha256": "eee8efaaf551c6915ab54dbaa93f2a60e2f8d053eeb33a651d77708ef794ac2d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5576,7 +5680,9 @@
     "size": 18,
     "offset": 4826336,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_49a4e0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5591,10 +5697,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x4c7f90 before installing the methods table at RVA 0x83dff8. Its first slot points to function RVA 0x49a500. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x4c7f90 before installing the methods table at RVA 0x83dff8. Its first slot points to function RVA 0x49a500. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "b1e3bf90696380b9687788dddc0a45dbac7755c0388af16b45cdd305abadd97c",
-      "inputs_sha256": "e0c39c2916d66c203ba09e29822d671a3091bf2ff2c5e9b25170b17141b42a78"
+      "inputs_sha256": "3f08aefe3af28e6bc8c32f14a332ae7f49cadb2f2ece1c60961e6357d27fd86a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5658,7 +5764,7 @@
     "identification": "Direct call at RVA 0x4ca3b5 in the independently delineated function at RVA 0x4ca370. The receiver field is at byte offset 24.",
     "match": {
       "bytes_sha256": "38058506e8e859d5be73a33baa621352c08ea01f2224ee170173253757193941",
-      "inputs_sha256": "bbe991b658467f3fc6ef64436493a0c9a2a85f36f8ea1c66eff24a2a8aa26266"
+      "inputs_sha256": "ccd3eae6200b45b8c3cda78b4b6100f099b483ee3f813d038aef72f8715d3ec6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5682,7 +5788,7 @@
     "identification": "Direct call at RVA 0x4ca8af in the independently delineated function at RVA 0x4ca8a0. The receiver field is at byte offset 28.",
     "match": {
       "bytes_sha256": "0b78473b3a56c63ff2a64431fb600078066cbe407d3dee7ea8fd7575bd7f82d5",
-      "inputs_sha256": "1d3b25ecad002c3e36e14f5f56fa8c14b7dcbc22fabae68451016197b3b8486a"
+      "inputs_sha256": "3bddaccdda2b7cc5183ddd432896ac926eba280da544762f87b58b50f8596971"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5706,7 +5812,7 @@
     "identification": "Direct call at RVA 0x4ca560 in the independently delineated function at RVA 0x4ca540. The receiver field is at byte offset 32.",
     "match": {
       "bytes_sha256": "07ad3a50b1c271e07fb57fb47d2f0e77f3342d41bfa410990cb1320a45035fb2",
-      "inputs_sha256": "461b46493da1bcbab48076018a68c1af3a0349c957cf6f3c5dccd7c6f9f0587f"
+      "inputs_sha256": "36422ddc4f0f4118f495b4f0db75dfcec694b746bf4a917d8ea679936b06d755"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5773,10 +5879,10 @@
         "basis": "Releases the node allocation through the shared allocator."
       }
     },
-    "identification": "Direct call at RVA 0x49aae3. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Direct call at RVA 0x49aae3. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type name ManagedList is analyst-invented for the list wrapper with a sentinel head and count.",
     "match": {
       "bytes_sha256": "3e29c6fdfdf19ef75ed04c559fcceb671ef71b3f5a3624fdcd7b614c35270695",
-      "inputs_sha256": "a9ab7e686bedd276502993cae3fff4dc531a0f85068f6a7001b9bb9f0ab790b9"
+      "inputs_sha256": "1cc6bfb587c36bd06dc517f7fb58ec749e2289f0e63e59bd002c6356e169d4ff"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5914,7 +6020,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x49a9d0. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "49bbda5165e27a6430bb3d9e5f4c4c689b128cce7d8754d4c6922fb744d97c30"
+      "inputs_sha256": "98e53901e049537c69ebcd5a3d7088cd11e839239bdd066394f7a822dcb89d79"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5984,7 +6090,8 @@
     "size": 153,
     "offset": 4827712,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyHeadNode@?$ListStorage@U?$ListNode@$03@@U?$Element@$03@@@@QAEPAU?$ListNode@$03@@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6022,7 +6129,7 @@
     "identification": "Engine container list head node: allocate, link the node to itself in a catch-all region; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "c56adacd92d642a5a703473a0748c74b6bebcc4c82c473033c074149963d9f45",
-      "inputs_sha256": "3dadd5df672fad2f9471492b98f9626bba412d14b0e8db15f289e66091339100"
+      "inputs_sha256": "006920edebc2d4b776fdbe7be76ce517b39741f8b614f64c928d1208589d62ad"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6061,7 +6168,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x49aae0. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "34fd68c951e49b91de5f0a4b2d7600b47d64f4240dc18a823d6cc029f6732f26",
-      "inputs_sha256": "edf250c972c06e98cfa81a2affafbfd861bad3243182d80a2a3a07c69fb7a949"
+      "inputs_sha256": "1460d7ecaab772e85960529a81206b9a114c000d3d3a072f19dd337f1dd40259"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6077,7 +6184,8 @@
     "size": 147,
     "offset": 4827968,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyNode@?$ListStorage@UWordListNode@@H@@QAEPAUWordListNode@@PAU2@0ABH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6115,7 +6223,7 @@
     "identification": "Engine container list node of one word: allocate and construct links and value in place; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "2d42a4363a936978f03828732adf4bfec08a09fc7624175e8bac69dde0057949",
-      "inputs_sha256": "74b5a4a496a4d73ec8c42b41a0fab1e369f903352118f4b5b95cf43eb733a7de"
+      "inputs_sha256": "5bcf9e3836e22595973a0a6c2401cfdb10aee5e6adfc0650be36c923d7b3829f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6154,7 +6262,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x49ac50. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "3d77fdd4c00c436aa10d84b39b821399268d50014f17087ee62a1554dbacb65e",
-      "inputs_sha256": "2bd764974cec2f9c65b33bb6b541802bba22c885282f1eaf50fe9ccbc7bedc68"
+      "inputs_sha256": "fd5d6ec597b31973df38e56d8fcb76ed2ef342698695075940d1c5f58ec890c2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6192,7 +6300,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x49acd0. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "bfe9916ba9ede47ea60daf0839e8f88c6c8289013f8d6d9e6832204eb565f013",
-      "inputs_sha256": "47fea34ee7048b3d4c0e25153c8ce88d140bc81bef3a6a8bf905de374377c546"
+      "inputs_sha256": "b453eb8425d297006bcc0345ee54ea5cdf16d1eb38e8030267f3deabaa552f56"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6255,10 +6363,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x49aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x49aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. ListInitializationTarget is an analyst-invented local name for the list object whose head and count fields are initialized here.",
     "match": {
       "bytes_sha256": "9bb2403c9c56b013ff584f3471944a3dc2d82b69c71a0b596a53bbb06071cff7",
-      "inputs_sha256": "9af8c8461c58f0159719b6f3441df5808d4685f9174599e737d2c433380294ba"
+      "inputs_sha256": "77a7550726ce9dc7d441bad5f2558d3af00f32403b37a9f50af79afe22c70f42"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6286,10 +6394,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x49aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x49aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. ListInitializationTarget is an analyst-invented local name for the list object whose head and count fields are initialized here.",
     "match": {
       "bytes_sha256": "44e564d05944e479578497033c3e846de761c3f580be4c095f2faa82e92f437c",
-      "inputs_sha256": "4dded2569d27669faf6c630b49599552bd7663af0f8ba6b29cb154c34d3e8bbc"
+      "inputs_sha256": "6875ad8fa34cba070b030aa57f56a1cddef7d1b299227888407084d70450a1a5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6441,7 +6549,7 @@
     "identification": "Direct call at RVA 0x4e9e13 in the independently delineated function at RVA 0x4e9df0. The receiver field is at byte offset 56.",
     "match": {
       "bytes_sha256": "7e6bda0a031f94dbe8477fe3ce3ba2b7e3d761a050d55625bc7d92212670e60c",
-      "inputs_sha256": "fc9d276452a31fa341846edeb2cc30a86431562e2ad29593128c2a11354b6d49"
+      "inputs_sha256": "842f3dd85a1c6a52af2769359c204cf7bbbe66827e876ce38e461e9a63a50983"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6465,7 +6573,7 @@
     "identification": "Direct call at RVA 0x4b5c10 in the independently delineated function at RVA 0x4b5b90. The receiver field is at byte offset 32.",
     "match": {
       "bytes_sha256": "dadecdeeff0b9454fd9dc08c558a9148187b2b1bec017fe8b92430570b86012a",
-      "inputs_sha256": "41768cfbe274217f4c357372011ae95f08798af40c443f698d7f194b10f58244"
+      "inputs_sha256": "a8e9f37c27e29f685a70e455b1a7df94c775992ca4d368b2e7185dd1023f0659"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6489,7 +6597,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x49b380. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "67df9ea0f5e846c633d9bb18912e1265ab13e6cecd572fb1fb889fd905629911"
+      "inputs_sha256": "d909ff04b5de0934213625b67f92e9fa12680f5e485b5938fb1c1abe856d8331"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6506,7 +6614,8 @@
     "size": 120,
     "rebuilt_symbol": "??1UnkType_10d9b700@@UAE@XZ",
     "inputs": [
-      "src/campaign_leaf_49b700.cpp"
+      "src/campaign_leaf_49b700.cpp",
+      "src/campaign_leaf_49b700_lock.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_49b700.obj src/campaign_leaf_49b700.cpp",
@@ -6559,7 +6668,7 @@
     },
     "match": {
       "bytes_sha256": "11967e1b847c30d2dbe1519eac5cf3d858debd93f2f28c0f01aee4f83bdaab13",
-      "inputs_sha256": "01bb83aa727a5991a7dcf4a9e437f5e652102ec07c89bad1e2ca0758c21eea31"
+      "inputs_sha256": "ad528b797326d0314995746f2d7d815bd287c06a5c5e3dd2ba926ca5884e81a4"
     }
   },
   {
@@ -6753,7 +6862,7 @@
     "identification": "Direct call at RVA 0x4b3a2b in the independently delineated function at RVA 0x4b3a20. The receiver field is at byte offset 188.",
     "match": {
       "bytes_sha256": "b08103e156d3eece27bcbc855c1b33c285d3ef1d264548e669fdf24ae61a3973",
-      "inputs_sha256": "ad5cf24edc73c7fc3cf372fd6a65e7e19ab88341de4087e7ad308f890e01f8ea"
+      "inputs_sha256": "5b0d0501462b2d6c5a31b18779e2947621884567ac894126bd1b3aa630ac7596"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6924,7 +7033,7 @@
     "identification": "Direct call at RVA 0x49c119 in the independently delineated function at RVA 0x49c0e0. Copies a 4-byte record into a non-null destination. Majority choice, not evidence: Record4 takes the majority name data and spelling unsigned int, and Record16 takes the majority spelling unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "8de44ff1239c5800f279e2142606ecdbaea9d748bc08545bdc7362b505481d8c",
-      "inputs_sha256": "301a51b287b603ff74bca2581da4b4bf5bc404ef358511ef0ab8cf4db797ae9c"
+      "inputs_sha256": "60fb84d0e391c3612d139ea6ea5fc2a14b437012e41ee54b9ddb4abb0391532c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6966,7 +7075,7 @@
     "identification": "Uninitialized copy into vector storage: build each element from the source range through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "cf4a5307f3bb22956a7272871281efcaf6e51b18e6f2137a3c3f836645152c2a",
-      "inputs_sha256": "9f2e3ca8ad63a6764b15c083a3fe5fa4c4ee19264ef0796c70c45cfb23143a28"
+      "inputs_sha256": "bce08d1cb153e8b9c6f6ff6783ce796bc9482cf132ccd1611e52e363cc83c870"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6976,6 +7085,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -7039,7 +7151,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x49c310. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "f5afadab2d679c5c1ff625145e4331ce5815d274a56e2d8366f4450893a7426c"
+      "inputs_sha256": "c061efdc0843001871cd97641f053dd5b42344594faaea4990e49d035e7c072f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7081,7 +7193,7 @@
     "identification": "Uninitialized fill of vector storage: build each element through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "0cf1056dc228391f57e28c5cdb02edb7e99ce17df9393da5822352bb05925e57",
-      "inputs_sha256": "59efcc1ef4e63d15b5e8bca50551a8a5e0cd0f06f8c0d19051d306ad05b8f819"
+      "inputs_sha256": "25bceb5e23756673ddf389a82ef8c68090dc8c24947aea6c29e93ae872846edb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7091,6 +7203,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -7113,10 +7228,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "ef7b19e61fc41d092c57a4d26e08a06201bf890a1974e9982c7e49668334d757",
-      "inputs_sha256": "4474232408f165c96efd751c079f6f6971dfdee919b0dd3afd9b5f5277392f0b"
+      "inputs_sha256": "d70f7eab0898869c3c3980a99a5014d58feef0da08ee7f68a4869f1dd573d40e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7147,10 +7262,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "ba104b8644cab60e595153c5bef732005e450d3215ef488c25044fa21a9fa7ee",
-      "inputs_sha256": "c9ad2bd8fbbd6238d0d2091ca307c2157ed9ce31976c4b24c4714730b86f572e"
+      "inputs_sha256": "2b53850083791e08a6bc7fdc1794206ef1ee0bcb4bfc5fc044e47184d8ce1bfb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7181,10 +7296,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "cc7b41d76506abee3817fa9616f4e00252c77fd7e82719509896ba8bb5f4b256",
-      "inputs_sha256": "625738d5138a642707d22273e82de8967aa226103c543b4ffc5d95de6fa40a2e"
+      "inputs_sha256": "081d4c161e2edf0b84ad9520bd4102412df5181842a81a6bebb0d4faa449ef6a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7737,6 +7852,56 @@
     }
   },
   {
+    "id": "campaign-leaf-49d560",
+    "offset": 4838752,
+    "size": 3,
+    "rebuilt_symbol": "??0UnkType_10d9d560@@QAE@XZ",
+    "inputs": [
+      "src/campaign_leaf_49d560.cpp",
+      "src/campaign_leaf_49d560_base.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_49d560.obj src/campaign_leaf_49d560.cpp",
+    "identification": "Empty base constructor at VA 0x10d9d560. At least 24 separately matched Campaign functions call it before initializing derived members; examples include constructors at 0x10a9e4e0, 0x10d7d5b0 and 0x10d7deb0. The retail body is mov eax, ecx; ret, returning this.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "58367ffa2a0179375018fa0f5c26da24391e42ebe0ed8fdda35a21fc7bdc396f",
+      "inputs_sha256": "480b6c76eadcd86e6ba48bae47818684ec8bd5eb6d3120f6a6a265e789af16e5"
+    }
+  },
+  {
+    "id": "campaign-leaf-49d570",
+    "offset": 4838768,
+    "size": 1,
+    "rebuilt_symbol": "??1UnkType_10d9d570@@QAE@XZ",
+    "inputs": [
+      "src/campaign_leaf_49d570.cpp",
+      "src/campaign_unidentified_empty_destructor.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_49d570.obj src/campaign_leaf_49d570.cpp",
+    "identification": "Empty base destructor at VA 0x10d9d570. It is called by two matched derived destructors after their members are destroyed, and by matched member-cleanup routines. The retail body is a one-byte ret.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "inputs_sha256": "588f3861c2fabc33ce022da2e5fc34dd80dc8a3a32437ba0c135682d78fa460a"
+    }
+  },
+  {
     "id": "campaign-leaf-49d630",
     "offset": 4838960,
     "size": 20,
@@ -7773,7 +7938,7 @@
     "identification": "Direct call at RVA 0x486cee in the independently delineated function at RVA 0x486bf0. The receiver field is at byte offset 0.",
     "match": {
       "bytes_sha256": "19d200194d49b34530548575f37a1bb4203ee60f18d42f0084e86b7a8c899faa",
-      "inputs_sha256": "4f7181ea2c81a91b5f8a6b19b62237318b2936899063050f9e03041b076fde2e"
+      "inputs_sha256": "1cf54383a3fc93aa3719e696ca46822cb73bbdbcbfef3a36aaf7170a60023069"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8076,7 +8241,7 @@
     "identification": "Direct call at RVA 0x4c39ad in the independently delineated function at RVA 0x4c3970. The receiver field is at byte offset 40.",
     "match": {
       "bytes_sha256": "84820c9f74a607947a808a1567dcf68506f79bdd5cb57fd2d8af148e5c8c05b7",
-      "inputs_sha256": "2c2b86632c0cdbd102dd055f72316acdb958332db2f1351c73542ab66bd80f75"
+      "inputs_sha256": "e3d6e24e67896317b9bdc213eedc807109aca9ee8d466c40efc1fceed39d472b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8816,7 +8981,8 @@
     "offset": 4846640,
     "inputs": [
       "src/campaign_tree_erase_nodes.c",
-      "src/campaign_three_link_node.h"
+      "src/campaign_three_link_node.h",
+      "src/campaign_allocation_service.h"
     ],
     "rebuilt_symbol": "@erase_49f430@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8826,19 +8992,19 @@
         "va": 282719280,
         "basis": "Recursive erasure of the right subtree."
       },
-      "_prepare_48b460": {
+      "_get_context": {
         "va": 282637408,
-        "basis": "Prepares the removed node with its allocation category."
+        "basis": "The independently matched Campaign allocation service getter at RVA 0x48b460 takes no arguments."
       },
-      "_release_48b550": {
+      "_release_block": {
         "va": 282637648,
-        "basis": "Releases the prepared allocation."
+        "basis": "The independently matched Campaign release_block at RVA 0x48b550 receives the context, block and allocation category."
       }
     },
     "identification": "Indexed recursive tree erasure with sentinel byte at offset 21, right subtree recursion, left subtree iteration and allocation category 7. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
     "match": {
       "bytes_sha256": "f6c19f6577d3efc724f5bdb93ca8d045a4aa1aca6df3e416a83499c0582e0137",
-      "inputs_sha256": "89d57639718acd3b05065e478169e5466c01c37795c6bd7b594328f362c826c7"
+      "inputs_sha256": "e137e4727f7521ec4225c04c1d5be8253ebc27425f5239a1deb439f902e9d223"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8950,7 +9116,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x49f5b0. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "8797f1d5b541f446d7b3597f50cec87ca2ac261f6ea7136141176bb2da64e08f"
+      "inputs_sha256": "38e90acfcf738ec11fec3f275c28cf6b416598bad1e5f1c35400735dc419d552"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9063,10 +9229,10 @@
         "basis": "Called with the root before resetting the tree sentinel."
       }
     },
-    "identification": "Default Ghidra extent. Erases the subtree via RVA 0x49f430, clears the count and restores three sentinel links.",
+    "identification": "Default Ghidra extent. Erases the subtree via RVA 0x49f430, clears the count and restores three sentinel links. The local type names ManagedTreeNode and ManagedTree are analyst-invented labels for the three-link tree node and its head/count wrapper.",
     "match": {
       "bytes_sha256": "a5fd8c3452274c78a9d4eb299c579e11a1851c37865bcf1b75b16b6ce72ccd77",
-      "inputs_sha256": "731415c21b07f3d2266201d5836e1ea95d65f44201c86e8d131558301c4b3b87"
+      "inputs_sha256": "b309a42998ff757b8908c951b2dfe16ddbd3f5bea1ec2ab21ebc9cb5b0141d24"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9082,7 +9248,8 @@
     "size": 180,
     "offset": 4847312,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyHeadNode@?$TreeStorage@U?$Element@$07@@@@QAEPAU?$TreeNode@U?$Element@$07@@@@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9120,7 +9287,7 @@
     "identification": "Engine container tree head node: allocate, null three links, mark black and not nil; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "3e6400f2202e3cf1c69a3b8f43a8fdff02b37f1ab1edf72c85547c45ab598227",
-      "inputs_sha256": "69d28498783eeeaddebc6cf428f19a454fe47a65bab28ee508b7cee278cfcb91"
+      "inputs_sha256": "8aa582341b2b3fb35473a93781b55a51841420da05aa3f3066196e2ad18d0264"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9137,7 +9304,8 @@
     "size": 160,
     "offset": 4847504,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyNode@?$TreeStorage@U?$Element@$07@@@@QAEPAU?$TreeNode@U?$Element@$07@@@@PAU2@00ABU?$Element@$07@@D@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9179,7 +9347,7 @@
     "identification": "Engine container tree node: allocate and run the out-of-line node constructor with links, value and colour; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "14efa00687030e4a9a55fa72230d64b9e64065d6e24ce94aaa04b97034ef4aa6",
-      "inputs_sha256": "b643dda7db42a0a7f55304114f05d0db4bcc51d3b10312427a08bed75b515de7"
+      "inputs_sha256": "b510b798acbd78dc7f43e2a512946cdc960d1932213849f3f9654b49ed799fd2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9380,10 +9548,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x49f6d0, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x49f6d0, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "9d6755c53d76b89636aa35fb06955ecbaf6765b7eef65dee35e6647f310191ab",
-      "inputs_sha256": "6618bb182976096516e8ba1b992f4cdb87f1edb77b1ef5208d5791be5a661fcf"
+      "inputs_sha256": "c482565e330a4c5fb88ff94bd86e7e40c7e47a83532243000f9a268b29d1ff99"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9442,10 +9610,10 @@
         "basis": "Direct call returning the node installed as this empty tree head."
       }
     },
-    "identification": "Default Ghidra range. Installs the node returned by RVA 0x49f6d0, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name.",
+    "identification": "Default Ghidra range. Installs the node returned by RVA 0x49f6d0, sets the sentinel byte at offset 21, points all three links to itself, and clears the count. Majority choice, not evidence: the tree node without colour is the shared struct ThreeLinkNode of campaign_three_link_node.h (left, parent, right); ThreeLinkNode is an invented name. The local type name SentinelTree is analyst-invented; it describes the tree wrapper initialized with a self-linked sentinel node.",
     "match": {
       "bytes_sha256": "68491a76af971432d47cb415755cbbae2f0888ba3e51a62c0b907d31abbc4ccf",
-      "inputs_sha256": "629bb34978720c1849a9b42b76e5ec8dfb0120a1179b6a606ce72d31bb9ede08"
+      "inputs_sha256": "b6188f3533875d5202b2a57502fb6f94df4e6abc6ca5f104a47390a34e465551"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

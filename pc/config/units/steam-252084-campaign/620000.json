@@ -4,7 +4,8 @@
     "offset": 6424208,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_620690@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -13,7 +14,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "098abaf1fe15ae52ca44d03c62657d7086d5148df8e50868464ab2b6d39765bb"
+      "inputs_sha256": "a0ba50090af8463278df73557e0321425d20df988ae853a5182061ab8ee431d7"
     }
   },
   {
@@ -21,7 +22,8 @@
     "offset": 6424496,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_6207b0@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -30,7 +32,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "077075a78f8886fccdb8f226d0be45e5961714a05955572c699ed318d7d46475"
+      "inputs_sha256": "7b5daffa86f1555fd0f661ed342bbbc8c646b184f23d393646cde92912f1be7c"
     }
   },
   {
@@ -50,10 +52,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. SentinelCleanupList is an analyst-invented local name for the wrapper holding the sentinel link.",
     "match": {
       "bytes_sha256": "d5d265613d719db077187d6384527214f6da9a3e09a2d347c983f0f44daabf79",
-      "inputs_sha256": "cdfa4711c2a909c022b3bda0fbe8d621b3bcd113731ca02599fd9e3ed301b790"
+      "inputs_sha256": "0ddc5c906ead60a6aa285b7e3e8a71a314e4b8d4b6a34f0dbfda0ce670b2efcb"
     }
   },
   {
@@ -143,10 +145,10 @@
         "basis": "Cleans the node payload before release."
       }
     },
-    "identification": "Direct call at retail VA 0x10f1e80d. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f1e80d. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "8aac847ad0a93f0d41e884f2bd5f83569f8e8da0c0572898642b9a6b1a08fe2f",
-      "inputs_sha256": "c0815ae9a2991ae01672cc33418aec83255e867299a5fa2a7a6ccd6d2131eeb2"
+      "inputs_sha256": "3c852018e47cde923a66f8e8414fd7cb7ff63a0c6aa33c396860db912a002fa0"
     }
   },
   {
@@ -155,6 +157,7 @@
     "size": 14,
     "inputs": [
       "src/campaign_tree_positions.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_620f70@8",
@@ -163,7 +166,7 @@
     "identification": "Tree routine at RVA 0x620a80 calls this position accessor at RVA 0x620d69 and a tree operation at RVA 0x620ec9. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "bd0c751c41724569d79b13cb395b1db4449f3f6b3802f98a401033a27ebb02e6"
+      "inputs_sha256": "d3291083ac187f983a1dcade8f9b3fabe31d3d35d8d62fed71a1305ac30730df"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -236,10 +239,10 @@
         "basis": "Independently matched red-black tree rotation."
       }
     },
-    "identification": "Direct call at retail VA 0x10f20b02. Inserts a signed 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree.",
+    "identification": "Direct call at retail VA 0x10f20b02. Inserts a signed 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree. The local type names InsertTreeKey, InsertTreeNode, InsertTree, InsertTreePosition, and InsertTreeArgs are analyst-invented labels for the key storage, red-black tree node, head/count wrapper, output node position, and insertion argument bundle.",
     "match": {
       "bytes_sha256": "1f5c6e4433504c40d873093e79f9f67e4b38e3d79f805ea3ad1139477213f04f",
-      "inputs_sha256": "5fb70f0bb6a1444b1eb385a8769418a2925d623e6ac1c992097fd52c8caa45b6"
+      "inputs_sha256": "eac5ac1a5e36815920c4c70b2bf79da80ed320366163f7ce82d08172fb3a4f43"
     }
   },
   {
@@ -420,7 +423,7 @@
     "identification": "Direct call at RVA 0x61b626 in the independently delineated function at RVA 0x61b490. The receiver field is at byte offset 8.",
     "match": {
       "bytes_sha256": "916ae10aa3fd76a4d5b25b2fb66e9df0fd04957c7ab10930268d1ed7808be689",
-      "inputs_sha256": "ff05718207188e748bbe27f4fea57a1fdc7e25c8bd983a0c509169473403ce2b"
+      "inputs_sha256": "f89398b26fd2a3060d0a36632e2f91ddafc22f2fe167c96773438175bacb9193"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -518,10 +521,10 @@
         "basis": "Cleans the node payload before release."
       }
     },
-    "identification": "Direct call at retail VA 0x10f21f5d. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f21f5d. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "583ee0c409343b406596b9822251bc6993a835832ce8c53e145525f030a5f7b0",
-      "inputs_sha256": "615c9fe227e3af3c8e8f99af367bb405efe61e65b842525b77969bdae595fe0d"
+      "inputs_sha256": "1438b474d393a6a4420ff9404dc842ef50e7093e119b649e3995cd0be7dac268"
     }
   },
   {
@@ -589,7 +592,8 @@
     "offset": 6447904,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_626320@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -598,7 +602,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "afb7aa6be95025438670bdca7d6a4ad45309746b2a63566b0a46f3390a2b8c2a"
+      "inputs_sha256": "c6e40bebd07bef2ee4bf501500766d384f50316ce2b700be98a7ce05a4a0c793"
     }
   },
   {
@@ -607,6 +611,7 @@
     "size": 14,
     "inputs": [
       "src/campaign_tree_positions.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_626850@8",
@@ -615,7 +620,7 @@
     "identification": "Tree routine at RVA 0x626360 calls this position accessor at RVA 0x626649 and a tree operation at RVA 0x6267a9. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "ea71aa7a14a7a01592caa9838db3f3e1e4d95c659cf4b538f16fc19de639e90e"
+      "inputs_sha256": "1a473e903a41aa9ebe5b09e6b661557cc0632d8f8377b901e0a3c77c7427b143"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -652,10 +657,10 @@
         "basis": "Independently matched red-black tree rotation."
       }
     },
-    "identification": "Direct call at retail VA 0x10f25d72. Inserts an unsigned 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree.",
+    "identification": "Direct call at retail VA 0x10f25d72. Inserts an unsigned 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree. The local type names InsertTreeKey, InsertTreeNode, InsertTree, InsertTreePosition, and InsertTreeArgs are analyst-invented labels for the key storage, red-black tree node, head/count wrapper, output node position, and insertion argument bundle.",
     "match": {
       "bytes_sha256": "6fba7d7f2bc2e11757150171b7b965211bb2547ecf36da4f75633a355bf1946f",
-      "inputs_sha256": "56c7d8f7c3cd1d71b0933147a10393006e4f03710bf0cfcfc02c0d7fd43991b0"
+      "inputs_sha256": "07d5257e98e549a8e62d0691843bc37ab6c5c9a14161f80c363b005e81f8a698"
     }
   },
   {
@@ -745,10 +750,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. SentinelCleanupList is an analyst-invented local name for the wrapper holding the sentinel link.",
     "match": {
       "bytes_sha256": "a023fd757d4c5430e7488389540db8071c7348d32936af960ee6b05576a3d6ac",
-      "inputs_sha256": "95db4b27ce05a3dd89f7f244ae405401464b14add7a82ee69ce090af6bfb39e9"
+      "inputs_sha256": "df262b71cc9b80fdcb7596c169122acabc7de1c3709578df780a127dddec4ce4"
     }
   },
   {
@@ -756,7 +761,8 @@
     "offset": 6454640,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_627d70@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -765,7 +771,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "05ea3bf995f1b320b98b146b4128d695e717e8c170aab32932a876ba5df1cf91"
+      "inputs_sha256": "0bb880ff3d2b8f31c9abe1d38a3fd2d589cc30a13ea144b8671349ca015dc6be"
     }
   },
   {
@@ -1024,6 +1030,7 @@
     "size": 14,
     "inputs": [
       "src/campaign_tree_positions.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_628700@8",
@@ -1032,7 +1039,7 @@
     "identification": "Tree routine at RVA 0x628360 calls this position accessor at RVA 0x6283a0 and a tree operation at RVA 0x6283cc. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "f1e289317d15e71ddef69b871e38dc7daa108837925c94641f07c539ffc7afe1"
+      "inputs_sha256": "6d1bc2326f3c87dcf05df97ccc931954ea534fc48c181d6342bd23fbad5112ce"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1048,7 +1055,8 @@
     "offset": 6457120,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_628720@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -1057,7 +1065,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "a9bf769f09fe4467729dfd8bfa3a4587ec3b7e6f8599ea31907ff73549d422f4"
+      "inputs_sha256": "5448330164059dae23da56d9dc13b459a102065da556d28d30fba0f638e1a767"
     }
   },
   {
@@ -1066,6 +1074,7 @@
     "size": 62,
     "inputs": [
       "src/campaign_tree_head_construction.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_628730@12",
@@ -1080,7 +1089,7 @@
     "identification": "Direct retail caller at VA 0x10f2808f. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "7d46da9fe787b5460a032813ebea7b3f81154122a1eeaf6190abe70d381335b4",
-      "inputs_sha256": "894ddc8226d720da596b368b34be42e3658c4c910439758ab72d6d0d852fb461"
+      "inputs_sha256": "a5332f5c2a0d216e5a078ebd8d548529c563b2142751e0d3879f9c3914f470ae"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1143,10 +1152,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x10f283cc. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f283cc. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "0960485e49a84cc544a925ba519e0d75ed6e7283deac6fcc4c724a45e33b4662",
-      "inputs_sha256": "a51f6abe12dfbe9128dbcce8d2c27df7301553afb66bb8dff52b8d3c82c6156c"
+      "inputs_sha256": "07c629b038ab68cf31bde56f97498ff2a7fce5e035d5669688e2ca2bb5d240ce"
     }
   },
   {
@@ -1175,10 +1184,10 @@
         "basis": "Independently matched red-black tree rotation."
       }
     },
-    "identification": "Direct call at retail VA 0x10f2811a. Inserts an unsigned 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree.",
+    "identification": "Direct call at retail VA 0x10f2811a. Inserts an unsigned 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree. The local type names InsertTreeKey, InsertTreeNode, InsertTree, InsertTreePosition, and InsertTreeArgs are analyst-invented labels for the key storage, red-black tree node, head/count wrapper, output node position, and insertion argument bundle.",
     "match": {
       "bytes_sha256": "327d821582fd89bc8b944f3ba545e2a66115b6cb10c1f8797390b1b3036842eb",
-      "inputs_sha256": "00598f8bdf40e25c162cea7f84b0b52f83fcd93fa46b0246424414988946cbd2"
+      "inputs_sha256": "d2793a855c34b9f8da81690b373b41d5e398b95ed19108ae9dc827a51d218210"
     }
   },
   {
@@ -1253,7 +1262,7 @@
     "identification": "Direct call at RVA 0x6282cd in the independently delineated function at RVA 0x6282c0. The receiver field is at byte offset 200.",
     "match": {
       "bytes_sha256": "e59ab34f523df9d6fc594b216399b80128902bd162caacdf26beba7f7c0d9e60",
-      "inputs_sha256": "bb27b5e24c669d5754e655a4174bb2cc6dd22f50f932e7dc007ac4048c37e25a"
+      "inputs_sha256": "0c5ffe3078ef0196e54424947f942e79da04d162df63aad1582045076b73ab61"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1277,7 +1286,7 @@
     "identification": "Direct call at RVA 0x6282ed in the independently delineated function at RVA 0x6282e0. The receiver field is at byte offset 204.",
     "match": {
       "bytes_sha256": "3279b9b1c79e71928378070a2e21f541be61bc6feee4828a771b94e943827091",
-      "inputs_sha256": "c740484e835bdd8d73aa985a1b0cd20952b37b85c6cc0f2e5077b73d0e6811e1"
+      "inputs_sha256": "7f2703e076fccb1e786a46994663245b0bcb6678a01fb3ee59e3791cd72df84e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1301,7 +1310,7 @@
     "identification": "Direct call at RVA 0x62830d in the independently delineated function at RVA 0x628300. The receiver field is at byte offset 208.",
     "match": {
       "bytes_sha256": "dfec6f1f86088934f8c25bcb49246274113b99a8119d7e44d9dcff2b1fd4c1be",
-      "inputs_sha256": "037a9c7f9c754ea63917670b23c15ea1e630b43f7644953deaad0b4d3693457b"
+      "inputs_sha256": "566afbe37089a0330d9e07f8dfd8fe9629191063da88c0216e91cf86c5cf7612"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1325,7 +1334,7 @@
     "identification": "Direct call at RVA 0x62832d in the independently delineated function at RVA 0x628320. The receiver field is at byte offset 212.",
     "match": {
       "bytes_sha256": "fbbb3f432970bf064811f3006c2e47883d3e60a9ea7bc1953e4e22ce941f9b3a",
-      "inputs_sha256": "f896242b514d1be7da54ced2f040631945c73930cd86358f12b72c444ec3a777"
+      "inputs_sha256": "aa677c00ae5d4fca9556f8816ce07a92bac4b9b2aed52a9559986dee3cef1fcd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1341,7 +1350,8 @@
     "offset": 6471680,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_62c000@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -1350,7 +1360,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "71a2d3539d8f8ca627c10ff17e84c809d74ca26ac4bcc045c3fe856190b1dc27"
+      "inputs_sha256": "dba5b8e43a407319fd3cbbd0fdb3c06a5cf05d00632fd02099696dfa99b9c1aa"
     }
   },
   {
@@ -1359,6 +1369,7 @@
     "size": 62,
     "inputs": [
       "src/campaign_tree_head_construction.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_62c1e0@12",
@@ -1373,7 +1384,7 @@
     "identification": "Direct retail caller at VA 0x10f28a2b. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "805d26704fe403c4bb79e883cf0c22c896e41e03313717479697c92ab59a5552",
-      "inputs_sha256": "f14d8e0469f5bc92216d62225c275c2c754250ced6dee49ec5aa78051200efa2"
+      "inputs_sha256": "191e6893a1ed1aa91a3f023823c698cadbdb2030f7677add82e7ee9f3f6ffc89"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1421,6 +1432,7 @@
     "size": 62,
     "inputs": [
       "src/campaign_tree_head_construction.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_62c240@12",
@@ -1435,7 +1447,7 @@
     "identification": "Direct retail caller at VA 0x10f28a57. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "002fbbc23c1ec37d8dc62e3513c98a46557f5e1109ee5e24ea887cb95c378cce",
-      "inputs_sha256": "30426cfc5f0f4a84c8e71214e3f10fba875cbb6b7578d30e568e02118b6f34b2"
+      "inputs_sha256": "26a363bb3e3bc787ea2b0524b4535c0af7f5040655324b330f4ef8b95ff9f87e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1452,6 +1464,7 @@
     "size": 62,
     "inputs": [
       "src/campaign_tree_head_construction.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_62c290@12",
@@ -1466,7 +1479,7 @@
     "identification": "Direct retail caller at VA 0x10f28a83. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "1cf4aa3eacae1cf589c50e7c6c82d420d884529ef1649da12f408780f1176b09",
-      "inputs_sha256": "0da611c04682ec3e0c420b2d41949c48a2791ae924002ef83b4d9827053fd835"
+      "inputs_sha256": "ad3fdf3c5ef70f8a5563486aa017bdf3c28fd2491b750a2f8d926bd29a87e69b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1483,6 +1496,7 @@
     "size": 62,
     "inputs": [
       "src/campaign_tree_head_construction.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_62c2e0@12",
@@ -1497,7 +1511,7 @@
     "identification": "Direct retail caller at VA 0x10f28aaf. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "00d5c18efa8cb1ea144a00e0904ae343f222bd813c061011299f10a06bb9f5fa",
-      "inputs_sha256": "ba79c43ca26657f1763530d128b56308edb5700451c9e57f47edc4d3605bc52e"
+      "inputs_sha256": "8f2439c032958466e3b61ea4f7bc97ff1033bc3101ccb9dee67fec4952f15c76"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1533,10 +1547,10 @@
         "basis": "Cleans the node payload before release."
       }
     },
-    "identification": "Direct call at retail VA 0x10f28c5d. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f28c5d. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "fdbd480e78aef36aa5d51c08d3ee93d3bc2f1cc352bc26f6333b047384e109f7",
-      "inputs_sha256": "9f1f25f6635c8e24743d2c3429c9da0590a2a0a7e69708b962a83df92af95377"
+      "inputs_sha256": "d34716798bb53cc58cf4a00622715d307ca32f16ede793eacf4e5ab227a3d2b9"
     }
   },
   {
@@ -1560,10 +1574,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x10f28ced. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f28ced. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "2155d6bf37fb11d77736c99d4f13b7926e71191d5d35d2f3edccbd8bfa4edc46",
-      "inputs_sha256": "63e7d1fb43b0271b21fcb10b27c28dec32ad78717c90e358bbc10d1f4b847045"
+      "inputs_sha256": "c46ce89c6978af1058d80a4332c2ec2ad760b18c104a9a7ad0d3dc8792bf52d8"
     }
   },
   {
@@ -1587,10 +1601,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x10f28d7d. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f28d7d. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "ec97261dd134d8e5c74d716921a122385c80dbf6fb24d877eddf7d9246fd6572",
-      "inputs_sha256": "ed1471c7997955cbba24ac695cbde080dbec6ea4ee303c4e60f660de8dd48535"
+      "inputs_sha256": "c3103bd4dcf57f59cfa4d358480b05df07e1ad4ab5b09404164a1a659c89d8c8"
     }
   },
   {
@@ -1614,10 +1628,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x10f28e0d. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f28e0d. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "54ea6d39d2520d66ae42d5d8efdbb447f7d5a156c54f533cb27a190abcd2d781",
-      "inputs_sha256": "9a8ad4231372befb79a94072e325c4fea5f12385d15c19e629e9aea08d1329cb"
+      "inputs_sha256": "8c8b8db27c9d4e2d52c2e6b75715bd3df11c5e68e63d7d479b6098bc9f09fed6"
     }
   },
   {
@@ -1645,10 +1659,10 @@
         "basis": "Cleans the node payload before release."
       }
     },
-    "identification": "Direct call at retail VA 0x10f28b25. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f28b25. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "952da64823eaf43ac95ffd0f2c675be243d53a852e1442a23b511c1582e0089e",
-      "inputs_sha256": "ce1a6996c086bcc8de31c0980a6eab4d3219533ec1d14a1e0ce242cd5a12f278"
+      "inputs_sha256": "4fa1c48d8dc3ef2941acf487c347d194ddb5dff62e02deb518c0ffe3920115b3"
     }
   },
   {
@@ -1713,10 +1727,10 @@
         "basis": "Independently matched red-black tree rotation."
       }
     },
-    "identification": "Direct call at retail VA 0x10f2b862. Inserts an unsigned 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree.",
+    "identification": "Direct call at retail VA 0x10f2b862. Inserts an unsigned 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree. The local type names InsertTreeKey, InsertTreeNode, InsertTree, InsertTreePosition, and InsertTreeArgs are analyst-invented labels for the key storage, red-black tree node, head/count wrapper, output node position, and insertion argument bundle.",
     "match": {
       "bytes_sha256": "03b4758979b2b5dfb9d801e98c46383bef2c479aa13b3e7f79305beffcf07f46",
-      "inputs_sha256": "3ad9b317b6e5471730725f68deeaac54514b6abad13c5b359314e7e5ed53fc60"
+      "inputs_sha256": "c47d37f1376533bc273905dba03150199cbb586fcd60ed6cd41a7a981ccb166f"
     }
   },
   {
@@ -1745,10 +1759,10 @@
         "basis": "Independently matched red-black tree rotation."
       }
     },
-    "identification": "Direct call at retail VA 0x10f2ba06. Inserts an unsigned 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree.",
+    "identification": "Direct call at retail VA 0x10f2ba06. Inserts an unsigned 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree. The local type names InsertTreeKey, InsertTreeNode, InsertTree, InsertTreePosition, and InsertTreeArgs are analyst-invented labels for the key storage, red-black tree node, head/count wrapper, output node position, and insertion argument bundle.",
     "match": {
       "bytes_sha256": "4454692b843b51a5e42e5bb9033703336fc209737ee1fe91cd3b0e1654065992",
-      "inputs_sha256": "161a0818b4230883c217c779463ff277f94ef976122188fb02274af99b2f4671"
+      "inputs_sha256": "6efb1b7c326e964aa1dce885771a346f7f9dda278ef0cb1afad8264946ed8c99"
     }
   },
   {
@@ -1911,10 +1925,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. SentinelCleanupList is an analyst-invented local name for the wrapper holding the sentinel link.",
     "match": {
       "bytes_sha256": "afe6ac35a6f7b2a87ff1ea5e366159e23918e514e6d0e22053ef3e71afc6485e",
-      "inputs_sha256": "203931c22e64e76c5335ca59283dacee74327a02ea4cd9b693cbf9b3960e8f45"
+      "inputs_sha256": "45dfeadeea9c99bff79533a74de6e89f842ce497adb82927309e54ba62ff2a1e"
     }
   },
   {
@@ -2062,6 +2076,7 @@
     "size": 14,
     "inputs": [
       "src/campaign_tree_positions.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_62eae0@8",
@@ -2070,7 +2085,7 @@
     "identification": "Tree routine at RVA 0x62e730 calls this position accessor at RVA 0x62e770 and a tree operation at RVA 0x62e79c. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "cdae8aebb9a390128de375e65fba14c7d6038b10f82faebe51466a078e65a83c"
+      "inputs_sha256": "86451d63240269795e3e462e291fe78e016928a910e43a6e5a4877d313734ff5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2086,7 +2101,8 @@
     "offset": 6482688,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_62eb00@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -2095,7 +2111,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "b1cc56ff32d50f85aa4861beb3cb8d5598ca1ece5e6a4641a2f140a4b5b0dfad"
+      "inputs_sha256": "d8d2ca3942a463eee6d416083529efc809d6bc0e8b98a726f4310c0950761279"
     }
   },
   {
@@ -2150,10 +2166,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x10f2e79c. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x10f2e79c. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "80472025cc5ffc1185c05f5d99c50ee0f01db32179524720cb1b302f0c633c66",
-      "inputs_sha256": "6d5e38f3807a9e09007a63cde39b20d9b532d87443752758b48e9669aff22ce1"
+      "inputs_sha256": "9a698f251a6984e41a1b82c4f0c852cc684a2d3ae17c1e2038be4794402a895d"
     }
   },
   {
@@ -2162,6 +2178,7 @@
     "size": 14,
     "inputs": [
       "src/campaign_tree_positions.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_62f070@8",
@@ -2170,7 +2187,7 @@
     "identification": "Tree routine at RVA 0x62eb80 calls this position accessor at RVA 0x62ee69 and a tree operation at RVA 0x62efc9. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "664ffc9d4bb99d91385f04efeebcb3dea0a1e584acc0fb3cb75fd96a27f16206"
+      "inputs_sha256": "e296fb4d977761ed5990ed11c73a5d5e2817363a847d2f2a8082c3f47f687c52"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2207,10 +2224,10 @@
         "basis": "Independently matched red-black tree rotation."
       }
     },
-    "identification": "Direct call at retail VA 0x10f2ec02. Inserts an unsigned 8-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree.",
+    "identification": "Direct call at retail VA 0x10f2ec02. Inserts an unsigned 8-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree. The local type names InsertTreeKey, InsertTreeNode, InsertTree, InsertTreePosition, and InsertTreeArgs are analyst-invented labels for the key storage, red-black tree node, head/count wrapper, output node position, and insertion argument bundle.",
     "match": {
       "bytes_sha256": "22613c787b8eac34079f2a51597ec80d496b05851f04313ae5302b7225b4b4be",
-      "inputs_sha256": "9240615c9686d1139cd0334326efd7ca493f074b57aeed86540266bf789a0e0a"
+      "inputs_sha256": "4ef2ed5ca1f36b482165a564e4bbdfc998f861bed37a380a433184442d74e226"
     }
   },
   {

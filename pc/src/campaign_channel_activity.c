@@ -1,10 +1,13 @@
+#include "campaign_channel_constants.h"
+/* FAKEMATCH: the C fastcall signature wraps the channel's integer array index
+   so that it stays on the stack after the mesh receiver. */
 struct Index { int value; };
-struct Mesh;
-struct Methods {
+struct ChannelActivityMesh;
+struct ChannelActivityMethods {
     void *reserved[56];
-    int (__fastcall *active)(struct Mesh *, struct Index);
+    int (__fastcall *active)(struct ChannelActivityMesh *, struct Index);
 };
-struct Channel {
+struct AnimationPlaybackChannel {
     unsigned sequence;
     unsigned reserved_04;
     float rate;
@@ -15,19 +18,17 @@ struct Channel {
     unsigned field_30;
     unsigned char reserved_34[0x4c];
 };
-struct Mesh {
-    const struct Methods *methods;
+struct ChannelActivityMesh {
+    const struct ChannelActivityMethods *methods;
     unsigned char reserved[0x90];
-    struct Channel *channels;
+    struct AnimationPlaybackChannel *channels;
     int count;
 };
-extern const float zero_rate;
-extern const double zero_position;
 
-int __fastcall channel_active(struct Mesh *mesh, struct Index index)
+int __fastcall channel_active(struct ChannelActivityMesh *mesh, struct Index index)
 {
     if (mesh->count > index.value && index.value >= 0) {
-        struct Channel *channel = &mesh->channels[index.value];
+        struct AnimationPlaybackChannel *channel = &mesh->channels[index.value];
         if (channel->sequence) {
             if (channel->position >= zero_rate ? channel->rate != zero_rate : channel->blend_rate != zero_rate)
                 return 1;
@@ -36,7 +37,7 @@ int __fastcall channel_active(struct Mesh *mesh, struct Index index)
     return 0;
 }
 
-int __fastcall stop_channels(struct Mesh *mesh)
+int __fastcall stop_channels(struct ChannelActivityMesh *mesh)
 {
     int i;
     for (i = 0; i < mesh->count; ++i) {
@@ -47,7 +48,7 @@ int __fastcall stop_channels(struct Mesh *mesh)
     return 1;
 }
 
-int __fastcall channel_blending(struct Mesh *mesh, struct Index index)
+int __fastcall channel_blending(struct ChannelActivityMesh *mesh, struct Index index)
 {
     if (mesh->count > index.value && index.value >= 0 &&
         mesh->channels[index.value].position < zero_position &&

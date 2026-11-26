@@ -1,4 +1,4 @@
-struct Context;
+#include "campaign_allocation_service.h"
 struct Methods {
     void *reserved;
     void (__fastcall *enter)(struct Context *);

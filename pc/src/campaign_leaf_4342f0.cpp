@@ -2,13 +2,7 @@
 // method at VA 0x10d65530 of the object the global at VA 0x11317bf8 points to, called with its
 // argument. All names are invented.
 
-class UnkType_10d65530
-{
-public:
-    int Unk_10d65530(int Value);
-};
-
-extern UnkType_10d65530* GUnk_11317bf8;
+#include "campaign_global_11317bf8.h"
 
 class UnkType_10d342f0
 {

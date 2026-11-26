@@ -10,7 +10,7 @@ typedef int INT;
 typedef unsigned long DWORD;
 typedef DWORD UBOOL;
 typedef void *HANDLE;
-typedef void *HWND;
+typedef struct HWND__ *HWND;
 typedef void *HGLOBAL;
 
 #define RESULT_DECL void *const Result

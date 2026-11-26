@@ -5,6 +5,8 @@
 // 0x10df4ca0.
 // The class and member names are invented; the offset and the bytes are the binary's.
 
+#include "campaign_leaf_19e700_member_types.h"
+
 class UnkType_10a9e700_Base
 {
 public:
@@ -21,14 +23,6 @@ public:
     ~UnkType_10a9e700_M48();
 };
 
-class UnkType_10a9e700_M2f4
-{
-public:
-    unsigned char unk_0[0x7fc];
-
-    ~UnkType_10a9e700_M2f4();
-};
-
 class UnkType_10a9e700_Maf0
 {
 public:
@@ -37,28 +31,12 @@ public:
     ~UnkType_10a9e700_Maf0();
 };
 
-class UnkType_10a9e700_M13f8
-{
-public:
-    unsigned char unk_0[0x158];
-
-    ~UnkType_10a9e700_M13f8();
-};
-
 class UnkType_10a9e700_M1550
 {
 public:
     unsigned char unk_0[0x484];
 
     ~UnkType_10a9e700_M1550();
-};
-
-class UnkType_10a9e700_M19d4
-{
-public:
-    unsigned char unk_0[0x4];
-
-    ~UnkType_10a9e700_M19d4();
 };
 
 class UnkType_10a9e700 : public UnkType_10a9e700_Base

@@ -1,9 +1,10 @@
-struct Node;
-struct NodeArg { struct Node *node; };
-struct Node { struct Node *left; struct NodeArg parent; struct Node *right; };
-struct Tree { unsigned reserved; struct Node *head; unsigned count; };
+struct ManagedTreeNode;
+/* FAKEMATCH: this C wrapper puts the tree's raw root pointer on the EraseSubtree member-call stack. */
+struct NodeArg { struct ManagedTreeNode *node; };
+struct ManagedTreeNode { struct ManagedTreeNode *left; struct NodeArg parent; struct ManagedTreeNode *right; };
+struct ManagedTree { unsigned reserved; struct ManagedTreeNode *head; unsigned count; };
 #define CLEAR_TREE(Entry, Erase) \
-    void __fastcall Entry(struct Tree *tree) \
+    void __fastcall Entry(struct ManagedTree *tree) \
     { \
         Erase(tree, tree->head->parent); \
         tree->head->parent.node = tree->head; \
@@ -12,29 +13,29 @@ struct Tree { unsigned reserved; struct Node *head; unsigned count; };
         tree->head->right = tree->head; \
     }
 
-extern void __fastcall erase_385890(struct Tree *, struct NodeArg);
-extern void __fastcall erase_422950(struct Tree *, struct NodeArg);
-extern void __fastcall erase_453f40(struct Tree *, struct NodeArg);
-extern void __fastcall erase_489ce0(struct Tree *, struct NodeArg);
-extern void __fastcall erase_48cee0(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4967c0(struct Tree *, struct NodeArg);
-extern void __fastcall erase_499800(struct Tree *, struct NodeArg);
-extern void __fastcall erase_49f430(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4a36d0(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4a5910(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4abaf0(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4af480(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4b06d0(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4bfe00(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4c5450(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4c95d0(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4c9f40(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4cf820(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4d4400(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4d7460(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4de850(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4ec5c0(struct Tree *, struct NodeArg);
-extern void __fastcall erase_4edc90(struct Tree *, struct NodeArg);
+extern void __fastcall erase_385890(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_422950(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_453f40(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_489ce0(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_48cee0(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4967c0(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_499800(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_49f430(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4a36d0(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4a5910(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4abaf0(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4af480(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4b06d0(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4bfe00(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4c5450(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4c95d0(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4c9f40(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4cf820(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4d4400(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4d7460(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4de850(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4ec5c0(struct ManagedTree *, struct NodeArg);
+extern void __fastcall erase_4edc90(struct ManagedTree *, struct NodeArg);
 
 CLEAR_TREE(clear_387ad0, erase_385890)
 CLEAR_TREE(clear_422af0, erase_422950)

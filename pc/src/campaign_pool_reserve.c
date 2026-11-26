@@ -1,96 +1,93 @@
-struct Block { void *base, *cursor; unsigned used, capacity; };
-struct Pool { unsigned reserved; struct Block *first, *end, *limit; unsigned char active; };
-struct Word { unsigned value; };
-struct BlockArg { struct Block *value; };
+#include "campaign_pool_reserve_types.h"
 extern void *__cdecl allocate_block(unsigned bytes, unsigned mode);
 
-extern void __fastcall append_21e7f0(struct Pool *, struct BlockArg);
-extern void __fastcall append_21e860(struct Pool *, struct BlockArg);
-extern void __fastcall append_21e8d0(struct Pool *, struct BlockArg);
-extern void __fastcall append_21e940(struct Pool *, struct BlockArg);
-extern void __fastcall append_21e9b0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a0e0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a150(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a1c0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a230(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a2a0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a310(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a380(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a3f0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a460(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a4d0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a540(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a5b0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a620(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a690(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a700(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a770(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a7e0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a850(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a8c0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a930(struct Pool *, struct BlockArg);
-extern void __fastcall append_44a9a0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44aa10(struct Pool *, struct BlockArg);
-extern void __fastcall append_44aa80(struct Pool *, struct BlockArg);
-extern void __fastcall append_44aaf0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44ab60(struct Pool *, struct BlockArg);
-extern void __fastcall append_44abd0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44ac40(struct Pool *, struct BlockArg);
-extern void __fastcall append_44acb0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44ad20(struct Pool *, struct BlockArg);
-extern void __fastcall append_44ad90(struct Pool *, struct BlockArg);
-extern void __fastcall append_44ae00(struct Pool *, struct BlockArg);
-extern void __fastcall append_44ae70(struct Pool *, struct BlockArg);
-extern void __fastcall append_44aee0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44af50(struct Pool *, struct BlockArg);
-extern void __fastcall append_44bbb0(struct Pool *, struct BlockArg);
-extern void __fastcall append_44bc20(struct Pool *, struct BlockArg);
-extern struct Pool pool_90b6c4;
-extern struct Pool pool_923a04;
-extern struct Pool pool_923a18;
-extern struct Pool pool_92d3e4;
-extern struct Pool pool_a17b08;
-extern struct Pool pool_a17b44;
-extern struct Pool pool_a17b80;
-extern struct Pool pool_a17bbc;
-extern struct Pool pool_a17c24;
-extern struct Pool pool_a17c60;
-extern struct Pool pool_a17c74;
-extern struct Pool pool_a17cb4;
-extern struct Pool pool_a17cf0;
-extern struct Pool pool_a17e00;
-extern struct Pool pool_a17e64;
-extern struct Pool pool_a17ea0;
-extern struct Pool pool_a17eb4;
-extern struct Pool pool_a17ec8;
-extern struct Pool pool_a17edc;
-extern struct Pool pool_a17ef0;
-extern struct Pool pool_a17fe4;
-extern struct Pool pool_a18020;
-extern struct Pool pool_a1a0b0;
-extern struct Pool pool_a1a0ec;
-extern struct Pool pool_a1a128;
-extern struct Pool pool_a1a168;
-extern struct Pool pool_a1a1a4;
-extern struct Pool pool_a1a1e0;
-extern struct Pool pool_a1a21c;
-extern struct Pool pool_a1a258;
-extern struct Pool pool_a1a294;
-extern struct Pool pool_a1a2d0;
-extern struct Pool pool_a1a348;
-extern struct Pool pool_a1a384;
-extern struct Pool pool_a1a3c0;
-extern struct Pool pool_a1a3fc;
-extern struct Pool pool_a1a488;
-extern struct Pool pool_a1a4c4;
-extern struct Pool pool_a1a500;
+extern void __fastcall append_21e7f0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_21e860(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_21e8d0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_21e940(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_21e9b0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a0e0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a150(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a1c0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a230(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a2a0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a310(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a380(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a3f0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a460(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a4d0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a540(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a5b0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a620(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a690(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a700(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a770(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a7e0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a850(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a8c0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a930(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44a9a0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44aa10(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44aa80(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44aaf0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44ab60(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44abd0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44ac40(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44acb0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44ad20(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44ad90(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44ae00(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44ae70(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44aee0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44af50(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44bbb0(struct ReservationPool *, struct ReservationBlockArg);
+extern void __fastcall append_44bc20(struct ReservationPool *, struct ReservationBlockArg);
+extern struct ReservationPool pool_90b6c4;
+extern struct ReservationPool pool_923a04;
+extern struct ReservationPool pool_923a18;
+extern struct ReservationPool pool_92d3e4;
+extern struct ReservationPool pool_a17b08;
+extern struct ReservationPool pool_a17b44;
+extern struct ReservationPool pool_a17b80;
+extern struct ReservationPool pool_a17bbc;
+extern struct ReservationPool pool_a17c24;
+extern struct ReservationPool pool_a17c60;
+extern struct ReservationPool pool_a17c74;
+extern struct ReservationPool pool_a17cb4;
+extern struct ReservationPool pool_a17cf0;
+extern struct ReservationPool pool_a17e00;
+extern struct ReservationPool pool_a17e64;
+extern struct ReservationPool pool_a17ea0;
+extern struct ReservationPool pool_a17eb4;
+extern struct ReservationPool pool_a17ec8;
+extern struct ReservationPool pool_a17edc;
+extern struct ReservationPool pool_a17ef0;
+extern struct ReservationPool pool_a17fe4;
+extern struct ReservationPool pool_a18020;
+extern struct ReservationPool pool_a1a0b0;
+extern struct ReservationPool pool_a1a0ec;
+extern struct ReservationPool pool_a1a128;
+extern struct ReservationPool pool_a1a168;
+extern struct ReservationPool pool_a1a1a4;
+extern struct ReservationPool pool_a1a1e0;
+extern struct ReservationPool pool_a1a21c;
+extern struct ReservationPool pool_a1a258;
+extern struct ReservationPool pool_a1a294;
+extern struct ReservationPool pool_a1a2d0;
+extern struct ReservationPool pool_a1a348;
+extern struct ReservationPool pool_a1a384;
+extern struct ReservationPool pool_a1a3c0;
+extern struct ReservationPool pool_a1a3fc;
+extern struct ReservationPool pool_a1a488;
+extern struct ReservationPool pool_a1a4c4;
+extern struct ReservationPool pool_a1a500;
 
 #define RESERVE_GLOBAL(Entry, Append, Stride, GlobalPool) \
     void __stdcall Entry(unsigned count) \
     { \
         if (count > 0) { \
-            struct Block block; \
-            struct BlockArg arg; \
+            struct ReservationBlock block; \
+            struct ReservationBlockArg arg; \
             block.base = allocate_block(count * Stride, 0); \
             block.cursor = block.base; \
             block.used = 0; \
@@ -102,11 +99,11 @@ extern struct Pool pool_a1a500;
     }
 
 #define RESERVE_MEMBER(Entry, Append, Stride) \
-    void __fastcall Entry(struct Pool *self, struct Word count, struct Word mode) \
+    void __fastcall Entry(struct ReservationPool *self, struct PoolParameterWord count, struct PoolParameterWord mode) \
     { \
         if (count.value > 0) { \
-            struct Block block; \
-            struct BlockArg arg; \
+            struct ReservationBlock block; \
+            struct ReservationBlockArg arg; \
             block.base = allocate_block(count.value * Stride, mode.value); \
             block.cursor = block.base; \
             block.used = 0; \

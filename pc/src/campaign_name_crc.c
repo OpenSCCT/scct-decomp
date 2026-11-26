@@ -1,6 +1,8 @@
+/* campaign_name_crc.c -- reflected CRC-32 for Campaign names */
 #include "campaign_globals.h"
-extern unsigned crc_table[256];
+#include "campaign_name_crc.h"
 
+/* name_crc */
 unsigned *__cdecl name_crc(unsigned *destination, const char *name)
 {
     unsigned checksum;
@@ -16,12 +18,12 @@ unsigned *__cdecl name_crc(unsigned *destination, const char *name)
                     entry = (entry >> 1) ^ 0xedb88320u;
                 else
                     entry >>= 1;
-            crc_table[i] = entry;
+            campaign_name_crc_table[i] = entry;
         }
     }
     checksum = ~0u;
     while ((ch = *name++) != 0)
-        checksum = crc_table[(checksum ^ ch) & 255] ^ (checksum >> 8);
+        checksum = campaign_name_crc_table[(checksum ^ ch) & 255] ^ (checksum >> 8);
     *destination = ~checksum;
     return destination;
 }

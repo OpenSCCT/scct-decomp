@@ -81,7 +81,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r391720@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -99,7 +100,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x391720 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "37a2bf72f5bc0222405695211966288425fc63d87c0bf60174c5c194608fece8"
+      "inputs_sha256": "de899cd5436747a007fec57a76330a6f7fe61d609f0e723090dbcf7faeff4288"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -140,7 +141,8 @@
     "offset": 3781840,
     "inputs": [
       "src/campaign_array_allocate_init.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_39b4d0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -158,7 +160,7 @@
     "identification": "Aligned entry bounded by a preceding return and compiler padding. Sets count and capacity and allocates fresh storage with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "13e5fc4998763bef7d73eaef8b6f8b3c971f73ac8519b1f8f9201aed10352307",
-      "inputs_sha256": "2016a046dfdd0edc08cc311d0b41383eb3675f67606f04e50e383ec44afb43d9"
+      "inputs_sha256": "542fe16ff0ab0cae13484e107bb0271b8ef532d8d06b6da3442da96095a5f931"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -176,7 +178,8 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_39b510@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -194,7 +197,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "22b988438ef3bcace7944e0979e1b7102d0b77dd44fe98684a230895e11766e0"
+      "inputs_sha256": "bc3df26a87f892d57a57cbc65314205ea345a73520ff3c02397712262e370b94"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -209,16 +212,19 @@
     "id": "array-remove-39b560",
     "size": 138,
     "offset": 3781984,
-    "rebuilt_symbol": "@array_remove_r39b560@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -234,7 +240,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x39b560, including RET. Incoming transfer decoded within analyzed function code at RVA 0x3a322b, 0x3a3769. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "9cbf06c69ea1bd54e2c73ca4a8990167860a440ec354b5c31789eec9009eff64",
-      "inputs_sha256": "c6ce0451da7174e312aaf52bf810f72eb8d268b19530ccb8ef7ffaeca494503f"
+      "inputs_sha256": "03e12b1c946027b85c683f495f28c7729dc272a41802e337e9a8da69d43a2005"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

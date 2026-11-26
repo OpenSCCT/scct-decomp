@@ -2,11 +2,7 @@
 // class at VA 0x10e6d280, then clears the members at 0x00 and 0x04. The class names are invented;
 // the offsets and addresses are the binary's.
 
-class UnkType_10e6d280
-{
-public:
-    UnkType_10e6d280();
-};
+#include "campaign_leaf_56d280_base.h"
 
 class UnkType_10e5be30 : public UnkType_10e6d280
 {

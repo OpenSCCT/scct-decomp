@@ -1,9 +1,9 @@
 struct Shared;
-struct Methods { void (__fastcall *destroy)(struct Shared *, unsigned, unsigned); };
-struct Shared { const struct Methods *methods; unsigned references; };
-struct Holder { struct Shared *shared; };
-extern void __cdecl release_memory(struct Holder *);
-struct Holder *__fastcall delete_holder(struct Holder *self, unsigned unused, unsigned flags)
+struct SharedMethods { void (__fastcall *destroy)(struct Shared *, unsigned, unsigned); };
+struct Shared { const struct SharedMethods *methods; unsigned references; };
+struct SharedHolder { struct Shared *shared; };
+extern void __cdecl release_memory(struct SharedHolder *);
+struct SharedHolder *__fastcall delete_holder(struct SharedHolder *self, unsigned unused, unsigned flags)
 {
     struct Shared *shared = self->shared;
     if (shared) {

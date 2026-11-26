@@ -5,6 +5,8 @@
 // and 0x44 (0x10db4c90), before the base destructor at 0x10da2740. The class and member names
 // are invented.
 
+#include "campaign_leaf_481cb0_parts.h"
+
 void* Unk_10d8b460();
 void Unk_10d8b550(void* Heap, void* Block, int Tag);
 
@@ -21,24 +23,6 @@ public:
 
 private:
     unsigned char unk_4[0x40];
-};
-
-class UnkType_10d81cb0_Part44
-{
-public:
-    ~UnkType_10d81cb0_Part44();
-
-private:
-    unsigned char unk_0[0xa00];
-};
-
-class UnkType_10d81cb0_PartA44
-{
-public:
-    ~UnkType_10d81cb0_PartA44();
-
-private:
-    unsigned char unk_0[0x108];
 };
 
 class UnkType_10d81cb0_Word

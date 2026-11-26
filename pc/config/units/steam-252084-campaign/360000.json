@@ -32,7 +32,7 @@
     "identification": "Typed cast at campaign RVA 0x3600b0, directly called at RVA 0x360773. Its class constructor at RVA 0x34bf60 identifies AERetinalScanner; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "bdca5789acbec5347317e9191d3ad17b1deac1b7b980124cf6326bfd48b90769",
-      "inputs_sha256": "147f80c414d0a6fbfa47947c155d853273d78867d1a1d2b71bee52cd81b19bc3"
+      "inputs_sha256": "504aa2c0c15bc6f5b707120bcab1a07b145c6f55536f77bdff7dc57f3aca4544"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -83,7 +83,8 @@
     "offset": 3540592,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AECoopRetinalScannerInt@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -109,7 +110,7 @@
     },
     "match": {
       "bytes_sha256": "066adece7c74eaa52755a95a70cfb4585914ace855747869d6042c06ddae0f96",
-      "inputs_sha256": "892b29cba44895ed7c292e5aa01e13f6f21d501060794e0c4d0857bdac4794a8"
+      "inputs_sha256": "840496515f2c9c2c27cc44da17b0cfb1147e3e1816d7c2593aee84c4b6818279"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -161,15 +162,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AECoopRetinalScannerInt",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AECoopRetinalScannerInt": {
         "va": 286300616,
@@ -187,15 +191,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AECoopRetinalScannerInt."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x3606e0; its allocation tag and reflected class name identify AECoopRetinalScannerInt. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x3606e0; its allocation tag and reflected class name identify AECoopRetinalScannerInt. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "fca4f138632c492a1c039ae699e001f3a77af8d9c85a0f7529607e3cc866b523",
-      "inputs_sha256": "72fc58ff896804ac1ed61f07c4f99020c07ff4714166627e5db8a31ef2acac32"
+      "inputs_sha256": "a251a5fd216f733b0dba43007934d86c8636f06f3d8ce11256955e4376b6b921"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -275,7 +279,7 @@
     "identification": "Class registration for AEDoorInteraction at RVA 0x360970, called immediately after the class factory at RVA 0x362640 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "8d0f2c5152bed753fc2b6272f2829007ee6cd17d11bafa8fb042343b3012334d",
-      "inputs_sha256": "dbcdcd83bc7ab148482c38c115573138d559e487210afd2c12bf529d59bf6455"
+      "inputs_sha256": "9d125d95b2a76605e0ec7d2e065c1f27fa61f652718cf9b2e16bf91953532e67"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -319,7 +323,7 @@
     "identification": "Typed cast at campaign RVA 0x360bd0, directly called at RVA 0x36143f. Its class constructor at RVA 0x33c1c0 identifies AESlidingDoor; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "c39b0a1beb0f99da6cfdad3f09e2814d6e06e6d4209fd7602cb29441d4530866",
-      "inputs_sha256": "b6a8b552c1470f18faffa3bdbcdaf2b450e94cf039b6e80340237d9c80021ba5"
+      "inputs_sha256": "e0b384a6903e0b10067d6434449ce9497f1b4b946905301931230a5f7dc6a516"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -370,7 +374,8 @@
     "offset": 3548624,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEDoorInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -396,7 +401,7 @@
     },
     "match": {
       "bytes_sha256": "f4174dc8f196e6ad2af46a5135020929542e358ff801fb26418e9cb7d44999c8",
-      "inputs_sha256": "68da0fd1a4b27c8377f8aa5e1e7bf3bcb861db786801af7ec0a062e0e19d11fa"
+      "inputs_sha256": "66defa8278e92132994b3236c84568fae11fc295637f034d307a183689f7207f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -448,15 +453,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEDoorInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEDoorInteraction": {
         "va": 286302148,
@@ -474,15 +482,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEDoorInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x362640; its allocation tag and reflected class name identify AEDoorInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x362640; its allocation tag and reflected class name identify AEDoorInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "2a33a7c00a6a76de158a78c9fa7fd9d97a5069ac6cb9e1e25ce2a4236a8c67b9",
-      "inputs_sha256": "61619375d672ec5516ff11340197dfc01badedda5924793489e5d6e411e7fcb4"
+      "inputs_sha256": "d79902b5210e0d4b43d97f46bb90de4a327ad9dd1cb0bcc308bb0cd4e1336405"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -562,7 +570,7 @@
     "identification": "Class registration for AESlidingDoorInteraction at RVA 0x362710, called immediately after the class factory at RVA 0x362c50 in the singleton initialization path. Sets superclass AEDoorInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "a0771b8584f08689dd7f1732c24bf1c6d9f2e2bf81e28de27afbccec6da0e700",
-      "inputs_sha256": "8ee1fd9f949952d4462ab8a4f4917d3f1554502b17d0e7c7cfca19a537d8bb27"
+      "inputs_sha256": "b0fdc344a229d14dc0f413b630c2805414c737b104a8a97afe617d54bef25c33"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -613,7 +621,8 @@
     "offset": 3550176,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESlidingDoorInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -639,7 +648,7 @@
     },
     "match": {
       "bytes_sha256": "f24f428d5272a654f8f9300830bc739afaa942bb7a7c9918f77bf6e86ea96a97",
-      "inputs_sha256": "aff0a299360b3e3f8ced405665e9305c723428f9df98809c29052d94171873c5"
+      "inputs_sha256": "25c419b9ea858a14077d0de5309ff8da7d59a3576e3abc385d3429ca1d775623"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -691,15 +700,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AESlidingDoorInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AESlidingDoorInteraction": {
         "va": 286302884,
@@ -717,15 +729,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AESlidingDoorInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x362c50; its allocation tag and reflected class name identify AESlidingDoorInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x362c50; its allocation tag and reflected class name identify AESlidingDoorInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "bb825fab5e2ac76baeb4cf4a8436306c981c77bc4f1e33627905e16babdbb001",
-      "inputs_sha256": "97a9dce04e777cfde83d84346c7b4c3606d4b1a3f2430fa6a766f546a4c13dbb"
+      "inputs_sha256": "8c8133ad735c8c992ca2dab2bc34000f8c3b2b84c2662890ec6fc92f40f2e22e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -841,7 +853,7 @@
     "identification": "Class registration for AEGeneratorInteraction at RVA 0x362d40, called immediately after the class factory at RVA 0x363560 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "63005c01e1d89e9d86faef57c5c7ec965529d8ea84d7d849328952140fe64b2a",
-      "inputs_sha256": "f1bce0b77ef9063ee8e1ca45a5f0592208c6f39b844b93950dc6522ca7130859"
+      "inputs_sha256": "45f1bf224e52f87a3444872f0ebaedf234139eda683801fc2842fce70306d0a9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -885,7 +897,7 @@
     "identification": "Typed cast at campaign RVA 0x362f40, directly called at RVA 0x362fac. Its class constructor at RVA 0x34fac0 identifies AEGenerator; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "78e6f287acf74f4aacf18fa142c6d66d602550bab453e90cd16f038e4d8b9993",
-      "inputs_sha256": "1115e016225e124a574d21dbc1853b845dd8f3e9f2eaa6abd4b3832bba5b1823"
+      "inputs_sha256": "80dcff86d5a68d8d3ec287ab9daf8650eac3ac5dda334a587dc5d4b241457092"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -970,7 +982,8 @@
     "offset": 3552496,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEGeneratorInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -996,7 +1009,7 @@
     },
     "match": {
       "bytes_sha256": "669a9079979898a5ed6323c38207cff2b912a1e9ed767be0fdee4ca8fd78d038",
-      "inputs_sha256": "99c76c6bdf549b0f1aa3af7657c8cc6a2d437286d60ebabd8c024d9140c8d220"
+      "inputs_sha256": "2611e1b344490503deda7161b7415eb6b5427a8716a22230d68fc73c66fc093f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1048,15 +1061,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AEGeneratorInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEGeneratorInteraction": {
         "va": 286303748,
@@ -1074,15 +1090,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEGeneratorInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x363560; its allocation tag and reflected class name identify AEGeneratorInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x363560; its allocation tag and reflected class name identify AEGeneratorInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "9c426f72791daf8090e26e8afe08eb1e5a497890ea9b2847bddbd2fea3f86095",
-      "inputs_sha256": "49663798c8006e0f211f68e1b54a40d39adda7a6c7b05272e01f7b2cc25f14ca"
+      "inputs_sha256": "96e4036088600dba9ce5d2e264578b5b4e8472e09432a142ed242577f7ceb0be"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1162,7 +1178,7 @@
     "identification": "Class registration for AEMedKitInteraction at RVA 0x363620, called immediately after the class factory at RVA 0x3640d0 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "f4ade83d7bba120518f830822d26c5e06db8371f24c13a567147a715aaba5c9e",
-      "inputs_sha256": "0733993d7f332921ce60fd3f768e879a540510c33fba01571498c313f529a6db"
+      "inputs_sha256": "f80d7b4a46c57491a737761717041740618473be83e5c7e0edf5260ea9db945f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1206,7 +1222,7 @@
     "identification": "Typed cast at campaign RVA 0x363730, directly called at RVA 0x3637a4. Its class constructor at RVA 0x354fb0 identifies AEMedKit; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "6ff923851b4946da60e894e5504b5153e78d8139b2af7cc7d770826fc369716e",
-      "inputs_sha256": "18fa714d72d9dd4ae921d596a8db382bb5b6f44b0feb41dff354effd507307cb"
+      "inputs_sha256": "89524f43035365a940513e9fa6bd6258233d9b3eed07bd91889deaf3b83d6025"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1257,7 +1273,8 @@
     "offset": 3555424,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEMedKitInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1283,7 +1300,7 @@
     },
     "match": {
       "bytes_sha256": "b208925d2894f8a745f2056a6f46301bcc5862cb9b11ecdf55686505de25d76b",
-      "inputs_sha256": "397b1af4adf787ba71d6c5af7acbc68cb5d75bc5f43be888abfd0f053d1943e4"
+      "inputs_sha256": "915d2e9a6aa0f3dcc150a4578ec4dfc729738718a8542db7aff42ef0540156b2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1335,15 +1352,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AEMedKitInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEMedKitInteraction": {
         "va": 286304716,
@@ -1361,15 +1381,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEMedKitInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x3640d0; its allocation tag and reflected class name identify AEMedKitInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x3640d0; its allocation tag and reflected class name identify AEMedKitInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "c20006ae568090c7d3a5d6a74d28d4b904fb4b8295c992ea53c8248fefb1664c",
-      "inputs_sha256": "e0fe81487ed6e91954b2bc3165f77c2290e91c69ed7f1f3913615dc00a0aa293"
+      "inputs_sha256": "cbda6c52ff58309158d5414b509f2720f31829eda947f3e8f3d3ba7d3e7b65f6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1503,7 +1523,7 @@
     "identification": "Class registration for AEShoulderChargeInteraction at RVA 0x3641c0, called immediately after the class factory at RVA 0x364760 in the singleton initialization path. Sets superclass AEChargeInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "7f45644230540561be9fe744eec150c01e55e628dca61f25cdb1e44d7fd34308",
-      "inputs_sha256": "13cb0c305e9bb127ef2e3faac9fda62b76df4ad84faae98ba9b646816eaaef8b"
+      "inputs_sha256": "09846f27ef9aaa596dc56f877476fca9863f5acf5b416e8c23ccee2f10954133"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1554,7 +1574,8 @@
     "offset": 3557104,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEShoulderChargeInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1580,7 +1601,7 @@
     },
     "match": {
       "bytes_sha256": "54ded265f988ad5511c59d37345aaec9a85b676083ff9c63e6f75f5178ec889d",
-      "inputs_sha256": "821129127992d3fd96d6e44131ffcf64d8aa4505aec8940ef0d11d4a0a938a79"
+      "inputs_sha256": "5b3798fe3556672dc1241bb8533c7572a5f3c7f7746d3b183a10412966a17fdb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1632,15 +1653,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AEShoulderChargeInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEShoulderChargeInteraction": {
         "va": 286305596,
@@ -1658,15 +1682,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEShoulderChargeInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x364760; its allocation tag and reflected class name identify AEShoulderChargeInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x364760; its allocation tag and reflected class name identify AEShoulderChargeInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "1ecd404675dda572a8afb74477bc8dc0a14350f17641f0ddea4e962d96d88582",
-      "inputs_sha256": "74762f02e5b02b30652dd3d0a1a8c7cf76fdc6088f682be2121ac1f6125a8136"
+      "inputs_sha256": "d351015774a5e4baae789d23566cb3e56e24bb20cf9bd699eaaa40e2d688087a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1776,7 +1800,7 @@
     "identification": "Class registration for AEPopObjectInteraction at RVA 0x364800, called immediately after the class factory at RVA 0x364d20 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "7c465bd0afdde67775b121c173fdb01a92fa61c8d695baf8c4bf4b5c2552778a",
-      "inputs_sha256": "197c73c507f0aa567ecaf5a92d0ccfccd6f89ab20de4cf68027669ab1620d398"
+      "inputs_sha256": "d18c0cf678d318ee9496b25367761941f0617443647d6a16de35e7551d2fd109"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1827,7 +1851,8 @@
     "offset": 3558576,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEPopObjectInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1853,7 +1878,7 @@
     },
     "match": {
       "bytes_sha256": "d7389895f8e1d1194ac6b4e3bcc1bc0a611cb2e3855278ef2e9d341eda4e7249",
-      "inputs_sha256": "35900b635d16c74b510af5a94928609f848c73fc7f95e8f4d1146c488e0607cd"
+      "inputs_sha256": "edd8101f862904a9dc20fbc16dd76979ab66908b0a2588579c63120c6013b391"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1905,15 +1930,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEPopObjectInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEPopObjectInteraction": {
         "va": 286306372,
@@ -1931,15 +1959,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEPopObjectInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x364d20; its allocation tag and reflected class name identify AEPopObjectInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x364d20; its allocation tag and reflected class name identify AEPopObjectInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "5687f50880ed20f0c6fd26312a2d403f4b2eb7a3dc20ca5f019af7b7dd0ba68d",
-      "inputs_sha256": "a2812c86075b79b6d62c4bc1aa327ac941f9870502b60e34a4efa21a37db2870"
+      "inputs_sha256": "f877007b40824313969094fe88091d290d824924c4177beaff1ccc2c5dfde676"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2019,7 +2047,7 @@
     "identification": "Class registration for AECraneInteraction at RVA 0x364db0, called immediately after the class factory at RVA 0x3653f0 in the singleton initialization path. Sets superclass AEPopObjectInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "1ce8e7eb9e145d0c813c40464142687128e7bd4686cf380fe0ebb3b578cac94c",
-      "inputs_sha256": "0d303edabdbef03aa34e39884196b3ef002d4b3f1f6649f9593a34a4cf87a279"
+      "inputs_sha256": "1fc48df0799f3723529e5b7b54f9dcce608294fe13eca5cabb38dd003358d3e9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2063,7 +2091,7 @@
     "identification": "Typed cast at campaign RVA 0x364fd0, directly called at RVA 0x365049. Its class constructor at RVA 0x343b80 identifies AECraneController; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "e0e0f4d02dff421a6d8a187e39ef3f833af76a13835317ac562612fc70528725",
-      "inputs_sha256": "84f5c07429cfae03be4836faeb39f6d373e6e2cccf1f05044b4533b15ae7fd14"
+      "inputs_sha256": "c878dafe10f7b90fe5c9e5fc7bf238b8150e16d241779ebe7cb79646a89a2587"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2114,7 +2142,8 @@
     "offset": 3560320,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AECraneInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2140,7 +2169,7 @@
     },
     "match": {
       "bytes_sha256": "3c48d2d69067ccef2a67279cadb38dbe5366b175f1466e7adea9260aea23f132",
-      "inputs_sha256": "8dbfeddadad9b8d89e85d6d1ad966c9ba6c12632af49379b6859a17f7433b8e3"
+      "inputs_sha256": "955389fcab30182680c36387c61e0bf129f73d65571947dbe3d9603c2a6d4e22"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2192,15 +2221,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AECraneInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AECraneInteraction": {
         "va": 286307180,
@@ -2218,15 +2250,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AECraneInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x3653f0; its allocation tag and reflected class name identify AECraneInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x3653f0; its allocation tag and reflected class name identify AECraneInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "f719a2c2e2219821259cd7fe57433f458448e735abc19f4e8a144a71f9d9f7f7",
-      "inputs_sha256": "118875d76452181048eeb34ad24a933436611f84068c6485503e4ba4a3f04801"
+      "inputs_sha256": "90d3faec607410b1ae9a7d0339322e62047f25d5c664f78ba24dcc87b661f844"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2378,7 +2410,7 @@
     "identification": "Class registration for AECryoTankInteraction at RVA 0x3654f0, called immediately after the class factory at RVA 0x365d30 in the singleton initialization path. Sets superclass AEPopObjectInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "59759ddab5ed404c245eb529d00e38505d84f43cdbb4509d477a13f9a60164a1",
-      "inputs_sha256": "492034d4a741857eee34dd50e75ed2f0d6e80852acc2ae09ddbf2e4fa8b2ed6a"
+      "inputs_sha256": "459e65f114d0388444de190ee06d8ad83b24d222777aa1eb886ad8f20ef0ef17"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2429,7 +2461,8 @@
     "offset": 3562688,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AECryoTankInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2455,7 +2488,7 @@
     },
     "match": {
       "bytes_sha256": "e556f7b33ac6c31a073ebd2bbad462221af4b0a7d6e6a852c32eecc8aa8882e9",
-      "inputs_sha256": "15a550b4295f0f738a62ab27f14df6c876726372e575dbfd1852d42153f24560"
+      "inputs_sha256": "542dd0c9d100e70dbd6ce1ac0c59775bbf4603f9943aee7292025c1657fca1dc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2507,15 +2540,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AECryoTankInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AECryoTankInteraction": {
         "va": 286307964,
@@ -2533,15 +2569,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AECryoTankInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x365d30; its allocation tag and reflected class name identify AECryoTankInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x365d30; its allocation tag and reflected class name identify AECryoTankInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "b1e947279a81eb721f9ab3510620435fb174b74cd9b49c99c6257c515eac6213",
-      "inputs_sha256": "5a745699feca5f36bfe4b5fa07b8948c3b789730a3ca915e32ed5506b40320ea"
+      "inputs_sha256": "467cc2eb507ca6557529728311679887072efb7bf3cf6ff0f7c796cd565c0217"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2621,7 +2657,7 @@
     "identification": "Class registration for AEDetonatorInteraction at RVA 0x365db0, called immediately after the class factory at RVA 0x366600 in the singleton initialization path. Sets superclass AEPopObjectInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "b4af55711ac3df04c7e2001455b3ed687d85d834bd205ac6dcf4bcfa0dff351b",
-      "inputs_sha256": "227d31e6b38dbe0069e907e028ae5099cf132f1897e206ba90afedf973812f21"
+      "inputs_sha256": "3f1b7565fb1cbc3ba262a8a413b62df8e2494c199d2ad274eae213ef4167d6cc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2665,7 +2701,7 @@
     "identification": "Typed cast at campaign RVA 0x365ec0, directly called at RVA 0x365f2c. Its class constructor at RVA 0x349600 identifies AEDetonator; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "d816d21559f46e281068aad2fa8fed96fa1d21196c2aa3799d0dc1e8f76ded41",
-      "inputs_sha256": "6b787429815f69dd632fa14ee76a982b492db649b11647d197cd45b1787e02af"
+      "inputs_sha256": "4f8b42bdd061e523437b370d263ee5ae77ea8d8eca9d69b415573802cbac411f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2716,7 +2752,8 @@
     "offset": 3564944,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEDetonatorInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2742,7 +2779,7 @@
     },
     "match": {
       "bytes_sha256": "e7ce3a4451e8cc616c05d8e766ed4b92fff496e0989320c11558c94f99d8118a",
-      "inputs_sha256": "f52a8d2053b9c1896c66bc70bf6e79b0b3eeb330b8e30a93ba521cc01519125b"
+      "inputs_sha256": "be1264b6f30d7f820adced96f69cea5ef7565cb3ac2c80310ab09103259184ac"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2794,15 +2831,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEDetonatorInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEDetonatorInteraction": {
         "va": 286308724,
@@ -2820,15 +2860,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEDetonatorInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x366600; its allocation tag and reflected class name identify AEDetonatorInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x366600; its allocation tag and reflected class name identify AEDetonatorInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "da4c0172bb248b4e7e0de8ca9da53ad052a90ec5697b1111591aebd5a68aec83",
-      "inputs_sha256": "d5488fdd737f9769f711cc3ed58a0dff79f273047177c92a725aae5e6750a319"
+      "inputs_sha256": "dc9d3b7d13088da7a291e10b0897401ae939a8e542374a262471b6b4bb2060fa"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2908,7 +2948,7 @@
     "identification": "Class registration for AEElevatorInteraction at RVA 0x366690, called immediately after the class factory at RVA 0x367060 in the singleton initialization path. Sets superclass AEPopObjectInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "6bee30a5620062d3a8614867886bf4e1aac71e6485495faf6bda4e7fb4c88530",
-      "inputs_sha256": "9a4be2b8a7f37f155e15aa6af4eba6372ffcdcb062b8d96107cb260c5d0dbcd8"
+      "inputs_sha256": "86782f7cc01b583e4658d736b5868194182318e5fe55dd5546971baceb5ff374"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2959,7 +2999,8 @@
     "offset": 3567600,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEElevatorInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2985,7 +3026,7 @@
     },
     "match": {
       "bytes_sha256": "593c6f29906a0a358b37de495d628ca4fe15504227c38ea7fa935f9d7ea737c9",
-      "inputs_sha256": "7d411168c13233097f2b5fe0863839fff7176a5503f7272a86b4191db46ba31a"
+      "inputs_sha256": "05b2b8af81872bf8879279efb6721fe15499e255461f659f6b8fb04ab71c5ab9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3037,15 +3078,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEElevatorInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEElevatorInteraction": {
         "va": 286309532,
@@ -3063,15 +3107,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEElevatorInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x367060; its allocation tag and reflected class name identify AEElevatorInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x367060; its allocation tag and reflected class name identify AEElevatorInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "273df163bd36f2971a55f0b7e7c66d0cf4c6463b6399a709d2e00529348d28d8",
-      "inputs_sha256": "8eada6d8f91b6c6bb86d5c56baf191073e204fb9e75b2d4afd0e32cbd9f3b371"
+      "inputs_sha256": "16b4cc1de107f2ac693497ad31cccf2e78db04ad60950b3b56acd4befd78b7b5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3187,7 +3231,7 @@
     "identification": "Class registration for AEHackingInteraction at RVA 0x367140, called immediately after the class factory at RVA 0x367dd0 in the singleton initialization path. Sets superclass AEPopObjectInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "34813fb767387be509bba7cbe2e11edaabfbfc66184c55b5c7b758db6ba41bf6",
-      "inputs_sha256": "2325c9285dcbd8bb0f3daf1df1fba590d0b60b69d90ee79302745e6ddbf2b645"
+      "inputs_sha256": "2c516fa9ef77607109cd731895e5732ab74ebba3b2130de968f4306787bd412c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3231,7 +3275,7 @@
     "identification": "Typed cast at campaign RVA 0x367780, directly called at RVA 0x3677ec. Its class constructor at RVA 0x2f60c0 identifies AEHackingGameplay; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "8c03ffab8a41bdd857e0972b124aa3779119684f470eee9c4e0950b2020b5a2a",
-      "inputs_sha256": "bff6399bafb581a40b16269caa3e1a8c6c7c209c1566fe70dfbb90e3b4ed03f0"
+      "inputs_sha256": "e76da447a14f242ceaa2e65833f6ae4db63a894793616c11fbe8ef675cd97cfe"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3316,7 +3360,8 @@
     "offset": 3571040,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEHackingInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3342,7 +3387,7 @@
     },
     "match": {
       "bytes_sha256": "33b7159724e5eeaf336f5a8442a394ee774eca5f459cd4f5790c825d0964c3db",
-      "inputs_sha256": "8e82d55af3f7f6cdedcb7f88a52bb66404eea110c8ca20ef91dae2ff587016c3"
+      "inputs_sha256": "8c5891e085058675ac0132baecef2aa537a7757a11d6d7b7af0a2a56d0b49138"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3394,15 +3439,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEHackingInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEHackingInteraction": {
         "va": 286310284,
@@ -3420,15 +3468,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEHackingInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x367dd0; its allocation tag and reflected class name identify AEHackingInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x367dd0; its allocation tag and reflected class name identify AEHackingInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "d1e4cbc0d6363f7c769af3db109bc0d9340544c69e455eb363a05b524ae45e78",
-      "inputs_sha256": "20594e7a6852bb8bd8a57ab4e2d82dc904de995be4ebd0a551840d6d3a861c1e"
+      "inputs_sha256": "0aa1bbd37c1561239b521f327f202b50a3c4872d2abb7891b4c23692ac36ec7e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3568,7 +3616,7 @@
     "identification": "Class registration for AEKeyPadInteraction at RVA 0x367ea0, called immediately after the class factory at RVA 0x369060 in the singleton initialization path. Sets superclass AEPopObjectInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "ca00052a1300fc9014ff9148bf1dd16f4fa0a606209cf2ff3dc7c30ed9899609",
-      "inputs_sha256": "c62497fc6fdc10902f05442717a6d6a6e749fa408f1343a72277b0a8a211a06d"
+      "inputs_sha256": "e77f69a16017bb457b65476c547824745dbeaba393f888fbe1c4c16951ea110a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3740,7 +3788,8 @@
     "offset": 3575728,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEKeyPadInteractionHanged@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3766,7 +3815,7 @@
     },
     "match": {
       "bytes_sha256": "3e80f182c82f8dbe107a09128651ec1bf1c2593f4f012b012032c1fd986bde4e",
-      "inputs_sha256": "894a4f7957bf14566158f97724be2eb1cd64168b36c3dfe77af9f5caafcd2b73"
+      "inputs_sha256": "93b9498a4c16f8e80cc00c0223f09fc9452701e07e6ff22b47eef26172cadd6a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3853,15 +3902,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEKeyPadInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEKeyPadInteraction": {
         "va": 286311820,
@@ -3879,15 +3931,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEKeyPadInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x369060; its allocation tag and reflected class name identify AEKeyPadInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x369060; its allocation tag and reflected class name identify AEKeyPadInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "649b6f9ffa35fc684ae82f2da4c5b2bfbec9f81e7d63587a980db4461f18560a",
-      "inputs_sha256": "02a025a7f187a33f6ba29c4510af8b9c10a758a2de68748d850c0399ab739cf8"
+      "inputs_sha256": "50f1b7c6e081be536f5bffaf5573e0f188351cf4937415bada20f53f0eb27e54"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3904,15 +3956,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEKeyPadInteractionHanged",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEKeyPadInteractionHanged": {
         "va": 286311860,
@@ -3930,15 +3985,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEKeyPadInteractionHanged."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x3690d0; its allocation tag and reflected class name identify AEKeyPadInteractionHanged. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x3690d0; its allocation tag and reflected class name identify AEKeyPadInteractionHanged. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "4149fad8a3de78f8bf2fc63c61d2bec924e998b1f7cdc2481e9c3b1273903a67",
-      "inputs_sha256": "6a910c1b9aad1e720b8b201f4ef1df8f887ca33c645937a7bfeedc7ddc6febf4"
+      "inputs_sha256": "91ffb20e3b3d5d5cf01a09eed411c0f2a6febeb3a243fb8fbe8906e3c432c352"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4018,7 +4073,7 @@
     "identification": "Class registration for AEKeyPadInteractionHanged at RVA 0x369140, called immediately after the class factory at RVA 0x3690d0 in the singleton initialization path. Sets superclass AEKeyPadInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "9bc200574101908e4e3b1d2cbf05b932f87599a32c4780a577901f69664a4a0a",
-      "inputs_sha256": "12a952718c0ee95106fde8fdb5ee9cf7285990217d3db61c7791de38a6a92a8b"
+      "inputs_sha256": "735e2229d9ed158188478e9cd5db42546665faac92b279be8513051c86ea8a49"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4098,7 +4153,7 @@
     "identification": "Class registration for AEMissileInteraction at RVA 0x3693a0, called immediately after the class factory at RVA 0x369c70 in the singleton initialization path. Sets superclass AEPopObjectInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "27fa0e944a61ea179b1831654e1614a207c77d30c7e077a3a685d9e9ec3c4fbf",
-      "inputs_sha256": "8fb7989ee63d7ec481f54979b910789d5b11316037a788f317d5bed7378e75e0"
+      "inputs_sha256": "e9da7db26118bfd47829aa356043dd12705482d9e09292232f1f01df08f08e52"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4149,7 +4204,8 @@
     "offset": 3578880,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEMissileInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4175,7 +4231,7 @@
     },
     "match": {
       "bytes_sha256": "78ab65f4f068ba24ff5684fc70eeafb9560011919c6a93ab33b792a397ed676e",
-      "inputs_sha256": "165af792ec2d29e0343919fdee5d0a13c4ac3f03059c51140a53ef548c915765"
+      "inputs_sha256": "5790b43c44ce60d1be2d18adb87c6c8b0f1680c46e4dfa53abedb726362f3489"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4227,15 +4283,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEMissileInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEMissileInteraction": {
         "va": 286312628,
@@ -4253,15 +4312,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEMissileInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x369c70; its allocation tag and reflected class name identify AEMissileInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x369c70; its allocation tag and reflected class name identify AEMissileInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "a92dcbbfbe9a70148087d738f31398588e9055be517e3d4c19255092483dc8c7",
-      "inputs_sha256": "188be0db880e0821a06a25f1dd2e3eed40bb053944f7f3e2450ee18a59147486"
+      "inputs_sha256": "6f53473bea9b5d3311bb55055aa735ca95ce23fbf1014b5d220102843b55d6f5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4341,7 +4400,7 @@
     "identification": "Class registration for AEPickLockInteraction at RVA 0x369e20, called immediately after the class factory at RVA 0x36a2b0 in the singleton initialization path. Sets superclass AEPopObjectInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "f35e705a09f678d8cdd0e6161660b38ec5099f8f39a99c8e0e437f04d45bcb28",
-      "inputs_sha256": "926f43615c07f82a9099850ca5cd074638b8a0d29ca5b03a34a037305fd1bf4c"
+      "inputs_sha256": "2e199ab344b4aa3a859da4b22a5d62ead35b8aa7968295e90f6a2e3b7800c40c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4385,7 +4444,7 @@
     "identification": "Typed cast at campaign RVA 0x36a190, directly called at RVA 0x36a1fc. Its class constructor at RVA 0x355800 identifies AEPickLockSystem; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "3866808fd2feea27884f65e0b285cd65bc2346eb56754f9d85198f78974f1a5e",
-      "inputs_sha256": "a2b00edb809b9e2e01b0718f47ba252a4e6287bc22583525344d45492270b8bf"
+      "inputs_sha256": "186c8679dbe61508172ae49ca2062981154d0c9e1b5fc9bf4d0a313c35407b57"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4470,7 +4529,8 @@
     "offset": 3580480,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEPickLockInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4496,7 +4556,7 @@
     },
     "match": {
       "bytes_sha256": "520c3fad7fe51462433f977d52b5bb4336ba61e05ecf605d90d6af33d4f775a6",
-      "inputs_sha256": "f5abd84d516d206310fcea2e6d6bb6672cf311b4041bb397c5b8e47e30f3d242"
+      "inputs_sha256": "776575fe4da7c2726a10ede86391f4f2670c5d4b5cd4cf4b3fd0a0cb83a65c37"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4548,15 +4608,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AEPickLockInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEPickLockInteraction": {
         "va": 286313372,
@@ -4574,15 +4637,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEPickLockInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36a2b0; its allocation tag and reflected class name identify AEPickLockInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36a2b0; its allocation tag and reflected class name identify AEPickLockInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "0b34a70c9e5a31fac93b5a3cf922b9f8412bf5b3b8c00e33cc7e6ac14899de16",
-      "inputs_sha256": "33a459165e84aaa2f3231628746670fb1f3140b3e335e651cc88bd4f8060e869"
+      "inputs_sha256": "63773b3d3ebc56f948b633aa9ee03092465a10e184a0cc755813aea069b9cdb5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4698,7 +4761,7 @@
     "identification": "Class registration for AERetinalScannerInteraction at RVA 0x36a360, called immediately after the class factory at RVA 0x36ab60 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "cab419b213c5fe2febf34f90594aa69cc999f99853e3a33579c577bb6839dad9",
-      "inputs_sha256": "9a5440f22f75b15f34555b2d604b9b8b68f019ba7ff2768d6651b958ecd4a0d2"
+      "inputs_sha256": "40b2125fb25c092a803dc7c585dca7822344071730b75e8a84c660789a9471e3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4779,7 +4842,8 @@
     "offset": 3582704,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AERetinalScannerInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4805,7 +4869,7 @@
     },
     "match": {
       "bytes_sha256": "5e6986bec6b7cba6927824c785f6915c5985dbe8be867d74e85e812e1a004f08",
-      "inputs_sha256": "8ea27f6d7fbb64ce16e982a31d7194e24a74c29aa52141441835adebd36a34d5"
+      "inputs_sha256": "d1c852d3bc7a3475b33491b00f6ed2191a82c9b0ae3db5e11a43a5a820f83f03"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4857,15 +4921,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AERetinalScannerInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AERetinalScannerInteraction": {
         "va": 286314140,
@@ -4883,15 +4950,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AERetinalScannerInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36ab60; its allocation tag and reflected class name identify AERetinalScannerInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36ab60; its allocation tag and reflected class name identify AERetinalScannerInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "12530bd76a536d17ac8d7f13176613db8f80bc48750cd43d48c2f97a1631056d",
-      "inputs_sha256": "8ed338b02e98053700a819c7e569b451189937dcf9c1f7e09f34061848eb97df"
+      "inputs_sha256": "be7a8f30790f6298141287ab6fcdd73eb6655e931fa2e70e2bb9240ff4e06269"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4971,7 +5038,7 @@
     "identification": "Class registration for AEShutterInteraction at RVA 0x36ace0, called immediately after the class factory at RVA 0x36b0a0 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "3a4a5034aabca9ef16279e54629ddf2a14a970f325bfe00bf6ade392337e033d",
-      "inputs_sha256": "a46d5c2511953bb1e0f6bb67d40942c5a401d1763263f8f2ae40c32598e2acba"
+      "inputs_sha256": "6bc088f609760e5d5d15e7af656bad12974365a16ff6ac288579bdd4730ccc67"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5106,7 +5173,8 @@
     "offset": 3584048,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEShutterInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5132,7 +5200,7 @@
     },
     "match": {
       "bytes_sha256": "f52d7f4b26085ce481a1b45054e0a3333271c552561026e45572709e81d3df8b",
-      "inputs_sha256": "f2d3987315882821f94d152428a47f1a78448576a0f3d52d2a0827f4de50af7b"
+      "inputs_sha256": "9969c63a4d407d19b75b34d18d448a9d111a9398e01ac2baa4c5a73c2b9597e6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5184,15 +5252,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AEShutterInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEShutterInteraction": {
         "va": 286314932,
@@ -5210,15 +5281,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEShutterInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36b0a0; its allocation tag and reflected class name identify AEShutterInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36b0a0; its allocation tag and reflected class name identify AEShutterInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "6024fc7ae25aa1ec07173c02cae61b5b801eb6149b34a433883b57212a818bbb",
-      "inputs_sha256": "c30b750dc06cc07b12b716e314374c2a50e2c5dc7ceb5f7bca933e9e41357c38"
+      "inputs_sha256": "bc914045d00f636265155167f7c001af262858441f926465eba48fdb6ed02410"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5352,7 +5423,7 @@
     "identification": "Class registration for AETelemetricLockInteraction at RVA 0x36b150, called immediately after the class factory at RVA 0x36ba00 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "b8eb89ed1d24baf659f6fa09f2783bdf936073c275dca1d6c57cca718d6393e1",
-      "inputs_sha256": "52a110484db83184faee8bccbc64cc18034817e4ec9258b5f18caa301f6bd182"
+      "inputs_sha256": "817dddd095fa00b17723801d6b29590fbadc1fa766d92e7a6b34a944b5d94bbd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5396,7 +5467,7 @@
     "identification": "Typed cast at campaign RVA 0x36b350, directly called at RVA 0x36b41c. Its class constructor at RVA 0x34c3b0 identifies AEDualLock; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "407cfed1c4684b1d8813190013cce19693c1afa138936630681c069ee1cc4652",
-      "inputs_sha256": "078abcf6a2b12c798f44c2f0c0812b791f46ff3d69e6901cb795d20035e5ed25"
+      "inputs_sha256": "2d1e7d0c8a6b69611a70385866979f17979dabf9bce52469abb7e977c76641f1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5440,7 +5511,7 @@
     "identification": "Typed cast at campaign RVA 0x36b3b0, directly called at RVA 0x36b500. Its class constructor at RVA 0x34c420 identifies AETelemetricDevice; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "6101039179817d0c908a767acb8e9b2c74d1ef4e58178f1ba3bdb93c2a3a40f9",
-      "inputs_sha256": "27f7056d6f2d375c7824a25365a99fa3b50a923746c4b1219f5c91f4a7c514df"
+      "inputs_sha256": "e6e97181f926dfe7a18c17eb2225deb8759d33ea50645b06b08292b11278d97a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5525,7 +5596,8 @@
     "offset": 3586448,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AETelemetricLockInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5551,7 +5623,7 @@
     },
     "match": {
       "bytes_sha256": "657cc372cb1f45f0a5ef2b33fa1dba517ea1bfee6e4bb167e96f3fcd0a76d810",
-      "inputs_sha256": "bf3b0d63de25ff6130d2a73a5a7589114b6ea74ce67f3194be986c1995a2ecb8"
+      "inputs_sha256": "14f1999548d952d5efaf76a62b9d9598281ab9faba04dec41a7822a3a2e84ca6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5603,15 +5675,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AETelemetricLockInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AETelemetricLockInteraction": {
         "va": 286315740,
@@ -5629,15 +5704,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AETelemetricLockInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36ba00; its allocation tag and reflected class name identify AETelemetricLockInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36ba00; its allocation tag and reflected class name identify AETelemetricLockInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "eb9057103eed1dd2403f0bf160f4b2037f1b75b4136ac4a642afd2226f758436",
-      "inputs_sha256": "68886a1883ac83278a65f32af38a4f077cf701125c9e3f6aa3c06d154c7e7231"
+      "inputs_sha256": "d84d5f1747866d26f4cccf2716b7f6e07ddab58166cb205d92fb76f99ccef102"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5717,7 +5792,7 @@
     "identification": "Class registration for AETrapInteraction at RVA 0x36baa0, called immediately after the class factory at RVA 0x36c4e0 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "06e711765d51351d720072ba378da9386864c8c08c8c413c6db62533c184585d",
-      "inputs_sha256": "060eb512b06f1af35e45ffb59cd57db43b2090dcd95427792ae11f7efa9b7d1e"
+      "inputs_sha256": "054c42454a34f7871ab55e357f4d16af2b8b1666004b5c1c9cde6a4116872ee4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5761,7 +5836,7 @@
     "identification": "Typed cast at campaign RVA 0x36be60, directly called at RVA 0x36bf07. Its class constructor at RVA 0x2f15f0 identifies AETrapMover; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "a9c67dcaea4fc2dd9f75cacd9f0e072db8469162378313c44f3ee0e8ff39dbad",
-      "inputs_sha256": "85134b6a8883fff7fe2b86a0c27b692e05289205fd6bdfa5763823402498ce3a"
+      "inputs_sha256": "f03d15d1fd9d9a12554978e8f7ce34dfaba418f37f23fafdf9b2f081852cee04"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5812,7 +5887,8 @@
     "offset": 3589232,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AETrapInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5838,7 +5914,7 @@
     },
     "match": {
       "bytes_sha256": "7ab6c671ffb57b95880ec4e0a35cbdebdb2b4b1ef03f4a6f24b557b3989a574d",
-      "inputs_sha256": "d9e243e46e5d12e71e7236caf829ae6bd5bc6bd41f74b36c98980ab0cc6615d0"
+      "inputs_sha256": "50a79faf401e858c72043263e7abafcad11387e7d38d39222169296438d22d5b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5890,15 +5966,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AETrapInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AETrapInteraction": {
         "va": 286316708,
@@ -5916,15 +5995,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AETrapInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36c4e0; its allocation tag and reflected class name identify AETrapInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36c4e0; its allocation tag and reflected class name identify AETrapInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "c071c09cb4c10a7bc0b1d9942f82c3ef0358aad9e4b1dc8365f5223a4bb02791",
-      "inputs_sha256": "36b7c5c5d90daa4825a6a8629e4f45b968df29027f6b7398d0093553c89c5a32"
+      "inputs_sha256": "479214939a0b143f6001551f37cd6ac111a4770befb7151e6d1210607917e0a6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6004,7 +6083,7 @@
     "identification": "Class registration for AETurretInteraction at RVA 0x36c560, called immediately after the class factory at RVA 0x36cc10 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "45a4286f4094f6c222df32d4d99fb2f95e7d4eec98d14f0a9a702e75c5c387f9",
-      "inputs_sha256": "f76d34e63511fa3d5979a17017f29ba53334be219ee9bd8a2589398d11441f58"
+      "inputs_sha256": "09b06e160a77f3f56f8b2082a5d0ec99224c62398cb45907d2010882fe240033"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6048,7 +6127,7 @@
     "identification": "Typed cast at campaign RVA 0x36c7b0, directly called at RVA 0x36c81c. Its class constructor at RVA 0x35c0b0 identifies AETurretConsole; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "5a35cee8fc8334a085bd8f2f0e67727e78631b0870b4ef2e38123e25dda945cb",
-      "inputs_sha256": "dfa6dab4e72e5979524176dff3e70e0c4eb960d0dc85e47bef8a24996887c2a7"
+      "inputs_sha256": "4251f474e1d14f284372f3251aaff2fdd94b256c31392e87623f1a55716098be"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6133,7 +6212,8 @@
     "offset": 3591072,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AETurretInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6159,7 +6239,7 @@
     },
     "match": {
       "bytes_sha256": "51aa6e8527e5146a364ed20de5ddc24c11899e8b0e7b27a49903d5e6638edd96",
-      "inputs_sha256": "0a948457281fd5da3234bb7ab030d2bcdb2a7233b06f102710ecb363ea65ff88"
+      "inputs_sha256": "e3c04225cfbf2fc7534c92c2536e84a761d2823bd22f0ff16eb4dfd2ae2667fe"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6211,15 +6291,18 @@
     "size": 109,
     "rebuilt_symbol": "_create_AETurretInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AETurretInteraction": {
         "va": 286317628,
@@ -6237,15 +6320,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AETurretInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36cc10; its allocation tag and reflected class name identify AETurretInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36cc10; its allocation tag and reflected class name identify AETurretInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "602f94de15881807860535bea045b8d699aed433f78d986e3b7265bcc00a3a48",
-      "inputs_sha256": "6a84e8b301dd81334443c051435daf50a635be2b98e8101a30d7f6719779bc0f"
+      "inputs_sha256": "53f71896ef81c8bf955b72485047ff06a2b086c4b6c023f66ad53c5aa27769af"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6361,7 +6444,7 @@
     "identification": "Class registration for AEVentInteraction at RVA 0x36ccb0, called immediately after the class factory at RVA 0x36d590 in the singleton initialization path. Sets superclass AEInteractObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "35010f52a647546aada8ced525fccb83d558567f2d5a0d67cecabbe9a83be7e3",
-      "inputs_sha256": "fa34aeb75ead94d645047f0e74629648215a3d88c5c8c3d912796d1b0c60aba4"
+      "inputs_sha256": "400d90ec7aa04569597fe556cd4f38e5fc7c455fc8c6469d6f8f519fbf19a0bb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6412,7 +6495,8 @@
     "offset": 3593504,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEVentInteraction@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6438,7 +6522,7 @@
     },
     "match": {
       "bytes_sha256": "80a19adcad4dc13f24d4a89b063d785c380d1d503da16aea9cd0b534f763b184",
-      "inputs_sha256": "fcae08489aa24079ce3afda80b882b5087f8738db39ed0f5d3d723a85f33e54f"
+      "inputs_sha256": "b066d78b04f983f36205276930ce48962f64dc0603017597ad45a9b65156d40c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6490,15 +6574,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AEVentInteraction",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEVentInteraction": {
         "va": 286318404,
@@ -6516,15 +6603,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEVentInteraction."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36d590; its allocation tag and reflected class name identify AEVentInteraction. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36d590; its allocation tag and reflected class name identify AEVentInteraction. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "60b19c1cb23f37c8509e71d56cf5b2bfdcac6a5a95223075afb16a6ebb7f6be8",
-      "inputs_sha256": "8d5e38acf558f4fea2067ba3c36a138e3e6b4888745ac1de921d782aacdace57"
+      "inputs_sha256": "c56f995d6e63dd059c6905d82f97ce85e871e4fe3e1b9159ad6f64262dd84858"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6604,7 +6691,7 @@
     "identification": "Class registration for AEPuddle at RVA 0x36d730, called immediately after the class factory at RVA 0x36dc60 in the singleton initialization path. Sets superclass AActor, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "a68faa68dc8e4b7f2ad13dfe3dd1f9be18df5bc139457e11c6018ec0225a046d",
-      "inputs_sha256": "32499ea9a0774390983c15f753e83498a00f7999566221c124b948b26bc113e9"
+      "inputs_sha256": "7dc8a3e5d1546e805c372242c486ba70d8aec357c03a234aaab27fd7b263815f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6679,7 +6766,8 @@
     "offset": 3595232,
     "size": 57,
     "inputs": [
-      "src/campaign_member_destruction.c"
+      "src/campaign_member_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEPuddle@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6709,7 +6797,7 @@
     },
     "match": {
       "bytes_sha256": "6ebe158b250eed8bdfc9b4997e585be0751f5c6059fba1366fdf5aadbf965be4",
-      "inputs_sha256": "64023f5c09cdf009e8bf3280715ca90f209fe8986f6db14930283314cea6a207"
+      "inputs_sha256": "ddef15dadc86e8e9a22694dbc8d6155a552491c909ae7d1a86d870f90b810f58"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6761,15 +6849,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AEPuddle",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEPuddle": {
         "va": 286319104,
@@ -6787,15 +6878,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEPuddle."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36dc60; its allocation tag and reflected class name identify AEPuddle. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36dc60; its allocation tag and reflected class name identify AEPuddle. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "b5f8df15163ae4660180b0688ad3be15f1e880e83ee190f26eaee6dbb4d29296",
-      "inputs_sha256": "b3ab368a74b2110e5139163431966199ce59441e5a2841c6e7c9d32c6187de7e"
+      "inputs_sha256": "de527f8b6b76274fbfac65400ddeb884f692e59424f19e7e1bfc8856ba0849a3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6875,7 +6966,7 @@
     "identification": "Class registration for AEScalingActor at RVA 0x36dd70, called immediately after the class factory at RVA 0x36e0a0 in the singleton initialization path. Sets superclass AActor, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "15b4f6b2209f8c8d5485cb0420479d5721d5f03369c49ee2c7361d394457d842",
-      "inputs_sha256": "f742cda6c7ef4a516571941afe8f030b756f0faff209e3bc6cb0f3c045bfd4f2"
+      "inputs_sha256": "fa173d0785481dc25217ad8f4f40d9a8fc73acb4a8f9513a2abc090164a3626d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6960,7 +7051,8 @@
     "offset": 3596336,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AEScalingActor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6986,7 +7078,7 @@
     },
     "match": {
       "bytes_sha256": "d554d3951dc0808bda9b3385a7601b88dea1057378167b5bed741da3d38122f5",
-      "inputs_sha256": "021b8d42a1135d02a29b2996bdd69458d89e321d79427dfef65094e7927877e6"
+      "inputs_sha256": "1bae7b05c6a0f1f3bfdb7bb071142b69170c2396f205ca2a96c67e035bcc2d87"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7038,15 +7130,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AEScalingActor",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AEScalingActor": {
         "va": 286319792,
@@ -7064,15 +7159,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AEScalingActor."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36e0a0; its allocation tag and reflected class name identify AEScalingActor. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36e0a0; its allocation tag and reflected class name identify AEScalingActor. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "1cc60b18c3802d6429357b590a46ccd05ffc88d378cabbea55769cd40911d3b9",
-      "inputs_sha256": "97bff83363399dd778463809e8e4923f14a2fff2aa90a3edb08f209e2e23b2dc"
+      "inputs_sha256": "f66bcd82bf464e7a0839577fc4999b4bb513ec994213d0f53582afe9da7ecde6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7224,7 +7319,7 @@
     "identification": "Class registration for AESBCustomActor at RVA 0x36e190, called immediately after the class factory at RVA 0x36e340 in the singleton initialization path. Sets superclass AESoftBodyActor, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "ffa6a0152c1d961f048b523caf7acaeecadda91bff7e64b87e702f42533fb649",
-      "inputs_sha256": "82a564503920b661d6df8b5d882e6f17993518c07b4e29401f8a7ba37d3fa3d3"
+      "inputs_sha256": "cf48fc504bd6ac55b2584419efceadf57fca9a52e5a4cb51d805bd90e748471b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7275,7 +7370,8 @@
     "offset": 3597008,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESBCustomActor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7301,7 +7397,7 @@
     },
     "match": {
       "bytes_sha256": "007f860b5261eba73a7b342166a769d646a481d2541cd572c471b41a90d24187",
-      "inputs_sha256": "0543f79d709fd8c4adf0751cd714903fa84849a4211ad433cc38077274d4b1cc"
+      "inputs_sha256": "6a47144d0ff2e2930906b239db6d934717e981f220080322095069091b68bbba"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7353,15 +7449,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AESBCustomActor",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AESBCustomActor": {
         "va": 286320504,
@@ -7379,15 +7478,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AESBCustomActor."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36e340; its allocation tag and reflected class name identify AESBCustomActor. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36e340; its allocation tag and reflected class name identify AESBCustomActor. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "08fc21d0198fa13e07fde8e32ba47023209df3fe403e454b2cd70cb4c761583f",
-      "inputs_sha256": "02c7fc3daf65f2026bf9102e640501f7effcb862175d3b788297775ef93f0db6"
+      "inputs_sha256": "3d9ef59df6e68fb74be7f51fcdccf3e7d19113e24c7d5572d0c29b20c2124c21"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7539,7 +7638,7 @@
     "identification": "Class registration for AESBPatchActor at RVA 0x36e430, called immediately after the class factory at RVA 0x36e5e0 in the singleton initialization path. Sets superclass AESoftBodyActor, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "caf55e2236eccfb6f8c2239e4caf1bb1f7506d861dfe1b74adde806a47c55075",
-      "inputs_sha256": "607e9d0df38adb464a8e61f3dc1884ee8f1d8c1665db69bb49c5b4425c5563fb"
+      "inputs_sha256": "3d997da3b737cd26c1c0d1b365c70522a635f7d69c1ca378da3de33cb49d08c5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7590,7 +7689,8 @@
     "offset": 3597680,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESBPatchActor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7616,7 +7716,7 @@
     },
     "match": {
       "bytes_sha256": "753a65708beb361c4e96006c02e81f0b76b2e22824ffe09b1a20ac037aeb7dfe",
-      "inputs_sha256": "d0bf7291c8c4011c14ab495b7cb50ee946c0981ab07f90f3fb9344a0ab760a9c"
+      "inputs_sha256": "d9f666b7f8973e987bac4a71575651135f97efd81a1ab3e71139a5d1ab2e4d97"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7668,15 +7768,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AESBPatchActor",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AESBPatchActor": {
         "va": 286321216,
@@ -7694,15 +7797,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AESBPatchActor."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36e5e0; its allocation tag and reflected class name identify AESBPatchActor. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36e5e0; its allocation tag and reflected class name identify AESBPatchActor. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "f9633d9b18de748a6ba9d77385219a923d188535a28c2c2d72e795562a7a5775",
-      "inputs_sha256": "eaf4d33d6054e84da7554ac384936981d1ae28257aa18306225bec1712a019ce"
+      "inputs_sha256": "d4739ab60a4046aab0fbd344de20064add271e01deb4077d6556c30ed46bee0f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7806,7 +7909,7 @@
     "identification": "Class registration for AESBStripDoorActor at RVA 0x36e670, called immediately after the class factory at RVA 0x36e840 in the singleton initialization path. Sets superclass AESBPatchActor, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "eae9192e3b25672286c0ce36efbc1a2fd1be5473687f094382ec94db07a72525",
-      "inputs_sha256": "73069ce8a18f34324bbac006d515af1fc3209a1dc93d356670d3804b4cb6ea5f"
+      "inputs_sha256": "9521bf548b02c1965e000c449f7aacacc0ee3d78dad1aba17f6ae57ead60b0cd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7822,7 +7925,9 @@
     "size": 22,
     "offset": 3598208,
     "inputs": [
-      "src/campaign_class_destructors.c"
+      "src/campaign_class_destructors.c",
+      "src/campaign_globals.h",
+      "src/campaign_class_destructors_vtables.h"
     ],
     "rebuilt_symbol": "@destroy_AESBPatchActor@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7852,7 +7957,7 @@
     },
     "match": {
       "bytes_sha256": "cd33c3e530fa873d5fc7b9426ed3d64927270cfd5aece03008499aa658a512a0",
-      "inputs_sha256": "fe8ec904d0a46e9ec15718de0b011c5db56c60f49716ed23df60229ff2ff4b5e"
+      "inputs_sha256": "8de7a3f818a1731a981f2eb914e727f7a79e7ce18a67834d8422cb61a9c3ad6f"
     }
   },
   {
@@ -7895,7 +8000,8 @@
     "offset": 3598288,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESBStripDoorActor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7921,7 +8027,7 @@
     },
     "match": {
       "bytes_sha256": "e9ea515950502168625ae912e4aaf8790de81f38e49aeb0b3b765823d150734f",
-      "inputs_sha256": "198499ca390923e33629cddb92706d10cf0946702b5e80c4eeda93a68bcce226"
+      "inputs_sha256": "0b23cbd7b436d08220d8b2452a889da5bf89a8282853610c1fe3aba5796d7cb7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7973,15 +8079,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AESBStripDoorActor",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AESBStripDoorActor": {
         "va": 286321928,
@@ -7999,15 +8108,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AESBStripDoorActor."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36e840; its allocation tag and reflected class name identify AESBStripDoorActor. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36e840; its allocation tag and reflected class name identify AESBStripDoorActor. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "50d8cfec30fd15a14fdbd6f6ec66909c827ced3ed84b2edec59bea9cc9cebea7",
-      "inputs_sha256": "bf07c43fc475acad881233e64fcfed37213e96ac011af349ae50d9b7f68737ee"
+      "inputs_sha256": "5759ff126584f68f44df70f164850a45e4e5bd47e15746dd888d998b2dc2e0d1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8135,7 +8244,7 @@
     "identification": "Class registration for AESBRopeActor at RVA 0x36e910, called immediately after the class factory at RVA 0x36eac0 in the singleton initialization path. Sets superclass AESoftBodyActor, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "f402277df5f526a1c4e2e744bc0f7f0607410ad6c0d63fb70952be3512bdd035",
-      "inputs_sha256": "22d28f8cd78404817589b5bad2ad8f3f8ade6ddc1d22623bc0160b3f2f579493"
+      "inputs_sha256": "97bdb76c6e72ef4417eb143e9bec62776535d8afa27929759800e8cf72685e79"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8186,7 +8295,8 @@
     "offset": 3598928,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESBRopeActor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8212,7 +8322,7 @@
     },
     "match": {
       "bytes_sha256": "4393425a7cc912bd0d5324075168d2cd46ee9ed8d77a7b84994a52e9838f2985",
-      "inputs_sha256": "b8e4713c5a39829f86e5e0b9a3c813624e13f6ea6e1bac8ffafb1a2a7243ff52"
+      "inputs_sha256": "ed9c6bc684f997bf4e16102dd9c2e6df9fb8d7b3f499f70ec9bf9a99bd66eb54"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8264,15 +8374,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AESBRopeActor",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AESBRopeActor": {
         "va": 286322648,
@@ -8290,15 +8403,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AESBRopeActor."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36eac0; its allocation tag and reflected class name identify AESBRopeActor. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36eac0; its allocation tag and reflected class name identify AESBRopeActor. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "53a747ab69ccd16d69146e591c570897f02f33b9ab25a5e0d8f6f1364844238e",
-      "inputs_sha256": "b6306dc8de7913d80c51ef9d940e732fc630b04b79beeaeaf9d1e2326dad3f43"
+      "inputs_sha256": "2cc427f414f3c4319009769c6c4e7192db9b9fe18845bdd4690b2b3a07b8fd5e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8402,7 +8515,7 @@
     "identification": "Class registration for AESBChainActor at RVA 0x36eb50, called immediately after the class factory at RVA 0x36ed20 in the singleton initialization path. Sets superclass AESBRopeActor, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "e530bbf8388b239b62425fab490bd13a3bf730f8db29a3091bb10e1091a42929",
-      "inputs_sha256": "254836dfd309a5f7175d37cab0317e209f9f536e88b77050ca9fd3cba83b3a12"
+      "inputs_sha256": "e84a4cab561010d067765bd507b3a11a440c540f552fbf2956c5cf8f06f0c2b1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8418,7 +8531,9 @@
     "size": 22,
     "offset": 3599456,
     "inputs": [
-      "src/campaign_class_destructors.c"
+      "src/campaign_class_destructors.c",
+      "src/campaign_globals.h",
+      "src/campaign_class_destructors_vtables.h"
     ],
     "rebuilt_symbol": "@destroy_AESBRopeActor@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8448,7 +8563,7 @@
     },
     "match": {
       "bytes_sha256": "000362d2a40c3aa68c2c8cffff3c722b1470b13b5873cba312480157a3cbd5de",
-      "inputs_sha256": "27075cc49f35d26d6320a88097594892a5d8b54dbeb0ca4e7d5ff6e7b1af8262"
+      "inputs_sha256": "dc1735b8744747918b868c4928caa17ab5ba9d0e7ae035104378192a6aa24936"
     }
   },
   {
@@ -8491,7 +8606,8 @@
     "offset": 3599536,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESBChainActor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8517,7 +8633,7 @@
     },
     "match": {
       "bytes_sha256": "4d1ac563bdc4539328cf0ef41b86ee1b365234fc81883a14babff01bc6e87cf1",
-      "inputs_sha256": "d4f13996c7214f007308e1589cdcb4a2365121bc6228e12603cdfd38a4fca352"
+      "inputs_sha256": "97c42b9c3b1f8dfd5144609808d59796ac9e497821d6f437067731971c248ac6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8569,15 +8685,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AESBChainActor",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AESBChainActor": {
         "va": 286323360,
@@ -8595,15 +8714,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AESBChainActor."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36ed20; its allocation tag and reflected class name identify AESBChainActor. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36ed20; its allocation tag and reflected class name identify AESBChainActor. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "5cd3ab42ea163a42204c3e84b164ad776ee973c20b2e350404d614146f779376",
-      "inputs_sha256": "c56283a996ea5fcf6e862114afead6282eef3ec7db6934dccf47e023b2be539a"
+      "inputs_sha256": "fb51c8f3d33df03514d96aa453594b0bbb0cb1bfe1cea1901172d6db6521bf50"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8731,7 +8850,7 @@
     "identification": "Class registration for AESBRopeClimbActor at RVA 0x36eed0, called immediately after the class factory at RVA 0x36f080 in the singleton initialization path. Sets superclass AESBRopeActor, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "235bff28c102938bae0a7dee072afc8d577912c78db9674bce5dd9a14af09883",
-      "inputs_sha256": "0156e93a38211cad7de168aa1278b73a8a4f33a11a54a5643df7338887e3c33a"
+      "inputs_sha256": "245d8842a16dba4c7c4e4dd9778f73a4983ecb191903f1f3e64b016bacdeb3f6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8782,7 +8901,8 @@
     "offset": 3600400,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_AESBRopeClimbActor@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8808,7 +8928,7 @@
     },
     "match": {
       "bytes_sha256": "c282d3b9f368b904ec4a2c0a2daf7aa2789bc7724ccd5aa85dad7502f8e9587a",
-      "inputs_sha256": "76398bfd55a06f885230add8c593537ee2fdd4ca61deeca038f940909d5c34d4"
+      "inputs_sha256": "d9f67265231295b009f46a251f52e52475527b5e47da894418391b4fbc16c410"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8860,15 +8980,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_AESBRopeClimbActor",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_AESBRopeClimbActor": {
         "va": 286324072,
@@ -8886,15 +9009,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for AESBRopeClimbActor."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x36f080; its allocation tag and reflected class name identify AESBRopeClimbActor. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x36f080; its allocation tag and reflected class name identify AESBRopeClimbActor. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "2a7f061d0bc1bca8a89efd0ba89a6b0d5923fb9abed83f061181c4562ac143ec",
-      "inputs_sha256": "31012dc5f1f5db2afcd6bab374efb28fcaeb586c8d236b8f1a06cb4e00445f59"
+      "inputs_sha256": "6ca6642a92eecdc3720d41c1a15ea6bac96c36961648de389d82deda7fcd5deb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9022,7 +9145,7 @@
     "identification": "Class registration for AEUAVDrone at RVA 0x36f310, called immediately after the class factory at RVA 0x370a10 in the singleton initialization path. Sets superclass AEAIPawn, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "4c76ec7756b32e49c4444abb7483683f5042e2f07b22de26891e3cf38f1e3375",
-      "inputs_sha256": "b6c8e302f2db2856eed2a82df85119d4cd86603d9583744cd06d359922221970"
+      "inputs_sha256": "1b43030e58cc9c0bf9f3624a201e42569bc986dc29dfc1e02ec13b60eed04b8a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

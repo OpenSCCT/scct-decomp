@@ -1,18 +1,13 @@
-typedef unsigned Word;
-typedef union {
-    char bytes[12];
-    Word limb[3];
-    unsigned short half[6];
-} Extended96;
+#include "crt_extended_number_types.h"
 
-int __addl(Word, Word, Word *);
+int __addl(ExtendedNumberWord, ExtendedNumberWord, ExtendedNumberWord *);
 void __shl_12(Extended96 *);
 void __shr_12(Extended96 *);
 void __add_12(Extended96 *, const Extended96 *);
 
-int steam_addl(Word a, Word b, Word *result)
+int steam_addl(ExtendedNumberWord a, ExtendedNumberWord b, ExtendedNumberWord *result)
 {
-    Word sum = a + b;
+    ExtendedNumberWord sum = a + b;
     int carry = 0;
     if (sum < a || sum < b) carry = 1;
     *result = sum;
@@ -27,14 +22,14 @@ void steam_add_12(Extended96 *out, const Extended96 *in)
 }
 void steam_shl_12(Extended96 *value)
 {
-    Word low_carry = value->limb[0] >> 31, mid_carry = value->limb[1] >> 31;
+    ExtendedNumberWord low_carry = value->limb[0] >> 31, mid_carry = value->limb[1] >> 31;
     value->limb[0] <<= 1;
     value->limb[1] = (value->limb[1] << 1) | low_carry;
     value->limb[2] = (value->limb[2] << 1) | mid_carry;
 }
 void steam_shr_12(Extended96 *value)
 {
-    Word high_carry = value->limb[2] << 31, mid_carry = value->limb[1] << 31;
+    ExtendedNumberWord high_carry = value->limb[2] << 31, mid_carry = value->limb[1] << 31;
     value->limb[2] >>= 1;
     value->limb[1] = (value->limb[1] >> 1) | high_carry;
     value->limb[0] = (value->limb[0] >> 1) | mid_carry;
@@ -71,10 +66,8 @@ void steam_mtold12(const char *digits, unsigned n, Extended96 *out)
 }
 
 struct Extended80 { unsigned lo, hi; unsigned short exponent; };
-extern Extended96 _pow10pos[], _pow10neg[];
 void __ld12mul(Extended96 *, const Extended96 *);
-int _RoundMan(Word *, int);
-#define DWORD_AT(x, n) (*(Word *)((x)->bytes + (n)))
+int _RoundMan(ExtendedNumberWord *, int);
 
 void steam_multtenpow12(Extended96 *out, int power, int precision)
 {
@@ -82,16 +75,16 @@ void steam_multtenpow12(Extended96 *out, int power, int precision)
     Extended96 corrected;
     if (!power) return;
     if (power < 0) { power = -power; table = _pow10neg - 8; }
-    if (!precision) out->half[0] = 0;
+    if (!precision) out->parts.extra_fraction = 0;
     while (power) {
         int digit = power & 7;
         power >>= 3;
         table += 7;
         if (digit) {
             const Extended96 *factor = table + digit;
-            if (factor->half[0] >= 0x8000) {
+            if (factor->parts.extra_fraction >= 0x8000) {
                 corrected = *factor;
-                --DWORD_AT(&corrected, 2);
+                --corrected.parts.low_fraction;
                 factor = &corrected;
             }
             __ld12mul(out, factor);
@@ -101,11 +94,11 @@ void steam_multtenpow12(Extended96 *out, int power, int precision)
 int steam_ld12told(const Extended96 *in, struct Extended80 *out)
 {
     int result = 0;
-    Word mantissa[3];
-    unsigned short exp = in->half[5] & 0x7fff, sign = in->half[5] & 0x8000;
-    mantissa[0] = DWORD_AT(in, 6);
-    mantissa[1] = DWORD_AT(in, 2);
-    mantissa[2] = (Word)in->half[0] << 16;
+    ExtendedNumberWord mantissa[3];
+    unsigned short exp = in->parts.sign_exponent & 0x7fff, sign = in->parts.sign_exponent & 0x8000;
+    mantissa[0] = in->parts.high_fraction;
+    mantissa[1] = in->parts.low_fraction;
+    mantissa[2] = (ExtendedNumberWord)in->parts.extra_fraction << 16;
     if (_RoundMan(mantissa, 64)) { mantissa[0] = 0x80000000; ++exp; }
     if (exp == 0x7fff) result = 1;
     out->hi = mantissa[0];

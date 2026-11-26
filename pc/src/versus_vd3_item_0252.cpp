@@ -14,7 +14,7 @@ typedef double DOUBLE;
 typedef unsigned char BYTE;
 typedef unsigned short WORD;
 typedef long HRESULT;
-typedef void *HWND;
+typedef struct HWND__ *HWND;
 
 #define D3DERR_DEVICELOST       ((HRESULT)0x88760868L)
 #define D3DERR_DEVICENOTRESET   ((HRESULT)0x88760869L)

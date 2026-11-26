@@ -1,19 +1,20 @@
+#include "crt_multibyte_globals.h"
+
 typedef unsigned short WideChar;
-struct LocaleInfo {
+struct MultibyteLocaleInfo {
     unsigned refcount, codepage, collation;
     unsigned categories[6];
     int clike, width;
     unsigned char before_types[0x1c];
     const unsigned short *types;
 };
-struct ThreadInfo { unsigned char before_locale[0x64]; struct LocaleInfo *locale; };
+struct ThreadInfo { unsigned char before_locale[0x64]; struct MultibyteLocaleInfo *locale; };
 extern struct ThreadInfo *_getptd(void);
-extern struct LocaleInfo *__ptlocinfo;
-struct LocaleInfo *__updatetlocinfo(void);
-extern const unsigned short *_pwctype, *_pctype;
-WideChar __towlower_mt(struct LocaleInfo *, WideChar);
-WideChar __towupper_mt(struct LocaleInfo *, WideChar);
-int __iswctype_mt(struct LocaleInfo *, WideChar, WideChar);
+extern struct MultibyteLocaleInfo *__ptlocinfo;
+struct MultibyteLocaleInfo *__updatetlocinfo(void);
+WideChar __towlower_mt(struct MultibyteLocaleInfo *, WideChar);
+WideChar __towupper_mt(struct MultibyteLocaleInfo *, WideChar);
+int __iswctype_mt(struct MultibyteLocaleInfo *, WideChar, WideChar);
 int __crtGetStringTypeW(unsigned, const WideChar *, int, WideChar *, unsigned, unsigned);
 int __crtGetStringTypeA(unsigned, const char *, int, WideChar *, unsigned, unsigned, int);
 int *_errno(void);
@@ -22,13 +23,13 @@ __declspec(dllimport) int __stdcall WideCharToMultiByte(unsigned, unsigned, cons
                                                        char *, int, const char *, int *);
 
 #define GET_LOCALE() \
-    struct LocaleInfo *locale = _getptd()->locale; \
+    struct MultibyteLocaleInfo *locale = _getptd()->locale; \
     if (locale != __ptlocinfo) locale = __updatetlocinfo()
 
 int steam_isleadbyte(int value) { return _pctype[(unsigned char)value] & 0x8000; }
 int steam_iswascii(WideChar value) { return value < 128; }
 
-int steam_iswctype_mt(struct LocaleInfo *locale, WideChar c, WideChar mask)
+int steam_iswctype_mt(struct MultibyteLocaleInfo *locale, WideChar c, WideChar mask)
 {
     WideChar type;
     if (c == 0xffff) type = 0;
@@ -58,7 +59,7 @@ WideChar steam_towupper(WideChar c)
         return (WideChar)(c >= 'a' && c <= 'z' ? c - ('a' - 'A') : c);
     return __towupper_mt(locale, c);
 }
-int steam_isctype_mt(struct LocaleInfo *locale, int c, int mask)
+int steam_isctype_mt(struct MultibyteLocaleInfo *locale, int c, int mask)
 {
     char text[3];
     int count;
@@ -79,7 +80,7 @@ int steam_isctype_mt(struct LocaleInfo *locale, int c, int mask)
         return 0;
     return type & mask;
 }
-int steam_mbtowc_mt(struct LocaleInfo *locale, WideChar *out, const char *text, unsigned n)
+int steam_mbtowc_mt(struct MultibyteLocaleInfo *locale, WideChar *out, const char *text, unsigned n)
 {
     if (!text || !n) return 0;
     if (!*text) { if (out) *out = 0; return 0; }
@@ -103,7 +104,7 @@ int steam_mbtowc_mt(struct LocaleInfo *locale, WideChar *out, const char *text, 
     }
     return 1;
 }
-int steam_wctomb_mt(struct LocaleInfo *locale, char *out, WideChar c)
+int steam_wctomb_mt(struct MultibyteLocaleInfo *locale, char *out, WideChar c)
 {
     if (!out) return 0;
     if (!locale->categories[2]) {
@@ -116,11 +117,11 @@ int steam_wctomb_mt(struct LocaleInfo *locale, char *out, WideChar c)
     *_errno() = 42;
     return -1;
 }
-int __isctype_mt(struct LocaleInfo *, int, int);
+int __isctype_mt(struct MultibyteLocaleInfo *, int, int);
 int __crtLCMapStringA(unsigned, unsigned, const char *, int, char *, int, unsigned, int);
 
 #define CASE_NARROW(function, low, high, delta, type, code) \
-int function(struct LocaleInfo *locale, int value) \
+int function(struct MultibyteLocaleInfo *locale, int value) \
 { \
     unsigned char input[3], output[3]; \
     int count; \

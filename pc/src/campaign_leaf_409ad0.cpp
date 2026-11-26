@@ -3,9 +3,7 @@
 // the global at VA 0x112327f8 is set, else to the one at VA 0x110b7404, and returns the result.
 // All names are invented.
 
-extern int GUnk_112327f8;
-extern int (__stdcall* GUnk_110b7404)(int, unsigned int, unsigned int, long);
-extern int (__stdcall* GUnk_110b7408)(int, unsigned int, unsigned int, long);
+#include "campaign_leaf_409ad0.h"
 
 class UnkType_10d09ad0
 {

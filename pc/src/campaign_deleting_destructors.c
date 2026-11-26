@@ -1,5 +1,7 @@
 /* Scalar deleting destructors generated for Unreal classes in this build.
    The single-field arguments preserve the x86 thiscall stack layout in C. */
+#include "campaign_engine_allocator.h"
+
 struct Allocation { void *object; };
 struct Allocator;
 struct AllocatorOps {
@@ -7,7 +9,6 @@ struct AllocatorOps {
     void (__fastcall *free)(struct Allocator *, struct Allocation);
 };
 struct Allocator { const struct AllocatorOps *ops; };
-extern struct Allocator *engine_allocator;
 struct DeleteFlags { unsigned value; };
 
 #define DEFINE_DELETING_DESTRUCTOR(Type)                                  \
@@ -19,7 +20,8 @@ struct DeleteFlags { unsigned value; };
         if (flags.value & 1) {                                           \
             struct Allocation allocation;                               \
             allocation.object = self;                                    \
-            engine_allocator->ops->free(engine_allocator, allocation);   \
+            ((struct Allocator *)engine_allocator)->ops->free(             \
+                (struct Allocator *)engine_allocator, allocation);        \
         }                                                                \
         return self;                                                     \
     }

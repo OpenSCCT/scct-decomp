@@ -190,7 +190,8 @@
     "offset": 7481424,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_722850@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -199,7 +200,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "5a36640ef8a597dff88b68dbd807aab2c15fecbc50b066543c8e92b58c0e3409"
+      "inputs_sha256": "0613063116af5708c3874703990b400575a7efc4c108e854e751b7f6ca293a38"
     }
   },
   {
@@ -208,6 +209,7 @@
     "size": 14,
     "inputs": [
       "src/campaign_tree_positions.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@tree_begin_722b70@8",
@@ -216,7 +218,7 @@
     "identification": "Tree routine at RVA 0x722860 calls this position accessor at RVA 0x7228a0 and a tree operation at RVA 0x7228cc. Returns the leftmost node through the supplied iterator. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "0fb5d965086e7a3a39603d8a0510fc815c9e34148c6de33224b72a8c3b57dcdb",
-      "inputs_sha256": "479b9e72ab795d5c4327958d62acb4f5fd7ed9b3935c5d6b59c169ae34906677"
+      "inputs_sha256": "83175d2aa408fdac368c9af721b0696831fe56afd71cbdd9f5e138b0af9e5e9f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -232,7 +234,8 @@
     "offset": 7482240,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_722b80@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -241,7 +244,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "7bd536367ed917f4bd97436942d98d49850eda85becb32d3d5afe71dda9a9716"
+      "inputs_sha256": "5a56b2da1b8d2b809cab6fa2e4ae6f18e403aad4b56052bf3ff428b29f118696"
     }
   },
   {
@@ -296,10 +299,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. SentinelCleanupList is an analyst-invented local name for the wrapper holding the sentinel link.",
     "match": {
       "bytes_sha256": "32e6663e0ac4a06885860186552d2e0b2afbda908fa02f7ea82df28a9f0be20d",
-      "inputs_sha256": "53156e492888c0e8138cb0dc7583d17c97c271e32de43fa2c6d6308fe8a8ab0d"
+      "inputs_sha256": "14c1695c1dece7f6b6a8547304e13299a86b38ddc7078f6bfc510397923da10c"
     }
   },
   {
@@ -354,10 +357,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. SentinelCleanupList is an analyst-invented local name for the wrapper holding the sentinel link.",
     "match": {
       "bytes_sha256": "3887b8eac705f4c2423773b2414dab8fb695496ef7908d6f6e4dc61c4ea584d4",
-      "inputs_sha256": "4f093f2f58fae2c78857385e9a8bb2dcb61aff3c3fc46340718259c9bcf30ff0"
+      "inputs_sha256": "e339a566229ab8465138a49db09e84567968ebaa00d9e974d8858137d075e17a"
     }
   },
   {
@@ -396,11 +399,42 @@
     }
   },
   {
+    "id": "campaign-cleanup-thunk-722d70",
+    "offset": 7482736,
+    "size": 5,
+    "inputs": [
+      "src/campaign_cleanup_aliases.c"
+    ],
+    "rebuilt_symbol": "@cleanup_722d70@4",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_cleanup_aliases.obj src/campaign_cleanup_aliases.c",
+    "link_bindings": {
+      "@cleanup_5fcf90@4": {
+        "va": 284151696,
+        "basis": "Retail tail-jump target at RVA 0x5fcf90."
+      }
+    },
+    "identification": "Five-byte cleanup thunk tail-jumping to RVA 0x5fcf90.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "468d69a89e7c680fc282160291ca7c526dbdf313150913a41b8bd50b4effa5e5",
+      "inputs_sha256": "eedf95412459ab4598dfab5809125fecabeaa5304d0276e78327b8c2b749400c"
+    }
+  },
+  {
     "id": "copy-word-722d80",
     "offset": 7482752,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_722d80@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -409,7 +443,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "04e3e9ba61e687cbb08ac356971d26a35573f2814aadf51a8f0d209e80ff8de1"
+      "inputs_sha256": "28404349d0e4dac3e9a5052db6f0545b15a3516390108c60cfc49594e2859401"
     }
   },
   {
@@ -417,7 +451,8 @@
     "offset": 7482784,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_722da0@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -426,7 +461,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "a2af542d02f6f04faf6f8219d5a90d2681aeafe632b664193a1420b7f5a976b3"
+      "inputs_sha256": "3603ec80a7099e1c14d7eea9381cde5e3319ba6bca4bddb4b38dc03f482fc242"
     }
   },
   {
@@ -434,7 +469,8 @@
     "offset": 7483024,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_722e90@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -443,7 +479,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "7db46d4216bd34a4f8f3067c45122a263467f98a6e15bed46a38ba794cb6f414"
+      "inputs_sha256": "b5c35d24d77e7fbd7a6cb2ce409fb2a7cde69e0fc826424057f31d007d07505f"
     }
   },
   {
@@ -463,10 +499,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. SentinelCleanupList is an analyst-invented local name for the wrapper holding the sentinel link.",
     "match": {
       "bytes_sha256": "fcf54acfad722393631070edd294e9bbdd31097f438940984e4f9a790f3f82ab",
-      "inputs_sha256": "7402eac0f23d120fa19601f25732a513b5e8c29c60af300d36d69e66f78a13b2"
+      "inputs_sha256": "3d569f9c667e3f6f220db0b0a77ac0a00f942d47440648c6a33bd7659f588ad8"
     }
   },
   {
@@ -568,6 +604,7 @@
     "size": 62,
     "inputs": [
       "src/campaign_tree_head_construction.c",
+      "src/campaign_color_tree.h",
       "src/campaign_color_node.h"
     ],
     "rebuilt_symbol": "@init_tree_head_722fc0@12",
@@ -582,7 +619,7 @@
     "identification": "Direct retail caller at VA 0x11021200. Creates an empty tree with a null root and both extreme links pointing at the head. Majority choice, not evidence: the colour tree node is the shared struct ColorNode of campaign_color_node.h (color, parent, left, right); ColorNode is an invented name.",
     "match": {
       "bytes_sha256": "10b27862ba245b173e0be849ce17c4034155fcee27e42d8c199c0f1f42943b98",
-      "inputs_sha256": "06752966ceca6f404b72366127e8732b299d7c1f1301d8efc08ea84af9fd0ad0"
+      "inputs_sha256": "ab7b3c28a65561ad62cb4f622a4dd277888004340e9e116f20139e4ffba98255"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -614,10 +651,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x110214ef. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x110214ef. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "9a79b68b746dc93357d52646093de6cbfde37aa757c60fc25d5846a9336348bb",
-      "inputs_sha256": "2bb22b3fc2711121b614907332dd8b273643d3f87facaab5ec128f0d1e968f3e"
+      "inputs_sha256": "0fa999a3a04d23af806d587ac051a2229345f3b423725140dfbc50230da43c15"
     }
   },
   {
@@ -641,10 +678,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x110213ad. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x110213ad. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "29a14b4f447e8f411562226ea3de0389726eeadfc9a2d3e1832e4b95f3e255bd",
-      "inputs_sha256": "a5f0fc10c0caebd5702f0ee2d1f63401e2989636579810b3e036dfddfa631d6d"
+      "inputs_sha256": "b2ca24c4661535b3c3dd6fc525606996bd07046ad69a7be26d8720ea7dc88a82"
     }
   },
   {
@@ -723,10 +760,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x1102403d. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x1102403d. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "bd926fa4672f918d91ec5c69ddab29aaa81cf0973474d3722eea3edc4eea60ac",
-      "inputs_sha256": "dcd924df873c07f495496d6fda3b1dc17599fc62ec849ae66bef21a014ff31d9"
+      "inputs_sha256": "3a7555fd9290c5027986dacca35b6e87ad34df0b0faa763dc4c242cdd9953473"
     }
   },
   {
@@ -825,10 +862,10 @@
         "basis": "Independently matched red-black tree rotation."
       }
     },
-    "identification": "Direct call at retail VA 0x11024219. Inserts a signed 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree.",
+    "identification": "Direct call at retail VA 0x11024219. Inserts a signed 32-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree. The local type names InsertTreeKey, InsertTreeNode, InsertTree, InsertTreePosition, and InsertTreeArgs are analyst-invented labels for the key storage, red-black tree node, head/count wrapper, output node position, and insertion argument bundle.",
     "match": {
       "bytes_sha256": "a3c6e396a04eae1079b8209506fbbcb000f9b3a8f1bffc4ea64e758fba27a8ea",
-      "inputs_sha256": "61886512ba19a4ef2531163b442edbd15a1e183cc454e80e2efe4d1e71cfb162"
+      "inputs_sha256": "11f5bb11e10df200f02c97f00ced722ce5d6f76f5f3dedfb28ab0c705c4b7d95"
     }
   },
   {
@@ -1186,10 +1223,10 @@
         "basis": "Node release wrapper used by the retail tree."
       }
     },
-    "identification": "Direct call at retail VA 0x11028bf4. Frees the right subtree recursively and walks the left branch until null.",
+    "identification": "Direct call at retail VA 0x11028bf4. Frees the right subtree recursively and walks the left branch until null. The local type name EraseBranchNode is an analyst-invented label for the linked node traversed while clearing tree branches.",
     "match": {
       "bytes_sha256": "99a8fe65ab17c72e69c1230d163684f6d5efd0c58210b4311ae7d328b6e2ddb0",
-      "inputs_sha256": "e35b926ad138c9b3191e83dbb38cdb8d68c044147a8d5ba71258a8a369f88790"
+      "inputs_sha256": "c5226a6ac7cbfa107716e92f0693d58664b8c0d5c00a6fcf13ee85269435823d"
     }
   },
   {
@@ -1225,6 +1262,36 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "id": "campaign-cleanup-thunk-7294a0",
+    "offset": 7509152,
+    "size": 5,
+    "inputs": [
+      "src/campaign_cleanup_aliases.c"
+    ],
+    "rebuilt_symbol": "@cleanup_7294a0@4",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_cleanup_aliases.obj src/campaign_cleanup_aliases.c",
+    "link_bindings": {
+      "@cleanup_730db0@4": {
+        "va": 285412784,
+        "basis": "Retail tail-jump target at RVA 0x730db0."
+      }
+    },
+    "identification": "Five-byte cleanup thunk tail-jumping to RVA 0x730db0.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "db1e537c864d6df60ec4ce1dd471b67e3f1cac47ad3a9219b19a55372eb6790b",
+      "inputs_sha256": "d4b8378fad4eac6171995a95a1f753957791e25f74df72b8772cfbff83cbf958"
     }
   },
   {
@@ -1295,6 +1362,36 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "id": "campaign-cleanup-thunk-72ba10",
+    "offset": 7518736,
+    "size": 5,
+    "inputs": [
+      "src/campaign_cleanup_aliases.c"
+    ],
+    "rebuilt_symbol": "@cleanup_72ba10@4",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_cleanup_aliases.obj src/campaign_cleanup_aliases.c",
+    "link_bindings": {
+      "@cleanup_729200@4": {
+        "va": 285381120,
+        "basis": "Retail tail-jump target at RVA 0x729200."
+      }
+    },
+    "identification": "Five-byte cleanup thunk tail-jumping to RVA 0x729200.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "6618416856c39c8c6fa7cb912fd74064d759d14585da0eacc4f36453415f9e74",
+      "inputs_sha256": "6b5e2699a3ac4ef919a7cbea890328f5853d3e752befec07a77142c64031e48c"
     }
   },
   {

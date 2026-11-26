@@ -14,12 +14,12 @@ struct ViewportMethods {
     void *other[0x100 / 4];
     ShowMenu show_menu;
 };
-struct ControlMethods {
+struct ViewportControlMethods {
     void *other[0x94 / 4];
     ControlCommand command;
 };
 struct ViewportControl {
-    const struct ControlMethods *methods;
+    const struct ViewportControlMethods *methods;
 };
 struct MenuViewport {
     const struct ViewportMethods *methods;

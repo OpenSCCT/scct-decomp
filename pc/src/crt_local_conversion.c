@@ -1,5 +1,5 @@
 #include "campaign_globals.h"
-extern int _daylight, _days[];
+#include "crt_calendar_globals.h"
 
 struct CalendarTime {
     int second, minute, hour, day, month, year, weekday, day_of_year, dst;

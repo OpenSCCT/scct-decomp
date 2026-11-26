@@ -158,7 +158,7 @@
     "identification": "Typed cast at campaign RVA 0x220420, directly called at RVA 0x22056d. Its class constructor at RVA 0x2d5740 identifies AECoopPlayerController; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "ddd004fdbd5ae7b8685c9ca83bd75fc766cb3766e929507bd63b8a74c9b4d77f",
-      "inputs_sha256": "89d536f84698aa855badb7db68d55ccec9f6b491d18cbfbad26533e7d1962f3b"
+      "inputs_sha256": "584df9038d89010f7731a8e4f0e054990add89faea47f087b17cf868adedaf2d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -213,7 +213,9 @@
     "size": 18,
     "offset": 2229872,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_220670@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -228,10 +230,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x3d7930 before installing the methods table at RVA 0x7deb60. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x3d7930 before installing the methods table at RVA 0x7deb60. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "442af106b51699bf167a55d7b63e71f02958fdf3faeccde08f8738722aa20568",
-      "inputs_sha256": "9c26e10bdd19742fe6f214016291a3c3803209c0986c92643f579a679a85b607"
+      "inputs_sha256": "2e8a04dc35c174e89764a32ec4711d70fb9cf17f4793b80388aff923e20c0413"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -247,7 +249,8 @@
     "offset": 2229904,
     "size": 57,
     "inputs": [
-      "src/campaign_member_destruction.c"
+      "src/campaign_member_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCMagmaInteractionMPGame@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -277,7 +280,7 @@
     },
     "match": {
       "bytes_sha256": "56d077ee993f0bf15b78259d0a1272b3c04cb118d9364b9075b1db0f5a5ef2a9",
-      "inputs_sha256": "31c119efb30637b5f3a5fb176f4f37bdeddf51ad8ff227db496df84c189843e8"
+      "inputs_sha256": "477e535739b122ac6a8e02833f8b870180c6cae8ef7667ca19e7062d18ba88a6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -329,15 +332,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_USCMagmaInteractionMPGame",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCMagmaInteractionMPGame": {
         "va": 286125136,
@@ -355,15 +361,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCMagmaInteractionMPGame."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x2206f0; its allocation tag and reflected class name identify USCMagmaInteractionMPGame. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x2206f0; its allocation tag and reflected class name identify USCMagmaInteractionMPGame. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "bb80b8bb0373ef1fa75cd4a1839379fb9b6895da4a924a6cccf9d5ef10d7ee08",
-      "inputs_sha256": "c4f5ac5954b1e85a9a34390e31bdd492cadcb6caca2bb8a90752a3e21d2119a8"
+      "inputs_sha256": "8f659705f1c2ca1f8cf1f302abb6723c9f69289a8faee072e865ae2dede6d39c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -462,14 +468,17 @@
     "size": 43,
     "offset": 2230656,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r220980@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -477,7 +486,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "a8e16bf4baf83369b6169e995fe2b0132a1be878c03274a2840a4315a5c12432"
+      "inputs_sha256": "4b6707329dadd3ec5b69037e5e0de39513440ddfed050c1ac9fb519300c010d7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -557,7 +566,7 @@
     "identification": "Class registration for USCMagmaInteractionPREGame at RVA 0x2209f0, called immediately after the class factory at RVA 0x220e20 in the singleton initialization path. Sets superclass USCMagmaInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "e35507c1e29c9a2c3b0ae88159c30eb18b926ec1af02843e2c703bdf94491322",
-      "inputs_sha256": "bce1f373e0d611d9327f1b40638139d982757feb297465db213fcfcb64d79cb0"
+      "inputs_sha256": "9db6a8d4e7dab4a8867ab94cfd21cd4d36310eef8f3b32d312de34b4317d509b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -576,7 +585,8 @@
     "inputs": [
       "src/campaign_vm_game_callbacks.c",
       "src/campaign_game_callback.h",
-      "src/campaign_vm_frame.h"
+      "src/campaign_vm_frame.h",
+      "src/campaign_native_initializer.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vm_game_callbacks.obj src/campaign_vm_game_callbacks.c",
@@ -593,7 +603,7 @@
     },
     "match": {
       "bytes_sha256": "5fe5c04957a3301e586ea0a207dfba027cddf7eb2b3d5c5a6d267432fe1b00eb",
-      "inputs_sha256": "9322656edb900579e0749a8cc1d294b56df9bd194243544c53b88a9c0cc2e435"
+      "inputs_sha256": "9203b235a6086c8ac9905e23d1aaf594f4d315e12ebd988feeb0b7a1e0e4399c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -612,7 +622,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r220b40@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -630,7 +641,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x220b40 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "8bec443d9fc4c0ce037d9eed38b902882bc0b3963c995a3dcce9e2aaea86c206"
+      "inputs_sha256": "112ac5a217e448623ae86e2f4a722c0465d0d23caa67ec3c71af032af608b183"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -645,16 +656,19 @@
     "id": "array-remove-220b70",
     "size": 138,
     "offset": 2231152,
-    "rebuilt_symbol": "@array_remove_r220b70@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -670,7 +684,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x220b70, including RET. Incoming transfer decoded within analyzed function code at RVA 0x220ccf. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "3ad5afb06e84c0bcbb1cb2e49d3bae2298fec2fcdc95fa2e0ef36ba54ca2cffb",
-      "inputs_sha256": "fee24af6274d8a89fbce654b73a98745ef99a1d61dac358e99c3e24d3d42506e"
+      "inputs_sha256": "fd3cff82f2187ed61bc371a013a00f7d6a952c7fa70bb6638daafc303c2adcf1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -723,25 +737,30 @@
     "offset": 2231520,
     "rebuilt_symbol": "@destroy_typed_r220ce0@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r220c40@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 280104000,
-        "basis": "The member range remover at RVA 0x220c40 calls the rebuilt FArray::Remove at RVA 0x220b70, with element size 20, from RVA 0x220ccf."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x220c40, which destroys elements then forwards element size 20 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x220ce0; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 20 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x220ce0; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "b1c0cd2e310ef1df1fb4c0c0d9638ef3f04aa844798a261c89e71652c2107481",
-      "inputs_sha256": "6db4ce60b96cc976ffa7fde74f3ed7f2078000a15cfce9479fc73efc078aed78"
+      "inputs_sha256": "96fc9c51429d9f9a7efbb13cf57c28208b362d3cfb9f58e87c8b3ffae10498ab"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -758,25 +777,30 @@
     "offset": 2231584,
     "rebuilt_symbol": "@destroy_typed_r220d20@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r220c40@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 280104000,
-        "basis": "The member range remover at RVA 0x220c40 calls the rebuilt FArray::Remove at RVA 0x220b70, with element size 20, from RVA 0x220ccf."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x220c40, which destroys elements then forwards element size 20 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x220d20; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 20 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x220d20; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "f096117699e6beec2da9e95dfe746004ae86d453abbab5390c904eba397898b2",
-      "inputs_sha256": "e123891e54fb02a2f2e2365303a529058751cce1cc59880083943fb7a59af730"
+      "inputs_sha256": "61214b8f7fa5812fe0c6153e50b329f78050790e254b58c318c3dd5c7a3bd654"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -792,7 +816,9 @@
     "size": 18,
     "offset": 2231664,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_220d70@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -807,10 +833,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x3d7930 before installing the methods table at RVA 0x7ded10. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x3d7930 before installing the methods table at RVA 0x7ded10. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "c05167f24c0ec4072d0ea4093959651d90b6a9497dee95d56ba83723053ff64f",
-      "inputs_sha256": "4554a09c8adccc2f91d01c6991c06cbba7e9775d617cc4dbfcb75fff63bf206c"
+      "inputs_sha256": "0da454cfc34f40c6e79a42f18ff37d5b58eb2f411683407e85efa853289b0e58"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -898,7 +924,8 @@
     "offset": 2231744,
     "size": 57,
     "inputs": [
-      "src/campaign_member_destruction.c"
+      "src/campaign_member_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCMagmaInteractionPREGame@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -928,7 +955,7 @@
     },
     "match": {
       "bytes_sha256": "6ded21439229ad9cf3b927447ad6400f4126ae1fe3e61da220267fa99895b77b",
-      "inputs_sha256": "5e2cfebba4df34fd701f94fd7c5b836e8c415fb4cbd54d00b4b5825877073d82"
+      "inputs_sha256": "d5ae72fa866d405ae9f9b87a0aef3729943361cc60522ca64e79b3da76eb8c9e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -980,15 +1007,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_USCMagmaInteractionPREGame",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCMagmaInteractionPREGame": {
         "va": 286125568,
@@ -1006,15 +1036,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCMagmaInteractionPREGame."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x220e20; its allocation tag and reflected class name identify USCMagmaInteractionPREGame. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x220e20; its allocation tag and reflected class name identify USCMagmaInteractionPREGame. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "c04f1a12487eb68fea9ac98f16a4a6a2f660aaebb112d97028e7cccbb41170ed",
-      "inputs_sha256": "e8521345d91ea42b252f2ab4ff6a60437bcea4d925d765f8a3646ce0c270895f"
+      "inputs_sha256": "e9753bddb3dbe1d6fc0aebcfb60499e33db39a18afff465d641c6e0152b4dc3e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1068,7 +1098,8 @@
     "inputs": [
       "src/campaign_vm_game_callbacks.c",
       "src/campaign_game_callback.h",
-      "src/campaign_vm_frame.h"
+      "src/campaign_vm_frame.h",
+      "src/campaign_native_initializer.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vm_game_callbacks.obj src/campaign_vm_game_callbacks.c",
@@ -1085,7 +1116,7 @@
     },
     "match": {
       "bytes_sha256": "df7f4f7e110d7260ba592b5d410004bb60bc03f888595963ff13d4678577db3b",
-      "inputs_sha256": "fa451e718333d742326c5f857ee51a8150908bdf3db7f7bb5bdd5d1e5f5a83ef"
+      "inputs_sha256": "88ebc91d32696dfd091f67bd82d13e664c8e89e2544025a928c7635a4b240fe9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1287,7 +1318,7 @@
     "identification": "Class registration for USCMagmaInteractionSPGame at RVA 0x221120, called immediately after the class factory at RVA 0x2213e0 in the singleton initialization path. Sets superclass USCMagmaInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "def97a35579641918a1bed8e282399ece7bf1cf873f7c258ba46ab251ca64e25",
-      "inputs_sha256": "3fd93a45b97e888d85e9b698c004f016ef1b40a30ba3401219cf977a172a0992"
+      "inputs_sha256": "bddc00324e0c34ec59fab7f7d5b91139108ba7017458bb0d4f7ccc707d21d4e3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1303,7 +1334,9 @@
     "size": 18,
     "offset": 2233200,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_221370@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1318,10 +1351,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x3d7930 before installing the methods table at RVA 0x7dee90. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x3d7930 before installing the methods table at RVA 0x7dee90. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "c775dfe06d8781d7ea217628aec2a87079988df0a136f3da29d885d387af5291",
-      "inputs_sha256": "adbe4d12b974ac903a20cb2f34f673d33e1a39c0f017d693f8b21e37515d1f08"
+      "inputs_sha256": "322ef11fad7cdab7192febf5a5abddd90de1317e15f4b14e8bc6070c58af2eb2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1337,7 +1370,8 @@
     "offset": 2233232,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCMagmaInteractionSPGame@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1363,7 +1397,7 @@
     },
     "match": {
       "bytes_sha256": "98a334fa3fe982d16766dc55bbdf963b91ee028205eb41c5e33271d1f7d264cc",
-      "inputs_sha256": "15918e9cca23aa91df5db1e49ee501eb76f80b343aff86c21c543b1ef1484056"
+      "inputs_sha256": "eecea0b9a858947e3d4206c842a494b41996a1a04563af28875f23a6f54bad50"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1415,15 +1449,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_USCMagmaInteractionSPGame",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCMagmaInteractionSPGame": {
         "va": 286125952,
@@ -1441,15 +1478,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCMagmaInteractionSPGame."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x2213e0; its allocation tag and reflected class name identify USCMagmaInteractionSPGame. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x2213e0; its allocation tag and reflected class name identify USCMagmaInteractionSPGame. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "a724d670630d2ac7ccfafc36951e57a87250f8a30f246bf040af449a99596f01",
-      "inputs_sha256": "2dadc3706eea04bb2d7c90b111063c01622b6518c16895ee3146951bd35254d8"
+      "inputs_sha256": "230456d2c9be73dfed7a25c1561c64b63a24630e7e697ae2e1a03bb00197aa4d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1937,7 +1974,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x222470. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "0e826e33e6aef0ebca56184822429f0b81d6de54eb3ad1e2d5026e859667731b"
+      "inputs_sha256": "54e080bd79d5ed78a894f33daa6b0cd9d7609c4558f159ea84c0c9ee7ded4229"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2036,7 +2073,7 @@
     "identification": "Direct call at RVA 0x23e07d in the independently delineated function at RVA 0x23df30. The receiver field is at byte offset 348.",
     "match": {
       "bytes_sha256": "2b0c1ae51309829f5a53e100c3e8c24864cb77237e72531ec210d66e946f0011",
-      "inputs_sha256": "23392846515c1f3d5e0f41823c70b4ecfd9471bb137f855d4dbeae7311ea1a0b"
+      "inputs_sha256": "749def7ba852e1135052aa9f33463aa8c7e7d263f55f9162e5d98d0a0933b3c9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2269,7 +2306,7 @@
     "identification": "Method table entry RVA 0x227e50 adjusts the receiver by its virtual displacement and 8 additional bytes, then forwards its deletion flags to RVA 0x228100.",
     "match": {
       "bytes_sha256": "3bd1117a0d7e219e2dba3c33608a6fd4092b1ca51b36b7a7c8d8e90aaa3e6a4a",
-      "inputs_sha256": "e47b940eb16a3b568cd83129c9e1f0c7cbf1518ae052c06d1b4692ba7805766d"
+      "inputs_sha256": "c99b6865864f97f4a8828937f8972f3bab8372db9f6700774ec9ea139adbeb2d"
     }
   },
   {
@@ -2772,7 +2809,7 @@
     "identification": "Method table entry RVA 0x228ad0 adjusts the receiver by its virtual displacement and 8 additional bytes, then forwards its deletion flags to RVA 0x228bd0.",
     "match": {
       "bytes_sha256": "d16311e538e31456e81411b68a1c757f41016aea865039df03a43310de2842e5",
-      "inputs_sha256": "766dd91ad1f4612da6d4a4fe26673f418da1fc4e36f86e680f59c1f355d269fb"
+      "inputs_sha256": "f82c7dd25655fae032047f339c750caecde3125e3a0d2f1fe96c53024b2650e0"
     }
   },
   {
@@ -3082,7 +3119,7 @@
     "identification": "Typed cast at campaign RVA 0x22a300, directly called at RVA 0x22ab2e. Its class constructor at RVA 0x2f7ec0 identifies AEMainGun; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "3d4c2260e28965ef4763b1686e8e1902dc9e474b812b08e8f595ecba19d72ab4",
-      "inputs_sha256": "6624a24ba2dd9fa41a32aacc8955bf501f7674aa9f55c83ffa83b781ae4f362e"
+      "inputs_sha256": "59d813a7ea694d4b7920fa583f3aabbcf39e1c653c80d3bf5a9e8d9e46ceebd8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3126,7 +3163,7 @@
     "identification": "Typed cast at campaign RVA 0x22a360, directly called at RVA 0x22ac94. Its class constructor at RVA 0x2fa010 identifies AEWeapon; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "e4965a9bee75da78b97b4017fe1a85b3303ecd74a2dba7fa5603255adcfb2646",
-      "inputs_sha256": "8b75341965323758d34fbede2dfc5a9af66dd84533069138604a7a86aa4f029b"
+      "inputs_sha256": "925458231d3ea78585292cf9273950aeeed2627d6f23d43c4cf5fb846c227f6c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3373,14 +3410,17 @@
     "size": 43,
     "offset": 2279936,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r22ca00@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -3388,7 +3428,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "03a0880d36acfadfc35e3b768e2babce21ce5c106d6996001f0b6f51ed525015"
+      "inputs_sha256": "7c2cf6ff788716b57e66a73c1587e1d07e75fb30471aaae2f9157dcd28ce2deb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3404,14 +3444,17 @@
     "size": 43,
     "offset": 2279984,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r22ca30@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -3419,7 +3462,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "f3d4e54734c38667f607738131ea6d32206bdaf685412a448523c09e5b1beb28"
+      "inputs_sha256": "2f2e7323a245c14a70393f09fde276171a64cbdd5ee1f15e2f0c551c0f4e56a0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3435,14 +3478,17 @@
     "size": 43,
     "offset": 2280032,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r22ca60@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -3450,7 +3496,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "88157bf095c1b380b941652af9eb2cd5347643230584e8d813d21af2f93970fe"
+      "inputs_sha256": "9303012352860aea1fa0e9fb8a464fc93150d7d9d19e607c1911b04fc811906c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3621,7 +3667,7 @@
     "identification": "Typed cast at campaign RVA 0x22ccb0, directly called at RVA 0x2316d3. Its class constructor at RVA 0x3406b0 identifies UComputerAccessComponent; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "2470635e9424d4aaad963dbee119731a966ca7ecd81212f7caeae01d71ca25f3",
-      "inputs_sha256": "34be1e27c7fa580433dc53e51566a282600439d07c5d4480aaf4d981f831f213"
+      "inputs_sha256": "6d099fbce73b982ccea12bbca2a7b0834948a5e638b3fa78373b9475dc5835fd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3665,7 +3711,7 @@
     "identification": "Typed cast at campaign RVA 0x22cd10, directly called at RVA 0x230658. Its class constructor at RVA 0x340720 identifies UComputerEmail; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "19fd57b56fc7af249bd602f7315ea2ca67ae89990af2d724765cc983197f03e4",
-      "inputs_sha256": "706515096f6dc9d09260874ea79efa03b31236743a5b929d44db5be39faedd0d"
+      "inputs_sha256": "f09e4f672486149b62d94ea1ddf78c2abb95cb74052aa0ad5e6f06125c918d8d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3709,7 +3755,7 @@
     "identification": "Typed cast at campaign RVA 0x22cd70, directly called at RVA 0x23094e. Its class constructor at RVA 0x341880 identifies UComputerImage; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "6963d614bc985df14a2903e6a2d61a333bab3141f9dea7e66c9d1bec421de1d5",
-      "inputs_sha256": "2231714b5a5ff26eb3bb523c893f911dbd54743c343745753b2cdc4065689148"
+      "inputs_sha256": "b200e1e5659ae766507df784f8324fda37d4cd613a0ba9b155f1db3fb7f42eeb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3753,7 +3799,7 @@
     "identification": "Typed cast at campaign RVA 0x22cdd0, directly called at RVA 0x230a19. Its class constructor at RVA 0x3418f0 identifies UComputerMusic; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "9368bac6eb352e9787dd3d360613e63d0add9061ef73add8078fb335f4034c89",
-      "inputs_sha256": "6201969baaaad4b4571dde069e25e5d3459f00bdb5070d11e2e438dd8601df5a"
+      "inputs_sha256": "0ec1917df14c615d37c0f8eec2b048e3a2930f01a994ad9208933b205824d2d1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3772,7 +3818,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r22cf30@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3790,7 +3837,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x22cf30 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "d74852671700df7716ba0cb8b47385c5e1faaa195310bae85a0ce965d0b2f4c3"
+      "inputs_sha256": "939be96fc5383dc1bc271747f1c72c2c3e60b6d1e54194647dd08883acc4e12f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3809,7 +3856,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r22cf60@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3827,7 +3875,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x22cf60 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "5782bbd8ae34e46f7ed8278fc3397f8b17855faf8e12beb6844b6064f05c8648"
+      "inputs_sha256": "31d34d2e2cebfb68f2736ccbaccd379cec0fdd62f187921ca68e2a7eb9824c13"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3846,7 +3894,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r22cf90@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3864,7 +3913,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x22cf90 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "4828bea9d92f1f3b8243798db3c24b7779fd2c1c65874c6b6999e98b11213c83"
+      "inputs_sha256": "dd020de12ffac4c481f7d1943aab0b1dae538ffe611a590d99e3355cbf05353a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3881,7 +3930,8 @@
     "offset": 2282704,
     "inputs": [
       "src/campaign_array_allocate_init.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_22d4d0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3899,7 +3949,7 @@
     "identification": "Aligned entry bounded by a preceding return and compiler padding. Sets count and capacity and allocates fresh storage with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "13e5fc4998763bef7d73eaef8b6f8b3c971f73ac8519b1f8f9201aed10352307",
-      "inputs_sha256": "66e2f8cd734be993e8c5a5b89319b26107306e074647868eb4b1e2f8e379d301"
+      "inputs_sha256": "c21a5c8156d614bb858d79957c23cfe5d9416235559f0208e26f2571b2e74490"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3916,7 +3966,8 @@
     "offset": 2282768,
     "inputs": [
       "src/campaign_array_allocate_init.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_22d510@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3934,7 +3985,7 @@
     "identification": "Aligned entry bounded by a preceding return and compiler padding. Sets count and capacity and allocates fresh storage with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "13e5fc4998763bef7d73eaef8b6f8b3c971f73ac8519b1f8f9201aed10352307",
-      "inputs_sha256": "5e70be5cffe08d24a9464848ef53abfb1e30a6eb9cc49839fe7e6cfdcc055e64"
+      "inputs_sha256": "61bf9bd2eadcbedb986f6acefa22c25f63486822470cb279eaade0cd6192767e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3951,7 +4002,8 @@
     "offset": 2282832,
     "inputs": [
       "src/campaign_array_allocate_init.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_22d550@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3969,7 +4021,7 @@
     "identification": "Aligned entry bounded by a preceding return and compiler padding. Sets count and capacity and allocates fresh storage with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "13e5fc4998763bef7d73eaef8b6f8b3c971f73ac8519b1f8f9201aed10352307",
-      "inputs_sha256": "1a91dc1c857467b33d693e44f64ab77b8d8ac6d4f3d536070731df7c43487896"
+      "inputs_sha256": "e4caab94df85e4d9cb374f057d3466045ceb8442b3ef521d29d100043f29fc57"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3987,7 +4039,8 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_22d590@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4005,7 +4058,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "e9b66272a5759bf047aa51a80eca2325622c3a47265a2f59d926c48fe698b8fe"
+      "inputs_sha256": "000d3da669624528ea161c7b4469141f68057882c5af142e7b9a375ddc510197"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4023,7 +4076,8 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_22d5e0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4041,7 +4095,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "d6c2e5dcd713b6fcc2af5087b28879d918c850dc6c4c1ad41bf3689e25ab4e08"
+      "inputs_sha256": "1cc0357b60e14898d8e1db49c18f5ed22242f33f44d28b81f79528d86722f3e5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4059,7 +4113,8 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_22d630@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4077,7 +4132,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "72e497f52d9e927740fe07476b4105f640edcadd2f1517acb376b49a59081bb6"
+      "inputs_sha256": "a214201d0fa2ebb1f8dbd11bc1a574a5a9ac8417ff44f42cf2416850d3ad8e5b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4092,16 +4147,19 @@
     "id": "array-remove-22d680",
     "size": 138,
     "offset": 2283136,
-    "rebuilt_symbol": "@array_remove_r22d680@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -4117,7 +4175,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x22d680, including RET. Incoming transfer decoded within analyzed function code at RVA 0x22e7e2. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "eb6dc51348b899002cecad58d34a23f154d3698c479c7af9bfacbcefb4aa029a",
-      "inputs_sha256": "6698f007a78e6d24330f7a61405b8a6f97d0bcd821590764aed11d0972f930c7"
+      "inputs_sha256": "19d451987117611ffec699fe524459b8336033221291ed91711644a23ff149ea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4132,16 +4190,19 @@
     "id": "array-remove-22d710",
     "size": 138,
     "offset": 2283280,
-    "rebuilt_symbol": "@array_remove_r22d710@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -4157,7 +4218,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x22d710, including RET. Incoming transfer decoded within analyzed function code at RVA 0x22e96a. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "bafe7ab2b69219ead9d78f14a321c018f484c74927d6036ea5e2703694ac74ec",
-      "inputs_sha256": "a6333c2ea12f3a2f9e4a78a73e4e617483b0d9d342b88b81bebfad355076198e"
+      "inputs_sha256": "ec96b5a9ed78d8670d2b8d1bb10db1b53132f221f49c3130635479433aec1a05"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4172,16 +4233,19 @@
     "id": "array-remove-22d7a0",
     "size": 138,
     "offset": 2283424,
-    "rebuilt_symbol": "@array_remove_r22d7a0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -4197,7 +4261,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x22d7a0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x22eab6. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "2013e7cafe13f785af6a1d8da210e9fb44a65921bd60172d07b17abc94eddc00",
-      "inputs_sha256": "c8172372ce79d6c8e6c0cd124f795ad2bb9456181d47b785be57495b5341493b"
+      "inputs_sha256": "d55b4336187e2167c017478259971b0c2488754d4ebeb0fb63a8a2fd16e3749f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4478,25 +4542,30 @@
     "offset": 2291664,
     "rebuilt_symbol": "@destroy_typed_r22f7d0@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r22e620@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 280159776,
-        "basis": "The member range remover at RVA 0x22e620 calls the rebuilt FArray::Remove at RVA 0x22d680, with element size 80, from RVA 0x22e7e2."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x22e620, which destroys elements then forwards element size 80 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x22f7d0; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 80 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x22f7d0; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "09bc4ef5c634ceec365cfaf9dcbf6d29fd5cd6bff0befb7626902297e848381c",
-      "inputs_sha256": "17315857ad9aabc8ccfdd56a5cd6f6f7f4112911343b37efa18aba2dc7b29c7c"
+      "inputs_sha256": "92ef70b432c86d120b7eb6a5492f967b5496d802328b531f242e70e1379c00ad"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4513,25 +4582,30 @@
     "offset": 2291728,
     "rebuilt_symbol": "@destroy_typed_r22f810@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r22e7f0@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 280160240,
-        "basis": "The member range remover at RVA 0x22e7f0 calls the rebuilt FArray::Remove at RVA 0x22d710, with element size 48, from RVA 0x22e96a."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x22e7f0, which destroys elements then forwards element size 48 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x22f810; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 48 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x22f810; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "846ce33d82dc23e11cd9cc2c993b888e69f2a13d20b7ddb77a334c24753f47cc",
-      "inputs_sha256": "050db3e904c998adcb2c35960a95b9b3dbfd7eb8c66bf5d9459d2e84c913756d"
+      "inputs_sha256": "dd804c0956b24cc682b3bfdba3aabe7022da73f344fca0baeb8155c114b8ccf2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4548,25 +4622,30 @@
     "offset": 2291792,
     "rebuilt_symbol": "@destroy_typed_r22f850@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r22e980@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 280160640,
-        "basis": "The member range remover at RVA 0x22e980 calls the rebuilt FArray::Remove at RVA 0x22d7a0, with element size 44, from RVA 0x22eab6."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x22e980, which destroys elements then forwards element size 44 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x22f850; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 44 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x22f850; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "35d71fa532caadb8a87d7c635e04dcf37ace347e2fa9b2596e8f0101d4a619b1",
-      "inputs_sha256": "ee9d63214b85b076552918f20c7b8e739c1456762578ead778a3c0d7ce44ff77"
+      "inputs_sha256": "6d005e035ac55b231bf620e695d7bbd26b062f221ca03e31157f04d54daab959"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

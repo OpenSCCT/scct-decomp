@@ -1,11 +1,7 @@
 /* The stock layout uses the first active viewport. A normalized dimension
    scales with its parent when requested, or with the viewport otherwise. */
-struct gui_component;
-typedef float (__fastcall *dimension_query)(struct gui_component *);
-struct gui_methods {
-    void *earlier[26];
-    dimension_query width, height, left, top;
-};
+#include "versus_gui_component.h"
+
 struct display_viewport {
     unsigned char prefix[0xa0];
     int width, height;
@@ -23,21 +19,6 @@ struct gui_context {
     unsigned char prefix[0x30];
     const struct gui_session *session;
 };
-struct gui_component {
-    const struct gui_methods *methods;
-    unsigned char before_context[0x24];
-    const struct gui_context *context;
-    struct gui_component *parent;
-    unsigned char before_flags[0x2c];
-    unsigned int bound_to_parent : 1;
-    unsigned int scale_to_parent : 1;
-    unsigned char before_placement[0x10];
-    float top, left, width, height;
-};
-
-/* Link addresses of the pooled 0.0f and 1.0f constants in Steam build 252084. */
-#define no_dimension (*(const float *)0x10c109f8u)
-#define normalized_limit (*(const float *)0x10c109fcu)
 
 float __fastcall gui_actual_width(struct gui_component *self)
 {
@@ -45,8 +26,8 @@ float __fastcall gui_actual_width(struct gui_component *self)
     const struct display_viewport *view;
     if (!context || !context->session || !context->session->display ||
         !context->session->display->viewport_count || !(view = context->session->display->viewports[0]))
-        return no_dimension;
-    if (self->width <= normalized_limit) {
+        return 0.0f;
+    if (self->width <= 1.0f) {
         struct gui_component *owner;
         if (self->scale_to_parent && (owner = self->parent))
             return self->width * owner->methods->width(owner);
@@ -61,8 +42,8 @@ float __fastcall gui_actual_height(struct gui_component *self)
     const struct display_viewport *view;
     if (!context || !context->session || !context->session->display ||
         !context->session->display->viewport_count || !(view = context->session->display->viewports[0]))
-        return no_dimension;
-    if (self->height <= normalized_limit) {
+        return 0.0f;
+    if (self->height <= 1.0f) {
         struct gui_component *owner;
         if (self->scale_to_parent && (owner = self->parent))
             return self->height * owner->methods->height(owner);

@@ -4,14 +4,17 @@
     "size": 43,
     "offset": 2163344,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r210290@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -19,7 +22,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "c6497af95839384e8c4a7e105ea145da513c9f46a590c1ca87ecdc8ed3868844"
+      "inputs_sha256": "40d4b815f779330b946250eec42dc2a08459494210047f4b8f74b2f12a8d2fb7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -38,7 +41,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r2102f0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -56,7 +60,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x2102f0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "484f33380679bd6f7e235d3b3f59bca881b6b5b7a221f973aaf75f14cca7c5ec"
+      "inputs_sha256": "5e36ef6ae94a7594a8f5e59607eb7c282ff0aaaca6c93a2d221675051d2e9d89"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -74,7 +78,8 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_210320@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -92,7 +97,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "ba48999a810eb1867d0e105dd12ecbb9ea402c0dcfce57168a580378f08daf34"
+      "inputs_sha256": "5bc3dc6b66bad758e811e5b1772e9916b9af2ce2d412c9490c101bfeff0b70e3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -111,7 +116,8 @@
       "src/campaign_aligned_array_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_210370@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -129,7 +135,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Resets the count and resizes the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "c92ec39039b40cef4edbe972b1e3cf4255142b9709fb68d13f6698d040a02a68",
-      "inputs_sha256": "948f46bb93483db10426898598d6c079c35ad051ab1462ef5c5f39e9529a9ca8"
+      "inputs_sha256": "c2eb26a45c479af90acb051673c0ff3ba8367804e9540794e472a1a1069ccf7d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -144,16 +150,19 @@
     "id": "array-remove-2103b0",
     "size": 138,
     "offset": 2163632,
-    "rebuilt_symbol": "@array_remove_r2103b0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -169,7 +178,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x2103b0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x21097b. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "ae8e5593c367f36f88e76376b437ccb82ecdc4b1213d5f03c26e5dc07eb6c083",
-      "inputs_sha256": "ccb12686dc0e4a947392ad0dceb4f2a6e22fddce1049183a9ceb727e1daa970a"
+      "inputs_sha256": "5b6cd66e596c22cb42114f62e976f7e33f3bd752ee993b4809ddb7a009eee804"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -189,7 +198,8 @@
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_record_arrays.obj src/campaign_record_arrays.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -207,7 +217,7 @@
     "identification": "Stock FArray operation at RVA 0x210440. Its independent function extent agrees with the compiler contribution and the allocation tag is shared with other matched operations. Record size is 32 bytes. Appends an uninitialized slot and returns its address.",
     "match": {
       "bytes_sha256": "0b129acf7851d65d00882afd5693d5a2e7322ac97f82f4bac6591aef386f58c6",
-      "inputs_sha256": "07ab50ac18e6ef5dafc051f8402f659017446b2097c068fcff03dffb3c8eb3d3"
+      "inputs_sha256": "96212df5975c3d7cc584f3dbc6bc3804111d4990cbc79eb4573d0f87ae79229f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -345,25 +355,30 @@
     "offset": 2166560,
     "rebuilt_symbol": "@destroy_typed_r210f20@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r2108f0@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 280037616,
-        "basis": "The member range remover at RVA 0x2108f0 calls the rebuilt FArray::Remove at RVA 0x2103b0, with element size 32, from RVA 0x21097b."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x2108f0, which destroys elements then forwards element size 32 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x210f20; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 32 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x210f20; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "bf509fa37387ae72a52561deab2e0517856c6b87a21699005a2a3097b7835c4c",
-      "inputs_sha256": "f3d26356de3fbc62b3530c054b6e0a55df8b39b8748d0b9fcba402e402cf0f97"
+      "inputs_sha256": "c694577202e1bf7faa737a788952e8bb38aef3492ee817d628b34070ecb7f124"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -372,6 +387,30 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "id": "campaign-leaf-211420",
+    "offset": 2167840,
+    "size": 1,
+    "rebuilt_symbol": "@destroy_211420@4",
+    "inputs": [
+      "src/campaign_leaf_211420.c"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_211420.obj src/campaign_leaf_211420.c",
+    "identification": "Empty record cleanup helper at VA 0x10b11420. The matched scalar-delete routine delete-record-1cdec0 calls it on the receiver before checking the release flag. The retail body is a one-byte ret.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "inputs_sha256": "0e888730b56ddfe81911fd0e2ddb93834d4b8c5593300d6edbc94fb40514671f"
     }
   },
   {
@@ -775,7 +814,9 @@
     "size": 18,
     "offset": 2175296,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_213140@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -790,10 +831,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x44e060 before installing the methods table at RVA 0x7de330. Its first slot points to function RVA 0x213390. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x44e060 before installing the methods table at RVA 0x7de330. Its first slot points to function RVA 0x213390. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "061fe4ce29d244303775f0109c436db6c4920b008f1f02840ad0af62fd39e12b",
-      "inputs_sha256": "8c7bfe96a7554f4cf8cce2d897a8b0b884d0d3f4fdaa83f80d76cab22fdb90eb"
+      "inputs_sha256": "5ed21aff001324ed239d6167f973da18915f4b4efc04fd064adf1b3db4ae5b10"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -988,7 +1029,7 @@
     "rebuilt_symbol": "_release_2133c0",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x2133a7 in the independently delineated function at RVA 0x213390. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x2133a7 in the independently delineated function at RVA 0x213390. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_90b6c4": {
         "va": 287356612,
@@ -1009,7 +1050,7 @@
     },
     "match": {
       "bytes_sha256": "b441b43d0ef723ed101f720e567d89d592c6986ea6319c624f618cd2511eac65",
-      "inputs_sha256": "b70ec917468dc20a83807862b84030de0a4cd32854e0cee7ca53cca21669d6b8"
+      "inputs_sha256": "b2eae72e612f7ac4e967d568aa57fb55189f539666131356384e4648f41ff30a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1030,10 +1071,10 @@
     "rebuilt_symbol": "@contains_2133f0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x2133cb in the independently delineated function at RVA 0x2133c0. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x2133cb in the independently delineated function at RVA 0x2133c0. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "21967fc3921de87da5c0d94c4edd9a9632dd9b21f8f2b14ea325069e6aea0c19"
+      "inputs_sha256": "cbdc3c449889e6aceabd90ae444c041ca23389192aeb7b9dea858a9cdfdc8402"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1088,10 +1129,10 @@
     "rebuilt_symbol": "@pop_213470@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x21345d in the independently delineated function at RVA 0x213430. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x21345d in the independently delineated function at RVA 0x213430. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "9893cb17820381725c9879e9fb2fc01b949f0037ee3587e01b125eaa8f3c532a"
+      "inputs_sha256": "9a21f8fc2588323bb3892fa84bfc20c1ba03a107b08f7817d8feba7f940f4da4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1107,25 +1148,27 @@
     "size": 25,
     "offset": 2176448,
     "inputs": [
-      "src/campaign_element_allocation.c"
+      "src/campaign_element_allocation.cpp",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@allocate_16@8",
+    "rebuilt_symbol": "?Allocate@?$TContainerAllocator@UUnkType_10b135c0@@@@QAEPAUUnkType_10b135c0@@I@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 287455708,
         "basis": "Writable allocation label passed as the second allocator argument."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Campaign shared buffer allocator."
       }
     },
-    "identification": "Complete aligned typed allocation method at RVA 0x2135c0; converts the element count into bytes at a stride of 16, loads the allocation label and returns the shared allocator result.",
+    "identification": "Complete aligned typed allocation method at RVA 0x2135c0; converts the element count into bytes at a stride of 16, loads the allocation label and returns the shared allocator result. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "de309f1a00fd75f5cfa544b807b745dea0b68bda02565be0c8458553938e4b5d",
-      "inputs_sha256": "c018955ad3eeeea3318f23a062d3051af1ef0d7d18101e9a3cedabe1e7ba01c9"
+      "inputs_sha256": "1631eb5218f6deb5d96185a18ca549f5638572f6c20870a468f01a9fc603d7b8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1141,25 +1184,27 @@
     "size": 25,
     "offset": 2176512,
     "inputs": [
-      "src/campaign_element_allocation.c"
+      "src/campaign_element_allocation.cpp",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@allocate_16@8",
+    "rebuilt_symbol": "?Allocate@?$TContainerAllocator@UUnkType_10b13600@@@@QAEPAUUnkType_10b13600@@I@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 287455708,
         "basis": "Writable allocation label passed as the second allocator argument."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Campaign shared buffer allocator."
       }
     },
-    "identification": "Complete aligned typed allocation method at RVA 0x213600; converts the element count into bytes at a stride of 16, loads the allocation label and returns the shared allocator result.",
+    "identification": "Complete aligned typed allocation method at RVA 0x213600; converts the element count into bytes at a stride of 16, loads the allocation label and returns the shared allocator result. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "3c26fb903047f814c79723cbe167745d2f70a8e89764ad0dd030f8adbf2d5f96",
-      "inputs_sha256": "e505017bbb862c8e6fca66fcd0fe70c97ac83c33576cddfd96f1a6d9ed026da3"
+      "inputs_sha256": "993800dd095a56a94ade39f8be5674b65f35f8d235a80c174dcb57974d2dfdb9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1498,10 +1543,10 @@
         "basis": "Retail call target, method table or global referenced by the complete function."
       }
     },
-    "identification": "Complete indexed Campaign scalar deleting destructor RVA 0x213a10: basic_string storage; releases a heap buffer, resets the small-string state and conditionally releases the object.",
+    "identification": "Complete indexed Campaign scalar deleting destructor RVA 0x213a10: basic_string storage; releases a heap buffer, resets the small-string state and conditionally releases the object. The local type name StringDeleteFlags is analyst-invented for the 32-bit scalar delete flags argument.",
     "match": {
       "bytes_sha256": "69739e6c443ecfff3c6bb7bb9367184f08a3d2a78bbe5ccc5c4640f2750cd5ad",
-      "inputs_sha256": "e36b80b06255df5ec5c9df39e934037114d3cb0cdda27d209d6264852cced44e"
+      "inputs_sha256": "9851e36e509eb850a446fecb53f03360ce6414aa34138769a142b7e13eeb751b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1736,10 +1781,10 @@
     "rebuilt_symbol": "@contains_213c10@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x213beb in the independently delineated function at RVA 0x213be0. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x213beb in the independently delineated function at RVA 0x213be0. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "6176f64d43d84878a20856cb5cdc6ee02ac36b0547caeefe662b0ac5b8c6a540"
+      "inputs_sha256": "7d6d40ff055d9c9c8214ef0fb93985a0e940ad9ef03d49a9dcbd96389833da67"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1794,10 +1839,10 @@
     "rebuilt_symbol": "@pop_213c90@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x213c7d in the independently delineated function at RVA 0x213c50. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x213c7d in the independently delineated function at RVA 0x213c50. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "f018d1b504cf28931911961d60df1014a7c836b6a0c3542f4069c9c7d6a0d911"
+      "inputs_sha256": "d51d28fb84d503d94bdacc895fdd23f84a285871297e60daf4fa0ad1442a8ef9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1991,7 +2036,9 @@
     "size": 18,
     "offset": 2178832,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_213f10@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2006,10 +2053,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x44ecc0 before installing the methods table at RVA 0x7de394. Its first slot points to function RVA 0x213f40. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x44ecc0 before installing the methods table at RVA 0x7de394. Its first slot points to function RVA 0x213f40. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "0091c9ee2be961bd5b9668c6d190f3fd22ddabcaf6a097791837fe8a035e5d68",
-      "inputs_sha256": "668f06e6d1fb94b1a7608df9ea54402f3e90db0578dfeaa3c3a055c1bec5cbb4"
+      "inputs_sha256": "5beb4c6d3eaa0edbf64b7b7860228bdacc3361a7227dc02afc2669a982dc4bf3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2064,7 +2111,7 @@
     "rebuilt_symbol": "_release_213f60",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x213f50 in the independently delineated function at RVA 0x213f40. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x213f50 in the independently delineated function at RVA 0x213f40. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_923a04": {
         "va": 287455748,
@@ -2085,7 +2132,7 @@
     },
     "match": {
       "bytes_sha256": "34eb91d47cf5a172f6950fe1b8be1756ead41775308541b1aa49bd89af1998eb",
-      "inputs_sha256": "d196681c218c00c609a5109cd411201021bfc0bece48670952928ecfe7129175"
+      "inputs_sha256": "c383db83b1729a42b4f7327222fe0f17100cee0e57d2939be229a22108fdfc94"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2106,10 +2153,10 @@
     "rebuilt_symbol": "@contains_213f90@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x213f6b in the independently delineated function at RVA 0x213f60. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x213f6b in the independently delineated function at RVA 0x213f60. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "d7edb013a070175a4ab618338a368ef7529d7fc5e18f5b9f675adc75583061e1"
+      "inputs_sha256": "ee6d88859f27281cda162d783a5518c4b69c623c9c3facdb1d00bea909cf4e05"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2164,10 +2211,10 @@
     "rebuilt_symbol": "@pop_214010@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x213ffd in the independently delineated function at RVA 0x213fd0. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x213ffd in the independently delineated function at RVA 0x213fd0. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "6c608c0c243f1b9c98e2cd304b12d3505319d1c5e3bd32a64c552e1f77ef287e"
+      "inputs_sha256": "d2d94bcd6d0276ab7693130b43e023d58f8fa47c3b28c8e5bc21cd0d548ecb4e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2183,29 +2230,32 @@
     "size": 81,
     "offset": 2179120,
     "inputs": [
-      "src/campaign_vector_noreturn.c"
+      "src/campaign_vector_noreturn.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?InitializeChecked@?$CampaignVectorStorage@UUnkType_10b14030@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_noreturn.obj src/campaign_vector_noreturn.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_noreturn.obj src/campaign_vector_noreturn.cpp",
     "link_bindings": {
-      "@vector_length_error@4": {
+      "?LengthError@?$CampaignVectorStorage@UUnkType_10b14030@@@@AAEXXZ": {
         "va": 280051136,
         "basis": "Direct call to the vector length exception constructor and throw routine."
       },
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 287455708,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x214030. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x214030. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "1c27709ceca70bf6c18f6fa4642fa88586bc98c62b64905ec7f3f6d385698c74",
-      "inputs_sha256": "2b30437729f8afa1276e2afffcc11a8348b94657dcbd5da8c258f34381a3a54a"
+      "inputs_sha256": "47f1889bbb7db13a1c3723b3172a85cc34685610a3b4b1315ad1bf821708ec84"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2221,29 +2271,32 @@
     "size": 81,
     "offset": 2179216,
     "inputs": [
-      "src/campaign_vector_noreturn.c"
+      "src/campaign_vector_noreturn.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?InitializeChecked@?$CampaignVectorStorage@UUnkType_10b14090@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_noreturn.obj src/campaign_vector_noreturn.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_noreturn.obj src/campaign_vector_noreturn.cpp",
     "link_bindings": {
-      "@vector_length_error@4": {
+      "?LengthError@?$CampaignVectorStorage@UUnkType_10b14090@@@@AAEXXZ": {
         "va": 280051248,
         "basis": "Direct call to the vector length exception constructor and throw routine."
       },
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 287455708,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x214090. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x214090. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "9a8e894513b754309519ee3b1c6160fb64cc934d70f998d9749c6194a4b9f42b",
-      "inputs_sha256": "dcfbca20d196813bfe92ae4caad62ff7d4e63499ca1fc07435e627af2cf657d8"
+      "inputs_sha256": "c8c8d8a367baa3765831d488158892e0536dcd39841896820ba2c3d6f0962a05"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3187,25 +3240,27 @@
     "size": 25,
     "offset": 2214464,
     "inputs": [
-      "src/campaign_element_allocation.c"
+      "src/campaign_element_allocation.cpp",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@allocate_16@8",
+    "rebuilt_symbol": "?Allocate@?$TContainerAllocator@UUnkType_10b1ca40@@@@QAEPAUUnkType_10b1ca40@@I@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 287495060,
         "basis": "Writable allocation label passed as the second allocator argument."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Campaign shared buffer allocator."
       }
     },
-    "identification": "Complete aligned typed allocation method at RVA 0x21ca40; converts the element count into bytes at a stride of 16, loads the allocation label and returns the shared allocator result.",
+    "identification": "Complete aligned typed allocation method at RVA 0x21ca40; converts the element count into bytes at a stride of 16, loads the allocation label and returns the shared allocator result. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "74eceb236c45fcbe418b25065d7a027e7a8366fb52894ab02f62aebcaffaa425",
-      "inputs_sha256": "e9b6b55343993c42af83cc8da7103d30facf72dac58716fe2cfbfcdd2edc81ac"
+      "inputs_sha256": "aee8117cb8965ca92f3874e7704e24c67054b3c0207060ed7ec0b5d103508cc1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3373,7 +3428,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x21cb00. Range-state initialization; saves the starting position in two fields, zeroes the count and saves the context.",
     "match": {
       "bytes_sha256": "a8e5f26e6c1884573c460aaf474eb5f467ef11baf59527860a70fcc153a1bd43",
-      "inputs_sha256": "b1c2eff9bf909b2743219f6e1c1c82139d5220918b8234861ece7aaf347f6309"
+      "inputs_sha256": "d475d5003f5808e7475413bb0862db78d5b28aa592d57d5b57808dc14d5c8e31"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3397,7 +3452,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x21cb20. Range-state initialization; saves the starting position in two fields, zeroes the count and saves the context.",
     "match": {
       "bytes_sha256": "a8e5f26e6c1884573c460aaf474eb5f467ef11baf59527860a70fcc153a1bd43",
-      "inputs_sha256": "9b77265d52f7ead080a2e3babbce180490810ff2541ef3f0e56ed979b8d8cb44"
+      "inputs_sha256": "23ef65ec4176cf5e449399fee47fdbe3570d0123631882b9bfaa94ce663241b1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3421,7 +3476,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x21cb40. Range-state initialization; saves the starting position in two fields, zeroes the count and saves the context.",
     "match": {
       "bytes_sha256": "a8e5f26e6c1884573c460aaf474eb5f467ef11baf59527860a70fcc153a1bd43",
-      "inputs_sha256": "81e2781507008da3b1cac5a6b63706e5decb42d287a479b2f3035ea97fac203d"
+      "inputs_sha256": "ab5b7db52a3bf119605ccfae2efd90de79409f32679eb9de210c2d2cc96af350"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3445,7 +3500,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x21cb60. Range-state initialization; saves the starting position in two fields, zeroes the count and saves the context.",
     "match": {
       "bytes_sha256": "a8e5f26e6c1884573c460aaf474eb5f467ef11baf59527860a70fcc153a1bd43",
-      "inputs_sha256": "7f5df862f1c292d73f2bf624758efe8acbdba9f86efbec367e84d1da83a3998f"
+      "inputs_sha256": "7bef56fd51f7b83febcd0d826143b5854ac9e5c4bbde77f2aca437f72cb9a4d4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3469,7 +3524,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x21cb80. Range-state initialization; saves the starting position in two fields, zeroes the count and saves the context.",
     "match": {
       "bytes_sha256": "a8e5f26e6c1884573c460aaf474eb5f467ef11baf59527860a70fcc153a1bd43",
-      "inputs_sha256": "cd37249c7434b8646eed3777b6bcf48f1212f199807ae28faad56ae8ef79a9ba"
+      "inputs_sha256": "e0609ad097a71e93b48cbc28c100ae81dfb7fc4e5c35d4d2899c8cdfdc139a6f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4173,7 +4228,7 @@
     "identification": "Direct call at RVA 0x21d1a9 in the independently delineated function at RVA 0x21d170. Copies a 16-byte record into a non-null destination. Majority choice, not evidence: Record4 takes the majority name data and spelling unsigned int, and Record16 takes the majority spelling unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "87a36aa7f113bd8b810a76ff56e4c70e1db75189a979ea35d2ada371e4c8c98c",
-      "inputs_sha256": "b82821b5ca0f1a554bad689270a0c9754ccdf3268d9b5c198209cef32c299bcb"
+      "inputs_sha256": "13711ba25124d3c822691d976bb0e374805f6c4647d346f63f20d40ace114b2d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4197,7 +4252,7 @@
     "identification": "Direct call at RVA 0x21d219 in the independently delineated function at RVA 0x21d1e0. Copies a 16-byte record into a non-null destination. Majority choice, not evidence: Record4 takes the majority name data and spelling unsigned int, and Record16 takes the majority spelling unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "87a36aa7f113bd8b810a76ff56e4c70e1db75189a979ea35d2ada371e4c8c98c",
-      "inputs_sha256": "b42df6eb593bf2c7cf4b17f6b1b33ce8ba43d9e79b63dd4ea81823f2a90d88cf"
+      "inputs_sha256": "f1102afed51587a0e49f1be20e9263541adc06b00a858e7d3b2cea6a80a194dc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4221,7 +4276,7 @@
     "identification": "Direct call at RVA 0x21d289 in the independently delineated function at RVA 0x21d250. Copies a 16-byte record into a non-null destination. Majority choice, not evidence: Record4 takes the majority name data and spelling unsigned int, and Record16 takes the majority spelling unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "87a36aa7f113bd8b810a76ff56e4c70e1db75189a979ea35d2ada371e4c8c98c",
-      "inputs_sha256": "5b7f85897ecf15607a4f76c208d5e83713509f98e892fa8e4574d379b829e7df"
+      "inputs_sha256": "f861e7175bf199fbbfcac65c569fdf30f8b7fcf3c88df8e615405ccde0b6d522"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4245,7 +4300,7 @@
     "identification": "Direct call at RVA 0x21d2f9 in the independently delineated function at RVA 0x21d2c0. Copies a 16-byte record into a non-null destination. Majority choice, not evidence: Record4 takes the majority name data and spelling unsigned int, and Record16 takes the majority spelling unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "87a36aa7f113bd8b810a76ff56e4c70e1db75189a979ea35d2ada371e4c8c98c",
-      "inputs_sha256": "82dd9172a851e53dd6845bbeeb6afb573534a0d72700b3b882762eeeda07bec4"
+      "inputs_sha256": "aa0c03885bb54ed71e535ce81825866ffac3ca8a3dc80dddbeddcbece450dfbf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4269,7 +4324,7 @@
     "identification": "Direct call at RVA 0x21d369 in the independently delineated function at RVA 0x21d330. Copies a 16-byte record into a non-null destination. Majority choice, not evidence: Record4 takes the majority name data and spelling unsigned int, and Record16 takes the majority spelling unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "87a36aa7f113bd8b810a76ff56e4c70e1db75189a979ea35d2ada371e4c8c98c",
-      "inputs_sha256": "131f669ffdb66c794019dce8d42ca750ac69963ba426f20db3e3092b1013e85d"
+      "inputs_sha256": "aced64889c86f530b509d4ad6f50bd590a96abfe547217775147e4dc06f94577"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4311,7 +4366,7 @@
     "identification": "Uninitialized copy into vector storage: build each element from the source range through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "94940af7c7e71b0fbe151abdb13c7be37f2aa0f82aca12583917da6647652b1c",
-      "inputs_sha256": "8820befd36515cd721c54bb6ba92ae8111823cfb0e2c490673dba8ffb7fc263f"
+      "inputs_sha256": "82cef855cbebed6e7e53e67cdfb454f853dd9cc6289d2dfa8ded6fbf2c113f52"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4321,6 +4376,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4354,7 +4412,7 @@
     "identification": "Uninitialized copy into vector storage: build each element from the source range through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "4c70d132ba614579a9dc3eb4ff55b9bae0514f556a4ee01785de175c4ccc1a69",
-      "inputs_sha256": "e9a444f7a98c2e16046f06c761fa07a9d58ca7932d4558c557a714cb91ce1390"
+      "inputs_sha256": "8dfee395a0137a7acee6b022c737a4b5ab197bf18faf4767349341a10e69cac8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4364,6 +4422,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4397,7 +4458,7 @@
     "identification": "Uninitialized copy into vector storage: build each element from the source range through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "027d5285b6cf07f70558c61cba9f54c16429b0ce290195d19404af5215a60d13",
-      "inputs_sha256": "35a84d8b6a7add2048187694e20437a9360443182394b9e4995a4ff9c2b3ab53"
+      "inputs_sha256": "cbfcecf923c8591a13fd2d8aa0492ce9fc63c971dee805c5044efc315b4c667e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4407,6 +4468,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4440,7 +4504,7 @@
     "identification": "Uninitialized copy into vector storage: build each element from the source range through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "b3c80715c53488c90dd6d9b0c416145c9e886e1a2b2acb682c4939d23ab1d5fe",
-      "inputs_sha256": "47895f34384644ebf0ff4531b69112f302bbe786598b0aba644f3dda93b4d054"
+      "inputs_sha256": "89fe4a2ed375e767231a051cb618ec458ac060c99ba7f7c6f538c0161683ce6b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4450,6 +4514,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4483,7 +4550,7 @@
     "identification": "Uninitialized copy into vector storage: build each element from the source range through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "2cee28c26e1b82cd41e3e8c04e57d5c16a3702460d2a0b48f8c82cd1c43c9c01",
-      "inputs_sha256": "3b966a37a54def16186fcff82dc18ab29c3d667504366877daebc289bccc174e"
+      "inputs_sha256": "ad79b6e78d978dc756ff9ef42bada0619b3c831dfc5a7a79d622a236f53b81d4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4493,6 +4560,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4526,7 +4596,7 @@
     "identification": "Uninitialized fill of vector storage: build each element through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "5e96af78651c6f20366ed4f4d0ea5ef7f944aab93cf713394aba97c959e44577",
-      "inputs_sha256": "c35b0ea4a92e2a0992162f8890bb136bc5e764c2e185d65db8c2ce883eb27674"
+      "inputs_sha256": "3638002a96c94fc5bc37b757ec64365d7c46d9d0ea4215179f3d10c64b012b93"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4536,6 +4606,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4569,7 +4642,7 @@
     "identification": "Uninitialized fill of vector storage: build each element through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "efb899aeb065c09917de735a616c1fc614182bb5658538a7bdf71240fda6c3f7",
-      "inputs_sha256": "27a399b1e62535388673ff33564f6513b4bc05eae001451801db79b725cdec4c"
+      "inputs_sha256": "006a708b9ab4948d65be73081da27c9a60cc2b66491fd5b2c8756e7e9a9f0f44"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4579,6 +4652,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4612,7 +4688,7 @@
     "identification": "Uninitialized fill of vector storage: build each element through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "9c7eda470c9729ad7ee0e30a128cdce0e28db9d62c6702b3fe501befbfe97f1b",
-      "inputs_sha256": "14a33bed2e733b84392f279bd59f5c1348df63fa48c34df2351d31c5f602407a"
+      "inputs_sha256": "06e95c3ced9e66040bbca00733abedab8d92d64f97c24e3df9c6d390ad14a80d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4622,6 +4698,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4655,7 +4734,7 @@
     "identification": "Uninitialized fill of vector storage: build each element through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "3f778ddce87c0367248e968bf566ea20d0b72c6f934a0f24b9fe60e75029a2a8",
-      "inputs_sha256": "1c8b5dd67e8fe26c1a60d644dd58203683f8023b910c242d0bcf45af901f394b"
+      "inputs_sha256": "ab001cc28950740c9c37d62f9429e5cf0c88451ee0538473f51237d1bd21743f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4665,6 +4744,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -4698,7 +4780,7 @@
     "identification": "Uninitialized fill of vector storage: build each element through the out-of-line allocator construct inside a catch-all region whose catch block rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "4c1c42d569c06471a28639c4a79b5aab029c4c7befa0300309db47a959775e90",
-      "inputs_sha256": "409ba76ac9f0e43fba476d684b9b7eff84322c40b1ba4c2b5188687522885261"
+      "inputs_sha256": "69f9c6d6985cf38593fe7101c8224a771b3e213ba6884a5b625ca6bc60ca7e62"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4708,6 +4790,9 @@
         "/EHa"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "system_headers": {
+      "stddef.h": "d7b558f210a48ea34e92d9c218e9a2ca397f57bb2d55a25f52ed74ccc1e232d7"
     }
   },
   {
@@ -5524,7 +5609,8 @@
     "size": 78,
     "offset": 2222624,
     "inputs": [
-      "src/campaign_pool_reserve.c"
+      "src/campaign_pool_reserve.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "@reserve_21ea20@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5539,10 +5625,10 @@
         "basis": "Direct call appending the four-word descriptor."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 28 bytes per entry, appends the new descriptor through RVA 0x21e7f0, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 28 bytes per entry, appends the new descriptor through RVA 0x21e7f0, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "ee1e21436dc921c758aa3dd1aee56fce473f54ee81376bed3a5870e5c44c2713",
-      "inputs_sha256": "07edca9f1703c196541146a505cc70278e8e7db9fe7c8295b5c7b9ef5fa15689"
+      "inputs_sha256": "e7991e4f5253a10e34879f404676469662f0b4787281cf4fdb23bb6f200b46e4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5558,7 +5644,8 @@
     "size": 78,
     "offset": 2222704,
     "inputs": [
-      "src/campaign_pool_reserve.c"
+      "src/campaign_pool_reserve.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "@reserve_21ea70@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5573,10 +5660,10 @@
         "basis": "Direct call appending the four-word descriptor."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 28 bytes per entry, appends the new descriptor through RVA 0x21e860, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 28 bytes per entry, appends the new descriptor through RVA 0x21e860, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "ee9fd2d19b86ebb74e6d170b62896bcd0639e1455f660cd921403209b48d419d",
-      "inputs_sha256": "45e84c14092141058f09720abb9ff4da47ecee7b1f7c936c36acfe3d2f2220dd"
+      "inputs_sha256": "5f63ab399f735e41d0f18575a9945a658d69c2e617e8207bc63faa629436d6ad"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5592,7 +5679,8 @@
     "size": 80,
     "offset": 2222784,
     "inputs": [
-      "src/campaign_pool_reserve.c"
+      "src/campaign_pool_reserve.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "@reserve_21eac0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5607,10 +5695,10 @@
         "basis": "Direct call appending the four-word descriptor."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 8 bytes per entry, appends the new descriptor through RVA 0x21e8d0, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 8 bytes per entry, appends the new descriptor through RVA 0x21e8d0, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "5333864a2241b6b493ce5c3fe2451bb6e6e298189a72aa895b840e3c35a41272",
-      "inputs_sha256": "2cca8481396b1ee3a46fa51b8ed7b079ec09fe6f260fdd9c01642beced964f40"
+      "inputs_sha256": "d34fb8fe2c83441522f1a7ae5bb9edf4af1aa04f0afd9218742aa2a71f4754dc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5626,7 +5714,8 @@
     "size": 78,
     "offset": 2222864,
     "inputs": [
-      "src/campaign_pool_reserve.c"
+      "src/campaign_pool_reserve.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "@reserve_21eb10@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5641,10 +5730,10 @@
         "basis": "Direct call appending the four-word descriptor."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 52 bytes per entry, appends the new descriptor through RVA 0x21e940, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 52 bytes per entry, appends the new descriptor through RVA 0x21e940, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "2b2bfdaef0508c2c90b8b52657ab1c3e43bb1aa712b5dfc6de1b69e87c5634cb",
-      "inputs_sha256": "157d568a3aab2eb55f973254895eb47fb0e7937d78c8fe81acbca73007bac24b"
+      "inputs_sha256": "cb6955e47b89d87028c3b0ae976afd25d38903f459db875cf3db63ba7255b4ca"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5660,7 +5749,8 @@
     "size": 79,
     "offset": 2222944,
     "inputs": [
-      "src/campaign_pool_reserve_extra.c"
+      "src/campaign_pool_reserve_extra.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "@reserve_21eb60@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5675,10 +5765,10 @@
         "basis": "Direct call appending the four-word descriptor."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 40 bytes per entry, appends the new descriptor through RVA 0x21e9b0, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 40 bytes per entry, appends the new descriptor through RVA 0x21e9b0, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "2bc2228c8d4eeac46d41ff54e589ca5fd300ac1e872f715345f79eef98225fb8",
-      "inputs_sha256": "f40101d6341c35d4885f6b6ffee87acb1c48fab3a7ffec8fbd618d9e608fa326"
+      "inputs_sha256": "0e3eb45cea39286b45f7e0b716c7bce289a14753c023bfcf38decb1fce26d9ae"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5694,7 +5784,8 @@
     "size": 77,
     "offset": 2223104,
     "inputs": [
-      "src/campaign_pool_reserve.c"
+      "src/campaign_pool_reserve.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "_reserve_21ec00@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5713,10 +5804,10 @@
         "basis": "Static pool receiver with activation flag at offset sixteen."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 52 bytes per entry, appends the new descriptor through RVA 0x21e940, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 52 bytes per entry, appends the new descriptor through RVA 0x21e940, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "08da5ba5dfb5b96348a83ed8933e8ca5cae81679f4d3311e5b98aa8f5e9b42e5",
-      "inputs_sha256": "9d39b02926b358eb41a7a721e46aaebd60f69a41d1ef9a0a0e884d956036c3b0"
+      "inputs_sha256": "f0ea75dc982d2e1a649c1895f8f2b04ce472e8ce0531b74a17e2f74d03c63d51"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5732,7 +5823,8 @@
     "size": 78,
     "offset": 2223184,
     "inputs": [
-      "src/campaign_pool_reserve.c"
+      "src/campaign_pool_reserve.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "_reserve_21ec50@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5751,10 +5843,10 @@
         "basis": "Static pool receiver with activation flag at offset sixteen."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 40 bytes per entry, appends the new descriptor through RVA 0x21e9b0, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 40 bytes per entry, appends the new descriptor through RVA 0x21e9b0, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "61ae639aeec4ef292c9b6a5c7be637945cc09f2a0b1e04a2d3acebe072670d66",
-      "inputs_sha256": "bbdc3632dc22ac0910b42f8c5d65235498243f5cb6407d87284cdb89d7600b95"
+      "inputs_sha256": "7b76afa173ffd489a2075673374fab2a2f2c2a56c4e44c161f39395bcb75e49f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5770,7 +5862,8 @@
     "size": 77,
     "offset": 2223264,
     "inputs": [
-      "src/campaign_pool_reserve.c"
+      "src/campaign_pool_reserve.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "_reserve_21eca0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5789,10 +5882,10 @@
         "basis": "Static pool receiver with activation flag at offset sixteen."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 28 bytes per entry, appends the new descriptor through RVA 0x21e860, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 28 bytes per entry, appends the new descriptor through RVA 0x21e860, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "340821886efa8bff547e203d78837e4de674572e6ccb9a67b6cc6bb5e8dd2115",
-      "inputs_sha256": "67cb291501bb8f70eabac4f3c942c7c8655d7c9836c749c0edca712ee0f6cdce"
+      "inputs_sha256": "c1d43600c0521449cb5e080cf1958c65574964f2ec85e7d0e78d8fff9d408390"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5808,7 +5901,8 @@
     "size": 79,
     "offset": 2223344,
     "inputs": [
-      "src/campaign_pool_reserve.c"
+      "src/campaign_pool_reserve.c",
+      "src/campaign_pool_reserve_types.h"
     ],
     "rebuilt_symbol": "_reserve_21ecf0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5827,10 +5921,10 @@
         "basis": "Static pool receiver with activation flag at offset sixteen."
       }
     },
-    "identification": "Default Ghidra extent. Allocates 8 bytes per entry, appends the new descriptor through RVA 0x21e8d0, then sets the pool activation flag.",
+    "identification": "Default Ghidra extent. Allocates 8 bytes per entry, appends the new descriptor through RVA 0x21e8d0, then sets the pool activation flag. The shared type names ReservationBlock, ReservationPool, PoolParameterWord, and ReservationBlockArg in campaign_pool_reserve_types.h are analyst-invented labels for the allocation block, block-list pool descriptor, 32-bit count/mode wrapper, and pointer argument wrapper.",
     "match": {
       "bytes_sha256": "9dd95c725231633aba2ce97cebc04e3879911acf623d9c5f9e809205c894e69c",
-      "inputs_sha256": "5b19c1c1eb2b38aa436ad78a24a00b61a7835ef6e6fe7d2261b44fa75a3eb5ce"
+      "inputs_sha256": "3803ce6491a06b7dbc2c4f8ec9dc8bcbdf4e9a77e06cde3d40398862a312fbac"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5966,29 +6060,32 @@
     "size": 81,
     "offset": 2227376,
     "inputs": [
-      "src/campaign_vector_noreturn.c"
+      "src/campaign_vector_noreturn.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?InitializeChecked@?$CampaignVectorStorage@UUnkType_10b1fcb0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_noreturn.obj src/campaign_vector_noreturn.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_noreturn.obj src/campaign_vector_noreturn.cpp",
     "link_bindings": {
-      "@vector_length_error@4": {
+      "?LengthError@?$CampaignVectorStorage@UUnkType_10b1fcb0@@@@AAEXXZ": {
         "va": 280091072,
         "basis": "Direct call to the vector length exception constructor and throw routine."
       },
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 287495100,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x21fcb0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x21fcb0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "57c1249ed5fbc39b29e954849a16e7e653f981ea4ad9dca14c0e22d037f75a92",
-      "inputs_sha256": "6debb8ae79f9cd339e3f193ee0425fd6e070af8bff71e335a37107267fc12543"
+      "inputs_sha256": "7337fd60c7467c69c596145fc651d6cd664495ddbc293facd86165e9036f7e64"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6042,7 +6139,8 @@
     "inputs": [
       "src/campaign_vm_game_callbacks.c",
       "src/campaign_game_callback.h",
-      "src/campaign_vm_frame.h"
+      "src/campaign_vm_frame.h",
+      "src/campaign_native_initializer.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vm_game_callbacks.obj src/campaign_vm_game_callbacks.c",
@@ -6059,7 +6157,7 @@
     },
     "match": {
       "bytes_sha256": "09fade72784b6ea4dd96480f6b029b75b4f8d92c1876f7ea436b60c5d8891b5e",
-      "inputs_sha256": "46a251708a0a3512d9e252932997dffd039e3fb7d6e87e8fd2ee009f16ab551a"
+      "inputs_sha256": "f4ad8b95730ec9e75de00cb84fb93cc88b7e7f8bfbfc812181800ae0f346939b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6139,7 +6237,7 @@
     "identification": "Class registration for USCMagmaInteractionMPGame at RVA 0x21fe40, called immediately after the class factory at RVA 0x2206f0 in the singleton initialization path. Sets superclass USCMagmaInteraction, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "8a1bbbd22e738c26606459c252f75a8a77813f44d131a442898a69750e38a21c",
-      "inputs_sha256": "771113064544993c24719ee4b4f637c4cef4dfabde68ff1acfa69f09728039eb"
+      "inputs_sha256": "054150bf48e4614f8799738f92719d2b06d5c089e0000f8f1d5893de4b35e8a0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

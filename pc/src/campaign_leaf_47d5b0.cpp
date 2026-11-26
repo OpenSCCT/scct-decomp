@@ -2,11 +2,7 @@
 // VA 0x10d9d560, then constructs the members at offsets 0 and 4 with the constructor at
 // VA 0x10d7ce90. All names are invented.
 
-class UnkType_10d9d560
-{
-public:
-    UnkType_10d9d560();
-};
+#include "campaign_leaf_49d560_base.h"
 
 class UnkType_10d7ce90
 {

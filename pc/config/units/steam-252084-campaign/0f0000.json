@@ -40,25 +40,30 @@
     "offset": 994224,
     "rebuilt_symbol": "@destroy_typed_r0f2bb0@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r0eab80@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 278834048,
-        "basis": "The member range remover at RVA 0xeab80 calls the rebuilt FArray::Remove at RVA 0xd8230, with element size 24, from RVA 0xeabbb."
+        "basis": "Calls the typed array's Remove implementation at RVA 0xeab80, which destroys elements then forwards element size 24 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0xf2bb0; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 24 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0xf2bb0; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "8135952b817c6911f107251bb334058a72511ebfc17e4647ef0c4556a978b943",
-      "inputs_sha256": "604a6d8e1ca54667702b8b242e75de472a282bfc2fa1e9fb782146e51fdc5c96"
+      "inputs_sha256": "41dd92c5928756438d799f0584647336aab359ecd1d8950047aef72ba53fd317"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -353,7 +358,8 @@
     "offset": 995920,
     "inputs": [
       "src/campaign_array_owner_cleanup.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@cleanup_0f3250@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -371,7 +377,7 @@
     "identification": "Default Ghidra range. Clears 8-byte elements through the independently rebuilt removal routine at RVA 0xd9db0. Both storage releases dispatch through the engine heap. Majority choice, not evidence: the StackWord union here takes the majority body unsigned value and float argument from the other copies; this source had int integer, and its code reads only the float member.",
     "match": {
       "bytes_sha256": "a8ef1063751f4284afd791da40f3b9fee7863edfaafb765c043ea745e06b3d05",
-      "inputs_sha256": "c0982a3c68754c5075018dc2abe53b4cd800885fe0d33be4aa5792f113623a15"
+      "inputs_sha256": "b73aaf06737c27ecaf8f1478ea77870d0e7182012b50992e2350bc8145145111"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -465,25 +471,30 @@
     "offset": 996256,
     "rebuilt_symbol": "@destroy_typed_r0f33a0@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r0eb920@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 278837536,
-        "basis": "The member range remover at RVA 0xeb920 calls the rebuilt FArray::Remove at RVA 0xe0590, with element size 16, from RVA 0xeb98a."
+        "basis": "Calls the typed array's Remove implementation at RVA 0xeb920, which destroys elements then forwards element size 16 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0xf33a0; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 16 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0xf33a0; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "89e019629f5d2bd75bee5e2c05039d8b932411d96a0eec69d810ea458b658b34",
-      "inputs_sha256": "5f58e36d7b1ccf17b6206268b2ec288174a980d9eec33a6b6ee63acd45904677"
+      "inputs_sha256": "cc355b523599b0ce05758a72e1a9bfa45061d2f7ef5f0cd0b711824d0ac90ad1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -539,7 +550,9 @@
     "offset": 996784,
     "inputs": [
       "src/campaign_array_member_deletion.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_array_member_0f35b0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -557,7 +570,7 @@
     "identification": "Default Ghidra extent with a call to independently rebuilt array removal at RVA 0xda320. Clears the array at receiver offset 12 using stride 8, releases its allocation, and conditionally releases the receiver. Majority choice, not evidence: the StackWord union here takes the majority float name argument from the other copies, where this source had stack_word, which its code reads.",
     "match": {
       "bytes_sha256": "4c3d0b28557cc780273f44f310aaf8e64ee1c5a7ef4307e53a5f7208f981fa44",
-      "inputs_sha256": "5b4c0bd9e0025241fc6d356ab3519a2182a892e2b316b02a1b458af8cc3a4ab7"
+      "inputs_sha256": "4517e15155f52e6fbe534ba286749b121d1df0a9ca2ac52a4e2361c0c530ef42"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -814,25 +827,30 @@
     "offset": 1037136,
     "rebuilt_symbol": "@destroy_typed_r0fd350@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r0f3460@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 278869088,
-        "basis": "The member range remover at RVA 0xf3460 calls the rebuilt FArray::Remove at RVA 0xe0980, with element size 12, from RVA 0xf34cb."
+        "basis": "Calls the typed array's Remove implementation at RVA 0xf3460, which destroys elements then forwards element size 12 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0xfd350; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 12 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0xfd350; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "bb6970449837a417741e0e930a73c02b9cfc0b726c3754be26180c13872c5f1c",
-      "inputs_sha256": "3de802bb565a6ad75f952640273ec6852b90b2a0cf1c4c631df448724b358a63"
+      "inputs_sha256": "59319c0c2697922a46f2d617409ce3191d046c9a854a28eb5aa86745c54914c8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -849,25 +867,30 @@
     "offset": 1037200,
     "rebuilt_symbol": "@destroy_typed_r0fd390@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r0f34e0@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 278869216,
-        "basis": "The member range remover at RVA 0xf34e0 calls the rebuilt FArray::Remove at RVA 0xe0bc0, with element size 72, from RVA 0xf351b."
+        "basis": "Calls the typed array's Remove implementation at RVA 0xf34e0, which destroys elements then forwards element size 72 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0xfd390; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 72 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0xfd390; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "7a53fe1e25702d71371f309456601aab89739fc05086cddd887833f128712141",
-      "inputs_sha256": "30c952180845154d8aa301d0151c5f3ecf035525648abe9e99b36ee9748b727d"
+      "inputs_sha256": "25735a715e0e232a5318ce94471fc7f3313e4e6372c61f692166848c0871e22a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1076,25 +1099,30 @@
     "offset": 1042000,
     "rebuilt_symbol": "@destroy_typed_r0fe650@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r0fd520@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 278910240,
-        "basis": "The member range remover at RVA 0xfd520 calls the rebuilt FArray::Remove at RVA 0xe0b30, with element size 60, from RVA 0xfd55b."
+        "basis": "Calls the typed array's Remove implementation at RVA 0xfd520, which destroys elements then forwards element size 60 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0xfe650; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 60 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0xfe650; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "0a5f09ec0d56cae375849cc161f52968080fa5224b449d33e4a7a97a6427714a",
-      "inputs_sha256": "8d24f3e5ecc9190a90e4399fda40c3d97e4f7ee5e5e89e7971af7d8669dbd270"
+      "inputs_sha256": "66d93cf91dc70b2ca7faf8e47f5e42a3ef1bd0f6e9cddac4f4988a9c0654a682"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

@@ -296,7 +296,7 @@
     "identification": "Method table entry RVA 0x243fb0 adjusts the receiver by its virtual displacement and 8 additional bytes, then forwards its deletion flags to RVA 0x2441f0.",
     "match": {
       "bytes_sha256": "686e593ae8e316824187778e861d00891a3a3d5163329506d823a8d9b1e97b5d",
-      "inputs_sha256": "e9fa42390656cd09d25bab60184704ce55c4eb290947aa8adf1d6ca1e856c38a"
+      "inputs_sha256": "1ae8ebad1a2c94dc85cf490b90cf8c4b4a6ca0f6980407cd6aa73989d20e2575"
     }
   },
   {
@@ -590,7 +590,7 @@
     "identification": "Method table entry RVA 0x245f30 adjusts the receiver by its virtual displacement and 8 additional bytes, then forwards its deletion flags to RVA 0x246200.",
     "match": {
       "bytes_sha256": "d2b6d8db4f30e4d7f58f6555c1add8a856c4e3e0bd5d3e7075c49b76c06e67e5",
-      "inputs_sha256": "b561dd804398e30a99ef431635446252f95dc904e0ece4b1398e834781bc51e1"
+      "inputs_sha256": "a9d292f64e4f7811659d2336561e2a70e7a682f18ac4a956d7a689450f2306d8"
     }
   },
   {
@@ -774,14 +774,17 @@
     "size": 43,
     "offset": 2385952,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r246820@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -789,7 +792,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "e63cbb3aae47adaeb7d4d8fad005d1e0bbf23b7d345af063383696f00bf15b8f"
+      "inputs_sha256": "15c88a76265045a58cb86e1855d8f8d6c11e5365c6844a54f3e3e02298d4aa91"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1063,7 +1066,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r246cc0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1081,7 +1085,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x246cc0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "facd41c9e352f9a61b93a5d67ed1b0a3af4ccb81c2d057a578502e0a8d6f93f8"
+      "inputs_sha256": "c0c09690c3ae2069d10eeea4126e4b36495e239c8f87bc5c2f843fbc28a8b5d0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1099,7 +1103,8 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_246fa0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1117,7 +1122,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "e552e60d04c619ff58d4c4d33f543289d7537c249041b511047534fe229bd2d3"
+      "inputs_sha256": "07e8681078a86bedf45695141102b1de53e857e3f5d13de3e12e37bc2b99cb0e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1132,16 +1137,19 @@
     "id": "array-remove-246ff0",
     "size": 138,
     "offset": 2387952,
-    "rebuilt_symbol": "@array_remove_r246ff0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -1157,7 +1165,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x246ff0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x247e8b, 0x248349. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "96d4ee7cb890e35b67c21a970ba0a15859ff654ed79342ee01b738c2d3391845",
-      "inputs_sha256": "20cbc5e323cd46ee98dc7a4affca80f8fc55457737e7ff7042d421bbe4a11767"
+      "inputs_sha256": "97fa023d457bc1e230ff1278e63a9e1814b3c7e09010a325810342f858fc20aa"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1176,7 +1184,8 @@
       "src/campaign_aligned_record_growth.c",
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_2476f0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1194,7 +1203,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with 4-byte elements and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "28fee31e18dd0e250ddea8f4807cd55f5d645af2d53cc12f7d6bde72f835e857",
-      "inputs_sha256": "f4da31544a36f90dbed64ffef1396b8c7a8f3be7aac5b0678e8f639e7d567ec2"
+      "inputs_sha256": "65229f9b5a7cacaccd45f9774df518cdc394750a1f702d6a7d39268ae99b1237"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1210,21 +1219,23 @@
     "size": 20,
     "offset": 2389824,
     "inputs": [
-      "src/campaign_typed_array_ranges.c"
+      "src/campaign_typed_array_remove.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h"
     ],
-    "rebuilt_symbol": "@remove_typed_247740@12",
+    "rebuilt_symbol": "??$RemoveTyped@$1?array_tag_7b7b08@@3QBGB$03@Array@@QAEXHH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_ranges.obj src/campaign_typed_array_ranges.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_remove.obj src/campaign_typed_array_remove.cpp",
     "link_bindings": {
-      "@remove_246ff0@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 280260592,
-        "basis": "Independently rebuilt array remove function at RVA 0x246ff0."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-246ff0. The wrapper forwards its index and count with element size 4."
       }
     },
-    "identification": "Aligned entry bounded by a previous return and INT3 padding. Passes the index, count and fixed 4-byte element size to the rebuilt array remove operation. Majority choice, not evidence: the Count member here takes unsigned from the other copies, where this source had int.",
+    "identification": "Complete typed FArray range wrapper at RVA 0x247740. Calls the matching Array::Remove<Tag> specialization with fixed element width 4.",
     "match": {
       "bytes_sha256": "165b0c44c936a2ec3889e0b4814121a06334523753bd6f0e7285c8c595c45868",
-      "inputs_sha256": "9ad0724e1c765e95766e47e84ff37bb309083a510ea198445680b0fdcea6909e"
+      "inputs_sha256": "6455a423f89906f62be106cd832561350178a6c883a4aeed7c42e97b232932df"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1239,27 +1250,31 @@
     "id": "array-destroy-247e80",
     "size": 56,
     "offset": 2391680,
-    "rebuilt_symbol": "@array_destroy_r247e80@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$03@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r246ff0@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 280260592,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-246ff0. The call passes index zero, the current count and element size 4."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-246ff0. The call passes index zero, the current count and element size 4."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x247e80, 0x247eb8). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x246ff0. Removes every element with stride 4 and releases remaining storage.",
     "match": {
       "bytes_sha256": "18626d29f04463bb7a14cb7bee20e72a9a2f2b894abe3871655c17aa27f22159",
-      "inputs_sha256": "f535e7cdefa9f764f77b6f04b0fec8f7c5d847aa1623b72f67abc8bdea8f1652"
+      "inputs_sha256": "bfd01aa88dcf26dca4ab4724d31f3414e34c0f4119c9bbe3950db2859648806c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1279,7 +1294,8 @@
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@append_array_item_r247ec0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1297,7 +1313,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x247ec0 through its RET. Grows the allocation if required, stores the incoming four-byte element and returns its original insertion index. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "a30eb2ed2fb4d27a0d8a0ca6ad1cd005f7b706779845ef80dc3d020481cfa641",
-      "inputs_sha256": "b7652bedfdc05d8fec105af0accdef47c1d87c9d06d9ad60d71f1a244ad25fc0"
+      "inputs_sha256": "4636b3f233ed013e9cd7fb79eccce038dff7ec72d7368c24ae40724ac0871f4b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1371,7 +1387,7 @@
     "identification": "Method table entry RVA 0x248180 adjusts the receiver by its virtual displacement and 8 additional bytes, then forwards its deletion flags to RVA 0x248480.",
     "match": {
       "bytes_sha256": "ce5663e53376c095446f96faad13aa76ab392c184371a8b4bb936cb45f068c1d",
-      "inputs_sha256": "2fc7f0e44cc301de31969a89d3bb3263671ceea7a9ee63fa5a5a011216671fb2"
+      "inputs_sha256": "d80148e2a9334f9e2cf2916840cf682dda697cf376fbd7c598606081eb3a8c18"
     }
   },
   {
@@ -1570,7 +1586,7 @@
     "identification": "Method table entry RVA 0x24aa30 adjusts the receiver by its virtual displacement and 8 additional bytes, then forwards its deletion flags to RVA 0x24ab90.",
     "match": {
       "bytes_sha256": "120e902fae60c992fb40fcf115bd22c37118667a4a551d067402dd9f27f0f334",
-      "inputs_sha256": "63ec66500f8342fcdc97ba49d1687086ecd130d4709b660a8a2ab902aee82e18"
+      "inputs_sha256": "dcf290e656a6058d8b1d90310ef6600fbecfbeedbf60788f3a5b051d98e0c3ed"
     }
   },
   {
@@ -2020,7 +2036,7 @@
     "identification": "Method table entry RVA 0x24c1b0 adjusts the receiver by its virtual displacement and 8 additional bytes, then forwards its deletion flags to RVA 0x24c370.",
     "match": {
       "bytes_sha256": "30246a074b3a5972b947bb006339c97fed21532917f12922319f4f5959e1745f",
-      "inputs_sha256": "1b80e04b02c9b3cc8c75cd1ad0944c721dff83ef9de756b0c2ac7431f8b8fff1"
+      "inputs_sha256": "4759baf6db264d32f2d1476e949698a13fbfae810011779b94aa071bb4c3d11d"
     }
   },
   {
@@ -2661,7 +2677,7 @@
     "identification": "Method table entry RVA 0x24f9a0 adjusts the receiver by its virtual displacement and 8 additional bytes, then forwards its deletion flags to RVA 0x24fbd0.",
     "match": {
       "bytes_sha256": "428cf9a1a1153213918fd12f366dd46500abaa3d3805ca7d8d7f1516237b2fda",
-      "inputs_sha256": "efa634b29c12994917e3cb30a7d486ef9e8a6a3f3ad85d010cf676f8cc44917a"
+      "inputs_sha256": "21e2bb88b3072af32f38d25a5bc46294731b27912b361669c074c1a508d1dbd6"
     }
   },
   {

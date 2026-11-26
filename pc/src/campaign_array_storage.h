@@ -1,20 +1,16 @@
 /* The one-word argument structs preserve the stack layout of MS x86 member
    calls. The object and allocator receivers are passed in ECX. */
-/* FAKEMATCH: the original passes its element buffer as a stack argument whose
-   type is not recovered; this one-member struct only steers that stack slot. */
-struct ArrayBuffer { unsigned char *bytes; };
+#include "campaign_array_object.h"
+
 /* FAKEMATCH: the original passes a size as a stack argument whose type is not
    recovered; this one-member struct only steers that stack slot. */
 struct ArraySize { int value; };
 /* FAKEMATCH: the original passes an allocation tag as a stack argument whose
    type is not recovered; this one-member struct only steers that stack slot. */
 struct ArrayTag { const unsigned short *text; };
-struct Array {
-    struct ArrayBuffer buffer;
-    int count;
-    int capacity;
-};
 struct ArrayAllocator;
+/* FAKEMATCH: this C vtable projection uses one-word wrappers for allocator
+   arguments whose source types are not recovered. */
 struct ArrayAllocatorMethods {
     void *allocate;
     unsigned char *(__fastcall *resize)(struct ArrayAllocator *, struct ArrayBuffer, struct ArraySize, struct ArrayTag);
@@ -22,7 +18,6 @@ struct ArrayAllocatorMethods {
 };
 struct ArrayAllocator { const struct ArrayAllocatorMethods *methods; };
 extern struct ArrayAllocator *array_allocator;
-extern void *__cdecl array_move(void *to, const void *from, unsigned size);
 
 static __forceinline void release_storage(struct Array *array)
 {

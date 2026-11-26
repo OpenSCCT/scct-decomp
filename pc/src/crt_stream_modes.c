@@ -1,5 +1,5 @@
 #include "campaign_globals.h"
-extern int _commode, _cflush;
+#include "crt_stream_globals.h"
 
 typedef unsigned short WideChar;
 struct Stream {

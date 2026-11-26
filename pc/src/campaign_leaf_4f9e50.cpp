@@ -4,19 +4,7 @@
 // type's destructor is the empty function at VA 0x10df4290. The class, method and member names are
 // invented; the offsets and the address are the binary's.
 
-class UnkType_10df9e50_Value
-{
-public:
-    ~UnkType_10df9e50_Value();
-
-    UnkType_10df9e50_Value operator=(const UnkType_10df9e50_Value& Other)
-    {
-        unk_00 = Other.unk_00;
-        return *this;
-    }
-
-    int unk_00;
-};
+#include "campaign_leaf_4f9e50_value.h"
 
 class UnkType_10df9e50_Slot
 {

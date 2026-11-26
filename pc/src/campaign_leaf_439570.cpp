@@ -2,13 +2,7 @@
 // VA 0x11317d30 points to through its virtual destructor and clears the global. All names are
 // invented.
 
-class UnkType_11317d30
-{
-public:
-    virtual ~UnkType_11317d30();
-};
-
-extern UnkType_11317d30* GUnk_11317d30;
+#include "campaign_global_11317d30.h"
 
 // Unk_10d39570
 void Unk_10d39570()

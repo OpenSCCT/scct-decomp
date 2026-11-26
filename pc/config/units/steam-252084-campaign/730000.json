@@ -321,10 +321,10 @@
         "basis": "Independently matched red-black tree rotation."
       }
     },
-    "identification": "Direct call at retail VA 0x1103484c. Inserts an unsigned 16-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree.",
+    "identification": "Direct call at retail VA 0x1103484c. Inserts an unsigned 16-bit key using placement hints, updates root and extreme links, then recolors and rotates the tree. The local type names InsertTreeKey, InsertTreeNode, InsertTree, InsertTreePosition, and InsertTreeArgs are analyst-invented labels for the key storage, red-black tree node, head/count wrapper, output node position, and insertion argument bundle.",
     "match": {
       "bytes_sha256": "cd8485ef0e15bd76360f7402fd58dc720cecb3e3e1c5525d9eef175b5119114f",
-      "inputs_sha256": "dacbbe93d2bf83666dba28be34f234129a77864e46f68762dd9f763420442ad9"
+      "inputs_sha256": "62ddc148c47e18ba4ec1e94dbb946bbc1d626b787c963c926b56d65d033b5276"
     }
   },
   {
@@ -403,10 +403,10 @@
         "basis": "Same heap release routine called for every node and the sentinel."
       }
     },
-    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Indexed circular list destructor releases each node followed by its sentinel. The full compiler contribution includes two trailing alignment NOPs after the return. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. SentinelCleanupList is an analyst-invented local name for the wrapper holding the sentinel link.",
     "match": {
       "bytes_sha256": "cc850a84095eb0b22224ee2973b82b0f41e276c825c9427ba1743094752bcdf7",
-      "inputs_sha256": "f27c40ec9b807cc9b653ae76aad9f5cf457bfc91951424b542ea97d64ec4874e"
+      "inputs_sha256": "41c96826021f789f93bbf05ccddc62d76e09350ee55a88cad445883a16a5f64b"
     }
   },
   {
@@ -511,7 +511,8 @@
     "offset": 7574032,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_739210@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -520,7 +521,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "e55b16e36ad32b6da20b21c468ba03918a90cdcbc7be50e50ce3502aa2497a02"
+      "inputs_sha256": "61be8835a2c21351394e96377760a2cb3f0488d37688990e681f4e3270a311c6"
     }
   },
   {
@@ -528,7 +529,8 @@
     "offset": 7574048,
     "size": 13,
     "inputs": [
-      "src/campaign_tree_range_helpers.c"
+      "src/campaign_tree_range_helpers.c",
+      "src/campaign_word.h"
     ],
     "rebuilt_symbol": "@copy_739220@8",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
@@ -537,7 +539,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
-      "inputs_sha256": "a4dd6b3e485e9eeea71876ee67f3c2eb81e689c90225b8721214803cc233bf38"
+      "inputs_sha256": "419ba68cfcf135f88fa1c92c1c4cd66fa28f7c50be77ee3ad24733a92ba5071f"
     }
   },
   {
@@ -843,7 +845,7 @@
     "identification": "Complete dispatch adapter at RVA 0x73a5f0. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x73a500.",
     "match": {
       "bytes_sha256": "a0136c7054809f80128c274cb52af05daaee9041b33d5f84f9b6a09fd7c7f1db",
-      "inputs_sha256": "1f4e065bc77a932a602b9fd744ed482121a9a9c42003626d4e6c6102c7401112"
+      "inputs_sha256": "c393e2ace0800212f9be5db3d24742e8fdd74175df4e1fa802c2bf04642deeea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -873,7 +875,7 @@
     "identification": "Complete dispatch adapter at RVA 0x73a650. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x73a580.",
     "match": {
       "bytes_sha256": "77b4b009e6a83d07910fe27a6f350e1ae5a9b3cfa018b55cfd133afb7faa5c3f",
-      "inputs_sha256": "7023b0e0ea95b462d0515073c8030ace4360eae1d82560cd7713247b00d1d4f9"
+      "inputs_sha256": "ba119d2b53ad9cc80a75877de29ef5e2509230301e62901c954e5adaf94024eb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -927,7 +929,9 @@
     "size": 18,
     "offset": 7579280,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_73a690@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -942,10 +946,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x73a0d0 before installing the methods table at RVA 0x8714c0. Its first slot points to function RVA 0x73a6d0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x73a0d0 before installing the methods table at RVA 0x8714c0. Its first slot points to function RVA 0x73a6d0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "fa54487ec5a0604d99e456b9c90aed5acbe27a0b9e42e0d59156667089b24929",
-      "inputs_sha256": "25611e1a93cd9d1636b9527dfc2ecbe35999945ca1d5ed341564f02fa3b2a0ef"
+      "inputs_sha256": "30c37a260b169ac09210d55eb9afec8c8c3f0e857802dc1eff348d47b9593901"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1191,7 +1195,8 @@
     "size": 153,
     "offset": 7580224,
     "inputs": [
-      "src/container_nodes.cpp"
+      "src/container_nodes.cpp",
+      "src/container_nodes.h"
     ],
     "rebuilt_symbol": "?BuyHeadNode@?$ListStorage@U?$ListNode@$0BA@@@U?$Element@$0BA@@@@@QAEPAU?$ListNode@$0BA@@@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1229,7 +1234,7 @@
     "identification": "Engine container list head node: allocate, link the node to itself in a catch-all region; the catch block returns the node to the allocator and rethrows. Section includes the catch block named by the retail FuncInfo.",
     "match": {
       "bytes_sha256": "0097fcc7f7a8ea07982e1b2e1b043275008b61c30668199dbf53bc7c88423271",
-      "inputs_sha256": "9a70f489eab9b06c440886d5db7f7c194d2c98281718afcfeb0e8f7c28e7f128"
+      "inputs_sha256": "ac2bd63fe4e349cecba076b3c814e2bc5f973b75dc2f6eedaafcf41c22c9c546"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1261,10 +1266,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Direct call at RVA 0x73b3c4. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Direct call at RVA 0x73b3c4. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "c084f785c8382e599acbf7afd2fc14d715e5121158f73406fa59ff15d55d9048",
-      "inputs_sha256": "328965a8edf45097a4441b6559578aa4d45a235662e461375949af7dccb9c398"
+      "inputs_sha256": "2a9940f0c683ba15f953a55d638f19a4dcfe94ad39ff4e7985f5ca8597daad94"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1292,10 +1297,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x73aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x73aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. ListInitializationTarget is an analyst-invented local name for the list object whose head and count fields are initialized here.",
     "match": {
       "bytes_sha256": "b46e9c9d0629509187d8cd68f75867c5dd6e7f546b44a7185c776602c72cd358",
-      "inputs_sha256": "438dba32fd39f4c7542301368800c4116e29b661d9b9afef82b166602b062366"
+      "inputs_sha256": "fda980906189f711ca666dceb414778bc6f5f0e8b54056f3f2287edad5857e8b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1326,10 +1331,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "874a7c4530ea15b2275878594d99ceae7970ebb4dab0f745520db11ad0e680f3",
-      "inputs_sha256": "dd56d3fb12da0b1d330a38c1ae1979701e8b32ffd90745c30f901fad5ef4b51b"
+      "inputs_sha256": "173dba38d8adcf5136089f8063f40b9b666ff712252e16beaf180d0cf2f65664"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1361,10 +1366,10 @@
         "basis": "Releases the node allocation through the shared allocator."
       }
     },
-    "identification": "Direct call at RVA 0x73aca3. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Direct call at RVA 0x73aca3. Restores the two sentinel links and clears the count before walking and releasing each detached node with allocation category 7. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. The local type name ManagedList is analyst-invented for the list wrapper with a sentinel head and count.",
     "match": {
       "bytes_sha256": "12b2b760456b0d74f66150270e2a818989aa63a7b071869b49d7339e30ec5f77",
-      "inputs_sha256": "01c449271206505303f0d9cfb73f5c0e743fb6a251723f17efd665089bd9c8d8"
+      "inputs_sha256": "d82a62ccefc4bfd20f2a5d0ba173f525afe8e68b7c17328ead1dd1b58bc2a7b4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1402,7 +1407,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x73aca0. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "d1f81767a3cc6ce3b94bec7ca8ee31348c1e280d632faffec811bfc276443789",
-      "inputs_sha256": "9e3611e1bd49486686d3579b9f3a3f40b6551792d0189e71f91c4e5467b80bbc"
+      "inputs_sha256": "ca3c6b12d0ba60655dcd31fc3be0bce914630e12373d7fb188e47ab38608d33a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1468,10 +1473,10 @@
         "basis": "Shared managed allocation release."
       }
     },
-    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers.",
+    "identification": "Default Ghidra extent. Releases the backing allocation with category 7 and clears the three vector pointers. The local type name ManagedVector is analyst-invented for the three-pointer container reset by these clear routines.",
     "match": {
       "bytes_sha256": "b940cff4000fe3dce435938ae099c229b987daba3cee9facfa06ffc224ac750f",
-      "inputs_sha256": "186aa765634294874e06b56c1d3f79b78d6122a3d1f81162f43fb2a722f68093"
+      "inputs_sha256": "da2f115c72fe0e28879609cf1a0bc22aeaf0865d047c24bfb40253fdab04a406"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1509,7 +1514,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x73ad60. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "ef20401dd6721ef79d95cc31af2f6a530c61930cdb2f83ade7ed28766196ff90",
-      "inputs_sha256": "a549f8aed6b1bd65d17ece172465ec451d35f31669f43baa524a2f615c71d506"
+      "inputs_sha256": "b8348663b35e53c35ed90f9e251945068c39260f674672706ce4f5825361d565"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1537,10 +1542,10 @@
         "basis": "Direct retail call returns a sentinel whose next and previous pointers both point to itself."
       }
     },
-    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x73aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Default Ghidra function extent. Calls the sentinel constructor at RVA 0x73aa40, stores the returned head at receiver offset four, and zeros the count at offset eight. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. ListInitializationTarget is an analyst-invented local name for the list object whose head and count fields are initialized here.",
     "match": {
       "bytes_sha256": "b61a0bb7ea27fb0506bbc4ab91d2744c7f4a5231179db76508defc9299c214d3",
-      "inputs_sha256": "cdc4b74e1305a42a0dba858386a87446dc9ef07b8c202c516ac97d6c49261737"
+      "inputs_sha256": "0c29b70e7ce3a7ec7f5c5b1927a13b26cf7048c7109532488931fdb74888784f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1578,7 +1583,7 @@
     "identification": "Independent code analysis marks the entire member function at RVA 0x73adf0. The receiver supplies storage at offset four. Both release helpers are corroborated by the registered exit callbacks. Allocation kind is 7.",
     "match": {
       "bytes_sha256": "15d11e75e6d434829433be0a92db6dc7f8665325cb1e2e2c23f224536d23604d",
-      "inputs_sha256": "989ac541c8c5ef73e7da05c95d34bd7b4a99541511bceb9091e7c51cd2bee071"
+      "inputs_sha256": "9f3b1a295b8dd79a39e307158cd68a7436bde31b4f83292b3915419bf14c1fe6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1855,7 +1860,8 @@
     "size": 27,
     "rebuilt_symbol": "??0UnkType_1103ba90@@QAE@XZ",
     "inputs": [
-      "src/campaign_leaf_73ba90.cpp"
+      "src/campaign_leaf_73ba90.cpp",
+      "src/campaign_leaf_49d560_base.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_73ba90.obj src/campaign_leaf_73ba90.cpp",
@@ -1880,7 +1886,7 @@
     },
     "match": {
       "bytes_sha256": "b5c7772230d9f60358eece9e5c5545ac97b8b8ab8a5a5646fb34c6164e0a1634",
-      "inputs_sha256": "9ab53c6a86c872f4f7b47d6c8512aa4b0e19cf0c469077c91ca0d1d7978ff3cd"
+      "inputs_sha256": "bff2fe54c6b8c84512f13db3ad9accc80bbb3f0520e4e146e83e68b95a5be2bf"
     }
   },
   {
@@ -1889,7 +1895,8 @@
     "size": 27,
     "rebuilt_symbol": "??0UnkType_1103bab0@@QAE@XZ",
     "inputs": [
-      "src/campaign_leaf_73bab0.cpp"
+      "src/campaign_leaf_73bab0.cpp",
+      "src/campaign_leaf_49d560_base.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_73bab0.obj src/campaign_leaf_73bab0.cpp",
@@ -1914,7 +1921,7 @@
     },
     "match": {
       "bytes_sha256": "cff86ff3e75c88d389689f6a7e014d47af09bd2048fe1ef92f0f28d5585c612e",
-      "inputs_sha256": "80533dc5f2f1c63c305494a7f64514b3b3be3ed086ca339815e21b80b789ca30"
+      "inputs_sha256": "76ee041d4e0c5e76deb16f91612b86bf95d9f623aebd7b70c75677c606c005e6"
     }
   },
   {
@@ -2018,6 +2025,30 @@
     }
   },
   {
+    "id": "sound-malloc-shutdown",
+    "offset": 7587264,
+    "size": 1,
+    "rebuilt_symbol": "_SND_fn_vDesInitMallocSnd@0",
+    "inputs": [
+      "src/sound_malloc_shutdown.c"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_malloc_shutdown.obj src/sound_malloc_shutdown.c",
+    "identification": "Steam PE export _SND_fn_vDesInitMallocSnd@0 at RVA 0x73c5c0. The complete body is a one-byte ret. Its in-image caller at VA 0x11044e20 invokes it after four other sound shutdown calls.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "inputs_sha256": "7bd4b05a3fdf1301c492a49908afa58e13c79948e3e2c97a4e07fbf912e10f92"
+    }
+  },
+  {
     "id": "sound-move-bytes",
     "offset": 7587376,
     "size": 26,
@@ -2084,6 +2115,41 @@
         "/O2"
       ],
       "basis": "evidence/campaign-vc71-o2.md"
+    }
+  },
+  {
+    "id": "sound-error-initialize",
+    "offset": 7587648,
+    "size": 35,
+    "rebuilt_symbol": "_SND_fn_vInitErrorSnd@4",
+    "inputs": [
+      "src/sound_error_init.c",
+      "src/sound_error.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_init.obj src/sound_error_init.c",
+    "identification": "Steam PE export _SND_fn_vInitErrorSnd@4 at RVA 0x73c740. Initializes all 44 entries of SND_g_astErrorOccurArray to one, then calls the separate one-byte function at RVA 0x73c8a0 with its one stack argument. The original name and argument type of that callee remain unknown; Unk_1103c8a0 is a placeholder.",
+    "link_bindings": {
+      "_SND_g_astErrorOccurArray": {
+        "va": 288536496,
+        "basis": "The named export initializes each of the 44 flags in SND_g_astErrorOccurArray; the sibling build's debug information names this array."
+      },
+      "_Unk_1103c8a0": {
+        "va": 285460640,
+        "basis": "The direct relative call at +0x17 of the named export resolves to the one-byte function at VA 0x1103c8a0."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "abd4582b6f557443ffe2c4d68a1cd018c543918cf685e8eacb44893ebe99f0b5",
+      "inputs_sha256": "98584962a78a005b868d6217bb52f2ef514fbb2301cdb7f334559124ad5f169d"
     }
   },
   {
@@ -2320,6 +2386,129 @@
     }
   },
   {
+    "inputs": [
+      "src/sound_error_stubs.c",
+      "src/sound_error.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_stubs.obj src/sound_error_stubs.c",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "id": "sound-report-error",
+    "offset": 7587968,
+    "size": 1,
+    "rebuilt_symbol": "_sound_report_error",
+    "identification": "Steam sound error reporting helper at VA 0x1103c880. It is directly called by the matched SND_fn_vDisplayError and SND_fn_vDisplayErrorEx exports; the retail function consists only of RET, so its recovered body is empty.",
+    "match": {
+      "bytes_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "inputs_sha256": "5eb9734fa970e4e535b77fd0510b5b2f9fd14a3dc356029cba5920280c033e80"
+    }
+  },
+  {
+    "id": "sound-error-init-stub",
+    "offset": 7588000,
+    "size": 1,
+    "rebuilt_symbol": "_Unk_1103c8a0",
+    "inputs": [
+      "src/sound_error_stubs.c",
+      "src/sound_error.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_stubs.obj src/sound_error_stubs.c",
+    "identification": "One-argument cdecl helper at VA 0x1103c8a0, the direct call target of the matched SND_fn_vInitErrorSnd export. That caller passes the argument after initializing all 44 error-occurrence entries. The target body is a one-byte ret; its original name remains unknown and is recorded as Unk_1103c8a0.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "inputs_sha256": "9c4dcfa13cf03f97d60518214f3cef04ff6fc087ac2060c0b2e0f014f2d62dc4"
+    }
+  },
+  {
+    "inputs": [
+      "src/sound_error_stubs.c",
+      "src/sound_error.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_error_stubs.obj src/sound_error_stubs.c",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "id": "sound-end-error-display",
+    "offset": 7588016,
+    "size": 1,
+    "rebuilt_symbol": "_sound_end_error_display",
+    "identification": "Steam sound error shutdown helper at VA 0x1103c8b0. It is the direct tail-call target of the matched SND_fn_vDesInitErrorSnd export; the retail function consists only of RET, so its recovered body is empty.",
+    "match": {
+      "bytes_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "inputs_sha256": "327c39c684192eae5a49c6e118cb607e450481f0171a6704a14780aa748493fd"
+    }
+  },
+  {
+    "id": "sound-assert-message",
+    "offset": 7588032,
+    "size": 3,
+    "rebuilt_symbol": "__snd_assert_message@16",
+    "inputs": [
+      "src/sound_assert_stubs.c"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_assert_stubs.obj src/sound_assert_stubs.c",
+    "identification": "Steam PE export __snd_assert_message@16 at RVA 0x73c8c0; its ret 0x10 cleans four stack words. The sole in-image callsite at VA 0x1105edf1 forwards three 32-bit values and a pointer to formatted error text. The first three parameter types and names remain placeholders.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "3ad36c6eeda528589a7a06f48684d3318576059d93d51f445ab60d280620edc7",
+      "inputs_sha256": "c8c6caeaf8d7883fd0f7515225b5cb7d53b9a690bb33cdb7360c7245f2479eb5"
+    }
+  },
+  {
+    "id": "sound-assert",
+    "offset": 7588128,
+    "size": 3,
+    "rebuilt_symbol": "__snd_assert@12",
+    "inputs": [
+      "src/sound_assert_stubs.c"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/sound_assert_stubs.obj src/sound_assert_stubs.c",
+    "identification": "Steam PE export __snd_assert@12 at RVA 0x73c920; its ret 0xc cleans three stack words. No direct in-image callsite was found, so all parameter types and names remain placeholders.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
+      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
+      "flags": [
+        "/O2"
+      ],
+      "basis": "evidence/campaign-vc71-o2.md"
+    },
+    "match": {
+      "bytes_sha256": "dbd1a662565b07272069f88faadf4327acaf51b7d14f236c84c0a9679d07cef3",
+      "inputs_sha256": "33c6dedaaab907323441bdea74f33b2520d27a01c63b1465dfc3b434b8abfe93"
+    }
+  },
+  {
     "id": "delete-members-73caf0",
     "size": 30,
     "offset": 7588592,
@@ -2418,7 +2607,7 @@
     },
     "match": {
       "bytes_sha256": "5bb49e2c1d4b2221db2d82b24e6fdb64700ae1996b7ca869cdc026d8ae6c1f56",
-      "inputs_sha256": "e943e89d89e88c2a2db82312c0443a00d1363ce0d8d7b605e190fba9ad93527f"
+      "inputs_sha256": "432ed4da784b258f86fc24fcd2a773e47059a8ceca97830ebaac32be54b04247"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2454,7 +2643,7 @@
     "identification": "Direct mode-one tail target of SND_fn_pstGetResFromEdIdSnd from RVA 0x745ffe. Scans each loaded bank in B-then-A order, testing its normal and extra 104-byte resource arrays. Locally assigned C name. Complete CFG through all terminal exits, including internal alignment only. Named from the Splinter Cell PS2 demo's debug information and the Double Agent PS2 linker map: the export of the same name without its suffix calls it for the load mode the suffix names (SND_E_DATALOADMODE_BANK is 0 and SND_E_DATALOADMODE_MAP is 1 in the sibling's enumeration).",
     "match": {
       "bytes_sha256": "de292878774a5ab36a21f96a41fc2601c03b4a6e6d169e663447b6d6e6e9b8e5",
-      "inputs_sha256": "e331c1c69c748851cca3d3fa435e341d1ff15789d873d91e09c8e8a7c3430e84"
+      "inputs_sha256": "40f31d292112309000459a5ba046b14ca4d110cac0d0adb9d565d159b4f4be99"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2499,7 +2688,7 @@
     },
     "match": {
       "bytes_sha256": "12fdc05d47db00dd5c1b75ebe6efe9b62298ae309a5fa6d141d0f35d3ffd9573",
-      "inputs_sha256": "4cf8c5ccd5a6a02cf786f21feb1e53fab51a9c625c0b2ae4ff795ce6a323bd9c"
+      "inputs_sha256": "9d5034089e86d6440f9b5206bba22c67ca4b1d2a18fa437b7563c51ebf422817"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2544,7 +2733,7 @@
     },
     "match": {
       "bytes_sha256": "9b2861f388c9b653068c931326f13c1bb5b811a5eec61243308030251651cfb7",
-      "inputs_sha256": "e8bfff53cd1d501e8621dcb7e5c0b4db2bd170c828754bd99d802e9931ca94cc"
+      "inputs_sha256": "6935b4ff7845845b9ab842f12b50cc61954de8345b6aa56ff547c7e5d00504eb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

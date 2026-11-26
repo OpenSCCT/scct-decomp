@@ -3,11 +3,7 @@
 // 0x10d91080 of the object each node holds in place. The class, structure, method, member and
 // parameter names are invented; the offset and the bytes are the binary's.
 
-class UnkType_10dd6340_Item
-{
-public:
-    void Unk_10d91080(int Value);
-};
+#include "campaign_leaf_4d6340_item.h"
 
 struct UnkType_10dd6340_Node
 {

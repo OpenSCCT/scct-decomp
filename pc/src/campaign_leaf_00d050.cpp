@@ -3,6 +3,7 @@
 // as its second argument, with the destructor at VA 0x1090ba70, then passes both arguments and the
 // element size to the method at VA 0x10909690. The class, member and method names are invented; the
 // offsets, the size and the addresses are the binary's.
+#include "campaign_array_type_1090d050.h"
 
 class UnkType_1090ba70_00d050
 {
@@ -11,18 +12,6 @@ public:
 
 private:
     unsigned char unk_00[0xc];
-};
-
-class UnkType_1090d050
-{
-public:
-    void Unk_1090d050(int Index, int Count);
-    void Unk_10909690(int Index, int Count, int ElementSize);
-
-private:
-    UnkType_1090ba70_00d050* unk_00;
-    int unk_04;
-    int unk_08;
 };
 
 // UnkType_1090d050::Unk_1090d050

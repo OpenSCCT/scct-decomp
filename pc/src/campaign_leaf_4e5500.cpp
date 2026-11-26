@@ -4,6 +4,8 @@
 // 0x10dacf90) and the base (VA 0x10de6450). The class and member names are invented; the offsets
 // and the addresses are the binary's.
 
+#include "campaign_leaf_4e5500_member.h"
+
 class UnkType_10de5500_Owned
 {
 public:
@@ -29,14 +31,6 @@ public:
     ~UnkType_10de5500_Base();
 
     int unk_00[0x25];
-};
-
-class UnkType_10de5500_Member
-{
-public:
-    ~UnkType_10de5500_Member();
-
-    int unk_00[0x20];
 };
 
 class UnkType_10de5500 : public UnkType_10de5500_Base

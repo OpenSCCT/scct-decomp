@@ -133,7 +133,7 @@
     "rebuilt_symbol": "_release_4606e0",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4606d0 in the independently delineated function at RVA 0x4606c0. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x4606d0 in the independently delineated function at RVA 0x4606c0. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a0ec": {
         "va": 288465132,
@@ -154,7 +154,7 @@
     },
     "match": {
       "bytes_sha256": "5dc3b0aa9612238d9cbbfcdd39821b9ec1500f43acc1cba2e5bb1bb7b038a511",
-      "inputs_sha256": "2fc7307910ad82980dbaa4ff5230af67d6fac57a6867cc7da03bc5c9889c803d"
+      "inputs_sha256": "58e0168d0f1f5a8dcb9862baf143fe8d88dc1525858a5aa9c617600d59ee4a99"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -175,10 +175,10 @@
     "rebuilt_symbol": "@contains_460710@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4606eb in the independently delineated function at RVA 0x4606e0. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x4606eb in the independently delineated function at RVA 0x4606e0. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "123322af32717ff4520a53f871d34ef952a3c9298298de4e1ae629959cc015bb"
+      "inputs_sha256": "9f49d33b468ad10060d432c3e232f307fa6477bab665e0211108f7d330824115"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -233,10 +233,10 @@
     "rebuilt_symbol": "@pop_460790@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46077d in the independently delineated function at RVA 0x460750. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x46077d in the independently delineated function at RVA 0x460750. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "269f093ebb0d745828a4149a53042651f818e8792b91471923219ea35fe639a1"
+      "inputs_sha256": "e43777f163aebe6fa79bb6f98b00d7b8ae6ba5475430a4e0635c9e9947873379"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -276,25 +276,27 @@
     "size": 29,
     "offset": 4589632,
     "inputs": [
-      "src/campaign_element_allocation.c"
+      "src/campaign_element_allocation.cpp",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@allocate_4@8",
+    "rebuilt_symbol": "?Allocate@?$TContainerAllocator@UUnkType_10d60840@@@@QAEPAUUnkType_10d60840@@I@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465152,
         "basis": "Writable allocation label passed as the second allocator argument."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Campaign shared buffer allocator."
       }
     },
-    "identification": "Complete aligned typed allocation method at RVA 0x460840; converts the element count into bytes at a stride of 4, loads the allocation label and returns the shared allocator result.",
+    "identification": "Complete aligned typed allocation method at RVA 0x460840; converts the element count into bytes at a stride of 4, loads the allocation label and returns the shared allocator result. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "6424740641d56c44b62abd49df3fbc6720590bdf20ef96d1f05dcdd2b68705ca",
-      "inputs_sha256": "8f6756fb0eafa091417f3ab36b8907ef1c0c740d8a5f055471e5c9c4993f90e3"
+      "inputs_sha256": "b54731b670126415939ef511297eb855677400afd29d5131077986d7887aa946"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -343,7 +345,7 @@
     "identification": "Direct call at retail VA 0x10d60e6f in the separately decoded function at RVA 0x460cf0. Independent automatic analysis agrees with the exact extent. The complete routine operates on fixed-width 4-byte records. Majority choice, not evidence: the Record16 member takes the majority name word, spelled unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "fe5e96b5969e5ae6c7b3311b02a5760fbe387efaa07f367300af69fce91960e0",
-      "inputs_sha256": "6fe24c812b96f9e4cfed00016cdfefcb581086d15fee24d945d02ded72c7aa42"
+      "inputs_sha256": "e6b1b7caa51f6c0329b9b8451176b6aa886cdfc62b7bc15e9413e280fec67deb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -368,7 +370,7 @@
     "identification": "Aligned Campaign function with return and compiler padding on both boundaries. Its whole record construction loop matches Versus RVA 0x2afd60.",
     "match": {
       "bytes_sha256": "def4c21a1d6130d21df9ffc08f48358a9d4a85de3467fffa26457649a37bdc65",
-      "inputs_sha256": "650af76447c9832afe159b69c27970ac6f78818257553ad6213a2d9b5a994c95"
+      "inputs_sha256": "eb0cda40cc68502195716f329f0470e5710ae9dd6cb80017452027758a68ec89"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -417,7 +419,7 @@
     "identification": "Aligned Campaign function with return and compiler padding on both boundaries. Its whole record construction loop matches Versus RVA 0x2ab840.",
     "match": {
       "bytes_sha256": "7b03083fc5a70e857d53690b899f60dbd945430880af3eaef2791598b0c12536",
-      "inputs_sha256": "eaaad7924295c655c8c4a41d1046bc279af78ab8c0455d03978925f27d3ccabf"
+      "inputs_sha256": "4604dcfc5c8e2e17c363fd0567bceabc81a3dd3d30bfd8073371c0360becd5f7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -433,25 +435,28 @@
     "size": 76,
     "offset": 4590176,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_4@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d60a60@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465152,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x460a60. Initializes three storage pointers and checks the 4-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x460a60. Initializes three storage pointers and checks the 4-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "6090d3f2f7b8573cd8dc8a6fae97454c7cbf8b576f39f54f091fce4961e47be1",
-      "inputs_sha256": "53fbd91f36cb758b7b02b79c5e25b318186b5530fd54dedcf17cb1157c6ebdd3"
+      "inputs_sha256": "bf25ae8545c5727ea49b7f75fc3dc5da473dcdc46868ddb2b9d92e97bf777ae1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -467,25 +472,28 @@
     "size": 74,
     "offset": 4590272,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d60ac0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465152,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x460ac0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x460ac0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "b194dc6d121004d33eeecad3301c3763c98e2faa2d2e8bcef89b2a342fc1ba69",
-      "inputs_sha256": "5dce09f4a4b1223d98dddc779c1ca2cd54540cfdc5b9baaec9cc24a5c9ccc918"
+      "inputs_sha256": "2fbf89ace59aec31c59d3ca775095a00fe75fcfb306a0deb07d033e80315bd94"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -549,7 +557,7 @@
     },
     "match": {
       "bytes_sha256": "8dd44f7fbd6dae3e5cbdc61970c90214928c121ee404a006dddb63b2d2fd71b6",
-      "inputs_sha256": "6ae4b16b465e010c5022855611a3d27365cee1bd3c1051a73a66243d0c897d22"
+      "inputs_sha256": "be630a1bae0461829f9610e3af42c89f66190720ed0bea1e782c54298bc6831a"
     }
   },
   {
@@ -635,7 +643,7 @@
     },
     "match": {
       "bytes_sha256": "e53c938a7fe35c1ad1940f83078484a0ab34d2f5d4e09ee6af75bca757bc2f14",
-      "inputs_sha256": "12a9b1f13d04ee1f57080aa86f7714b700aec3f2a22ae08cf7eebbb8e59ae4a3"
+      "inputs_sha256": "9e96cc0ec30814548519db43242c144237f4c0602529e01295ee5e15105c6559"
     }
   },
   {
@@ -691,7 +699,7 @@
     },
     "match": {
       "bytes_sha256": "d90db93b4d7a8bc545a91b08dc6160e5c493545e6e8fd87b32f3f5da7631dd48",
-      "inputs_sha256": "dba90f91236bcff9c1ce100f304b01cf6300f5fc4989d7b7551bbec829b283f0"
+      "inputs_sha256": "fb2c68a0c1b5b7732fea06f005bfd417e105d78eb4b8c76d7e49af89a51a38b9"
     }
   },
   {
@@ -854,7 +862,7 @@
     "rebuilt_symbol": "_release_461160",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46114a in the independently delineated function at RVA 0x461130. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x46114a in the independently delineated function at RVA 0x461130. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a128": {
         "va": 288465192,
@@ -875,7 +883,7 @@
     },
     "match": {
       "bytes_sha256": "252cf1095a14c4a2feb04d1771eda6e00d46be37287744e5905e9682cd505c61",
-      "inputs_sha256": "fde8232ad6aa661a70043b90bb408ff57cdb58bba94811f2aad7d79457115c97"
+      "inputs_sha256": "5ee085e1fd7013bdda354cb1f4f8654f241781f337bf38ebb601c0fec7256fd4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -896,10 +904,10 @@
     "rebuilt_symbol": "@contains_461190@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46116b in the independently delineated function at RVA 0x461160. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x46116b in the independently delineated function at RVA 0x461160. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "73db50c8625e6bda5e057e14d1ba63ed377af644c2a501166c36f616839ec8ad"
+      "inputs_sha256": "b64ca484ac0ebe93ae3ffc7ebcde865260bd4ab1a083df76826f26f369226f78"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -954,10 +962,10 @@
     "rebuilt_symbol": "@pop_461210@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4611fd in the independently delineated function at RVA 0x4611d0. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x4611fd in the independently delineated function at RVA 0x4611d0. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "a4ecdc63e07b452c861d734cf84556741e25c1459001374864720a03effa4a9b"
+      "inputs_sha256": "004e55d23e68b1d12e09cdd80575d2b568a5424ca86362c02a110ded8c24d0b1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1021,25 +1029,28 @@
     "size": 74,
     "offset": 4592528,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d61390@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465212,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x461390. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x461390. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "2840df409aa46042a6387da7a5cb79fe3d2725c40fe49b70dda09f1223c62470",
-      "inputs_sha256": "fd39498f69fd9713286556b520d55a767741b20a9bad5d6cb920a4c365c6eff4"
+      "inputs_sha256": "74659f3ae40561ef1b152e162a7f094aef8a6241ca7a9b753e790243f6b0e79b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1199,25 +1210,28 @@
     "size": 74,
     "offset": 4593328,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d616b0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465276,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x4616b0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x4616b0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "0b0706c15b6c18d936097718a8625c9126434771a082118136a97b15906e651b",
-      "inputs_sha256": "b74e8ab3dff9414d721c98b4adfabc4764e42a8c42de9628ceab609a4f75dfef"
+      "inputs_sha256": "453a3dc42ed44ddfc719fdfc9d07dcca1b25c7233ef191bf7dcd30a229de2e36"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1401,25 +1415,28 @@
     "size": 74,
     "offset": 4594032,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d61970@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465336,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x461970. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x461970. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "0c98dd28390627aa563bb81e6a0d12c189c72939adccd47fd88b7e7e07703f21",
-      "inputs_sha256": "eb1b30a15401b65135472ab1d37a474f52e60018499c8af9992da8ef5c2427e1"
+      "inputs_sha256": "e32e7ef37423d40cb77adf643935d5b7156e121abe647098e19fc1db8442c53b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1579,25 +1596,28 @@
     "size": 74,
     "offset": 4595696,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d61ff0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465396,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x461ff0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x461ff0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "b8ccfdd7df8c8573c2e01469c6d34f4f51022dc60b7967d7d4ad5a9a11ee0948",
-      "inputs_sha256": "f22f0a5ea0be85d62f7fc963e352a0a2a4068409c15587f3a7761e22e3c1b534"
+      "inputs_sha256": "89744d17f619294b4c1981ec0721c1c8ef319b7d6bacef65501487d0247859d6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1742,7 +1762,7 @@
     "rebuilt_symbol": "_release_462110",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x462100 in the independently delineated function at RVA 0x4620f0. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x462100 in the independently delineated function at RVA 0x4620f0. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a21c": {
         "va": 288465436,
@@ -1763,7 +1783,7 @@
     },
     "match": {
       "bytes_sha256": "7360dabeb52abec90f52130b041a39afe587434a574c8c840249c979ed32b346",
-      "inputs_sha256": "53e4d91d56cb62003af039424b58fc9bb59d69c3bdb6f8ad5ef16584b1d82c21"
+      "inputs_sha256": "c8532b4b6fc4ddeea7bac76242b3ca60c25f3f0cc3b037560d830ece80db01bd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1784,10 +1804,10 @@
     "rebuilt_symbol": "@contains_462140@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46211b in the independently delineated function at RVA 0x462110. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x46211b in the independently delineated function at RVA 0x462110. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "a207769000738de4b0c0b6126a7154e01952ea057ac2572c2fa70602398abce3"
+      "inputs_sha256": "718ad165dd958e9422161e9866fbae16d2f8cccea860f069363dd4c2fe2a3b1e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1842,10 +1862,10 @@
     "rebuilt_symbol": "@pop_4621c0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4621ad in the independently delineated function at RVA 0x462180. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x4621ad in the independently delineated function at RVA 0x462180. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "c2ea18e08b0343c136d673199f99015d6d881ea2345374d90ae99123b75b75af"
+      "inputs_sha256": "291a4f34bbaaf0d89e49f991177e1112b97893670eda6b2df1b9928b22e6f464"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1983,25 +2003,28 @@
     "size": 74,
     "offset": 4596528,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d62330@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465456,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x462330. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x462330. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "76502a101455dd0d22695685944ed2950eb2d0e1eeb826298a2990d210b1e2b0",
-      "inputs_sha256": "085e369082c2dc741d8517a5d84cb530ade865eba5c88a894429e347ed5b2b65"
+      "inputs_sha256": "7f0f688ac3e893b13104ce81ec55a87fedecf6e9b2fc5686859102b1366ef682"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2146,7 +2169,7 @@
     "rebuilt_symbol": "_release_462450",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x462440 in the independently delineated function at RVA 0x462430. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x462440 in the independently delineated function at RVA 0x462430. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a258": {
         "va": 288465496,
@@ -2167,7 +2190,7 @@
     },
     "match": {
       "bytes_sha256": "86a90aee7401bf245d3aadf9cde582e84f7de0d5a067a71300ce1d9ddb5b709e",
-      "inputs_sha256": "367f8c22b81e500a5da0bd06501bd7296f729f3a0a690af44ab7e6fc6aad0166"
+      "inputs_sha256": "46493040e4688eef4e23ec4afb1d8ef9b60953dc9a9bb37c19c0e4429a16929f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2188,10 +2211,10 @@
     "rebuilt_symbol": "@contains_462480@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46245b in the independently delineated function at RVA 0x462450. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x46245b in the independently delineated function at RVA 0x462450. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "b9251e532d2b65ea8f735aea99fd96b120f90ffadf4ab7f1138ccb7f31ead7ec"
+      "inputs_sha256": "e619c6672dc12b1d35b6f32b660dc9804d0557c8de5998abf36056bfbbdd7a2b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2246,10 +2269,10 @@
     "rebuilt_symbol": "@pop_462500@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4624ed in the independently delineated function at RVA 0x4624c0. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x4624ed in the independently delineated function at RVA 0x4624c0. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "6804f4e72f85c3755b5428c7562f37017f71542cfde25b49bbdc4d6bf1085526"
+      "inputs_sha256": "144f75e3d1e560a86efb52a5e289945c9b7dcc23c07488d2abe562f5d879aa2c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2319,25 +2342,28 @@
     "size": 74,
     "offset": 4597168,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d625b0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465516,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x4625b0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x4625b0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "7076b890ea423f028137532a53c37368fc197c372de0a438c91c23564b429f2d",
-      "inputs_sha256": "768b61d14ecb7b31c0bce2e0311c7a943603f0ac179f008a3c5889cb76f26321"
+      "inputs_sha256": "472014037fbb0f469c3e82a69e1afc91d60c303bd1f1ce95a073ec79d5dea9c6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2497,25 +2523,28 @@
     "size": 74,
     "offset": 4597568,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d62740@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465576,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x462740. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x462740. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "6bb228653629e47c9e5ac19be43234d1e4616c55ae5380d3ecd6b7069ad46c94",
-      "inputs_sha256": "c93524297bbc58bdb0739e2d193b66bd92558affaed10965d473d8b9bf21524a"
+      "inputs_sha256": "9fc251a984a52d285463dc7a176d033b4b48b66b356ec30700dc770ab5ab698f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2651,25 +2680,27 @@
     "size": 29,
     "offset": 4598144,
     "inputs": [
-      "src/campaign_element_allocation.c"
+      "src/campaign_element_allocation.cpp",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@allocate_4@8",
+    "rebuilt_symbol": "?Allocate@?$TContainerAllocator@UUnkType_10d62980@@@@QAEPAUUnkType_10d62980@@I@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465636,
         "basis": "Writable allocation label passed as the second allocator argument."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Campaign shared buffer allocator."
       }
     },
-    "identification": "Complete aligned typed allocation method at RVA 0x462980; converts the element count into bytes at a stride of 4, loads the allocation label and returns the shared allocator result.",
+    "identification": "Complete aligned typed allocation method at RVA 0x462980; converts the element count into bytes at a stride of 4, loads the allocation label and returns the shared allocator result. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "8996964e93233174ba8494fad15ffcf24adadee49cd1b9ae8d42afaf8bd36a7a",
-      "inputs_sha256": "a2070c56c03c715faa27d64ac633ca8d0ddceb5a691c8a4e6ca1179d18dd6f8e"
+      "inputs_sha256": "a3c371e4348c39fe5f338964e1097c00cd4b1283b06121dceefb30018c257ac3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2718,7 +2749,7 @@
     "identification": "Direct call at retail VA 0x10d6342f in the separately decoded function at RVA 0x4632b0. Independent automatic analysis agrees with the exact extent. The complete routine operates on fixed-width 4-byte records. Majority choice, not evidence: the Record16 member takes the majority name word, spelled unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "fe5e96b5969e5ae6c7b3311b02a5760fbe387efaa07f367300af69fce91960e0",
-      "inputs_sha256": "a00c8b392bfc9df4fb4421901c03075d6fdd06e16674f322ea7df242974e1437"
+      "inputs_sha256": "c929b2cf56d17efb579da721c92b69c3bce3ec9e51aae4f277301f53a6cc905d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2743,7 +2774,7 @@
     "identification": "Aligned Campaign function with return and compiler padding on both boundaries. Its whole record construction loop matches Versus RVA 0x2afd60.",
     "match": {
       "bytes_sha256": "def4c21a1d6130d21df9ffc08f48358a9d4a85de3467fffa26457649a37bdc65",
-      "inputs_sha256": "c939f3144af08af632cf02cf1cacacf556a0bf284e33ef2704deca728c5b9c09"
+      "inputs_sha256": "de138ceaf701f808de0c918731abf15c075545468745273a96b55ba5bc2fa94d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2767,7 +2798,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x462bb0. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "33b27198ba5e66c4918adaca323310c1515ed25e80dc8c206bd0f50635d417af"
+      "inputs_sha256": "34bb3e15b47c4fd366064d935dbfc02a826ed355b685eebde252f7bc57ddf7ac"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2783,25 +2814,28 @@
     "size": 76,
     "offset": 4598752,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_4@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d62be0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465636,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x462be0. Initializes three storage pointers and checks the 4-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x462be0. Initializes three storage pointers and checks the 4-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "509fa6b79937774b6c61ba46987ec7abc57bcd7f276e49d41d6b8b013f525340",
-      "inputs_sha256": "8821882ac1437f6b1cccd0faf6e5e4f3e134749fe2bdb109423316e72411339b"
+      "inputs_sha256": "d29786faab4976bb480d411e7f61a18601e92b2c83889d1d20ded7aa64f75373"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2874,7 +2908,7 @@
     "identification": "Aligned Campaign function with return and compiler padding on both boundaries. Its whole record construction loop matches Versus RVA 0x2afd60.",
     "match": {
       "bytes_sha256": "def4c21a1d6130d21df9ffc08f48358a9d4a85de3467fffa26457649a37bdc65",
-      "inputs_sha256": "92353001f85a9894c18c524c64187bcefca4d8ec959f769cda1a48badb58d157"
+      "inputs_sha256": "5d7fd77bc2f7632fd5f70c9aecabb38c819b89a4b1c0d6aeb9d08c834c849ae9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2899,7 +2933,7 @@
     "identification": "Aligned Campaign function with return and compiler padding on both boundaries. Its whole record construction loop matches Versus RVA 0x2ab840.",
     "match": {
       "bytes_sha256": "7b03083fc5a70e857d53690b899f60dbd945430880af3eaef2791598b0c12536",
-      "inputs_sha256": "b9aaec93ded38089cf3c565ac289b623f01659d0d505d6f18216df67ad92b39d"
+      "inputs_sha256": "6c1586e8d8e2a0c3e8ac78b8ecd5f7bfa57a66f9d24ecca42341fb051db4670b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2945,25 +2979,28 @@
     "size": 74,
     "offset": 4599376,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d62e50@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465636,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x462e50. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x462e50. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "360bf739f529a508d514ba1cb016c13bbc4478f855d3d81879961ce8f9d9eb37",
-      "inputs_sha256": "c7f1d567bb74ba2ac3396632cd1ca3644d071b3214203b0283a492b69c8c4bcc"
+      "inputs_sha256": "e699ffb6e731eb23597e9eb55e659712735a1b5d64d5cb83e4661388aaed2643"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3051,7 +3088,7 @@
     },
     "match": {
       "bytes_sha256": "8dd44f7fbd6dae3e5cbdc61970c90214928c121ee404a006dddb63b2d2fd71b6",
-      "inputs_sha256": "6b7bbd191da1d127718429de6f8ae0436916c9fe8a52f856b5aeb0f488d73cdf"
+      "inputs_sha256": "d3df8a8341cbb53e3a70ea3890ef8d0b790689b35e6442db1560f720d5209fd3"
     }
   },
   {
@@ -3179,7 +3216,7 @@
     },
     "match": {
       "bytes_sha256": "e53c938a7fe35c1ad1940f83078484a0ab34d2f5d4e09ee6af75bca757bc2f14",
-      "inputs_sha256": "08d1bb2867817d81cb72782ee6666ee3f72a8796b107b8ae6df10f2af0469387"
+      "inputs_sha256": "ca302ca64c6a56cd3cb49727090f3c8bef778bb339584d269f041747cbcfafc7"
     }
   },
   {
@@ -3235,7 +3272,7 @@
     },
     "match": {
       "bytes_sha256": "63d073ece032ae9cfb34a0c5e04e5483303575ab097f757d79175f8385dcdf0a",
-      "inputs_sha256": "f015cd38a196595819a71451b91bfc5622d5c4773bbdc61439ba40c696a1c598"
+      "inputs_sha256": "0b98a7ee18e64360b8a5ca65c998cdd45ad391054d3423fddb761c056ea7ffa8"
     }
   },
   {
@@ -3465,7 +3502,7 @@
     "rebuilt_symbol": "_release_463b40",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x463b30 in the independently delineated function at RVA 0x463b20. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x463b30 in the independently delineated function at RVA 0x463b20. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a30c": {
         "va": 288465676,
@@ -3486,7 +3523,7 @@
     },
     "match": {
       "bytes_sha256": "7e023416a48f728a6c9ea9220a7720324bd81686c012d01850a10c91b66c7041",
-      "inputs_sha256": "b8c9f03c594ab219f4a831b3b592e87ae8f145cd88f94c4a49892707459eaf24"
+      "inputs_sha256": "60ea6c9b564964e5d7e5877501ac87296684dd9c105bd3f0cee4e5a5c9814a94"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3507,10 +3544,10 @@
     "rebuilt_symbol": "@contains_463b70@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x463b4b in the independently delineated function at RVA 0x463b40. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x463b4b in the independently delineated function at RVA 0x463b40. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "a4dc20c1a2611d1f92854362e41d2c8fcd2c07810292ba94ba555819940a07d4"
+      "inputs_sha256": "e97ce414a0ca649fc6836f97b58cd9cd4bce1027b5a3c589df0f4ff670e8ab94"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3565,10 +3602,10 @@
     "rebuilt_symbol": "@pop_463bf0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x463bdd in the independently delineated function at RVA 0x463bb0. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x463bdd in the independently delineated function at RVA 0x463bb0. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "58094b7af7114dfc4b30a2cc6d4d9f39be1778c4e39a68fabf24d8e097f91a6a"
+      "inputs_sha256": "a5354fc0fa397f84a6b9679b16308ac4cda0c23740054a4c4a2f17b4f9fce2d0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3608,25 +3645,28 @@
     "size": 74,
     "offset": 4603168,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d63d20@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465696,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x463d20. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x463d20. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "139ca1cc6048c6dc8de7e1f3293bc3bcbdb39072a9ec1b547c49da9bb44c852c",
-      "inputs_sha256": "d52b990a827a14815f7589e6ff91e5522c5e9083bc1e4766d6f13218e7432172"
+      "inputs_sha256": "3dac5e8889fa43152a5e5788243a2f9d10338c0f13fa42174421a29287a8b7b0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3771,7 +3811,7 @@
     "rebuilt_symbol": "_release_463e40",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x463e30 in the independently delineated function at RVA 0x463e20. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x463e30 in the independently delineated function at RVA 0x463e20. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a348": {
         "va": 288465736,
@@ -3792,7 +3832,7 @@
     },
     "match": {
       "bytes_sha256": "ad205a5fea1399c13926360e9161cf499e401c3844101fb2e31c0f9f2bfb5fcf",
-      "inputs_sha256": "bde839e69442b3aecf1e049d41e8081a3e63c1bcfc21b155e4b5e95e8ff00579"
+      "inputs_sha256": "482e566c06ce7f51bca0817dfe5e0cab3085aa5e338e00b2973b5b708f9f83ec"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3813,10 +3853,10 @@
     "rebuilt_symbol": "@contains_463e70@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x463e4b in the independently delineated function at RVA 0x463e40. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x463e4b in the independently delineated function at RVA 0x463e40. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "f8bf1622e88e7de51fb17b90f2fac279f9ef44d1de2ce8aa20803c15abb4654e"
+      "inputs_sha256": "1d24a026a24220a7d5b4410f3b329c778f2df437b97106e6db35cf28028e0e82"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3871,10 +3911,10 @@
     "rebuilt_symbol": "@pop_463ef0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x463edd in the independently delineated function at RVA 0x463eb0. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x463edd in the independently delineated function at RVA 0x463eb0. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "db8323a8ddbdc3cf4cbe9994cb20ebd4ba1c9e0e3073bb6a3d1df6626a736bf5"
+      "inputs_sha256": "30e5db6baaf326876d9bb1749f020f8e405d329e041c782fabc92921c388e40e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -3944,25 +3984,28 @@
     "size": 74,
     "offset": 4603808,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d63fa0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465756,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x463fa0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x463fa0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "b1bbda3ba428bb0c8267f56dc44b01f739f944a805fc453766f1293dc6d2db4c",
-      "inputs_sha256": "2ba798a94c28dfb8249d044adc2ce2ff630c2a3784beb9a9c453100c2ad1b1e9"
+      "inputs_sha256": "2e84a6924babbff7e636a349484e2212d6ca046043f47d7e69d6ad3c49eac893"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4137,7 +4180,7 @@
     "rebuilt_symbol": "_release_4641b0",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4641a0 in the independently delineated function at RVA 0x464190. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x4641a0 in the independently delineated function at RVA 0x464190. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a384": {
         "va": 288465796,
@@ -4158,7 +4201,7 @@
     },
     "match": {
       "bytes_sha256": "0f1d9547de163720ea5cdf00344a6c412763f5c34441ebc695cde887859ac2ab",
-      "inputs_sha256": "ad6a070edc769ed90cbdace610236b010145f60f103f514986f71aecc9a6ed12"
+      "inputs_sha256": "dd55d39fa00397d0d71d5c12f5eb0183d350262b792a23bf79316c2488bfee65"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4179,10 +4222,10 @@
     "rebuilt_symbol": "@contains_4641e0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4641bb in the independently delineated function at RVA 0x4641b0. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x4641bb in the independently delineated function at RVA 0x4641b0. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "2ce45f7fb59c5b2dd182b6a5eb3f122abe517e063004c3adb64fc196658d52de"
+      "inputs_sha256": "db7c4ad59ca79decc5cefad2e3d0aee6e9940527efed0cd49bbfc66c8f8717a1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4237,10 +4280,10 @@
     "rebuilt_symbol": "@pop_464260@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46424d in the independently delineated function at RVA 0x464220. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x46424d in the independently delineated function at RVA 0x464220. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "28601326d4da87d329bb6ce89606424e3a4ac56c19db907da6dc3399da8f5abf"
+      "inputs_sha256": "e543a0b3a6ed424e7ebe218c2adee3b4cc4a75a8196b07ce302dfcbf8c79baf5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4280,25 +4323,28 @@
     "size": 74,
     "offset": 4605072,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d64490@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465816,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x464490. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x464490. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "831ce9fc235f374e16efdf648f316337fecde523886b18de70019d461f7f7db7",
-      "inputs_sha256": "f8da3fb6c9c39ea9f4dc542c14e140e9e12e38f3634cb6e936ba2e815e49ea9c"
+      "inputs_sha256": "38b4d86c799b4e092a2b240af78675f32fe959251e8b16cc6d97001c81324d7d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4485,10 +4531,10 @@
     "rebuilt_symbol": "@contains_4645e0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4645bb in the independently delineated function at RVA 0x4645b0. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x4645bb in the independently delineated function at RVA 0x4645b0. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "ec3b61ab169253fce491ebfdc447b5d8ad7ea89e7638e345de7e3b0e7877bdc0"
+      "inputs_sha256": "1c38043c0e465a3cd96007becc3f116f05df75c8410f365ce0ff43003fcf6291"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4543,10 +4589,10 @@
     "rebuilt_symbol": "@pop_464660@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46464d in the independently delineated function at RVA 0x464620. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x46464d in the independently delineated function at RVA 0x464620. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "9c9a8203ed3f4e906354b81ad9b923d209b56302395d3ffbd894a2808304bcdd"
+      "inputs_sha256": "984c1fa3eb11f231d536418b9938fa85cc1d7aedba3ede929da3a7cf8a9dcacd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4616,25 +4662,27 @@
     "size": 29,
     "offset": 4605856,
     "inputs": [
-      "src/campaign_element_allocation.c"
+      "src/campaign_element_allocation.cpp",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@allocate_4@8",
+    "rebuilt_symbol": "?Allocate@?$TContainerAllocator@UUnkType_10d647a0@@@@QAEPAUUnkType_10d647a0@@I@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_element_allocation.obj src/campaign_element_allocation.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465876,
         "basis": "Writable allocation label passed as the second allocator argument."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Campaign shared buffer allocator."
       }
     },
-    "identification": "Complete aligned typed allocation method at RVA 0x4647a0; converts the element count into bytes at a stride of 4, loads the allocation label and returns the shared allocator result.",
+    "identification": "Complete aligned typed allocation method at RVA 0x4647a0; converts the element count into bytes at a stride of 4, loads the allocation label and returns the shared allocator result. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "0c1e05a1726c785cd6e2b93165db9eae6476f00b3a90ae6310807228fab65d8a",
-      "inputs_sha256": "3c294b98aecb151d360b501513d8821ae1e33a6c9e87049cb2b5c99d868fc231"
+      "inputs_sha256": "b3c6294600e24324599333b2ec7d1df56125a4fd66da0c02cf223fbe2061f800"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4707,7 +4755,7 @@
     "identification": "Direct call at retail VA 0x10d64eaf in the separately decoded function at RVA 0x464d30. Independent automatic analysis agrees with the exact extent. The complete routine operates on fixed-width 4-byte records. Majority choice, not evidence: the Record16 member takes the majority name word, spelled unsigned int, from the other copies.",
     "match": {
       "bytes_sha256": "fe5e96b5969e5ae6c7b3311b02a5760fbe387efaa07f367300af69fce91960e0",
-      "inputs_sha256": "031bf9ca7e6da756a3698913040da1127343631e1cb9a3a1766e0054be517d33"
+      "inputs_sha256": "58c281a9ea5743706ff9b56be60adfe7fef2b30e1385a09a5bceaed1e24dd590"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4731,7 +4779,7 @@
     "identification": "Aligned complete Campaign routine at RVA 0x464850. Compares the stored positions of two cursors and returns a byte boolean.",
     "match": {
       "bytes_sha256": "3e5f1961ab83ce257cba0431c7d9119ecc31d17d45d1bf10493929765a5b76c0",
-      "inputs_sha256": "5dd7efd3fcdbecd71e0be987847b5c431e6ef165e0363fc8f50ae7019df3eb6e"
+      "inputs_sha256": "610cf9c1bcfab0b8bcc1b7c2944a41d3ad5ceea0704e796fdc25c4a7c0e5004f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4756,7 +4804,7 @@
     "identification": "Aligned Campaign function with return and compiler padding on both boundaries. Its whole record construction loop matches Versus RVA 0x2afd60.",
     "match": {
       "bytes_sha256": "def4c21a1d6130d21df9ffc08f48358a9d4a85de3467fffa26457649a37bdc65",
-      "inputs_sha256": "703609de74ec5632752bd741c1666711dfa201d4bb907fad9058ac64d0adbecf"
+      "inputs_sha256": "ce68dd46d972ed558d1cd739495d2019928f17d5fb57f14a88a6c32f222de48b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4863,7 +4911,7 @@
     "identification": "Aligned Campaign function with return and compiler padding on both boundaries. Its whole record construction loop matches Versus RVA 0x2ab840.",
     "match": {
       "bytes_sha256": "7b03083fc5a70e857d53690b899f60dbd945430880af3eaef2791598b0c12536",
-      "inputs_sha256": "f115aca264bef2a9e30112dcf20d3446341f7922114a610c203c3ec001346592"
+      "inputs_sha256": "c7c227c3441f16ec1177d8d02d6033533e190af3c8c13c97c740b1fa17c363db"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4879,25 +4927,28 @@
     "size": 76,
     "offset": 4606640,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_4@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d64ab0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465876,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x464ab0. Initializes three storage pointers and checks the 4-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x464ab0. Initializes three storage pointers and checks the 4-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "70ca97244de78b468c0f375e4e17eb41658587c68961a7ffb44cce784bdd46d9",
-      "inputs_sha256": "94873391a802b62eac7cb2825053efa2f42ce00d72fb34bf16e8282f30c1dff0"
+      "inputs_sha256": "d3457964530c99a7c2806f5e5d1f0f28da2a625b5f561d58fab6ab5a455d2127"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4913,25 +4964,28 @@
     "size": 74,
     "offset": 4606784,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d64b40@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288465876,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x464b40. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x464b40. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "249c8dd81217a4ced5a1f5a6325e278d31dfafc48aa3abb5a31915e222f54809",
-      "inputs_sha256": "af99a19a0a9c90e10884cfac7c74a6d660c0980dfe671fcbc9c6236c20b69dd1"
+      "inputs_sha256": "d27b8c2945b5ed775b087aeee4a7c07f3de3c1d5726519965fefc4b8281a4038"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -4995,7 +5049,7 @@
     },
     "match": {
       "bytes_sha256": "8dd44f7fbd6dae3e5cbdc61970c90214928c121ee404a006dddb63b2d2fd71b6",
-      "inputs_sha256": "070fbdbab7ddb0b529ee76629a16fc4d227cc57b51a5eb5aec7d59aa0f25f682"
+      "inputs_sha256": "6ce2de93281c562ea4665c2339c0914da1b921322935bb5c2f8579682f3a1714"
     }
   },
   {
@@ -5081,7 +5135,7 @@
     },
     "match": {
       "bytes_sha256": "e53c938a7fe35c1ad1940f83078484a0ab34d2f5d4e09ee6af75bca757bc2f14",
-      "inputs_sha256": "7a212cb2a21d0c64c883b2fcb362b4818837c18733a17999383f02d797cf9e40"
+      "inputs_sha256": "43ec134c494ddfe0e18ea22df840719c9fe92e52dbc136c7b97498d4e6c5c63e"
     }
   },
   {
@@ -5137,7 +5191,7 @@
     },
     "match": {
       "bytes_sha256": "b55acb2cdfed7b1b67bbacf09cfb5550ad8b20c274b48ac037a8a9726c857625",
-      "inputs_sha256": "78a5e064b1022f4331831dce10e5c7683ec22102e61587c52f4483cc8379ff9b"
+      "inputs_sha256": "e393ce2294c1354344c6dac34d94f7c4a6a4310f0fe1c3fe39a0ed188f409c17"
     }
   },
   {
@@ -5304,7 +5358,7 @@
     "rebuilt_symbol": "_release_465020",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x465010 in the independently delineated function at RVA 0x465000. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x465010 in the independently delineated function at RVA 0x465000. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a3fc": {
         "va": 288465916,
@@ -5325,7 +5379,7 @@
     },
     "match": {
       "bytes_sha256": "5fdcf01880385333802861fa5ce822c8970f4aede3cff3b38588200bec4d2949",
-      "inputs_sha256": "61c242b85d4e002e45e8ed5dea4440ae9be7bf52c0166b326bb3b7e1b934d930"
+      "inputs_sha256": "67679a0cc9e02b6d4692a02712e03cc14542f452aae0eb9c75deeb7e6990d228"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5346,10 +5400,10 @@
     "rebuilt_symbol": "@contains_465050@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46502b in the independently delineated function at RVA 0x465020. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x46502b in the independently delineated function at RVA 0x465020. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "92bc5625739aa718cb84e30b07d3b4df70dae63a99909ba33ce4d5b553f047f2"
+      "inputs_sha256": "34b05b354706450103b5386e0769be96dc808bc38988bcd16e9a1d048f8ddfa9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5404,10 +5458,10 @@
     "rebuilt_symbol": "@pop_4650d0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4650bd in the independently delineated function at RVA 0x465090. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x4650bd in the independently delineated function at RVA 0x465090. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "4ef6cbdf34637047075541150b8ed730c1a4c82f56da51254a7cbc380ca7d9a5"
+      "inputs_sha256": "d60de653c00bb088ec3f03e6e4fcb410f21743833d5345a87027489060d963e2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5653,7 +5707,7 @@
     "identification": "Direct call at RVA 0x434c11 in the independently delineated function at RVA 0x434bc0. The receiver field is at byte offset 16.",
     "match": {
       "bytes_sha256": "b994e2bd1bc262c5b463fca225534224134549b75fddcc1f700f38a59510b90e",
-      "inputs_sha256": "3834ff087ad393df74beed084321aebf592f6b8a767cf83a1afa97bc21393ef6"
+      "inputs_sha256": "4393711b80f711d49e8a75ae2eab96a4f05445275ba133bfce0f882cdbe63e22"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5677,7 +5731,7 @@
     "identification": "Direct call at RVA 0x434843 in the independently delineated function at RVA 0x4347e0. The receiver field is at byte offset 28.",
     "match": {
       "bytes_sha256": "eeccf6337909677489e16f4719bd017f6de247d05525e3dd9397e8acf32bd661",
-      "inputs_sha256": "95b67db2c766ad1c094e80d9cf75fb8a6fe38915b51d4fb90891491c7a14df59"
+      "inputs_sha256": "225da9ba6eada3eb5a75bf0c94d880a109678881990e9b3776597ed13353fc7c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5701,7 +5755,7 @@
     "identification": "Direct call at RVA 0x43484f in the independently delineated function at RVA 0x4347e0. The receiver field is at byte offset 20.",
     "match": {
       "bytes_sha256": "5940df69b60defd9e87bf6c4f1f44706b7d3bc501eab25edf30198be533ee258",
-      "inputs_sha256": "7defd93ecf147e0acec85551e5d85d0529301a1f33de59f4efa95bff3c4e41d4"
+      "inputs_sha256": "a1c9759a7edb807364546845548397362ef3a3ff56b107ffe8c50beacab5200d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5725,7 +5779,7 @@
     "identification": "Direct call at RVA 0x434872 in the independently delineated function at RVA 0x4347e0. The receiver field is at byte offset 24.",
     "match": {
       "bytes_sha256": "f707ae2ccd6108f77a22f32dd3a544e8d9c1831da5491cfc20acc261d3e27db4",
-      "inputs_sha256": "0419bdd204ce9be811ffdca0a7d9f9c4953bc6462e37592002bf49d5e3264049"
+      "inputs_sha256": "1e69c980accbb968667e042ab71c4d5bae87dc8aa0d5cdbd157c0b476f45a13f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5749,7 +5803,7 @@
     "identification": "Direct call at RVA 0x43483b in the independently delineated function at RVA 0x4347e0. The receiver field is at byte offset 12.",
     "match": {
       "bytes_sha256": "0a5b1a6d212e0caedbf2d98dea5a75fa8dba9f19919dae6658f37365af35e72f",
-      "inputs_sha256": "e5b86e54bbeaa1099779bbfcdedd9aefb762f001e562a58e3c21e403d4703817"
+      "inputs_sha256": "9f3e1058f4577ad64cbb3a19bcca2aa88b5e0a9644a4cf0f359dec0630f3360d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5773,7 +5827,7 @@
     "identification": "Direct call at RVA 0x434860 in the independently delineated function at RVA 0x4347e0. The receiver field is at byte offset 36.",
     "match": {
       "bytes_sha256": "ca61dd78194c3ba8c719ba2f6af7a08994f210654e77739e8b26e3bf365977ae",
-      "inputs_sha256": "347a5fef4574aca36bdee81ce43934ba0cb8c7c11ab719e2c1f2a6ee03e803d7"
+      "inputs_sha256": "08595a77b18c5d53b5d19d25992b42e321138a05bbb08a808bc0904136eaf3a3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5847,25 +5901,28 @@
     "size": 74,
     "offset": 4611328,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d65d00@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288466016,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x465d00. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x465d00. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "d942c9767f381dd31ae1d9f18aeb51de4d583e52b45d2e4862d5ebfefda88398",
-      "inputs_sha256": "3ccecf454c3394809ac7f52ce0c4fb1cf8b4e9f5bb0f8d01aa5734b3f33fbbfb"
+      "inputs_sha256": "b0e297c158a6f1319a2b00920978f0e6d5f083240d6a4b315078ae0318bf97c0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5976,7 +6033,7 @@
     "rebuilt_symbol": "_release_465e30",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x465e17 in the independently delineated function at RVA 0x465e00. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x465e17 in the independently delineated function at RVA 0x465e00. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a488": {
         "va": 288466056,
@@ -5997,7 +6054,7 @@
     },
     "match": {
       "bytes_sha256": "13401e0932074313de09e1d587675fa05b849a09953fdd64aa1ce34493b776df",
-      "inputs_sha256": "b91bae726b29424554fb4e9206dfc9cbcdb5a6b5928306782e90b338eb218bbe"
+      "inputs_sha256": "8123e6682c2424bb006b257f404c0d47bafc84c0fb4c929e3c57cc366856e4cd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6018,10 +6075,10 @@
     "rebuilt_symbol": "@contains_465e60@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x465e3b in the independently delineated function at RVA 0x465e30. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x465e3b in the independently delineated function at RVA 0x465e30. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "6c8c4ecfdd3a0415147d7782be80cca939801853f2c069d3f954a48d2a387c42"
+      "inputs_sha256": "fde866b6c1a014cd3144baf099eca6f968eaa3a58dbffd32ee13b16ac41e5b8b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6076,10 +6133,10 @@
     "rebuilt_symbol": "@pop_465ee0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x465ecd in the independently delineated function at RVA 0x465ea0. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x465ecd in the independently delineated function at RVA 0x465ea0. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "848cb39e8fbfd3bd37944437d5f174e2c35dd3a395603a510bbaa140245060eb"
+      "inputs_sha256": "0bb897cc0dcfaac133638b87f2d234c0c7051fb182816d5c3bc73568c70a171d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6149,25 +6206,28 @@
     "size": 74,
     "offset": 4612064,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d65fe0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288466076,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x465fe0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x465fe0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "7e8300a693f23b0325e1db9301ec2e7dddc4501788ff587336f2b461a9581183",
-      "inputs_sha256": "647e6472e3d6aa02efb514e507930e20347298c04ab71d28c73a09df67307a80"
+      "inputs_sha256": "26fdeaa2a5000fee5e41a3143745f0cb9f7a7a2392f224d54cd49ea625a93660"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6278,7 +6338,7 @@
     "rebuilt_symbol": "_release_466110",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4660f7 in the independently delineated function at RVA 0x4660e0. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x4660f7 in the independently delineated function at RVA 0x4660e0. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a4c4": {
         "va": 288466116,
@@ -6299,7 +6359,7 @@
     },
     "match": {
       "bytes_sha256": "a4039d79b056e304963f8d6cd26778c1ba699f04c6b6dd5c8ef6d8a69fc8e379",
-      "inputs_sha256": "3a44d577562d9feac6980cc57af0879f03ceb6555032da69ef5d5ecd78d81e2d"
+      "inputs_sha256": "07ca450b7059060421e028356a363a8243c4aba162f68060751496021e92a902"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6320,10 +6380,10 @@
     "rebuilt_symbol": "@contains_466140@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46611b in the independently delineated function at RVA 0x466110. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x46611b in the independently delineated function at RVA 0x466110. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "74efdfe0e2cc638bbdcfeaafa809343b6897773b9ffd329a753f1403e688d572"
+      "inputs_sha256": "d6cad7c1010bc72ff0a4169c99168230c1c7668a5bdcc58410aca1ab132d1b2d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6378,10 +6438,10 @@
     "rebuilt_symbol": "@pop_4661c0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4661ad in the independently delineated function at RVA 0x466180. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x4661ad in the independently delineated function at RVA 0x466180. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "e8295bdd64c61e4143b53daa271221a68835a139b7383aafc41f94f8e3cd9463"
+      "inputs_sha256": "069b0ae2a7321a6ebdfef9cc166a71d7e6557951d564632dbd96a8740e8fed1f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6451,25 +6511,28 @@
     "size": 74,
     "offset": 4612784,
     "inputs": [
-      "src/campaign_vector_initialize.c"
+      "src/campaign_vector_initialize.cpp",
+      "src/campaign_vector_initialization.h",
+      "src/campaign_container_allocator.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@initialize_16@8",
+    "rebuilt_symbol": "?Initialize@?$CampaignVectorStorage@UUnkType_10d662b0@@@@QAE_NI@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vector_initialize.obj src/campaign_vector_initialize.cpp",
     "link_bindings": {
-      "_allocation_kind": {
+      "?GContainerTag@@3PBGB": {
         "va": 288466136,
         "basis": "Allocation label pointer passed to the shared allocator."
       },
-      "_allocate_buffer": {
+      "??2@YAPAXIPBG@Z": {
         "va": 279826608,
         "basis": "Direct call to the shared Campaign buffer allocator."
       }
     },
-    "identification": "Aligned vector initialization entry at RVA 0x4662b0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument.",
+    "identification": "Aligned vector initialization entry at RVA 0x4662b0. Initializes three storage pointers and checks the 16-byte element limit before allocation. Both return paths pop the count argument. The C++ specialization uses an address-based placeholder for the element whose stride the retail code gives.",
     "match": {
       "bytes_sha256": "66f9e751bae5b4c774f1a4f0f0e346df09f99c7aff23bb7c3b987009dfc0f494",
-      "inputs_sha256": "f2e3ac1eff3112f9f60085fa4f1a1afd951b555c4c8e8b22ea2a559d19ab9e05"
+      "inputs_sha256": "bc9ab9ce47f3da9ba99c7eaaa57b7f22818e3cfc3404d5dc72b6bad79ad3f01b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6644,7 +6707,7 @@
     "rebuilt_symbol": "_release_4666a0",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x466690 in the independently delineated function at RVA 0x466680. Routes the pointer through its active block pool or directly to the heap.",
+    "identification": "Direct call at RVA 0x466690 in the independently delineated function at RVA 0x466680. Routes the pointer through its active block pool or directly to the heap. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "link_bindings": {
       "_pool_a1a500": {
         "va": 288466176,
@@ -6665,7 +6728,7 @@
     },
     "match": {
       "bytes_sha256": "652b25c1e7c6b8b371feb2a502eb412efd0bd25ae479d6876966e4a864686904",
-      "inputs_sha256": "a754976c83dc523d5690bb4dfafa7dc9e4ff5e48512c0b710b8f4c6ddf8c470f"
+      "inputs_sha256": "c2a9d541c7e3afcb11810a6474d55746c4baa1ab82c9fdf26f4d717af418aebf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6686,10 +6749,10 @@
     "rebuilt_symbol": "@contains_4666d0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x4666ab in the independently delineated function at RVA 0x4666a0. Checks the address against the half-open range of the last active block.",
+    "identification": "Direct call at RVA 0x4666ab in the independently delineated function at RVA 0x4666a0. Checks the address against the half-open range of the last active block. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "edc469c846002c2dee494b1a5cd9331e4e1327f7559d407142f5480fb29d6b44",
-      "inputs_sha256": "341c72824b416be92784a641dc0cbf7782dd144b918944bb076bf46eb1b3237c"
+      "inputs_sha256": "38be38520e438634070285927f308e79731c2dd8c5ffc86f39391de57f8b5ff7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6744,10 +6807,10 @@
     "rebuilt_symbol": "@pop_466750@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_block_pool.obj src/campaign_block_pool.c",
-    "identification": "Direct call at RVA 0x46673d in the independently delineated function at RVA 0x466710. Pops the last 16-byte block descriptor when the pool is nonempty.",
+    "identification": "Direct call at RVA 0x46673d in the independently delineated function at RVA 0x466710. Pops the last 16-byte block descriptor when the pool is nonempty. The local type names BlockPoolBlock, BlockPoolPointer, and BlockPoolRanges are analyst-invented labels for a tracked block range, its by-value pointer wrapper, and the array that holds the ranges.",
     "match": {
       "bytes_sha256": "7de6d23eceae7841f4b21a27b9ab8f16fdbe8e7297128d2a7be59a19f42d9f9b",
-      "inputs_sha256": "7de7f6599150d6880568c90ad0c570dbcd75b7832914f2b07fc0fca85ef8bfae"
+      "inputs_sha256": "a2abba8b6ba73a9106566973ceb9a40025782fa57d69bc208294214d9abac1d4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7173,10 +7236,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x467cd0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x467cd0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "978da91fff5e52c2438120233343be88f4f871fad99775144843a283744275a4",
-      "inputs_sha256": "2249f6ef00fb3a2caa22bbfcff7d0389d5a6582ccfbdd8372b27eef097287930"
+      "inputs_sha256": "a07d98e7e383ab6b290b1e92508540557d156fa2f81e5b66f63ac840c409676c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7204,10 +7267,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x467d00. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x467d00. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "ac470fcb0b228b327132c1aad758da842068a22e7bb028d4b8a72f32969ec376",
-      "inputs_sha256": "33505eadfe839a5b811811c145dc9e036855e4827c2aafeb978b97b28d07ddd5"
+      "inputs_sha256": "7131c008d14c8ab8cca2ae41834d6b01cfc89c705eb2de5ac36fcd5bf47f1b17"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7390,7 +7453,8 @@
     "size": 31,
     "rebuilt_symbol": "?Unk_10d688b0@@YAXHHH@Z",
     "inputs": [
-      "src/campaign_leaf_4688b0.cpp"
+      "src/campaign_leaf_4688b0.cpp",
+      "src/campaign_global_1131a5ac.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_4688b0.obj src/campaign_leaf_4688b0.cpp",
@@ -7415,7 +7479,7 @@
     },
     "match": {
       "bytes_sha256": "0b6d74fecfbdecdc0b78a127042351a25a3da88de4646cca73fac8c02df41639",
-      "inputs_sha256": "ae2a1d1f3dd268b9b94e1ab3c83c32268a7319525d64597678488d109e992ef4"
+      "inputs_sha256": "584b7cac855048b062317dc2b91acbbdaec782306b0645b14bf093a127bc3252"
     }
   },
   {
@@ -7435,10 +7499,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x468c80. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x468c80. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "d1befda06023d2a0f92ebb5ad9c8a1f00f02a7f017c09536b38acbf13266e473",
-      "inputs_sha256": "367bc7a01b92796cac0f1563752154bf4a61881a80da6b2586272114264e8e2f"
+      "inputs_sha256": "00caeaa93e506ccd845fbe88a2ea51dea53ce26e05aac0fb7e384a2b2d4c48aa"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7466,10 +7530,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x468cb0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x468cb0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "fc86a2aedc8171e75070be8eed75860f7621c211749a3b5bac96dc89a639eb31",
-      "inputs_sha256": "c0f2dfd895a24bc319da76afe1c9c7a7d37683c01b4ecad8c844a036e6f94cfe"
+      "inputs_sha256": "b0dd898c6171173a2adf6f452382e7024f3eef6eddfae7f88d492feaf98cd766"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7497,10 +7561,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x468ce0. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x468ce0. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "294e7bf787e6833c6bc6927c56656ec59c5f82a0d8f2cede18d5943f9e2cea47",
-      "inputs_sha256": "471e811c0324334f1f0c4434ee0bac325bc88b3e3a1b8155c89c24850597c989"
+      "inputs_sha256": "a04be8f2b96add45e8c2fd3b0417f2a341d5792dce1e40cfdd9e2113fc0361ba"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7528,10 +7592,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x468d20. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x468d20. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "3ded9bd0b92a46b1c9f5ba1530690f03d30c959d84407aceb6d3677529e7255a",
-      "inputs_sha256": "ef282284715385d604f1a387750e0663af563f203a038eb0bdef3b5aabf60459"
+      "inputs_sha256": "c86c2d99609409234a7b901006eb85170dbffedde7cfd7acd68f1bbfcb8b8619"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7559,10 +7623,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x468d60. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x468d60. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "a944dbece5b066b200d60b4576b85c4a932b4c869bf8b843bca7934617c0db19",
-      "inputs_sha256": "930b740a67a96f2ffd9e068036a2f10dc36bad854bf1c832799c14a73938f5a3"
+      "inputs_sha256": "cb4119a8fb8eba36bbcb839605c093e1ffaf79f910561ab8c1f54b0bd874e505"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7709,6 +7773,7 @@
     "size": 18,
     "rebuilt_symbol": "?Unk_10d69620@@YAHH@Z",
     "inputs": [
+      "src/campaign_global_1131a5b4.h",
       "src/campaign_leaf_469620.cpp"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7734,7 +7799,7 @@
     },
     "match": {
       "bytes_sha256": "f31db41f98ae1f02d1ac2bb67b8a3ab9475194fc287396ba8ce2cb698650efce",
-      "inputs_sha256": "db58f9adb5705bf0b1b692e1b259c2c8ec535429e4aa213a3e61e25195c1ae12"
+      "inputs_sha256": "949a636a27104430a9a2c7856e42a1c98d0f29be0a3da186bb5126fc78dddd50"
     }
   },
   {
@@ -7743,6 +7808,7 @@
     "size": 17,
     "rebuilt_symbol": "?Unk_10d69640@UnkType_10d69640@@QAEXH@Z",
     "inputs": [
+      "src/campaign_global_1131a5d0.h",
       "src/campaign_leaf_469640.cpp"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7764,7 +7830,7 @@
     },
     "match": {
       "bytes_sha256": "3c6e1d93f7fb0210ab78c52a7eaa0b51c9d08cb48afadd544a7800b24a6694d8",
-      "inputs_sha256": "4acbf9fa1d8e89272ea5d0287ca914d58729be991171731606c40d04386452f3"
+      "inputs_sha256": "d4b1eed91a79be91f605becc5ec5761bf2d62aff270eff0d553b256893e02aba"
     }
   },
   {
@@ -7772,11 +7838,14 @@
     "size": 11,
     "offset": 4626016,
     "inputs": [
-      "src/campaign_release_routes.c"
+      "src/campaign_release_routes.cpp",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "_release_route_469670",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_release_routes.obj src/campaign_release_routes.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_release_routes.obj src/campaign_release_routes.cpp",
     "link_bindings": {
       "_release_73c870@4": {
         "va": 285460528,
@@ -7786,7 +7855,7 @@
     "identification": "Complete indexed Campaign function RVA 0x469660. Its masked instruction shape equals matched unit release-route-469670, and the same committed C rebuilds every byte with the retail operands bound here.",
     "match": {
       "bytes_sha256": "b6a07bf1e0cd1ff23676e2055a35ba6c85d3a897dbac9082ad004631b828483e",
-      "inputs_sha256": "11cd27468e96e7a23de9b47fb1961df96a8ba0c441197538e1897c6a81c5a503"
+      "inputs_sha256": "03e3b9caa62d313d5b46188f719d5ef70d5bb8b783abbe88afa7b77db47226c7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7802,11 +7871,14 @@
     "offset": 4626032,
     "size": 11,
     "inputs": [
-      "src/campaign_release_routes.c"
+      "src/campaign_release_routes.cpp",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "_release_route_469670",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_release_routes.obj src/campaign_release_routes.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_release_routes.obj src/campaign_release_routes.cpp",
     "link_bindings": {
       "_release_73c870@4": {
         "va": 285460592,
@@ -7816,7 +7888,7 @@
     "identification": "Direct call at RVA 0x467a90 in the independently delineated function at RVA 0x467a80. Forwards the allocation pointer to the campaign engine heap.",
     "match": {
       "bytes_sha256": "5a1bf13fafc4a878ffc6d73a9b86d66061b55b43ecb6f461041b533ea348b137",
-      "inputs_sha256": "69b4e6ad3ed4e0d1fb26c044fe83f21440f103028b777ba14c4f87e1e435a47d"
+      "inputs_sha256": "8796f70529e60cafec2b1a9264aac6b373caa4d32602c61563b9e2c6a6cc2a35"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7833,6 +7905,7 @@
     "size": 22,
     "rebuilt_symbol": "?Unk_10d69890@UnkType_10d69890@@QAEXHH@Z",
     "inputs": [
+      "src/campaign_global_1131a5c8.h",
       "src/campaign_leaf_469890.cpp"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7854,7 +7927,7 @@
     },
     "match": {
       "bytes_sha256": "9fb9e80777a6473fcc7641da24a6917d8c9408bf5244296f45293d5e1a5f162d",
-      "inputs_sha256": "44eeb39aedf66e507e76d4ca25707693df4205e2818e3a4493fd2d29249c30ca"
+      "inputs_sha256": "9c4c106e7f8612811dd289249522e557f2932e90fe3674bb9c36c8509bfb7c23"
     }
   },
   {
@@ -7863,6 +7936,7 @@
     "size": 17,
     "rebuilt_symbol": "?Unk_10d698b0@UnkType_10d698b0@@QAEXH@Z",
     "inputs": [
+      "src/campaign_global_1131a5c4.h",
       "src/campaign_leaf_4698b0.cpp"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7884,7 +7958,7 @@
     },
     "match": {
       "bytes_sha256": "cb49faceac3da9079f85e5a38d546d391b967ba2b9f3b1ecc534494ab53f34d4",
-      "inputs_sha256": "d89166b195a44ffd07b5d2984e9e449b8151513d0003af16ec6ae6256d4b0ca5"
+      "inputs_sha256": "69b47186c3e3b611bdd68459fa2a6ca93ec31f9a76bb8345d5b24686728f4d37"
     }
   },
   {
@@ -7928,10 +8002,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46a4b0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46a4b0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "9e11240cfcf9e275d6de0f23eaf94c8e5dc5ad00fee80f30755f501e855a0008",
-      "inputs_sha256": "2cd402ffd4208740f88c7b6308cc12b65feb2e7e75b2ad24defd04d2c78dc60f"
+      "inputs_sha256": "9ba8bde5d20eabbcdf68f5eb920be833adde06cf13bf268002d62d0e7dea5ef4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7959,10 +8033,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46a4e0. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46a4e0. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "a96868851abbae63cda32d178566689bebe643b87f6dd07175a76ce151b74b2e",
-      "inputs_sha256": "93fb4c76816ba8d1fce14b78ceac83d49a9cd8758ba14b67be9da53d434da888"
+      "inputs_sha256": "071cdaa36f9da8340d6e5961c6cbe4a856b293815849d1c6efe0fb0ebdae7350"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8229,10 +8303,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46cdc0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46cdc0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "8fcf32948fc229cf664d8f566e5dab6d433dbbd2360b6d377f3b61fba5963759",
-      "inputs_sha256": "d75fe9783a17967ed78abf9494010191c5045844056a8360af8418f8b44a0091"
+      "inputs_sha256": "abc91cd986647be34edcf1a79d5d68261eee0a42fb654615fb6f52d7d297b206"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8260,10 +8334,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46cdf0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46cdf0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "d1d18e51669b13cc4ea2a068ffa8a4ab413434928c8358af7dfa170afa705e60",
-      "inputs_sha256": "8e4837f8611234611cc9732b8f207587ed77f4392b1a56a1359d93f5e088ceeb"
+      "inputs_sha256": "3ba6fcb2dcf95a880b45cf34a3417087252c6bd2bdcba98d7305823a0676b2ea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8291,10 +8365,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46ce20. Allocates a 16-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46ce20. Allocates a 16-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "0356c1731e75458b3a7e56ea9e9d35b5c0a13b6ed56a7a333d1543315234a533",
-      "inputs_sha256": "e5423b9f3c89dbdaf8853041d25d6f6dbfb5f5759f2b673af83a27fed4134771"
+      "inputs_sha256": "e8dd4d2930e5ce5e11d798c45eb3a1d81c06f71c5b4b6706e6cf71579b4e1e43"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8322,10 +8396,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46ce50. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46ce50. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "b73426480f7dae5cba93173a3e60501317cc6e62003fb7ab0a1c6461b6e9380e",
-      "inputs_sha256": "8aeee6e23cec15e345a4a346619a8c0c416e28dc0268633a68a62e4cc3c6bdfc"
+      "inputs_sha256": "c1b04013f0407d4690841f7e855d67330570c62856aeba48ea8fd67f5ac5737f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8353,10 +8427,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46ce80. Allocates a 16-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46ce80. Allocates a 16-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "c1bf3072c80d267dc0b845be0692186ea7ea75dbed02a08ef9d9d0754ae69d33",
-      "inputs_sha256": "38e186af16ab75a636299d172ffcb296d9166f388b18cd3bcd2259f29ed2025d"
+      "inputs_sha256": "85e758bf27facbd15a3a4ef3292dc49ade08a697072b0197911680eb5ec2f312"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8384,10 +8458,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46ceb0. Allocates a 40-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46ceb0. Allocates a 40-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "5fb4c152222c743f86aa15315da81d89973da4e47455be089b4e8cec57f0403e",
-      "inputs_sha256": "3c803969651c33b777b34b7a1d6270f8b23f7245d38187b74eb5b8e069cdb976"
+      "inputs_sha256": "22425ebb89be398c4ee640906681ab3976ba8830775d6602da76c1daa1dfdb28"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8415,10 +8489,10 @@
         "basis": "Indexed engine allocator entry."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46cee0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46cee0. Allocates a 12-byte node, initializes both links and increases the count on success. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "ea5cdc1dd36e77c9245a61b0e4f912c9bfd000ae180831442266b520c585a6bb",
-      "inputs_sha256": "cd09c8eab289aed9b191111d915b4c28a9fba05b435c7787bd1701766bd3d07b"
+      "inputs_sha256": "688997397c57a129d8762e88273941a3f516017f20966fde1ee2b0b0806fbfdf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8446,10 +8520,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46cf10. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46cf10. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "9cc771940a2709db19c1ed1fab32e8a00c787442dcb8f23595e60fd94e9a690a",
-      "inputs_sha256": "2165740d58f7511e2bcc7a17ba63cee87480ef048773e3ca0967faa47f41c8c0"
+      "inputs_sha256": "b9b09e14034a62f9f6291fa73f4d96690bae4a070c5fb446f2c36d2956ae3d9e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8510,10 +8584,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46cff0. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46cff0. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "d77b23b0eb865cf4f9936f8a4fa667a3f35ed46da473b63177d0d2e3715e67e9",
-      "inputs_sha256": "a948c0e859e9b559250a17130b46aadb8ec513436ea6c23171ea236a5cd02632"
+      "inputs_sha256": "01467a4ef58adc489e899ff94be69429625357e48937fd8e4476e7b130c90736"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8541,10 +8615,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46d020. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46d020. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "efe72c3d0670b5cbcf9900d0673703035c9d8c4129c5c3061e07b7747b0111fc",
-      "inputs_sha256": "73f31beddf427e9401444c8f940d425018a94b6aaf86ae2be814add4bf22b24b"
+      "inputs_sha256": "ffee7098f8c444d30138211f88322e03406bbb10af7199becdc9f4994c978191"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8572,10 +8646,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46d040. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46d040. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "84d1888dd87d56628e20010f43dcec89383c0920a3bef2882daf02c6ce8e70d4",
-      "inputs_sha256": "2c776646dd5a6d1611964893dfcad3406789a13f42648e2dd78ed1e87111bcf1"
+      "inputs_sha256": "2b030db0bb618252959cb60401e97e6c0e1d13696124f3cbd855fcacf7f70d51"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8603,10 +8677,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46d080. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46d080. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "175a3140103a65ce6beadd205cfaf8c49f935d26869161692bd25fe41213b011",
-      "inputs_sha256": "d669e6e5488ae8e6acd4478725e91aef0bca1aebdd4ffc60cd9e47186b286d7b"
+      "inputs_sha256": "4b7d2a9db36896b15712365f46dd907915a22a10277eb7fead1e2c799eb6878d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8634,10 +8708,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46d0a0. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46d0a0. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "da28ee398c390c2a5ac9e883495988a1a45fad1ae98c56d4183275db44a343e6",
-      "inputs_sha256": "e1943d7c617051e3ce7d3cd6d7735b9ffa875db8e0f7b6701cb60089b28a7a6f"
+      "inputs_sha256": "1ac0502ea2b4a0ce389aeb1805849e648ee0d84264a9fc727b2f69156eab04a5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8697,10 +8771,10 @@
         "basis": "Indexed engine buffer release."
       }
     },
-    "identification": "Complete Campaign method at RVA 0x46d150. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names.",
+    "identification": "Complete Campaign method at RVA 0x46d150. Releases a non-null node and decreases the count. Majority choice, not evidence: the list links are the shared struct ListLink of campaign_list_link.h (next and previous); ListLink, next and previous are invented names. CountedNodePool is an analyst-invented local name for the wrapper storing the allocated-node count.",
     "match": {
       "bytes_sha256": "63d8f90e48e096bdf2c07f7e97ca72bc380c067e890067dc82dca39d82d4ed7d",
-      "inputs_sha256": "4b5adfa60deb194eda3199ca32b32b50de29454d4ca218941d97dd56465d1b67"
+      "inputs_sha256": "2b127f7426cc60d4bb5a514713f24b2a681432941d1c9a12d6296e1a30dc104b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

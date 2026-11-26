@@ -723,7 +723,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r193910@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -741,7 +742,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x193910 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "958a8de808ff39176f5c8c335a9f8606c369b154ff398a5d8c0466c5b3378eab",
-      "inputs_sha256": "12677cc191699ea8993e1416b4c9194e860f3b04dbb0fba92ecc69fad685a9f1"
+      "inputs_sha256": "9f0f9ed7e6e6254a8d5fc8d3c525b09783ab33019f6ffeb6d8882faee99b4e63"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -809,7 +810,7 @@
     "identification": "Typed cast at campaign RVA 0x194970, directly called at RVA 0x194afb. Its class constructor at RVA 0x972e0 identifies ALight; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "36a586bbaa8e898a643d85d4b9326bab88cfa9c0e23a19be91967fcb5378f0e7",
-      "inputs_sha256": "2c515f1f82824778594b7d932e625445714ed3d1c269f004368bfd76ec7a0617"
+      "inputs_sha256": "e2a52909c892a1ed55bfdda940c5257c950bc825381c2a0844badb39f19e6f81"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -853,7 +854,7 @@
     "identification": "Typed cast at campaign RVA 0x1949d0, directly called at RVA 0x194d28. Its class constructor at RVA 0x1050e0 identifies UPlayerInput; the complete object and null return paths precede alignment.",
     "match": {
       "bytes_sha256": "d4b81b92d6c6cab9d0602b3d11d4a2446b0bf699769cbc040aab5896713c387c",
-      "inputs_sha256": "0717af0629b077783433abb044e51decf8f392fa83c1ca1f16bcd82fec1ee178"
+      "inputs_sha256": "51bb2ef85287636e30d51a973cd6d4bf27d1d39172d67c283495cf18d62986d9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -897,7 +898,8 @@
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_record_arrays.obj src/campaign_record_arrays.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -915,7 +917,7 @@
     "identification": "Stock FArray operation at RVA 0x1973b0. Its independent function extent agrees with the compiler contribution and the allocation tag is shared with other matched operations. Record size is 4 bytes. Advances the count by the requested amount and returns the original count.",
     "match": {
       "bytes_sha256": "4d5603415f0a7071d3e4722b879bb8be5cbfa4c3df2651b142de80b4de8c1ed0",
-      "inputs_sha256": "2149d5c3f20667b38bcf8a6761ba88d04d71c7072db5764af8b6713559db2e6a"
+      "inputs_sha256": "d268416c61b8f35b3715d2a764476c091912fa2bc27879d53935f9fcfc70cb4a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -931,21 +933,23 @@
     "size": 20,
     "offset": 1668096,
     "inputs": [
-      "src/campaign_typed_array_ranges.c"
+      "src/campaign_typed_array_remove.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h"
     ],
-    "rebuilt_symbol": "@remove_typed_197400@12",
+    "rebuilt_symbol": "??$RemoveTyped@$1?array_tag_7ba17c@@3QBGB$03@Array@@QAEXHH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_ranges.obj src/campaign_typed_array_ranges.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_remove.obj src/campaign_typed_array_remove.cpp",
     "link_bindings": {
-      "@remove_01b2c0@16": {
+      "??$Remove@$1?array_tag_7ba17c@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 277983936,
-        "basis": "Independently rebuilt array remove function at RVA 0x1b2c0."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-01b2c0. The wrapper forwards its index and count with element size 4."
       }
     },
-    "identification": "Aligned entry bounded by a previous return and INT3 padding. Passes the index, count and fixed 4-byte element size to the rebuilt array remove operation. Majority choice, not evidence: the Count member here takes unsigned from the other copies, where this source had int.",
+    "identification": "Complete typed FArray range wrapper at RVA 0x197400. Calls the matching Array::Remove<Tag> specialization with fixed element width 4.",
     "match": {
       "bytes_sha256": "9a755367ce0ad9b805f0897f57f96774c57d395153c018d8f8541038e58de7f8",
-      "inputs_sha256": "87213e3bbb4a93e7ea77039b0058d19baae5d09087a5ef0ce84741275a390c72"
+      "inputs_sha256": "6231a92c6623fb795c6cd09945fd506b9dcd0285869a2d5e532c02352fe1e997"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -965,7 +969,8 @@
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@append_array_item_r197750@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -983,7 +988,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x197750 through its RET. Grows the allocation if required, stores the incoming four-byte element and returns its original insertion index. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "d4a67fcaeef443dc29c4673c8b6b30f06cab40be381ba9390c50d34719531a8d",
-      "inputs_sha256": "ab87606e07ff67a9501b8a2917681e60ffb42d7940dfc766689dd5728db46f86"
+      "inputs_sha256": "77c0b6c75518f39904be4e58feb6e54b497951c837710acbc0ac71007fa4fac6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1078,7 +1083,7 @@
     "identification": "Complete dispatch adapter at RVA 0x19c960. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x4a0970.",
     "match": {
       "bytes_sha256": "572030a410483b31f7c6ce6e91d8c474acfb0c753fde16b44781955026d21194",
-      "inputs_sha256": "f0340ed1b910ab0d26d9c713c739ba09ed320add61611cd1ff8e1b666d846af7"
+      "inputs_sha256": "e93372eed044a2d340878a5651cdd1884a2a0c5f40fb30c5108481959bf4b660"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1377,7 +1382,7 @@
     "identification": "Complete dispatch adapter at RVA 0x19d350. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x19d260.",
     "match": {
       "bytes_sha256": "a0136c7054809f80128c274cb52af05daaee9041b33d5f84f9b6a09fd7c7f1db",
-      "inputs_sha256": "8a4a5d264692a987c98c77188df56fb65fe6d6a628b6b4ed4cbe2f6fa0a2fe71"
+      "inputs_sha256": "7e4a7fb414735599e469b7f1128c89fdfb3a103812c44fbbe98b5907f1aff22f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1407,7 +1412,7 @@
     "identification": "Complete dispatch adapter at RVA 0x19d3b0. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x19d2e0.",
     "match": {
       "bytes_sha256": "77b4b009e6a83d07910fe27a6f350e1ae5a9b3cfa018b55cfd133afb7faa5c3f",
-      "inputs_sha256": "835a08b495dc2b7783704cac37f770c7f4838dda923e2f7bc8caec1bd5475a3e"
+      "inputs_sha256": "b5ece31b9b55273343511a55a0e12de5a18d75987b40f3021ebdf192d800e406"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -1915,7 +1920,7 @@
     "identification": "Complete dispatch adapter at RVA 0x19e1d0. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x19d5b0.",
     "match": {
       "bytes_sha256": "c6492708f8c888094d36141d918753a0113e872d5c968bb55a86c8d981504649",
-      "inputs_sha256": "3b95dfe0c31f1e4a32bc4d8dbaf7706ff51065cef9855215104192a9821c01ff"
+      "inputs_sha256": "b9c1b706cb4b4df7b0bdf4176325ccad00167b961b68703cb165bcc35fb674a6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2402,7 +2407,9 @@
     "size": 80,
     "rebuilt_symbol": "??1UnkType_10a9e700@@UAE@XZ",
     "inputs": [
-      "src/campaign_leaf_19e700.cpp"
+      "src/campaign_leaf_19e700.cpp",
+      "src/campaign_leaf_19e700_member_types.h",
+      "src/campaign_unidentified_empty_destructor.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_leaf_19e700.obj src/campaign_leaf_19e700.cpp",
@@ -2451,7 +2458,7 @@
     },
     "match": {
       "bytes_sha256": "efbed3b9ecce4cbf8d7f88ea5454429739d51c41cf1d97af667ed7d569649089",
-      "inputs_sha256": "42d9cc16f91f9c0da2f79f0965c4cf54fa6220ab88e8f8da0677aa7ce3bfed67"
+      "inputs_sha256": "87274f32c3e75bd674c04b951a34a01667d0f815c9e80a8dc2af7675154d31d3"
     }
   },
   {
@@ -2473,7 +2480,7 @@
     "identification": "Complete dispatch adapter at RVA 0x19f100. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x19eea0.",
     "match": {
       "bytes_sha256": "7db0ad0c3d79a141323afedecd86613b4d066cf8a59c75cd033664a579e9470e",
-      "inputs_sha256": "9599d16ab2c57b0d329041c9f08ad88eb84d2d79d895960ebf27b356b0019f20"
+      "inputs_sha256": "1bc4239a41d212bbadc7baa238573aae9c47130fff4ffd51472d52a9569e70d3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2696,7 +2703,7 @@
     "identification": "Complete dispatch adapter at RVA 0x19fb20. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x19fa30.",
     "match": {
       "bytes_sha256": "a0136c7054809f80128c274cb52af05daaee9041b33d5f84f9b6a09fd7c7f1db",
-      "inputs_sha256": "81ebe907ecf9f6fc199817db0c014dad641054f044cd55dfcd76f2c3962e137f"
+      "inputs_sha256": "e52929f42e5372e0cb0302754f7e7f7dc191b8e9712851789e1f8b9d6249bfd1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2726,7 +2733,7 @@
     "identification": "Complete dispatch adapter at RVA 0x19fb80. Places the receiver in ECX and forwards the two remaining arguments to member RVA 0x19fab0.",
     "match": {
       "bytes_sha256": "77b4b009e6a83d07910fe27a6f350e1ae5a9b3cfa018b55cfd133afb7faa5c3f",
-      "inputs_sha256": "496c8409cfc3cc2aa044e940e41d36fc08baf644d04c6c2ffec5cf478967fe2a"
+      "inputs_sha256": "d676b9d9d663d0d4c62417969c3565c67b2c4017809e56faffadd94ab3c5345a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

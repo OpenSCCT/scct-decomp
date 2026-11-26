@@ -24,7 +24,7 @@ struct AllocatorMethods {
                                void *, int, const unsigned short *);
 };
 struct Allocator { const struct AllocatorMethods *methods; };
-extern struct Allocator *engine_allocator;
+#include "campaign_engine_allocator.h"
 extern const unsigned short array_allocation_name[];
 void __fastcall actor_post_begin_play(struct Music *music);
 struct AIPawn *__cdecl cast_ai_pawn(struct Actor *actor);
@@ -40,8 +40,9 @@ void __fastcall music_post_begin_play(struct Music *music)
             int index = music->count++;
             if (music->count > music->capacity) {
                 music->capacity = music->count + 3 * music->count / 8 + 2;
-                music->ai_pawns = engine_allocator->methods->resize(
-                    engine_allocator, engine_allocator->methods, music->ai_pawns,
+                music->ai_pawns = ((struct Allocator *)engine_allocator)->methods->resize(
+                    (struct Allocator *)engine_allocator, ((struct Allocator *)engine_allocator)->methods,
+                    music->ai_pawns,
                     music->capacity * sizeof(*music->ai_pawns), array_allocation_name);
             }
             music->ai_pawns[index] = pawn;

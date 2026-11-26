@@ -1,29 +1,29 @@
 #include "campaign_three_link_node.h"
-struct Tree { unsigned reserved; struct ThreeLinkNode *head; unsigned count; };
+struct SentinelTree { unsigned reserved; struct ThreeLinkNode *head; unsigned count; };
 struct Argument { unsigned word; };
 struct Arguments { unsigned words[2]; };
 
-extern struct ThreeLinkNode *__fastcall make_node_387b00(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4894c0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_48c630(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_496a50(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_499410(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_49f6d0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4a3380(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4a5c20(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4abef0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4aeec0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4aef90(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4c01d0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4c58e0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4c96a0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4c98a0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4cf460(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4d4030(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4d7730(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4de0d0(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4ec370(struct Tree *tree);
-extern struct ThreeLinkNode *__fastcall make_node_4eda40(struct Tree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_387b00(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4894c0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_48c630(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_496a50(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_499410(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_49f6d0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4a3380(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4a5c20(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4abef0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4aeec0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4aef90(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4c01d0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4c58e0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4c96a0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4c98a0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4cf460(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4d4030(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4d7730(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4de0d0(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4ec370(struct SentinelTree *tree);
+extern struct ThreeLinkNode *__fastcall make_node_4eda40(struct SentinelTree *tree);
 
 #define INITIALIZE_BODY(Create, NilOffset) \
     tree->head = Create(tree); \
@@ -34,7 +34,7 @@ extern struct ThreeLinkNode *__fastcall make_node_4eda40(struct Tree *tree);
     tree->count = 0
 
 #define INIT_0(Entry, Create, NilOffset) \
-    void __fastcall Entry(struct Tree *tree) \
+    void __fastcall Entry(struct SentinelTree *tree) \
     { INITIALIZE_BODY(Create, NilOffset); }
 
 INIT_0(init_tree_388260, make_node_387b00, 17)

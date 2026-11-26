@@ -1,7 +1,7 @@
 typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned long DWORD;
-typedef void *HWND;
+typedef struct HWND__ *HWND;
 extern "C" __declspec(dllimport) size_t __cdecl wcslen(const TCHAR *);
 extern "C" void *__cdecl appMemcpy(void *Dest, const void *Src, INT Count);
 

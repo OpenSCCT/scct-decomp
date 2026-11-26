@@ -1,15 +1,9 @@
+#include "crt_locale_time_types.h"
+
 void __cdecl free(void *);
 void *__cdecl malloc(unsigned);
 unsigned __cdecl strlen(const char *);
 char *__cdecl strcpy(char *, const char *);
-
-struct TimeNames {
-    char *short_day[7], *long_day[7];
-    char *short_month[12], *long_month[12];
-    char *am_pm[2];
-    char *short_date, *long_date, *time;
-};
-extern struct TimeNames *__lc_time_curr;
 
 struct NumericConventions {
     char *decimal_point, *thousands_sep, *grouping;
@@ -55,7 +49,7 @@ void __cdecl steam_free_lconv_mon(struct NumericConventions *data)
     free(months[4]); free(months[5]); free(months[6]); free(months[7]); \
     free(months[8]); free(months[9]); free(months[10]); free(months[11])
 
-void __cdecl steam_free_lc_time(struct TimeNames *data)
+void __cdecl steam_free_lc_time(struct LocaleTimeNames *data)
 {
     if (data) {
         FREE_WEEK(data->short_day);
@@ -73,7 +67,7 @@ void __cdecl steam_free_lc_time(struct TimeNames *data)
 #define DEFINE_NAMES(function, short_names, long_names, count) \
 char *__cdecl function(void) \
 { \
-    struct TimeNames *names = __lc_time_curr; \
+    struct LocaleTimeNames *names = __lc_time_curr; \
     unsigned i, size = 0; \
     char *result, *cursor; \
     for (i = 0; i < count; ++i) \

@@ -1,4 +1,5 @@
-typedef unsigned size_t;
+#include "crt_stream_globals.h"
+typedef unsigned CrtStreamSize;
 struct Stream {
     char *cursor;
     int left;
@@ -9,7 +10,7 @@ struct Stream {
 enum { Read = 1, Write = 2, Unbuffered = 4, OwnedBuffer = 8, End = 16,
        Error = 32, String = 64, Update = 128, UserBuffer = 256,
        BigBuffer = OwnedBuffer | UserBuffer, AnyBuffer = BigBuffer | Unbuffered };
-void *memcpy(void *, const void *, size_t);
+void *memcpy(void *, const void *, CrtStreamSize);
 int _read(int, void *, unsigned);
 int _write(int, const void *, unsigned);
 int _flush(struct Stream *);
@@ -17,16 +18,16 @@ int _filbuf(struct Stream *);
 int _flsbuf(int, struct Stream *);
 void _getbuf(struct Stream *);
 
-size_t steam_fread(void *buffer, size_t size, size_t count, struct Stream *stream)
+CrtStreamSize steam_fread(void *buffer, CrtStreamSize size, CrtStreamSize count, struct Stream *stream)
 {
     char *cursor = buffer;
-    size_t total = size * count, remaining = total, block_size, chunk;
+    CrtStreamSize total = size * count, remaining = total, block_size, chunk;
     int value;
     if (!remaining) return 0;
     block_size = (stream->flags & AnyBuffer) ? stream->buffer_size : 4096;
     while (remaining) {
         if ((stream->flags & AnyBuffer) && stream->left) {
-            chunk = remaining < (size_t)stream->left ? remaining : (size_t)stream->left;
+            chunk = remaining < (CrtStreamSize)stream->left ? remaining : (CrtStreamSize)stream->left;
             memcpy(cursor, stream->cursor, chunk);
             remaining -= chunk;
             stream->left -= (int)chunk;
@@ -57,16 +58,16 @@ size_t steam_fread(void *buffer, size_t size, size_t count, struct Stream *strea
     return count;
 }
 
-size_t steam_fwrite(const void *buffer, size_t size, size_t count, struct Stream *stream)
+CrtStreamSize steam_fwrite(const void *buffer, CrtStreamSize size, CrtStreamSize count, struct Stream *stream)
 {
     const char *cursor = buffer;
-    size_t total = size * count, remaining = total, block_size, chunk;
+    CrtStreamSize total = size * count, remaining = total, block_size, chunk;
     int written;
     if (!remaining) return 0;
     block_size = (stream->flags & AnyBuffer) ? stream->buffer_size : 4096;
     while (remaining) {
         if ((stream->flags & BigBuffer) && stream->left) {
-            chunk = remaining < (size_t)stream->left ? remaining : (size_t)stream->left;
+            chunk = remaining < (CrtStreamSize)stream->left ? remaining : (CrtStreamSize)stream->left;
             memcpy(stream->cursor, cursor, chunk);
             stream->left -= (int)chunk;
             stream->cursor += chunk;
@@ -83,7 +84,7 @@ size_t steam_fwrite(const void *buffer, size_t size, size_t count, struct Stream
             }
             cursor += written;
             remaining -= written;
-            if ((size_t)written < chunk) {
+            if ((CrtStreamSize)written < chunk) {
                 stream->flags |= Error;
                 return (total - remaining) / size;
             }
@@ -151,8 +152,7 @@ struct DescriptorInfo {
 extern struct DescriptorInfo *__pioinfo[], __badioinfo;
 extern struct Stream _iob[];
 extern char *_stdbuf[];
-extern int _cflush;
-void *malloc(size_t);
+void *malloc(CrtStreamSize);
 void free(void *);
 int _isatty(int);
 enum { ExplicitBuffer = 0x400, TemporaryBuffer = 0x1000, ControlZ = 0x2000,

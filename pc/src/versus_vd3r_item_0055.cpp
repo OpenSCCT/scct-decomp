@@ -12,7 +12,7 @@ typedef unsigned long DWORD;
 typedef DWORD UBOOL;
 typedef unsigned short WORD;
 typedef void *HANDLE;
-typedef void *HWND;
+typedef struct HWND__ *HWND;
 typedef void *HGLOBAL;
 typedef void *HINSTANCE;
 

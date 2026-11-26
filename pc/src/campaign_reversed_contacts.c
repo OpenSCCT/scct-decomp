@@ -5,9 +5,12 @@ struct Contact {
     unsigned extra[4];
 };
 struct ContactArray { struct Contact *data; int count; };
-struct Output { struct ContactArray *contacts; };
+struct ContactOutput { struct ContactArray *contacts; };
+/* FAKEMATCH: the C fastcall declaration uses this wrapper to keep the pair
+   and input addresses in the collision method's stack argument slots. */
 struct PairArgument { const void *value; };
-struct OutputArgument { struct Output *value; };
+/* FAKEMATCH: this wrapper passes the collision output address on the stack. */
+struct OutputArgument { struct ContactOutput *value; };
 
 extern void __fastcall collide(void *agent, struct PairArgument first, struct PairArgument second,
                                struct PairArgument input, struct OutputArgument output);

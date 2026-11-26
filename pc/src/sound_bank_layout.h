@@ -114,6 +114,7 @@ tdstBlockResourceMem *__stdcall SND_fn_pstGetResFromEdIdSnd_Map(unsigned long ul
 tdstBlockResourceMem *__stdcall SND_fn_pGetBinRes(unsigned long ulBinId);
 SND_tdstBlockEvent *__stdcall SND_fn_pGetBinEvent(unsigned long ulBinId);
 SND_tdstBlockEvent *__stdcall SND_fn_hGetSoundEventHandleFromEditorId(unsigned long ulEdId);
+SND_tdstBlockEvent *__stdcall SND_fn_hGetSoundEventHandleFromSectionName(const char *szSectionName);
 tdstBlockResourceMem *__stdcall SND_fn_pstGetResFromEdIdSnd(unsigned long ulEdId);
 unsigned long __stdcall SND_fn_ulGetEditorIdFromSoundEventName(const char *szName);
 

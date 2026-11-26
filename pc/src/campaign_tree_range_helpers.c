@@ -1,8 +1,8 @@
-struct Word { unsigned value; };
-struct Source { const struct Word *word; };
+#include "campaign_word.h"
+struct Source { const struct CampaignWord *word; };
 
 #define COPY_WORD(Entry) \
-    struct Word *__fastcall Entry(struct Word *out, struct Source from) \
+    struct CampaignWord *__fastcall Entry(struct CampaignWord *out, struct Source from) \
     { \
         *out = *from.word; \
         return out; \

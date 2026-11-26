@@ -5,7 +5,8 @@
     "offset": 3812592,
     "inputs": [
       "src/campaign_array_allocate_init.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@initialize_3a2cf0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -23,7 +24,7 @@
     "identification": "Aligned entry bounded by a preceding return and compiler padding. Sets count and capacity and allocates fresh storage with 4-byte elements and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "ba8bd35191358555a62006605321044af9f2c1a356db2b0996a768eaf70c167c",
-      "inputs_sha256": "63bb79b2dbd727ed4993c1aa45599224561c47773fcec1c4268fe2998503fb3d"
+      "inputs_sha256": "e7f56d3f16a6d1ebf7919d45da5925b242e0044ad44bbedaf2459f00ee710846"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -39,21 +40,23 @@
     "size": 20,
     "offset": 3812736,
     "inputs": [
-      "src/campaign_typed_array_ranges.c"
+      "src/campaign_typed_array_remove.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h"
     ],
-    "rebuilt_symbol": "@remove_typed_3a2d80@12",
+    "rebuilt_symbol": "??$RemoveTyped@$1?array_tag_7b7b08@@3QBGB$03@Array@@QAEXHH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_ranges.obj src/campaign_typed_array_ranges.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_remove.obj src/campaign_typed_array_remove.cpp",
     "link_bindings": {
-      "@remove_39b560@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 281654624,
-        "basis": "Independently rebuilt array remove function at RVA 0x39b560."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-39b560. The wrapper forwards its index and count with element size 4."
       }
     },
-    "identification": "Aligned entry bounded by a previous return and INT3 padding. Passes the index, count and fixed 4-byte element size to the rebuilt array remove operation. Majority choice, not evidence: the Count member here takes unsigned from the other copies, where this source had int.",
+    "identification": "Complete typed FArray range wrapper at RVA 0x3a2d80. Calls the matching Array::Remove<Tag> specialization with fixed element width 4.",
     "match": {
       "bytes_sha256": "8690adb9dd320ec9fe25eb2d5ee4edf5602c63104471444621463daecc155072",
-      "inputs_sha256": "f5f6b923ff89722d30a7eb74ccbc221dcb1e9b7c1de2a42dd2b5a9e92e0a4510"
+      "inputs_sha256": "8bfe7cc810fb083056d63336166671c7ae52ba34031a360b675602d01333c9de"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -73,7 +76,8 @@
       "src/campaign_fixed_record_growth.h",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_record_arrays.obj src/campaign_record_arrays.c",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -91,7 +95,7 @@
     "identification": "Stock FArray operation at RVA 0x3a31b0. Its independent function extent agrees with the compiler contribution and the allocation tag is shared with other matched operations. Record size is 376 bytes. Appends a copy of the input record and returns its index.",
     "match": {
       "bytes_sha256": "df6f5b337c98f0af1b0059ea15b7144787bd5fe6822d8383ddd85e90ec9ec546",
-      "inputs_sha256": "389f45e7a4c069d2d87e4017fb962f82f4dcbb6272e49684066c3e611e73a722"
+      "inputs_sha256": "e4b83c9b20fd4b964106b262c872b819216e5916b21dce0207d5b89d9f949022"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -106,27 +110,31 @@
     "id": "array-destroy-3a3220",
     "size": 56,
     "offset": 3813920,
-    "rebuilt_symbol": "@array_destroy_r3a3220@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$03@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r39b560@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 281654624,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-39b560. The call passes index zero, the current count and element size 4."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-39b560. The call passes index zero, the current count and element size 4."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x3a3220, 0x3a3258). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x39b560. Removes every element with stride 4 and releases remaining storage.",
     "match": {
       "bytes_sha256": "7d4b18704793b4f0f3517c1f61ef6eb389b2c46722c1b721e32f7faa0e05b70e",
-      "inputs_sha256": "1fb5eb4527ff9385e7e6591c8b544e5f6f16ed72cab0c2c05db8525d558741d7"
+      "inputs_sha256": "771ebd2ed6e002f8ae60a131955a8039c36031a29172f5560e99e87585860778"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

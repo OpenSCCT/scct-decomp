@@ -7,7 +7,8 @@
     "inputs": [
       "src/campaign_vm_game_callbacks.c",
       "src/campaign_game_callback.h",
-      "src/campaign_vm_frame.h"
+      "src/campaign_vm_frame.h",
+      "src/campaign_native_initializer.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vm_game_callbacks.obj src/campaign_vm_game_callbacks.c",
@@ -20,7 +21,7 @@
     },
     "match": {
       "bytes_sha256": "5d6ee1dc9a9ee302224a2c36ece0f4f7b5077bb4ba2bc92112520e8b10286e2a",
-      "inputs_sha256": "4edcd287a1c86aaf7bf6fb1bb0d7fbc33f06e72091b0e841e0205d75d540741e"
+      "inputs_sha256": "463cb5d61ff8dfe9ce0ddd51bc8ec933327d455cc9f311b45e8302d9fcd374ca"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -39,7 +40,8 @@
     "inputs": [
       "src/campaign_vm_game_callbacks.c",
       "src/campaign_game_callback.h",
-      "src/campaign_vm_frame.h"
+      "src/campaign_vm_frame.h",
+      "src/campaign_native_initializer.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_vm_game_callbacks.obj src/campaign_vm_game_callbacks.c",
@@ -52,7 +54,7 @@
     },
     "match": {
       "bytes_sha256": "5d6ee1dc9a9ee302224a2c36ece0f4f7b5077bb4ba2bc92112520e8b10286e2a",
-      "inputs_sha256": "dd3cfbcb718fa1dad700104680e4e619d063ece45fbe377187b0c86dc8621047"
+      "inputs_sha256": "e75aa8c9c429c49624318910d0b89e6e95db90cb94139488eb661ded1c61f28e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -104,15 +106,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_UKeyboardManager",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_UKeyboardManager": {
         "va": 286069272,
@@ -130,15 +135,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for UKeyboardManager."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x110100; its allocation tag and reflected class name identify UKeyboardManager. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x110100; its allocation tag and reflected class name identify UKeyboardManager. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "bc47b8c4cfa486237ae8becc4ab7d0752d0063287ea04adfc4f8827d8a498890",
-      "inputs_sha256": "8b14e0d1585772308cc5aa95fd49e59a1e6b0f98a56f29575a5aafbbc306d06e"
+      "inputs_sha256": "98c04004b46b9a6f68e7648cd4d966261e19edf10d573611c107aef340bfd038"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -290,7 +295,7 @@
     "identification": "Class registration for URainDropMaterial at RVA 0x1101b0, called immediately after the class factory at RVA 0x110350 in the singleton initialization path. Sets superclass UBitmapMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "0d091e54c0467b29cf1c9f3ac576b46d40b2a5264982be5950c42ea95868c721",
-      "inputs_sha256": "c3f9960892641d6759b1c7d6ba00e7cbc9a186277e6248a581e4558792fbb687"
+      "inputs_sha256": "e8d37768bbd14eeae575d4a289fdf8ce1734a93d9d93458f5d66c54fe0cff0f2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -330,7 +335,8 @@
     "offset": 1114864,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_URainDropMaterial@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -356,7 +362,7 @@
     },
     "match": {
       "bytes_sha256": "02824c39fbd038812a5b2ab618843836996f52eb7895beb8410f7e8b67eb28b6",
-      "inputs_sha256": "b9bd3585017aa51b3a157565130d8aff1a3d77e75475fc913bba17e8f2c10601"
+      "inputs_sha256": "77b48b84bd0d2e32cc9d25f35f1552ae59e9be5b4cd0090eae3bd2ed974eb2a2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -373,15 +379,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_URainDropMaterial",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_URainDropMaterial": {
         "va": 286069536,
@@ -399,15 +408,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for URainDropMaterial."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x110350; its allocation tag and reflected class name identify URainDropMaterial. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x110350; its allocation tag and reflected class name identify URainDropMaterial. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "5e82ea7cb0c678b00f486334f64e7a02f46d3f9ed5993b1404085d77a834f6a3",
-      "inputs_sha256": "1f1fb407d8496c131c30b250ff781ca636b795a177ee3569d78d5f755a18efc9"
+      "inputs_sha256": "3a7016f95869f2940541a9ae0304de6327ca2b1962447605a50eb3df4306bf0d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6783,7 +6792,9 @@
     "size": 18,
     "offset": 1127888,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_1135d0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6798,10 +6809,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1348. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1348. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "e5643a54f855a1dbf4d75a7e0a1cbca8181fc2b6fd860a3290ad7432c368ed89",
-      "inputs_sha256": "25f1f1db2db36d0a54e8e9ddd89481569c35b0d2fe6f73e4597eaa5f8cc63efb"
+      "inputs_sha256": "8117e5da721c8f47c5fa794e0d66238a67f408a2aa7c6f753074705b35abd8f2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6817,7 +6828,8 @@
     "offset": 1127920,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_ALL_unlit_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6843,7 +6855,7 @@
     },
     "match": {
       "bytes_sha256": "a205090e6945dbe6958ed3cb87670363ed4e609d511e4078ecd4e93fa65e2fe8",
-      "inputs_sha256": "e41360bb62618348f742539b504787d06c14178ba7b2e99822ee85049a2082f0"
+      "inputs_sha256": "fc2fc209209e60b626aa9f588cad1b2b52f91d20f2acd79250c542aa61891d44"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6859,7 +6871,9 @@
     "size": 18,
     "offset": 1127984,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113630@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6874,10 +6888,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1420. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1420. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "39c8cb306ff1a45e221dad0ae06f761e1523f7f5781cef715c590b36e8e73cc9",
-      "inputs_sha256": "7d6d8858e47128a6e0cc8f6b59b7ff492a6df36688fb9ec00cb6bd6f1dfa1051"
+      "inputs_sha256": "a55425b1ef67ed6f173a4808257cb179223559262bbeb0b1ceeaf4bbd0a8260e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6893,7 +6907,8 @@
     "offset": 1128016,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_basic_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6919,7 +6934,7 @@
     },
     "match": {
       "bytes_sha256": "0805cb75dd0185e766006f98c9c7f5292527adfe217da924f1e473713d7813e1",
-      "inputs_sha256": "8989d56c174848df71f1a71f732a196242525fb09de39cb72d48aa552a9c63cb"
+      "inputs_sha256": "034e113ca560da3f58a7fd088283458b8e815e4e0bc8f938a9561144de9ccd4e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6935,7 +6950,9 @@
     "size": 18,
     "offset": 1128080,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113690@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6950,10 +6967,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d14f8. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d14f8. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "ce7c0f89570d21e87c30f42162d666dbec18ec0c2142a75f27694708079356f1",
-      "inputs_sha256": "bd0964c6482ac62f2c8d603ff298886bf5d8e37c6a9e7b29779ca9b9e0971f10"
+      "inputs_sha256": "408173f871e4d01c031055451b7af6c0172f2041091dca873b0e5d24e2e1c036"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6969,7 +6986,8 @@
     "offset": 1128112,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_BSP_basic_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6995,7 +7013,7 @@
     },
     "match": {
       "bytes_sha256": "13d256e671ccaaff6a5ff0f29ec4c01bfedab85e104422737f312af8472a29da",
-      "inputs_sha256": "b40e8bc89eb15e2e1d966e7f3b1f69483c5ba548ef8a06a8e5faa2e3fa63db02"
+      "inputs_sha256": "29396194f3fed51e5e6896b735d614d71f586b1c7beee92cd5e77a95b2e423c8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7011,7 +7029,9 @@
     "size": 18,
     "offset": 1128176,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_1136f0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7026,10 +7046,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d15d0. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d15d0. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "7a3100c5b00bd30c9cbf3cc37c4421b135772c3debb98106e1b236661aa0dbe0",
-      "inputs_sha256": "009eb73872cddde4a59ce4c491fcda6c7af7a82fed16f9a051dafdbcbc6219b0"
+      "inputs_sha256": "f5b660f593624346be1ae8f4a66b44d9b7c061abd00e30c18f3f65d0d9824bb8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7069,7 +7089,8 @@
     "offset": 1128224,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_canvas_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7095,7 +7116,7 @@
     },
     "match": {
       "bytes_sha256": "55de5ba13dfec131d49459af06196d8d8cf5358eb89fcd78bde9090caaaaed95",
-      "inputs_sha256": "2d69a4e8d7c51c153e34e319602095486a0e8ed692828f9b3520ae23e01c57f2"
+      "inputs_sha256": "299bdb2f9cc5adfbc7cbc0057becce49e33f599c9e2397af5de67d485e23c75a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7111,7 +7132,9 @@
     "size": 18,
     "offset": 1128288,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113760@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7126,10 +7149,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d16a8. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d16a8. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "fac96ed26ab8b89bb9c224b722b988ced993fadacc59e3e1ee918d22e65a79a6",
-      "inputs_sha256": "7624fad9a93781c8cd37e3b60f39321abbe5e8ad9d27a72e1b8ef1540f08a2d4"
+      "inputs_sha256": "1627be7b792a46d4e53489a48756e6cc738e47e34203ed766bc6a41c3ba094d1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7145,7 +7168,8 @@
     "offset": 1128320,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_CHR_basic_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7171,7 +7195,7 @@
     },
     "match": {
       "bytes_sha256": "5ecfadf4273de266869e045f989afc0ffe948e4da991efdf0aa2ce4b908e6469",
-      "inputs_sha256": "b56841e71ed759674f5644ab7c996d39a02e52fc835292900fb2f584d29dbbbe"
+      "inputs_sha256": "544f069cce4b777f8afdce4e29ec02b5999a8c796f4dac29e76bb2d8733e2c1d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7187,7 +7211,9 @@
     "size": 18,
     "offset": 1128384,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_1137c0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7202,10 +7228,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1780. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1780. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "9bcbe1bf6b7c010c8a82470cf86afd311e5ba39c9220a2f160cfb2401732d6ee",
-      "inputs_sha256": "acb6c28cbb84142614b7550acd0961f10e4ae9c8570aa89679f18073a2d65cbc"
+      "inputs_sha256": "cf10fc3f65bdc4c59593735e38d93b73469efd083a56efad4cfc77f31bdff068"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7221,7 +7247,8 @@
     "offset": 1128512,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_combine_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7247,7 +7274,7 @@
     },
     "match": {
       "bytes_sha256": "277a30fe69abfc93e63fd484822d41f9fd2e18f83cccdef5dfafa6ba50f91fa3",
-      "inputs_sha256": "e9eab510777c077d00516763a277052bce387b7cf0addf020844d0b176194afa"
+      "inputs_sha256": "033fa066555ef3fa90a71e928da62b6f0618ffeae931b7c301b4de2eb6299352"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7263,7 +7290,9 @@
     "size": 18,
     "offset": 1128576,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113880@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7278,10 +7307,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1858. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1858. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "5c9f124d2ac7d4085334660125c12c3cf27421c5fe534ee0406e9698148d933f",
-      "inputs_sha256": "1c94ca49cc85c48ee163cf3c22bb1483033268b9d79b8c5260c68a6ef0e5e6a1"
+      "inputs_sha256": "f2236c28046302d0956c0a579a4b6c38e99d0dcf02bd39403aec24ff369c7c49"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7321,7 +7350,8 @@
     "offset": 1128624,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_decal_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7347,7 +7377,7 @@
     },
     "match": {
       "bytes_sha256": "4dd08033876d461dee4c0748446715286cf6b27f604abb6894877c17c0d2ea53",
-      "inputs_sha256": "ff771391a0c5676419201a087364e849c85b13c089382be53047be354b6c1ba8"
+      "inputs_sha256": "5bc873eab5e1d3b69a6933f4bd448bfcca7a5a35e04960571a209a0fc6e86854"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7363,7 +7393,9 @@
     "size": 18,
     "offset": 1128688,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_1138f0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7378,10 +7410,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1930. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1930. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "ee564c7202c5d2a53c02ae3a9834de9b6912b302cf4133e29c452bdc31380977",
-      "inputs_sha256": "9719913880d2d752c170260899343c9ba39c284e52601bcd62e1c6d01deeadb1"
+      "inputs_sha256": "b2aea0de56130bd41a39317600269f86c3a6d5d6fefaea0314b4e9b57bd9154f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7397,7 +7429,8 @@
     "offset": 1128784,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_depth_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7423,7 +7456,7 @@
     },
     "match": {
       "bytes_sha256": "42cfa2e567f1662738970a5b1860d24875736fbc77a0a9f17faf5c9a93dc34f2",
-      "inputs_sha256": "e9875a3a5763c9c0d7fd4dc8c18208fa7162a1f0e8b7a005474d7d641364f14d"
+      "inputs_sha256": "c61ee0887539fa3ed3cff37bda2fa9e498d5baad38e0d099f26a37b4df112cd5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7439,7 +7472,9 @@
     "size": 18,
     "offset": 1128848,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113990@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7454,10 +7489,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1a08. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1a08. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "e323435242ba932648e8281ded57081e38c7dbf502c9cdc3f388a2a2cbe920f5",
-      "inputs_sha256": "541260202c0ac01737061cdbbdaa21e4fcb40b6ffbfb35393ebe45a158848aed"
+      "inputs_sha256": "2efca9d2417cf21e875f6b72328ebbaac18323a85d42883b4b3d0915449a7adb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7473,7 +7508,8 @@
     "offset": 1128944,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_eev_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7499,7 +7535,7 @@
     },
     "match": {
       "bytes_sha256": "b642d6b571fd0f0b9844dbea5dfb911483215ab24564da94487e419cd1639498",
-      "inputs_sha256": "331a634bd06ad976194cb9be2384cd2cc97d495dda2c3c52fcaea74d4a8fd533"
+      "inputs_sha256": "b15d6a94c7c639d1ad1aeac2c4a138941c1e8c833e7d1e0f4418cd0483e11246"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7515,7 +7551,9 @@
     "size": 18,
     "offset": 1129008,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113a30@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7530,10 +7568,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1ae0. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1ae0. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "97f4e54603bb65a6933fc476c106393115b099e6105d50a310b5ddfbd4fe3c30",
-      "inputs_sha256": "469ece61bbf40179a0c0b695dec01ab6f4776a51b3437d286687572940e4a0c8"
+      "inputs_sha256": "db3a781dc09f7d1fc42c2eaeab23df82afeb4d17b99b7e981b3c25d5f1aa915f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7549,7 +7587,8 @@
     "offset": 1129040,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_glass_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7575,7 +7614,7 @@
     },
     "match": {
       "bytes_sha256": "cf483175e47c8bf13cafacffd4c04a163c27427d8a77171551759870bd95723a",
-      "inputs_sha256": "808470cdf4ff13dc46c04fb0050e4af1965e58ee1c1e4464f319d6ddccdf5ea0"
+      "inputs_sha256": "544435f037a7c3399393383cbc6cfcfb955785a5f2c1f96d3ed0e060aa35c0d6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7591,7 +7630,9 @@
     "size": 18,
     "offset": 1129104,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113a90@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7606,10 +7647,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1bc0. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1bc0. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "64272aeee0478081c7de10b8c298c613187885f5e4c031d32c794b91dc139358",
-      "inputs_sha256": "1460b5e5945eebd59031f89937bca5406a66ac3815ce6a6629baa54d65aedb82"
+      "inputs_sha256": "dc933e9649ebb4ad660886f6f3e2453cb8cfb4bd6e8fbfe3cd1aad784ce47757"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7649,7 +7690,8 @@
     "offset": 1129152,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_glow_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7675,7 +7717,7 @@
     },
     "match": {
       "bytes_sha256": "a32db467416b9a36236d00b9959b1ec904d99fc660dfad0bf52375d2a8cb47f2",
-      "inputs_sha256": "d8dad4a14d29cf13715a6a3fbcaaf6df49c8b1ae7a28b5eed10bb83e189ea019"
+      "inputs_sha256": "19609dc58c9ad4b1407aa1ead7f1c5ac235cb0b7e87d83d1bf9e2e57ebb2d5a0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7691,7 +7733,9 @@
     "size": 18,
     "offset": 1129232,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113b10@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7706,10 +7750,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1c98. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1c98. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "1b251f915fff3e65f491735bc4425c805943e9efa5265402391a00dcb20f29e9",
-      "inputs_sha256": "c5e8bd3d1564a50ca221242d7c3cd796fc1427a018ee58dfc18a7c69c9149130"
+      "inputs_sha256": "60c293807e653584c1278ccc2e3a1c929f50000933900faae4a00dba76189fb2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7749,7 +7793,8 @@
     "offset": 1129280,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_particle_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7775,7 +7820,7 @@
     },
     "match": {
       "bytes_sha256": "3bf6f931c7b7303521ff5a037af82c8a65b07fc45b8f5d11e63f024b67f19068",
-      "inputs_sha256": "21768b474d2dd4cb6b7132578af40db03e11b3edb51ea5df6a1521f82284e27a"
+      "inputs_sha256": "e50d2fbf0bdaee3f296cfb0e09d95ecd967e6b287d0731ec9b557800b2c9d847"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7791,7 +7836,9 @@
     "size": 18,
     "offset": 1129344,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113b80@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7806,10 +7853,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1d70. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1d70. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "8ffe60689e0af15d797e8f1e951066eda28f1816c2bddb3d88a9052a50228c9f",
-      "inputs_sha256": "eabb27c083bfcb0bf1f3540093ad65b811bf91f3b8d122be48bac48a7b8c06bc"
+      "inputs_sha256": "b4efd62ee126fc99258b278787e3f50f03a23b2a2f6341f94be72853222971f9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7873,7 +7920,8 @@
     "offset": 1129424,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_rain_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7899,7 +7947,7 @@
     },
     "match": {
       "bytes_sha256": "0ea765bd494fde81eb731c23c19e67ce2c62b1e9f32865f5451ac8c2a1876d9c",
-      "inputs_sha256": "56dc9c41bdde9400976a906db293540fff0e92f095c1ba1141cf475df84323e0"
+      "inputs_sha256": "fe569b865197a91607debc7b507d3f2be1f8fd10739eea30d82c8cc9d8f5cc3e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7915,7 +7963,9 @@
     "size": 18,
     "offset": 1129488,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113c10@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7930,10 +7980,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1e50. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1e50. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "d9fd801c2a4720d934623f085fdeceff7764aacb21bd9d04813d6f9ac4aa2dc4",
-      "inputs_sha256": "678004cd7a35e42bae54017c24e741519ad247e0c54bf93e2cc0e2348a772895"
+      "inputs_sha256": "a712d4abd69616977d4cd397e479ba57766aff832122e51cb72ab1a8302cb90f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7973,7 +8023,8 @@
     "offset": 1129536,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_reflection_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -7999,7 +8050,7 @@
     },
     "match": {
       "bytes_sha256": "abc6a6abe6a65bb18c9e27b47cc177fa565fa554271f58d7fabaad5b4c0a09c3",
-      "inputs_sha256": "97990a74e6fc4ae6f5a627e04bb84b6a0bb9ddff9a751bc94a1f92d2ed105023"
+      "inputs_sha256": "2ee4416e1f0348513b0016e03c5bc35a0a96ebd28649a161b8ab398484108976"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8015,7 +8066,9 @@
     "size": 18,
     "offset": 1129600,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113c80@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8030,10 +8083,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1f28. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d1f28. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "56a12d2d05fcfdcf8ae40b02d7c48a4d78f8de133c114abfe8fa68426ab36e3e",
-      "inputs_sha256": "3275da084b510421fc9ec030f591f0849bcb85ac40b82dff92cc93f4ee2a9c11"
+      "inputs_sha256": "441fd59f513da5dafaf3b082e1bc859458ba26bf2bbbc3fdae0b2c91e0e94b48"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8049,7 +8102,8 @@
     "offset": 1129632,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_skin_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8075,7 +8129,7 @@
     },
     "match": {
       "bytes_sha256": "3cd5b2132fad183c8fedd0fcf2b7d7679f7900cea016fbd27bf1439628abb3c7",
-      "inputs_sha256": "10600e52b0faf6119400264dc9b4507c7e55e8c870701ff826a61e0e28915cf5"
+      "inputs_sha256": "fc04d1e068c47d14fd7fbfe7f5a0314a5f023b7daaf4ac29ef83961c9805b4d0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8091,7 +8145,9 @@
     "size": 18,
     "offset": 1129696,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113ce0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8106,10 +8162,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d2000. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d2000. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "f033914639a93510109e164b19a6401fa7a73194f967f8d0797ca5220ff7613e",
-      "inputs_sha256": "a9ce228d659fd74f938d33683d1b50d58059fb58309f9c17de5ea1e70b653a0f"
+      "inputs_sha256": "bae49cac406b636d32d622f2890ead26bdded9eb195bc00fd3e76101dedfaadb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8125,7 +8181,8 @@
     "offset": 1129856,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_state_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8151,7 +8208,7 @@
     },
     "match": {
       "bytes_sha256": "3defa10198d64059e7154332b05636363c6dde5804456e8f24348dd080b32b7c",
-      "inputs_sha256": "498caed9fd8e42375d590e8900915c07e20b508af9526abc92c65d9de771ee1b"
+      "inputs_sha256": "35fa84c44e7cc40fe38b504f7251a991583f906c56dddd774812863f12002de1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8167,7 +8224,9 @@
     "size": 18,
     "offset": 1129920,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113dc0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8182,10 +8241,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d20d8. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d20d8. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "f389e72189b46f795a1eb794c9f9f19b639944faff2550554d8c9d2ea5263798",
-      "inputs_sha256": "accdd234f8e5e14005760f6770f2a930c432f2624b363640b89a7fa27faca5eb"
+      "inputs_sha256": "0520d88f443c7d68f2462b527ae422cbb3cfc5357ffecd12d00c1ac3a189c632"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8201,7 +8260,8 @@
     "offset": 1129952,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_STM_basic_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8227,7 +8287,7 @@
     },
     "match": {
       "bytes_sha256": "4458d5bf5c1a796dd8bae8bfdd4c5e90a3088b1494fd7ec2afeb8cdd04df06b2",
-      "inputs_sha256": "dcabb3d462486a052847998565981d0ce748d49f9acf8c46d9058241d49e8136"
+      "inputs_sha256": "5387be57ac1a01891f158a3e2f7ef548f66bbba4060b26451a2d907d52a0364e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8243,7 +8303,9 @@
     "size": 18,
     "offset": 1130016,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113e20@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8258,10 +8320,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d21b0. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d21b0. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "0b1b9cb38da846ffea70e72185d11fc824525a1f3db1de2b9206630ab910723d",
-      "inputs_sha256": "ca1ad263a684306196545107724540511cef122a7f24fd2446b26331fb6a4d1e"
+      "inputs_sha256": "db6b144fcea66d30f7907c65289151ae5cc77cb0dfeee1678d213d7a18e1df70"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8349,7 +8411,8 @@
     "offset": 1130176,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_thermalvision_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8375,7 +8438,7 @@
     },
     "match": {
       "bytes_sha256": "152e6e35561c8fe627126dd7d2d8fb236136ae1075ae678f4fb8172c629e43ab",
-      "inputs_sha256": "7538f48b743b35000c290914d16826f0cd49d0bcd7cfe3ff3aa811ae271b9276"
+      "inputs_sha256": "d17339d71fa1748e325a53407493c3c699f12cf0de4ec37c5d6a31a6bf20411f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8391,7 +8454,9 @@
     "size": 18,
     "offset": 1130240,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113f00@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8406,10 +8471,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d2290. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d2290. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "1ad3db85e351c57021952f16ec2df859a3e5a81ff7e6f87972b7cd2c99dc1524",
-      "inputs_sha256": "a38636c7d35b7cdc4d368ad3b7c68129b041e68ee85bfd0a7adf64ad74cb96bf"
+      "inputs_sha256": "3a08c2a2bbf2b016e49dd6b3885b783d89db7e509ea8f928c40973f5f88f2e33"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8449,7 +8514,8 @@
     "offset": 1130288,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_unlit_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8475,7 +8541,7 @@
     },
     "match": {
       "bytes_sha256": "6c1c8469f7b5be81fced9f6b2351ce4ddc327d83ce208fc1446d08900ffe02ed",
-      "inputs_sha256": "b19a03330dd9bce3280896b5559c4729cc7654ea3c149283ff651bad73fa6238"
+      "inputs_sha256": "c5a828449aae22936d252b5f284bed7ca073ace6498d1a46236c1171c70771f8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8491,7 +8557,9 @@
     "size": 18,
     "offset": 1130352,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113f70@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8506,10 +8574,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d2368. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d2368. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "a576eb7204891a29a640dcf95c0d71c84658ae9e53ae9109357ae42797a9abe0",
-      "inputs_sha256": "0084f655bbf5d5d0a14cbd816cb8b5cf4bdb106367b923c195a4584b65dd2ea5"
+      "inputs_sha256": "dc367d45e683d47b13d2ca5cf6e8d768eb9f69fbd577036d88c44311fc2828dc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8525,7 +8593,8 @@
     "offset": 1130384,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_volumetric_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8551,7 +8620,7 @@
     },
     "match": {
       "bytes_sha256": "eb6acfb75c7c7cf430c4de3abef69052aa3a4aadfcbd1e7b42612d250e7e5365",
-      "inputs_sha256": "374f6cbd99169479bef12caa0099e963b9da8260028cbced544850fee25f9bec"
+      "inputs_sha256": "1d3a44b1de11ee0cc38684cb449ec1e3adfd36b2b9281540ff5ab3664b119222"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8567,7 +8636,9 @@
     "size": 18,
     "offset": 1130448,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_113fd0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8582,10 +8653,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d2440. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x6a190 before installing the methods table at RVA 0x7d2440. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "2c31ba70691029a49db62779cf50cb95a31f1c0c45a953c3ec9f88b2dc35074c",
-      "inputs_sha256": "86d6bfabfae45d217878e0d707eb8bd20cd0274caedcf487ff9b2d45f3a6b27b"
+      "inputs_sha256": "49f89edad018f45745dc76eedd25a87d989aefbc0223d1d75ff2706cf0c18dab"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8649,7 +8720,8 @@
     "offset": 1130528,
     "size": 46,
     "inputs": [
-      "src/campaign_class_destruction.c"
+      "src/campaign_class_destruction.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_USCX_water_material@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8675,7 +8747,7 @@
     },
     "match": {
       "bytes_sha256": "b002380657350d2bd92e839c90bcfbf65329963999088759288c65831d63897d",
-      "inputs_sha256": "ae2a6f4522c4475659b034f05c05a9b39fabf5db681c814083bc3c2f91b81e5e"
+      "inputs_sha256": "9166808bd1fb5a81c03deec8be642257133cd0c7859a624a39235b6b64628ae5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8755,7 +8827,7 @@
     "identification": "Class registration for USCX_basic_material at RVA 0x114150, called immediately after the class factory at RVA 0x117490 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "4e2c7f52d07190bc2e55026fd8b6d7c6324d75a639a13bdde89a3bb692b4172d",
-      "inputs_sha256": "44dd829f0ba13406f37f4d5bb617f9fa6bc1caf391e6a02e445204ff63c03d93"
+      "inputs_sha256": "c260c61cc3f4ec4f8d8c21f453c16ce611a6b809c0c448125a5c9e5f9c741ae6"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8835,7 +8907,7 @@
     "identification": "Class registration for USCX_canvas_material at RVA 0x114320, called immediately after the class factory at RVA 0x117530 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "94b8ee46a3c9d01f3b03b6b46b0f15028ac2ff6c7c20cc8865844f31f57e04b2",
-      "inputs_sha256": "95c175049ae6a35104ecdfdcc7b2e66f8de7a364b54cef28c9aa0c79f9d67950"
+      "inputs_sha256": "00afc9d3eb801f5c97fdf5045faaadcc585abc9c06b082d89b9830bc40e4f0e5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8949,7 +9021,7 @@
     "identification": "Class registration for USCX_combine_material at RVA 0x114510, called immediately after the class factory at RVA 0x1175b0 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "8dd92114d56a72be80902ec8e345f3cfc21979f6397b01c92e741afccc4de307",
-      "inputs_sha256": "d5d287d66092e658b15d77a7db5248c00867385d3d1551c2a0c208bc4734bcf2"
+      "inputs_sha256": "b5972170d4b0d5d791098b5a08eebc957c895209da7b78dea882a06784fbd664"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9063,7 +9135,7 @@
     "identification": "Class registration for USCX_depth_material at RVA 0x114730, called immediately after the class factory at RVA 0x117630 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "8d0a229d17cb1df295db0d6d64cf8113d55c2507e14721a467be8ad1f0d41a2a",
-      "inputs_sha256": "95f55549001d96748306839ea90fdcafbfeb87bfd9cbeb96822e9a78c2d3be17"
+      "inputs_sha256": "d3368c42070f8daedfdeed4cabeb0458c573103f037b63df1ffaf0709699b8a4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9143,7 +9215,7 @@
     "identification": "Class registration for USCX_decal_material at RVA 0x114920, called immediately after the class factory at RVA 0x1176b0 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "faca908395b7c3c272c47eba05de6998fb06b52f6d06137784dbe912496770ca",
-      "inputs_sha256": "edc51f85052128c71693d890548eff1baecba8c5607b763e68d6744142b6c778"
+      "inputs_sha256": "945dcc3cd9fbc5af9977321aa9c10f67d7956ec47e93e3e2ba034ba48bc381c3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9223,7 +9295,7 @@
     "identification": "Class registration for USCX_eev_material at RVA 0x114b10, called immediately after the class factory at RVA 0x117730 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "c2d440d8a77cdafe1b472b0936b6ad1fb65a7e4df0dbc13c132c5cd8fa54ad96",
-      "inputs_sha256": "8cdb83dd33260c741964a7bf5e94429498923fb92db0aee085314b2856e7ecca"
+      "inputs_sha256": "34f89120075138b516079928c1b3bca2ddf07307123dc3f06d3f1f16f1326972"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9303,7 +9375,7 @@
     "identification": "Class registration for USCX_glass_material at RVA 0x114d40, called immediately after the class factory at RVA 0x1177b0 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "c346d6d9384989d6973b1f8c300d395ff9727c6328f20e7fa702e1d29df5e630",
-      "inputs_sha256": "c2a155fc163cbd253748783b3de563fa58aede7da2744ca6b73f6961dce9db3d"
+      "inputs_sha256": "072c3714e6eac7b82ad84303edb911beb5915cae1c457455a5747d4cc3aa5fcc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9383,7 +9455,7 @@
     "identification": "Class registration for USCX_glow_material at RVA 0x114f30, called immediately after the class factory at RVA 0x117830 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "525e63825ca2c4d66342ec775b2e39a4895f69e64525ed59e6db7652656b33db",
-      "inputs_sha256": "60b27a0390db84b44e67fc6e2226451a2f3589a1fbc0e857d0714b4f01fd252c"
+      "inputs_sha256": "b75f8f11c8288c633a5e1ee67a8fd6f70f18aea2429d39a494b568742e2d1aa4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9463,7 +9535,7 @@
     "identification": "Class registration for USCX_gui_material at RVA 0x115120, called immediately after the class factory at RVA 0x1187f0 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "dee124694e1569569c2d2e84115ba793825f47b9931542c7f28ca43a388ca681",
-      "inputs_sha256": "0909bccdaabc861bea7fea2023de9409bb82b16d13423d41ef7293bc764b384d"
+      "inputs_sha256": "17d0fa55fa34226bf4980ed9005de8cb373639f83e9f5fbb9acd1e27a239430a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9543,7 +9615,7 @@
     "identification": "Class registration for USCX_particle_material at RVA 0x115320, called immediately after the class factory at RVA 0x1178c0 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "d053c54e6d7dcc5e21ed0a1bf6dc042cc8a55afb5f39eaef869b973b3ccf3cb7",
-      "inputs_sha256": "8fc13d3839de22863fdcd0489465fd076a3250af1fa2d1b14987cb6301724978"
+      "inputs_sha256": "0d23aa2164f50725ca041b6d37a736e1e42052ac3d148f1322524dd01599e783"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9623,7 +9695,7 @@
     "identification": "Class registration for USCX_skin_material at RVA 0x115510, called immediately after the class factory at RVA 0x117940 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "24f5c32eccfd9fcf2f2b9c53e4e89e7c35fc81fe5f4fee38d39bf3a340bba492",
-      "inputs_sha256": "b9b8fb86e4bae9e3c28c50f25841ea473296fff1d673d9c0e21017bd0406aae9"
+      "inputs_sha256": "30c7a4f9827fea5c9d5f0b3ea31966b41fee007205c4bf296b8ce50e03a49ecd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9727,7 +9799,7 @@
     "identification": "Class registration for USCX_rain_material at RVA 0x115700, called immediately after the class factory at RVA 0x1179c0 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "eb7fa9ee93a992ff7d2e770ea532214c0d5f4c3ba95d8918ae8067328bff4427",
-      "inputs_sha256": "15a834b0804e6eb289c6bad5e167c4e1c3dc2515fd3ce03d638a3b6f9a24ecbb"
+      "inputs_sha256": "c205bcd3df1d6844faf8f7c463b76061a89a88e9f8f9ef758efc4c9299d5c54f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9831,7 +9903,7 @@
     "identification": "Class registration for USCX_reflection_material at RVA 0x115910, called immediately after the class factory at RVA 0x117a40 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "49adf3e7f90d84d2e8f1356e1c6ad3fdcd00496efe5278509a99a8c84bcabb40",
-      "inputs_sha256": "e3c3a0337ae8e6ea41a5da567c2316f0f94c590860d14a0a97531436fd66a22d"
+      "inputs_sha256": "d4b938efafab0dc3989bdbc66a5529e6aeb9bfc87cf72e5fb35640840736648c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9935,7 +10007,7 @@
     "identification": "Class registration for USCX_state_material at RVA 0x115b00, called immediately after the class factory at RVA 0x117ac0 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "6c89d7932d4d98846a3269d1e318f8f92a3115e80d043d7dc04f0efc45b3d9b0",
-      "inputs_sha256": "608113e1cc44fcdcccc2f3dac557c6616af7560fedf95e8ebe1359651aa17dce"
+      "inputs_sha256": "a5393539ac37d0e198918292d768a15e7d596d79fd6e4d16db019fc41b309063"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10063,7 +10135,7 @@
     "identification": "Class registration for USCX_thermalvision_material at RVA 0x115d60, called immediately after the class factory at RVA 0x117b80 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "4d0c5571ba28eff1e6ce1efeddea7ae997764eec6c2402543301a298263db2ab",
-      "inputs_sha256": "1be3f778a4cfbecb05d80275316163d86e5504bed48daaae885162457c5527fe"
+      "inputs_sha256": "01a1ca8e8a9e760303a330c9530e29c18a9efd979eb64b0ccde0a19915114e37"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10167,7 +10239,7 @@
     "identification": "Class registration for USCX_unlit_material at RVA 0x115f50, called immediately after the class factory at RVA 0x117c00 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "10bac5f9696d4c68ede2b005d01b02ba39cfbb3f5f6274eef896e80d11871504",
-      "inputs_sha256": "4bdc080a77d4eec8a18b568a198f0dac69cfe58b45efdacb67651cc049ebbf9d"
+      "inputs_sha256": "d7652c6a6da78b805ea19f79a289cccc0e38d5b095de98e5b04610f39770ece9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10271,7 +10343,7 @@
     "identification": "Class registration for USCX_volumetric_material at RVA 0x116140, called immediately after the class factory at RVA 0x117c80 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "af2ea34caf186b0f07b48d333413b141e04855dccf33b2bb4ad835386d4cb62c",
-      "inputs_sha256": "64c68c6b77582115108b0e39d09f0e10e0098bc32f0605cb2aa00510fcbd28d1"
+      "inputs_sha256": "2d81ff8541075814ae054106800bd9ad460bed002d37bab3f0ee6e6aba1ac43c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10351,7 +10423,7 @@
     "identification": "Class registration for USCX_water_material at RVA 0x116360, called immediately after the class factory at RVA 0x117d00 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "9a73475e79ba18966df5aecc71505ae9d1d8072e2957f1be9ff4236f3d5b1d3b",
-      "inputs_sha256": "24ce917e859ee4350118b6f07c1c8ecff917345ad2f458d9181f2fbd7f547a9a"
+      "inputs_sha256": "64f253e62618e53f3eba0feb341e526313de4c6163bdc7f23b48acde6230edfd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10431,7 +10503,7 @@
     "identification": "Class registration for USCX_ALL_unlit_material at RVA 0x116550, called immediately after the class factory at RVA 0x117d80 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "98ebb8355ba310a8fa52bec0e61f687fe108eb8c0e835b54280323c65d22693c",
-      "inputs_sha256": "b90c8d1df89ca6d3649c9d92f2f571e361b8d60bfc153251b5d8163cda843020"
+      "inputs_sha256": "50923f2ee3e66b7f22971c2cbf75541e8620034d1985bcbc7397e826cf6aa3c8"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10511,7 +10583,7 @@
     "identification": "Class registration for USCX_BSP_basic_material at RVA 0x116770, called immediately after the class factory at RVA 0x117e00 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "4fc390c4bfde13eecbd5d89c6ec80ea8151085cd8d04bbb9baeb240b77967452",
-      "inputs_sha256": "6c218df09e4d8701d328baf6898ad4772eeef9d44e00fdbdc96340a7202ce809"
+      "inputs_sha256": "4b35c8553f46f87c6b51bd3654e43fcbee81383ee4ac720a3c51de240c49db5d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10591,7 +10663,7 @@
     "identification": "Class registration for USCX_CHR_basic_material at RVA 0x116990, called immediately after the class factory at RVA 0x117e80 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "37ca03f160130a410fafb83bf3862ec0b2d933c37da678df0a51b50d9e5c4a1c",
-      "inputs_sha256": "7ca79b77f82803648ea850933c47d2648c1daa90851f5dc6c3b44e84f424c631"
+      "inputs_sha256": "4f97a5f150a9b097cd0916e1e91bc8e564e3bb269c9b9ead680bd7cee138ec8b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10671,7 +10743,7 @@
     "identification": "Class registration for USCX_STM_basic_material at RVA 0x116bb0, called immediately after the class factory at RVA 0x117f00 in the singleton initialization path. Sets superclass URenderedMaterial, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "56a7cb1425c35a6e99eda4d9ac94a830ac660a924c74ac8baafa729c3d9eb111",
-      "inputs_sha256": "9a44027665ea2c14376aed24e8854fb21b87ef7fb8bcfb8141f980d40518c07a"
+      "inputs_sha256": "ce705439aac0ccc32dbcc6b5df3cb553d6b4c03a7dd0a5ca2021ac62beae92b4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11497,15 +11569,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_USCX_basic_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_basic_material": {
         "va": 286075288,
@@ -11523,15 +11598,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_basic_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117490; its allocation tag and reflected class name identify USCX_basic_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117490; its allocation tag and reflected class name identify USCX_basic_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "a34de82796cc2972f1887a8ff26a4a199a8727689e4246598df91edebc59a5a8",
-      "inputs_sha256": "6f0392ee4d45ebc61e30a63d52812594dafe1205eb66d7b322ca2bea54dfaf06"
+      "inputs_sha256": "87a8b7963db0d3f9d7512e7040da82a6cd6299b9fcf9ca154114ada78ba3c701"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11548,15 +11623,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_USCX_canvas_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_canvas_material": {
         "va": 286075364,
@@ -11574,15 +11652,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_canvas_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117530; its allocation tag and reflected class name identify USCX_canvas_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117530; its allocation tag and reflected class name identify USCX_canvas_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "44c9797304b7c3d05241e5ece1135529d2842c6e916ec2d19574795c7b6ff6bb",
-      "inputs_sha256": "f91a10a6b1f6ebbb7fdd67dcc71a278a34160fd70a06a5c3c01b8ac64f1d5783"
+      "inputs_sha256": "da9604ce76541f7a79ba1b858c6943635599d498a0d6ea35bd5d745a3d656d04"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11599,15 +11677,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_combine_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_combine_material": {
         "va": 286075408,
@@ -11625,15 +11706,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_combine_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x1175b0; its allocation tag and reflected class name identify USCX_combine_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x1175b0; its allocation tag and reflected class name identify USCX_combine_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "178dfa900ca3fc5a9a569bd1ee559e4a8fdd186560e10e141f88d4f913dee031",
-      "inputs_sha256": "66d42bf05e84c673f2550eee42e621b312f71e99cbda0a8d2507a54696473b0b"
+      "inputs_sha256": "4b611679406585aa6438091237ab22b156fb4845477e8f3175c64e901e0febc7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11650,15 +11731,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_depth_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_depth_material": {
         "va": 286075452,
@@ -11676,15 +11760,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_depth_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117630; its allocation tag and reflected class name identify USCX_depth_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117630; its allocation tag and reflected class name identify USCX_depth_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "5d0dd8b6b9169df170a56c9fb0ec5565203aed29d48d28b9740ceca88d7e1a20",
-      "inputs_sha256": "0cfc7358d2451c16152a34740b03e4e1b23abf5a5a262ffe501c5f0f713ee22e"
+      "inputs_sha256": "6d2a260c2308d270db4a525f04dd802b7491075f85c98a3838c145ad00b74236"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11701,15 +11785,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_decal_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_decal_material": {
         "va": 286075492,
@@ -11727,15 +11814,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_decal_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x1176b0; its allocation tag and reflected class name identify USCX_decal_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x1176b0; its allocation tag and reflected class name identify USCX_decal_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "50af7a0480f6ff57562aac3aa80aa99890fc922220884e8e90e79d1cfb4c0d7d",
-      "inputs_sha256": "2a2cdeb8b892e215ebae73bb84728d8c7069e2431b60c64e594353d7f6f8b6da"
+      "inputs_sha256": "d44756623eefd81e9e7e8d0e9e82a9e252f268367bc16281960e6d87a0eca124"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11752,15 +11839,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_USCX_eev_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_eev_material": {
         "va": 286075532,
@@ -11778,15 +11868,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_eev_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117730; its allocation tag and reflected class name identify USCX_eev_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117730; its allocation tag and reflected class name identify USCX_eev_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "05bf9d8a13d9a5b923c993384cfdb7cbf83a7685ad2032a5f162cd49495a3720",
-      "inputs_sha256": "f396b3ac073dd22f80b0a6cdb9c53274d07eae633b3599b73d3567d34069f440"
+      "inputs_sha256": "8ccc134aefe9d369cc73bba33f3cbecb8b36806a00f83de816a1480be271b8bf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11803,15 +11893,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_USCX_glass_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_glass_material": {
         "va": 286075568,
@@ -11829,15 +11922,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_glass_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x1177b0; its allocation tag and reflected class name identify USCX_glass_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x1177b0; its allocation tag and reflected class name identify USCX_glass_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "e6df3add729eab4a916a8a50bf88a9b2954ecff35b04452a4ccd42efe3e7de09",
-      "inputs_sha256": "e34727edec9a581f32d005631812954a9103349310fd90d3fdd7a22c1dfaee8b"
+      "inputs_sha256": "908173f4e9cf84ca1510416eb44ba89208065eea7712f56ec427adc5d8487256"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11854,15 +11947,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_glow_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_glow_material": {
         "va": 286075608,
@@ -11880,15 +11976,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_glow_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117830; its allocation tag and reflected class name identify USCX_glow_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117830; its allocation tag and reflected class name identify USCX_glow_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "3c1a8468f70e8a65276c84f191828f987f81f1cca9cfd5906830b3dfe9fe50f0",
-      "inputs_sha256": "25e47b89a702bcf8680f8697788b527f4a12dc4142448029dd759a932abbb779"
+      "inputs_sha256": "44288357937c03bba1e421c838cfc97a0d27289f40db2cdc86c463ed2fb3554a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11905,15 +12001,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_particle_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_particle_material": {
         "va": 286075648,
@@ -11931,15 +12030,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_particle_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x1178c0; its allocation tag and reflected class name identify USCX_particle_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x1178c0; its allocation tag and reflected class name identify USCX_particle_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "e52b3f083b3ee363a3938c0a354aa5eb9618af81d7b6ee2a39cfb9e6e58f1e12",
-      "inputs_sha256": "721518889074bbfa119c87bb1e29e19b11f8de0a8a3d12df39090121a4fca292"
+      "inputs_sha256": "ddd7075d09b300d24cb0365dc024cc390e28934c376bccd5e8dcd3ac81f4556b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -11956,15 +12055,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_skin_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_skin_material": {
         "va": 286075696,
@@ -11982,15 +12084,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_skin_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117940; its allocation tag and reflected class name identify USCX_skin_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117940; its allocation tag and reflected class name identify USCX_skin_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "669411983841b27420f8fadad3825fd02002557cddbcf6335ef4048cbf0923a1",
-      "inputs_sha256": "a7e98f7282ebf39bede9b16d57a640f85d0671e4574435ceca44a0f4c875558c"
+      "inputs_sha256": "98594ae97567395d45edcd0be2f545896c8e64a724fb8edfb51de4306372477b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12007,15 +12109,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_rain_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_rain_material": {
         "va": 286075736,
@@ -12033,15 +12138,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_rain_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x1179c0; its allocation tag and reflected class name identify USCX_rain_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x1179c0; its allocation tag and reflected class name identify USCX_rain_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "9042a15eed51f9e898a51b74debab51a712aaa5cbdedf3a8553fb250107c0fef",
-      "inputs_sha256": "b84bb876a56c17d5f672e13af36f18fdc0ff41a6789638717d3780be345c6e06"
+      "inputs_sha256": "89595ee03740990b4c21e894616eafb87cb804244db1ec82893dae2aed3ab3d7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12058,15 +12163,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_reflection_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_reflection_material": {
         "va": 286075776,
@@ -12084,15 +12192,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_reflection_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117a40; its allocation tag and reflected class name identify USCX_reflection_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117a40; its allocation tag and reflected class name identify USCX_reflection_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "1ad5ef742a98639488aa4c96d35ef52ad6846150f0a56ce4720ce44b77356483",
-      "inputs_sha256": "9fbf5ba808b7d822a11521f6b10dcef8155278bad35ec28e6eb301d37d615219"
+      "inputs_sha256": "99e8f25884206194842edc29954f10bd3fb4c18cc0609364af6bc4994a7addae"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12109,15 +12217,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_state_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_state_material": {
         "va": 286075828,
@@ -12135,15 +12246,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_state_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117ac0; its allocation tag and reflected class name identify USCX_state_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117ac0; its allocation tag and reflected class name identify USCX_state_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "fb4d5959044c03930f7c6f8de4a7d3bb903478f13881154be0c5768fcb306b2e",
-      "inputs_sha256": "1b91307fbc8118904f8a18e12c479029e65505805fed7f4deabd818d68cb66aa"
+      "inputs_sha256": "8eb14ed2119226e266b09aee785aa799d70883c45deff61b10d5d0b97aac9f9f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12160,15 +12271,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_thermalvision_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_thermalvision_material": {
         "va": 286075868,
@@ -12186,15 +12300,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_thermalvision_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117b80; its allocation tag and reflected class name identify USCX_thermalvision_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117b80; its allocation tag and reflected class name identify USCX_thermalvision_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "b85bd3dbaadbd0a74a837fceb472e08a7596e6998a390417a7ad58a4a12c4f6b",
-      "inputs_sha256": "71fcd0bf6eef4ed6cf256d17a4899dac023cac425cc9a019d1793b8535dbf0ab"
+      "inputs_sha256": "19b80a9cf76c40c93f68cb505383fab95b3ab9e5397709f1376fb032db72e1fa"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12211,15 +12325,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_unlit_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_unlit_material": {
         "va": 286075924,
@@ -12237,15 +12354,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_unlit_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117c00; its allocation tag and reflected class name identify USCX_unlit_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117c00; its allocation tag and reflected class name identify USCX_unlit_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "f3941e95a24c5bcea01b781ff6009f45d0cc21326d24449445527fbab4734981",
-      "inputs_sha256": "3eda07c7d083cd69169aa26e66d9fa136a3a8b3274cde668050dd3524b4d8656"
+      "inputs_sha256": "ad3461f9ba8c06db9fd3dba1ba42392b16f6b7ed20d9eff7e13e1199bef9ad49"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12262,15 +12379,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_volumetric_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_volumetric_material": {
         "va": 286075964,
@@ -12288,15 +12408,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_volumetric_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117c80; its allocation tag and reflected class name identify USCX_volumetric_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117c80; its allocation tag and reflected class name identify USCX_volumetric_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "67414305adcb9c31e30963bb838e2f49282086c4211450cfc6a3fb0f0318b50e",
-      "inputs_sha256": "ff2981c42c3e9243886b0e5892006fb72397bff9de3e060fd0da06bdce73d99f"
+      "inputs_sha256": "75e823f4e420ed148f70ca3e995e354a1fa97d8a1d3754316b0a9fc7d04d2f70"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12313,15 +12433,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_USCX_water_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_water_material": {
         "va": 286076016,
@@ -12339,15 +12462,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_water_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117d00; its allocation tag and reflected class name identify USCX_water_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117d00; its allocation tag and reflected class name identify USCX_water_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "632490dbf03f46e402cb5e6ad8abdc75ac3754f6f8f057140eede289178d8acd",
-      "inputs_sha256": "a8455793dd81c1e66bdb8d38437ba75241849adb94d35b9153abfefc5ae265ba"
+      "inputs_sha256": "90908fb52e8305cef40fa39cfb78a442845455abed2778a25a9a7ba4aec5436c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12364,15 +12487,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_ALL_unlit_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_ALL_unlit_material": {
         "va": 286076056,
@@ -12390,15 +12516,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_ALL_unlit_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117d80; its allocation tag and reflected class name identify USCX_ALL_unlit_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117d80; its allocation tag and reflected class name identify USCX_ALL_unlit_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "3eefb9e4742873663c10bc9d104b1d251d942136d8dc3b6d729235f956e26186",
-      "inputs_sha256": "9cdd900b2930ebf46ee1a5b3590f652f83bfc72ea3afd27520cb05afdaccda4a"
+      "inputs_sha256": "c38b2ab4882bbf72f0ca5925a7d214ca7739465ebb15aa88adec7282ac8959f5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12415,15 +12541,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_BSP_basic_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_BSP_basic_material": {
         "va": 286076104,
@@ -12441,15 +12570,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_BSP_basic_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117e00; its allocation tag and reflected class name identify USCX_BSP_basic_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117e00; its allocation tag and reflected class name identify USCX_BSP_basic_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "72c3a3a654cdd863ae9ea9667d6bb97f292603a3ff2fe1dc372fc0ce7cba3704",
-      "inputs_sha256": "af7b320387bbed25ad6c0ddfdcb712d21872e882c2ea0d8d9ad5e68f7a65d772"
+      "inputs_sha256": "57e96ebe722c84cf1e8197af8cb1881ae1859ac0f6d7da525fab70665071ee1b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12466,15 +12595,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_CHR_basic_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_CHR_basic_material": {
         "va": 286076152,
@@ -12492,15 +12624,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_CHR_basic_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117e80; its allocation tag and reflected class name identify USCX_CHR_basic_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117e80; its allocation tag and reflected class name identify USCX_CHR_basic_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "beadfb21fd4b1809e053c2664b3ff16ef1a7c3c059e068ed4bc719cd354e9a68",
-      "inputs_sha256": "b5ddb7c744a83c9cb69fb4ef0ee0918562748663109a9f5f7880d6147ab59fa7"
+      "inputs_sha256": "6dc576bf92909ea759bafc2601e56c6eff2e599b073f73be598f8a366b586b2a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12517,15 +12649,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_STM_basic_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_STM_basic_material": {
         "va": 286076200,
@@ -12543,15 +12678,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_STM_basic_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x117f00; its allocation tag and reflected class name identify USCX_STM_basic_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x117f00; its allocation tag and reflected class name identify USCX_STM_basic_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "1601a538ed52164940398efc7df2bd3aae93bdd98f6390317a646904b8bca2a0",
-      "inputs_sha256": "36f5348e42691e32642a2248a0f69c1abe43753ea4021e1813e3477ef67717e6"
+      "inputs_sha256": "142603431f4ffe082f3b6e0590a62f3ae438b8647ec1f8359872bf0ecdbc8660"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -12599,15 +12734,18 @@
     "size": 102,
     "rebuilt_symbol": "_create_USCX_gui_material",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_USCX_gui_material": {
         "va": 286076512,
@@ -12625,15 +12763,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for USCX_gui_material."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x1187f0; its allocation tag and reflected class name identify USCX_gui_material. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x1187f0; its allocation tag and reflected class name identify USCX_gui_material. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "dc341c7d79c2e730510b0adba91cc9c652f9065f65bdcf9e1e9c1253420f1ecb",
-      "inputs_sha256": "f475b6b0561d8d481a3e0531f55ad5b40375ca2a469659f924bd50e64fc8739f"
+      "inputs_sha256": "9d577ac37df19a7b3a7396d52192df9766e93c516c62b58667f0bb76340aa1ee"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13474,14 +13612,17 @@
     "size": 43,
     "offset": 1163968,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r11c2c0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -13489,7 +13630,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "00b0ff84c46292fca35beb95091d3062a3dbf11eb86cd79f14fc2d6ae072a340"
+      "inputs_sha256": "8cb267d9282515546334db066a31437955ee9e3cc6af425ce90cc7eb7f1dbd8e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13505,14 +13646,17 @@
     "size": 43,
     "offset": 1164016,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r11c2f0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -13520,7 +13664,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "aaaf8a71f3f29d5f4f4d9f4fdffd9829b5a2dd4c3d068617fcea8f46e1cff89c"
+      "inputs_sha256": "5abc8dbaa5ccd059d02cdc9efc07faa15e96dd4f9b4cd1f1d9c7cb65f67e09e3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13536,14 +13680,17 @@
     "size": 43,
     "offset": 1164064,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r11c320@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -13551,7 +13698,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "8068c07ffb1cdedd710d72070e6851f56cc8a9cb69160919e3de7548cc0301e2"
+      "inputs_sha256": "6d76f3723d757fc6e119377242476bc4bda5b92e050665793b7c2b839b694057"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13615,7 +13762,7 @@
     "identification": "Class registration for UParticleEmitter at RVA 0x11c470, called immediately after the class factory at RVA 0x11f670 in the singleton initialization path. Sets superclass UObject, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "ce0a4d549f0f9e4a59c7cc471b82cd51e69c84f58eae15fa5df12fa611c78fc3",
-      "inputs_sha256": "7fc12d1d0803735c42066ff95eb4a68e8565a39fb7eaf7561461bb06a61a3d96"
+      "inputs_sha256": "f79857920641b0b065d4dafa556978988ae735f6e3d1ef73f84d83f5da01fa62"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13688,7 +13835,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r11d540@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13706,7 +13854,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x11d540 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "24b12f0ce7cd562b81b0033d6f4d3dee7b8c79be99050d49c6ba72fb1caf3ba3"
+      "inputs_sha256": "bceab3bba269a07bb33cb497e01be6225235a882d3fde91560e7e8aadbad43ab"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13725,7 +13873,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r11d570@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13743,7 +13892,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x11d570 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "ec15c4b2ec784b8e1253207fb3b93c656934b5c872bfc99820f1be9e0855e3fc"
+      "inputs_sha256": "317d6ef22e2c8377f08e13b7fc6d7bdf5575867e3faa31299ad3a0c4a0a7baa7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13762,7 +13911,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r11d5a0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13780,7 +13930,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x11d5a0 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "680a560165fc2d79b9a8d730163bad460465528cc2e38466a9fd5629253512a6"
+      "inputs_sha256": "ec0f7465174779f3ba739074ea0ac7206cd81cb556446efa59d24ad97f5e240d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13798,7 +13948,8 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_11eeb0@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13816,7 +13967,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "98ee88503043dca8091fc80c0452408b76162318d7f3ea2193f195bbb6f42591",
-      "inputs_sha256": "903c52b251a16c5e4cf7bc72c84273ed5fe8d8b4c8b55b19206001e719d52958"
+      "inputs_sha256": "93a532635f3eff964bdedb1811c0510081f7a4e816213f88c5d3635e275b186e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13835,7 +13986,8 @@
       "src/campaign_aligned_array_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_11ef00@12",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13853,7 +14005,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Resets the count and resizes the array with caller-supplied element size and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "c92ec39039b40cef4edbe972b1e3cf4255142b9709fb68d13f6698d040a02a68",
-      "inputs_sha256": "dc1d5fd66adcce197e04b5517f7776e3ea56d134309e64280fb86fd471dc110d"
+      "inputs_sha256": "507c67fb982fd20a0c1678457b03ec1636368d6e971923477ddb81f69a2753f3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13868,16 +14020,19 @@
     "id": "array-remove-11ef40",
     "size": 138,
     "offset": 1175360,
-    "rebuilt_symbol": "@array_remove_r11ef40@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -13893,7 +14048,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x11ef40, including RET. Incoming transfer decoded within analyzed function code at RVA 0x11f31b, 0x11f3db, 0x11f5f4. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "dbab3a9c39fd411788c42855717c4ae93ac4b560e5fa7db4bd0caaa198cbeac5",
-      "inputs_sha256": "3d8678b3e0cd226cf0ac91afc2be783beb2dea49834041e3ba2379716a8738e6"
+      "inputs_sha256": "a0044a41dd4195cd4ac66677b5ad0c5c77a37b30e8035af73ecd6b6d65cf7a09"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13908,16 +14063,19 @@
     "id": "array-remove-11efd0",
     "size": 138,
     "offset": 1175504,
-    "rebuilt_symbol": "@array_remove_r11efd0@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -13933,7 +14091,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x11efd0, including RET. Incoming transfer decoded within analyzed function code at RVA 0x11f35b, 0x11f41b, 0x11f5b8. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "3816ae295d90448928a34b530942ef8685dff029f72dc8b39ef6353b4ca2c1c4",
-      "inputs_sha256": "90edbb9723d903c51e58495ea19061361b0f261eb8ab50dfc2aa25e2c13ea1ee"
+      "inputs_sha256": "78db14da81b84a341b48adc1aaea2c8e3230f6c9e49313ae83f5d5c6c74b4c75"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13948,16 +14106,19 @@
     "id": "array-remove-11f060",
     "size": 138,
     "offset": 1175648,
-    "rebuilt_symbol": "@array_remove_r11f060@16",
+    "rebuilt_symbol": "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z",
     "inputs": [
-      "src/campaign_array_remove.c",
-      "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_array_remove.cpp",
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_remove.obj src/campaign_array_remove.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       },
@@ -13973,7 +14134,7 @@
     "identification": "Stock contiguous FArray routine at RVA 0x11f060, including RET. Incoming transfer decoded within analyzed function code at RVA 0x11f39e, 0x11f45e, 0x11f587. Moves the suffix, decrements the element count and shrinks storage under the original slack thresholds.",
     "match": {
       "bytes_sha256": "e6b53d5c4e54c109a978f62100971f621c271240659a13373d33b4c0b4f73124",
-      "inputs_sha256": "c0308ccd45630efdbfb45cf1870ffd6894d89f2e49323cfa6acf92b29422be0d"
+      "inputs_sha256": "7a0c219de197ecb92b048d5438bf9f7d7840aec0b66a065679812b3fd6fafad2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -13991,7 +14152,8 @@
     "inputs": [
       "src/campaign_aligned_array_growth.c",
       "src/campaign_array_growth.h",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_storage.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@grow_11f0f0@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14009,7 +14171,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Grows the array with 148-byte elements and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "3078299f524a6ce3ddba4aebc52c9f58a62e563402b503bcf283f7f8fbf64a5a",
-      "inputs_sha256": "7d7250fc5febfda0700dd8f991e4127dd67bd9be0e3ff343bd258c389913fd9d"
+      "inputs_sha256": "5aa3b4d11d66a35b9f585793ef416fe7c60fc9ef1157804d0f206378e2afe551"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14028,7 +14190,8 @@
       "src/campaign_aligned_array_reset.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@reset_11f140@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14046,7 +14209,7 @@
     "identification": "Aligned entry between INT3 padding runs following a previous return. Resets the count and resizes the array with 148-byte elements and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "c0842f74b9857400bef36f9cf14cb8dc8c2878d362813c4085994cfd5ec4547b",
-      "inputs_sha256": "b1c7d088f0ec94723e924dd82933d56083d6cc04b1f6f033566e22c6faf9364f"
+      "inputs_sha256": "ee4f53e809edb4fee4aeeea2d58cea3bd4290b2536520d850a34785ba6cbc4c0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14062,21 +14225,23 @@
     "size": 20,
     "offset": 1175936,
     "inputs": [
-      "src/campaign_typed_array_ranges.c"
+      "src/campaign_typed_array_remove.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h"
     ],
-    "rebuilt_symbol": "@remove_typed_11f180@12",
+    "rebuilt_symbol": "??$RemoveTyped@$1?array_tag_7b7b08@@3QBGB$07@Array@@QAEXHH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_ranges.obj src/campaign_typed_array_ranges.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_remove.obj src/campaign_typed_array_remove.cpp",
     "link_bindings": {
-      "@remove_11ef40@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048000,
-        "basis": "Independently rebuilt array remove function at RVA 0x11ef40."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11ef40. The wrapper forwards its index and count with element size 8."
       }
     },
-    "identification": "Aligned entry bounded by a previous return and INT3 padding. Passes the index, count and fixed 8-byte element size to the rebuilt array remove operation. Majority choice, not evidence: the Count member here takes unsigned from the other copies, where this source had int.",
+    "identification": "Complete typed FArray range wrapper at RVA 0x11f180. Calls the matching Array::Remove<Tag> specialization with fixed element width 8.",
     "match": {
       "bytes_sha256": "46a9f82665752b40c4c222ec485f4f39dcc863dd99431ec70c2f4dcee6365166",
-      "inputs_sha256": "03388fcadb62136ba5dcd316642e926261803d0052b0a9a457d1f5269ebb0c5b"
+      "inputs_sha256": "ffc8aa9682b5b31bdbcf2121263b5fa4e27d708ce0844bb45e6e543aecacf1ee"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14092,21 +14257,23 @@
     "size": 20,
     "offset": 1175968,
     "inputs": [
-      "src/campaign_typed_array_ranges.c"
+      "src/campaign_typed_array_remove.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h"
     ],
-    "rebuilt_symbol": "@remove_typed_11f1a0@12",
+    "rebuilt_symbol": "??$RemoveTyped@$1?array_tag_7b7b08@@3QBGB$07@Array@@QAEXHH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_ranges.obj src/campaign_typed_array_ranges.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_remove.obj src/campaign_typed_array_remove.cpp",
     "link_bindings": {
-      "@remove_11efd0@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048144,
-        "basis": "Independently rebuilt array remove function at RVA 0x11efd0."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11efd0. The wrapper forwards its index and count with element size 8."
       }
     },
-    "identification": "Aligned entry bounded by a previous return and INT3 padding. Passes the index, count and fixed 8-byte element size to the rebuilt array remove operation. Majority choice, not evidence: the Count member here takes unsigned from the other copies, where this source had int.",
+    "identification": "Complete typed FArray range wrapper at RVA 0x11f1a0. Calls the matching Array::Remove<Tag> specialization with fixed element width 8.",
     "match": {
       "bytes_sha256": "35e7f89b7c603afc0a7913627fbe7f621a5e1ae9d5ee3726d7820d987818bab9",
-      "inputs_sha256": "be3afe3c7de341ec9f422cdc120c4c648485a997da1351e8faf79491d10775fa"
+      "inputs_sha256": "e57c5bf9d453e08e4ca09a8759c7a7b87f430a5a3306f4071316518c0c50f98a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14122,21 +14289,23 @@
     "size": 23,
     "offset": 1176000,
     "inputs": [
-      "src/campaign_typed_array_ranges.c"
+      "src/campaign_typed_array_remove.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h"
     ],
-    "rebuilt_symbol": "@remove_typed_11f1c0@12",
+    "rebuilt_symbol": "??$RemoveTyped@$1?array_tag_7b7b08@@3QBGB$0JE@@Array@@QAEXHH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_ranges.obj src/campaign_typed_array_ranges.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_remove.obj src/campaign_typed_array_remove.cpp",
     "link_bindings": {
-      "@remove_11f060@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048288,
-        "basis": "Independently rebuilt array remove function at RVA 0x11f060."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11f060. The wrapper forwards its index and count with element size 148."
       }
     },
-    "identification": "Aligned entry bounded by a previous return and INT3 padding. Passes the index, count and fixed 148-byte element size to the rebuilt array remove operation. Majority choice, not evidence: the Count member here takes unsigned from the other copies, where this source had int.",
+    "identification": "Complete typed FArray range wrapper at RVA 0x11f1c0. Calls the matching Array::Remove<Tag> specialization with fixed element width 148.",
     "match": {
       "bytes_sha256": "0377c290d517dc18acd8fcaa9ad13dbfc5c244fc25413ff14de602c4fc8190f9",
-      "inputs_sha256": "088330f9ac8a840588630b807a764ff2b3a89687df7c66bf0982dcd8d5f94a6c"
+      "inputs_sha256": "32cfdc48333676c95992c99d2e990e8184a60426718c871d47883f88420738c4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14151,27 +14320,31 @@
     "id": "array-destroy-11f310",
     "size": 56,
     "offset": 1176336,
-    "rebuilt_symbol": "@array_destroy_r11f310@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$07@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r11ef40@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048000,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-11ef40. The call passes index zero, the current count and element size 8."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11ef40. The call passes index zero, the current count and element size 8."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x11f310, 0x11f348). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x11ef40. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "fea855605c1cf2d67322581786df644b4858e2d130e8336b34847afc5465263c",
-      "inputs_sha256": "308b997614c7769b3fe2434f996afb3aed80998e83f4ed687debd2789df36f69"
+      "inputs_sha256": "03db723317da442861ea9abcbeee6a6b2da41e0b696fd3318655cb6fa05c9476"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14186,27 +14359,31 @@
     "id": "array-destroy-11f350",
     "size": 56,
     "offset": 1176400,
-    "rebuilt_symbol": "@array_destroy_r11f350@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$07@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r11efd0@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048144,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-11efd0. The call passes index zero, the current count and element size 8."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11efd0. The call passes index zero, the current count and element size 8."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x11f350, 0x11f388). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x11efd0. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "8445fb797178a323d0a0d4762fe729da3d15307fe2952870dfe456732b952cf6",
-      "inputs_sha256": "e60a4613362876c9704265d15e18d2c23191dbc4a15e46643684554ec0d77c08"
+      "inputs_sha256": "735b4c4e6138b496d7cdce7ebf034f7e2d09218501a6ebff4277f5bae8fe1646"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14221,27 +14398,31 @@
     "id": "array-destroy-11f390",
     "size": 59,
     "offset": 1176464,
-    "rebuilt_symbol": "@array_destroy_r11f390@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$0JE@@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r11f060@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048288,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-11f060. The call passes index zero, the current count and element size 148."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11f060. The call passes index zero, the current count and element size 148."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x11f390, 0x11f3cb). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x11f060. Removes every element with stride 148 and releases remaining storage.",
     "match": {
       "bytes_sha256": "07ab340c692176ce87cdc44a11c9102650aecb6a09d9087208b8388790edb229",
-      "inputs_sha256": "1b659f224e99318f5d53ccb313b9def2e78dcf670b23ecf0df11e78a0bdfb928"
+      "inputs_sha256": "7615cf7b3595d0c66336372a68f2aaba6532c94778c176879b5d0457b9c44078"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14256,27 +14437,31 @@
     "id": "array-destroy-11f3d0",
     "size": 56,
     "offset": 1176528,
-    "rebuilt_symbol": "@array_destroy_r11f3d0@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$07@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r11ef40@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048000,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-11ef40. The call passes index zero, the current count and element size 8."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11ef40. The call passes index zero, the current count and element size 8."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x11f3d0, 0x11f408). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x11ef40. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "e2b5b4f6d1f23b7842bec56130cb6f562245a058cbc78327cbf1ef202bae08a4",
-      "inputs_sha256": "601fd1aa8146a30e96b08da9f2a220e65bec857ac6ca3897ceb6b9806deffb64"
+      "inputs_sha256": "529b8b2170420ec39035df9beefde1ab6edc82e724e1e8a754d091d2d8a5faf4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14291,27 +14476,31 @@
     "id": "array-destroy-11f410",
     "size": 56,
     "offset": 1176592,
-    "rebuilt_symbol": "@array_destroy_r11f410@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$07@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r11efd0@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048144,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-11efd0. The call passes index zero, the current count and element size 8."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11efd0. The call passes index zero, the current count and element size 8."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x11f410, 0x11f448). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x11efd0. Removes every element with stride 8 and releases remaining storage.",
     "match": {
       "bytes_sha256": "c15890bc3852d52dbc8137d05f51b24a90ab362dc33d22fe51e074d65d3777d5",
-      "inputs_sha256": "5dcf398dbd975fff3f74f5a068b4438757ed76f4c305f43007aac2e451068ef3"
+      "inputs_sha256": "295e0677fcbc32f92391b2c2d64e42f4224bf7e0382a7f0afb0f3b190bc29eee"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14326,27 +14515,31 @@
     "id": "array-destroy-11f450",
     "size": 59,
     "offset": 1176656,
-    "rebuilt_symbol": "@array_destroy_r11f450@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$0JE@@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
+      "src/campaign_globals.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r11f060@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 279048288,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-11f060. The call passes index zero, the current count and element size 148."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-11f060. The call passes index zero, the current count and element size 148."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x11f450, 0x11f48b). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x11f060. Removes every element with stride 148 and releases remaining storage.",
     "match": {
       "bytes_sha256": "848061415dbd9bde36bcdb43a8b6d5cbca421ea81c2d8d7154c9d3731d1a6870",
-      "inputs_sha256": "66652eb0423cdc147382c4809a72d1021de0e0e80338d39ad9fd9fca68a1d789"
+      "inputs_sha256": "1ea0fec9ba7fe9fe4660bb9e1c10952ccaa83845ae4ea64c323ff446fd381d1e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14362,7 +14555,9 @@
     "size": 18,
     "offset": 1176768,
     "inputs": [
-      "src/campaign_table_initializers.c"
+      "src/campaign_table_initializers.c",
+      "src/campaign_globals.h",
+      "src/campaign_table_method_globals.h"
     ],
     "rebuilt_symbol": "@init_11f4c0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14377,10 +14572,10 @@
         "basis": "Read-only table stored in the receiver. Its first slot points to executable code."
       }
     },
-    "identification": "Independent Ghidra extent. Calls RVA 0x3d7930 before installing the methods table at RVA 0x7d3180. Its first slot points to function RVA 0x3d6af0. Returns the original receiver.",
+    "identification": "Independent Ghidra extent. Calls RVA 0x3d7930 before installing the methods table at RVA 0x7d3180. Its first slot points to function RVA 0x3d6af0. Returns the original receiver. TableInitializerObject is an analyst-invented local view of the method-table prefix written by these initializers.",
     "match": {
       "bytes_sha256": "011534066bdff0c0ba4c38ebc45d4155bcd5c3b87e3b3db87556a0a766ebb502",
-      "inputs_sha256": "78add65b75f1db634eff46fe52a1020db5b237854c6d35c2f355d1e567468656"
+      "inputs_sha256": "bd287d4c353c51a9f9937837cd1fbe076f2ce95c90fe38c53b72e0472e6602b3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14516,7 +14711,8 @@
     "offset": 1176880,
     "size": 33,
     "inputs": [
-      "src/campaign_deleting_destructors.c"
+      "src/campaign_deleting_destructors.c",
+      "src/campaign_engine_allocator.h"
     ],
     "rebuilt_symbol": "@delete_UParticleEmitter@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14534,7 +14730,7 @@
     },
     "match": {
       "bytes_sha256": "02df6e269ab907fa6c1ce35d9acd246a7fd54e3510f6bd369851da9175482aa0",
-      "inputs_sha256": "e583c4a49a89b95f03d30dad1f935145438649e87a44085c40aadb13469ab547"
+      "inputs_sha256": "c3212d5061eb9fc97dba10cfef46cefbe334ea27f89098344e40fba764b8eb2a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14649,15 +14845,18 @@
     "size": 105,
     "rebuilt_symbol": "_create_UParticleEmitter",
     "inputs": [
-      "src/campaign_class_factories.c",
-      "src/campaign_class_factory_symbols.h"
+      "src/campaign_class_factories.cpp",
+      "src/campaign_class_factory_symbols.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.c",
+    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_class_factories.obj src/campaign_class_factories.cpp",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
-        "basis": "Shared engine allocator pointer. Its first virtual slot allocates the runtime class descriptor."
+        "basis": "The Campaign factory loads GMalloc at VA 0x111c88a0 and calls its first virtual slot, FMalloc::Malloc, for its 0x2e0-byte class descriptor."
       },
       "_native_name_UParticleEmitter": {
         "va": 286077464,
@@ -14675,15 +14874,15 @@
         "va": 281897664,
         "basis": "Static class callback passed together with the placement callback for UParticleEmitter."
       },
-      "@construct_runtime_class@56": {
+      "?Construct@RuntimeClassBuilder@@QAEPAURuntimeClass@@IIIUEngineGuid@@PBG11IP6AXPAUPlacementObject@@@ZP6IX2@Z@Z": {
         "va": 281961024,
         "basis": "Common native class descriptor constructor called after the successful 0x2e0-byte allocation."
       }
     },
-    "identification": "Native class factory at RVA 0x11f670; its allocation tag and reflected class name identify UParticleEmitter. The successful construction and null-allocation returns both belong to this complete symbol.",
+    "identification": "Native class factory at RVA 0x11f670; its allocation tag and reflected class name identify UParticleEmitter. The successful construction and null-allocation returns both belong to this complete symbol. RuntimeClassBuilder and Construct are analyst-invented names for the stock descriptor construction call. EngineGuid is an analyst-invented label for the 16-byte zero GUID argument.",
     "match": {
       "bytes_sha256": "a1e15830c711f6c57e94e68df304bef427ca93176185eb4d59cfcd148ce7d315",
-      "inputs_sha256": "db7cf7c39706892b291d86ff53ab255a3fc58017559a8d082a0e9eea33557422"
+      "inputs_sha256": "dd324b7176d5219b26ce6ef86a6b13fab475b670fa5bab498c53ef8e89d71705"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14699,14 +14898,17 @@
     "size": 43,
     "offset": 1177392,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r11f730@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -14714,7 +14916,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "3d0a4eddce1ca5d4b2456c170c0afea4e7e3db486258c72444b021bcf679e0d0"
+      "inputs_sha256": "963b7576fff5d5c0d5605c1c20848981083544178fbe09d83edaef00b3c3a86c"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14760,14 +14962,17 @@
     "size": 43,
     "offset": 1177536,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r11f7c0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -14775,7 +14980,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "165ac1cf01f5b2dcf7b0720416c2e67fcbe5bbbe4b4f3e95566c00bf9dd05eb6"
+      "inputs_sha256": "2ab1a9076dff96804b5ce14a07f51dcec62fee7d73b5f9e1c8732089f4fea5bc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14791,14 +14996,17 @@
     "size": 43,
     "offset": 1177584,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r11f7f0@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -14806,7 +15014,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "79bae187f8177eab9a32d8ac42411c28fb03fb837cf4b8cf2b3a7c2652d8dfbb"
+      "inputs_sha256": "55eea9a691e26c6a51df9f4f684705a487dc74ab61a06dd8c86e42bedba34b7f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14822,14 +15030,17 @@
     "size": 43,
     "offset": 1177632,
     "inputs": [
-      "src/campaign_array_cleanup_copies.c",
-      "src/campaign_array_storage.h"
+      "src/campaign_array_release.cpp",
+      "src/campaign_array_object.h",
+      "src/unreal_containers.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "@array_release_r11f820@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_cleanup_copies.obj src/campaign_array_cleanup_copies.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_release.obj src/campaign_array_release.cpp",
     "link_bindings": {
-      "_array_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 287082656,
         "basis": "Engine allocator referenced by the registered UClass factories and class destruction callbacks."
       }
@@ -14837,7 +15048,7 @@
     "identification": "Default Ghidra function extent and full retail body identical to the unwind-referenced array release at RVA 0x55b0. Releases nonnull storage through the engine heap and clears all three array fields. Caller and class identity are unknown.",
     "match": {
       "bytes_sha256": "e426323bd2fb6b92b62c0922900feb143223116c5a9d61098841fb2e7c922a4e",
-      "inputs_sha256": "1bf527507d3431bdfdddbba42d8717d697692709f63b96b1b3fa66325d937b8d"
+      "inputs_sha256": "5d64821164a8e34813cb36f349b8929059916307f98713a4573b581cf058318a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14917,7 +15128,7 @@
     "identification": "Class registration for UBeamEmitter at RVA 0x11f980, called immediately after the class factory at RVA 0x1231a0 in the singleton initialization path. Sets superclass UParticleEmitter, within-class UObject, and metaclass UClass. Both the virtual tail call and plain return are covered.",
     "match": {
       "bytes_sha256": "d3c79435a1313ac351115294ffa21e300c0f675f274a2d1eafbf32bc28104428",
-      "inputs_sha256": "608e9d1ec332a8de08627296f08f4b5e9136be9436e1da5d6a55c3f4337ad900"
+      "inputs_sha256": "ad014e636deda3040ac7106dbd6137cc64073fef56c6670849c8dab5afc219e7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14936,7 +15147,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r11fd90@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14954,7 +15166,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x11fd90 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "399b58f534dad258077da76fd19f6d622f98b289f18d92259e3894c18a37d7c0"
+      "inputs_sha256": "b7325cc97bb93fd9af334abfa935983572d6531e7b9d96cd80d7ae7161a7bf2e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14973,7 +15185,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r11ff10@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -14991,7 +15204,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x11ff10 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "f26c17989b6fd2c775f95e2f23f78696467ebfdba7ce25d5757e8bf67d318c28"
+      "inputs_sha256": "0e41e680250bda12656b6c2078186fbd07312e2c3e3af01cc7a4eb6207c2a4b7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -15010,7 +15223,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r11ff40@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -15028,7 +15242,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x11ff40 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "27c32eb9c79cfd08d0680aa5485e4f04fb8bbbb2b415f6eecd155d602590c521"
+      "inputs_sha256": "209f8f76db3326fef0f6a6f7cc2972c2fb8319d5f69fcb608400fcf269dcb814"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -15047,7 +15261,8 @@
       "src/campaign_array_resize.c",
       "src/campaign_array_resize_abi.h",
       "src/campaign_array_storage.h",
-      "src/campaign_globals.h"
+      "src/campaign_globals.h",
+      "src/campaign_array_object.h"
     ],
     "rebuilt_symbol": "@resize_array_r11ff70@8",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -15065,7 +15280,7 @@
     "identification": "Complete independently analyzed stock FArray method at RVA 0x11ff70 through its RET. Resizes the existing allocation to capacity times the incoming element size and stores the returned pointer. The heap and exact allocation-tag address agree with other rebuilt array methods.",
     "match": {
       "bytes_sha256": "5a8746e0d8bd32113ecc92e0c27329b209e558722df63524f5da70acabfabcc0",
-      "inputs_sha256": "713259b80d0096a9d05a0baff08972f105e392461b08df96ec4b6638bc72675d"
+      "inputs_sha256": "1670c6286d6528e104dc6408e8f76e7242d2206006268151278bbe97fe35edbf"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

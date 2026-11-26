@@ -3,11 +3,7 @@
 // VA 0x10d9d560, then the constructor at VA 0x1103b1d0 on the 0x60-byte members at 0x0 and 0x60.
 // The class names are invented; the offsets and the addresses are the binary's.
 
-class UnkType_10d9d560
-{
-public:
-    UnkType_10d9d560();
-};
+#include "campaign_leaf_49d560_base.h"
 
 class UnkType_1103b1d0
 {

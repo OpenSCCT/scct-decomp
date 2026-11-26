@@ -7,8 +7,8 @@ struct Methods {
     void (__fastcall *release)(struct Allocator *, struct Pointer);
 };
 struct Allocator { const struct Methods *methods; };
+#include "campaign_engine_allocator.h"
 extern struct Array storage;
-extern struct Allocator *engine_allocator;
 extern void __fastcall remove_range(struct Array *, float first_bits, struct Count count, float width_bits);
 
 static __forceinline void destroy_storage(float element_size_bits)
@@ -18,7 +18,7 @@ static __forceinline void destroy_storage(float element_size_bits)
     remove_range(&storage, 0.0f, count, element_size_bits);
     if (storage.buffer.bytes) {
         struct Pointer buffer = {storage.buffer.bytes};
-        engine_allocator->methods->release(engine_allocator, buffer);
+        ((struct Allocator *)engine_allocator)->methods->release((struct Allocator *)engine_allocator, buffer);
     }
     storage.buffer.bytes = 0;
     storage.capacity = 0;

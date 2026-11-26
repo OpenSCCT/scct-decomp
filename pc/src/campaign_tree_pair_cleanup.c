@@ -1,20 +1,20 @@
+#include "campaign_allocation_service.h"
 struct Tree;
 struct Pair { void *first, *second; };
-struct Node {
-    struct Node *left, *parent, *right;
+struct PairCleanupNode {
+    struct PairCleanupNode *left, *parent, *right;
     struct Pair value;
     unsigned char colour;
     unsigned char sentinel;
 };
-struct Child { struct Node *ptr; };
+/* FAKEMATCH: this wrapper puts the raw subtree node pointer on the member call's stack. */
+struct PairCleanupChild { struct PairCleanupNode *ptr; };
 extern void __fastcall destroy_field(void *);
-extern void *__cdecl prepare_release(struct Node *, unsigned);
-extern void __cdecl release_prepared(void *);
-void __fastcall erase_nodes(struct Tree *tree, struct Child child)
+void __fastcall erase_nodes(struct Tree *tree, struct PairCleanupChild child)
 {
-    struct Node *node = child.ptr;
+    struct PairCleanupNode *node = child.ptr;
     while (!child.ptr->sentinel) {
-        struct Child right;
+        struct PairCleanupChild right;
         right.ptr = node->right;
         erase_nodes(tree, right);
         node = node->left;
@@ -23,7 +23,7 @@ void __fastcall erase_nodes(struct Tree *tree, struct Child child)
             destroy_field(&pair->second);
             destroy_field(pair);
         }
-        release_prepared(prepare_release(child.ptr, 7));
+        release_block(get_context(), (unsigned char *)child.ptr, 7);
         child.ptr = node;
     }
 }

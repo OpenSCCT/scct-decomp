@@ -7,52 +7,7 @@
 // values at 0x00 and 0x04. The class and member names are invented; the offsets, the tag and the
 // addresses are the binary's.
 
-#include "campaign_global_111c88a0.h"
-
-class UnkType_111c88a0_067370
-{
-public:
-    UnkType_111c88a0_067370(int Count)
-    : unk_00(0)
-    , unk_04(Count)
-    , unk_08(Count)
-    {
-        unk_00 = static_cast<unsigned char*>(GUnk_111c88a0->Realloc(unk_00, unk_08,
-                                                                          L"FArray::BYTE"));
-    }
-
-private:
-    unsigned char* unk_00;
-    int unk_04;
-    int unk_08;
-};
-
-class UnkType_110bec68_067370_Base
-{
-public:
-    UnkType_110bec68_067370_Base(int Count)
-    : unk_08(Count)
-    {
-        unk_00 = 0;
-        unk_04 = 0;
-    }
-
-private:
-    int unk_00;
-    int unk_04;
-    UnkType_111c88a0_067370 unk_08;
-};
-
-class UnkType_110bec68 : public UnkType_110bec68_067370_Base
-{
-public:
-    UnkType_110bec68(int Count)
-    : UnkType_110bec68_067370_Base(Count)
-    {
-    }
-
-    virtual ~UnkType_110bec68();
-};
+#include "campaign_leaf_110bec68.h"
 
 class UnkType_10967370
 {
