@@ -1,3 +1,6 @@
+#include "campaign_globals.h"
+#include "campaign_static_record_methods.h"
+
 /* Termination callbacks registered by the stock executable with atexit. */
 struct StaticRecord {
     const void *methods;
@@ -19,8 +22,6 @@ extern void __fastcall set_registered(struct StaticRecord *record, float stack_w
         Object.methods = Base; \
     }
 
-extern const void *const methods_7c1d60[];
-extern const void *const methods_7c1d64[];
 extern struct StaticRecord static_record_8cf448;
 extern struct StaticRecord static_record_8fa804;
 extern struct StaticRecord static_record_a1b47c;
