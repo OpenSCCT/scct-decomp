@@ -25,7 +25,7 @@
     "identification": "Aligned entry bounded by a preceding return and compiler padding. Sets count and capacity and allocates fresh storage with 4-byte elements and the retail allocation label FArray.",
     "match": {
       "bytes_sha256": "ba8bd35191358555a62006605321044af9f2c1a356db2b0996a768eaf70c167c",
-      "inputs_sha256": "4c3ba0d388fef0f2542eeb5fd110056b0a8e15caf2cbebce02a6d609823fb87f"
+      "inputs_sha256": "8d3aa244b4fe893f7ad5ab3c181e93b1baa7ed74c4de1d4f11383a2d5d0eb781"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -95,7 +95,7 @@
     "identification": "Stock FArray operation at RVA 0x3a31b0. Its independent function extent agrees with the compiler contribution and the allocation tag is shared with other matched operations. Record size is 376 bytes. Appends a copy of the input record and returns its index.",
     "match": {
       "bytes_sha256": "df6f5b337c98f0af1b0059ea15b7144787bd5fe6822d8383ddd85e90ec9ec546",
-      "inputs_sha256": "9e642280d47c5f2ca3b23297a19040369201348935bf75d903f5bd99dcf4e254"
+      "inputs_sha256": "ce28a19fc3ea09cc2826b1470bbb332389b85ff90158f66a440d7ae7f08f28a3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -110,29 +110,29 @@
     "id": "array-destroy-3a3220",
     "size": 56,
     "offset": 3813920,
-    "rebuilt_symbol": "@array_destroy_r3a3220@4",
+    "rebuilt_symbol": "??$Empty@$1?array_tag_7b7b08@@3QBGB$03@Array@@QAEXXZ",
     "inputs": [
-      "src/campaign_array_destroy.c",
-      "src/campaign_array_storage.h",
+      "src/campaign_array_destroy.cpp",
+      "src/campaign_array_object.h",
       "src/campaign_array_allocator.h",
-      "src/campaign_array_object.h"
+      "src/campaign_globals.h"
     ],
-    "build_command": "cl /nologo /Gy /O2 /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_array_destroy.obj src/campaign_array_destroy.cpp",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "link_bindings": {
       "_array_allocator": {
         "va": 287082656,
         "basis": "Engine allocator used by the recovered FArray removal and release functions."
       },
-      "@destroy_remove_r39b560@16": {
+      "??$Remove@$1?array_tag_7b7b08@@3QBGB@Array@@QAEXHHH@Z": {
         "va": 281654624,
-        "basis": "Direct call to the independently compiled FArray range-removal function array-remove-39b560. The call passes index zero, the current count and element size 4."
+        "basis": "Direct call to the independently compiled Array::Remove<Tag> specialization in array-remove-39b560. The call passes index zero, the current count and element size 4."
       }
     },
     "identification": "Default Ghidra analysis independently identified the isolated range [0x3a3220, 0x3a3258). The 16-byte-aligned entry follows a completed function or INT3 padding, and the final RET precedes INT3 padding. The direct call resolves to the previously rebuilt array removal at RVA 0x39b560. Removes every element with stride 4 and releases remaining storage.",
     "match": {
       "bytes_sha256": "7d4b18704793b4f0f3517c1f61ef6eb389b2c46722c1b721e32f7faa0e05b70e",
-      "inputs_sha256": "c2c341430b4f56566c077c76e1463f7fb2d9207a95702ecd0e13abffe0636343"
+      "inputs_sha256": "88a5038bc89a138e557a0f264bc59e6421cc34279cf80e3829a0aa4906873af3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

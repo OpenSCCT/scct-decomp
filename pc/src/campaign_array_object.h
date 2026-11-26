@@ -15,6 +15,8 @@ struct Array {
 #ifdef __cplusplus
     template<const unsigned short *Tag>
     void Remove(int index, int amount, int element_size);
+    template<const unsigned short *Tag, int ElementSize>
+    void Empty();
 #endif
 };
 
