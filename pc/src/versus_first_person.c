@@ -1,9 +1,6 @@
 #include "versus_vm_argument.h"
+#include "versus_viewport.h"
 
-struct Viewport {
-    unsigned char before_first_person[0x18c];
-    void *first_person;
-};
 struct Canvas {
     unsigned char before_viewport[0x78];
     struct Viewport *viewport;

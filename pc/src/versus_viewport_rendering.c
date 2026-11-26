@@ -1,4 +1,5 @@
-struct Viewport;
+#include "versus_viewport.h"
+
 struct PointerArg { void *value; };
 struct Device;
 struct DeviceMethods {
@@ -7,19 +8,6 @@ struct DeviceMethods {
     void (__fastcall *end)(struct Device *, struct PointerArg viewport);
 };
 struct Device { const struct DeviceMethods *methods; };
-struct Viewport {
-    unsigned char before_device[0x70];
-    struct Device *device;
-    unsigned char before_size[0x94-0x74];
-    int width, height;
-    void *screen;
-    unsigned char before_frame[0x130-0xa0];
-    int frame_width, frame_height;
-    unsigned char before_surface[8];
-    void *surface;
-    unsigned char before_active[12];
-    int active;
-};
 static __inline struct PointerArg pointer_arg(void *value) {
     struct PointerArg arg;
     arg.value = value;

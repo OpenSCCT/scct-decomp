@@ -1,4 +1,5 @@
 #include "versus_script_frame.h"
+#include "versus_viewport.h"
 
 struct EntryLevel {
     unsigned char unknown[0x2c];
@@ -17,10 +18,6 @@ struct PlayerLevel {
 struct PlayerActor {
     unsigned char unknown[0x1a4];
     struct PlayerLevel *level;
-};
-struct Viewport {
-    unsigned char unknown[0x30];
-    struct PlayerActor *actor;
 };
 struct GuiPlayer {
     unsigned char unknown[0x2c];

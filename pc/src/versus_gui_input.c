@@ -1,12 +1,11 @@
 #include "versus_vm_argument.h"
+#include "versus_viewport.h"
 
-struct Viewport;
 struct InputMethods {
     void *before_input[31];
     void (__fastcall *input)(struct Viewport *, const struct InputMethods *dispatch,
                              void *device, int key, int state, float delta);
 };
-struct Viewport { const struct InputMethods *methods; };
 struct InputContext {
     unsigned char before_viewport[0x28];
     struct Viewport *viewport;
