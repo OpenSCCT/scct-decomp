@@ -1,10 +1,10 @@
 #include "campaign_list_link.h"
-struct List { struct ListLink *head; };
+struct SentinelCleanupList { struct ListLink *head; };
 
 extern void __stdcall release_739a40(struct ListLink *);
 
 #define DESTROY_LIST(Entry, Release) \
-    void __fastcall Entry(struct List *list) \
+    void __fastcall Entry(struct SentinelCleanupList *list) \
     { \
         struct ListLink *node = list->head->next; \
         while (node != list->head) { \
