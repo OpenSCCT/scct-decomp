@@ -3,12 +3,12 @@
 #ifndef CAMPAIGN_GLOBAL_1131B110_H
 #define CAMPAIGN_GLOBAL_1131B110_H
 
-class UnkType_1131b110
+class UnkType_10961930
 {
 public:
     void* Unk_10961930(int Kind, int Value);
 };
 
-extern UnkType_1131b110 GUnk_1131b110;
+extern UnkType_10961930 GUnk_1131b110;
 
 #endif
