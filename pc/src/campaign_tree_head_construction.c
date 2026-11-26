@@ -1,9 +1,8 @@
-#include "campaign_color_node.h"
-struct Tree { struct ColorNode *head; unsigned count; unsigned char compare; };
-struct Args { const unsigned char *compare; const void *allocator; };
+#include "campaign_color_tree.h"
+struct TreeHeadArgs { const unsigned char *compare; const void *allocator; };
 extern void *__stdcall allocate_node(unsigned bytes);
 #define MAKE_TREE(Name, Size) \
-    struct Tree *__fastcall Name(struct Tree *tree, struct Args args) \
+    struct ColorTree *__fastcall Name(struct ColorTree *tree, struct TreeHeadArgs args) \
     { \
         struct ColorNode *head; \
         tree->head = 0; \

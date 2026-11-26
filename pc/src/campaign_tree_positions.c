@@ -1,5 +1,4 @@
-#include "campaign_color_node.h"
-struct ColorTree { struct ColorNode *head; unsigned count; };
+#include "campaign_color_tree.h"
 struct ColorTreePosition { struct ColorNode *node; };
 struct ColorTreeOutput { struct ColorTreePosition *out; };
 #define TREE_EDGE(Name, Value) \
