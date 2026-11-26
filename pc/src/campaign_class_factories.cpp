@@ -1,60 +1,38 @@
-/* The x86 class constructor receives its allocator or destination in ECX and
-   every remaining word on the stack. VC 7.1 reserves explicit __thiscall for
-   member declarations. Its C __fastcall form stack-passes float and aggregate
-   parameters. IntegerStackWord supplies the original unsigned integer word
-   through the float parameter's stack slot without numeric conversion.
-   Pointer arguments use one-word aggregates for the same stack convention. */
-#include "campaign_class_factory_symbols.h"
-
+/* Native class factories allocate a runtime descriptor, then pass its metadata
+   through the allocator's virtual method and the descriptor's construction method. */
 struct RuntimeClass;
-struct PlacementObject;
-struct Allocator;
+extern "C" {
+#include "campaign_class_factory_symbols.h"
+}
 
-/* FAKEMATCH: bit pattern passed as a float argument to keep the original's integer word in its stack slot. */
-typedef union { unsigned int value; float stack_word; } IntegerStackWord;
-/* FAKEMATCH: the original passes its name as a stack argument; this one-member struct only steers that stack slot. */
-typedef struct { const unsigned short *value; } NameArgument;
-/* FAKEMATCH: the original passes its placement routine as a stack argument; this one-member struct only steers that stack slot. */
-typedef struct { void (__cdecl *value)(struct PlacementObject *); } PlacementArgument;
-/* FAKEMATCH: the original passes its static constructor as a stack argument; this one-member struct only steers that stack slot. */
-typedef struct { void (__fastcall *value)(struct PlacementObject *); } StaticConstructorArgument;
 struct EngineGuid { unsigned int a, b, c, d; };
 
-/* FAKEMATCH: bit pattern passed as a float argument; the float only fills the stack slot that holds the original's integer size. */
-struct AllocatorMethods {
-    void *(__fastcall *allocate)(struct Allocator *, float size, NameArgument tag);
+class ClassFactoryAllocator {
+public:
+    virtual void *Allocate(unsigned size, const unsigned short *tag) = 0;
 };
-struct Allocator { const struct AllocatorMethods *methods; };
-extern struct Allocator *engine_allocator;
+extern "C" ClassFactoryAllocator *engine_allocator;
 
-/* FAKEMATCH: bit patterns passed as float arguments for the native, instance size, class flags and object flags words; each call passes IntegerStackWord's stack_word. */
-struct RuntimeClass *__fastcall construct_runtime_class(
-    void *storage, float native, float instance_size, float class_flags,
-    struct EngineGuid guid, NameArgument name, NameArgument package, NameArgument config,
-    float object_flags, PlacementArgument placement, StaticConstructorArgument initialize);
+class RuntimeClassBuilder {
+public:
+    RuntimeClass *Construct(unsigned native, unsigned instance_size, unsigned class_flags,
+                            EngineGuid guid, const unsigned short *name,
+                            const unsigned short *package, const unsigned short *config,
+                            unsigned object_flags,
+                            void (__cdecl *placement)(struct PlacementObject *),
+                            void (__fastcall *initialize)(struct PlacementObject *));
+};
 
 #define DEFINE_CLASS_FACTORY(Type, InstanceSize, Flags, Config)                \
-    struct RuntimeClass *create_##Type(const unsigned short *package)         \
+    extern "C" struct RuntimeClass *create_##Type(const unsigned short *package) \
     {                                                                         \
-        static const IntegerStackWord descriptor_size = { 0x2e0 };            \
-        NameArgument allocation_name = { native_name_##Type };                \
-        void *memory = engine_allocator->methods->allocate(                   \
-            engine_allocator, descriptor_size.stack_word, allocation_name);   \
+        void *memory = engine_allocator->Allocate(0x2e0, native_name_##Type); \
         if (memory) {                                                         \
-            static const IntegerStackWord native = { 0 };                     \
-            static const IntegerStackWord instance_size = { InstanceSize };   \
-            static const IntegerStackWord class_flags = { Flags };            \
-            static const IntegerStackWord object_flags = { 0x4084004 };       \
             struct EngineGuid guid = { 0, 0, 0, 0 };                          \
-            NameArgument name = { native_name_##Type + 1 };                   \
-            NameArgument config = { config_##Config }, package_name;          \
-            PlacementArgument place = { place_##Type };                       \
-            StaticConstructorArgument initialize = { static_init_##Type };    \
-            package_name.value = package;                                     \
-            return construct_runtime_class(                                   \
-                memory, native.stack_word, instance_size.stack_word,          \
-                class_flags.stack_word, guid, name, package_name, config,     \
-                object_flags.stack_word, place, initialize);                  \
+            return ((struct RuntimeClassBuilder *)memory)->Construct(        \
+                0, InstanceSize, Flags, guid, native_name_##Type + 1,        \
+                package, config_##Config, 0x4084004, place_##Type,            \
+                static_init_##Type);                                         \
         }                                                                     \
         return 0;                                                             \
     }
