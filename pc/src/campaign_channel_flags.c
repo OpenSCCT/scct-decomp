@@ -1,29 +1,29 @@
-struct Channel {
+struct FlagQueryChannel {
     unsigned sequence;
     unsigned char reserved_04[0x24];
     unsigned flags;
     unsigned char reserved_2c[0x54];
 };
-struct Mesh {
+struct FlagQueryMesh {
     unsigned char reserved[0x94];
-    struct Channel *channels;
+    struct FlagQueryChannel *channels;
     int count;
 };
 struct Index { int value; };
 struct Output { unsigned *name; };
-static __forceinline int valid(const struct Mesh *mesh, int i)
+static __forceinline int valid(const struct FlagQueryMesh *mesh, int i)
 {
     return mesh->count > i && i >= 0;
 }
-int __fastcall channel_flag_one(const struct Mesh *mesh, struct Index index)
+int __fastcall channel_flag_one(const struct FlagQueryMesh *mesh, struct Index index)
 {
     return valid(mesh, index.value) ? (mesh->channels[index.value].flags >> 1) & 1u : 0;
 }
-int __fastcall channel_flag_four(const struct Mesh *mesh, struct Index index)
+int __fastcall channel_flag_four(const struct FlagQueryMesh *mesh, struct Index index)
 {
     return valid(mesh, index.value) ? (mesh->channels[index.value].flags >> 4) & 1u : 0;
 }
-int __fastcall clear_channel_flags(struct Mesh *mesh, struct Index index)
+int __fastcall clear_channel_flags(struct FlagQueryMesh *mesh, struct Index index)
 {
     if (valid(mesh, index.value)) {
         mesh->channels[index.value].flags &= ~2u;
@@ -32,7 +32,7 @@ int __fastcall clear_channel_flags(struct Mesh *mesh, struct Index index)
     }
     return 0;
 }
-unsigned *__fastcall channel_sequence_name(const struct Mesh *mesh, struct Output output, struct Index index)
+unsigned *__fastcall channel_sequence_name(const struct FlagQueryMesh *mesh, struct Output output, struct Index index)
 {
     if (index.value >= 0 && index.value < mesh->count) {
         *output.name = mesh->channels[index.value].sequence;

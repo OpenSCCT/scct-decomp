@@ -5,5 +5,6 @@
 extern const float zero_rate;
 extern const double zero_position;
 extern const float zero_value;
+extern const float unit_value;
 
 #endif
