@@ -1,16 +1,16 @@
 struct Tree;
 #include "campaign_three_link_node.h"
-struct Child { struct ThreeLinkNode *ptr; };
+struct TreeEraseChild { struct ThreeLinkNode *ptr; };
 
 extern void *__cdecl prepare_48b460(struct ThreeLinkNode *, unsigned);
 extern void __cdecl release_48b550(void *);
 
 #define ERASE_NODES(Entry, SentinelOffset, Category, Prepare, Release) \
-    void __fastcall Entry(struct Tree *tree, struct Child child) \
+    void __fastcall Entry(struct Tree *tree, struct TreeEraseChild child) \
     { \
         struct ThreeLinkNode *node = child.ptr; \
         while (!*((const unsigned char *)child.ptr + SentinelOffset)) { \
-            struct Child right; \
+            struct TreeEraseChild right; \
             right.ptr = node->right; \
             Entry(tree,right); \
             node = node->left; \
