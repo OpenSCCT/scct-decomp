@@ -2,87 +2,94 @@
 
 [![Progress](https://bytematch.dev/OpenSCCT/scct-decomp.svg)](https://bytematch.dev/OpenSCCT/scct-decomp)
 
-Readable C and C++ that rebuilds the original *Chaos Theory* executables byte for byte.
-Each platform release is tracked per executable, so the same source can serve several
-versions of the game. The [OpenSCCT hub](https://github.com/OpenSCCT/OpenSCCT) pins this
-repository as `decomp/` and shows its progress on the player website.
+This project reconstructs the retail programs for *Splinter Cell: Chaos Theory* in C and C++.
+The goal is readable source code that produces the same bytes as each retail program.
+The project measures each program independently. Different game versions can use the same source code.
+The [OpenSCCT hub](https://github.com/OpenSCCT/OpenSCCT) records the revision of this repository in its `decomp/` directory.
+The player website shows the progress for that revision.
 
-| Platform | Executables | Guide |
+| Platform | Programs | Documentation |
 | --- | --- | --- |
-| PC (Steam build 252084) | Campaign and co-op, Versus | [pc/README.md](pc/README.md) · [toolchain notes](pc/TOOLCHAIN.md) |
-| PlayStation 2 (PAL 1.01) | Boot, offline and online programs | [ps2/README.md](ps2/README.md) |
+| PC (Steam build 252084) | Campaign and co-op, Versus | [PC guide](pc/README.md) · [Compiler tools](pc/TOOLCHAIN.md) |
+| PlayStation 2 (PAL 1.01) | Disc boot, offline program, online program | [PlayStation 2 guide](ps2/README.md) |
 
 ## Status
+
+A **candidate** is a complete function that produces the retail bytes in a clean build.
+For a **verified** function, a reviewer has also confirmed the identity of the retail compiler and its options from build records.
+The table gives a byte count for each group. [Progress report](reports/progress.json)
 
 <!-- status:begin -->
 | Build and program | Verified bytes | Candidate bytes | Measured code |
 | --- | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 1,179,753 | 37,085 | 8,082,506 bytes |
-| Steam 252084 · Versus | 477,149 | 60,333 | 2,991,392 bytes |
+| Steam 252084 · Campaign and co-op | 1,180,131 | 37,090 | 8,082,506 bytes |
+| Steam 252084 · Versus | 477,149 | 65,829 | 2,991,392 bytes |
 | PAL 1.01 · Disc boot | 0 | 0 | Unmeasured |
 | PAL 1.01 · Offline program | 0 | 0 | Unmeasured |
 | PAL 1.01 · Online program | 0 | 8 | Unmeasured |
 <!-- status:end -->
 
-Candidates have reproduced every byte of a complete function in a clean build. Verified
-bytes additionally need reviewed evidence of the original compiler and flags. The
-machine-readable feed is [reports/progress.json](reports/progress.json), and
-[ByteMatch](https://bytematch.dev/OpenSCCT/scct-decomp) reads the same receipts.
-
 ### Matched under the rules
 
-Matching bytes prove the source is faithful; readable source is the point. A unit counts as
-**matched under the rules** only when its bytes match *and* its source passes every [match] rule
-of the [code rules](docs/code-rules/README.md): one declaration per type and global, no offset
-casts, real vtables, no fake code, no assembly bodies. A unit that reproduces the bytes with
-scattered declarations or a compiler-steering trick is `MATCH-PENDING`: open work, not progress.
+A function is **matched under the rules** when it produces the retail bytes and its source code passes all `[match]` rules.
+For example, each type and each global variable must have one declaration.
+The source code must use the correct virtual method tables.
+The rules prohibit offset casts, artificial code that forces a match, and function bodies written in assembly language. [Code rules](docs/code-rules/README.md)
+
+`MATCH-PENDING` means that the function matches the retail bytes but its source code fails one or more rules.
+For example, two source files can each contain a declaration for the same type (R1) or global variable (R2).
+The project profile specifies how to correct these declarations and which records to use for names. [Project profile](AGENTS.md)
 
 <!-- rules:begin -->
 | Build and program | Bytes matched | Verified | Verified under the rules | `MATCH-PENDING` |
 | --- | ---: | ---: | ---: | ---: |
-| Steam 252084 · Campaign and co-op | 1,216,838 | 1,179,753 | 359,462 | 843,666 |
-| Steam 252084 · Versus | 537,482 | 477,149 | 25,176 | 492,464 |
+| Steam 252084 · Campaign and co-op | 1,217,221 | 1,180,131 | 646,144 | 551,104 |
+| Steam 252084 · Versus | 542,978 | 477,149 | 97,670 | 419,085 |
 | PAL 1.01 · Online program | 8 | 0 | 0 | 0 |
 <!-- rules:end -->
 
-[reports/rules.json](reports/rules.json) holds the same totals with the count behind each rule;
-`rules --explain <unit>` lists what holds one unit back. Nearly all pending units fail R1 or R2:
-each source file declares its own copy of the types and globals it touches. The
-[project profile](AGENTS.md) says how to fix that, and from which evidence names may be taken.
+The rules report gives the totals for each program and each rule.
+To find the rule that applies to a unit, use `local/bin/rules --explain UNIT`. [Rules report](reports/rules.json)
 
-**PC.** Both Steam files match the sizes and SHA-1 values in depot 13571, manifest
-`2604462187318687519`; the manifests also lock each file by SHA-256.
-**PS2.** The PAL disc's `SYSTEM.CNF` boots `SLES_532.87`; the offline and online ELF
-programs are fingerprinted separately. Each mixes code and data in one executable
-section, so a reviewed code map is needed before a percentage can be measured.
+### Retail programs
 
-## Layout
+**PC.** The two Steam files have the sizes and SHA-1 hashes from depot 13571, manifest `2604462187318687519`.
+The project manifest also gives the SHA-256 hash for each file.
+
+**PlayStation 2.** The PAL disc starts `SLES_532.87` as specified in `SYSTEM.CNF`.
+The project records one hash for the offline ELF program and one for the online ELF program.
+The executable sections of these programs contain code and data. A reviewer must examine the code ranges before the project can calculate a percentage.
+
+## Repository layout
 
 | Path | Contents |
 | --- | --- |
-| `<platform>/config/` | One manifest per executable: SHA-256, executable sections and matched units. Large targets keep units in 64 KiB shards under `units/`. |
-| `<platform>/src/` | Independently written C and C++ sources |
-| `pc/function_maps/` | Function boundaries from Ghidra analysis, as file offsets (no game bytes), so ByteMatch can draw unmatched code function by function; `pc/README.md` explains how to regenerate them |
-| `tools/` | Image reader, progress tracker, x86 COFF linker, ByteMatch export, progress publisher |
-| `tools/rules/` | Code-rule checker (C): computes which matched units also pass the [match] rules |
-| `tools/evidence/` | Symbol indexer (C) for sibling builds that shipped with symbols |
-| `docs/code-rules/` | The code rules; `AGENTS.md` at the root is this project's profile |
-| `reports/progress.json` | Generated feed used by the website and ByteMatch |
-| `reports/rules.json` | Generated totals of units matched under the rules |
+| `<platform>/config/` | One manifest for each program. It contains the SHA-256 hash, executable sections, and units. For large programs, files under `units/` group the units by 64 KiB address range. |
+| `<platform>/src/` | C and C++ source code written independently for this project |
+| `pc/function_maps/` | File offsets for function boundaries from Ghidra. ByteMatch uses these offsets to show individual functions that still have no matching source code. The [PC guide](pc/README.md) gives the procedure to make the maps. |
+| `tools/` | Programs to read executable files, measure progress, link x86 COFF objects, export ByteMatch data, and publish reports |
+| `tools/rules/` | C program that finds code rule violations in matching units |
+| `tools/evidence/` | C program that indexes symbols from other builds that contain symbol information |
+| `docs/code-rules/` | Code rules and examples. The [project profile](AGENTS.md) specifies the rules for this repository. |
+| `reports/progress.json` | Progress report for the website. ByteMatch uses the same verification records. |
+| `reports/rules.json` | Byte counts and function counts from the code rules check |
 
-Game files, disc images, compiled objects and analysis databases stay in an ignored
-`local/` folder or outside the checkout. `tools/ci/no_game_data.py` enforces this in CI.
+Keep game files, disc images, compiled objects, and analysis databases in the ignored `local/` directory. You can also keep these files in a directory external to the checkout.
+The continuous integration (CI) system examines the repository with `tools/ci/no_game_data.py`.
 
-## How matching works
+## How to match a function
 
-1. **Disassemble.** Verify your own executable against its manifest hash. Keep extracted
-   bytes, disassembly and databases under `local/`.
-   [Source and evidence rules](https://github.com/OpenSCCT/OpenSCCT/blob/main/re/PROVENANCE.md)
-2. **Rewrite.** Write one complete function in the language and dialect the original used,
-   following the [code rules](docs/code-rules/README.md) and the [project profile](AGENTS.md):
-   shared declarations, typed members, names from evidence. Record the compiler and flags.
-3. **Verify.** Link compiler-emitted references against retail evidence and compare the
-   whole function. Commit the source, recipe and receipt hashes.
+1. Compare the hash of your executable file with the hash in its manifest.
+2. Disassemble the function. Keep the extracted bytes, disassembly, and analysis database under `local/`. [Source and evidence rules](https://github.com/OpenSCCT/OpenSCCT/blob/main/re/PROVENANCE.md)
+3. Write the complete function in the language and dialect of the retail program. Use shared declarations and typed members. Select names that the project records support. [Code rules](docs/code-rules/README.md) · [Project profile](AGENTS.md)
+4. Record the compiler and its options.
+5. Link the references from the compiler output to the addresses from the retail executable.
+6. Compare all bytes of the rebuilt function with the retail bytes.
+7. Commit the source code, the build recipe, and the hashes in the verification record (the *receipt*).
+
+### Commands
+
+In these commands, replace each uppercase parameter with its value. Brackets identify optional arguments.
 
 ```text
 python tools/progress.py identify PATH_TO_EXECUTABLE
@@ -90,50 +97,57 @@ python tools/progress.py verify EDITION TARGET PATH_TO_EXECUTABLE
 python tools/progress.py match EDITION TARGET PATH_TO_EXECUTABLE UNIT BUILT_ARTIFACT
 python tools/progress.py report [--check]
 python -m unittest discover -s tools
+```
+
+Before you compile the code rules checker, make the `local/bin/` directory.
+
+```text
 cc -std=c99 -O2 -o local/bin/rules tools/rules/rules.c
 local/bin/rules [--findings] [--explain UNIT] [--json reports/rules.json] [--check]
 ```
 
-## Reading a report
+## How to read a progress report
 
-The numerator counts nonoverlapping whole units with a recorded byte-for-byte comparison
-**and** reviewed original build evidence (`recipe_evidence`: compiler, flags and a
-Markdown basis). When the original compiler build cannot optimise or is unavailable, the
-evidence names it as `original_compiler` and the basis must show that the compiler used
-generates the same code ([Campaign basis](pc/evidence/campaign-vc71-o2.md), [Versus basis](pc/evidence/versus-vc71-o2.md)).
-Byte-identical candidates are counted separately until that evidence exists.
-Each receipt binds the original build hash, unit boundaries, compiler recipe and
-tracked inputs to the result; CI checks receipts against their inputs with synthetic
-fixtures.
+The progress percentage is the number of verified bytes divided by the number of measured code bytes, multiplied by 100.
+The report counts only complete units that have a receipt and reviewed records for the retail build.
+The byte ranges for these units do not overlap.
+The `recipe_evidence` record identifies the compiler, its options, and a Markdown file that explains how the reviewer identified them.
 
-For the PC images the denominator is the file-backed part of executable code sections,
-excluding writable sections and file-alignment padding. A mixed code/data ELF stays
-unmeasured until a reviewed `code_map` lists its code ranges. The feed uses `null` for
-an unknown denominator.
+If the retail compiler is unavailable or cannot optimize the code, the build record gives its name in `original_compiler`.
+The build record must show that the replacement compiler produces the same code. [Campaign compiler evidence](pc/evidence/campaign-vc71-o2.md) · [Versus compiler evidence](pc/evidence/versus-vc71-o2.md)
 
-## Publishing progress
+Each receipt records the result and identifies the retail file hash, unit boundaries, build recipe, and input files in Git.
+CI compares the receipts with the input files. CI also tests the verification tools with synthetic data.
 
-After committing a new report, update a running Linux master from this checkout (the SSH
-user needs passwordless sudo):
+For PC programs, the total includes the bytes of executable code sections that have data in the file.
+The measurement excludes writable sections and file alignment padding.
+For an ELF program that contains code and data in the same section, the measurement requires a reviewed `code_map`.
+The report uses `null` when the number of code bytes is unknown.
+
+## How to publish the progress report
+
+1. Commit the new report.
+2. Make sure that the SSH account can use `sudo` without a password on the Linux master server.
+3. If the server uses a different `Master.DataDirectory`, add `--data-directory` and its absolute path to the command.
+4. Enter the command from this checkout.
 
 ```powershell
 python tools/publish_progress.py ubuntu@master.lumbridge.co.uk --key "$HOME/.ssh/lightsail-eu-west-2.pem"
 ```
 
-It runs `report --check`, confirms the report matches `HEAD`, and installs those bytes
-atomically, refusing a report outside this checkout's history or a concurrent change.
-Use `--data-directory` for a custom `Master.DataDirectory`.
+The publisher uses `report --check` and compares the report with the copy in `HEAD`.
+It replaces the server file in one operation.
+It stops if the checkout history does not contain the installed report. It also stops if the server file changes during publication.
 
-## Tools
+## Tools and references
 
-[Ghidra](https://github.com/NationalSecurityAgency/ghidra) for x86 and MIPS analysis ·
-[objdiff](https://github.com/encounter/objdiff) for instruction diffs ·
-[splat](https://github.com/ethteck/splat), [spimdisasm](https://github.com/Decompollaborate/spimdisasm)
-and [m2c](https://github.com/matt-kempster/m2c) for PS2 ·
-[decomp.me](https://decomp.me/) for shared compiler experiments ·
-[PCSX2](https://pcsx2.net/) for runtime comparison.
-The hub's [Ghidra and UnrealScript tools](https://github.com/OpenSCCT/OpenSCCT/blob/main/re/README.md)
-and [behaviour specs](https://github.com/OpenSCCT/OpenSCCT/blob/main/spec/README.md) help identify functions.
+| Task | Tool or reference |
+| --- | --- |
+| Analyze x86 and MIPS code | [Ghidra](https://github.com/NationalSecurityAgency/ghidra) |
+| Compare instructions | [objdiff](https://github.com/encounter/objdiff) |
+| Analyze PlayStation 2 code | [splat](https://github.com/ethteck/splat), [spimdisasm](https://github.com/Decompollaborate/spimdisasm), [m2c](https://github.com/matt-kempster/m2c) |
+| Compare compiler output with other contributors | [decomp.me](https://decomp.me/) |
+| Compare program behavior on PlayStation 2 | [PCSX2](https://pcsx2.net/) |
+| Identify functions | [Ghidra and UnrealScript tools](https://github.com/OpenSCCT/OpenSCCT/blob/main/re/README.md), [behavior specifications](https://github.com/OpenSCCT/OpenSCCT/blob/main/spec/README.md) |
 
-Conventions follow OpenRAC's per-game decompilation repositories, for example
-[rac1-decomp](https://github.com/OpenRAC/rac1-decomp/blob/main/CONTRIBUTING.md).
+The project follows the repository conventions that OpenRAC uses for each game. [OpenRAC example](https://github.com/OpenRAC/rac1-decomp/blob/main/CONTRIBUTING.md)
