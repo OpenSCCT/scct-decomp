@@ -1,9 +1,9 @@
-union Key { unsigned u32; int s32; unsigned short u16; unsigned char u8; struct { const unsigned char *first, *end; } range; };
-struct Node { unsigned char color; struct Node *parent, *left, *right; union Key key; };
+union InsertTreeKey { unsigned u32; int s32; unsigned short u16; unsigned char u8; struct { const unsigned char *first, *end; } range; };
+struct InsertTreeNode { unsigned char color; struct InsertTreeNode *parent, *left, *right; union InsertTreeKey key; };
 #define ROTATE(Name, Near, Far) \
-    static __forceinline void Name(struct Node *node, struct Node **root) \
+    static __forceinline void Name(struct InsertTreeNode *node, struct InsertTreeNode **root) \
     { \
-        struct Node *pivot = node->Near; \
+        struct InsertTreeNode *pivot = node->Near; \
         node->Near = pivot->Far; \
         if (pivot->Far) pivot->Far->parent = node; \
         pivot->parent = node->parent; \
@@ -15,20 +15,20 @@ struct Node { unsigned char color; struct Node *parent, *left, *right; union Key
     }
 ROTATE(rotate_left, right, left)
 ROTATE(rotate_right, left, right)
-struct Tree { struct Node *head; unsigned count; };
-struct Position { struct Node *node; };
-struct Args {
-    struct Position *out;
-    struct Node *left_hint, *parent;
-    const union Key *value;
+struct InsertTree { struct InsertTreeNode *head; unsigned count; };
+struct InsertTreePosition { struct InsertTreeNode *node; };
+struct InsertTreeArgs {
+    struct InsertTreePosition *out;
+    struct InsertTreeNode *left_hint, *parent;
+    const union InsertTreeKey *value;
     unsigned right_hint;
 };
-struct Value { const union Key *data; };
+struct Value { const union InsertTreeKey *data; };
 
-extern void rotate_left_call(struct Node *,struct Node **);
-extern void rotate_right_call(struct Node *,struct Node **);
+extern void rotate_left_call(struct InsertTreeNode *,struct InsertTreeNode **);
+extern void rotate_right_call(struct InsertTreeNode *,struct InsertTreeNode **);
 #define FIX_INSERT(Near, Far, First, Second) \
-        struct Node *uncle = current->parent->parent->Far; \
+        struct InsertTreeNode *uncle = current->parent->parent->Far; \
         if (uncle && uncle->color == 0) { \
             current->parent->color = 1; \
             uncle->color = 1; \
@@ -44,11 +44,11 @@ extern void rotate_right_call(struct Node *,struct Node **);
         }
 
 #define INSERT_WITH(Entry, Make, Less, SecondRotation) \
-    struct Position *__fastcall Entry(struct Tree *tree, struct Args args) \
+    struct InsertTreePosition *__fastcall Entry(struct InsertTree *tree, struct InsertTreeArgs args) \
     { \
         struct Value value; \
-        struct Node *node, *parent = args.parent, *current; \
-        struct Node **root; \
+        struct InsertTreeNode *node, *parent = args.parent, *current; \
+        struct InsertTreeNode **root; \
         value.data = args.value; \
         if (parent == tree->head || (!args.right_hint && (args.left_hint || Less))) { \
             node = Make(tree, value); \

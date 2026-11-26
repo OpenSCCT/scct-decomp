@@ -1,19 +1,19 @@
 #include "linked_tree_insert.h"
 
-extern struct Node *__fastcall make_node_5ee0c0(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_5ee0f0(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_5ee120(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_5ee150(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_619050(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_619640(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_6213c0(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_625b90(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_628990(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_62d600(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_62d630(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_62f3d0(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_727f10(struct Tree *, struct Value);
-extern struct Node *__fastcall make_node_735eb0(struct Tree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_5ee0c0(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_5ee0f0(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_5ee120(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_5ee150(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_619050(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_619640(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_6213c0(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_625b90(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_628990(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_62d600(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_62d630(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_62f3d0(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_727f10(struct InsertTree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_735eb0(struct InsertTree *, struct Value);
 
 INSERT_NODE(insert_node_5ed8a0, make_node_5ee0c0, u32)
 INSERT_NODE(insert_node_5eda70, make_node_5ee0f0, u32)
@@ -34,7 +34,7 @@ extern int __cdecl compare_ranges(const unsigned char *, const unsigned char *,
                                   const unsigned char *, const unsigned char *);
 #define RANGE_LESS (compare_ranges(value.data->range.first, value.data->range.end, \
                                    parent->key.range.first, parent->key.range.end) < 0)
-extern struct Node *__fastcall make_node_5fa9b0(struct Tree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_5fa9b0(struct InsertTree *, struct Value);
 INSERT_WITH(insert_node_5fa0d0, make_node_5fa9b0, RANGE_LESS, rotate_right_call)
-extern struct Node *__fastcall make_node_5faa70(struct Tree *, struct Value);
+extern struct InsertTreeNode *__fastcall make_node_5faa70(struct InsertTree *, struct Value);
 INSERT_WITH(insert_node_5fa440, make_node_5faa70, RANGE_LESS, rotate_right_call)
