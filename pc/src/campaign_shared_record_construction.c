@@ -1,13 +1,13 @@
 #include "record_copy.h"
 
 struct Record4 { unsigned int data[1]; };
-struct Record8 { unsigned int data[2]; };
-struct Record32 { unsigned int data[8]; };
+struct WordAlignedRecord8 { unsigned int data[2]; };
+struct WordAlignedRecord32 { unsigned int data[8]; };
 
 CONSTRUCT_RANGE(r4211f0, Record4)
 CONSTRUCT_COPIES(r421750, Record4)
-CONSTRUCT_RANGE(r423710, Record8)
-CONSTRUCT_COPIES(r423850, Record8)
+CONSTRUCT_RANGE(r423710, WordAlignedRecord8)
+CONSTRUCT_COPIES(r423850, WordAlignedRecord8)
 CONSTRUCT_RANGE(r428eb0, Record4)
 CONSTRUCT_COPIES(r4297e0, Record4)
 CONSTRUCT_RANGE(r429840, Record4)
@@ -20,9 +20,9 @@ CONSTRUCT_RANGE(r4363d0, Record4)
 CONSTRUCT_COPIES(r436430, Record4)
 CONSTRUCT_RANGE(r443d30, Record4)
 CONSTRUCT_RANGE(r443d60, Record4)
-CONSTRUCT_COPIES(r455400, Record32)
-CONSTRUCT_RANGE(r45a130, Record8)
-CONSTRUCT_COPIES(r45a2b0, Record8)
+CONSTRUCT_COPIES(r455400, WordAlignedRecord32)
+CONSTRUCT_RANGE(r45a130, WordAlignedRecord8)
+CONSTRUCT_COPIES(r45a2b0, WordAlignedRecord8)
 CONSTRUCT_RANGE(r460940, Record4)
 CONSTRUCT_COPIES(r460a00, Record4)
 CONSTRUCT_RANGE(r462b30, Record4)

@@ -1,9 +1,9 @@
 struct WordList { int *values; int count, capacity; };
-struct WordRef { const int *ptr; };
+struct WordSearchRef { const int *ptr; };
 struct IndexRef { int *ptr; };
 
 #define FIND_WORD(Entry) \
-int __fastcall Entry(struct WordList *list, struct WordRef word, struct IndexRef index) \
+int __fastcall Entry(struct WordList *list, struct WordSearchRef word, struct IndexRef index) \
 { \
     for (*index.ptr = 0; *index.ptr < list->count; ++*index.ptr) { \
         if (list->values[*index.ptr] == *word.ptr) \
