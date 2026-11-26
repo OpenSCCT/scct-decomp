@@ -14,6 +14,10 @@ struct Array {
     int capacity;
 #ifdef __cplusplus
     template<const unsigned short *Tag>
+    void Insert(int index, int amount, int element_size);
+    template<const unsigned short *Tag, int ElementSize>
+    void InsertTyped(int index, int amount);
+    template<const unsigned short *Tag>
     void Remove(int index, int amount, int element_size);
     template<const unsigned short *Tag, int ElementSize>
     void Empty();
