@@ -2,7 +2,7 @@
 
 struct Word { unsigned value; };
 
-extern unsigned __fastcall native_EchelonAI_BaseSoldier_SwitchWithOtherEnemy(Object *, struct Word);
+extern unsigned __fastcall native_EchelonAI_BaseSoldier_SwitchWithOtherEnemy(struct ScriptObject *, struct Word);
 HANDLER(exec_EchelonAI_BaseSoldier_SwitchWithOtherEnemy, unsigned)
 {
     struct Word arg1;
@@ -13,7 +13,7 @@ HANDLER(exec_EchelonAI_BaseSoldier_SwitchWithOtherEnemy, unsigned)
     *result = native_EchelonAI_BaseSoldier_SwitchWithOtherEnemy(self, arg1);
 }
 
-extern unsigned __fastcall native_EchelonAI_BaseSoldier_CanHandleChokeDoor(Object *, struct Word);
+extern unsigned __fastcall native_EchelonAI_BaseSoldier_CanHandleChokeDoor(struct ScriptObject *, struct Word);
 HANDLER(exec_EchelonAI_BaseSoldier_CanHandleChokeDoor, unsigned)
 {
     struct Word arg1;
@@ -24,7 +24,7 @@ HANDLER(exec_EchelonAI_BaseSoldier_CanHandleChokeDoor, unsigned)
     *result = native_EchelonAI_BaseSoldier_CanHandleChokeDoor(self, arg1);
 }
 
-extern unsigned __fastcall native_AActor_DetachFromBone(Object *, struct Word);
+extern unsigned __fastcall native_AActor_DetachFromBone(struct ScriptObject *, struct Word);
 HANDLER(exec_AActor_DetachFromBone, unsigned)
 {
     struct Word arg1;
@@ -35,7 +35,7 @@ HANDLER(exec_AActor_DetachFromBone, unsigned)
     *result = native_AActor_DetachFromBone(self, arg1);
 }
 
-extern unsigned __fastcall native_AActor_IsAnimating(Object *, struct Word);
+extern unsigned __fastcall native_AActor_IsAnimating(struct ScriptObject *, struct Word);
 HANDLER(exec_AActor_IsAnimating, unsigned)
 {
     struct Word arg1;
@@ -46,7 +46,7 @@ HANDLER(exec_AActor_IsAnimating, unsigned)
     *result = native_AActor_IsAnimating(self, arg1);
 }
 
-extern unsigned __fastcall native_Engine_Pawn_GetIKCompFlag(Object *, struct Word);
+extern unsigned __fastcall native_Engine_Pawn_GetIKCompFlag(struct ScriptObject *, struct Word);
 HANDLER(exec_Engine_Pawn_GetIKCompFlag, unsigned)
 {
     struct Word arg1;
@@ -57,7 +57,7 @@ HANDLER(exec_Engine_Pawn_GetIKCompFlag, unsigned)
     *result = native_Engine_Pawn_GetIKCompFlag(self, arg1);
 }
 
-extern unsigned __fastcall native_Echelon_EInventory_CanAddItem(Object *, struct Word);
+extern unsigned __fastcall native_Echelon_EInventory_CanAddItem(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EInventory_CanAddItem, unsigned)
 {
     struct Word arg1;
@@ -68,7 +68,7 @@ HANDLER(exec_Echelon_EInventory_CanAddItem, unsigned)
     *result = native_Echelon_EInventory_CanAddItem(self, arg1);
 }
 
-extern unsigned __fastcall native_Echelon_EPattern_IsSomeoneAbleToReachBody(Object *, struct Word);
+extern unsigned __fastcall native_Echelon_EPattern_IsSomeoneAbleToReachBody(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EPattern_IsSomeoneAbleToReachBody, unsigned)
 {
     struct Word arg1;
@@ -79,7 +79,7 @@ HANDLER(exec_Echelon_EPattern_IsSomeoneAbleToReachBody, unsigned)
     *result = native_Echelon_EPattern_IsSomeoneAbleToReachBody(self, arg1);
 }
 
-extern unsigned __fastcall native_Echelon_EAIManager_GetNPCLastZone(Object *, struct Word);
+extern unsigned __fastcall native_Echelon_EAIManager_GetNPCLastZone(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_GetNPCLastZone, unsigned)
 {
     struct Word arg1;
@@ -92,7 +92,7 @@ HANDLER(exec_Echelon_EAIManager_GetNPCLastZone, unsigned)
 
 HANDLER(exec_EchelonAI_BaseCivilian_ShouldUseFlashLight, unsigned)
 {
-    typedef unsigned (__fastcall *Method)(Object *, struct Word);
+    typedef unsigned (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -103,7 +103,7 @@ HANDLER(exec_EchelonAI_BaseCivilian_ShouldUseFlashLight, unsigned)
 
 HANDLER(exec_Engine_ESoftBodyActor_StepClimb, unsigned)
 {
-    typedef unsigned (__fastcall *Method)(Object *, struct Word);
+    typedef unsigned (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -114,7 +114,7 @@ HANDLER(exec_Engine_ESoftBodyActor_StepClimb, unsigned)
 
 HANDLER(exec_Engine_Controller_TestSearchPoint, unsigned)
 {
-    typedef unsigned (__fastcall *Method)(Object *, struct Word);
+    typedef unsigned (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -125,7 +125,7 @@ HANDLER(exec_Engine_Controller_TestSearchPoint, unsigned)
 
 HANDLER(exec_Echelon_ESRA_ApplyImpulse, unsigned)
 {
-    typedef unsigned (__fastcall *Method)(Object *, struct Word);
+    typedef unsigned (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -136,7 +136,7 @@ HANDLER(exec_Echelon_ESRA_ApplyImpulse, unsigned)
 
 HANDLER(exec_Echelon_EBaseDoor_GetInteraction, unsigned)
 {
-    typedef unsigned (__fastcall *Method)(Object *, struct Word);
+    typedef unsigned (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -145,7 +145,7 @@ HANDLER(exec_Echelon_EBaseDoor_GetInteraction, unsigned)
     *result = (*(Method **)self)[190](self, arg1);
 }
 
-extern float __fastcall native_Engine_Actor_GetAnimTime(Object *, struct Word);
+extern float __fastcall native_Engine_Actor_GetAnimTime(struct ScriptObject *, struct Word);
 HANDLER(exec_Engine_Actor_GetAnimTime, float)
 {
     struct Word arg1;
@@ -156,7 +156,7 @@ HANDLER(exec_Engine_Actor_GetAnimTime, float)
     *result = native_Engine_Actor_GetAnimTime(self, arg1);
 }
 
-extern float __fastcall native_Echelon_EAIManager_GetNPCLastKnownTimeUpdate(Object *, struct Word);
+extern float __fastcall native_Echelon_EAIManager_GetNPCLastKnownTimeUpdate(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_GetNPCLastKnownTimeUpdate, float)
 {
     struct Word arg1;
@@ -169,21 +169,21 @@ HANDLER(exec_Echelon_EAIManager_GetNPCLastKnownTimeUpdate, float)
 
 HANDLER(exec_Engine_Actor_IsRainingOnActor, unsigned char)
 {
-    typedef unsigned char (__fastcall *Method)(Object *, struct Word);
-    Object *receiver;
+    typedef unsigned char (__fastcall *Method)(struct ScriptObject *, struct Word);
+    struct ScriptObject *receiver;
     struct Word arg1;
 
     arg1.value = 0;
     step(frame, &arg1);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x7c);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x7c);
     *result = (*(Method **)receiver)[52](receiver, arg1);
 }
 
-extern void __fastcall native_Engine_NavMeshActor_ChangeTriangleState(Object *, struct Word, struct Word);
+extern void __fastcall native_Engine_NavMeshActor_ChangeTriangleState(struct ScriptObject *, struct Word, struct Word);
 HANDLER(exec_Engine_NavMeshActor_ChangeTriangleState, void)
 {
-    Object *receiver;
+    struct ScriptObject *receiver;
     struct Word arg1, arg2;
 
     arg1.value = 0;
@@ -191,13 +191,13 @@ HANDLER(exec_Engine_NavMeshActor_ChangeTriangleState, void)
     arg2.value = 0;
     step(frame, &arg2);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x34c);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x34c);
     native_Engine_NavMeshActor_ChangeTriangleState(receiver, arg1, arg2);
 }
 
 HANDLER(exec_Engine_ESoftBodyActor_AttachPawn, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word, struct Word, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word, struct Word, struct Word);
     struct Word arg1, arg2, arg3;
 
     arg1.value = 0;
@@ -212,7 +212,7 @@ HANDLER(exec_Engine_ESoftBodyActor_AttachPawn, void)
 
 HANDLER(exec_UCanvas_VideoPlay, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word, struct Word, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word, struct Word, struct Word);
     struct Word arg1, arg2, arg3;
 
     arg1.value = 0;
@@ -227,7 +227,7 @@ HANDLER(exec_UCanvas_VideoPlay, void)
 
 HANDLER(exec_Echelon_EPlayerController_NotifyMenu, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word, struct Word, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word, struct Word, struct Word);
     struct Word arg1, arg2, arg3;
 
     arg1.value = 0;
@@ -242,7 +242,7 @@ HANDLER(exec_Echelon_EPlayerController_NotifyMenu, void)
 
 HANDLER(exec_Engine_EInteractObject_CPPSetInteractLocation, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -253,7 +253,7 @@ HANDLER(exec_Engine_EInteractObject_CPPSetInteractLocation, void)
 
 HANDLER(exec_Engine_EInteractObject_CPPPostInteract, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -264,7 +264,7 @@ HANDLER(exec_Engine_EInteractObject_CPPPostInteract, void)
 
 HANDLER(exec_Engine_EInteractObject_CPPInteract, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -275,7 +275,7 @@ HANDLER(exec_Engine_EInteractObject_CPPInteract, void)
 
 HANDLER(exec_AProjector_DetachProjector, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -286,7 +286,7 @@ HANDLER(exec_AProjector_DetachProjector, void)
 
 HANDLER(exec_Engine_LevelInfo_RemoveFromAllUsersAcknowledgeList, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -297,7 +297,7 @@ HANDLER(exec_Engine_LevelInfo_RemoveFromAllUsersAcknowledgeList, void)
 
 HANDLER(exec_Engine_LevelInfo_NotifyNPCofNavMeshChanges, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -308,7 +308,7 @@ HANDLER(exec_Engine_LevelInfo_NotifyNPCofNavMeshChanges, void)
 
 HANDLER(exec_UCanvas_VideoGotoFrame, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -319,7 +319,7 @@ HANDLER(exec_UCanvas_VideoGotoFrame, void)
 
 HANDLER(exec_Echelon_EGameplayObject_SetMalfunctionning, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -330,7 +330,7 @@ HANDLER(exec_Echelon_EGameplayObject_SetMalfunctionning, void)
 
 HANDLER(exec_Echelon_EScopeAttachment_ToggleScope, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -341,7 +341,7 @@ HANDLER(exec_Echelon_EScopeAttachment_ToggleScope, void)
 
 HANDLER(exec_Echelon_EPawn_StartMouthMotion, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;
@@ -350,7 +350,7 @@ HANDLER(exec_Echelon_EPawn_StartMouthMotion, void)
     (*(Method **)self)[201](self, arg1);
 }
 
-extern void __fastcall native_Engine_Pawn_ActivateBoneChain(Object *, struct Word, struct Word, struct Word);
+extern void __fastcall native_Engine_Pawn_ActivateBoneChain(struct ScriptObject *, struct Word, struct Word, struct Word);
 HANDLER(exec_Engine_Pawn_ActivateBoneChain, void)
 {
     struct Word arg1, arg2, arg3;
@@ -365,7 +365,7 @@ HANDLER(exec_Engine_Pawn_ActivateBoneChain, void)
     native_Engine_Pawn_ActivateBoneChain(self, arg1, arg2, arg3);
 }
 
-extern void __fastcall native_Echelon_EPattern_SendPatternEvent(Object *, struct Word, struct Word, struct Word);
+extern void __fastcall native_Echelon_EPattern_SendPatternEvent(struct ScriptObject *, struct Word, struct Word, struct Word);
 HANDLER(exec_Echelon_EPattern_SendPatternEvent, void)
 {
     struct Word arg1, arg2, arg3;
@@ -380,7 +380,7 @@ HANDLER(exec_Echelon_EPattern_SendPatternEvent, void)
     native_Echelon_EPattern_SendPatternEvent(self, arg1, arg2, arg3);
 }
 
-extern void __fastcall native_EchelonIngredient_EElevatorPanel_SendElevator(Object *, struct Word, struct Word, struct Word);
+extern void __fastcall native_EchelonIngredient_EElevatorPanel_SendElevator(struct ScriptObject *, struct Word, struct Word, struct Word);
 HANDLER(exec_EchelonIngredient_EElevatorPanel_SendElevator, void)
 {
     struct Word arg1, arg2, arg3;
@@ -397,7 +397,7 @@ HANDLER(exec_EchelonIngredient_EElevatorPanel_SendElevator, void)
 
 HANDLER(exec_UCanvas_SetPos, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word, struct Word);
     struct Word arg1, arg2;
 
     arg1.value = 0;
@@ -410,7 +410,7 @@ HANDLER(exec_UCanvas_SetPos, void)
 
 HANDLER(exec_UCanvas_SetOrigin, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word, struct Word);
     struct Word arg1, arg2;
 
     arg1.value = 0;
@@ -423,7 +423,7 @@ HANDLER(exec_UCanvas_SetOrigin, void)
 
 HANDLER(exec_UCanvas_SetClip, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word, struct Word);
     struct Word arg1, arg2;
 
     arg1.value = 0;
@@ -436,7 +436,7 @@ HANDLER(exec_UCanvas_SetClip, void)
 
 HANDLER(exec_Echelon_EPlayerController_NotifyInterestObject, void)
 {
-    typedef void (__fastcall *Method)(Object *, struct Word, struct Word);
+    typedef void (__fastcall *Method)(struct ScriptObject *, struct Word, struct Word);
     struct Word arg1, arg2;
 
     arg1.value = 0;
@@ -447,7 +447,7 @@ HANDLER(exec_Echelon_EPlayerController_NotifyInterestObject, void)
     (*(Method **)self)[185](self, arg1, arg2);
 }
 
-extern unsigned __fastcall native_Echelon_ECoopPlayerController_IsValidCoopInteract(Object *, struct Word, struct Word);
+extern unsigned __fastcall native_Echelon_ECoopPlayerController_IsValidCoopInteract(struct ScriptObject *, struct Word, struct Word);
 HANDLER(exec_Echelon_ECoopPlayerController_IsValidCoopInteract, unsigned)
 {
     struct Word arg1, arg2;
@@ -460,7 +460,7 @@ HANDLER(exec_Echelon_ECoopPlayerController_IsValidCoopInteract, unsigned)
     *result = native_Echelon_ECoopPlayerController_IsValidCoopInteract(self, arg1, arg2);
 }
 
-extern unsigned __fastcall native_Echelon_EPawn_ArePointsConnected(Object *, struct Word, struct Word);
+extern unsigned __fastcall native_Echelon_EPawn_ArePointsConnected(struct ScriptObject *, struct Word, struct Word);
 HANDLER(exec_Echelon_EPawn_ArePointsConnected, unsigned)
 {
     struct Word arg1, arg2;
@@ -473,100 +473,100 @@ HANDLER(exec_Echelon_EPawn_ArePointsConnected, unsigned)
     *result = native_Echelon_EPawn_ArePointsConnected(self, arg1, arg2);
 }
 
-extern void __fastcall native_Echelon_EAIManager_UnSubscribeObjectToHWManager(Object *, struct Word);
+extern void __fastcall native_Echelon_EAIManager_UnSubscribeObjectToHWManager(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_UnSubscribeObjectToHWManager, void)
 {
-    Object *receiver;
+    struct ScriptObject *receiver;
     struct Word arg1;
 
     arg1.value = 0;
     step(frame, &arg1);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x308);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x308);
     native_Echelon_EAIManager_UnSubscribeObjectToHWManager(receiver, arg1);
 }
 
-extern void __fastcall native_Echelon_EAIManager_UnSubscribeActorToHWManager(Object *, struct Word);
+extern void __fastcall native_Echelon_EAIManager_UnSubscribeActorToHWManager(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_UnSubscribeActorToHWManager, void)
 {
-    Object *receiver;
+    struct ScriptObject *receiver;
     struct Word arg1;
 
     arg1.value = 0;
     step(frame, &arg1);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x308);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x308);
     native_Echelon_EAIManager_UnSubscribeActorToHWManager(receiver, arg1);
 }
 
-extern void __fastcall native_Echelon_EAIManager_SubscribeObjectToHWManager(Object *, struct Word);
+extern void __fastcall native_Echelon_EAIManager_SubscribeObjectToHWManager(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_SubscribeObjectToHWManager, void)
 {
-    Object *receiver;
+    struct ScriptObject *receiver;
     struct Word arg1;
 
     arg1.value = 0;
     step(frame, &arg1);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x308);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x308);
     native_Echelon_EAIManager_SubscribeObjectToHWManager(receiver, arg1);
 }
 
-extern void __fastcall native_Echelon_EAIManager_SubscribeActorToHWManager(Object *, struct Word);
+extern void __fastcall native_Echelon_EAIManager_SubscribeActorToHWManager(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_SubscribeActorToHWManager, void)
 {
-    Object *receiver;
+    struct ScriptObject *receiver;
     struct Word arg1;
 
     arg1.value = 0;
     step(frame, &arg1);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x308);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x308);
     native_Echelon_EAIManager_SubscribeActorToHWManager(receiver, arg1);
 }
 
-extern void __fastcall native_Echelon_EAIManager_UnSubscribeToSRAManager(Object *, struct Word);
+extern void __fastcall native_Echelon_EAIManager_UnSubscribeToSRAManager(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_UnSubscribeToSRAManager, void)
 {
-    Object *receiver;
+    struct ScriptObject *receiver;
     struct Word arg1;
 
     arg1.value = 0;
     step(frame, &arg1);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x304);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x304);
     native_Echelon_EAIManager_UnSubscribeToSRAManager(receiver, arg1);
 }
 
-extern void __fastcall native_Echelon_EAIManager_SubscribeToSRAManager(Object *, struct Word);
+extern void __fastcall native_Echelon_EAIManager_SubscribeToSRAManager(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_SubscribeToSRAManager, void)
 {
-    Object *receiver;
+    struct ScriptObject *receiver;
     struct Word arg1;
 
     arg1.value = 0;
     step(frame, &arg1);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x304);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x304);
     native_Echelon_EAIManager_SubscribeToSRAManager(receiver, arg1);
 }
 
-extern void __fastcall native_Echelon_EAIManager_UnSubscribeToChangedActorManager(Object *, struct Word);
+extern void __fastcall native_Echelon_EAIManager_UnSubscribeToChangedActorManager(struct ScriptObject *, struct Word);
 HANDLER(exec_Echelon_EAIManager_UnSubscribeToChangedActorManager, void)
 {
-    Object *receiver;
+    struct ScriptObject *receiver;
     struct Word arg1;
 
     arg1.value = 0;
     step(frame, &arg1);
     finish_arguments(frame);
-    receiver = *(Object **)((unsigned char *)self + 0x300);
+    receiver = *(struct ScriptObject **)((unsigned char *)self + 0x300);
     native_Echelon_EAIManager_UnSubscribeToChangedActorManager(receiver, arg1);
 }
 
 HANDLER(exec_Echelon_EBaseDoor_CanDoTrigger, unsigned)
 {
-    typedef unsigned (__fastcall *Method)(Object *, struct Word, struct Word);
+    typedef unsigned (__fastcall *Method)(struct ScriptObject *, struct Word, struct Word);
     struct Word arg1, arg2;
 
     arg1.value = 0;
@@ -579,7 +579,7 @@ HANDLER(exec_Echelon_EBaseDoor_CanDoTrigger, unsigned)
 
 HANDLER(exec_Echelon_EPawn_GetMoveSpeed, float)
 {
-    typedef float (__fastcall *Method)(Object *, struct Word);
+    typedef float (__fastcall *Method)(struct ScriptObject *, struct Word);
     struct Word arg1;
 
     arg1.value = 0;

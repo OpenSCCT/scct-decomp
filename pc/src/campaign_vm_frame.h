@@ -1,31 +1,21 @@
 #ifndef CAMPAIGN_VM_FRAME_H
 #define CAMPAIGN_VM_FRAME_H
 
-typedef struct Frame Frame;
-typedef struct Object Object;
-/* VmNative: invented name (the original's name for this pointer type is unknown). The UE2
-   member pointer that the unreal_script.h header calls Native is a different type. */
-typedef void (__fastcall *VmNative)(Object *, unsigned, Frame *, void *);
-struct Frame {
-    void *frame_prefix;
-    void *node;
-    Object *object;
-    unsigned char *code;
-};
+#include "campaign_native_initializer.h"
+
+typedef ScriptFrame Frame;
 typedef struct FrameArg { Frame *frame; } FrameArg;
 /* The debug-info handler at campaign RVA 0x3f7780 ignores its second stack
    word. Passing x86 positive zero leaves EDX available and places the
    four-byte null result in that stack slot. */
-typedef void (__fastcall *DebugInfoCall)(Object *, FrameArg, float);
-extern VmNative campaign_native_table[];
-extern VmNative campaign_cast_table[];
+typedef void (__fastcall *DebugInfoCall)(struct ScriptObject *, FrameArg, float);
 #define DISPATCH campaign_native_table
 #define HANDLER(name, result_type) \
-    void __fastcall name(Object *self, void *unused_edx, Frame *frame, result_type *result)
+    void __fastcall name(struct ScriptObject *self, void *unused_edx, Frame *frame, result_type *result)
 
 static __forceinline void step(Frame *frame, void *result)
 {
-    Object *receiver = frame->object;
+    struct ScriptObject *receiver = frame->object;
     unsigned opcode = *frame->code++;
     DISPATCH[opcode](receiver, opcode, frame, result);
 }

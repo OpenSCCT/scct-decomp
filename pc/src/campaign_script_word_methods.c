@@ -4,7 +4,7 @@
 struct Word { unsigned value; };
 
 #define SCRIPT_METHOD_1(name) \
-    extern void __fastcall native_##name(Object *, struct Word); \
+    extern void __fastcall native_##name(struct ScriptObject *, struct Word); \
     HANDLER(exec_##name, void) \
     { \
         struct Word argument = {0}; \
@@ -14,7 +14,7 @@ struct Word { unsigned value; };
     }
 
 #define SCRIPT_METHOD_2(name) \
-    extern void __fastcall native_##name(Object *, struct Word, struct Word); \
+    extern void __fastcall native_##name(struct ScriptObject *, struct Word, struct Word); \
     HANDLER(exec_##name, void) \
     { \
         struct Word first = {0}, second; \

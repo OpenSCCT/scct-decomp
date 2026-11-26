@@ -1,8 +1,8 @@
 #include "campaign_vm_frame.h"
 
-HANDLER(execObjectConst, Object *)
+HANDLER(execObjectConst, struct ScriptObject *)
 {
-    Object *object = *(Object *const *)frame->code;
+    struct ScriptObject *object = *(struct ScriptObject *const *)frame->code;
     frame->code += sizeof(object);
     *result = object;
 }
@@ -16,4 +16,4 @@ HANDLER(execNameConst, int)
 
 HANDLER(execTrue, int) { *result = 1; }
 HANDLER(execFalse, int) { *result = 0; }
-HANDLER(execNoObject, Object *) { *result = 0; }
+HANDLER(execNoObject, struct ScriptObject *) { *result = 0; }
