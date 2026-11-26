@@ -1,28 +1,21 @@
-typedef unsigned size_t;
-void *malloc(size_t);
-size_t strlen(const char *);
-char *strcpy(char *, const char *);
-void *memcpy(void *, const void *, size_t);
+#include "crt_locale_time_types.h"
 
-struct TimeNames {
-    char *short_day[7], *long_day[7];
-    char *short_month[12], *long_month[12];
-    char *am_pm[2];
-    char *short_date, *long_date, *time;
-    unsigned locale, calendar, references;
-};
-extern struct TimeNames *__lc_time_curr;
+typedef unsigned LocaleNamesSize;
+void *malloc(LocaleNamesSize);
+LocaleNamesSize strlen(const char *);
+char *strcpy(char *, const char *);
+void *memcpy(void *, const void *, LocaleNamesSize);
 
 #define COPY_NAME(field) \
     result->field = cursor; \
     cursor += strlen(strcpy(cursor, names->field)) + 1
 
-struct TimeNames *__cdecl steam_Gettnames(void)
+struct LocaleTimeNames *__cdecl steam_Gettnames(void)
 {
-    struct TimeNames *names = __lc_time_curr;
-    struct TimeNames *result;
+    struct LocaleTimeNames *names = __lc_time_curr;
+    struct LocaleTimeNames *result;
     char *cursor;
-    size_t i, length = 0;
+    LocaleNamesSize i, length = 0;
     for (i = 0; i < 7; ++i)
         length += strlen(names->short_day[i]) + strlen(names->long_day[i]) + 2;
     for (i = 0; i < 12; ++i)
