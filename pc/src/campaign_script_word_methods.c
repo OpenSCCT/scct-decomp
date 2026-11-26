@@ -1,23 +1,23 @@
 #include "campaign_vm_frame.h"
 
 /* Script values occupy four-byte stack arguments in these native calls. */
-struct Word { unsigned value; };
+struct ScriptMethodWord { unsigned value; };
 
 #define SCRIPT_METHOD_1(name) \
-    extern void __fastcall native_##name(struct ScriptObject *, struct Word); \
+    extern void __fastcall native_##name(struct ScriptObject *, struct ScriptMethodWord); \
     HANDLER(exec_##name, void) \
     { \
-        struct Word argument = {0}; \
+        struct ScriptMethodWord argument = {0}; \
         step(frame, &argument); \
         finish_arguments(frame); \
         native_##name(self, argument); \
     }
 
 #define SCRIPT_METHOD_2(name) \
-    extern void __fastcall native_##name(struct ScriptObject *, struct Word, struct Word); \
+    extern void __fastcall native_##name(struct ScriptObject *, struct ScriptMethodWord, struct ScriptMethodWord); \
     HANDLER(exec_##name, void) \
     { \
-        struct Word first = {0}, second; \
+        struct ScriptMethodWord first = {0}, second; \
         step(frame, &first); \
         second.value = 0; \
         step(frame, &second); \
