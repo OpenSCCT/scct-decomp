@@ -6,6 +6,8 @@
 //   0x122210 APlayerController::execGetPlayerNetworkAddress
 //   0x122270 APlayerController::GetPlayerNetworkAddress
 
+#include "versus_globals.h"
+
 typedef unsigned char BYTE;
 typedef unsigned short _WORD;
 typedef unsigned short TCHAR;
@@ -304,11 +306,6 @@ struct FMapListManager {
     void LoadMaps();
 };
 
-struct FGlobalContext {
-    BYTE unk_0[0x184];
-    FMapListManager *MapList;   // +0x184
-};
-
 class UTravelNotify : public UObject {
 public:
     void eventTravelError(BYTE Reason)
@@ -319,7 +316,6 @@ public:
     }
 };
 
-extern FGlobalContext *GGlobalContext;  // 0x10c923c4
 extern UTravelNotify  *GTravelNotifyObject; // 0x10c9253c
 
 // Neutral name: 0x48-byte travel launcher object constructed in execClientTravel (0x10a84060).
@@ -411,7 +407,7 @@ void APlayerController::execClientTravel(FFrame &Stack, RESULT_DECL)
     P_GET_UBOOL(bItems);
     P_FINISH;
 
-    FMapListManager *MapMgr = GGlobalContext->MapList;
+    FMapListManager *MapMgr = (FMapListManager *)GGlobalContext->unk_184;
     if (Player && appStricmp(*MapMgr->CurrentMap, StrMap_entry) != 0)
     {
         FURL TempURL(&GetLevel()->Engine->LastURL, *URL, (ETravelType)TravelType);

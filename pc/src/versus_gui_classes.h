@@ -381,6 +381,7 @@ public:
 class UGUISplitter : public UGUIPanel {
 public:
     virtual ~UGUISplitter();
+    void SplitterUpdatePositions();
 
     BYTE unk_1a8[0x10];
 };

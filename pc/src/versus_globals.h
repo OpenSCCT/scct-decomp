@@ -8,6 +8,18 @@ struct ShortString;
 struct StaticRecord;
 struct vector3;
 
+// Canonical storage declaration for the Versus object-pointer slot at VA 0x10c924e8.
+// Consumers retain separate address-named views where their code establishes them.
+extern void *GObject_10c924e8;
+
+// The global context is observed at VA 0x10c923c4. Its +0x184 value is shared by
+// distinct consumer views, so keep the canonical field opaque.
+struct FGlobalContext {
+    unsigned char unk_0[0x184];
+    void *unk_184;
+};
+extern struct FGlobalContext *GGlobalContext;
+
 extern const void *const vtable_UAnimNotify[];
 extern const void *const vtable_UAnimNotify_DestroyEffect[];
 extern const void *const vtable_UAnimNotify_Effect[];

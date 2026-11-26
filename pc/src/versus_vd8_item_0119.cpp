@@ -5,8 +5,10 @@
 //   0x155ca0 UGUIController::execRequestWriteAccountList
 //   0x155cd0 UGUIController::execIsWriteAccountListFinished
 //   0x155d80 UGUIController::execLaunchNewImage
-// The three execIs*Finished natives call UPCSaveGameDevice::FinishOp (RVA 0xe5dc0),
+// The three execIs*Finished natives call this address-specific view's FinishOp (RVA 0xe5dc0),
 // which takes `this` in ECX and the operation mode in EAX under VC7.0 /LTCG.
+#include "versus_globals.h"
+
 typedef unsigned char BYTE;
 typedef unsigned short TCHAR;
 typedef int INT;
@@ -73,7 +75,7 @@ struct FFrame {
     INT *Var = GPropAddr ? (INT *)GPropAddr : &Var##T
 #define P_FINISH Stack.Code++
 
-class UPCSaveGameDevice {
+class FObjectView_10c924e8_0119 {
 public:
     virtual void Vf00(); virtual void Vf04(); virtual void Vf08(); virtual void Vf0c();
     virtual void Vf10(); virtual void Vf14(); virtual void Vf18(); virtual void Vf1c();
@@ -82,9 +84,11 @@ public:
     virtual void Vf40(); virtual void Vf44(); virtual void Vf48(); virtual void Vf4c();
     virtual void Vf50(); virtual void Vf54(); virtual void Vf58(); virtual void Vf5c();
     virtual void Vf60(); virtual void Vf64(); virtual void Vf68(); virtual void Vf6c();
-    virtual void StartNextOperation(); // +0x70
+    virtual void VirtualSlot28(); // +0x70, identity unknown
 
-    INT unk_04[12];      // +0x04
+    INT  unk_04[9];      // +0x04
+    void *vtable_28;     // +0x28
+    INT  unk_2c[2];      // +0x2c
     INT OpDone[7];       // +0x34 (op 1=+0x38, op 2=+0x3c, op 3=+0x40, op 4=+0x44, op 5=+0x48, op 6=+0x4c)
     INT Progress;        // +0x50
     INT unk_54[17];      // +0x54
@@ -108,7 +112,7 @@ public:
     }
 };
 
-extern UPCSaveGameDevice *GSaveGameDevice; // VA 0x10c924e8
+#define GObjectView_10c924e8_0119 (*((FObjectView_10c924e8_0119 **)&GObject_10c924e8))
 
 class UGUIController : public UObject {
 public:
@@ -125,7 +129,7 @@ void UGUIController::execIsWriteProfileFinished(FFrame &Stack, RESULT_DECL)
 {
     P_GET_INT_REF(ErrorCode);
     P_FINISH;
-    UPCSaveGameDevice *SaveDevice = GSaveGameDevice;
+    FObjectView_10c924e8_0119 *SaveDevice = GObjectView_10c924e8_0119;
     if (SaveDevice) {
         *(UBOOL *)Result = SaveDevice->IsOpFinished(2, ErrorCode);
     } else {
@@ -137,8 +141,8 @@ void UGUIController::execIsWriteProfileFinished(FFrame &Stack, RESULT_DECL)
 void UGUIController::execRequestGetAccountList(FFrame &Stack, RESULT_DECL)
 {
     P_FINISH;
-    if (GSaveGameDevice) {
-        *(UBOOL *)Result = GSaveGameDevice->QueueOp4();
+    if (GObjectView_10c924e8_0119) {
+        *(UBOOL *)Result = GObjectView_10c924e8_0119->QueueOp4();
     } else {
         *(UBOOL *)Result = 0;
     }
@@ -149,7 +153,7 @@ void UGUIController::execIsGetAccountListFinished(FFrame &Stack, RESULT_DECL)
 {
     P_GET_INT_REF(ErrorCode);
     P_FINISH;
-    UPCSaveGameDevice *SaveDevice = GSaveGameDevice;
+    FObjectView_10c924e8_0119 *SaveDevice = GObjectView_10c924e8_0119;
     if (SaveDevice) {
         *(UBOOL *)Result = SaveDevice->IsOpFinished(4, ErrorCode);
     } else {
@@ -161,8 +165,8 @@ void UGUIController::execIsGetAccountListFinished(FFrame &Stack, RESULT_DECL)
 void UGUIController::execRequestWriteAccountList(FFrame &Stack, RESULT_DECL)
 {
     P_FINISH;
-    if (GSaveGameDevice) {
-        *(UBOOL *)Result = GSaveGameDevice->QueueOp5();
+    if (GObjectView_10c924e8_0119) {
+        *(UBOOL *)Result = GObjectView_10c924e8_0119->QueueOp5();
     } else {
         *(UBOOL *)Result = 0;
     }
@@ -173,7 +177,7 @@ void UGUIController::execIsWriteAccountListFinished(FFrame &Stack, RESULT_DECL)
 {
     P_GET_INT_REF(ErrorCode);
     P_FINISH;
-    UPCSaveGameDevice *SaveDevice = GSaveGameDevice;
+    FObjectView_10c924e8_0119 *SaveDevice = GObjectView_10c924e8_0119;
     if (SaveDevice) {
         *(UBOOL *)Result = SaveDevice->IsOpFinished(5, ErrorCode);
     } else {
@@ -192,9 +196,9 @@ void UGUIController::execLaunchNewImage(FFrame &Stack, RESULT_DECL)
 // Scaffolding for the LTCG link, not part of the unit.
 // FinishOp (RVA 0xe5dc0) receives `this` in ECX and `Mode` in EAX under /LTCG.
 void Escape(void *);
-void ExternalFinish(UPCSaveGameDevice *, INT);
+void ExternalFinish(FObjectView_10c924e8_0119 *, INT);
 
-__declspec(noinline) void UPCSaveGameDevice::FinishOp(INT Mode)
+__declspec(noinline) void FObjectView_10c924e8_0119::FinishOp(INT Mode)
 {
     ExternalFinish(this, Mode);
 }
@@ -205,7 +209,7 @@ void Driver_155b10(Native *Out)
     Escape(&GPropAddr);
     Escape(&GPropObject);
     Escape(&GProperty);
-    Escape(&GSaveGameDevice);
+    Escape(&GObjectView_10c924e8_0119);
     Escape(GNatives);
 }
 
@@ -215,7 +219,7 @@ void Driver_155bf0(Native *Out)
     Escape(&GPropAddr);
     Escape(&GPropObject);
     Escape(&GProperty);
-    Escape(&GSaveGameDevice);
+    Escape(&GObjectView_10c924e8_0119);
     Escape(GNatives);
 }
 
@@ -225,6 +229,6 @@ void Driver_155cd0(Native *Out)
     Escape(&GPropAddr);
     Escape(&GPropObject);
     Escape(&GProperty);
-    Escape(&GSaveGameDevice);
+    Escape(&GObjectView_10c924e8_0119);
     Escape(GNatives);
 }

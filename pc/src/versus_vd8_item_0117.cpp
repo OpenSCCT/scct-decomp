@@ -1,6 +1,8 @@
 // Work item 0117 (vwork4): Versus RVA 0x155660-0x155705.
 // UGUIController::execIsProfileOnMC (RVA 0x155660).
-// Calls UnnamedModeStack_e5dc0::HasItem (RVA 0xe5e90, LTCG `this` in ESI).
+// Calls the address-specific view's HasItem (RVA 0xe5e90, LTCG `this` in ESI).
+
+#include "versus_globals.h"
 
 typedef unsigned short TCHAR;
 typedef int INT;
@@ -70,11 +72,13 @@ struct FFrame : public FOutputDevice
 #define P_GET_STR(var) FString var; Stack.Step(Stack.Object, &var);
 #define P_FINISH Stack.Code++;
 
-class UnnamedModeStack_e5dc0
+class FObjectView_10c924e8_0117
 {
 public:
-    virtual void Unused00();
-    INT unk_04[12];
+    virtual void VirtualSlot00();
+    INT  unk_04[9];
+    void *vtable_28;
+    INT  unk_2c[2];
     INT Done[7];            // +0x34
     INT Current;            // +0x50
     INT unk_54[8];
@@ -83,8 +87,8 @@ public:
     UBOOL HasItem(FString S);
 };
 
-// Invented name for global pointer at 0x10c924e8 (UnnamedModeStack_e5dc0*).
-extern UnnamedModeStack_e5dc0 *GProfileManager;
+// Consumer-specific view of the object-pointer slot at VA 0x10c924e8.
+#define GObjectView_10c924e8_0117 (*((FObjectView_10c924e8_0117 **)&GObject_10c924e8))
 
 class UGUIController : public UObject
 {
@@ -97,7 +101,7 @@ void UGUIController::execIsProfileOnMC(FFrame &Stack, RESULT_DECL)
 {
     P_GET_STR(ProfileName);
     P_FINISH;
-    UnnamedModeStack_e5dc0 *ProfileManager = GProfileManager;
+    FObjectView_10c924e8_0117 *ProfileManager = GObjectView_10c924e8_0117;
     if (ProfileManager)
         *(UBOOL *)Result = ProfileManager->HasItem(ProfileName);
     else
@@ -107,7 +111,7 @@ void UGUIController::execIsProfileOnMC(FFrame &Stack, RESULT_DECL)
 // Scaffolding for the link, not part of the unit.
 // HasItem (published in versus_vd5_item_0203.cpp, RVA 0xe5e90) is included here
 // so LTCG assigns its retail calling convention (`this` in ESI).
-UBOOL UnnamedModeStack_e5dc0::HasItem(FString S)
+UBOOL FObjectView_10c924e8_0117::HasItem(FString S)
 {
     for (INT i = 0; i < Items.Num(); i++)
         if (wcscmp(*Items(i), *S) == 0)
@@ -117,9 +121,9 @@ UBOOL UnnamedModeStack_e5dc0::HasItem(FString S)
 
 void Escape(void *);
 void Driver_155660(UGUIController *C, FFrame *Stack, void *Result,
-                   UnnamedModeStack_e5dc0 *M, FString *S)
+                   FObjectView_10c924e8_0117 *M, FString *S)
 {
-    Escape(&GProfileManager);
+    Escape(&GObjectView_10c924e8_0117);
     Escape(GNatives);
     void (UGUIController::*Exec)(FFrame &, void *const) = &UGUIController::execIsProfileOnMC;
     Escape(&Exec);

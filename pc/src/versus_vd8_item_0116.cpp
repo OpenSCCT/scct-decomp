@@ -6,6 +6,8 @@
 //   0x155570 UGUIController::execRequestGetProfileList
 //   0x1555b0 UGUIController::execIsGetProfileListFinished
 
+#include "versus_globals.h"
+
 typedef unsigned char BYTE;
 typedef unsigned short TCHAR;
 typedef int INT;
@@ -68,16 +70,8 @@ struct FProfileContext {
     INT RequestParam;   // +0x7c
 };
 
-// Neutral name: global context at 0x10c923c4.
-struct FGlobalContext {
-    BYTE unk_0[0x184];
-    FProfileContext *ProfileContext; // +0x184
-};
-
-extern FGlobalContext *GGlobalContext; // VA 0x10c923c4
-
-// Neutral name: profile / memory-card manager at 0x10c924e8 (same class as UnnamedModeStack_e5dc0).
-class FProfileManager {
+// Consumer-specific view of the object-pointer slot at VA 0x10c924e8; class identity is unknown.
+class FObjectView_10c924e8_0116 {
 public:
     virtual void VFunc00(); virtual void VFunc04(); virtual void VFunc08(); virtual void VFunc0c();
     virtual void VFunc10(); virtual void VFunc14(); virtual void VFunc18(); virtual void VFunc1c();
@@ -89,9 +83,10 @@ public:
     virtual UBOOL IsMemoryCardReady();                      // +0x64
     virtual UBOOL HasMemoryCardBeenChanged();               // +0x68
     virtual UBOOL SetMemoryCardActivation(UBOOL bActive);   // +0x6c
-    virtual void ModeChanged();                             // +0x70
+    virtual void VirtualSlot28();                            // +0x70, identity unknown
 
-    BYTE unk_04[0x28];
+    BYTE   unk_04[0x24];
+    void  *vtable_28;
     INT RequestParam;       // +0x2c
     INT unk_30;             // +0x30
     INT Done[7];            // +0x34
@@ -116,7 +111,7 @@ public:
     }
 };
 
-extern FProfileManager *GProfileManager; // VA 0x10c924e8
+#define GObjectView_10c924e8_0116 (*((FObjectView_10c924e8_0116 **)&GObject_10c924e8))
 
 class UGUIController : public UObject {
 public:
@@ -132,8 +127,8 @@ public:
 void UGUIController::execIsSavingMediaAvailable(FFrame &Stack, RESULT_DECL)
 {
     P_FINISH;
-    if (GProfileManager)
-        *(UBOOL *)Result = GProfileManager->IsSavingMediaAvailable();
+    if (GObjectView_10c924e8_0116)
+        *(UBOOL *)Result = GObjectView_10c924e8_0116->IsSavingMediaAvailable();
     else
         *(UBOOL *)Result = 0;
 }
@@ -142,8 +137,8 @@ void UGUIController::execIsSavingMediaAvailable(FFrame &Stack, RESULT_DECL)
 void UGUIController::execIsMemoryCardReady(FFrame &Stack, RESULT_DECL)
 {
     P_FINISH;
-    if (GProfileManager)
-        *(UBOOL *)Result = GProfileManager->IsMemoryCardReady();
+    if (GObjectView_10c924e8_0116)
+        *(UBOOL *)Result = GObjectView_10c924e8_0116->IsMemoryCardReady();
     else
         *(UBOOL *)Result = 0;
 }
@@ -153,8 +148,8 @@ void UGUIController::execSetMemoryCardActivation(FFrame &Stack, RESULT_DECL)
 {
     P_GET_UBOOL(bActive);
     P_FINISH;
-    if (GProfileManager)
-        *(UBOOL *)Result = GProfileManager->SetMemoryCardActivation(bActive);
+    if (GObjectView_10c924e8_0116)
+        *(UBOOL *)Result = GObjectView_10c924e8_0116->SetMemoryCardActivation(bActive);
     else
         *(UBOOL *)Result = 0;
 }
@@ -163,8 +158,8 @@ void UGUIController::execSetMemoryCardActivation(FFrame &Stack, RESULT_DECL)
 void UGUIController::execHasMemoryCardBeenChanged(FFrame &Stack, RESULT_DECL)
 {
     P_FINISH;
-    if (GProfileManager)
-        *(UBOOL *)Result = GProfileManager->HasMemoryCardBeenChanged();
+    if (GObjectView_10c924e8_0116)
+        *(UBOOL *)Result = GObjectView_10c924e8_0116->HasMemoryCardBeenChanged();
     else
         *(UBOOL *)Result = 0;
 }
@@ -173,9 +168,9 @@ void UGUIController::execHasMemoryCardBeenChanged(FFrame &Stack, RESULT_DECL)
 void UGUIController::execRequestGetProfileList(FFrame &Stack, RESULT_DECL)
 {
     P_FINISH;
-    FProfileManager *ProfileManager = GProfileManager;
+    FObjectView_10c924e8_0116 *ProfileManager = GObjectView_10c924e8_0116;
     if (ProfileManager) {
-        ProfileManager->RequestParam = GGlobalContext->ProfileContext->RequestParam;
+        ProfileManager->RequestParam = ((FProfileContext *)GGlobalContext->unk_184)->RequestParam;
         *(UBOOL *)Result = ProfileManager->PushMode1();
     } else {
         *(UBOOL *)Result = 0;
@@ -187,7 +182,7 @@ void UGUIController::execIsGetProfileListFinished(FFrame &Stack, RESULT_DECL)
 {
     P_GET_INT_REF(ErrorCode);
     P_FINISH;
-    FProfileManager *ProfileManager = GProfileManager;
+    FObjectView_10c924e8_0116 *ProfileManager = GObjectView_10c924e8_0116;
     if (ProfileManager)
         *(UBOOL *)Result = ProfileManager->IsGetProfileListFinished(*ErrorCode);
     else
@@ -197,7 +192,7 @@ void UGUIController::execIsGetProfileListFinished(FFrame &Stack, RESULT_DECL)
 // Scaffolding for the LTCG link, not part of the unit.
 void Escape(void *);
 
-void FProfileManager::Pop(INT Mode)
+void FObjectView_10c924e8_0116::Pop(INT Mode)
 {
     if (Depth) {
         if (ModeStack[0] != Mode)
@@ -213,15 +208,15 @@ void FProfileManager::Pop(INT Mode)
             Current = ModeValues[0];
         }
     }
-    ModeChanged();
+    VirtualSlot28();
 }
 
-void Driver_1555b0(Native *Out, FProfileManager *M, INT Mode)
+void Driver_1555b0(Native *Out, FObjectView_10c924e8_0116 *M, INT Mode)
 {
     Escape(&GPropAddr);
     Escape(&GPropObject);
     Escape(&GProperty);
-    Escape(&GProfileManager);
+    Escape(&GObjectView_10c924e8_0116);
     Escape(GNatives);
     M->Pop(Mode);
     *Out = (Native)&UGUIController::execIsGetProfileListFinished;
