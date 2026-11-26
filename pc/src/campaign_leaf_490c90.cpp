@@ -2,14 +2,9 @@
 // VA 0x1131a6b0 is set, frees it with the operator delete at VA 0x10d87b90 and clears it. All
 // names are invented.
 
-struct UnkType_1131a6b0
-{
-    int unk_00;
-};
+#include "campaign_global_1131a6b0.h"
 
 void operator delete(void* Pointer);
-
-extern UnkType_1131a6b0* GUnk_1131a6b0;
 
 // Unk_10d90c90
 void Unk_10d90c90()

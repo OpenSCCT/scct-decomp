@@ -2,8 +2,8 @@
 // VA 0x110b7504, then the one at VA 0x110b7524 with the dword at offset 4, 0 and 0. All names are
 // invented.
 
-extern int (__stdcall* GUnk_110b7504)();
-extern int (__stdcall* GUnk_110b7524)(int, int, int);
+#include "campaign_global_110b7504.h"
+#include "campaign_global_110b7524.h"
 
 class UnkType_10d05950
 {

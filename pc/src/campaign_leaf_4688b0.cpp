@@ -2,13 +2,7 @@
 // VA 0x1131a5ac is set, calls the method at VA 0x10d6f910 of the object it points to with its
 // three arguments. All names are invented.
 
-class UnkType_1131a5ac
-{
-public:
-    void Unk_10d6f910(int First, int Second, int Third);
-};
-
-extern UnkType_1131a5ac* GUnk_1131a5ac;
+#include "campaign_global_1131a5ac.h"
 
 // Unk_10d688b0
 void Unk_10d688b0(int First, int Second, int Third)
