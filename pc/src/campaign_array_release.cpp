@@ -1,4 +1,14 @@
-#include "campaign_array_storage.h"
+#include "campaign_array_object.h"
+
+#define ARRAY_RELEASE(Entry) \
+    extern "C" void __fastcall array_release_##Entry(Array *array) \
+    { \
+        if (array->data) \
+            reinterpret_cast<ArrayAllocatorVirtual *>(array_allocator)->Release(array->data); \
+        array->data = 0; \
+        array->capacity = 0; \
+        array->count = 0; \
+    }
 
 ARRAY_RELEASE(r028ec0)
 ARRAY_RELEASE(r028f60)
@@ -403,3 +413,24 @@ ARRAY_RELEASE(r418db0)
 ARRAY_RELEASE(r418df0)
 ARRAY_RELEASE(r418e30)
 ARRAY_RELEASE(r418e70)
+ARRAY_RELEASE(r019960)
+ARRAY_RELEASE(r0055b0)
+ARRAY_RELEASE(r005e00)
+ARRAY_RELEASE(r006050)
+ARRAY_RELEASE(r006080)
+ARRAY_RELEASE(r0060c0)
+ARRAY_RELEASE(r007590)
+ARRAY_RELEASE(r007620)
+ARRAY_RELEASE(r007660)
+ARRAY_RELEASE(r0076a0)
+ARRAY_RELEASE(r0076e0)
+ARRAY_RELEASE(r00d5b0)
+ARRAY_RELEASE(r011ed0)
+ARRAY_RELEASE(r0157d0)
+ARRAY_RELEASE(r0192f0)
+ARRAY_RELEASE(r019420)
+ARRAY_RELEASE(r01b290)
+ARRAY_RELEASE(r01d2f0)
+ARRAY_RELEASE(r01f840)
+
+#undef ARRAY_RELEASE
