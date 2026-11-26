@@ -9,16 +9,15 @@
 // then treats InitLauncherPaths as non-throwing and drops the last EH state store
 // in the constructor, as retail does.
 typedef unsigned short TCHAR;
-typedef int INT;
+typedef int BOOL, INT, INT_PTR;
 typedef unsigned long DWORD;
 typedef unsigned short WORD;
 typedef DWORD UBOOL;
 typedef DWORD BITFIELD;
-typedef void *HWND;
-typedef long LRESULT;
-typedef unsigned int WPARAM;
-typedef long LPARAM;
-typedef LRESULT (__stdcall *WNDPROC)(HWND, unsigned int, WPARAM, LPARAM);
+typedef struct HWND__ *HWND;
+typedef unsigned int UINT, WPARAM;
+typedef long LONG, LPARAM, LRESULT;
+typedef LRESULT (__stdcall *WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 
 inline void *operator new(unsigned int, void *Mem) { return Mem; }
 
@@ -211,10 +210,7 @@ typedef void *HBITMAP;
 extern "C" __declspec(dllimport) int __stdcall DeleteObject(HGDIOBJ ho);
 
 typedef void *HINSTANCE;
-typedef int BOOL;
-typedef unsigned int UINT;
-typedef long LONG;
-typedef INT (__stdcall *DLGPROC)(HWND, UINT, WPARAM, LPARAM);
+typedef INT_PTR (__stdcall *DLGPROC)(HWND, UINT, WPARAM, LPARAM);
 HBITMAP LoadFileToBitmap(const TCHAR *Filename, INT &SizeX, INT &SizeY);
 
 // Unreal Window.h bitmap holder.

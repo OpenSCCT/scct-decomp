@@ -9,8 +9,8 @@ typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned long DWORD;
 typedef DWORD UBOOL;
-typedef void *HWND;
-typedef long LRESULT;
+typedef struct HWND__ *HWND;
+typedef long LONG, LPARAM, LRESULT;
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const TCHAR *);
 void appMemcpy(void *Dest, const void *Src, INT Count);

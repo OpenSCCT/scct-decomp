@@ -1,25 +1,23 @@
 // Work item 0030: Versus RVA 0x68b0-0x6c86 (launcher/splash window code).
 typedef unsigned short TCHAR;
-typedef int INT;
+typedef int BOOL, INT, INT_PTR;
 typedef unsigned long DWORD;
-typedef unsigned int UINT;
+typedef unsigned int UINT, WPARAM;
 typedef unsigned char BYTE;
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const TCHAR*);
 extern "C" __declspec(dllimport) int __cdecl _wcsicmp(const TCHAR*, const TCHAR*);
 extern "C" __declspec(dllimport) TCHAR* __cdecl wcscpy(TCHAR*, const TCHAR*);
 
-typedef void* HWND;
+typedef struct HWND__ *HWND;
 typedef void* HINSTANCE;
 typedef void* HBITMAP;
 typedef void* HICON;
 typedef void* HGDIOBJ;
 typedef long LONG;
-typedef unsigned int WPARAM;
 typedef long LPARAM;
-typedef int BOOL;
 typedef DWORD UBOOL;
-typedef INT (__stdcall *DLGPROC)(HWND, UINT, WPARAM, LPARAM);
+typedef INT_PTR (__stdcall *DLGPROC)(HWND, UINT, WPARAM, LPARAM);
 
 extern "C" __declspec(dllimport) HWND __stdcall GetDlgItem(HWND hDlg, INT nIDDlgItem);
 extern "C" __declspec(dllimport) INT __stdcall GetSystemMetrics(INT nIndex);
