@@ -3,15 +3,7 @@
 // then calls the array's member at VA 0x1090d050 with 0 and 1. guess: handles and removes the first
 // element. The class, method and member names are invented; the offsets and addresses are the
 // binary's.
-
-class UnkType_1090d050
-{
-public:
-    void Unk_1090d050(int Index, int Count);
-
-    void* unk_00;
-    int unk_04;
-};
+#include "campaign_array_type_1090d050.h"
 
 class UnkType_10b6b950
 {
