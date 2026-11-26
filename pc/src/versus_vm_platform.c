@@ -1,14 +1,8 @@
 /* The x86 native handler ABI passes the receiver in ecx, followed by
    the script frame and result pointer on the stack. */
-typedef struct Frame Frame;
-typedef struct Object Object;
-struct Frame {
-    void *frame_prefix[2];
-    Object *object;
-    unsigned char *code;
-};
+#include "versus_native_registration.h"
 #define HANDLER(name, result_type) \
-    void __fastcall name(Object *self, void *unused_edx, Frame *frame, result_type *result)
+    void __fastcall name(struct ScriptObject *self, void *unused_edx, struct ScriptFrame *frame, result_type *result)
 
 HANDLER(execIsPsx2, int)
 {

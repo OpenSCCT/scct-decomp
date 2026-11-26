@@ -1,9 +1,16 @@
-/* Versus installs the UnrealScript natives and primitive conversions at startup.
-   The handler ABI uses ECX for the receiver and two stack arguments. */
+/* Versus installs the UnrealScript natives and primitive conversions at startup. This C ABI
+   view models FFrame's x86 layout; ScriptObject and ScriptNode stand for UObject and UStruct.
+   VmHandler is a raw function pointer, distinct from UObject::Native's member pointer. */
 struct ScriptObject;
-struct ScriptFrame;
-typedef void __fastcall VmHandler(struct ScriptObject *, unsigned int,
-                                  struct ScriptFrame *, void *);
+struct ScriptNode;
+struct ScriptFrame {
+    void *vfptr;
+    struct ScriptNode *node;
+    struct ScriptObject *object;
+    unsigned char *code;
+    unsigned char *locals;
+};
+typedef void __fastcall VmHandler(struct ScriptObject *, unsigned int, struct ScriptFrame *, void *);
 
 enum { NATIVE_COUNT = 4096, CAST_COUNT = 255 };
 extern VmHandler undefined_native;
@@ -38,7 +45,5 @@ static __forceinline void register_cast(unsigned slot, VmHandler *handler)
     cast_table[slot] = handler;
 }
 
-#define REGISTER_NATIVE(slot, name) \
-    do { extern VmHandler name; register_native(slot, name); } while (0)
-#define REGISTER_CAST(slot, name) \
-    do { extern VmHandler name; register_cast(slot, name); } while (0)
+#define REGISTER_NATIVE(slot, name) register_native(slot, name)
+#define REGISTER_CAST(slot, name) register_cast(slot, name)
