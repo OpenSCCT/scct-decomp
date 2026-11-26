@@ -191,6 +191,11 @@ def summary(folder, target):
                 raise ValueError("choose one rebuilt artifact location")
         elif type(unit.get("rebuilt_offset")) is not int or unit["rebuilt_offset"] < 0:
             raise ValueError("missing or invalid rebuilt offset")
+        if "rebuilt_storage_class" in unit:
+            if (type(unit["rebuilt_storage_class"]) is not int or unit["rebuilt_storage_class"] != 3
+                    or "rebuilt_symbol" not in unit or "link_bindings" in unit
+                    or "ltcg_link" in unit or "coff_alignment" in unit):
+                raise ValueError("private COFF receipts require one named, unlinked function symbol")
         signature = inputs_digest(folder, unit, image_hash, file_cache, callee_units(units, unit))
         if "match" in unit:
             if unit["match"]["inputs_sha256"] != signature:
@@ -241,6 +246,11 @@ def verify(target, original):
 
 def built_unit_bytes(target, unit, output, original=None):
     """Obtain the complete function at its specified position in the linked image."""
+    if "rebuilt_storage_class" in unit:
+        if (type(unit["rebuilt_storage_class"]) is not int or unit["rebuilt_storage_class"] != 3
+                or "rebuilt_symbol" not in unit or "link_bindings" in unit
+                or "ltcg_link" in unit or "coff_alignment" in unit):
+            raise ValueError("private COFF receipts require one named, unlinked function symbol")
     if "ltcg_link" in unit:
         # The rebuilt artifact is a DLL linked with link-time code generation.
         if original is None or "link_bindings" not in unit or "coff_alignment" in unit:
@@ -291,7 +301,8 @@ def built_unit_bytes(target, unit, output, original=None):
                 return link_function(output, unit["rebuilt_symbol"], unit["size"], address, unit["link_bindings"],
                                      **readers)
         raise ValueError("link address outside a measured code section")
-    offset = (coff_symbol_offset(output, unit["rebuilt_symbol"], unit["size"])
+    offset = (coff_symbol_offset(output, unit["rebuilt_symbol"], unit["size"],
+                                 unit.get("rebuilt_storage_class", 2))
               if "rebuilt_symbol" in unit else unit["rebuilt_offset"])
     c, d = span(offset, unit["size"], len(output))
     return output[c:d]

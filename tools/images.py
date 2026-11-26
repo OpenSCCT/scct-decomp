@@ -97,8 +97,15 @@ def inspect(data):
                 executable_sections=sections)
 
 
-def coff_symbol_offset(data, symbol, size):
-    """Find a complete, relocation-free function in a one-function COFF section."""
+def coff_symbol_offset(data, symbol, size, storage_class=2):
+    """Find a complete, relocation-free COFF function in its own section.
+
+    External functions are the default. A caller may select a private function
+    explicitly with storage_class=3; in that case its executable section must
+    contain exactly that one function symbol.
+    """
+    if type(storage_class) is not int or storage_class not in (2, 3):
+        raise ValueError("expected an external or explicitly selected private COFF function")
     machine, count, _, table, symbols, opt, _ = struct.unpack_from("<HHIIIHH", data, 0)
     if machine != 0x14C or opt or not symbols:
         raise ValueError("expected an x86 COFF object with a symbol table")
@@ -106,6 +113,8 @@ def coff_symbol_offset(data, symbol, size):
     string_size, = struct.unpack_from("<I", data, strings)
     _, strings_end = span(strings, string_size, len(data))
     entry = 0
+    named = []
+    functions = []
     while entry < symbols:
         at = table + 18 * entry
         name, value, index, kind, storage, extra = struct.unpack_from("<8sIhHBB", data, at)
@@ -115,16 +124,28 @@ def coff_symbol_offset(data, symbol, size):
             if not 4 <= offset < string_size:
                 raise ValueError("invalid COFF string offset")
             name = data[strings + offset:strings_end].split(b"\0", 1)[0]
-        if name.rstrip(b"\0") != symbol.encode("ascii") or kind != 0x20 or storage != 2:
+        name = name.rstrip(b"\0")
+        if kind == 0x20 and 1 <= index <= count:
+            functions.append((name, value, index, storage))
+        if name != symbol.encode("ascii"):
             continue
-        if not 1 <= index <= count:
-            raise ValueError("invalid COFF symbol section")
-        header = 20 + 40 * (index - 1)
-        length, start = struct.unpack_from("<II", data, header + 16)
-        relocs, = struct.unpack_from("<H", data, header + 32)
-        flags, = struct.unpack_from("<I", data, header + 36)
-        if value or length != size or relocs or flags & 0x20000020 != 0x20000020:
-            raise ValueError("object match requires a single complete function with no relocations")
-        span(start, size, len(data))
-        return start
-    raise ValueError(f"function symbol missing from object: {symbol}")
+        named.append((name, value, index, kind, storage))
+    if not named:
+        raise ValueError(f"function symbol missing from object: {symbol}")
+    if len(named) != 1:
+        raise ValueError(f"function symbol is ambiguous in object: {symbol}")
+    name, value, index, kind, actual_storage = named[0]
+    if kind != 0x20 or actual_storage != storage_class:
+        raise ValueError(f"function symbol has the wrong COFF storage class or type: {symbol}")
+    if not 1 <= index <= count:
+        raise ValueError("invalid COFF symbol section")
+    if storage_class == 3 and sum(1 for _, _, section, _ in functions if section == index) != 1:
+        raise ValueError("private COFF match requires a unique function in its section")
+    header = 20 + 40 * (index - 1)
+    length, start = struct.unpack_from("<II", data, header + 16)
+    relocs, = struct.unpack_from("<H", data, header + 32)
+    flags, = struct.unpack_from("<I", data, header + 36)
+    if value or length != size or relocs or flags & 0x20000020 != 0x20000020:
+        raise ValueError("object match requires a single complete function with no relocations")
+    span(start, size, len(data))
+    return start
