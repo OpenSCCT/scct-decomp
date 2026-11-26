@@ -1,3 +1,4 @@
+#include "crt_stream_globals.h"
 typedef unsigned size_t;
 struct Stream {
     char *cursor;
@@ -151,7 +152,6 @@ struct DescriptorInfo {
 extern struct DescriptorInfo *__pioinfo[], __badioinfo;
 extern struct Stream _iob[];
 extern char *_stdbuf[];
-extern int _cflush;
 void *malloc(size_t);
 void free(void *);
 int _isatty(int);
