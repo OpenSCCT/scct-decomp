@@ -3,20 +3,14 @@
 // runs the base destructor at 0x10da2740. The class and member names are invented; the offset and
 // the bytes are the binary's.
 
+#include "campaign_leaf_4d32d0_member.h"
+
 class UnkType_10dd32d0_Base
 {
 public:
     unsigned char unk_4[0x40];
 
     virtual ~UnkType_10dd32d0_Base();
-};
-
-class UnkType_10dd32d0_Member
-{
-public:
-    int unk_0;
-
-    ~UnkType_10dd32d0_Member();
 };
 
 class UnkType_10dd32d0 : public UnkType_10dd32d0_Base

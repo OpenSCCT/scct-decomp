@@ -1,0 +1,10 @@
+#ifndef CAMPAIGN_UNIDENTIFIED_EMPTY_DESTRUCTOR_H
+#define CAMPAIGN_UNIDENTIFIED_EMPTY_DESTRUCTOR_H
+
+class UnkType_10d9d570
+{
+public:
+    ~UnkType_10d9d570();
+};
+
+#endif

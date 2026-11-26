@@ -4,6 +4,8 @@
 // at 0xc (0x10d98ee0) and the lock at 0x8, before the base destructor at 0x10da4690. The class
 // and member names are invented.
 
+#include "campaign_leaf_49b700_lock.h"
+
 void* Unk_10d8b460();
 void Unk_10d8b550(void* Heap, void* Block, int Tag);
 void Unk_10dc1a10();
@@ -13,15 +15,6 @@ inline void FreeBlock(void* Block)
 {
     Unk_10d8b550(Unk_10d8b460(), Block, 7);
 }
-
-class UnkType_10d9b700_Lock
-{
-public:
-    ~UnkType_10d9b700_Lock();
-
-private:
-    int unk_0;
-};
 
 class UnkType_10d9b700_Items
 {
