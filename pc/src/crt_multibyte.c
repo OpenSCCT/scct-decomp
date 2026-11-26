@@ -1,3 +1,5 @@
+#include "crt_multibyte_globals.h"
+
 typedef unsigned short WideChar;
 struct LocaleInfo {
     unsigned refcount, codepage, collation;
@@ -10,7 +12,6 @@ struct ThreadInfo { unsigned char before_locale[0x64]; struct LocaleInfo *locale
 extern struct ThreadInfo *_getptd(void);
 extern struct LocaleInfo *__ptlocinfo;
 struct LocaleInfo *__updatetlocinfo(void);
-extern const unsigned short *_pwctype, *_pctype;
 WideChar __towlower_mt(struct LocaleInfo *, WideChar);
 WideChar __towupper_mt(struct LocaleInfo *, WideChar);
 int __iswctype_mt(struct LocaleInfo *, WideChar, WideChar);
