@@ -5455,27 +5455,28 @@
     "offset": 4058256,
     "rebuilt_symbol": "@destroy_typed_r3dec90@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h",
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
       "src/campaign_array_allocator.h",
-      "src/campaign_array_object.h"
+      "src/campaign_globals.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
       "_array_allocator": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r3dd1f0@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 281924080,
-        "basis": "The member range remover at RVA 0x3dd1f0 calls the rebuilt FArray::Remove at RVA 0x3da160, with element size 20, from RVA 0x3dd27f."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x3dd1f0, which destroys elements then forwards element size 20 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x3dec90; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 20 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x3dec90; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "824e5e5043262ab56733731ad1946a731c7e5405283e6d7cc7b0eca092eb5862",
-      "inputs_sha256": "953e584a78c676afa347ae18a0b88f689f59e8811df33af212f99d5e1a699188"
+      "inputs_sha256": "f1eb4b5c97531086c699ad649d6ef578c15f72b2db3d1748bc404599426db13f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

@@ -10093,27 +10093,28 @@
     "offset": 3466224,
     "rebuilt_symbol": "@destroy_typed_r34e3f0@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h",
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
       "src/campaign_array_allocator.h",
-      "src/campaign_array_object.h"
+      "src/campaign_globals.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
       "_array_allocator": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r34e150@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 281338192,
-        "basis": "The member range remover at RVA 0x34e150 calls the rebuilt FArray::Remove at RVA 0x34cfd0, with element size 44, from RVA 0x34e1c0."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x34e150, which destroys elements then forwards element size 44 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x34e3f0; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 44 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x34e3f0; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "1de4b4dd13e31b5a13c6c3f72c33e5e693c7f95557ce98506d56d45e9af2a79a",
-      "inputs_sha256": "68cd11d621713c6a3a8d3162f861725f2a456835de6b13d9d4424b97cf3dbcf1"
+      "inputs_sha256": "c65efbc96c50d5b891f884c211aee3c93aa6c1dd07762041ee0f8e59ddb852a1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10130,27 +10131,28 @@
     "offset": 3466288,
     "rebuilt_symbol": "@destroy_typed_r34e430@4",
     "inputs": [
-      "src/campaign_typed_array_destroy.c",
-      "src/campaign_array_storage.h",
+      "src/campaign_typed_array_destroy.cpp",
+      "src/campaign_typed_array_object.h",
+      "src/campaign_array_object.h",
       "src/campaign_array_allocator.h",
-      "src/campaign_array_object.h"
+      "src/campaign_globals.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_typed_array_destroy.obj src/campaign_typed_array_destroy.cpp",
     "link_bindings": {
       "_array_allocator": {
         "va": 287082656,
         "basis": "The common campaign engine allocator releases the remaining storage through slot 2."
       },
-      "@remove_typed_r34e150@12": {
+      "?Remove@TypedArray@@QAEXHH@Z": {
         "va": 281338192,
-        "basis": "The member range remover at RVA 0x34e150 calls the rebuilt FArray::Remove at RVA 0x34cfd0, with element size 44, from RVA 0x34e1c0."
+        "basis": "Calls the typed array's Remove implementation at RVA 0x34e150, which destroys elements then forwards element size 44 to FArray::Remove at RVA 0x4bdf0."
       }
     },
-    "identification": "Complete array destructor at RVA 0x34e430; its default-analysis extent ends at RET. Passes the first index zero and the current count to the typed remover and then releases any remaining allocation. The remover forwards element size 44 to the matched FArray::Remove.",
+    "identification": "Complete typed-array destructor at RVA 0x34e430; the TypedArray name is an invented shared view of the array layout. Removes the live range through the type's Remove method, then releases any remaining allocation.",
     "match": {
       "bytes_sha256": "c6a268029d862bdeab038435f713f199e0af3c571124986c43216733d435bd23",
-      "inputs_sha256": "826b2e9ba4b9edfbf1cc1f8672f63b2e466f265504cb2078176142133910a308"
+      "inputs_sha256": "c8b0c0733d5b8cd446b34bd1296c1418089c5f50c28bb044c2a71917707e941d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
