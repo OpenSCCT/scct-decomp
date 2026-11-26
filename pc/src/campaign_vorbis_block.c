@@ -2250,7 +2250,6 @@ int vorbis_analysis_blockout(vorbis_dsp_state *v,vorbis_block *vb){
   codec_setup_info *ci=vi->codec_setup;
   backend_lookup_state *b=v->backend_state;
   vorbis_look_psy_global *g=b->psy_g_look;
-  vorbis_info_psy_global *gi=&ci->psy_g_param;
   long beginW=v->centerW-ci->blocksizes[v->W]/2,centerNext;
   vorbis_block_internal *vbi=(vorbis_block_internal *)vb->internal;
 
