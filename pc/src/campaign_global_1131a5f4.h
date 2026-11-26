@@ -3,12 +3,12 @@
 #ifndef CAMPAIGN_GLOBAL_1131A5F4_H
 #define CAMPAIGN_GLOBAL_1131A5F4_H
 
-class UnkType_1131a5f4
+class UnkType_10d7cfe0
 {
 public:
     void Unk_10d7cfe0(int Value);
 };
 
-extern UnkType_1131a5f4 GUnk_1131a5f4;
+extern UnkType_10d7cfe0 GUnk_1131a5f4;
 
 #endif
