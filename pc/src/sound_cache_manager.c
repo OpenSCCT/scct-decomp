@@ -1,14 +1,13 @@
-typedef unsigned Word;
+#include "sound_cache_item.h"
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
-    Word value;
+    SoundCacheWord value;
 } WordArg;
 typedef struct
 {
-    Word state[2], has_spatial;
+    SoundCacheWord state[2], has_spatial;
 } Buffer;
-typedef struct Item Item;
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
@@ -16,9 +15,9 @@ typedef struct
 } ItemArg;
 typedef struct
 {
-    Word flags[9], options, fields28[12];
+    SoundCacheWord flags[9], options, fields28[12];
     Item **items;
-    Word count;
+    SoundCacheWord count;
 } Resource;
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
@@ -43,9 +42,9 @@ extern void __fastcall mark_cache_item_busy(Item *);
 extern void __fastcall mark_cache_item_available(Item *);
 extern void __fastcall rewind_cache_item_buffers(Item *);
 extern int __fastcall cache_accepts_size(Cache *, ItemArg);
-extern Word __fastcall cache_limit(Cache *);
-extern Word __fastcall cache_usage(Cache *);
-extern Word __fastcall cache_item_bytes(Item *);
+extern SoundCacheWord __fastcall cache_limit(Cache *);
+extern SoundCacheWord __fastcall cache_usage(Cache *);
+extern SoundCacheWord __fastcall cache_item_bytes(Item *);
 extern Item *__fastcall cache_pop_last(Cache *);
 extern void __fastcall destroy_cache_item_buffers(Item *);
 extern void __cdecl free_cache_item(Item *);
@@ -104,7 +103,7 @@ Item *__fastcall create_managed_item(Manager *manager, ResourceArg resource, Wor
 #pragma code_seg(".text$V7503c0")
 __declspec(noinline) Item *__fastcall claim_available_item(Manager *manager, ResourceArg resource)
 {
-    Word i;
+    SoundCacheWord i;
     for (i = 0; i < resource.ptr->count; ++i)
     {
         Item *item = resource.ptr->items[i];
@@ -136,7 +135,7 @@ void __fastcall discard_managed_item(Manager *manager, ItemArg ref)
 void __fastcall return_managed_item(Manager *manager, ItemArg ref)
 {
     Item *item = ref.ptr;
-    Word space;
+    SoundCacheWord space;
     rewind_cache_item_buffers(item);
     if (cache_item_reusable(item))
     {
@@ -166,7 +165,7 @@ void __fastcall return_managed_item(Manager *manager, ItemArg ref)
 
 typedef struct
 {
-    Word leading[9], options;
+    SoundCacheWord leading[9], options;
 } PlaybackOptions;
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
@@ -175,7 +174,7 @@ typedef struct
 } OptionsArg;
 /* Bit-preserving 32-bit stack flag for the x86 member-call ABI. */
 static const union {
-    Word bits;
+    SoundCacheWord bits;
     float stack_word;
 } enable_spatial = {1};
 static __forceinline void apply_spatial_option(Buffer *buffer, const PlaybackOptions *options)

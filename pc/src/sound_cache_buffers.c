@@ -1,31 +1,14 @@
-typedef unsigned Word;
+#include "sound_cache_item.h"
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
-    Word value;
+    SoundCacheWord value;
 } WordArg;
-typedef struct BufferObject BufferObject;
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
     BufferObject *value;
 } BufferArg;
-typedef struct
-{
-    void(__fastcall *destroy)(BufferObject *, float stack_flags);
-} BufferVTable;
-struct BufferObject
-{
-    const BufferVTable *methods;
-    Word status, has_spatial;
-};
-typedef struct
-{
-    Word busy, reusable, bytes;
-    int priority;
-    void *key;
-    BufferObject *primary, *secondary;
-} Item;
 /* FAKEMATCH: wraps one stack argument of a C++ member call; the original passes the value itself. */
 typedef struct
 {
@@ -40,7 +23,7 @@ extern void *__stdcall SND_fn_pvMallocSnd(unsigned);
 /* FAKEMATCH: bit pattern passed as a float argument; the single-bit flag is the integer the
    original passes in that stack slot. */
 static const union {
-    Word bits;
+    SoundCacheWord bits;
     float stack_word;
 } release_owned = {1};
 static __forceinline void set_buffers(Item *item, BufferArg first, WordArg first_bytes,
