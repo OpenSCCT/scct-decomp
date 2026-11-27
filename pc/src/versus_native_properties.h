@@ -4,45 +4,9 @@
 #include "versus_build.h"
 #include "versus_native_class_init.h"
 
-class UPackageMap;
+#include "versus_property.h"
 
-enum ECppProperty { EC_CppProperty };
-
-class UProperty : public UField {
-public:
-    virtual ~UProperty();
-    virtual void CleanupDestroyed(BYTE *Data);
-    virtual INT Link(FArchive &Ar, UProperty *Prev);
-    virtual UBOOL Identical(const void *A, const void *B) const;
-    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
-    virtual UBOOL NetSerializeItem(FArchive &Ar, UPackageMap *Map, void *Data) const;
-    virtual void ExportTextItem(TCHAR *Text, BYTE *Value, BYTE *Default, INT PortFlags) const;
-    virtual const TCHAR *ImportText(const TCHAR *Buffer, BYTE *Data, INT PortFlags) const;
-    virtual void VirtualSlot34();
-    virtual void CopySingleValue(void *Dest, void *Src, UObject *SuperObject);
-    virtual void CopyCompleteValue(void *Dest, void *Src, UObject *SuperObject);
-    virtual void DestroyValue(void *Dest);
-    virtual void VirtualSlot38();
-    virtual void VirtualSlot39();
-
-    short ArrayDim;
-    short ElementSize;
-    DWORD PropertyFlags;
-    FName Category;
-    INT Offset;
-    BYTE unk_40[8];
-    UProperty *ConstructorLinkNext;
-    UProperty *NextRef;
-    BYTE unk_50[8];
-
-    UBOOL Matches(const void *A, const void *B, INT ArrayIndex) const
-    {
-        INT FieldOffset = Offset + ArrayIndex * ElementSize;
-        return Identical((const BYTE *)A + FieldOffset, B ? (const BYTE *)B + FieldOffset : 0);
-    }
-    UProperty() : UField(0), ArrayDim(1), NextRef(0) {}
-    UProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags);
-};
+inline UProperty::UProperty() : UField(0), ArrayDim(1), NextRef(0) {}
 
 #define DECLARE_NATIVE_PROPERTY(Type) \
     static UClass PrivateStaticClass; \

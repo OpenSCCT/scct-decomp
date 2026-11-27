@@ -248,15 +248,6 @@ public:
     virtual ~ABlockingVolume();
 };
 
-// Engine.TeamInfo: 0x324 bytes, 78 virtual functions
-class ATeamInfo : public AReplicationInfo {
-public:
-    virtual ~ATeamInfo();
-
-    FString unk_2f8;
-    BYTE    unk_304[0x20];
-};
-
 // Engine.AntiPortalActor: 0x2f8 bytes, 78 virtual functions
 class AAntiPortalActor : public AActor {
 public:
@@ -343,20 +334,6 @@ public:
     TArray<UnkType_C>      unk_4d8;
     TArrayLtcg<UnkType_4>  unk_4e4;
     BYTE                   unk_4f0[0x4];
-};
-
-// Engine.Channel: 0x58 bytes, 28 virtual functions
-class UChannel : public UObject {
-public:
-    virtual ~UChannel();
-    virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
-    virtual void VirtualSlot24();
-    virtual void VirtualSlot25();
-    virtual void VirtualSlot26();
-    virtual void VirtualSlot27();
-
-    BYTE unk_28[0x30];
 };
 
 // Engine.CheatManager: 0x28 bytes, 22 virtual functions

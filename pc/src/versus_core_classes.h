@@ -15,23 +15,7 @@ public:
     BYTE unk_28[0x18];
 };
 
-// Core.PackageMap: 0x70 bytes, 32 virtual functions
-class UPackageMap : public UObject {
-public:
-    virtual ~UPackageMap();
-    virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
-    virtual void VirtualSlot24();
-    virtual void VirtualSlot25();
-    virtual void VirtualSlot26();
-    virtual void VirtualSlot27();
-    virtual void VirtualSlot28();
-    virtual void VirtualSlot29();
-    virtual void VirtualSlot30();
-    virtual void VirtualSlot31();
-
-    BYTE unk_28[0x48];
-};
+#include "versus_net_channel.h"
 
 // Core.Package: 0x34 bytes, 22 virtual functions
 class UPackage : public UObject {

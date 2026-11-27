@@ -79,6 +79,8 @@ public:
 
     static UObject *StaticAllocateObject(class UClass *ObjectClass, UObject *Outer, FName Name,
         DWORD Flags, UObject *Template, FOutputDevice *Error, UObject *Ptr, UObject *SubobjectRoot);
+    static UObject *StaticFindObject(class UClass *ObjectClass, UObject *InOuter, FName Package,
+                                     FName Group, FName ObjectName, UBOOL ExactClass);
     const TCHAR *GetName() const;
     UBOOL IsA(class UClass *SomeBase) const;
     UObject *FindInStateOrClass(FName InName, INT Global);
@@ -93,10 +95,16 @@ public:
     class UClass *Class;
 };
 
+struct FPropertyRetirement;
+class UPackageMap;
+class UActorChannel;
+class UProperty;
+
 class AActor : public UObject {
 public:
     virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
+    virtual INT *GetOptimizedRepList(BYTE *Recent, FPropertyRetirement *Retire, INT *Ptr,
+                                      UPackageMap *Map, UActorChannel *Channel);
     virtual void VirtualSlot24();
     virtual void VirtualSlot25();
     virtual void VirtualSlot26();
@@ -202,7 +210,9 @@ public:
     BITFIELD unk_2e8_b18 : 6;
     BITFIELD bWorldGeometry : 1;
     BITFIELD unk_2e8_b25 : 7;
-    BITFIELD unk_2ec_b0 : 17;
+    BITFIELD unk_2ec_b0 : 6;
+    BITFIELD bSkipActorPropertyReplication : 1;
+    BITFIELD unk_2ec_b7 : 10;
     BITFIELD UsesLightBeam : 1;
     BITFIELD unk_2ec_b18 : 10;
     BITFIELD bUseLightingFromBase : 1;
@@ -211,7 +221,8 @@ public:
     BITFIELD unk_2ec_b31 : 1;
     BITFIELD unk_2f0_0 : 13;
     BITFIELD bCollideWorld : 1;
-    BITFIELD unk_2f0_14 : 18;
+    BITFIELD unk_2f0_14 : 17;
+    BITFIELD bNetInitial : 1;
     BYTE unk_2f4[4];
 
     void SetCollision(UBOOL CollideActors, UBOOL BlockActors, UBOOL BlockPlayers);
@@ -511,6 +522,13 @@ struct FFieldHash {
 
 class UField : public UObject {
 public:
+    virtual ~UField();
+    virtual void AddCppProperty(UProperty *Property);
+    virtual void VirtualSlot23();
+    virtual void VirtualSlot24();
+    virtual void VirtualSlot25();
+    virtual INT GetPropertiesSize();
+
     UField *SuperField;
     UField *Next;
 };

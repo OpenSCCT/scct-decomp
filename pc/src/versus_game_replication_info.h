@@ -5,6 +5,9 @@
 #include "unreal_actor.h"
 #endif
 class APlayerReplicationInfo;
+struct FPropertyRetirement;
+class UPackageMap;
+class UActorChannel;
 
 // Core.Object.EGameMode is serialized as a byte on Engine.GameReplicationInfo.
 enum EGameMode {
@@ -18,16 +21,44 @@ enum EGameMode {
 class AReplicationInfo : public AInfo {
 public:
     virtual ~AReplicationInfo();
+    virtual INT *GetOptimizedRepList(BYTE *Recent, FPropertyRetirement *Retire, INT *Ptr,
+                                      UPackageMap *Map, UActorChannel *Channel);
+};
+
+// Engine.TeamInfo: 0x324 bytes, 78 virtual functions
+class ATeamInfo : public AReplicationInfo {
+public:
+    virtual ~ATeamInfo();
+
+    FString unk_2f8;
+    BYTE    unk_304[0x20];
 };
 
 // Engine.GameReplicationInfo: 0x3c0 bytes, 78 virtual functions
 class AGameReplicationInfo : public AReplicationInfo {
 public:
     virtual ~AGameReplicationInfo();
+    virtual INT *GetOptimizedRepList(BYTE *Recent, FPropertyRetirement *Retire, INT *Ptr,
+                                      UPackageMap *Map, UActorChannel *Channel);
+    static UClass PrivateStaticClass;
+    static UClass *StaticClass() { return &PrivateStaticClass; }
 
-    FString               unk_2f8;
-    FString               unk_304;
-    DWORD                 GameFlags;
+    FString               GameName;
+    FString               m_ActualMapName;
+    BITFIELD              bTeamGame : 1;
+    BITFIELD              bStopCountDown : 1;
+    BITFIELD              bMatchHasBegun : 1;
+    BITFIELD              bMatchLaunching : 1;
+    BITFIELD              bMatchLaunchingNow : 1;
+    BITFIELD              bTeamSymbolsUpdated : 1;
+    BITFIELD              ServerOnly : 1;
+    BITFIELD              Revenge : 1;
+    BITFIELD              GameWithRanking : 1;
+    BITFIELD              allowVoiceChat : 1;
+    BITFIELD              allowVoiceChatInLobby : 1;
+    BITFIELD              bAlternateMode : 1;
+    BITFIELD              bTutorMode : 1;
+    BITFIELD              bRandomMap : 1;
     INT                   RemainingTime, ElapsedTime, RemainingMinute;
     FLOAT                 SecondCount;
     INT                   TimeLimit;
@@ -37,18 +68,30 @@ public:
     INT                   sessionId, GamesInARow, LastTimeObjectif;
     BYTE                  voiceChatQuality;
     class ATeamInfo      *Teams[2];
-    FString               unk_378;
-    FString               unk_384;
-    FString               unk_390;
-    FString               unk_39c;
-    BYTE                  unk_3a8[0x4];
+    FString               ServerName;
+    FString               ShortName;
+    FString               AdminName;
+    FString               AdminEmail;
+    INT                   ServerRegion;
 #ifdef VERSUS_LTCG_H
     // The legacy destructor receipt models the private stack-this calling convention.
     TArrayLtcg<UnkType_4> PRIArray;
 #else
     TArray<APlayerReplicationInfo *> PRIArray;
 #endif
-    BYTE                  unk_3b8[4];
+    BITFIELD              bAvlb_SPY_ThermalVision : 1;
+    BITFIELD              bAvlb_SPY_NightVision : 1;
+    BITFIELD              bAvlb_SPY_Grab : 1;
+    BITFIELD              bAvlb_SPY_Elbow : 1;
+    BITFIELD              bAvlb_SPY_LeathalDropTech : 1;
+    BITFIELD              bAvlb_MERC_Elbow : 1;
+    BITFIELD              bAvlb_MERC_LeathalDropTech : 1;
+    BITFIELD              bAvlb_MERC_EMFVision : 1;
+    BITFIELD              bAvlb_MERC_MotiontrackingVision : 1;
+    BITFIELD              bAvlb_MERC_Torche : 1;
+    BITFIELD              bAvlb_MERC_Laser : 1;
+    BITFIELD              bAvlb_MERC_Berserk : 1;
+    BITFIELD              bAvlb_MERC_Charge : 1;
     BYTE                  WinningTeam, WinningReason, GameMode;
 };
 

@@ -9,12 +9,17 @@
 #include "versus_ltcg.h"
 #include "unreal_math.h"
 
+struct FPropertyRetirement;
+class UPackageMap;
+class UActorChannel;
+
 // Engine.Actor: 0x2f8 bytes, 78 virtual functions
 class AActor : public UObject {
 public:
     virtual ~AActor();
     virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
+    virtual INT *GetOptimizedRepList(BYTE *Recent, FPropertyRetirement *Retire, INT *Ptr,
+                                      UPackageMap *Map, UActorChannel *Channel);
     virtual void VirtualSlot24();
     virtual void VirtualSlot25();
     virtual void VirtualSlot26();
