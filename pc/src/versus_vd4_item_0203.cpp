@@ -26,7 +26,6 @@ public:
 
     FPlane TransformFPlane(const FPlane &P) const;   // 0x4fe60, called
     FVector TransformFVector(const FVector &V) const;
-    FLOAT Determinant() const;
 };
 
 // RVA 0x4ff40: this on the stack (ret 4), V in EAX, result in ESI.
@@ -34,31 +33,6 @@ public:
 FVector FMatrix::TransformFVector(const FVector &V) const
 {
     return TransformFPlane(FPlane(V.X, V.Y, V.Z, 1.0f));
-}
-
-// RVA 0x4ff90: this in EAX.
-FLOAT FMatrix::Determinant() const
-{
-    return  M[0][0] * (
-                M[1][1] * (M[2][2] * M[3][3] - M[2][3] * M[3][2]) -
-                M[2][1] * (M[1][2] * M[3][3] - M[1][3] * M[3][2]) +
-                M[3][1] * (M[1][2] * M[2][3] - M[1][3] * M[2][2])
-                ) -
-            M[1][0] * (
-                M[0][1] * (M[2][2] * M[3][3] - M[2][3] * M[3][2]) -
-                M[2][1] * (M[0][2] * M[3][3] - M[0][3] * M[3][2]) +
-                M[3][1] * (M[0][2] * M[2][3] - M[0][3] * M[2][2])
-                ) +
-            M[2][0] * (
-                M[0][1] * (M[1][2] * M[3][3] - M[1][3] * M[3][2]) -
-                M[1][1] * (M[0][2] * M[3][3] - M[0][3] * M[3][2]) +
-                M[3][1] * (M[0][2] * M[1][3] - M[0][3] * M[1][2])
-                ) -
-            M[3][0] * (
-                M[0][1] * (M[1][2] * M[2][3] - M[1][3] * M[2][2]) -
-                M[1][1] * (M[0][2] * M[2][3] - M[0][3] * M[2][2]) +
-                M[2][1] * (M[0][2] * M[1][3] - M[0][3] * M[1][2])
-                );
 }
 
 // Scaffolding for the link, not part of the unit.
@@ -82,4 +56,3 @@ void Driver_4ff40(const FMatrix *M, const FVector *V, FVector *Out)
     Out[14] = M->TransformFVector(V[14]); Sink(Out);
     Out[15] = M->TransformFVector(V[15]); Sink(Out);
 }
-float Driver_4ff90(const FMatrix *M) { return M->Determinant(); }

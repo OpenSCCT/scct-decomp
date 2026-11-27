@@ -2148,6 +2148,104 @@
     }
   },
   {
+    "id": "versus-matrix-inverse",
+    "offset": 342768,
+    "size": 815,
+    "inputs": [
+      "src/versus_canvas_update.cpp",
+      "src/versus_build.h",
+      "src/versus_canvas.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_canvas_util.h",
+      "src/versus_arrays.h",
+      "src/versus_canvas_matrix.h",
+      "src/versus_canvas_viewport.h",
+      "src/unreal_script.h",
+      "src/versus_viewport_types.h",
+      "src/versus_matrix_determinant.inl",
+      "src/versus_matrix_inverse.inl",
+      "src/versus_matrix_product.inl"
+    ],
+    "rebuilt_symbol": "?Inverse@FMatrix@@QBE?AU1@XZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_update.obj src/versus_canvas_update.cpp",
+    "identification": "FMatrix::Inverse computes the adjugate and divides by the determinant. The singular branch copies all sixteen coefficients of the identity matrix. Direct callers include FCanvasUtil::SetTransforms (RVA 0x103f00) and the camera matrix update (RVA 0x116670). The complete callee FMatrix::Determinant and canvas caller both reproduce in this same link.",
+    "link_bindings": {
+      "?Determinant@FMatrix@@QBEMXZ": {
+        "va": 278200208,
+        "basis": "The call at RVA 0x53af7 receives this in EAX. This link reproduces all 186 bytes of the determinant using the shared inline definition."
+      },
+      "__real@00000000": {
+        "va": 281086456,
+        "basis": "The zero determinant test references the compiler float constant 0.0f."
+      },
+      "?GIdentityMatrix@@3UFMatrix@@A": {
+        "va": 281843040,
+        "basis": "The singular branch copies sixteen floats from this writable identity matrix. The retail initializer at RVA 0x2d8a60 constructs four unit-axis planes and calls the FMatrix four-plane constructor on this address."
+      },
+      "__real@3f800000": {
+        "va": 281086460,
+        "basis": "A nonzero determinant is inverted by dividing the compiler constant 1.0f by it."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?PaintProgress@UGameEngine@@UAEXXZ"
+      ],
+      "stubs": [
+        "??0FMatrix@@QAE@ABUFPlane@@000@Z"
+      ],
+      "fields": [
+        [
+          8,
+          "rel32",
+          "?Determinant@FMatrix@@QBEMXZ"
+        ],
+        [
+          14,
+          "abs",
+          "__real@00000000"
+        ],
+        [
+          26,
+          "abs",
+          "?GIdentityMatrix@@3UFMatrix@@A"
+        ],
+        [
+          51,
+          "abs",
+          "__real@3f800000"
+        ]
+      ],
+      "symbols": {
+        "?Determinant@FMatrix@@QBEMXZ": 268440336,
+        "__real@00000000": 268443652,
+        "?GIdentityMatrix@@3UFMatrix@@A": 268447744,
+        "__real@3f800000": 268443648
+      },
+      "rebuilt_offset": 2000,
+      "rebuilt_address": 268440528
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "ltcg_callees": [
+      "versus-object-find-function"
+    ],
+    "match": {
+      "bytes_sha256": "c7af7e76811a296d12c8d5b3f9d09d3ac1108abfa03aadb1a8293894bd35e053",
+      "inputs_sha256": "bfc6643490433dd09c3797f1deb2ef7acdbb4317fc47b3c7b7c132deccbc5a5c"
+    }
+  },
+  {
     "id": "versus-vd-53e80",
     "offset": 343680,
     "size": 52,

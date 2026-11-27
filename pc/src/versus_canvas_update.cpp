@@ -97,6 +97,12 @@ FScaleMatrix::FScaleMatrix(const FVector& Scale)
 FTranslationMatrix::FTranslationMatrix(const FVector& Delta)
     : FMatrix(FPlane(1, 0, 0, 0), FPlane(0, 1, 0, 0), FPlane(0, 0, 1, 0), FPlane(Delta.X, Delta.Y, Delta.Z, 1)) {}
 
-extern FMatrix GIdentityMatrix;
+FMatrix GIdentityMatrix(
+    FPlane(1.f, 0.f, 0.f, 0.f),
+    FPlane(0.f, 1.f, 0.f, 0.f),
+    FPlane(0.f, 0.f, 1.f, 0.f),
+    FPlane(0.f, 0.f, 0.f, 1.f));
+
+#include "versus_matrix_determinant.inl"
 #include "versus_matrix_inverse.inl"
 #include "versus_matrix_product.inl"
