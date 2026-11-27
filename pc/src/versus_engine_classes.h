@@ -1167,17 +1167,7 @@ public:
     BYTE unk_408[0x1c];
 };
 
-// Engine.PersistentData: 0x7c bytes, 22 virtual functions
-class UPersistentData : public UObject {
-public:
-    virtual ~UPersistentData();
-
-    TArray<FString> unk_28;
-    FString         unk_34;
-    BYTE            unk_40[0xc];
-    TArray<FString> unk_4c;
-    BYTE            unk_58[0x24];
-};
+#include "versus_persistent_data_types.h"
 
 inline ALevelInfo *ULevel::GetLevelInfo() const
 {

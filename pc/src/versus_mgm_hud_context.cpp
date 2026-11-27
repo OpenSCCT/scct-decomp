@@ -1,5 +1,6 @@
 #include "versus_mgm_hud_context.h"
-#include "versus_canvas_viewport.h"
+#include "versus_pawn_action_events.h"
+#include "versus_viewport_types.h"
 
 struct MgmMenuSystem {
     BYTE UnknownBeforeViewport[0x38];
@@ -15,4 +16,9 @@ UViewport *GetMgmViewport()
 APlayerController *GetMgmPlayerController()
 {
     return GetMgmViewport()->Actor;
+}
+
+AGameReplicationInfo *GetMgmGameReplicationInfo()
+{
+    return GetMgmViewport()->Actor->GameReplicationInfo;
 }

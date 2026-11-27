@@ -176,7 +176,11 @@ public:
 class APlayerController : public AController {
 public:
     virtual void VirtualSlot83();
-    BYTE unk_3c4[0x604 - 0x3c4];
+    BYTE unk_3c4[0x52c - 0x3c4];
+    class AHUD *myHUD;
+    BYTE unk_530[0x598 - 0x530];
+    class AGameReplicationInfo *GameReplicationInfo;
+    BYTE unk_59c[0x604 - 0x59c];
 };
 
 class ASPlayerController : public APlayerController {
