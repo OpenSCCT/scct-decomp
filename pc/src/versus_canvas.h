@@ -2,7 +2,9 @@
 #define VERSUS_CANVAS_H
 
 #include "versus_build.h"
+#ifndef VERSUS_NATIVE_CLASS_TYPES_H
 #include "unreal_object.h"
+#endif
 #include "unreal_math.h"
 
 class UMaterial;
@@ -29,8 +31,8 @@ public:
     UViewport *Viewport;
     FCanvasUtil *pCanvasUtil;
 
-    DECLARE_NATIVE(execTextSize)
-    DECLARE_NATIVE(execRenderMotionTracking)
+    void execTextSize(FFrame &Stack, void *const Result);
+    void execRenderMotionTracking(FFrame &Stack, void *const Result);
     void RenderMotionTracking(INT A0, INT A1, INT A2);
     void StrLen(UFont *InFont, FLOAT ScaleX, FLOAT ScaleY, INT &XL, INT &YL, const TCHAR *Text);
     // Draws one line of glyphs and returns its horizontal advance.

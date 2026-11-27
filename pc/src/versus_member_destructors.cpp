@@ -8,12 +8,6 @@
 #include "versus_gui_classes.h"
 #include "versus_sbase_classes.h"
 
-// UGlobalTempObjects::~UGlobalTempObjects
-UGlobalTempObjects::~UGlobalTempObjects()
-{
-    ConditionalDestroy();
-}
-
 // ADecorationList::~ADecorationList
 ADecorationList::~ADecorationList()
 {

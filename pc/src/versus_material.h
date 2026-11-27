@@ -2,7 +2,9 @@
 #define VERSUS_MATERIAL_H
 
 #include "versus_build.h"
+#ifndef VERSUS_NATIVE_CLASS_TYPES_H
 #include "unreal_object.h"
+#endif
 
 // Engine.Material: 0x4c bytes, 35 virtual functions
 class UMaterial : public UObject {
