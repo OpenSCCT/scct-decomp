@@ -7963,7 +7963,8 @@
       "src/versus_registration_arrays.h",
       "src/versus_build.h",
       "src/unreal_name.h",
-      "src/unreal_types.h"
+      "src/unreal_types.h",
+      "src/versus_registration_array_add.inl"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_process_registrants.obj src/versus_process_registrants.cpp",
@@ -8001,7 +8002,7 @@
     "identification": "The shipped editor names UObject::ProcessRegistrants in the guard referenced at VA 0x10fa9116 and calls its separately named UObject::ConditionalRegister in the per-object loop. Both executables count and drain the same pending list through the temporarily reused export-index field. The editor asserts i!=GObjRegistrants.Num() after the list search in ConditionalRegister and checks !GAutoRegister after draining it. The outer recursion counter name is descriptive. VC7.0 13.00.9466 and VC7.1 13.10.3052 both reproduce the complete function without LTCG. The VC7.0 COFF alignment bytes after the return are outside the measured body.",
     "match": {
       "bytes_sha256": "2e43b5feca18557f07bd450a4f723b9efdb165260c313ef465109a33d529c112",
-      "inputs_sha256": "7553bb01bfc9752e355f7579d7358c8fd0f46a711a7c512ac3cb87f9acfca043"
+      "inputs_sha256": "e9ff390d29210e342e41fd8a0199143f73abd913b9550b1cda7d1c6561237afc"
     }
   },
   {
@@ -9125,6 +9126,63 @@
       "bytes_sha256": "1148e7ad1288d5121888d2d7fa246470ea906589deab471963f26bd12ae8d7be",
       "inputs_sha256": "7113e440c52bc6ff6bd2735a22409c741af000d2c310b777a5c859026600f64d"
     }
+  },
+  {
+    "inputs": [
+      "src/versus_client_properties.cpp",
+      "src/versus_native_properties.h",
+      "src/versus_native_class_init.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h"
+    ],
+    "rebuilt_symbol": "??0UEnum@@QAE@PAVUField@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /Ob1 /c /Folocal/versus_client_properties.obj src/versus_client_properties.cpp",
+    "id": "versus-enum-native-field-constructor",
+    "offset": 125408,
+    "size": 21,
+    "identification": "UEnum(UField*) sets SuperField, installs its primary vtable and clears all three words of Names. It is called after allocating the ETextureDetail UEnum in UClient::StaticConstructor. Other period-compiler or optimization controls can reproduce these bytes, so the receipt remains a candidate. LINK exports the compiler-defined primary vtable, whose RVA varies across independently named object paths.",
+    "ltcg_link": {
+      "roots": [
+        "?StaticConstructor@UClient@@QAEXXZ"
+      ],
+      "stubs": [
+        "??1?$TArray@VFName@@@@QAE@XZ",
+        "??1UByteProperty@@UAE@XZ",
+        "??1UEnum@@UAE@XZ",
+        "?Add@FArray@@QAEHHH@Z",
+        "?PrivateStaticClass@UByteProperty@@2VUClass@@A",
+        "?PrivateStaticClass@UEnum@@2VUClass@@A"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          7,
+          "abs",
+          "??_7UEnum@@6B@"
+        ]
+      ],
+      "symbols": {},
+      "exported_vtables": [
+        "??_7UEnum@@6B@"
+      ]
+    },
+    "link_bindings": {
+      "??_7UEnum@@6B@": {
+        "va": 281071200,
+        "basis": "The registered UEnum primary vtable, also installed by its independently identified class placement and destructor."
+      }
+    },
+    "match": {
+      "bytes_sha256": "0b8204cd6bb0cd1d893d93c4957f4af5e530adcd094d3a947947ab97438361bd",
+      "inputs_sha256": "04b9d8e0f4858878102dca6912fdff9eecb8a87ab82b31ec8f7942698a0df71b"
+    },
+    "ltcg_callees": [
+      "versus-native-uintproperty-constructor"
+    ]
   },
   {
     "id": "versus-vd-1ea00",

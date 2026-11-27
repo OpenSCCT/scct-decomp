@@ -1,5 +1,6 @@
 #include "versus_build.h"
 #include "versus_native_class_init.h"
+#include "versus_registration_array_add.inl"
 
 extern "C" void *__cdecl memcpy(void *Dest, const void *Source, unsigned int Count);
 extern INT GRegistrationDepth;

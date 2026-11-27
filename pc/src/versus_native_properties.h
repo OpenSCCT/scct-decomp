@@ -33,6 +33,7 @@ public:
     UProperty *NextRef;
     BYTE unk_50[8];
 
+    UProperty() : UField(0), ArrayDim(1), NextRef(0) {}
     UProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags);
 };
 
@@ -51,6 +52,37 @@ public:
     DECLARE_NATIVE_PROPERTY(UBoolProperty);
 };
 class UFloatProperty : public UProperty { public: DECLARE_NATIVE_PROPERTY(UFloatProperty); };
-class UStrProperty : public UProperty { public: DECLARE_NATIVE_PROPERTY(UStrProperty); };
+class UStrProperty : public UProperty {
+public:
+    UStrProperty() {}
+    DECLARE_NATIVE_PROPERTY(UStrProperty);
+};
+
+class UArrayProperty : public UProperty {
+public:
+    UProperty *Inner;
+    DECLARE_NATIVE_PROPERTY(UArrayProperty);
+};
+
+class UEnum : public UField {
+public:
+    static UClass PrivateStaticClass;
+    TArray<FName> Names;
+    UEnum(UField *InSuper);
+    virtual ~UEnum();
+    void *operator new(unsigned int, UObject *InOuter, FName InName, DWORD Flags = 0) {
+        return StaticAllocateObject(&PrivateStaticClass, InOuter, InName, Flags);
+    }
+};
+class UByteProperty : public UProperty {
+public:
+    UEnum *Enum;
+    static UClass PrivateStaticClass;
+    void *operator new(unsigned int, UObject *InOuter, FName InName, DWORD Flags = 0) {
+        return StaticAllocateObject(&PrivateStaticClass, InOuter, InName, Flags);
+    }
+    virtual ~UByteProperty();
+    UByteProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags, UEnum *InEnum);
+};
 #undef DECLARE_NATIVE_PROPERTY
 #endif

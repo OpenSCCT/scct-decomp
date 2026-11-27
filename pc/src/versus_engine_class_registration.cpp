@@ -1,6 +1,7 @@
 // Native classes and network encryption key sources registered by the Engine package.
 #include "versus_build.h"
 #include "versus_native_class_init.h"
+#include "versus_registration_array_add.inl"
 
 // The Core registrar initializes all 256 entries before Engine selects the first key.
 BYTE GByteTable_10c814d8[256];
