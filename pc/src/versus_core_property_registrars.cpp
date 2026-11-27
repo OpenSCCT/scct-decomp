@@ -1,10 +1,6 @@
 #include "versus_build.h"
 #include "versus_native_properties.h"
 
-UArrayProperty::UArrayProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags)
-    : UProperty(EC_CppProperty, InOffset, InCategory, InFlags)
-{}
-
 class USubsystem : public UObject {};
 
 class UFactory : public UObject {

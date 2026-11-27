@@ -10,7 +10,7 @@ class UProperty : public UField {
 public:
     virtual ~UProperty();
     virtual void VirtualSlot27();
-    virtual void VirtualSlot28();
+    virtual INT Link(FArchive &Ar, UProperty *Prev);
     virtual void VirtualSlot29();
     virtual void VirtualSlot30();
     virtual void VirtualSlot31();
@@ -45,13 +45,21 @@ public:
     virtual ~Type(); \
     Type(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags)
 
-class UIntProperty : public UProperty { public: DECLARE_NATIVE_PROPERTY(UIntProperty); };
+class UIntProperty : public UProperty {
+public:
+    DECLARE_NATIVE_PROPERTY(UIntProperty);
+    virtual INT Link(FArchive &Ar, UProperty *Prev);
+};
 class UBoolProperty : public UProperty {
 public:
     DWORD BitMask;
     DECLARE_NATIVE_PROPERTY(UBoolProperty);
 };
-class UFloatProperty : public UProperty { public: DECLARE_NATIVE_PROPERTY(UFloatProperty); };
+class UFloatProperty : public UProperty {
+public:
+    DECLARE_NATIVE_PROPERTY(UFloatProperty);
+    virtual INT Link(FArchive &Ar, UProperty *Prev);
+};
 class UStrProperty : public UProperty {
 public:
     UStrProperty() {}
@@ -62,6 +70,12 @@ class UArrayProperty : public UProperty {
 public:
     UProperty *Inner;
     DECLARE_NATIVE_PROPERTY(UArrayProperty);
+};
+
+class UNameProperty : public UProperty {
+public:
+    virtual INT Link(FArchive &Ar, UProperty *Prev);
+    DECLARE_NATIVE_PROPERTY(UNameProperty);
 };
 
 class UEnum : public UField {
@@ -76,6 +90,7 @@ public:
 };
 class UByteProperty : public UProperty {
 public:
+    virtual INT Link(FArchive &Ar, UProperty *Prev);
     UEnum *Enum;
     static UClass PrivateStaticClass;
     void *operator new(unsigned int, UObject *InOuter, FName InName, DWORD Flags = 0) {
@@ -84,5 +99,33 @@ public:
     virtual ~UByteProperty();
     UByteProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags, UEnum *InEnum);
 };
+
+class UObjectProperty : public UProperty {
+public:
+    static UClass PrivateStaticClass;
+    UClass *PropertyClass;
+
+    void *operator new(unsigned int, UObject *Outer, FName Name, DWORD Flags = 0) {
+        return StaticAllocateObject(&PrivateStaticClass, Outer, Name, Flags);
+    }
+    virtual ~UObjectProperty();
+    virtual INT Link(FArchive &Ar, UProperty *Prev);
+    UObjectProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags, UClass *InClass)
+        : UProperty(EC_CppProperty, InOffset, InCategory, InFlags), PropertyClass(InClass) {}
+};
+
+class UStructProperty : public UProperty {
+public:
+    static UClass PrivateStaticClass;
+    UStruct *Struct;
+
+    void *operator new(unsigned int, UObject *Outer, FName Name, DWORD Flags = 0) {
+        return StaticAllocateObject(&PrivateStaticClass, Outer, Name, Flags);
+    }
+    virtual ~UStructProperty();
+    UStructProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags, UStruct *InStruct)
+        : UProperty(EC_CppProperty, InOffset, InCategory, InFlags), Struct(InStruct) {}
+};
+
 #undef DECLARE_NATIVE_PROPERTY
 #endif

@@ -3,30 +3,6 @@
 #include "versus_native_properties.h"
 
 
-UProperty::UProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags)
-    : UField(0), ArrayDim(1), PropertyFlags(InFlags), Category(InCategory),
-      Offset(InOffset), NextRef(0)
-{
-    static_cast<UField *>(Outer)->AddCppProperty(this);
-}
-
-UIntProperty::UIntProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags)
-    : UProperty(EC_CppProperty, InOffset, InCategory, InFlags)
-{}
-
-UBoolProperty::UBoolProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags)
-    : UProperty(EC_CppProperty, InOffset, InCategory, InFlags), BitMask(1)
-{}
-
-UFloatProperty::UFloatProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags)
-    : UProperty(EC_CppProperty, InOffset, InCategory, InFlags)
-{}
-
-UStrProperty::UStrProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags)
-    : UProperty(EC_CppProperty, InOffset, InCategory, InFlags)
-{}
-
-
 class USubsystem : public UObject {};
 static const DWORD RF_Public = 4;
 static const DWORD CPF_Config = 0x4000;

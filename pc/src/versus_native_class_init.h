@@ -76,6 +76,10 @@ public:
     static UObject *StaticAllocateObject(UClass *ObjectClass, UObject *InOuter, FName InName,
         DWORD SetFlags, UObject *Template = 0, FOutputDevice *Error = GError,
         UObject *Ptr = 0, UObject *SubobjectRoot = 0);
+    FName GetFName() const { return Name; }
+    static UObject *StaticFindObject(UClass *ObjectClass, UObject *InOuter, FName Package,
+        FName Group, FName ObjectName, UBOOL ExactClass);
+    void LoadConfig(UBOOL Propagate = 0, UClass *InClass = 0, const TCHAR *Filename = 0);
     UClass *GetClass() const { return Class; }
     static TArray<UObject *> GObjRegistrants;
     static void ProcessRegistrants();
@@ -114,6 +118,8 @@ public:
 struct FSArray {
     BYTE *Data;
     INT Num;
+
+    FSArray() : Data(0), Num(0) {}
 };
 
 class UStruct : public UField {
@@ -140,6 +146,16 @@ public:
     UProperty *unk_5c;
     UProperty *unk_60;
     UProperty *ConstructorLink;
+
+    static UClass PrivateStaticClass;
+
+    void *operator new(unsigned int, UObject *InOuter, FName InName, DWORD Flags = 0)
+    {
+        return StaticAllocateObject(&PrivateStaticClass, InOuter, InName, Flags);
+    }
+    UStruct(UStruct *InSuper)
+        : UField(InSuper), PropertiesSize(InSuper ? InSuper->GetPropertiesSize() : 0),
+          FriendlyName(GetFName()), PropertyLink(0) {}
 
     void InitNative(ENativeConstructor Ctor, DWORD Size, FName InName,
                     FName InPackage, DWORD Flags, UStruct *Super);
@@ -185,11 +201,12 @@ public:
     TArray<UnkType_8> unk_94;
     TArray<UnkType_4> NetFields;
     TArray<BYTE> Defaults;
+    UObject *GetDefaultObject() { return (UObject *)&Defaults(0); }
     FGuid ClassGuid;
     FString DefaultPropText;
     TArray<UnkType_C> Dependencies;
     TArray<UnkType_4> PackageImports;
-    TArray<UnkType_4> unk_ec;
+    TArray<FName> HideCategories;
     TArray<UnkType_4> unk_f8;
     void (*ClassConstructor)(void *);
     StaticConstructorType ClassStaticConstructor;
