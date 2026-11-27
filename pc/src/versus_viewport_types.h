@@ -8,13 +8,16 @@ public:
 
 class APlayerController;
 class UCanvas;
+class UInteraction;
 class FRenderInterface;
 
 // Engine registers Player with a size of 0x68 and Viewport with a size of 0x190.
 class UPlayer : public UObject, public FOutputDevice, public FExec {
 public:
     APlayerController *Actor;
-    BYTE unk_34[0x68 - 0x34];
+    BYTE unk_34[0x58 - 0x34];
+    TArray<UInteraction *> LocalInteractions;
+    BYTE unk_64[4];
 };
 
 class UViewport : public UPlayer {

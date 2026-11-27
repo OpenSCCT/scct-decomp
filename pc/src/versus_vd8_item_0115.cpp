@@ -1,4 +1,4 @@
-/* w4_item_0115.cpp -- UGUIController::NativeTick and UGUIController::NativePostRender */
+/* w4_item_0115.cpp -- UGUIController::NativeTick and UGUIController::NativePreRender */
 
 typedef unsigned char BYTE;
 typedef unsigned short TCHAR;
@@ -211,8 +211,8 @@ void UGUIController::NativeTick(FLOAT DeltaTime)
         ActivePage->eventOnTick(DeltaTime);
 }
 
-/* UGUIController::NativePostRender */
-void UGUIController::NativePostRender(UCanvas *Canvas)
+/* UGUIController::NativePreRender */
+void UGUIController::NativePreRender(UCanvas *Canvas)
 {
     if (!Canvas || !Master || !Master->Client || !Master->Client->Viewports.Num()
         || !Master->Client->Viewports(0))

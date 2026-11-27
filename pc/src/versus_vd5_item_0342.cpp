@@ -189,10 +189,11 @@ public:
     TArray<UViewport*> Viewports;                  // 0x2c
 };
 
-// FName indices (the Tick/PreRender/PostRender values are placeholders:
-// they only appear in stand-in bodies).
-enum { NAME_Process_KeyType = 0x13ff, NAME_Process_KeyEvent = 0x1400,
-       NAME_Process_Tick = 0x1401, NAME_Process_PreRender = 0x1402, NAME_Process_PostRender = 0x1403 };
+enum {
+#define REGISTER_NAME(symbol, index, flags, text) NAME_##symbol = index,
+#include "versus_hardcoded_names.inl"
+#undef REGISTER_NAME
+};
 
 // Strings live in writable .data in retail.
 extern const TCHAR TEXT_KeyTypeFormat1[];          // L"%c" (retail 0x10c47b68)

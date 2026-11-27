@@ -1,30 +1,9 @@
 #ifndef VERSUS_GUI_CONTROLLER_TYPES_H
 #define VERSUS_GUI_CONTROLLER_TYPES_H
 
-class UCanvas;
-class UViewport;
-class UInteractionMaster;
+#include "versus_interaction_types.h"
+
 class UGUIPage;
-
-class UInteractions : public UObject {
-public:
-    virtual ~UInteractions();
-};
-
-class UInteraction : public UInteractions {
-public:
-    virtual ~UInteraction();
-    virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
-    virtual UBOOL NativeKeyEvent(BYTE &iKey, BYTE &State, FLOAT Delta);
-    virtual void NativeTick(FLOAT DeltaTime);
-    virtual void NativePostRender(UCanvas *Canvas);
-    virtual void VirtualSlot27();
-
-    BYTE unk_28[0x04];
-    UViewport *ViewportOwner;
-    UInteractionMaster *Master;
-};
 
 // Engine and GUI register these classes with sizes 0xc50 and 0xe9c.
 class UBaseGUIController : public UInteraction {
@@ -37,6 +16,7 @@ public:
     virtual ~UGUIController();
     virtual UBOOL NativeKeyEvent(BYTE &iKey, BYTE &State, FLOAT Delta);
     virtual void NativeTick(FLOAT DeltaTime);
+    virtual void NativePreRender(UCanvas *Canvas);
     virtual void NativePostRender(UCanvas *Canvas);
 
     BYTE unk_c50[0xc80 - 0xc50];
