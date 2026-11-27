@@ -1293,6 +1293,104 @@
     }
   },
   {
+    "id": "versus-skeletal-instance-set-bone-scale",
+    "offset": 744800,
+    "size": 238,
+    "inputs": [
+      "src/versus_bone_scale.cpp",
+      "src/versus_build.h",
+      "src/unreal_script.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h",
+      "src/unreal_types.h"
+    ],
+    "rebuilt_symbol": "?SetBoneScale@USkeletalMeshInstance@@QAEKHMVFName@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_bone_scale.obj src/versus_bone_scale.cpp",
+    "identification": "USkeletalMeshInstance::SetBoneScale. The shipped editor directly names the function in its guard string. The native handler for Engine.Actor.SetBoneScale calls this RVA with the slot, uniform scale, and bone name. It grows the 60-byte scaler array at instance offset +0x10c through the requested slot, and sets, clears or preserves that slot according to the requested bone and scale.",
+    "link_bindings": {
+      "?AddZeroed@FArray@@QAGHHH@Z": {
+        "va": 277959680,
+        "basis": "FArray::AddZeroed at RVA 0x15400 calls FArray::Add and zeros the enlarged tail. The callee pops all three arguments. Existing complete callers at RVAs 0x55f20, 0x134720 and 0x1585f0 bind the same specialization-independent helper."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "Writable engine allocator pointer. Its original initializer is the allocator object at VA 0x10c73cd8, whose vtable starts with CRT malloc, realloc and free wrappers. Engine initialization writes a replacement at RVA 0x13f85. The function calls Realloc in virtual slot 1."
+      },
+      "??_C@_1O@PFKPDBEB@?$AAF?$AAA?$AAr?$AAr?$AAa?$AAy?$AA?$AA@": {
+        "va": 281086324,
+        "basis": "UTF-16 FArray allocation tag, independently matched by the FArray::Shrink path at RVA 0x14250."
+      },
+      "__real@3f800000": {
+        "va": 281086460,
+        "basis": "Read-only IEEE-754 float 1.0 is the unit scale that clears the controller."
+      },
+      "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": {
+        "va": 278615984,
+        "basis": "Looks up the named reference bone, following tag aliases first. RVA 0xb57b0 has a previous byte receipt. The named skeletal controls for rotation, location and direction call the same lookup."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?execSetBoneScale@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?GMalloc@@3PAVFMalloc@@A"
+      ],
+      "stubs": [
+        "?AddZeroed@FArray@@QAGHHH@Z",
+        "?GDefaultAllocator@@3VFMalloc@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
+        "?MeshGetInstance@UMesh@@QAEPAVUMeshInstance@@PBVAActor@@@Z",
+        "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1216,
+      "rebuilt_address": 268439744,
+      "fields": [
+        [
+          41,
+          "rel32",
+          "?AddZeroed@FArray@@QAGHHH@Z"
+        ],
+        [
+          88,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          95,
+          "abs",
+          "??_C@_1O@PFKPDBEB@?$AAF?$AAA?$AAr?$AAr?$AAa?$AAy?$AA?$AA@"
+        ],
+        [
+          114,
+          "abs",
+          "__real@3f800000"
+        ],
+        [
+          137,
+          "rel32",
+          "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z"
+        ]
+      ],
+      "symbols": {
+        "?AddZeroed@FArray@@QAGHHH@Z": 268439984,
+        "?GMalloc@@3PAVFMalloc@@A": 268447744,
+        "??_C@_1O@PFKPDBEB@?$AAF?$AAA?$AAr?$AAr?$AAa?$AAy?$AA?$AA@": 268443648,
+        "__real@3f800000": 268443664,
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": 268439987
+      },
+      "constants": {
+        "??_C@_1O@PFKPDBEB@?$AAF?$AAA?$AAr?$AAr?$AAa?$AAy?$AA?$AA@": 14,
+        "__real@3f800000": 4
+      }
+    },
+    "match": {
+      "bytes_sha256": "a58264ef9e92bb1859be49ce3ec3a7ee5c335b81fc6eafb8f32f9a5e6f0e5f2e",
+      "inputs_sha256": "00d6343c1124c1f9b178abcce195d6f54ed5245d0d7a97833701b3f24b62db07"
+    }
+  },
+  {
     "id": "versus-skeletal-mesh-instance-set-bone-location",
     "offset": 745040,
     "size": 264,
