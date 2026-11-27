@@ -21,7 +21,7 @@ enum EMgmInterpolationMode {
 struct MgmKeyInterpolation {
     FLOAT Duration, Elapsed;
     EMgmInterpolationMode Mode;
-    BYTE Unknown0c[4];
+    INT unk_0c;
     const MgmKeyframe *From, *To;
 };
 

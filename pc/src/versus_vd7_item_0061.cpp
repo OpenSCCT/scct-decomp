@@ -3,16 +3,11 @@
 //   0x135ac0: UnnamedSceneAllocDerived_135ac0::~UnnamedSceneAllocDerived_135ac0 (this in ESI)
 //   0x135b00: UnnamedZoneVis_135b00::FilterBox (this on stack, Box in EAX)
 //   0x135b80: UnnamedZoneVis_135b00::FilterSphere (this in EDI, Sphere in ECX)
-//   0x135be0: UnnamedZoneVis_135b00::FilterBounds (this in EAX, Bounds in EDI)
+//   0x135be0: UnnamedZoneVis_135b00::FilterBounds (this in EAX, Frustum in EDI)
 //   0x135c10: FDynamicActor::BoxDistanceSquared (this in EAX, Point in ECX)
 //   0x135d00: FDynamicActor::CheckCullDistance (this in EAX, Viewport in ECX, ViewOrigin on stack)
 
-typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
-typedef unsigned char BYTE;
+#include "versus_frustum_query.h"
 
 extern "C" double __cdecl tan(double);
 #pragma intrinsic(tan)
@@ -87,13 +82,6 @@ public:
     TList<ElementType> *Next;
 };
 
-struct UnnamedBounds_135be0
-{
-    BYTE unk_00[0x60];
-};
-
-extern UBOOL __cdecl CheckBoundsAgainstVolume(const UnnamedBounds_135be0 *Bounds, FConvexVolume *Volume);
-
 // RVA 0x135ac0: Destructor for unnamed scene allocation struct (neutral name;
 // unwind funclet at 0x2d7cf0 jumps here with this in ESI, and base unwind at
 // 0x2d7cf8 jumps to 0x135a80 freeing +0x10).
@@ -133,7 +121,7 @@ public:
 
     __declspec(noinline) UBOOL FilterBox(const FBox &Box) const;
     __declspec(noinline) UBOOL FilterSphere(const FSphere &Sphere) const;
-    __declspec(noinline) UBOOL FilterBounds(const UnnamedBounds_135be0 &Bounds) const;
+    __declspec(noinline) UBOOL FilterBounds(const FLightFrustum &Frustum) const;
 };
 
 // RVA 0x135b00: UnnamedZoneVis_135b00::FilterBox
@@ -193,11 +181,11 @@ UBOOL UnnamedZoneVis_135b00::FilterSphere(const FSphere &Sphere) const
 }
 
 // RVA 0x135be0: UnnamedZoneVis_135b00::FilterBounds
-UBOOL UnnamedZoneVis_135b00::FilterBounds(const UnnamedBounds_135be0 &Bounds) const
+UBOOL UnnamedZoneVis_135b00::FilterBounds(const FLightFrustum &Frustum) const
 {
     for (TList<FConvexVolume *> *Volume = InclusionList; Volume; Volume = Volume->Next)
     {
-        if (CheckBoundsAgainstVolume(&Bounds, Volume->Element))
+        if (IntersectsFrustumFaces(Frustum, *Volume->Element))
             return 1;
     }
     return 0;
@@ -381,7 +369,7 @@ UBOOL __fastcall Driver_135b80(const FSphere *S, const UnnamedZoneVis_135b00 *Zo
     return Zones->FilterSphere(*S);
 }
 
-UBOOL Driver_135be0(const UnnamedZoneVis_135b00 *Zones, INT ZoneIdx, const UnnamedBounds_135be0 *B)
+UBOOL Driver_135be0(const UnnamedZoneVis_135b00 *Zones, INT ZoneIdx, const FLightFrustum *B)
 {
     return Zones[ZoneIdx].FilterBounds(*B);
 }

@@ -9,14 +9,14 @@ static inline void BindMgmChild(MgmChild *&Child, MgmArea *Area, const ANSICHAR 
 void SpyHud::InitResources()
 {
     Energy = FindMgmArea(Package, "A_JaugeEnergie");
-    EnergyGauge = &static_cast<MgmImageContent *>(FindMgmChild(Energy, "jaugeinterne")->Content)->Image->Region;
-    EnergyLeft = &static_cast<MgmImageContent *>(FindMgmChild(Energy, "jaugeindicator_gauche")->Content)->Image->Region;
-    EnergyRight = &static_cast<MgmImageContent *>(FindMgmChild(Energy, "jaugeindicator_droite")->Content)->Image->Region;
+    EnergyGauge = &static_cast<MgmImage *>(FindMgmChild(Energy, "jaugeinterne")->Content->Keyframe)->Region;
+    EnergyLeft = &static_cast<MgmImage *>(FindMgmChild(Energy, "jaugeindicator_gauche")->Content->Keyframe)->Region;
+    EnergyRight = &static_cast<MgmImage *>(FindMgmChild(Energy, "jaugeindicator_droite")->Content->Keyframe)->Region;
     EnergyGaugeHeight = 133.0f;
     EnergyReferenceValue = 100.0f;
 
     BindMgmArea(StickyCam, Package, "A_InteractionStickyCam");
-    StickyCamButtonImage = static_cast<MgmImageContent *>(FindMgmChild(StickyCam, "PC_Button")->Content)->Image;
+    StickyCamButtonImage = static_cast<MgmImage *>(FindMgmChild(StickyCam, "PC_Button")->Content->Keyframe);
     StickyCamButton = FindMgmChild(StickyCam, "A_Button");
     TArray<MgmChild *> &Labels = StickyCamText;
     Labels.ArrayNum = 0;

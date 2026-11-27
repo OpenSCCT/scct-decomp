@@ -3,6 +3,7 @@
 
 #include "versus_build.h"
 #include "unreal_types.h"
+#include <vector>
 
 // Hud.mgm uses the CRC32 of a lowercase name as each serialized resource ID.
 class MgmId {
@@ -17,6 +18,7 @@ struct MgmImageRegion;
 struct MgmImage;
 
 struct MgmContent;
+struct MgmTimedKey;
 
 class MgmChild {
 public:
@@ -24,8 +26,10 @@ public:
     BYTE Visible;
     BYTE UnknownBeforeId[0x24 - 5];
     MgmId Id;
-    BYTE UnknownBeforeContent[4];
+    INT CurrentKey;
     MgmContent *Content;
+    std::vector<MgmTimedKey *> Keys;
+    INT FindKey(FLOAT Seconds, INT MillisecondsPerFrame) const;
     MgmId GetId() const;
     void EvaluateTime(FLOAT Seconds, INT MillisecondsPerFrame, BYTE Update);
     void SetTime(FLOAT Seconds, INT MillisecondsPerFrame, BYTE Update);

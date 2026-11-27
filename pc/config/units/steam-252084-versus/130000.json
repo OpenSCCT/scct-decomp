@@ -3676,7 +3676,10 @@
     "offset": 1268480,
     "size": 126,
     "inputs": [
-      "src/versus_vd7_item_0061.cpp"
+      "src/versus_vd7_item_0061.cpp",
+      "src/versus_frustum_query.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "?FilterBox@UnnamedZoneVis_135b00@@QBEKABVFBox@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3698,7 +3701,7 @@
       ],
       "stubs": [
         "??3@YAXPAX@Z",
-        "?CheckBoundsAgainstVolume@@YAKPBUUnnamedBounds_135be0@@PAVFConvexVolume@@@Z",
+        "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z",
         "?Escape@@YAXPAX@Z",
         "?GDummy0@@3HA",
         "?GDummy1@@3HA",
@@ -3733,7 +3736,7 @@
     },
     "match": {
       "bytes_sha256": "59d997618d90866838cd790d81a74427a4436475142d355ed125ab8cf736b27b",
-      "inputs_sha256": "a5d29037e062dd3a63407e78f947e96acef9119acb083ec827568f5789ef3a9e"
+      "inputs_sha256": "7cea6aa4eb2125fc90f754242dba10288fba7ba1298892b681ac5af6f877671f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3749,7 +3752,10 @@
     "offset": 1268608,
     "size": 81,
     "inputs": [
-      "src/versus_vd7_item_0061.cpp"
+      "src/versus_vd7_item_0061.cpp",
+      "src/versus_frustum_query.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "?FilterSphere@UnnamedZoneVis_135b00@@QBEKABVFSphere@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3767,7 +3773,7 @@
       ],
       "stubs": [
         "??3@YAXPAX@Z",
-        "?CheckBoundsAgainstVolume@@YAKPBUUnnamedBounds_135be0@@PAVFConvexVolume@@@Z",
+        "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z",
         "?Escape@@YAXPAX@Z",
         "?GDummy0@@3HA",
         "?GDummy1@@3HA",
@@ -3796,7 +3802,7 @@
     },
     "match": {
       "bytes_sha256": "64195e7d89864d44a763b555ab66573b3d57285b3b8f4097f8a5820a89a80730",
-      "inputs_sha256": "e264e76da4bfabe5f1e3c5a93e2648503578f19dad1ee195c49f0bbd57188797"
+      "inputs_sha256": "c59ac57e92c678d2354e88c674a745913c2783c7e16ca518b4895451fcf6ccc5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3812,25 +3818,27 @@
     "offset": 1268704,
     "size": 41,
     "inputs": [
-      "src/versus_vd7_item_0061.cpp"
+      "src/versus_vd7_item_0061.cpp",
+      "src/versus_frustum_query.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "?FilterBounds@UnnamedZoneVis_135b00@@QBEKABUUnnamedBounds_135be0@@@Z",
+    "rebuilt_symbol": "?FilterBounds@UnnamedZoneVis_135b00@@QBEKABUFLightFrustum@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd7_item_0061_vc70_ltcg_o2gygl.obj src/versus_vd7_item_0061.cpp",
-    "identification": "Complete Versus function at RVA 0x135be0. Direct call at RVA 0x1373b6 in the retail function at RVA 0x137370.",
+    "identification": "The 41-byte zone inclusion-list test calls IntersectsFrustumFaces at RVA 0x135beb for each portal volume. Both calls from the 240-byte light visibility function at 0x137370 pass the frustum at FDynamicLight+0x50. The shipped editor equivalents are 0x111a2ea0 and 0x111a7090.",
     "link_bindings": {
-      "?CheckBoundsAgainstVolume@@YAKPBUUnnamedBounds_135be0@@PAVFConvexVolume@@@Z": {
+      "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z": {
         "va": 278992240,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "RVA 0x135beb calls the 332-byte six-face frustum intersection with the current light frustum and portal volume, also seen in the shipped editor at 0x11176b30."
       }
     },
     "ltcg_link": {
       "roots": [
-        "?Driver_135be0@@YAKPBVUnnamedZoneVis_135b00@@HPBUUnnamedBounds_135be0@@@Z"
+        "?Driver_135be0@@YAKPBVUnnamedZoneVis_135b00@@HPBUFLightFrustum@@@Z"
       ],
       "stubs": [
         "??3@YAXPAX@Z",
-        "?CheckBoundsAgainstVolume@@YAKPBUUnnamedBounds_135be0@@PAVFConvexVolume@@@Z",
         "?Escape@@YAXPAX@Z",
         "?GDummy0@@3HA",
         "?GDummy1@@3HA",
@@ -3845,16 +3853,16 @@
         [
           12,
           "rel32",
-          "?CheckBoundsAgainstVolume@@YAKPBUUnnamedBounds_135be0@@PAVFConvexVolume@@@Z"
+          "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z"
         ]
       ],
       "symbols": {
-        "?CheckBoundsAgainstVolume@@YAKPBUUnnamedBounds_135be0@@PAVFConvexVolume@@@Z": 268439633
+        "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z": 268441440
       }
     },
     "match": {
       "bytes_sha256": "d42b977bec1f7f201c552d0182b93364d72e723409402b8fab5eee17078e80f7",
-      "inputs_sha256": "38b620633f19a6aee4156dd76faedcacbfd156eacc9f711cfde87ee1b3ad7c80"
+      "inputs_sha256": "6c7b9249ba46275d51b0a11d026af13ab5347fca82cc91460621a01320ad63e0"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3863,14 +3871,20 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
-    }
+    },
+    "ltcg_callees": [
+      "versus-light-frustum-intersects-faces"
+    ]
   },
   {
     "id": "versus-vd-135c10",
     "offset": 1268752,
     "size": 229,
     "inputs": [
-      "src/versus_vd7_item_0061.cpp"
+      "src/versus_vd7_item_0061.cpp",
+      "src/versus_frustum_query.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "?BoxDistanceSquared@FDynamicActor@@QBEMABVFVector@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3888,7 +3902,7 @@
       ],
       "stubs": [
         "??3@YAXPAX@Z",
-        "?CheckBoundsAgainstVolume@@YAKPBUUnnamedBounds_135be0@@PAVFConvexVolume@@@Z",
+        "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z",
         "?Escape@@YAXPAX@Z",
         "?GDummy0@@3HA",
         "?GDummy1@@3HA",
@@ -3912,7 +3926,7 @@
     },
     "match": {
       "bytes_sha256": "f0d52a7d0b93ef3fef047530e8ce4cf2b707a102a0e06c97d3d8a43270dcd527",
-      "inputs_sha256": "69fb15dc1a3441922b4812666342b3f3ed8e9cce852e1c41206233313b87027e"
+      "inputs_sha256": "1251cf2b28c1843c659ff7cf69f7b74e6dad32ab0dc54597cd52f72c80bee5af"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3928,7 +3942,10 @@
     "offset": 1268992,
     "size": 148,
     "inputs": [
-      "src/versus_vd7_item_0061.cpp"
+      "src/versus_vd7_item_0061.cpp",
+      "src/versus_frustum_query.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "?CheckCullDistance@FDynamicActor@@SAKPBV1@PAVUViewport@@ABVFVector@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3954,7 +3971,7 @@
       ],
       "stubs": [
         "??3@YAXPAX@Z",
-        "?CheckBoundsAgainstVolume@@YAKPBUUnnamedBounds_135be0@@PAVFConvexVolume@@@Z",
+        "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z",
         "?Escape@@YAXPAX@Z",
         "?GDummy0@@3HA",
         "?GDummy1@@3HA",
@@ -3995,7 +4012,7 @@
     },
     "match": {
       "bytes_sha256": "113d4622190bba459e870a33802e3649a72bf9e99cf79de18960c9e935ec91c0",
-      "inputs_sha256": "ead49ef9269dd887261ed21b4575a2b744e12f9c8d03fd13c58ff39fe9906d55"
+      "inputs_sha256": "af74c687183daa927f4f0247fb9d6a649f4c612323a77328ab8d6442c3dee3e7"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",

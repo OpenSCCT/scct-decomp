@@ -26,7 +26,7 @@ void SpyBinocularHudPage::InitResources()
     ZoomValue = static_cast<MgmTextContent *>(FindMgmChild(Zoom, "ZoomValue")->Content);
     ZoomValue->SetExternalText(ZoomLabels[2]);
     ZoomLevel = 1;
-    ZoomInside = static_cast<MgmImageContent *>(FindMgmChild(Zoom, "zoomInside")->Content)->Image;
+    ZoomInside = static_cast<MgmImage *>(FindMgmChild(Zoom, "zoomInside")->Content->Keyframe);
     ZoomInside->GetPosition(Center);
     Right.X = Center.X + 35;
     Right.Y = Center.Y;

@@ -24,6 +24,15 @@ def unit(identifier, *, callees=None, command=WITH_GL, toolchain=TOOLCHAIN, link
 
 
 class CalleeUnitTests(unittest.TestCase):
+    def test_distinct_link_exports_cannot_share_a_dll(self):
+        link = unit("plain")["ltcg_link"]
+        table = "?GFrustumFaceVertices@@3PAY03HA"
+        face = dict(link, box_face_cursor={"symbol": table, "sha256": "0" * 64})
+        vtable = dict(link, exported_vtables=["??_7FTest@@6B@"])
+        keys = {verify_build.link_recipe_key(recipe) for recipe in (link, face, vtable)}
+        self.assertEqual(len(keys), 3)
+        self.assertEqual(verify_build.link_exports(face), [f"/EXPORT:{table},DATA"])
+
     def test_a_unit_without_the_field_links_alone(self):
         caller = unit("a")
         self.assertEqual(callee_units([caller], caller), [])

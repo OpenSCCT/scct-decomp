@@ -9,7 +9,7 @@
 INT appSprintf(TCHAR *Dest, const TCHAR *Format, ...);
 static inline MgmImage *GetMgmImage(MgmChild *Child)
 {
-    return static_cast<MgmImageContent *>(Child->Content)->Image;
+    return static_cast<MgmImageContent *>(Child->Content)->GetImage();
 }
 
 void MgmPlayerHud::InitResources()

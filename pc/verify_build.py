@@ -235,6 +235,16 @@ def stub_plan(unresolved, declared):
     return names, undeclared
 
 
+def link_exports(link):
+    return vtable_export_args(link) + box_face_export_args(link)
+
+
+def link_recipe_key(link):
+    if link is None:
+        return None
+    return tuple(link["roots"]), tuple(link["stubs"]), tuple(link_exports(link))
+
+
 def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, streams):
     """Link a unit's object with the objects of its callees into one DLL.
 
@@ -247,7 +257,7 @@ def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, st
     roots = list(dict.fromkeys(root for link in links for root in link["roots"]))
     declared = list(dict.fromkeys(name for link in links for name in link["stubs"]))
     linker = Path(cl).with_name("LINK.EXE")
-    exports = sorted({arg for link in links for arg in vtable_export_args(link) + box_face_export_args(link)})
+    exports = sorted({arg for link in links for arg in link_exports(link)})
     options = [*link_arguments({"roots": roots}), *exports]
     by_id = {record["id"]: path for record, path in zip([unit, *callees], [obj, *member_objects])}
     objects = [str(by_id[record["id"]]) for record in ordered_object_units(unit, callees)]
@@ -292,7 +302,7 @@ def rebuild_unit(unit, cl, env, build_dir, streams, callees=(), found=None):
         dll = obj.with_suffix(".dll")
         stubs.write_bytes(stub_object(unit["ltcg_link"]["stubs"]))
         linker = Path(cl).with_name("LINK.EXE")
-        exports = vtable_export_args(unit["ltcg_link"]) + box_face_export_args(unit["ltcg_link"])
+        exports = link_exports(unit["ltcg_link"])
         run_tool([str(linker), *link_arguments(unit["ltcg_link"]), *exports,
                   "/OUT:" + str(dll), str(obj), str(stubs)],
                  streams, cwd=build_dir, env=env, stdout=subprocess.DEVNULL)
@@ -421,7 +431,7 @@ def main():
             callees = callee_units(target["units"], unit)
             headers = unit.get("system_headers")
             key = (unit["toolchain"], unit["build_command"], tuple(sorted(unit["inputs"])),
-                   link and (tuple(link["roots"]), tuple(link["stubs"]), tuple(vtable_export_args(link))),
+                   link_recipe_key(link),
                    headers is not None and tuple(sorted(headers.items())))
             if callees:
                 # A unit linked with callees has a recipe of its own, since the callees are part of its build.

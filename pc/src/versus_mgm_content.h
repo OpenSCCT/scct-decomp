@@ -5,6 +5,7 @@
 
 // A child owns this polymorphic object and invokes its deleting destructor.
 struct MgmContent {
+    MgmKeyframe *Keyframe;
     virtual ~MgmContent();
     virtual void ContentSlot1();
     virtual void ContentSlot2();
@@ -16,11 +17,11 @@ struct MgmContent {
 };
 
 struct MgmImageContent : MgmContent {
-    MgmImage *Image;
+    MgmImage *GetImage() const { return static_cast<MgmImage *>(Keyframe); }
 };
 
 struct MgmTextContent : MgmContent {
-    BYTE Unknown04[8];
+    BYTE Unknown08[4];
     TCHAR *Text;
     BYTE Unknown10[5];
     BYTE Flags;

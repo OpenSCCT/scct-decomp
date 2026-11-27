@@ -1,5 +1,6 @@
 #include "versus_polygon_splitting.inl"
 #include "versus_convex_volume.h"
+#include "versus_frustum_query.h"
 
 FPoly FConvexVolume::ClipPolygon(FPoly Polygon) const
 {
