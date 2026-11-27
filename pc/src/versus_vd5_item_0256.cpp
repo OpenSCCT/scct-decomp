@@ -1,5 +1,5 @@
 // Work item 0256 (RVA 0xf4c20-0xf4d94): FMipmap constructors and
-// TArray<FMipmap>::~TArray (UE2 UnTex.h / UnTemplate.h). VC7.0 /O2 /Gy /GX /Ob1 /GL, /LTCG.
+// TArray<FMipmap>::~TArray (UE2 UnTex.h / UnTemplate.h). VC7.0 /O2 /Gy /GX /GL, /LTCG. The array destructor and Remove use /Ob1.
 //
 // FMipmap layout: FMipmapBase 0x00-0x0d (DataPtr, USize, VSize, UBits, VBits),
 // TLazyArray<BYTE> DataArray at 0x10 (FLazyLoader vtable 0x10, SavedAr 0x14,
@@ -115,7 +115,7 @@ FMipmap::FMipmap(BYTE InUBits, BYTE InVBits, INT InSize)
 {
 }
 
-// 0xf4da0 (not in this item; defined so the link gives it retail's convention)
+// 0xf4da0 TArray<FMipmap>::Remove
 template <class T> void TArray<T>::Remove(INT Index, INT Count)
 {
     for (INT i = Index; i < Index + Count; i++)

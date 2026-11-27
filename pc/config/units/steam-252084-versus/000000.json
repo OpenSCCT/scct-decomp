@@ -7809,7 +7809,7 @@
     ],
     "rebuilt_symbol": "??0?$TArray@VFString@@@@QAE@ABV0@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Ob1 /Gy /GX /GL /c /Folocal/versus_vd3r_item_0044_vc70_ltcg_o2ob1gygxgl.obj src/versus_vd3r_item_0044.cpp",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd3r_item_0044_vc70_ltcg_o2gygxgl.obj src/versus_vd3r_item_0044.cpp",
     "identification": "Complete Versus function at RVA 0xc550. Direct call at RVA 0xa67a in the function at RVA 0xa5a0, rebuilt in this batch.",
     "link_bindings": {
       "__ehhandler$??0?$TArray@VFString@@@@QAE@ABV0@@Z": {
@@ -7891,7 +7891,16 @@
     },
     "match": {
       "bytes_sha256": "c558bf7882db4630de9f725fb6c707382fee29d8e4613bfee2b4d4c954c68b94",
-      "inputs_sha256": "9a67b571c1061f19aa55272a6911cd6aa8d4145d0ea8c4743d8a2d595b2821cd"
+      "inputs_sha256": "3c81008698f5e05a11141c4e175632d28e9fefe51b560dfd6fb36b030587fa0e"
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GX",
+        "/GL"
+      ],
+      "basis": "evidence/versus-container-default-inlining.md"
     }
   },
   {
@@ -8159,6 +8168,70 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    }
+  },
+  {
+    "id": "versus-vd-c7d0",
+    "offset": 51152,
+    "size": 69,
+    "inputs": [
+      "src/versus_vd3r_item_0044.cpp"
+    ],
+    "rebuilt_symbol": "?Remove@?$TArray@VFString@@@@QAEXHH@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GX /GL /c /Folocal/versus_vd3r_item_0044_vc70_ltcg_o2ob1gygxgl.obj src/versus_vd3r_item_0044.cpp",
+    "identification": "The FString-array destructor at RVA 0xc5f0 calls this Remove specialization. It walks 12-byte strings, calls FString::~FString at RVA 0x48b0 for each, and then removes the range from the base array.",
+    "link_bindings": {
+      "??1FString@@QAE@XZ": {
+        "va": 277891248,
+        "basis": "FString::~FString destroys the 12-byte string element, including its owned character buffer."
+      },
+      "?Remove@FArray@@QAEXHHH@Z": {
+        "va": 277944768,
+        "basis": "FArray::Remove receives the index, count and element stride after the individual elements have been destroyed."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "??1?$TArray@VFString@@@@QAE@XZ"
+      ],
+      "stubs": [
+        "??0FString@@QAE@ABV0@@Z",
+        "??1FString@@QAE@XZ",
+        "??3@YAXPAX@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?Escape@@YAXPAX@Z",
+        "?FArray_ProtectedCstorTag@@3QBGB",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?MakeList@@YA?AV?$TArray@VFString@@@@XZ",
+        "?MayThrow@@YAXPAX@Z",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "rebuilt_offset": 1168,
+      "rebuilt_address": 268439696,
+      "fields": [
+        [
+          38,
+          "rel32",
+          "??1FString@@QAE@XZ"
+        ],
+        [
+          61,
+          "rel32",
+          "?Remove@FArray@@QAEXHHH@Z"
+        ]
+      ],
+      "symbols": {
+        "??1FString@@QAE@XZ": 268439777,
+        "?Remove@FArray@@QAEXHHH@Z": 268439786
+      }
+    },
+    "match": {
+      "bytes_sha256": "8d8f86bd99e9ddc05c315b83f5911aee356b96fd4ca8b9a1632e4791e56cfe24",
+      "inputs_sha256": "699f3e1593aaf451a350ab1ea929f59f569c4fe640c0ceaa02aeea415656e724"
     }
   },
   {
