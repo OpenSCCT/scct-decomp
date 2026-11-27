@@ -9,6 +9,7 @@
 class FRenderResource;
 class UViewport;
 struct FMipmap;
+struct FColor;
 
 // Engine.RenderedMaterial: 0x4c bytes, 35 virtual functions
 class URenderedMaterial : public UMaterial {
@@ -38,8 +39,8 @@ public:
     UTexture();
     virtual ~UTexture();
     ETextureFormat ConvertDXT(INT MipIndex, UBOOL NoDXT1, UBOOL NoData, BYTE **Dest);
-    virtual void VirtualSlot37();
-    virtual void VirtualSlot38();
+    virtual void ClearColor(FColor Color);
+    virtual void Clear(DWORD ClearFlags);
     virtual void VirtualSlot39();
     virtual void VirtualSlot40();
     virtual void VirtualSlot41();
