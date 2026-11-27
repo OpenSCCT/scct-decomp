@@ -1,4 +1,4 @@
-#include "windows_dispatch_types.h"
+#include "d3dx_box_filter.h"
 
 static const UINT RedBlueMask = 0x00ff00ff;
 static const UINT AlphaGreenMask = 0xff00ff00;
@@ -52,3 +52,6 @@ LONG c_BoxFilter2D_X8R8G8B8(UINT *dst, UINT *src, UINT width, UINT height,
     }
     return 0;
 }
+
+BoxFilter2D *g_pBoxFilter2D_A8R8G8B8 = init_BoxFilter2D_A8R8G8B8;
+BoxFilter2D *g_pBoxFilter2D_X8R8G8B8 = init_BoxFilter2D_X8R8G8B8;

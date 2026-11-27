@@ -5,6 +5,7 @@
     "size": 294,
     "inputs": [
       "src/d3dx_box_filter.cpp",
+      "src/d3dx_box_filter.h",
       "src/windows_dispatch_types.h"
     ],
     "rebuilt_symbol": "?c_BoxFilter2D_A8R8G8B8@@YAJPAI0IIII@Z",
@@ -21,7 +22,7 @@
     },
     "match": {
       "bytes_sha256": "828a01ed08ac3f2859f5c6dcf5c432ddfa7f8eed9d0e294df872dc6670503920",
-      "inputs_sha256": "2aa5ecd5b19871d5cb51f3b6db40c97c94561642a43881e52321bf7bbf4da5fc"
+      "inputs_sha256": "5e9c93b3c5dc856c449525959ccb06ba9ec6835899853c3d0367dceb355170aa"
     }
   },
   {
@@ -30,6 +31,7 @@
     "size": 232,
     "inputs": [
       "src/d3dx_box_filter.cpp",
+      "src/d3dx_box_filter.h",
       "src/windows_dispatch_types.h"
     ],
     "rebuilt_symbol": "?c_BoxFilter2D_X8R8G8B8@@YAJPAI0IIII@Z",
@@ -46,7 +48,115 @@
     },
     "match": {
       "bytes_sha256": "5cd9f03555f4a35e67ef1d8e9e9d91a0f6c49625097d2559213d9ce94a5526fa",
-      "inputs_sha256": "b8e13c0007ff1083978fecaaab24142ae0811513c54e62063e2a14d2d037e4b9"
+      "inputs_sha256": "be0ee59511e2749dd3beee5f594aeb4065e04e5e7a3fdc6699e0be023e0d3b44"
+    }
+  },
+  {
+    "id": "versus-d3dx-box-filter-init-a8r8g8b8",
+    "offset": 2714947,
+    "size": 56,
+    "inputs": [
+      "src/d3dx_box_filter_dispatch.cpp",
+      "src/d3dx_box_filter.h",
+      "src/d3dx_settings.h",
+      "src/windows_dispatch_types.h",
+      "src/d3dx_box_filter.cpp"
+    ],
+    "rebuilt_symbol": "?init_BoxFilter2D_A8R8G8B8@@YAJPAI0IIII@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O1 /Gy /c /Folocal/d3dx_box_filter_dispatch.obj src/d3dx_box_filter_dispatch.cpp",
+    "identification": "The original DirectX 8.1 cd3dxblt.obj names the full 56-byte A8R8G8B8 box-filter initializer. Both lazy entries select MMX or the format-specific scalar implementations on first use.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "original_compiler": "Microsoft C/C++ 13.00.9176 for x86",
+      "flags": [
+        "/O1"
+      ],
+      "basis": "evidence/versus-d3dx8-box-filter-init.md"
+    },
+    "link_bindings": {
+      "?isMMXprocessor@@YAHXZ": {
+        "va": 280547090,
+        "basis": "The existing 176-byte receipt identifies the MMX availability query, including its DisableMMX registry override."
+      },
+      "?g_pBoxFilter2D_A8R8G8B8@@3P6AJPAI0IIII@ZA": {
+        "va": 281272776,
+        "basis": "The writable slot initially contains the named A8R8G8B8 initializer at file offset 0x296d43. Both the original object and rebuilt table emit its named initializer relocation."
+      },
+      "?c_BoxFilter2D_A8R8G8B8@@YAJPAI0IIII@Z": {
+        "va": 280586783,
+        "basis": "The existing scalar A8R8G8B8 receipt verifies the complete named filter at this address."
+      },
+      "?g_pBoxFilter2D_X8R8G8B8@@3P6AJPAI0IIII@ZA": {
+        "va": 281272780,
+        "basis": "The writable slot initially contains the named X8R8G8B8 initializer at file offset 0x296d7b. Both the original object and rebuilt table emit its named initializer relocation."
+      },
+      "?c_BoxFilter2D_X8R8G8B8@@YAJPAI0IIII@Z": {
+        "va": 280587077,
+        "basis": "The existing scalar X8R8G8B8 receipt verifies the complete named filter at this address."
+      },
+      "?mmx_BoxFilter2D_A8R8G8B8@@YAJPAI0IIII@Z": {
+        "va": 280587309,
+        "basis": "The complete 278-byte mmx_BoxFilter2D_A8R8G8B8 object section matches the locked image, including its original call to the 294-byte scalar fallback."
+      }
+    },
+    "match": {
+      "bytes_sha256": "5ae654c4db8b2df1d4e798760096643ada4b5f2c9873d59ec7ded9e44198226d",
+      "inputs_sha256": "6816f3bf867029392cb9a42049498bd42bc0cb0df7d2dac9ff8c11d76c99fae0"
+    }
+  },
+  {
+    "id": "versus-d3dx-box-filter-init-x8r8g8b8",
+    "offset": 2715003,
+    "size": 47,
+    "inputs": [
+      "src/d3dx_box_filter_dispatch.cpp",
+      "src/d3dx_box_filter.h",
+      "src/d3dx_settings.h",
+      "src/windows_dispatch_types.h",
+      "src/d3dx_box_filter.cpp"
+    ],
+    "rebuilt_symbol": "?init_BoxFilter2D_X8R8G8B8@@YAJPAI0IIII@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O1 /Gy /c /Folocal/d3dx_box_filter_dispatch.obj src/d3dx_box_filter_dispatch.cpp",
+    "identification": "The original DirectX 8.1 cd3dxblt.obj names the full 47-byte X8R8G8B8 box-filter initializer. Both lazy entries select MMX or the format-specific scalar implementations on first use.",
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "original_compiler": "Microsoft C/C++ 13.00.9176 for x86",
+      "flags": [
+        "/O1"
+      ],
+      "basis": "evidence/versus-d3dx8-box-filter-init.md"
+    },
+    "link_bindings": {
+      "?isMMXprocessor@@YAHXZ": {
+        "va": 280547090,
+        "basis": "The existing 176-byte receipt identifies the MMX availability query, including its DisableMMX registry override."
+      },
+      "?g_pBoxFilter2D_A8R8G8B8@@3P6AJPAI0IIII@ZA": {
+        "va": 281272776,
+        "basis": "The writable slot initially contains the named A8R8G8B8 initializer at file offset 0x296d43. Both the original object and rebuilt table emit its named initializer relocation."
+      },
+      "?c_BoxFilter2D_A8R8G8B8@@YAJPAI0IIII@Z": {
+        "va": 280586783,
+        "basis": "The existing scalar A8R8G8B8 receipt verifies the complete named filter at this address."
+      },
+      "?g_pBoxFilter2D_X8R8G8B8@@3P6AJPAI0IIII@ZA": {
+        "va": 281272780,
+        "basis": "The writable slot initially contains the named X8R8G8B8 initializer at file offset 0x296d7b. Both the original object and rebuilt table emit its named initializer relocation."
+      },
+      "?c_BoxFilter2D_X8R8G8B8@@YAJPAI0IIII@Z": {
+        "va": 280587077,
+        "basis": "The existing scalar X8R8G8B8 receipt verifies the complete named filter at this address."
+      },
+      "?mmx_BoxFilter2D_A8R8G8B8@@YAJPAI0IIII@Z": {
+        "va": 280587309,
+        "basis": "The complete 278-byte mmx_BoxFilter2D_A8R8G8B8 object section matches the locked image, including its original call to the 294-byte scalar fallback."
+      }
+    },
+    "match": {
+      "bytes_sha256": "3b5f2f7e869bfc8fbd779cbe60cd11ca83723d7ca5d314e31890a9038d9ff52e",
+      "inputs_sha256": "eb6dbdac215492e275a4d1aaf0ee5ecff153fa6a787cebb12bef8ecc0dc742f8"
     }
   },
   {
