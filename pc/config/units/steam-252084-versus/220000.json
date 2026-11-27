@@ -2114,6 +2114,114 @@
     }
   },
   {
+    "id": "versus-mgm-find-area-by-id",
+    "offset": 2254608,
+    "size": 15,
+    "rebuilt_symbol": "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@VMgmId@@@Z",
+    "inputs": [
+      "src/versus_mgm_lookups.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_lookups.obj src/versus_mgm_lookups.cpp",
+    "identification": "Forwards the package and its four-byte MGM ID to the package search. The HUD page loader at RVA 0x2267b0 uses this overload for the P_HudATT page of the Hud package.",
+    "link_bindings": {
+      "?FindArea@MgmPackage@@QAEPAVMgmArea@@VMgmId@@@Z": {
+        "va": 280646288,
+        "basis": "Scans the package object range at +8/+12 and returns the area or page whose ID equals the argument. The HUD package loader searches for P_HudATT and the Spy HUD searches for named Area resources."
+      }
+    },
+    "match": {
+      "bytes_sha256": "cdfdf824c0c30e12e887a984d3682138f90f2088e6780418f63ff73fbc349cd7",
+      "inputs_sha256": "a5d7dd58986058231b96b8ae857dc4e5a7d964fe6f494466934f394dec9023bc"
+    }
+  },
+  {
+    "id": "versus-mgm-find-child-by-id",
+    "offset": 2254624,
+    "size": 15,
+    "rebuilt_symbol": "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@VMgmId@@@Z",
+    "inputs": [
+      "src/versus_mgm_lookups.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_lookups.obj src/versus_mgm_lookups.cpp",
+    "identification": "The ID overload passes the returned MGM ID to the area child search at RVA 0x2a4b70.",
+    "link_bindings": {
+      "?FindChild@MgmArea@@QAEPAVMgmChild@@VMgmId@@@Z": {
+        "va": 280644464,
+        "basis": "Scans the area child range at +0x28/+0x2c, asking each child for its MGM ID. Hud.mgm groups the exact child names under the matching Area and Page resources."
+      }
+    },
+    "match": {
+      "bytes_sha256": "6af5dbfcf5ece0dac88ad432f9fd7826267c65abb6cafefcde97c3cdf4c0f64b",
+      "inputs_sha256": "4ce78a0f466ccc457c312cdeea96ef038303f6d2f66c33deeb90e251414a0438"
+    }
+  },
+  {
+    "id": "versus-mgm-find-area-by-name",
+    "offset": 2254640,
+    "size": 33,
+    "rebuilt_symbol": "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z",
+    "inputs": [
+      "src/versus_mgm_lookups.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_lookups.obj src/versus_mgm_lookups.cpp",
+    "identification": "The Spy HUD initializer looks up A_JaugeEnergie and A_Radar with this overload. Versus/Menus/Hud.mgm contains both Area resources and gives them the CRC32 of their lowercase name.",
+    "link_bindings": {
+      "?MgmNameId@@YA?AVMgmId@@PBD@Z": {
+        "va": 280651584,
+        "basis": "Lowercases a copy of the input name and calculates its CRC32 with polynomial 0xedb88320. The ID of A_JaugeEnergie in the retail Hud.mgm is 2989371901, the CRC32 of a_jaugeenergie."
+      },
+      "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@VMgmId@@@Z": {
+        "va": 280127248,
+        "basis": "Forwards the package and its four-byte MGM ID to the package search. The HUD page loader at RVA 0x2267b0 uses this overload for the P_HudATT page of the Hud package."
+      }
+    },
+    "match": {
+      "bytes_sha256": "fc672a4ce98c6dc19fd5a738e5ed6e157f75ad61ab745ac45cc52438a346b562",
+      "inputs_sha256": "dd6c3d95e9f207a7d9a7cd5c0d7eb23eabb22ff97aff8aa936b8adb796f4a16e"
+    }
+  },
+  {
+    "id": "versus-mgm-find-child-by-name",
+    "offset": 2254688,
+    "size": 33,
+    "rebuilt_symbol": "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z",
+    "inputs": [
+      "src/versus_mgm_lookups.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_lookups.obj src/versus_mgm_lookups.cpp",
+    "identification": "The Spy HUD looks up the IMAGE PC_button and TEXT textSticky1 beneath A_InteractionStickyCam. Versus/Menus/Hud.mgm supplies their names, nesting, types and lowercase CRC32 IDs.",
+    "link_bindings": {
+      "?MgmNameId@@YA?AVMgmId@@PBD@Z": {
+        "va": 280651584,
+        "basis": "Lowercases a copy of the input name and calculates its CRC32 with polynomial 0xedb88320. The ID of A_JaugeEnergie in the retail Hud.mgm is 2989371901, the CRC32 of a_jaugeenergie."
+      },
+      "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@VMgmId@@@Z": {
+        "va": 280127264,
+        "basis": "The ID overload passes the returned MGM ID to the area child search at RVA 0x2a4b70."
+      }
+    },
+    "match": {
+      "bytes_sha256": "e67b107904d852f825da9ccd982a18b87cbb535f0733a4b222ea29e4b5626270",
+      "inputs_sha256": "a5b6f9f654873e7ccd35c18eeb83b728e7e45bb53a5b626fb164de6dac97aa1e"
+    }
+  },
+  {
     "id": "simple-table-destroy-226790",
     "size": 31,
     "offset": 2254736,

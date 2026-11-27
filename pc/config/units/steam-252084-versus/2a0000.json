@@ -1134,16 +1134,19 @@
     "id": "versus-leaf-2a4880",
     "offset": 2771072,
     "size": 12,
-    "rebuilt_symbol": "?GetUnk24@UnkType_10ba4880@@QAEPAHPAH@Z",
+    "rebuilt_symbol": "?GetId@MgmChild@@QBE?AVMgmId@@XZ",
     "inputs": [
-      "src/versus_leaf_2a4880.cpp"
+      "src/versus_mgm_ids.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_leaf_2a4880.obj src/versus_leaf_2a4880.cpp",
-    "identification": "Complete Versus function at file offset 0x2a4880 (VA 0x10ba4880): stores the int at 0x24 through the out-pointer argument and returns it. The class, method and element struct names are invented placeholders; the offsets, the element stride and the argument sizes are the binary's.",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_ids.obj src/versus_mgm_ids.cpp",
+    "identification": "The MGM area child search calls this getter to return the child ID at +0x24 by value. MSVC returns its four-byte class using a hidden destination, which distinguishes this member from a source-level out parameter.",
     "match": {
       "bytes_sha256": "882927cd2d4bab506455a07314226c5d31f3136be456d6b2f0cb52820be5ad56",
-      "inputs_sha256": "1f93ac2429d793b8b94e0f90c66448482cd510a97f50369f5bc5f1ea323d7cd1"
+      "inputs_sha256": "c384defe29852e62f66839098c5fa00fe2a45a90ace784275fd60cb26c453939"
     }
   },
   {
@@ -1249,6 +1252,31 @@
     }
   },
   {
+    "id": "versus-mgm-area-find-child",
+    "offset": 2771824,
+    "size": 56,
+    "rebuilt_symbol": "?FindChild@MgmArea@@QAEPAVMgmChild@@VMgmId@@@Z",
+    "inputs": [
+      "src/versus_mgm_lookups.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_lookups.obj src/versus_mgm_lookups.cpp",
+    "identification": "Scans the area child range at +0x28/+0x2c, asking each child for its MGM ID. Hud.mgm groups the exact child names under the matching Area and Page resources.",
+    "link_bindings": {
+      "?GetId@MgmChild@@QBE?AVMgmId@@XZ": {
+        "va": 280643712,
+        "basis": "The MGM area child search calls this getter to return the child ID at +0x24 by value. MSVC returns its four-byte class using a hidden destination, which distinguishes this member from a source-level out parameter."
+      }
+    },
+    "match": {
+      "bytes_sha256": "dc2828f54e4de1cad62123478353dc5e3893aad13e5d72c397275b11d0e3b16c",
+      "inputs_sha256": "8e508f26a6d537b126233c843922060b8497158a9658d8d47d31df7b387d1980"
+    }
+  },
+  {
     "id": "table-scalar-delete-2a4ff0",
     "size": 30,
     "offset": 2772976,
@@ -1286,16 +1314,19 @@
     "id": "versus-leaf-2a5090",
     "offset": 2773136,
     "size": 12,
-    "rebuilt_symbol": "?CopyField20@UnkType_10ba5090@@QAEPAHPAH@Z",
+    "rebuilt_symbol": "?GetId@MgmArea@@QBE?AVMgmId@@XZ",
     "inputs": [
-      "src/versus_leaf_2a5090.cpp"
+      "src/versus_mgm_ids.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_leaf_2a5090.obj src/versus_leaf_2a5090.cpp",
-    "identification": "Complete Versus function at file offset 0x2a5090 (VA 0x10ba5090), 12 bytes: stores the int at +0x20 through its out-argument and returns that argument (ret 4). Class and method names are invented; the bytes are the binary's.",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_ids.obj src/versus_mgm_ids.cpp",
+    "identification": "The MGM package lookup calls this getter for each area or page, returning the ID stored at +0x20 by value. P_HudATT and A_JaugeEnergie match the IDs in the shipped Hud.mgm package.",
     "match": {
       "bytes_sha256": "9a634b06cf67a6a46d9d1999aa003d3390bc89406ef199d448c5c6d66568e1e9",
-      "inputs_sha256": "63551c73a83f51591fc78b3942071728526405a99e2e88772f6e5120a508a757"
+      "inputs_sha256": "9287a8abaf19c206c0f2dac927e750816a0d4a310314e51a16ca1d3348b42480"
     }
   },
   {
@@ -1395,6 +1426,31 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-mgm-package-find-area",
+    "offset": 2773648,
+    "size": 56,
+    "rebuilt_symbol": "?FindArea@MgmPackage@@QAEPAVMgmArea@@VMgmId@@@Z",
+    "inputs": [
+      "src/versus_mgm_lookups.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_lookups.obj src/versus_mgm_lookups.cpp",
+    "identification": "Scans the package object range at +8/+12 and returns the area or page whose ID equals the argument. The HUD package loader searches for P_HudATT and the Spy HUD searches for named Area resources.",
+    "link_bindings": {
+      "?GetId@MgmArea@@QBE?AVMgmId@@XZ": {
+        "va": 280645776,
+        "basis": "The MGM package lookup calls this getter for each area or page, returning the ID stored at +0x20 by value. P_HudATT and A_JaugeEnergie match the IDs in the shipped Hud.mgm package."
+      }
+    },
+    "match": {
+      "bytes_sha256": "6a5ade839ade50cf52d1019af1cbd4528a77775053394938f92369b8f4004ecf",
+      "inputs_sha256": "44a662617651080155e3b825c4101b7a987668fd3b2ac633790a32e6d2f86f5e"
     }
   },
   {
