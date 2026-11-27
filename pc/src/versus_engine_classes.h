@@ -583,26 +583,7 @@ public:
     BYTE unk_50[0x28];
 };
 
-// Engine.Material: 0x4c bytes, 35 virtual functions
-class UMaterial : public UObject {
-public:
-    virtual ~UMaterial();
-    virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
-    virtual void VirtualSlot24();
-    virtual void VirtualSlot25();
-    virtual void VirtualSlot26();
-    virtual void VirtualSlot27();
-    virtual void VirtualSlot28();
-    virtual void VirtualSlot29();
-    virtual void VirtualSlot30();
-    virtual void VirtualSlot31();
-    virtual void VirtualSlot32();
-    virtual void VirtualSlot33();
-    virtual void VirtualSlot34();
-
-    BYTE unk_28[0x24];
-};
+#include "versus_material.h"
 
 // Engine.RenderedMaterial: 0x4c bytes, 35 virtual functions
 class URenderedMaterial : public UMaterial {

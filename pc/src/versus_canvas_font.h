@@ -3,7 +3,7 @@
 
 #include "versus_build.h"
 #include "unreal_object.h"
-#include "unreal_containers.h"
+#include "versus_arrays.h"
 
 class UMaterial;
 
@@ -51,7 +51,8 @@ public:
 
     void GetCharSize(TCHAR Char, INT &Width, INT &Height) const
     {
-        Width = Height = 0;
+        Width = 0;
+        Height = 0;
         TCHAR Ch = RemapChar(Char);
         if (Ch < Characters.ArrayNum) {
             const FFontCharacter &Glyph = static_cast<const FFontCharacter *>(Characters.Data)[Ch];

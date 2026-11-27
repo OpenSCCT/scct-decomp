@@ -2103,12 +2103,20 @@
     "offset": 1122128,
     "size": 559,
     "inputs": [
-      "src/versus_vd5_item_0351.cpp"
+      "src/versus_canvas_render.cpp",
+      "src/versus_build.h",
+      "src/versus_canvas_util.h",
+      "src/versus_arrays.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/versus_material.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h"
     ],
     "rebuilt_symbol": "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd5_item_0351_vc70_ltcg_o2gygl.obj src/versus_vd5_item_0351.cpp",
-    "identification": "Complete Versus function at RVA 0x111f50. Direct call at RVA 0xe6bbc in the function at RVA 0xe69d0, rebuilt in this batch.",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_render.obj src/versus_canvas_render.cpp",
+    "identification": "The glyph drawer calls FCanvasUtil::DrawTile at RVA 0xff746 with a material, color, screen rectangle, texture rectangle and depth. UCanvas::DrawTile at RVA 0xff300 calls the same renderer at 0xff38c. Two material size virtuals and six 24-byte FCanvasVertex additions build a pair of textured triangles. The existing public FCanvasUtil::DrawTile receipt established these 559 bytes. The shared implementation now uses the original FArray::Add and the four UCanvas entry points that reach it, together with the independently receipted FCanvasUtil::Flush in the same batch renderer.",
     "link_bindings": {
       "?Flush@FCanvasUtil@@QAEXXZ": {
         "va": 278994016,
@@ -2118,35 +2126,16 @@
         "va": 281086460,
         "basis": "Retail function, table, global or constant referenced by the complete function."
       },
-      "?Add@FCanvasVertexArray@@QAEHHH@Z": {
+      "?Add@FArray@@QAEHHH@Z": {
         "va": 277890272,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The same FArray::Add at RVA 0x44e0 used by the class-registration and FName receipts. All six additions request one 24-byte FCanvasVertex."
       }
     },
     "ltcg_link": {
       "roots": [
-        "?Driver_111f50@@YAXPAMPAVUMaterial@@UFColor@@@Z",
-        "?Driver_112180@@YAXPAUUnnamedOwner_10c5a0@@@Z",
-        "?Driver_112240@@YAXPAVFCanvasUtil@@@Z",
-        "?Driver_1122a0@@YAXPBUFVector@@PAMPAUFColor@@PAVUMaterial@@EKK@Z"
+        "?WrappedStrLenf@UCanvas@@QAAXPAVUFont@@AAH1PBGZZ"
       ],
-      "stubs": [
-        "?Add@FArray@@QAEHHH@Z",
-        "?Add@FCanvasVertexArray@@QAEHHH@Z",
-        "?Escape@@YAXPAX@Z",
-        "?ExtBetween@@YAXPAUUnnamedOwner_10c5a0@@@Z",
-        "?FCanvasUtil_BlendMaterial@@3PAVUnnamedBlend_1122a0@@A",
-        "?FMatrix_Identity@@3UFMatrix@@A",
-        "?GError@@3PAVFOutputDevice@@A",
-        "?GTransientPackage@@3PAVUObject@@A",
-        "?GUnnamedHook_cc4574@@3P6AXPAVUObject@@@ZA",
-        "?GUnnamedRoots_c92540@@3PAUFUnnamedRoots@@A",
-        "?GUnnamedVector_ccacc0@@3PAUFVector@@A",
-        "?MakeCanvas@@YAPAVFCanvasUtil@@XZ",
-        "?StaticConstructObject@@YAPAVUObject@@PAVUClass@@PAV1@HK1PAVFOutputDevice@@11@Z",
-        "?UnnamedBlend_1122a0_Class@@3VUClass@@A",
-        "__fltused"
-      ],
+      "stubs": [],
       "rebuilt_offset": 1024,
       "rebuilt_address": 268439552,
       "fields": [
@@ -2168,44 +2157,44 @@
         [
           138,
           "rel32",
-          "?Add@FCanvasVertexArray@@QAEHHH@Z"
+          "?Add@FArray@@QAEHHH@Z"
         ],
         [
           210,
           "rel32",
-          "?Add@FCanvasVertexArray@@QAEHHH@Z"
+          "?Add@FArray@@QAEHHH@Z"
         ],
         [
           278,
           "rel32",
-          "?Add@FCanvasVertexArray@@QAEHHH@Z"
+          "?Add@FArray@@QAEHHH@Z"
         ],
         [
           346,
           "rel32",
-          "?Add@FCanvasVertexArray@@QAEHHH@Z"
+          "?Add@FArray@@QAEHHH@Z"
         ],
         [
           414,
           "rel32",
-          "?Add@FCanvasVertexArray@@QAEHHH@Z"
+          "?Add@FArray@@QAEHHH@Z"
         ],
         [
           482,
           "rel32",
-          "?Add@FCanvasVertexArray@@QAEHHH@Z"
+          "?Add@FArray@@QAEHHH@Z"
         ]
       ],
       "symbols": {
-        "?Flush@FCanvasUtil@@QAEXXZ": 268440816,
-        "__real@3f800000": 268443648,
-        "?Add@FCanvasVertexArray@@QAEHHH@Z": 268441985
+        "?Flush@FCanvasUtil@@QAEXXZ": 268442640,
+        "__real@3f800000": 268447812,
+        "?Add@FArray@@QAEHHH@Z": 268445175
       }
     },
-    "match": {
-      "bytes_sha256": "09632ce947910ea3f2c111fd13b9215005c1f63c80a362385ca53565d99ae777",
-      "inputs_sha256": "389e32678674cbfccf78b3bea21970de8a756e61be9fd06f4731850b1eea4f4d"
-    },
+    "ltcg_callees": [
+      "versus-canvas-wrapped-print",
+      "versus-vd-111c60"
+    ],
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
       "flags": [
@@ -2213,6 +2202,10 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "09632ce947910ea3f2c111fd13b9215005c1f63c80a362385ca53565d99ae777",
+      "inputs_sha256": "79d1709867e8814e4d2ada890415dbbfd8c6a38623a7ffd8d62513c0bc24c4be"
     }
   },
   {

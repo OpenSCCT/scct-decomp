@@ -29,6 +29,7 @@ public:
     UViewport *Viewport;
     FCanvasUtil *pCanvasUtil;
 
+    DECLARE_NATIVE(execTextSize)
     DECLARE_NATIVE(execRenderMotionTracking)
     void RenderMotionTracking(INT A0, INT A1, INT A2);
     void StrLen(UFont *InFont, FLOAT ScaleX, FLOAT ScaleY, INT &XL, INT &YL, const TCHAR *Text);
