@@ -70,6 +70,31 @@ def named_callees(unit):
     return named
 
 
+def ordered_object_units(unit, callees):
+    """Order and coalesce named LTCG translation units only when the receipt requests it."""
+    records = [unit, *callees]
+    link = unit.get("ltcg_link", {})
+    if "object_order" not in link:
+        return records
+    order = link["object_order"]
+    by_id = {record["id"]: record for record in records}
+    if (not callees or not isinstance(order, list)
+            or not all(isinstance(identifier, str) for identifier in order)
+            or len(order) != len(by_id) or set(order) != set(by_id)):
+        raise ValueError(f"{unit['id']}: object_order must name every unit in the link exactly once")
+
+    result, seen = [], set()
+    for identifier in order:
+        record = by_id[identifier]
+        headers = record.get("system_headers")
+        recipe = (record["toolchain"], record["build_command"], tuple(sorted(record["inputs"])),
+                  None if headers is None else tuple(sorted(headers.items())))
+        if recipe not in seen:
+            seen.add(recipe)
+            result.append(record)
+    return result
+
+
 def callee_units(units, unit):
     """The units a unit links with: those its ltcg_callees name, then those they name, in order.
 
@@ -77,6 +102,7 @@ def callee_units(units, unit):
     decides every calling convention between the units. A callee must carry /GL in its recorded
     command and name the same toolchain, and a unit cannot be its own callee."""
     if not named_callees(unit):
+        ordered_object_units(unit, [])
         return []
     by_id = {u["id"]: u for u in units}
     closure, seen, pending = [], {unit["id"]}, [unit]
@@ -97,6 +123,7 @@ def callee_units(units, unit):
                 raise ValueError(f"{unit['id']}: callee {identifier} names another compiler")
             closure.append(callee)
             pending.append(callee)
+    ordered_object_units(unit, closure)
     return closure
 
 

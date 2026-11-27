@@ -6,7 +6,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "pc"))
 import verify_build  # noqa: E402
-from progress import callee_units  # noqa: E402
+from progress import ordered_object_units, callee_units  # noqa: E402
 
 TOOLCHAIN = "Microsoft C/C++ 13.00.9466 for x86"
 WITH_GL = "cl /nologo /O2 /Gy /GL /c /Folocal/a.obj src/a.cpp"
@@ -52,6 +52,46 @@ class CalleeUnitTests(unittest.TestCase):
             with self.subTest(label):
                 with self.assertRaisesRegex(ValueError, message):
                     callee_units(units, units[0])
+
+
+class ObjectOrderTests(unittest.TestCase):
+    def setUp(self):
+        self.a = unit("a", callees=["b", "c"])
+        self.b = unit("b")
+        self.c = unit("c", command=WITH_GL.replace("src/a.cpp", "src/c.cpp"))
+        self.records = [self.a, self.b, self.c]
+
+    def ordered(self):
+        callees = callee_units(self.records, self.a)
+        return [u["id"] for u in ordered_object_units(self.a, callees)]
+
+    def test_default_preserves_every_record_and_the_primary_stays_first(self):
+        self.assertEqual(self.ordered(), ["a", "b", "c"])
+
+    def test_named_order_can_place_a_callee_first_and_link_each_compile_once(self):
+        self.a["ltcg_link"]["object_order"] = ["c", "b", "a"]
+        self.assertEqual(self.ordered(), ["c", "b"])
+
+    def test_rejects_missing_unknown_repeated_or_nonstring_units(self):
+        for order in ([], ["c", "b"], ["c", "b", "x"], ["a", "b", "b"], ["a", [], "c"]):
+            with self.subTest(order=order), self.assertRaisesRegex(ValueError, "exactly once"):
+                self.a["ltcg_link"]["object_order"] = order
+                self.ordered()
+
+    def test_rejects_order_on_a_standalone_unit(self):
+        self.b["ltcg_link"]["object_order"] = ["b"]
+        with self.assertRaisesRegex(ValueError, "exactly once"):
+            callee_units(self.records, self.b)
+
+    def test_each_compile_input_distinguishes_an_object(self):
+        self.a["ltcg_link"]["object_order"] = ["c", "a", "b"]
+        for field, value in (("inputs", ["src/a.cpp", "src/b.h"]),
+                             ("build_command", WITH_GL.replace("/O2", "/O1")),
+                             ("system_headers", {}), ("toolchain", "another compiler")):
+            with self.subTest(field=field):
+                changed = dict(self.b, **{field: value})
+                self.assertEqual(ordered_object_units(self.a, [changed, self.c]),
+                                 [self.c, self.a, changed])
 
 
 class UnresolvedExternalTests(unittest.TestCase):

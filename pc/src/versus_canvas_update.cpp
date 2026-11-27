@@ -91,18 +91,13 @@ void FCanvasUtil::SetTransforms(FRenderInterface* InRI, FLOAT SizeX, FLOAT SizeY
     ScreenToCanvas = CanvasToScreen.Inverse();
 }
 
-FScaleMatrix::FScaleMatrix(const FVector& Scale)
-    : FMatrix(FPlane(Scale.X, 0, 0, 0), FPlane(0, Scale.Y, 0, 0), FPlane(0, 0, Scale.Z, 0), FPlane(0, 0, 0, 1)) {}
-
-FTranslationMatrix::FTranslationMatrix(const FVector& Delta)
-    : FMatrix(FPlane(1, 0, 0, 0), FPlane(0, 1, 0, 0), FPlane(0, 0, 1, 0), FPlane(Delta.X, Delta.Y, Delta.Z, 1)) {}
-
-FMatrix GIdentityMatrix(
-    FPlane(1.f, 0.f, 0.f, 0.f),
-    FPlane(0.f, 1.f, 0.f, 0.f),
-    FPlane(0.f, 0.f, 1.f, 0.f),
-    FPlane(0.f, 0.f, 0.f, 1.f));
 
 #include "versus_matrix_determinant.inl"
 #include "versus_matrix_inverse.inl"
 #include "versus_matrix_product.inl"
+
+// FPlane::FPlane
+FPlane::FPlane(FLOAT InX, FLOAT InY, FLOAT InZ, FLOAT InW)
+    : FVector(InX, InY, InZ), W(InW)
+{
+}

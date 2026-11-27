@@ -17,6 +17,7 @@ import tempfile
 
 PC = Path(__file__).resolve().parent
 sys.path.insert(0, str(PC.parent / "tools"))
+from progress import ordered_object_units
 from progress import callee_units, compare_unit, summary, verify, write
 from link_image import link_arguments, stub_object
 from link_vtable_exports import vtable_export_args
@@ -247,7 +248,8 @@ def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, st
     linker = Path(cl).with_name("LINK.EXE")
     exports = sorted({arg for link in links for arg in vtable_export_args(link)})
     options = [*link_arguments({"roots": roots}), *exports]
-    objects = [str(obj), *(str(path) for path in member_objects)]
+    by_id = {record["id"]: path for record, path in zip([unit, *callees], [obj, *member_objects])}
+    objects = [str(by_id[record["id"]]) for record in ordered_object_units(unit, callees)]
     # Continue through code generation so the discovery link also reports compiler-generated
     # externals. The final link below remains strict and rejects unresolved symbols.
     probe = subprocess.run([str(linker), *options, "/FORCE:UNRESOLVED",
