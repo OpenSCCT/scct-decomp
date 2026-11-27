@@ -2,7 +2,9 @@
 #define VERSUS_CANVAS_UTIL_H
 
 #include "versus_build.h"
+#ifndef UNREAL_CONTAINERS_H
 #include "versus_arrays.h"
+#endif
 #include "versus_canvas_matrix.h"
 
 class FRenderInterface;

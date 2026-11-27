@@ -3,14 +3,8 @@
 
 #include "unreal_types.h"
 
-class FMalloc {
-public:
-    virtual void *Malloc(DWORD Count, const TCHAR *Tag);
-    virtual void *Realloc(void *Original, DWORD Count, const TCHAR *Tag);
-    virtual void Free(void *Original);
-};
+#include "versus_malloc.h"
 
-extern FMalloc *GMalloc;
 extern const TCHAR FArrayAddTag[];      // L"FArray::Add"
 extern const TCHAR FArrayTag[];         // L"FArray"
 

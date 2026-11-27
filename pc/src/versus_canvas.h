@@ -2,7 +2,7 @@
 #define VERSUS_CANVAS_H
 
 #include "versus_build.h"
-#ifndef VERSUS_NATIVE_CLASS_TYPES_H
+#if !defined(VERSUS_NATIVE_CLASS_TYPES_H) && !defined(VERSUS_PAWN_ACTION_EVENTS_H)
 #include "unreal_object.h"
 #endif
 #include "unreal_math.h"

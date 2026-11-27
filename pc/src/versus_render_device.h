@@ -40,7 +40,7 @@ public:
     virtual void Slot28();
     virtual void UnSetRes(UViewport *Viewport);
     virtual void Slot30();
-    virtual void Slot31();
+    virtual void FlushResource(unsigned __int64 CacheId);
     virtual void Slot32();
     virtual void Slot33();
     virtual void Slot34();

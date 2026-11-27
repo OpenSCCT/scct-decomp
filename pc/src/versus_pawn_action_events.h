@@ -140,11 +140,14 @@ public:
     virtual void VirtualSlot76();
     virtual void VirtualSlot77();
 
-    BYTE unk_28[0xbc - 0x28];
+    BYTE unk_28[0x80 - 0x28];
+    FVector Location;
+    BYTE unk_8c[0xbc - 0x8c];
     FVector PrePivot;
     BYTE unk_c8[0xe0 - 0xc8];
     FRotator Rotation;
-    BYTE unk_ec[0x1a4 - 0xec];
+    BYTE unk_ec[0x1a0 - 0xec];
+    class ALevelInfo *Level;
     class ULevel *XLevel;
     BYTE unk_1a8[0x1bc - 0x1a8];
     class UMesh *Mesh;
@@ -175,17 +178,29 @@ public:
     virtual void VirtualSlot81();
     virtual void VirtualSlot82();
 
-    BYTE unk_2f8[0x3c4 - 0x2f8];
+    BYTE unk_2f8[0x308 - 0x2f8];
+    FLOAT FovAngle;
+    BYTE unk_30c[0x3c4 - 0x30c];
 };
 
 class APlayerController : public AController {
 public:
-    virtual void VirtualSlot83();
-    BYTE unk_3c4[0x52c - 0x3c4];
+    virtual void PlayerCalcView(AActor *&ViewActor, FVector &CameraLocation, FRotator &CameraRotation, UBOOL Flag);
+    BYTE unk_3c4[0x4fc - 0x3c4];
+    INT RendMap;
+    BYTE unk_500[0x518 - 0x500];
+    FLOAT SquintingFactor;
+    BYTE unk_51c[0x524 - 0x51c];
+    FLOAT RemanenceBlendFactor;
+    BYTE unk_528[4];
     class AHUD *myHUD;
     BYTE unk_530[0x598 - 0x530];
     class AGameReplicationInfo *GameReplicationInfo;
-    BYTE unk_59c[0x604 - 0x59c];
+    BYTE unk_59c[0x5f0 - 0x59c];
+    BITFIELD unk_5f0_0 : 11;
+    BITFIELD bCaptureRemanence : 1;
+    BITFIELD unk_5f0_12 : 20;
+    BYTE unk_5f4[0x604 - 0x5f4];
 };
 
 class ASPlayerController : public APlayerController {

@@ -166,31 +166,8 @@ public:
 
 // UpdateVertexPools (RVA 0x146800; neutral name; LTCG: Viewport in EBX)
 // Clears Stream bindings on each pool and flushes/deletes expired pools.
-__declspec(noinline) void UpdateVertexPools(UViewport *Viewport)
-{
-    FVertexPool *PrevPool = NULL;
-    FVertexPool *Pool = GFirstVertexPool;
-    while (Pool)
-    {
-        Pool->Stream = NULL;
-        if (--Pool->UnusedFrames <= 0)
-        {
-            if (PrevPool)
-                PrevPool->NextPool = Pool->NextPool;
-            else
-                GFirstVertexPool = Pool->NextPool;
-            Pool->NextPool = NULL;
-            Viewport->RenDev->FlushResource(Pool->GetCacheId());
-            delete Pool;
-            Pool = PrevPool;
-        }
-        PrevPool = Pool;
-        if (Pool)
-            Pool = Pool->NextPool;
-        else
-            Pool = GFirstVertexPool;
-    }
-}
+__declspec(noinline) void UpdateVertexPools(UViewport *Viewport);
+#include "versus_vertex_pool_update.inl"
 
 // ---- Math and StaticMesh collision (0x146890, 0x146910, 0x146a50) ----
 
