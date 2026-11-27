@@ -6,7 +6,7 @@
 #include "versus_mgm.h"
 #include "versus_mgm_content.h"
 
-class APlayerController;
+class ASPlayerController;
 class ASHud;
 
 class MgmPlayerHud : public MgmHudPage {
@@ -18,8 +18,10 @@ public:
     virtual void UpdateClock();
     virtual void UpdateHackTimer();
     virtual void UpdateAlarmTimer();
+    virtual bool UpdateObjectiveTimers();
+    virtual void UpdateObjective();
 
-    APlayerController *Controller;
+    ASPlayerController *Controller;
     ASHud *Hud;
     BYTE Unknownbc[0xc0 - 0xbc];
     DWORD Status[3];
@@ -53,9 +55,10 @@ public:
     MgmArea *ObjectiveTimers[2];
     MgmContent *ObjectiveTimes[2];
     MgmArea *Objective;
-    BYTE Unknown244[0x26c - 0x244];
-    MgmContent *ObjectiveText;
-    BYTE Unknown270[0x278 - 0x270];
+    TCHAR ObjectiveLabel[20];
+    MgmTextContent *ObjectiveText;
+    INT LastObjectiveCount;
+    BYTE Unknown274[4];
     MgmArea *Radar;
     MgmArea *CompassBackground;
     INT RadarIconLeft;

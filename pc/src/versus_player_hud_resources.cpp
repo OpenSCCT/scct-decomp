@@ -39,11 +39,11 @@ void MgmPlayerHud::InitResources()
     if (Controller->GameReplicationInfo->GameMode == GM_DeathMatch) {
         FindMgmArea(Package, "A_Objectif")->SetVisible(0, 1);
         Objective = FindMgmArea(Package, "A_deathmatch");
-        ObjectiveText = FindMgmChild(Objective, "objectif")->Content;
+        ObjectiveText = static_cast<MgmTextContent *>(FindMgmChild(Objective, "objectif")->Content);
     } else {
         FindMgmArea(Package, "A_deathmatch")->SetVisible(0, 1);
         Objective = FindMgmArea(Package, "A_Objectif");
-        ObjectiveText = FindMgmChild(Objective, "objectif")->Content;
+        ObjectiveText = static_cast<MgmTextContent *>(FindMgmChild(Objective, "objectif")->Content);
     }
 
     HackTimer = FindMgmArea(Package, "A_ChronoHack");

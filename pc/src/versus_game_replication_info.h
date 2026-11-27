@@ -31,7 +31,12 @@ public:
     INT                   RemainingTime, ElapsedTime, RemainingMinute;
     FLOAT                 SecondCount;
     INT                   TimeLimit;
-    BYTE                  unk_328[0x378 - 0x328];
+    INT                   TotalTeamLives[2], TimesRespawn, TeamLivesATT, TeamLivesDEF;
+    INT                   NumObjectives, NumDogTagsTaken, NbPublicSlots, iGamesInARow;
+    INT                   iScoresInARow[2], NumDisks, NumDisksToWin, NumDisksMax;
+    INT                   sessionId, GamesInARow, LastTimeObjectif;
+    BYTE                  voiceChatQuality;
+    class ATeamInfo      *Teams[2];
     FString               unk_378;
     FString               unk_384;
     FString               unk_390;

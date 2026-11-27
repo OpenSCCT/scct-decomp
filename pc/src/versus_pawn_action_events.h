@@ -186,7 +186,9 @@ public:
 
     BYTE unk_2f8[0x308 - 0x2f8];
     FLOAT FovAngle;
-    BYTE unk_30c[0x3c4 - 0x30c];
+    BYTE unk_30c[0x388 - 0x30c];
+    class APlayerReplicationInfo *PlayerReplicationInfo;
+    BYTE unk_38c[0x3c4 - 0x38c];
 };
 
 class APlayerController : public AController {
@@ -211,6 +213,7 @@ public:
 
 class ASPlayerController : public APlayerController {
 public:
+    INT eventGetObjectivesLeft();
     void eventClientStopRM(INT TheAction);
     BYTE unk_604[0xc70 - 0x604];
 };
