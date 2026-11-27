@@ -31,64 +31,6 @@ __declspec(noinline) void UCanvas::ClippedPrint(UFont* Font, FLOAT ScaleX, FLOAT
     DrawClippedString(Font, ScaleX, ScaleY, (INT)CurX, (INT)CurY, 1, Text);
 }
 
-// FVector / FPlane / FMatrix from Unreal Engine 2.
-class FVector
-{
-public:
-    FLOAT X, Y, Z;
-    FVector(FLOAT InX, FLOAT InY, FLOAT InZ) : X(InX), Y(InY), Z(InZ) {}
-};
-class FPlane : public FVector
-{
-public:
-    FLOAT W;
-    FPlane(FLOAT InX, FLOAT InY, FLOAT InZ, FLOAT InW) : FVector(InX, InY, InZ), W(InW) {}
-};
-class FMatrix
-{
-public:
-    FLOAT M[4][4];
-    FMatrix() {}
-    FMatrix(FPlane InX, FPlane InY, FPlane InZ, FPlane InW);  // retail 0x1094fbc0
-    FMatrix operator*(const FMatrix& Other) const;             // retail 0x1097b110
-    FMatrix Inverse() const;                                   // retail 0x10953af0
-};
-// Retail 0x10981910 and 0x109819b0 (out of line in this build).
-class FScaleMatrix : public FMatrix
-{
-public:
-    FScaleMatrix(const FVector& Scale);
-};
-class FTranslationMatrix : public FMatrix
-{
-public:
-    FTranslationMatrix(const FVector& Delta);
-};
-
-class FRenderInterface;
-
-// Canvas helper holding the canvas <-> screen transforms (cf. UE2's
-// FCanvasUtil; the class name is neutral, layout from this function).
-class UnnamedCanvasUtil_103f00
-{
-public:
-    DWORD Pad[4];
-    FRenderInterface* RI;           // 0x10
-    FMatrix ScreenToCanvas;         // 0x14
-    FMatrix CanvasToScreen;         // 0x54
-
-    void SetTransforms(FRenderInterface* InRI, FLOAT SizeX, FLOAT SizeY);
-};
-
-// RVA 0x103f00.
-__declspec(noinline) void UnnamedCanvasUtil_103f00::SetTransforms(FRenderInterface* InRI, FLOAT SizeX, FLOAT SizeY)
-{
-    RI = InRI;
-    CanvasToScreen = FTranslationMatrix(FVector(-SizeX / 2.0f - 0.5f, -SizeY / 2.0f - 0.5f, 0.0f))
-                   * FScaleMatrix(FVector(2.0f / SizeX, -2.0f / SizeY, 1.0f));
-    ScreenToCanvas = CanvasToScreen.Inverse();
-}
-
 typedef unsigned char BYTE;
 
 // UObject / UClass from Unreal Engine 2 (Class at 0x24, SuperField at 0x28).
@@ -303,49 +245,6 @@ void Driver_103ed0(UCanvas* C, UFont* F, const TCHAR* T, const TCHAR* T2)
 {
     C->ClippedPrint(F, 1.f, 1.f, 0, T);
     C->ClippedPrint(F, 1.f, 1.f, 1, T2);
-}
-
-__declspec(noinline) FScaleMatrix::FScaleMatrix(const FVector& Scale)
-    : FMatrix(FPlane(Scale.X, 0, 0, 0), FPlane(0, Scale.Y, 0, 0), FPlane(0, 0, Scale.Z, 0), FPlane(0, 0, 0, 1)) {}
-__declspec(noinline) FTranslationMatrix::FTranslationMatrix(const FVector& Delta)
-    : FMatrix(FPlane(1, 0, 0, 0), FPlane(0, 1, 0, 0), FPlane(0, 0, 1, 0), FPlane(Delta.X, Delta.Y, Delta.Z, 1)) {}
-__declspec(noinline) FMatrix FMatrix::operator*(const FMatrix& Other) const
-{
-    FMatrix Result;
-    Result.M[0][0] = M[0][0] * Other.M[0][0] + M[0][1] * Other.M[1][0] + M[0][2] * Other.M[2][0] + M[0][3] * Other.M[3][0];
-    Result.M[0][1] = M[0][0] * Other.M[0][1] + M[0][1] * Other.M[1][1] + M[0][2] * Other.M[2][1] + M[0][3] * Other.M[3][1];
-    Result.M[0][2] = M[0][0] * Other.M[0][2] + M[0][1] * Other.M[1][2] + M[0][2] * Other.M[2][2] + M[0][3] * Other.M[3][2];
-    Result.M[0][3] = M[0][0] * Other.M[0][3] + M[0][1] * Other.M[1][3] + M[0][2] * Other.M[2][3] + M[0][3] * Other.M[3][3];
-    Result.M[1][0] = M[1][0] * Other.M[0][0] + M[1][1] * Other.M[1][0] + M[1][2] * Other.M[2][0] + M[1][3] * Other.M[3][0];
-    Result.M[1][1] = M[1][0] * Other.M[0][1] + M[1][1] * Other.M[1][1] + M[1][2] * Other.M[2][1] + M[1][3] * Other.M[3][1];
-    Result.M[1][2] = M[1][0] * Other.M[0][2] + M[1][1] * Other.M[1][2] + M[1][2] * Other.M[2][2] + M[1][3] * Other.M[3][2];
-    Result.M[1][3] = M[1][0] * Other.M[0][3] + M[1][1] * Other.M[1][3] + M[1][2] * Other.M[2][3] + M[1][3] * Other.M[3][3];
-    Result.M[2][0] = M[2][0] * Other.M[0][0] + M[2][1] * Other.M[1][0] + M[2][2] * Other.M[2][0] + M[2][3] * Other.M[3][0];
-    Result.M[2][1] = M[2][0] * Other.M[0][1] + M[2][1] * Other.M[1][1] + M[2][2] * Other.M[2][1] + M[2][3] * Other.M[3][1];
-    Result.M[2][2] = M[2][0] * Other.M[0][2] + M[2][1] * Other.M[1][2] + M[2][2] * Other.M[2][2] + M[2][3] * Other.M[3][2];
-    Result.M[2][3] = M[2][0] * Other.M[0][3] + M[2][1] * Other.M[1][3] + M[2][2] * Other.M[2][3] + M[2][3] * Other.M[3][3];
-    Result.M[3][0] = M[3][0] * Other.M[0][0] + M[3][1] * Other.M[1][0] + M[3][2] * Other.M[2][0] + M[3][3] * Other.M[3][0];
-    Result.M[3][1] = M[3][0] * Other.M[0][1] + M[3][1] * Other.M[1][1] + M[3][2] * Other.M[2][1] + M[3][3] * Other.M[3][1];
-    Result.M[3][2] = M[3][0] * Other.M[0][2] + M[3][1] * Other.M[1][2] + M[3][2] * Other.M[2][2] + M[3][3] * Other.M[3][2];
-    Result.M[3][3] = M[3][0] * Other.M[0][3] + M[3][1] * Other.M[1][3] + M[3][2] * Other.M[2][3] + M[3][3] * Other.M[3][3];
-    return Result;
-}
-extern FMatrix GIdentityMatrix;
-FLOAT Determinant(const FMatrix* M);
-__declspec(noinline) FMatrix FMatrix::Inverse() const
-{
-    if (Determinant(this) == 0.0f)
-        return GIdentityMatrix;
-    FMatrix R;
-    for (INT i = 0; i < 4; i++)
-        for (INT j = 0; j < 4; j++)
-            R.M[i][j] = M[j][i];
-    return R;
-}
-void Driver_103f00(UnnamedCanvasUtil_103f00* U, FRenderInterface* RI, INT X, INT Y, UnnamedCanvasUtil_103f00* U2)
-{
-    U->SetTransforms(RI, (FLOAT)X, (FLOAT)Y);
-    U2->SetTransforms(RI, (FLOAT)Y, (FLOAT)X);
 }
 
 __declspec(noinline) void UnnamedRefHolder_1a50::AddRef(void* Ref)

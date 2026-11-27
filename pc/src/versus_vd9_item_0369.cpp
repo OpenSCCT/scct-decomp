@@ -291,102 +291,7 @@ FSceneNode::FSceneNode(FSceneNode* InParent)
     CameraY = InParent->CameraY;
     Determinant = WorldToScreen.Determinant();
 }
-FMatrix FMatrix::Inverse() const
-{
-    FMatrix Result;
-    FLOAT Det = Determinant();
-
-    if (Det == 0.0f)
-        return GIdentityMatrix;
-
-    FLOAT RDet = 1.0f / Det;
-
-    Result.M[0][0] = RDet * (
-            M[1][1] * (M[2][2] * M[3][3] - M[2][3] * M[3][2]) -
-            M[2][1] * (M[1][2] * M[3][3] - M[1][3] * M[3][2]) +
-            M[3][1] * (M[1][2] * M[2][3] - M[1][3] * M[2][2])
-            );
-    Result.M[0][1] = -RDet * (
-            M[0][1] * (M[2][2] * M[3][3] - M[2][3] * M[3][2]) -
-            M[2][1] * (M[0][2] * M[3][3] - M[0][3] * M[3][2]) +
-            M[3][1] * (M[0][2] * M[2][3] - M[0][3] * M[2][2])
-            );
-    Result.M[0][2] = RDet * (
-            M[0][1] * (M[1][2] * M[3][3] - M[1][3] * M[3][2]) -
-            M[1][1] * (M[0][2] * M[3][3] - M[0][3] * M[3][2]) +
-            M[3][1] * (M[0][2] * M[1][3] - M[0][3] * M[1][2])
-            );
-    Result.M[0][3] = -RDet * (
-            M[0][1] * (M[1][2] * M[2][3] - M[1][3] * M[2][2]) -
-            M[1][1] * (M[0][2] * M[2][3] - M[0][3] * M[2][2]) +
-            M[2][1] * (M[0][2] * M[1][3] - M[0][3] * M[1][2])
-            );
-
-    Result.M[1][0] = -RDet * (
-            M[1][0] * (M[2][2] * M[3][3] - M[2][3] * M[3][2]) -
-            M[2][0] * (M[1][2] * M[3][3] - M[1][3] * M[3][2]) +
-            M[3][0] * (M[1][2] * M[2][3] - M[1][3] * M[2][2])
-            );
-    Result.M[1][1] = RDet * (
-            M[0][0] * (M[2][2] * M[3][3] - M[2][3] * M[3][2]) -
-            M[2][0] * (M[0][2] * M[3][3] - M[0][3] * M[3][2]) +
-            M[3][0] * (M[0][2] * M[2][3] - M[0][3] * M[2][2])
-            );
-    Result.M[1][2] = -RDet * (
-            M[0][0] * (M[1][2] * M[3][3] - M[1][3] * M[3][2]) -
-            M[1][0] * (M[0][2] * M[3][3] - M[0][3] * M[3][2]) +
-            M[3][0] * (M[0][2] * M[1][3] - M[0][3] * M[1][2])
-            );
-    Result.M[1][3] = RDet * (
-            M[0][0] * (M[1][2] * M[2][3] - M[1][3] * M[2][2]) -
-            M[1][0] * (M[0][2] * M[2][3] - M[0][3] * M[2][2]) +
-            M[2][0] * (M[0][2] * M[1][3] - M[0][3] * M[1][2])
-            );
-
-    Result.M[2][0] = RDet * (
-            M[1][0] * (M[2][1] * M[3][3] - M[2][3] * M[3][1]) -
-            M[2][0] * (M[1][1] * M[3][3] - M[1][3] * M[3][1]) +
-            M[3][0] * (M[1][1] * M[2][3] - M[1][3] * M[2][1])
-            );
-    Result.M[2][1] = -RDet * (
-            M[0][0] * (M[2][1] * M[3][3] - M[2][3] * M[3][1]) -
-            M[2][0] * (M[0][1] * M[3][3] - M[0][3] * M[3][1]) +
-            M[3][0] * (M[0][1] * M[2][3] - M[0][3] * M[2][1])
-            );
-    Result.M[2][2] = RDet * (
-            M[0][0] * (M[1][1] * M[3][3] - M[1][3] * M[3][1]) -
-            M[1][0] * (M[0][1] * M[3][3] - M[0][3] * M[3][1]) +
-            M[3][0] * (M[0][1] * M[1][3] - M[0][3] * M[1][1])
-            );
-    Result.M[2][3] = -RDet * (
-            M[0][0] * (M[1][1] * M[2][3] - M[1][3] * M[2][1]) -
-            M[1][0] * (M[0][1] * M[2][3] - M[0][3] * M[2][1]) +
-            M[2][0] * (M[0][1] * M[1][3] - M[0][3] * M[1][1])
-            );
-
-    Result.M[3][0] = -RDet * (
-            M[1][0] * (M[2][1] * M[3][2] - M[2][2] * M[3][1]) -
-            M[2][0] * (M[1][1] * M[3][2] - M[1][2] * M[3][1]) +
-            M[3][0] * (M[1][1] * M[2][2] - M[1][2] * M[2][1])
-            );
-    Result.M[3][1] = RDet * (
-            M[0][0] * (M[2][1] * M[3][2] - M[2][2] * M[3][1]) -
-            M[2][0] * (M[0][1] * M[3][2] - M[0][2] * M[3][1]) +
-            M[3][0] * (M[0][1] * M[2][2] - M[0][2] * M[2][1])
-            );
-    Result.M[3][2] = -RDet * (
-            M[0][0] * (M[1][1] * M[3][2] - M[1][2] * M[3][1]) -
-            M[1][0] * (M[0][1] * M[3][2] - M[0][2] * M[3][1]) +
-            M[3][0] * (M[0][1] * M[1][2] - M[0][2] * M[1][1])
-            );
-    Result.M[3][3] = RDet * (
-            M[0][0] * (M[1][1] * M[2][2] - M[1][2] * M[2][1]) -
-            M[1][0] * (M[0][1] * M[2][2] - M[0][2] * M[2][1]) +
-            M[2][0] * (M[0][1] * M[1][2] - M[0][2] * M[1][1])
-            );
-
-    return Result;
-}
+#include "versus_matrix_inverse.inl"
 
 FLOAT FMatrix::Determinant() const
 {
@@ -412,27 +317,7 @@ FLOAT FMatrix::Determinant() const
                 );
 }
 
-__declspec(noinline) FMatrix FMatrix::operator*(const FMatrix& Other) const
-{
-    FMatrix Result;
-    Result.M[0][0] = M[0][0] * Other.M[0][0] + M[0][1] * Other.M[1][0] + M[0][2] * Other.M[2][0] + M[0][3] * Other.M[3][0];
-    Result.M[0][1] = M[0][0] * Other.M[0][1] + M[0][1] * Other.M[1][1] + M[0][2] * Other.M[2][1] + M[0][3] * Other.M[3][1];
-    Result.M[0][2] = M[0][0] * Other.M[0][2] + M[0][1] * Other.M[1][2] + M[0][2] * Other.M[2][2] + M[0][3] * Other.M[3][2];
-    Result.M[0][3] = M[0][0] * Other.M[0][3] + M[0][1] * Other.M[1][3] + M[0][2] * Other.M[2][3] + M[0][3] * Other.M[3][3];
-    Result.M[1][0] = M[1][0] * Other.M[0][0] + M[1][1] * Other.M[1][0] + M[1][2] * Other.M[2][0] + M[1][3] * Other.M[3][0];
-    Result.M[1][1] = M[1][0] * Other.M[0][1] + M[1][1] * Other.M[1][1] + M[1][2] * Other.M[2][1] + M[1][3] * Other.M[3][1];
-    Result.M[1][2] = M[1][0] * Other.M[0][2] + M[1][1] * Other.M[1][2] + M[1][2] * Other.M[2][2] + M[1][3] * Other.M[3][2];
-    Result.M[1][3] = M[1][0] * Other.M[0][3] + M[1][1] * Other.M[1][3] + M[1][2] * Other.M[2][3] + M[1][3] * Other.M[3][3];
-    Result.M[2][0] = M[2][0] * Other.M[0][0] + M[2][1] * Other.M[1][0] + M[2][2] * Other.M[2][0] + M[2][3] * Other.M[3][0];
-    Result.M[2][1] = M[2][0] * Other.M[0][1] + M[2][1] * Other.M[1][1] + M[2][2] * Other.M[2][1] + M[2][3] * Other.M[3][1];
-    Result.M[2][2] = M[2][0] * Other.M[0][2] + M[2][1] * Other.M[1][2] + M[2][2] * Other.M[2][2] + M[2][3] * Other.M[3][2];
-    Result.M[2][3] = M[2][0] * Other.M[0][3] + M[2][1] * Other.M[1][3] + M[2][2] * Other.M[2][3] + M[2][3] * Other.M[3][3];
-    Result.M[3][0] = M[3][0] * Other.M[0][0] + M[3][1] * Other.M[1][0] + M[3][2] * Other.M[2][0] + M[3][3] * Other.M[3][0];
-    Result.M[3][1] = M[3][0] * Other.M[0][1] + M[3][1] * Other.M[1][1] + M[3][2] * Other.M[2][1] + M[3][3] * Other.M[3][1];
-    Result.M[3][2] = M[3][0] * Other.M[0][2] + M[3][1] * Other.M[1][2] + M[3][2] * Other.M[2][2] + M[3][3] * Other.M[3][2];
-    Result.M[3][3] = M[3][0] * Other.M[0][3] + M[3][1] * Other.M[1][3] + M[3][2] * Other.M[2][3] + M[3][3] * Other.M[3][3];
-    return Result;
-}
+#include "versus_matrix_product.inl"
 void Driver_115530(void* Mem, FLevelSceneNode* P, INT Zone, FMatrix* M)
 {
     Escape(&GIdentityMatrix);

@@ -1,0 +1,31 @@
+#ifndef VERSUS_CANVAS_MATRIX_H
+#define VERSUS_CANVAS_MATRIX_H
+
+#include "unreal_math.h"
+
+struct FPlane : public FVector
+{
+    FLOAT W;
+    FPlane(FLOAT InX, FLOAT InY, FLOAT InZ, FLOAT InW) : FVector(InX, InY, InZ), W(InW) {}
+};
+struct FMatrix
+{
+    FLOAT M[4][4];
+    FMatrix() {}
+    FMatrix(const FPlane& InX, const FPlane& InY, const FPlane& InZ, const FPlane& InW);  // retail 0x1094fbc0
+    FMatrix operator*(const FMatrix& Other) const;             // retail 0x1097b110
+    FLOAT Determinant() const;
+    FMatrix Inverse() const;                                   // retail 0x10953af0
+};
+// Retail 0x10981910 and 0x109819b0 (out of line in this build).
+struct FScaleMatrix : public FMatrix
+{
+    FScaleMatrix(const FVector& Scale);
+};
+struct FTranslationMatrix : public FMatrix
+{
+    FTranslationMatrix(const FVector& Delta);
+};
+
+
+#endif

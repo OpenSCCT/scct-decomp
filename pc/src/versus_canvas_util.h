@@ -3,7 +3,7 @@
 
 #include "versus_build.h"
 #include "versus_arrays.h"
-#include "unreal_math.h"
+#include "versus_canvas_matrix.h"
 
 class FRenderInterface;
 class UMaterial;
@@ -30,11 +30,12 @@ public:
     UMaterial *Material;
     INT NumPrimitives;
     FRenderInterface *RI;
-    FLOAT ScreenToCanvas[4][4];
-    FLOAT CanvasToScreen[4][4];
+    FMatrix ScreenToCanvas;
+    FMatrix CanvasToScreen;
     TArray<FCanvasVertex> Vertices;
     unsigned __int64 CacheId;
 
+    void SetTransforms(FRenderInterface *InRI, FLOAT SizeX, FLOAT SizeY);
     void Flush();
     void DrawTile(FLOAT X1, FLOAT Y1, FLOAT X2, FLOAT Y2, FLOAT U1, FLOAT V1,
         FLOAT U2, FLOAT V2, FLOAT Z, UMaterial *Material, FColor Color);

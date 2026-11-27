@@ -16,6 +16,7 @@ class FCanvasUtil;
 class UCanvas : public UObject {
 public:
     virtual ~UCanvas();
+    void Update();
 
     UFont *Font;
     FLOAT OrgX, OrgY;

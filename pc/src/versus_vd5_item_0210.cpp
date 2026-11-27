@@ -6,12 +6,6 @@ typedef float FLOAT;
 typedef unsigned short TCHAR;
 typedef unsigned char BYTE;
 
-struct FColor {
-    BYTE R, G, B, A;
-    FColor() {}
-    FColor(BYTE InR, BYTE InG, BYTE InB, BYTE InA) : R(InR), G(InG), B(InB), A(InA) {}
-};
-
 struct FVector {
     FLOAT X, Y, Z;
     FVector() {}
@@ -31,40 +25,8 @@ FVector FLinePlaneIntersection(const FVector &Point1, const FVector &Point2, con
     return Point1 + (Point2 - Point1) * ((Plane.W - (Point1 | Plane)) / ((Point2 - Point1) | Plane));
 }
 
-// Render device / interface reached through UViewport+0x140 (unnamed, slot 4 clears the screen).
-class URenderInterface_e7720 {
-public:
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void Clear(UBOOL UseColor, FColor Color, UBOOL UseDepth, FLOAT Depth, UBOOL UseStencil, DWORD Stencil);
-};
-
-class UViewport {
-public:
-    virtual void vpad00(); virtual void vpad01(); virtual void vpad02(); virtual void vpad03();
-    virtual void vpad04(); virtual void vpad05(); virtual void vpad06(); virtual void vpad07();
-    virtual void vpad08(); virtual void vpad09(); virtual void vpad10(); virtual void vpad11();
-    virtual void vpad12(); virtual void vpad13(); virtual void vpad14(); virtual void vpad15();
-    virtual void vpad16(); virtual void vpad17(); virtual void vpad18(); virtual void vpad19();
-    virtual void vpad20(); virtual void vpad21(); virtual void vpad22(); virtual void vpad23();
-    virtual void vpad24(); virtual void vpad25(); virtual void vpad26(); virtual void vpad27();
-    virtual void vpad28(); virtual void vpad29(); virtual void vpad30(); virtual void vpad31();
-    virtual void vpad32(); virtual void vpad33(); virtual void vpad34(); virtual void vpad35();
-    virtual void Present(); // slot 36 (+0x90)
-    BYTE Pad04[0x64];
-    class UCanvas *Canvas;             // +0x68
-    BYTE Pad6C[0x140 - 0x6C];
-    URenderInterface_e7720 *RI;        // +0x140
-};
-
-class UClient {
-public:
-    BYTE Pad00[0x2C];
-    UViewport **Viewports;             // +0x2C (TArray data)
-    INT ViewportsNum;                  // +0x30
-};
+class UClient;
+class UViewport;
 
 class UObject {
 public:
@@ -294,7 +256,6 @@ public:
     static void InternalConstructor(void *Storage);
     UGameEngine();
     DWORD HashKey_e77b0(INT Key);
-    void DrawFirstViewport_e7720();
     void Tick_e77d0(void *A, void *B);
     void BrowseInitialMap_e7880();
 
@@ -306,32 +267,6 @@ UGameEngine::UGameEngine()
 :   LastURL(UGameEngine_EmptyURL)
 {}
 
-
-class UCanvas : public UObject {
-public:
-    BYTE Pad28[0x34 - 0x28];
-    FLOAT ClipX;                        // +0x34
-    FLOAT ClipY;                        // +0x38
-    BYTE Pad3C[0x58 - 0x3C];
-    INT SizeX;                          // +0x58
-    INT SizeY;                          // +0x5C
-    BYTE Pad60[0x78 - 0x60];
-    UViewport *Viewport;                // +0x78
-    void Update();                      // FUN_10a00d30 (LTCG, this in ESI)
-};
-void *FindCanvasResetEvent(UCanvas *Canvas);
-INT appFloor(FLOAT F);
-
-// Retail body of FUN_10a00d30 is larger; this stand-in keeps it out of line with this in ESI.
-void UCanvas::Update()
-{
-    ProcessEvent(FindCanvasResetEvent(this), 0, 0, 0);
-    ClipX = (FLOAT)Viewport->Canvas->SizeX;
-    SizeX = appFloor(ClipX);
-    ClipY = (FLOAT)Viewport->Canvas->SizeY;
-    SizeY = appFloor(ClipY);
-    ProcessEvent(FindCanvasResetEvent(this), 0, 0, 0);
-}
 
 // Unnamed object at +0x40 of the first argument of slot 54 (neutral names).
 class UnnamedSink_e77d0 {
@@ -400,28 +335,8 @@ DWORD UGameEngine::HashKey_e77b0(INT Key)
     return (Key >> 16) ^ (Key * 237) ^ (Key << 16) ^ 0x93FE92CE;
 }
 
-// Reflected vtable slot 52: clear and draw the first viewport.
-void UGameEngine::DrawFirstViewport_e7720()
-{
-    if (Client && Client->ViewportsNum) {
-        UViewport *Viewport = Client->Viewports[0];
-        if (Viewport && Viewport->Canvas && Viewport->RI) {
-            Viewport->Canvas->Update();
-            Viewport->RI->Clear(0, FColor(0, 0, 0, 255), 1, 1.0f, 1, 0);
-            Draw(Viewport, 1, 0, 0);
-            Viewport->Present();
-        }
-    }
-}
-
 // Scaffolding for the LTCG link, not part of the unit.
 void Escape(void *);
-void Driver_e7720(UGameEngine *E)
-{
-    void (UGameEngine::*P)() = &UGameEngine::DrawFirstViewport_e7720;
-    Escape(&P);
-    E->DrawFirstViewport_e7720();
-}
 void Driver_e77d0(UGameEngine *E, void *A, void *B)
 {
     void (UGameEngine::*P)(void *, void *) = &UGameEngine::Tick_e77d0;
