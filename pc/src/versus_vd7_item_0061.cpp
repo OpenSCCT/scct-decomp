@@ -1,13 +1,12 @@
 // Work item 0061: Versus RVA 0x135ac0-0x135d94, 6 functions, 664 bytes.
 // All six functions are VC7.0 LTCG (custom calling conventions); verified with try_ltcg.py.
 //   0x135ac0: UnnamedSceneAllocDerived_135ac0::~UnnamedSceneAllocDerived_135ac0 (this in ESI)
-//   0x135b00: UnnamedZoneVis_135b00::FilterBox (this on stack, Box in EAX)
-//   0x135b80: UnnamedZoneVis_135b00::FilterSphere (this in EDI, Sphere in ECX)
-//   0x135be0: UnnamedZoneVis_135b00::FilterBounds (this in EAX, Frustum in EDI)
+//   0x135b00: FZoneVisibility::FilterBox (this on stack, Box in EAX)
+//   0x135b80: FZoneVisibility::FilterSphere (this in EDI, Sphere in ECX)
 //   0x135c10: FDynamicActor::BoxDistanceSquared (this in EAX, Point in ECX)
 //   0x135d00: FDynamicActor::CheckCullDistance (this in EAX, Viewport in ECX, ViewOrigin on stack)
 
-#include "versus_frustum_query.h"
+#include "versus_zone_visibility.h"
 
 extern "C" double __cdecl tan(double);
 #pragma intrinsic(tan)
@@ -75,13 +74,6 @@ public:
     BYTE BoxCheck(const FVector &Origin, const FVector &Extent) const;
 };
 
-template <class ElementType> class TList
-{
-public:
-    ElementType Element;
-    TList<ElementType> *Next;
-};
-
 // RVA 0x135ac0: Destructor for unnamed scene allocation struct (neutral name;
 // unwind funclet at 0x2d7cf0 jumps here with this in ESI, and base unwind at
 // 0x2d7cf8 jumps to 0x135a80 freeing +0x10).
@@ -112,27 +104,15 @@ UnnamedSceneAllocDerived_135ac0::~UnnamedSceneAllocDerived_135ac0()
         GMalloc->Free(AllocPtr_14);
 }
 
-// RVA 0x135b00, 0x135b80, 0x135be0: Per-zone convex visibility lists (neutral name).
-class UnnamedZoneVis_135b00
-{
-public:
-    TList<FConvexVolume *> *InclusionList;
-    TList<FConvexVolume *> *ExclusionList;
-
-    __declspec(noinline) UBOOL FilterBox(const FBox &Box) const;
-    __declspec(noinline) UBOOL FilterSphere(const FSphere &Sphere) const;
-    __declspec(noinline) UBOOL FilterBounds(const FLightFrustum &Frustum) const;
-};
-
-// RVA 0x135b00: UnnamedZoneVis_135b00::FilterBox
-UBOOL UnnamedZoneVis_135b00::FilterBox(const FBox &Box) const
+// RVA 0x135b00: FZoneVisibility::FilterBox
+__declspec(noinline) UBOOL FZoneVisibility::FilterBox(const FBox &Box) const
 {
     FVector Extents;
     FVector Center;
     Box.GetCenterAndExtents(Center, Extents);
 
     UBOOL Visible = 0;
-    for (TList<FConvexVolume *> *Volume = InclusionList; Volume; Volume = Volume->Next)
+    for (TList<FConvexVolume *> *Volume = Portals; Volume; Volume = Volume->Next)
     {
         if (Volume->Element->BoxCheck(Center, Extents) & OUTCODE_Inside)
         {
@@ -142,7 +122,7 @@ UBOOL UnnamedZoneVis_135b00::FilterBox(const FBox &Box) const
     }
     if (Visible)
     {
-        for (TList<FConvexVolume *> *Volume = ExclusionList; Volume; Volume = Volume->Next)
+        for (TList<FConvexVolume *> *Volume = AntiPortals; Volume; Volume = Volume->Next)
         {
             if (!(Volume->Element->BoxCheck(Center, Extents) & OUTCODE_Outside))
             {
@@ -154,11 +134,11 @@ UBOOL UnnamedZoneVis_135b00::FilterBox(const FBox &Box) const
     return Visible;
 }
 
-// RVA 0x135b80: UnnamedZoneVis_135b00::FilterSphere
-UBOOL UnnamedZoneVis_135b00::FilterSphere(const FSphere &Sphere) const
+// RVA 0x135b80: FZoneVisibility::FilterSphere
+__declspec(noinline) UBOOL FZoneVisibility::FilterSphere(const FSphere &Sphere) const
 {
     UBOOL Visible = 0;
-    for (TList<FConvexVolume *> *Volume = InclusionList; Volume; Volume = Volume->Next)
+    for (TList<FConvexVolume *> *Volume = Portals; Volume; Volume = Volume->Next)
     {
         if (Volume->Element->SphereCheck(Sphere) & OUTCODE_Inside)
         {
@@ -168,7 +148,7 @@ UBOOL UnnamedZoneVis_135b00::FilterSphere(const FSphere &Sphere) const
     }
     if (Visible)
     {
-        for (TList<FConvexVolume *> *Volume = ExclusionList; Volume; Volume = Volume->Next)
+        for (TList<FConvexVolume *> *Volume = AntiPortals; Volume; Volume = Volume->Next)
         {
             if (!(Volume->Element->SphereCheck(Sphere) & OUTCODE_Outside))
             {
@@ -178,17 +158,6 @@ UBOOL UnnamedZoneVis_135b00::FilterSphere(const FSphere &Sphere) const
         }
     }
     return Visible;
-}
-
-// RVA 0x135be0: UnnamedZoneVis_135b00::FilterBounds
-UBOOL UnnamedZoneVis_135b00::FilterBounds(const FLightFrustum &Frustum) const
-{
-    for (TList<FConvexVolume *> *Volume = InclusionList; Volume; Volume = Volume->Next)
-    {
-        if (IntersectsFrustumFaces(Frustum, *Volume->Element))
-            return 1;
-    }
-    return 0;
 }
 
 class APlayerController
@@ -357,22 +326,19 @@ void Driver_135ac0(UnnamedSceneAllocDerived_135ac0 *Obj)
     Obj->~UnnamedSceneAllocDerived_135ac0();
 }
 
-UBOOL Driver_135b00(const UnnamedZoneVis_135b00 *Zones, INT ZoneIdx, const FDynamicActor *DynActor)
+UBOOL Driver_135b00(const FZoneVisibility *Zones, INT ZoneIdx, const FDynamicActor *DynActor)
 {
     Escape(&GIsSSE);
     return Zones[ZoneIdx].FilterBox(DynActor->BoundingBox);
 }
 
-UBOOL __fastcall Driver_135b80(const FSphere *S, const UnnamedZoneVis_135b00 *Zones)
+UBOOL __fastcall Driver_135b80(const FSphere *S, const FZoneVisibility *Zones)
 {
     if (!S) Escape(&GIsSSE);
     return Zones->FilterSphere(*S);
 }
 
-UBOOL Driver_135be0(const UnnamedZoneVis_135b00 *Zones, INT ZoneIdx, const FLightFrustum *B)
-{
-    return Zones[ZoneIdx].FilterBounds(*B);
-}
+
 
 FLOAT Driver_135c10(const FDynamicActor *DynActor, const FVector *Pt)
 {

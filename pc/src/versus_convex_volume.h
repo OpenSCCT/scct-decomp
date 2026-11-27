@@ -15,10 +15,6 @@ public:
     FPoly ClipPolygon(FPoly Polygon) const;
 };
 
-struct FLightFrustum
-{
-    FVector Vertices[8];
-    FPlane Planes[6];
-};
+#include "versus_light_frustum.h"
 
 #endif

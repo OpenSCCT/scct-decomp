@@ -34,29 +34,12 @@ class UStaticMesh : public UPrimitive
     UBOOL UseSimpleLineCollision, UseSimpleBoxCollision, UseVertexColor;
 };
 
-template <class T> struct TList {
-    T Element;
-    TList *Next;
-};
 class FBspDrawList
 {
   public:
     void Render(FLevelSceneNode *SceneNode, FRenderInterface *RI, DWORD Flags);
 };
 struct FDynamicLightList;
-struct FDynamicActor {
-    AActor *Actor;
-    INT Revision;
-    FLOAT Determinant;
-    BYTE unk_c[0xe8 - 0x0c];
-    FDynamicLightList *Lights;
-    DWORD unk_ec;
-    FDynamicLightList *SectionLights;
-    void *Projectors;
-    void UpdateLightFade(FLevelSceneNode *SceneNode);
-    void Render(FLevelSceneNode *SceneNode, FDynamicLightList *InLights, void *InProjectors,
-                FRenderInterface *RI, INT Pass, void *PostActors);
-};
 struct FTranslucentListNode {
     UBOOL bIsBsp;
     union {

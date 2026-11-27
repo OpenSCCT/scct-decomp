@@ -5,15 +5,11 @@
 // conventions; function names and Chaos Theory-specific fields/structs here are
 // neutral/inferred where retail carries no symbol.
 
-typedef unsigned char BYTE;
-typedef unsigned short _WORD;
-typedef unsigned short TCHAR;
-typedef int INT;
+#include "versus_build.h"
+#include "unreal_math.h"
+#include "versus_zone_visibility.h"
+
 typedef unsigned int UINT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
-typedef double DOUBLE;
 typedef unsigned __int64 QWORD;
 
 enum { DEFAULT_ALIGNMENT = 8 };
@@ -244,18 +240,6 @@ struct FLevelSceneNode
     INT bField1c8;          // +0x1c8
 };
 
-struct FZonePortalNode
-{
-    void *Volume;           // +0x00
-    FZonePortalNode *Next;  // +0x04
-};
-
-struct FZoneRenderInfo
-{
-    FZonePortalNode *Portals; // +0x00
-    INT Pad04;                // +0x04
-};
-
 struct FVisibleZoneNode
 {
     INT ZoneIndex;          // +0x00
@@ -270,40 +254,13 @@ struct FLevelRenderContext
     FRenderInterface *RI;           // +0x04
     BYTE Pad08[0x20 - 0x08];
     FDynamicLightList *LightList;   // +0x20
-    FZoneRenderInfo Zones[64];      // +0x24 .. +0x223
+    FZoneVisibility Zones[64];      // +0x24 .. +0x223
     FVisibleZoneNode *VisibleZones; // +0x224
     BYTE Pad228[0x258 - 0x228];
     BYTE Field258[4];               // +0x258
 };
 
-class FDynamicLight
-{
-public:
-    AActor *Actor;          // +0x00
-    INT Revision;           // +0x04
-    BYTE Pad08[0x34 - 0x08];
-    // +0x34 bitfield
-    DWORD Bits0_5 : 6;
-    DWORD bBit6 : 1;        // 0x40
-    DWORD bBit7 : 1;        // 0x80
-    DWORD bBit8 : 1;        // 0x100
-    DWORD Bits9_31 : 23;
-    INT Pad38;              // +0x38
-    FLOAT Alpha;            // +0x3c
-    INT ShadowSlot;         // +0x40
-    BYTE Pad44[0x50 - 0x44];
-    BYTE Bounds50[0x298 - 0x50]; // +0x50
-    TArray<INT> Zones;      // +0x298
-};
-
-struct FDynamicLightList
-{
-    FDynamicLight *Light;   // +0x00
-    FDynamicLightList *Next;// +0x04
-
-    FDynamicLightList(FDynamicLight *InLight, FDynamicLightList *InNext)
-        : Light(InLight), Next(InNext) {}
-};
+#include "versus_dynamic_light.h"
 
 class FDynamicActor
 {
@@ -319,11 +276,6 @@ public:
     void UpdateLightFade(FLevelSceneNode *SceneNode);
     void Render(FLevelSceneNode *SceneNode, FDynamicLightList *InLights, void *InProjectors, FRenderInterface *RI, INT Pass, void *Extra);
 };
-
-// External callee of ZoneIntersectsBounds (0x10a11570).
-UBOOL VolumeIntersectsBounds(const void *Bounds, void *Volume);
-// Out-of-item LTCG callee (0x10a35be0); defined in scaffolding below.
-__declspec(noinline) UBOOL ZoneIntersectsBounds(FZoneRenderInfo *Zone, const void *Bounds);
 
 // ===========================================================================
 // Function 1: RVA 0x137060 — FDynamicActor::UpdateLightFade
@@ -380,34 +332,6 @@ void RenderDynamicActor(FLevelRenderContext *Context, FDynamicActor *DynamicActo
 }
 
 // ===========================================================================
-// Function 3: RVA 0x137250 — InsertSortedLight
-// ===========================================================================
-void InsertSortedLight(FDynamicLightList **List, FDynamicLight *Light)
-{
-    while (*List && Light->ShadowSlot >= (*List)->Light->ShadowSlot)
-        List = &(*List)->Next;
-    *List = new(GSceneMem) FDynamicLightList(Light, *List);
-}
-
-// ===========================================================================
-// Function 4: RVA 0x1372d0 — AssignLightSlots
-// ===========================================================================
-INT AssignLightSlots(FDynamicLightList *Node)
-{
-    if (!Node)
-        return 0;
-    INT Slot = AssignLightSlots(Node->Next);
-    if (Node->Light->ShadowSlot == 0)
-    {
-        Node->Light->ShadowSlot = Slot;
-        if (Slot == 3 || Slot == -2)
-            return -2;
-        return Slot + 1;
-    }
-    return Slot;
-}
-
-// ===========================================================================
 // Function 5: RVA 0x137310 — CanActorReceiveLight
 // ===========================================================================
 UBOOL CanActorReceiveLight(AActor *Actor, AActor *LightActor)
@@ -423,60 +347,9 @@ UBOOL CanActorReceiveLight(AActor *Actor, AActor *LightActor)
 }
 
 // ===========================================================================
-// Function 6: RVA 0x137370 — IsLightVisibleInContext
-// ===========================================================================
-UBOOL IsLightVisibleInContext(FDynamicLight *Light, FLevelRenderContext *Context)
-{
-    if (Context->SceneNode->Viewport->bField14c)
-        return 1;
-    if (!Light->bBit7 || !Light->bBit8)
-        return 0;
-    if (Light->Actor->bDynamicLight)
-    {
-        for (FVisibleZoneNode *Z = Context->VisibleZones; Z; Z = Z->Next)
-            if (ZoneIntersectsBounds(&Context->Zones[Z->ZoneIndex], Light->Bounds50))
-                return 1;
-        return 0;
-    }
-    if (Light->bBit6 && Context->SceneNode->bField1c8)
-    {
-        Light->bBit8 = 0;
-        for (FVisibleZoneNode *Z = Context->VisibleZones; Z; Z = Z->Next)
-        {
-            for (INT i = 0; i < Light->Zones.Num(); i++)
-            {
-                if (Z->ZoneIndex == Light->Zones(i))
-                {
-                    if (ZoneIntersectsBounds(&Context->Zones[Z->ZoneIndex], Light->Bounds50))
-                    {
-                        Light->bBit8 = 1;
-                        goto Done;
-                    }
-                    break;
-                }
-            }
-        }
-    }
-    else
-    {
-        Light->bBit8 = 1;
-    }
-Done:
-    return Light->bBit8;
-}
-
-// ===========================================================================
 // Scaffolding for LTCG links (not part of the matched units).
 // ===========================================================================
 void Escape(void *);
-
-UBOOL ZoneIntersectsBounds(FZoneRenderInfo *Zone, const void *Bounds)
-{
-    for (FZonePortalNode *P = Zone->Portals; P; P = P->Next)
-        if (VolumeIntersectsBounds(Bounds, P->Volume))
-            return 1;
-    return 0;
-}
 
 BYTE *FMemCache::Get(QWORD Id, FCacheItem *&Item, INT Alignment)
 {
@@ -544,33 +417,10 @@ void Driver_1371d0(FLevelRenderContext *C, FDynamicActor *A, UBOOL bUpdateFade, 
     RenderDynamicActor(C, A, 0, 2);
 }
 
-void Driver_137250(FDynamicLightList **List, FDynamicLight *Light)
-{
-    Escape(&GSceneMem);
-    Escape(&GMalloc);
-    Escape(&FMemStack::UnusedChunks);
-    InsertSortedLight(List, Light);
-    Escape(List);
-    InsertSortedLight(List, Light);
-}
-
-INT Driver_1372d0(FDynamicLightList *Node)
-{
-    return AssignLightSlots(Node);
-}
-
 UBOOL Driver_137310(AActor *A, AActor *L)
 {
     UBOOL R = CanActorReceiveLight(A, L);
     Escape(A);
     Escape(L);
     return R + CanActorReceiveLight(A, L);
-}
-
-UBOOL Driver_137370(FDynamicLight *L, FLevelRenderContext *C)
-{
-    UBOOL R = IsLightVisibleInContext(L, C);
-    Escape(L);
-    Escape(C);
-    return R + IsLightVisibleInContext(L, C);
 }
