@@ -4,71 +4,10 @@
 //   0x1fe80 FName::Hardcode                      (AutoName in ESI)
 //   0x1ff70 FName::FName(const TCHAR*,EFindName) (this in EBX, Name in EAX)
 //   0x20080 GetLocalizedPackageName              (cdecl, Name on the stack)
-typedef unsigned short TCHAR;
-typedef unsigned char BYTE;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-
-enum EFindName { FNAME_Find = 0, FNAME_Add = 1, FNAME_Intrinsic = 2 };
-#define RF_Native 0x04000000
+#include "versus_build.h"
+#include "versus_name_registry.h"
 
 inline void *operator new(unsigned int, void *Mem) { return Mem; }
-
-class FMalloc
-{
-public:
-    virtual void *Malloc(DWORD Count, const TCHAR *Tag);
-    virtual void *Realloc(void *Original, DWORD Count, const TCHAR *Tag);
-    virtual void Free(void *Original);
-};
-extern FMalloc *GMalloc;                 // 0x10c73bf0
-
-extern "C" __declspec(dllimport) INT __cdecl _wcsicmp(const TCHAR *, const TCHAR *);
-extern "C" __declspec(dllimport) INT __cdecl wcscmp(const TCHAR *, const TCHAR *);
-extern "C" __declspec(dllimport) TCHAR *__cdecl wcscpy(TCHAR *, const TCHAR *);
-extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const TCHAR *);
-
-class FArray
-{
-public:
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    INT Num() const { return ArrayNum; }
-    INT Add(INT Count, INT ElementSize);                         // 0x109044e0
-    void Remove(INT Index, INT Count, INT ElementSize);          // 0x109119c0
-};
-
-template<class T> class TArray : public FArray
-{
-public:
-    T &operator()(INT i) { return ((T *)Data)[i]; }
-    // Inline growth used by FName::Hardcode (inlined in retail).
-    INT AddInline(INT Count)
-    {
-        INT Index = ArrayNum;
-        if ((ArrayNum += Count) > ArrayMax) {
-            ArrayMax = ArrayNum + 3 * ArrayNum / 8 + 32;
-            if (Data == 0)
-                Data = GMalloc->Malloc(ArrayMax * sizeof(T), L"FArray::Add");
-            else
-                Data = GMalloc->Realloc(Data, ArrayMax * sizeof(T), L"FArray");
-        }
-        return Index;
-    }
-};
-
-struct FNameEntry
-{
-    INT Index;
-    DWORD Flags;
-    FNameEntry *HashNext;
-    TCHAR Name[64];
-};
-extern TArray<FNameEntry *> FName_Names;         // 0x10cc9e5c, FName::Names
-extern TArray<INT> FName_Available;              // 0x10cc9e68, FName::Available
-extern FNameEntry *FName_NameHash[4096];         // 0x10c7d4d8, FName::NameHash
 
 extern DWORD GCRCTable[256];                    // 0x10c78cd0
 inline TCHAR appToUpper(TCHAR c)
@@ -101,15 +40,6 @@ __declspec(noinline) FNameEntry *AllocateNameEntry(const TCHAR *Name, DWORD Inde
 
 // UnUnix/UnVcWin32 inline wrapper.
 inline INT appStrcmp(const TCHAR *A, const TCHAR *B) { return wcscmp(A, B); }
-
-class FName
-{
-public:
-    INT Index;
-    FName() {}
-    FName(const TCHAR *Name, EFindName FindType);
-    static void Hardcode(FNameEntry *AutoName);
-};
 
 // RVA 0x1fe80
 void FName::Hardcode(FNameEntry *AutoName)

@@ -1,13 +1,14 @@
 import struct
 import unittest
 
-from images import file_pe_data
+from images import file_pe_data, inspect
 from link_image import link_arguments, place_function, stub_object
+from progress import built_unit_bytes
 
 BASE = 0x10000000
 
 
-def image(code, data=b""):
+def image(code, data=b"", data_flags=0x40000040):
     """A minimal x86 PE: headers, a code section at RVA 0x1000 and a data section at 0x2000."""
     pe = 0x40
     header = bytearray(0x200)
@@ -15,10 +16,11 @@ def image(code, data=b""):
     struct.pack_into("<I", header, 0x3C, pe)
     header[pe:pe + 4] = b"PE\0\0"
     struct.pack_into("<HHIIIHH", header, pe + 4, 0x14C, 2, 0, 0, 0, 0xE0, 0x2102)
+    struct.pack_into("<H", header, pe + 24, 0x10B)
     struct.pack_into("<I", header, pe + 24 + 28, BASE)
     table = pe + 24 + 0xE0
     struct.pack_into("<8sIIIIIIHHI", header, table, b".text", 0x200, 0x1000, 0x200, 0x200, 0, 0, 0, 0, 0x60000020)
-    struct.pack_into("<8sIIIIIIHHI", header, table + 40, b".rdata", 0x200, 0x2000, 0x200, 0x400, 0, 0, 0, 0, 0x40000040)
+    struct.pack_into("<8sIIIIIIHHI", header, table + 40, b".data", 0x200, 0x2000, 0x200, 0x400, 0, 0, 0, 0, data_flags)
     return bytes(header) + code.ljust(0x200, b"\xcc") + data.ljust(0x200, b"\0")
 
 
@@ -77,6 +79,92 @@ class LinkImageTests(unittest.TestCase):
     def test_link_arguments_include_roots(self):
         self.assertIn("/INCLUDE:_driver", link_arguments(self.link))
         self.assertIn("/LTCG", link_arguments(self.link))
+
+
+class WritableStringTests(unittest.TestCase):
+    symbol = "?NameText_None@@3QBGB"
+    value = "None\0".encode("utf-16le")
+    linked = BASE + 0x2000
+    original = BASE + 0x2004
+
+    def setUp(self):
+        self.link = {"rebuilt_offset": 0x200, "rebuilt_address": BASE + 0x1000,
+                     "fields": [[1, "abs", self.symbol]], "symbols": {self.symbol: self.linked},
+                     "writable_strings": {self.symbol: len(self.value)}}
+        self.bindings = {self.symbol: {"va": self.original, "basis": "fixture name registration"}}
+
+    @staticmethod
+    def code(va):
+        return b"\x68" + struct.pack("<I", va) + b"\xc3"
+
+    def place(self, *, linked_text=None, retail_text=None, linked_va=None, retail_flags=0xc0000040):
+        rebuilt = image(self.code(self.linked if linked_va is None else linked_va),
+                        self.value if linked_text is None else linked_text)
+        retail = image(self.code(self.original), b"\x00" * 4 + (self.value if retail_text is None else retail_text),
+                       data_flags=retail_flags)
+        unit = {"offset": 0x200, "size": 6, "ltcg_link": self.link, "link_bindings": self.bindings}
+        return built_unit_bytes({"image": inspect(retail)}, unit, rebuilt, retail)
+
+    def test_named_const_array_can_match_writable_retail_storage(self):
+        self.assertEqual(self.place(), self.code(self.original))
+
+    def test_changed_string_on_either_side_is_refused(self):
+        for key in ("linked_text", "retail_text"):
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, "differs from retail"):
+                self.place(**{key: "Node\0".encode("utf-16le")})
+
+    def test_shifted_linked_referent_is_refused(self):
+        with self.assertRaisesRegex(ValueError, "does not refer"):
+            self.place(linked_va=self.linked + 2)
+        self.link["symbols"][self.symbol] += 2
+        with self.assertRaisesRegex(ValueError, "differs from retail"):
+            self.place(linked_va=self.linked + 2)
+
+    def test_shifted_retail_referent_is_refused(self):
+        self.bindings[self.symbol]["va"] += 2
+        with self.assertRaisesRegex(ValueError, "differs from retail"):
+            self.place()
+
+    def test_checks_complete_terminated_string(self):
+        for length in (len(self.value) - 2, len(self.value) + 2):
+            self.link["writable_strings"][self.symbol] = length
+            with self.subTest(length=length), self.assertRaisesRegex(ValueError, "complete terminated"):
+                self.place()
+
+    def test_each_string_requires_an_absolute_field(self):
+        self.link["fields"] = []
+        with self.assertRaisesRegex(ValueError, "no field refers"):
+            self.place()
+        self.link["fields"] = [[1, "rel32", self.symbol]]
+        with self.assertRaisesRegex(ValueError, "absolute reference"):
+            self.place()
+
+    def test_retail_storage_must_be_writable_initialized_data(self):
+        for flags in (0x40000040, 0xc0000080, 0xe0000040):
+            with self.subTest(flags=flags), self.assertRaisesRegex(ValueError, "file-backed writable data section"):
+                self.place(retail_flags=flags)
+
+    def test_distinct_objects_with_equal_spelling_cannot_share_an_address(self):
+        other = "?NameText_NoneAgain@@3QBGB"
+        self.link["fields"].append([6, "abs", other])
+        self.link["writable_strings"][other] = len(self.value)
+        for pooled_linked, pooled_retail in ((False, False), (True, False), (False, True)):
+            with self.subTest(pooled_linked=pooled_linked, pooled_retail=pooled_retail):
+                linked = self.linked if pooled_linked else self.linked + len(self.value)
+                original = self.original if pooled_retail else self.original + len(self.value)
+                self.link["symbols"][other] = linked
+                self.bindings[other] = {"va": original, "basis": "second registration"}
+                code = self.code(self.linked)[:-1] + self.code(linked)
+                expected = self.code(self.original)[:-1] + self.code(original)
+                rebuilt = image(code, self.value * 2)
+                retail = image(expected, b"\0" * 4 + self.value * 2, data_flags=0xc0000040)
+                unit = {"offset": 0x200, "size": len(code), "ltcg_link": self.link, "link_bindings": self.bindings}
+                target = {"image": inspect(retail)}
+                if pooled_linked or pooled_retail:
+                    with self.assertRaisesRegex(ValueError, "overlapping writable string"):
+                        built_unit_bytes(target, unit, rebuilt, retail)
+                else:
+                    self.assertEqual(built_unit_bytes(target, unit, rebuilt, retail), expected)
 
 
 class JumpTableTests(unittest.TestCase):

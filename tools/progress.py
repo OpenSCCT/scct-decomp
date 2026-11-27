@@ -11,6 +11,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from images import coff_symbol_offset, file_pe_data, initialized_pe_data, inspect, readonly_pe_data, span
 from link_image import place_function
+from link_writable_strings import check_writable_strings
 from link_x86 import link_function
 from manifests import load_target, save_receipt
 
@@ -145,9 +146,13 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
     recipe = {k: v for k, v in unit.items() if k != "match"}
     if "link_bindings" in unit:
         linker = Path(__file__).with_name("link_image.py" if "ltcg_link" in unit else "link_x86.py")
-        if linker not in file_cache:
-            file_cache[linker] = hashlib.sha256(linker.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
-        fingerprints["tools/" + linker.name] = file_cache[linker]
+        validators = [linker]
+        if "writable_strings" in unit.get("ltcg_link", {}):
+            validators.append(linker.with_name("link_writable_strings.py"))
+        for validator in validators:
+            if validator not in file_cache:
+                file_cache[validator] = hashlib.sha256(validator.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+            fingerprints["tools/" + validator.name] = file_cache[validator]
     payload = json.dumps([image_hash, recipe, fingerprints], sort_keys=True).encode()
     if callees:
         # The unit's bytes come from the callees' sources and recipes too, so they are bound as well.
@@ -258,6 +263,8 @@ def built_unit_bytes(target, unit, output, original=None):
         a, b = span(unit["offset"], unit["size"], len(original))
         for s in target["image"]["executable_sections"]:
             if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
+                if "writable_strings" in unit["ltcg_link"]:
+                    check_writable_strings(output, original, unit["ltcg_link"], unit["link_bindings"])
                 return place_function(output, unit["size"], s["address"] + a - s["offset"], unit["ltcg_link"],
                                       unit["link_bindings"],
                                       read_constant=lambda va, size: readonly_pe_data(original, va, size),
