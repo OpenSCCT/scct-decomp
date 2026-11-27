@@ -234,6 +234,14 @@ describes the combined link, not the solo one: `rebuilt_offset`, `rebuilt_addres
 same link. The verifier checks each field against those addresses and rewrites it with the retail
 address from `link_bindings`.
 
+A link can also need a caller, a data definition, or a translation unit compiled with different
+flags from its existing receipt. List these source objects in the owning unit's `ltcg_context`.
+Each entry specifies a local `id`, its `build_command`, and its `inputs`. Include those files
+in the owning unit's inputs too. An entry can specify hashes in `system_headers` for the compiler
+headers that it reads. Each object uses the owner's compiler and can produce ordinary COFF or
+`/GL` output. Use `ltcg_link.object_order` when link order matters. Only the owning function's
+compared range contributes bytes to its receipt.
+
 The verifier links in two steps. The first link has no stubs, and `LINK.EXE` names each external
 that no linked object defines. A stub is made only for those names that a linked unit's
 `ltcg_link.stubs` declares, so a callee's own definition is never shadowed. Any other unresolved

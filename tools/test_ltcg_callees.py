@@ -6,7 +6,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "pc"))
 import verify_build  # noqa: E402
-from progress import ordered_object_units, callee_units  # noqa: E402
+from progress import ordered_object_units, callee_units, inputs_digest  # noqa: E402
 
 TOOLCHAIN = "Microsoft C/C++ 13.00.9466 for x86"
 WITH_GL = "cl /nologo /O2 /Gy /GL /c /Folocal/a.obj src/a.cpp"
@@ -101,6 +101,72 @@ class ObjectOrderTests(unittest.TestCase):
                 changed = dict(self.b, **{field: value})
                 self.assertEqual(ordered_object_units(self.a, [changed, self.c]),
                                  [self.c, self.a, changed])
+
+
+class ContextObjectTests(unittest.TestCase):
+    def setUp(self):
+        self.renderer = unit("renderer")
+        self.player = {"id": "player-caller", "inputs": ["src/player.cpp"],
+                       "build_command": WITHOUT_GL.replace("src/a.cpp", "src/player.cpp")}
+        self.renderer["inputs"].extend(self.player["inputs"])
+        self.renderer["ltcg_context"] = [self.player]
+        self.renderer["ltcg_link"]["object_order"] = ["player-caller", "renderer"]
+
+    def test_uncredited_caller_compiles_with_its_own_flags_and_link_order(self):
+        from tempfile import TemporaryDirectory
+        from unittest.mock import patch
+
+        contexts = callee_units([self.renderer], self.renderer)
+        context, = contexts
+        self.assertEqual(context["toolchain"], TOOLCHAIN)
+        self.assertNotIn("/GL", context["build_command"].split())
+        self.assertEqual(ordered_object_units(self.renderer, contexts), [context, self.renderer])
+        with TemporaryDirectory() as directory:
+            folder = Path(directory)
+            objects = [folder / "renderer.obj", folder / "player.obj"]
+            with patch.object(verify_build, "compile_unit", side_effect=objects) as compile_unit, \
+                    patch.object(verify_build, "link_with_callees") as link:
+                verify_build.rebuild_unit(self.renderer, "cl", {}, folder, [], contexts)
+                self.assertEqual(compile_unit.call_args_list[1].kwargs, {"context": True})
+                self.assertEqual(link.call_args.args[3], objects[1:])
+
+    def test_context_source_and_recipe_change_the_owning_receipt(self):
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as directory:
+            folder = Path(directory)
+            (folder / "src").mkdir()
+            (folder / "src/a.cpp").write_text("void Render() {}\n")
+            source = folder / "src/player.cpp"
+            source.write_text("void Play();\n")
+
+            def fingerprint():
+                return inputs_digest(folder, self.renderer, "0" * 64,
+                                     callees=callee_units([self.renderer], self.renderer))
+
+            original = fingerprint()
+            source.write_text("void Play(int);\n")
+            changed_source = fingerprint()
+            self.player["build_command"] += " /Ob1"
+            self.assertEqual(len({original, changed_source, fingerprint()}), 3)
+
+    def test_context_follows_a_receipted_callee(self):
+        parent = unit("outer", callees=["renderer"])
+        objects = callee_units([parent, self.renderer], parent)
+        self.assertEqual([o["id"] for o in objects], ["renderer", "player-caller"])
+
+    def test_context_uses_its_own_compiler_header_hashes(self):
+        self.player["system_headers"] = {"stdarg.h": "a" * 64}
+        player, = callee_units([self.renderer], self.renderer)
+        self.assertEqual(player["system_headers"], self.player["system_headers"])
+        self.assertNotIn("system_headers", self.renderer)
+
+    def test_context_cannot_inject_a_receipt_or_hide_a_source(self):
+        for change in ({"size": 20}, {"id": "renderer"}, {"id": "../escape"},
+                       {"inputs": ["src/other.cpp"]}, {"inputs": []}):
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                caller = dict(self.renderer, ltcg_context=[dict(self.player, **change)])
+                callee_units([caller], caller)
 
 
 class UnresolvedExternalTests(unittest.TestCase):

@@ -36,6 +36,11 @@ public:
     FLOAT FovAngle;
 };
 
+class FPlayerSceneNode : public FCameraSceneNode {
+public:
+    virtual void Render(FRenderInterface *RI, UBOOL Clear);
+};
+
 class FActorSceneNode : public FCameraSceneNode {
 public:
     virtual FActorSceneNode *AsActorSceneNode() { return this; }

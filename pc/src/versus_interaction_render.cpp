@@ -9,18 +9,7 @@ public:
     TArray<UViewport *> Viewports;
 };
 
-class UInteractionMaster : public UInteractions {
-public:
-    UClient *Client;
-    UInteraction *BaseMenu;
-    UInteraction *Console;
-    TArray<UInteraction *> GlobalInteractions;
-
-    void MasterProcessPreRender(UCanvas *Canvas);
-    void MasterProcessPostRender(UCanvas *Canvas);
-    void eventProcess_PreRender(TArray<UInteraction *> Interactions, UCanvas *Canvas);
-    void eventProcess_PostRender(TArray<UInteraction *> Interactions, UCanvas *Canvas);
-};
+#include "versus_interaction_master.h"
 
 namespace InteractionEventNames {
 #define REGISTER_NAME(symbol, index, flags, text) const EName NAME_##symbol = static_cast<EName>(index);

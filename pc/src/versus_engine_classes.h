@@ -384,7 +384,6 @@ public:
     BYTE                   unk_34[0x4];
 };
 
-// Engine.InteractionMaster: 0x44 bytes, 22 virtual functions
 class UInteractionMaster : public UInteractions {
 public:
     virtual ~UInteractionMaster();
@@ -452,14 +451,6 @@ public:
 
 #include "versus_canvas_materials.h"
 
-
-// Engine.ProxyBitmapMaterial: 0x68 bytes, 37 virtual functions
-class UProxyBitmapMaterial : public UBitmapMaterial {
-public:
-    virtual ~UProxyBitmapMaterial();
-
-    BYTE unk_64[0x4];
-};
 
 // Engine.TexCoordMaterial: 0x54 bytes, 35 virtual functions
 class UTexCoordMaterial : public URenderedMaterial {

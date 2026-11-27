@@ -51,7 +51,7 @@ void UViewport::DrawPendingView()
         CameraLocation.Y = A->Location.Y;
         CameraLocation.Z = A->Location.Z;
         FRotator CameraRotation = A->Rotation;
-        const FColor Black = {0, 0, 0, 255};
+        const FColor Black(0, 0, 0);
         RI->Clear(0, Black, 1, 1.0f, 0, 0);
         Actor->PlayerCalcView(ViewActor, CameraLocation, CameraRotation, 1);
         {

@@ -3,13 +3,7 @@
 
 #include "versus_sbase_interaction_types.h"
 
-// The Engine.HUD registration records a 0x49c-byte actor.
-class AHUD : public AActor {
-public:
-    BYTE Unknown2f8[0x3e0 - 0x2f8];
-    APlayerController *PlayerOwner;
-    BYTE Unknown3e4[0x49c - 0x3e4];
-};
+#include "versus_hud_types.h"
 
 // SBase.SHud registers 0x898 bytes. Its three reflected arrays occur consecutively.
 class ASHud : public AHUD {

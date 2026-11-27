@@ -96,13 +96,38 @@ def ordered_object_units(unit, callees):
     return result
 
 
+def context_objects(owner):
+    """Return independently compiled source objects that receive no matching credit."""
+    if "ltcg_context" not in owner:
+        return []
+    entries = owner["ltcg_context"]
+    if "ltcg_link" not in owner or not isinstance(entries, list) or not entries:
+        raise ValueError(f"{owner['id']}: ltcg_context needs an LTCG link and at least one object")
+    result = []
+    for entry in entries:
+        required = {"id", "inputs", "build_command"}
+        if (not isinstance(entry, dict) or not required <= entry.keys()
+                or entry.keys() - required - {"system_headers"}):
+            raise ValueError(f"{owner['id']}: each context object needs id, inputs and build_command")
+        identifier = identity(entry["id"])
+        inputs = entry["inputs"]
+        if (not isinstance(inputs, list) or not all(isinstance(path, str) for path in inputs)
+                or not any(Path(path).suffix.lower() in (".c", ".cpp") for path in inputs)
+                or not set(inputs) <= set(owner["inputs"])):
+            raise ValueError(f"{identifier}: context source and headers must be listed in the owning unit's inputs")
+        if not isinstance(entry["build_command"], str) or not entry["build_command"].strip():
+            raise ValueError(f"{identifier}: a context object needs a compile command")
+        result.append(dict(entry, toolchain=owner["toolchain"]))
+    return result
+
+
 def callee_units(units, unit):
-    """The units a unit links with: those its ltcg_callees name, then those they name, in order.
+    """The objects for one LTCG link, including transitive callees and their source context.
 
     Each callee is built with link-time code generation by the unit's own compiler, so the link
     decides every calling convention between the units. A callee must carry /GL in its recorded
     command and name the same toolchain, and a unit cannot be its own callee."""
-    if not named_callees(unit):
+    if not named_callees(unit) and "ltcg_context" not in unit:
         ordered_object_units(unit, [])
         return []
     by_id = {u["id"]: u for u in units}
@@ -124,6 +149,13 @@ def callee_units(units, unit):
                 raise ValueError(f"{unit['id']}: callee {identifier} names another compiler")
             closure.append(callee)
             pending.append(callee)
+    for owner in [unit, *closure]:
+        for context in context_objects(owner):
+            identifier = context["id"]
+            if identifier in by_id or identifier in seen:
+                raise ValueError(f"{unit['id']}: context object ID {identifier} collides with another object")
+            seen.add(identifier)
+            closure.append(context)
     ordered_object_units(unit, closure)
     return closure
 

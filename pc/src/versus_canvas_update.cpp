@@ -75,7 +75,7 @@ void UGameEngine::PaintProgress()
         UViewport *Viewport = Client->Viewports(0);
         if (Viewport && Viewport->Canvas && Viewport->RI) {
             Viewport->Canvas->Update();
-            const FColor Black = {0, 0, 0, 255};
+            const FColor Black(0, 0, 0);
             Viewport->RI->Clear(0, Black, 1, 1.0f, 1, 0);
             Draw(Viewport, 1, 0, 0);
             Viewport->Present();

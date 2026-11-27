@@ -129,7 +129,7 @@ def decode(output):
     return output.decode("mbcs" if os.name == "nt" else "utf-8", "replace")
 
 
-def compile_unit(unit, cl, env, build_dir, streams, found=None):
+def compile_unit(unit, cl, env, build_dir, streams, found=None, *, context=False):
     """Compile a unit with its recorded command in build_dir, and return the object it writes.
 
     A unit with a system_headers record compiles against its toolchain's own headers through
@@ -139,7 +139,7 @@ def compile_unit(unit, cl, env, build_dir, streams, found=None):
     found receives the headers it read; otherwise only the recorded headers are staged."""
     # Recipes use relative forward-slash paths, even on Windows.
     program, *args = shlex.split(unit["build_command"])
-    if "rebuilt_symbol" not in unit:
+    if not context and "rebuilt_symbol" not in unit:
         raise ValueError("expected a named x86 COFF function")
     if program.lower() in ("cl", "cl.exe") and "/c" in args and unit["toolchain"].startswith("Microsoft C/C++ "):
         outputs = [arg[3:] or args[i + 1] for i, arg in enumerate(args) if arg.startswith("/Fo")]
@@ -295,7 +295,9 @@ def rebuild_unit(unit, cl, env, build_dir, streams, callees=(), found=None):
         if "/GL" not in shlex.split(unit["build_command"])[1:]:
             raise ValueError("an LTCG unit compiles with /GL")
         if callees:
-            member_objects = [compile_unit(callee, cl, env, build_dir / callee["id"], streams)
+            context_ids = {entry["id"] for owner in (unit, *callees) for entry in owner.get("ltcg_context", [])}
+            member_objects = [compile_unit(callee, cl, env, build_dir / callee["id"], streams,
+                                           context=callee["id"] in context_ids)
                               for callee in callees]
             return link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, streams)
         stubs = obj.with_name(obj.stem + "_stubs.obj")

@@ -28,7 +28,8 @@ public:
     FColor DrawColor;
     BYTE unk_54[4];
     INT SizeX, SizeY;
-    BYTE unk_60[0x78 - 0x60];
+    UFont *TinyFont, *SmallFont, *MedFont;
+    FName TinyFontName, SmallFontName, MedFontName;
     UViewport *Viewport;
     FCanvasUtil *pCanvasUtil;
 

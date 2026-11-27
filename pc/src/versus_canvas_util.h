@@ -2,7 +2,7 @@
 #define VERSUS_CANVAS_UTIL_H
 
 #include "versus_build.h"
-#ifndef UNREAL_CONTAINERS_H
+#if !defined(UNREAL_CONTAINERS_H) && !defined(VERSUS_STATS_ARRAYS_H)
 #include "versus_arrays.h"
 #endif
 #include "versus_canvas_matrix.h"
@@ -37,6 +37,8 @@ public:
     TArray<FCanvasVertex> Vertices;
     unsigned __int64 CacheId;
 
+    FCanvasUtil(class FRenderTarget *Target, FRenderInterface *InRI);
+    ~FCanvasUtil();
     void SetTransforms(FRenderInterface *InRI, FLOAT SizeX, FLOAT SizeY);
     void Flush();
     void DrawTile(FLOAT X1, FLOAT Y1, FLOAT X2, FLOAT Y2, FLOAT U1, FLOAT V1,

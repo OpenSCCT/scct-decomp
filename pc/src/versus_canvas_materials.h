@@ -2,7 +2,7 @@
 #define VERSUS_CANVAS_MATERIALS_H
 #include "versus_material.h"
 #include "versus_texture_format.h"
-#ifndef UNREAL_CONTAINERS_H
+#if !defined(UNREAL_CONTAINERS_H) && !defined(VERSUS_STATS_ARRAYS_H)
 #include "versus_arrays.h"
 #endif
 
@@ -93,6 +93,16 @@ public:
     virtual ~UModifier();
 
     UMaterial *Material;
+};
+
+// Engine.ProxyBitmapMaterial: 0x68 bytes, 37 virtual functions
+class UProxyBitmapMaterial : public UBitmapMaterial {
+public:
+    virtual ~UProxyBitmapMaterial();
+
+    static UClass PrivateStaticClass;
+    void SetTextureInterface(class FTexture *Texture);
+    FTexture *TextureInterface;
 };
 
 // Engine.FinalBlend: 0x5c bytes, 35 virtual functions

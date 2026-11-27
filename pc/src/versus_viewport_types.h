@@ -47,7 +47,10 @@ public:
 class UPlayer : public UObject, public FOutputDevice, public FExec {
 public:
     APlayerController *Actor;
-    BYTE unk_34[0x58 - 0x34];
+    BYTE unk_34[0x44 - 0x34];
+    INT CurrentNetSpeed;
+    BYTE unk_48[0x54 - 0x48];
+    class UInteractionMaster *InteractionMaster;
     TArray<UInteraction *> LocalInteractions;
     BYTE unk_64[4];
 };
@@ -76,11 +79,16 @@ public:
     UnnamedPlaneArray_68dc0 RenderEntries;
     BYTE unk_8c[0xa0 - 0x8c];
     INT SizeX, SizeY;
-    BYTE unk_a8[0xb8 - 0xa8];
+    BYTE unk_a8[4];
+    FLOAT AspectRatio;
+    BYTE unk_b0[8];
     INT ColorBytes;
     BYTE unk_bc[0xe4 - 0xbc];
     FViewportRenderTarget RenderTarget;
-    BYTE unk_f4[0x130 - 0xf4];
+    BYTE unk_f4[0x114 - 0xf4];
+    UBOOL bLetterBox;
+    FLOAT DesiredAspectRatio;
+    BYTE unk_11c[0x130 - 0x11c];
     DOUBLE CurrentTime;
     BYTE unk_138[0x140 - 0x138];
     FRenderInterface *RI;
@@ -93,6 +101,7 @@ public:
     BYTE unk_158[0x18c - 0x158];
     AActor *FirstPersonActor;
 
+    void Precache();
     void DrawPendingView();
     void UpdateScreenEffects();
 };

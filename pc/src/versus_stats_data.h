@@ -2,7 +2,7 @@
 #define VERSUS_STATS_DATA_H
 
 enum EStatsType {
-    STATSTYPE_Render = 0, STATSTYPE_Game = 1, STATSTYPE_Hardware = 2, STATSTYPE_Net = 6
+    STATSTYPE_Render = 0, STATSTYPE_Game = 1, STATSTYPE_Hardware = 2, STATSTYPE_Audio = 5, STATSTYPE_Net = 6
 };
 enum EStatsDataType { STATSDATATYPE_Integer, STATSDATATYPE_Float, STATSDATATYPE_String };
 enum EStatsUnit {
@@ -11,9 +11,12 @@ enum EStatsUnit {
 };
 struct FStatsData { INT Index; EStatsDataType DataType; EStatsUnit Unit; };
 
+class UEngine;
+class UViewport;
+
 class FStats {
 public:
-    DWORD Unknown00;
+    FLOAT AverageFrameTime;
     UBOOL Registered[8];
     template<class T> struct Values {
         TArray<T> Current, Previous;
@@ -29,6 +32,7 @@ public:
         TArray<DWORD> Samples;
     };
     TArray<FMovingAverage> History;
+    void Render(UViewport *Viewport, UEngine *Engine);
     void Clear();
     void SmoothCounter(INT Index, INT Window);
     INT RegisterStats(EStatsType Type, EStatsDataType DataType, FString Description,

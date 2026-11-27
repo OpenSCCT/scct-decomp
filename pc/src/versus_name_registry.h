@@ -56,7 +56,7 @@ public:
     }
 };
 
-extern TArray<FNameEntry *> FName_Names;         // 0x10cc9e5c, FName::Names
+#include "versus_name_table.h"
 extern TArray<INT> FName_Available;              // 0x10cc9e68, FName::Available
 extern FNameEntry *FName_NameHash[4096];         // 0x10c7d4d8, FName::NameHash
 

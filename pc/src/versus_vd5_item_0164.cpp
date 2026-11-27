@@ -112,8 +112,7 @@ inline FArchive &operator<<(FArchive &Ar, FStaticMeshUV &UV) { return Ar << UV.U
 
 inline FColor MeshColor(BYTE R, BYTE G, BYTE B, BYTE A)
 {
-    FColor Color = {B, G, R, A};
-    return Color;
+    return FColor(R, G, B, A);
 }
 
 // Pre-version-111 vertex record (32 bytes); its serializer is RVA 0x86b40

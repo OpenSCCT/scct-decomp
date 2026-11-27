@@ -76,9 +76,25 @@ inline FVector operator*(FLOAT Scale, const FVector &V)
 
 extern FVector GDefaultVector;      // the zero vector natives use as a default argument
 
+#ifdef SCCT_VERSUS
+struct FPlane;
+
+struct FColor {
+    union {
+        struct { BYTE B, G, R, A; };
+        DWORD Value;
+    };
+
+    FColor() {}
+    FColor(BYTE InR, BYTE InG, BYTE InB, BYTE InA = 255)
+        : B(InB), G(InG), R(InR), A(InA) {}
+    FColor(const FPlane &Color);
+};
+#else
 struct FColor {
     BYTE B, G, R, A;
 };
+#endif
 
 // Angles in units of 1/65536 of a turn.
 struct FRotator {

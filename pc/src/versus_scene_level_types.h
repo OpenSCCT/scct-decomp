@@ -1,7 +1,7 @@
 #ifndef VERSUS_SCENE_LEVEL_TYPES_H
 #define VERSUS_SCENE_LEVEL_TYPES_H
 
-#if !defined(VERSUS_ARRAYS_H)
+#if !defined(VERSUS_ARRAYS_H) && !defined(VERSUS_STATS_ARRAYS_H)
 #include "versus_ltcg.h"
 #endif
 
@@ -28,7 +28,8 @@ class ULevelBase : public UObject, public FNetworkNotify {
 public:
     virtual INT NotifyAcceptingConnection();
     TTransArray<AActor *> Actors;
-    BYTE unk_3c[0xf0 - 0x3c];
+    BYTE unk_3c[0xec - 0x3c];
+    class UNetDriver *NetDriver;
     class UEngine *Engine;
     BYTE unk_f4[0x13c - 0xf4];
 };

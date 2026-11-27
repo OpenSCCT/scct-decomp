@@ -7,10 +7,11 @@
 #ifndef VERSUS_PAWN_COLLISION_MATH_H
 #include "unreal_math.h"
 #endif
-#if !defined(VERSUS_ARRAYS_H)
+#if !defined(VERSUS_ARRAYS_H) && !defined(VERSUS_STATS_ARRAYS_H)
 #include "unreal_containers.h"
 #endif
 
+#ifndef VERSUS_NAME_H
 enum EName {
 #define REGISTER_NAME(symbol, index, flags, text) NAME_##symbol = index,
 #include "versus_hardcoded_names.inl"
@@ -25,6 +26,8 @@ public:
     UBOOL operator==(const FName &Other) const { return Index == Other.Index; }
     FName(EName Name) : Index(Name) {}
 };
+
+#endif
 
 class UFunction;
 class AActor;
@@ -74,13 +77,17 @@ public:
     virtual void VirtualSlot20();
     virtual void VirtualSlot21();
 
+    static UObject *StaticAllocateObject(class UClass *ObjectClass, UObject *Outer, FName Name,
+        DWORD Flags, UObject *Template, FOutputDevice *Error, UObject *Ptr, UObject *SubobjectRoot);
+    const TCHAR *GetName() const;
     UBOOL IsA(class UClass *SomeBase) const;
     UObject *FindInStateOrClass(FName InName, INT Global);
     UFunction *FindFunctionChecked(FName InName, INT Global);
     INT Index;
     BYTE unk_8[4];
     struct FStateFrame *StateFrame;
-    BYTE unk_10[12];
+    BYTE unk_10[8];
+    UObject *Outer;
     DWORD ObjectFlags;
     FName Name;
     class UClass *Class;
@@ -223,7 +230,9 @@ public:
     virtual void VirtualSlot81();
     virtual void VirtualSlot82();
 
-    BYTE unk_2f8[0x308 - 0x2f8];
+    BYTE unk_2f8[4];
+    class APawn *Pawn;
+    BYTE unk_300[0x308 - 0x300];
     FLOAT FovAngle;
     BYTE unk_30c[0x388 - 0x30c];
     class APlayerReplicationInfo *PlayerReplicationInfo;
@@ -233,7 +242,9 @@ public:
 class APlayerController : public AController {
 public:
     virtual void PlayerCalcView(AActor *&ViewActor, FVector &CameraLocation, FRotator &CameraRotation, UBOOL Flag);
-    BYTE unk_3c4[0x4fc - 0x3c4];
+    BYTE unk_3c4[0x410 - 0x3c4];
+    FVector FlashScale, FlashFog;
+    BYTE unk_428[0x4fc - 0x428];
     INT RendMap;
     BYTE unk_500[0x518 - 0x500];
     FLOAT SquintingFactor;
@@ -259,6 +270,7 @@ public:
 
 class APawn : public AActor {
 public:
+    void eventFirstPersonRender(class UCanvas *Canvas);
     virtual void VirtualSlot78();
     virtual void VirtualSlot79();
     virtual void VirtualSlot80();
@@ -519,6 +531,9 @@ public:
     DWORD ClassCastFlags;
     BYTE unk_8c[0xac - 0x8c];
     TArray<BYTE> Defaults;
+    BYTE unk_b8[0x104 - 0xb8];
+    void (*ClassConstructor)(void *);
+    BYTE unk_108[0x114 - 0x108];
 };
 
 struct FStateFrame : public FFrame {
