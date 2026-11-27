@@ -1,8 +1,14 @@
 #ifndef VERSUS_CANVAS_MATERIALS_H
 #define VERSUS_CANVAS_MATERIALS_H
 #include "versus_material.h"
+#include "versus_texture_format.h"
+#ifndef UNREAL_CONTAINERS_H
+#include "versus_arrays.h"
+#endif
 
 class FRenderResource;
+class UViewport;
+struct FMipmap;
 
 // Engine.RenderedMaterial: 0x4c bytes, 35 virtual functions
 class URenderedMaterial : public UMaterial {
@@ -17,9 +23,12 @@ public:
     static UClass PrivateStaticClass;
     virtual ~UBitmapMaterial();
     virtual FRenderResource *GetRenderInterface();
-    virtual void VirtualSlot36();
+    virtual UBitmapMaterial *Get(DOUBLE Time, UViewport *Viewport);
 
-    BYTE unk_4c[0x18];
+    INT USize, VSize;
+    INT UClamp, VClamp;
+    BYTE Format, UClampMode, VClampMode;
+    BYTE unk_5f[5];
 };
 
 // Engine.Texture: 0xc0 bytes, 46 virtual functions
@@ -27,7 +36,7 @@ class UTexture : public UBitmapMaterial {
 public:
     static UClass PrivateStaticClass;
     virtual ~UTexture();
-    BYTE ConvertMip(INT MipIndex, UBOOL NoDXT1, UBOOL NoData, BYTE **Dest);
+    ETextureFormat ConvertDXT(INT MipIndex, UBOOL NoDXT1, UBOOL NoData, BYTE **Dest);
     virtual void VirtualSlot37();
     virtual void VirtualSlot38();
     virtual void VirtualSlot39();
@@ -38,7 +47,9 @@ public:
     virtual void VirtualSlot44();
     virtual void VirtualSlot45();
 
-    BYTE unk_64[0x5c];
+    BYTE unk_64[0xc];
+    TArray<FMipmap> Mips;
+    BYTE unk_7c[0x44];
 };
 
 // Engine.Shader: 0x74 bytes, 35 virtual functions

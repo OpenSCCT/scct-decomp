@@ -223,7 +223,7 @@ UBOOL FD3DTexture::Cache(FBaseTexture *source)
                 bitmap->GetTextureData(first, data, pitch, TEXF_RGBA8, 0);
                 readRGBA = 1;
             } else {
-                format = static_cast<ETextureFormat>(bitmap->GetUTexture()->ConvertMip(first, !RenDev->SupportsDXT1, 0, &data));
+                format = bitmap->GetUTexture()->ConvertDXT(first, !RenDev->SupportsDXT1, 0, &data);
                 if (format == TEXF_DXT1) {
                     destFormat = D3DFMT_DXT1;
                     convert = 0;
@@ -287,7 +287,7 @@ UBOOL FD3DTexture::Cache(FBaseTexture *source)
                         data = static_cast<BYTE *>(GMalloc->Malloc(w * h * 4, L"new"));
                         bitmap->GetTextureData(mip + 1, data, w * 2, format, 0);
                     } else {
-                        bitmap->GetUTexture()->ConvertMip(mip + 1, convert, 0, &data);
+                        bitmap->GetUTexture()->ConvertDXT(mip + 1, convert, 0, &data);
                     }
                 }
             } else if (!RenDev->Use16bitTextures) {

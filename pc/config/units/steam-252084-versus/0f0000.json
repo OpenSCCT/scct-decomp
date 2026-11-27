@@ -1569,8 +1569,7 @@
     "offset": 995040,
     "size": 24,
     "inputs": [
-      "src/versus_vd5_item_0248.cpp",
-      "src/versus_texture_format.h"
+      "src/versus_vd5_item_0248.cpp"
     ],
     "rebuilt_symbol": "??0UPalette@@QAE@XZ",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1592,7 +1591,6 @@
         "??3@YAXPAX@Z",
         "?Add@FArray@@QAEHHH@Z",
         "?AllocateObject@@YAPAXH@Z",
-        "?DXTConvertTag@@3QBGB",
         "?Empty@FArray@@QAEXHH@Z",
         "?Escape@@YAXPAX@Z",
         "?GMalloc@@3PAVFMalloc@@A",
@@ -1613,7 +1611,7 @@
     },
     "match": {
       "bytes_sha256": "33c954efe8c394dd06e182ff8258f9d9e6d50c536d1fbd6103a725c39b950fa2",
-      "inputs_sha256": "5b0e6dc6034619d8428868519a594a235ef523b6418dd70e30a7f0ab70556343"
+      "inputs_sha256": "41f48ca3e45f4aa0b10e345a13ca016b3fc132932433116f96cfd85f694001bf"
     }
   },
   {
@@ -1621,8 +1619,7 @@
     "offset": 995072,
     "size": 90,
     "inputs": [
-      "src/versus_vd5_item_0248.cpp",
-      "src/versus_texture_format.h"
+      "src/versus_vd5_item_0248.cpp"
     ],
     "rebuilt_symbol": "?Serialize@UPalette@@QAEXAAVFArchive@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1648,7 +1645,6 @@
         "??3@YAXPAX@Z",
         "?Add@FArray@@QAEHHH@Z",
         "?AllocateObject@@YAPAXH@Z",
-        "?DXTConvertTag@@3QBGB",
         "?Empty@FArray@@QAEXHH@Z",
         "?Escape@@YAXPAX@Z",
         "?GMalloc@@3PAVFMalloc@@A",
@@ -1669,13 +1665,13 @@
         ]
       ],
       "symbols": {
-        "?Serialize@UObject@@QAEXAAVFArchive@@@Z": 268440297,
+        "?Serialize@UObject@@QAEXAAVFArchive@@@Z": 268440296,
         "??6@YAAAVFArchive@@AAV0@AAVFArray@@@Z": 268439552
       }
     },
     "match": {
       "bytes_sha256": "be017b8256d6b65106692fd4e0f4722ec5292d6c2efe046b9c7d2c9386bf6981",
-      "inputs_sha256": "0fb114b5cba9ab42c02c9349519e66b73008eaaab43880bfe26e09eace4b93a1"
+      "inputs_sha256": "2a48e787634e442139713b5d2d44985da77078851536ce240c50034778684532"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1687,13 +1683,304 @@
     }
   },
   {
+    "id": "versus-texture-convert-dxt",
+    "offset": 995168,
+    "size": 307,
+    "inputs": [
+      "src/versus_texture_dxt.cpp",
+      "src/versus_build.h",
+      "src/versus_native_class_types.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_malloc.h",
+      "src/versus_arrays.h",
+      "src/versus_canvas_materials.h",
+      "src/versus_material.h",
+      "src/versus_texture_format.h",
+      "src/versus_lazy_archive.h",
+      "src/versus_archive.h",
+      "src/versus_dxt5_decode.inl"
+    ],
+    "rebuilt_symbol": "?ConvertDXT@UTexture@@QAE?AW4ETextureFormat@@HKKPAPAE@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /c /Folocal/versus_texture_dxt.obj src/versus_texture_dxt.cpp",
+    "identification": "The editor FD3DTexture::Cache calls UTexture::ConvertDXT at 0x11099990. Its exception guard at 0x11099af1 names UTexture::ConvertDXT, and its two callers consume the full ETextureFormat result. Retail Cache calls the same method at 0x699cd and 0x69d85. It obtains the indexed FMipmap on UTexture::Mips, loads its lazy data if empty, selects the conversion from UBitmapMaterial::Format and unloads the concrete mip data.",
+    "ltcg_callees": [
+      "versus-texture-is-dxt-compressed"
+    ],
+    "link_bindings": {
+      "?ConvertDXT5@@YAKHPAUFDXT5Block@@HKPAPAEK@Z": {
+        "va": 278868400,
+        "basis": "TEXF_DXT5 branch in UTexture::ConvertDXT, confirmed by its alpha endpoint tests and editor call at 0x11099a6c."
+      },
+      "?ConvertDXT3@@YAKHPAUFDXT3Block@@HKPAPAEK@Z": {
+        "va": 278868128,
+        "basis": "TEXF_DXT3 branch in UTexture::ConvertDXT, confirmed by its explicit alpha tests and editor call at 0x11099a87."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "Engine allocation interface, used by the allocation and lazy-array release paths."
+      },
+      "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": {
+        "va": 281086424,
+        "basis": "Shared read-only UTF-16 allocation tag L\"new\", including the terminating zero."
+      },
+      "?DecompressDXT1@@YAXPBKHHPAK@Z": {
+        "va": 278868688,
+        "basis": "DXT1 pixel expansion in the TEXF_DXT1 branch. The editor calls its counterpart at 0x110986ca."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Cache@FD3DTexture@@QAEKPAVFBaseTexture@@@Z"
+      ],
+      "stubs": [],
+      "rebuilt_offset": 1584,
+      "rebuilt_address": 268440112,
+      "fields": [
+        [
+          103,
+          "rel32",
+          "?ConvertDXT5@@YAKHPAUFDXT5Block@@HKPAPAEK@Z"
+        ],
+        [
+          141,
+          "rel32",
+          "?ConvertDXT3@@YAKHPAUFDXT3Block@@HKPAPAEK@Z"
+        ],
+        [
+          175,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          187,
+          "abs",
+          "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@"
+        ],
+        [
+          214,
+          "rel32",
+          "?DecompressDXT1@@YAXPBKHHPAK@Z"
+        ],
+        [
+          259,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ]
+      ],
+      "symbols": {
+        "?ConvertDXT5@@YAKHPAUFDXT5Block@@HKPAPAEK@Z": 268439824,
+        "?ConvertDXT3@@YAKHPAUFDXT3Block@@HKPAPAEK@Z": 268439552,
+        "?GMalloc@@3PAVFMalloc@@A": 268446259,
+        "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": 268447744,
+        "?DecompressDXT1@@YAXPBKHHPAK@Z": 268440432
+      },
+      "constants": {
+        "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": 8
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "1c355befd63fa5c05faaa06cefb6abd3aa2e510e882fe86072b923fc94966d68",
+      "inputs_sha256": "d6e2d709eb9ba8ce3d0ab90894d7bf73866e49520465f37b8e23cfef978d77b1"
+    }
+  },
+  {
+    "id": "versus-texture-convert-dxt3",
+    "offset": 995488,
+    "size": 272,
+    "inputs": [
+      "src/versus_texture_dxt.cpp",
+      "src/versus_build.h",
+      "src/versus_native_class_types.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_malloc.h",
+      "src/versus_arrays.h",
+      "src/versus_canvas_materials.h",
+      "src/versus_material.h",
+      "src/versus_texture_format.h",
+      "src/versus_lazy_archive.h",
+      "src/versus_archive.h",
+      "src/versus_dxt5_decode.inl"
+    ],
+    "rebuilt_symbol": "?ConvertDXT3@@YAKHPAUFDXT3Block@@HKPAPAEK@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /c /Folocal/versus_texture_dxt.obj src/versus_texture_dxt.cpp",
+    "identification": "UTexture::ConvertDXT directly calls this helper in its TEXF_DXT3 branch at 0xf2fec. The corresponding editor call at 0x11099a87 targets 0x110986e0, whose unpacked fallback calls the DXT3 pixel decoder at 0x1109881f. It tests the two 32-bit explicit-alpha words in each sixteen-byte block, repacks opaque blocks as DXT1 when allowed, or expands them using the DXT3 decoder. ConvertDXT3 is a descriptive name.",
+    "ltcg_callees": [
+      "versus-texture-is-dxt-compressed"
+    ],
+    "link_bindings": {
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "Engine allocation interface, used by the allocation and lazy-array release paths."
+      },
+      "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": {
+        "va": 281086424,
+        "basis": "Shared read-only UTF-16 allocation tag L\"new\", including the terminating zero."
+      },
+      "?DecompressDXT3@@YAXPBKHHPAK@Z": {
+        "va": 278869344,
+        "basis": "DXT3 explicit four-bit alpha pixel expansion fallback. The editor calls its counterpart at 0x1109881f."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Cache@FD3DTexture@@QAEKPAVFBaseTexture@@@Z"
+      ],
+      "stubs": [],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          111,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          118,
+          "abs",
+          "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@"
+        ],
+        [
+          225,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          237,
+          "abs",
+          "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@"
+        ],
+        [
+          259,
+          "rel32",
+          "?DecompressDXT3@@YAXPBKHHPAK@Z"
+        ]
+      ],
+      "symbols": {
+        "?GMalloc@@3PAVFMalloc@@A": 268446259,
+        "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": 268447744,
+        "?DecompressDXT3@@YAXPBKHHPAK@Z": 268441088
+      },
+      "constants": {
+        "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": 8
+      }
+    },
+    "match": {
+      "bytes_sha256": "c2ba006cb17a4e0ce9969e4dd166894585a5f6e7c9a23a6924e173c87862c071",
+      "inputs_sha256": "578289a72d43d9260f52fdbea4d97900cbe1a7a9936fc019cbe8cc5a6c68eab9"
+    }
+  },
+  {
+    "id": "versus-texture-convert-dxt5",
+    "offset": 995760,
+    "size": 288,
+    "inputs": [
+      "src/versus_texture_dxt.cpp",
+      "src/versus_build.h",
+      "src/versus_native_class_types.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_malloc.h",
+      "src/versus_arrays.h",
+      "src/versus_canvas_materials.h",
+      "src/versus_material.h",
+      "src/versus_texture_format.h",
+      "src/versus_lazy_archive.h",
+      "src/versus_archive.h",
+      "src/versus_dxt5_decode.inl"
+    ],
+    "rebuilt_symbol": "?ConvertDXT5@@YAKHPAUFDXT5Block@@HKPAPAEK@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /c /Folocal/versus_texture_dxt.obj src/versus_texture_dxt.cpp",
+    "identification": "UTexture::ConvertDXT directly calls this helper in its TEXF_DXT5 branch at 0xf2fc6. The corresponding editor call at 0x11099a6c targets 0x11098830, whose unpacked fallback calls the DXT5 pixel decoder at 0x1109897f. The low 16-bit alpha endpoint pair must be opaque in every block for the compact DXT1 path. ConvertDXT5 is a descriptive name.",
+    "ltcg_callees": [
+      "versus-texture-is-dxt-compressed"
+    ],
+    "link_bindings": {
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "Engine allocation interface, used by the allocation and lazy-array release paths."
+      },
+      "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": {
+        "va": 281086424,
+        "basis": "Shared read-only UTF-16 allocation tag L\"new\", including the terminating zero."
+      },
+      "?DecompressDXT5@@YAXPBKHHPAK@Z": {
+        "va": 278870048,
+        "basis": "DXT5 interpolated alpha decoder, independently receipted at 0xf3820 and called by the matching editor fallback."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Cache@FD3DTexture@@QAEKPAVFBaseTexture@@@Z"
+      ],
+      "stubs": [],
+      "rebuilt_offset": 1296,
+      "rebuilt_address": 268439824,
+      "fields": [
+        [
+          119,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          126,
+          "abs",
+          "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@"
+        ],
+        [
+          240,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          252,
+          "abs",
+          "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@"
+        ],
+        [
+          275,
+          "rel32",
+          "?DecompressDXT5@@YAXPBKHHPAK@Z"
+        ]
+      ],
+      "symbols": {
+        "?GMalloc@@3PAVFMalloc@@A": 268446259,
+        "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": 268447744,
+        "?DecompressDXT5@@YAXPBKHHPAK@Z": 268441792
+      },
+      "constants": {
+        "??_C@_17PBGNJEND@?$AAn?$AAe?$AAw?$AA?$AA@": 8
+      }
+    },
+    "match": {
+      "bytes_sha256": "3fc64794fd2115ec3a0365d50199692fdb8e53c2199c33fc3f3dfb180e974eae",
+      "inputs_sha256": "a4ad7b69a92ef6912f97c4351c3b224fdcc136a8a80d7227ba76437b0ec3453c"
+    }
+  },
+  {
     "id": "versus-vd-f3820",
     "offset": 997408,
     "size": 997,
     "inputs": [
-      "src/versus_vd5_item_0250.cpp"
+      "src/versus_vd5_item_0250.cpp",
+      "src/versus_dxt5_decode.inl"
     ],
-    "rebuilt_symbol": "?DecompressDXT5@@YAXPAKPBKHH@Z",
+    "rebuilt_symbol": "?DecompressDXT5@@YAXPBKHHPAK@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd5_item_0250_vc70_ltcg_o2gygl.obj src/versus_vd5_item_0250.cpp",
     "identification": "Complete Versus function at RVA 0xf3820. Direct call at RVA 0xf32c2 in the retail function at RVA 0xf31b0.",
@@ -1723,7 +2010,7 @@
     },
     "match": {
       "bytes_sha256": "b58702d694428df9d54368af0a515fc1410d2f69b301384e585f849896ae735f",
-      "inputs_sha256": "21896acb6fe534803ee0e57e45cdceb9cf8d3f04e5f3451b81483c9483b945ba"
+      "inputs_sha256": "f6c8187649840c56366c2f0839be1fcb01e0e40ea14cac29e1b7e129e4d62223"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2306,7 +2593,8 @@
       "src/versus_shadow_bitmap_material.h",
       "src/versus_scene_level_types.h",
       "src/versus_game_replication_info.h",
-      "src/versus_info.h"
+      "src/versus_info.h",
+      "src/versus_texture_format.h"
     ],
     "rebuilt_symbol": "??1UCubemap@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2341,7 +2629,7 @@
     },
     "match": {
       "bytes_sha256": "2f6f1df59da335328a73d85c9ef30ce3388c67e3f88fea1332f976067f237016",
-      "inputs_sha256": "88872cd9db3255b6b6ef66a000c0a71a4076a039497f397b4dad7adf89be0e8f"
+      "inputs_sha256": "f2b39eedeb0c465189b74113838e7d6b310a2b4e72d318e12db6196d9d00b670"
     }
   },
   {
@@ -2510,7 +2798,8 @@
       "src/versus_script_delegate.h",
       "src/versus_scene_level_types.h",
       "src/versus_game_replication_info.h",
-      "src/versus_info.h"
+      "src/versus_info.h",
+      "src/versus_texture_format.h"
     ],
     "rebuilt_symbol": "??1UPalette@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2540,7 +2829,7 @@
     "identification": "UPalette::~UPalette at RVA 0xf4ba0 of the Versus executable. It installs the vtable at RVA 0x303fc8 (22 slots), runs the inlined UObject::ConditionalDestroy (Destroy is slot 9), destroys the member at 0x28 (TArrayLtcg<UnkType_4>, destructor RVA 0x17bf30) and calls the UObject destructor at RVA 0x15ee0. Name: the UClass registration at RVA 0xa2159 registers Engine.Palette (hardcoded name table), 0x3c bytes, with the placement constructor at RVA 0xa44a0, which installs this vtable. FAKEMATCH, open: the TArrayLtcg members stand for TArray<T> members whose destructors the link-time code generation gave a stack `this`; see src/versus_ltcg.h.",
     "match": {
       "bytes_sha256": "c7af8a15c27d905b27888337e153fdb9acdc2598cae60b6a0bb5f1089e202aab",
-      "inputs_sha256": "b78b2099d9485552193d1283d53831fd96d3fc46cf0efa67ab0f8bce69be3ec8"
+      "inputs_sha256": "b9b5a87eb713a19603575dbdc897eb520e04f4a4a7df474099ecfa973ca9b1e4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9670,7 +9959,7 @@
     },
     "match": {
       "bytes_sha256": "ab0b47d37aa2753f657bbc69243aeab2f527b161e3b2c4b50c81b0143cb5e3d1",
-      "inputs_sha256": "d72747bd90d7387ff2496f579087f626d391f36f5d697b3b128550531022c2e1"
+      "inputs_sha256": "5b61d5b070a4025c3cd0066ec2564a617d9162f8f1839ff11cd607a7294584af"
     }
   },
   {
@@ -9748,7 +10037,7 @@
     },
     "match": {
       "bytes_sha256": "a25e040fc0d34a5f4106b69d1391c324e0e183abee87543b69b5580e3eb6fcd5",
-      "inputs_sha256": "fcf690000617ee651988f58992e46f32b2fe507d7fc7be1c073440f63d420c31"
+      "inputs_sha256": "9e976ad0ca3ce2f9d78694e0460fc975d3ab55214dbc975c3ae1d9fb9e66eb06"
     }
   }
 ]
