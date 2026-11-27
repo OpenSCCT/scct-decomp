@@ -174,10 +174,7 @@ public:
     virtual const TCHAR *ImportText(const TCHAR *Buffer, BYTE *Data, INT PortFlags) const;
 };
 
-struct FScriptDelegate {
-    UObject *Object;
-    FName FunctionName;
-};
+#include "versus_script_delegate.h"
 
 class UDelegateProperty : public UProperty {
 public:

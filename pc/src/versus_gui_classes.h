@@ -8,47 +8,7 @@
 #include "versus_ltcg.h"
 
 // GUI.GUI: 0x2c bytes, 22 virtual functions
-class UGUI : public UObject {
-public:
-    virtual ~UGUI();
-
-    BYTE unk_28[0x4];
-};
-
-// GUI.GUIComponent: 0x190 bytes, 44 virtual functions
-class UGUIComponent : public UGUI {
-public:
-    virtual ~UGUIComponent();
-    virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
-    virtual void VirtualSlot24();
-    virtual void VirtualSlot25();
-    virtual void VirtualSlot26();
-    virtual void VirtualSlot27();
-    virtual void VirtualSlot28();
-    virtual void VirtualSlot29();
-    virtual void VirtualSlot30();
-    virtual void VirtualSlot31();
-    virtual void VirtualSlot32();
-    virtual void VirtualSlot33();
-    virtual void VirtualSlot34();
-    virtual void VirtualSlot35();
-    virtual void VirtualSlot36();
-    virtual void VirtualSlot37();
-    virtual void VirtualSlot38();
-    virtual void VirtualSlot39();
-    virtual void VirtualSlot40();
-    virtual void VirtualSlot41();
-    virtual void VirtualSlot42();
-    virtual void VirtualSlot43();
-
-    BYTE    unk_2c[0x8];
-    FString unk_34;
-    FString unk_40;
-    BYTE    unk_4c[0x18];
-    FString unk_64;
-    BYTE    unk_70[0x120];
-};
+#include "versus_gui_list_types.h"
 
 // GUI.GUIImage: 0x1ac bytes, 44 virtual functions
 class UGUIImage : public UGUIComponent {
@@ -274,21 +234,6 @@ public:
     virtual ~UGUIPanel();
 
     BYTE unk_1a0[0x8];
-};
-
-// GUI.GUIListBase: 0x1d0 bytes, 45 virtual functions
-class UGUIListBase : public UGUIComponent {
-public:
-    virtual ~UGUIListBase();
-    virtual void VirtualSlot44();
-
-    BYTE unk_190[0x40];
-};
-
-// GUI.GUIVertList: 0x1d0 bytes, 45 virtual functions
-class UGUIVertList : public UGUIListBase {
-public:
-    virtual ~UGUIVertList();
 };
 
 // GUI.GUIList: 0x1ec bytes, 45 virtual functions

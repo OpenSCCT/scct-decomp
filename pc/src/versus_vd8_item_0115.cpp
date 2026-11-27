@@ -112,32 +112,13 @@ public:
     TArray<UViewport *> Viewports;
 };
 
-class UInteractions : public UObject {
-public:
-    virtual ~UInteractions();
-};
+#include "versus_gui_controller_types.h"
 
 class UInteractionMaster : public UInteractions {
 public:
     virtual ~UInteractionMaster();
 
     UClient *Client;
-};
-
-/* Engine.Interaction: 0x34 bytes, 28 virtual functions in Versus. */
-class UInteraction : public UInteractions {
-public:
-    virtual ~UInteraction();
-    virtual void VirtualSlot22();
-    virtual void VirtualSlot23();
-    virtual UBOOL NativeKeyEvent(BYTE &iKey, BYTE &State, FLOAT Delta);
-    virtual void NativeTick(FLOAT DeltaTime);
-    virtual void NativePostRender(UCanvas *Canvas);
-    virtual void VirtualSlot27();
-
-    BYTE unk_28[0x04];
-    UViewport *ViewportOwner;
-    UInteractionMaster *Master;
 };
 
 class UGUI : public UObject {
@@ -187,31 +168,6 @@ public:
 
 /* Originally a static local/file BYTE initialized to IST_Hold (2). */
 extern BYTE GGUIRepeatAction;
-
-class UGUIController : public UInteraction {
-public:
-    virtual ~UGUIController();
-    virtual UBOOL NativeKeyEvent(BYTE &iKey, BYTE &State, FLOAT Delta);
-    virtual void NativeTick(FLOAT DeltaTime);
-    virtual void NativePostRender(UCanvas *Canvas);
-
-    BYTE unk_34[0xc4c];
-    UGUIPage *ActivePage;
-    BYTE unk_c84[0x48];
-    INT MouseX;
-    INT MouseY;
-    INT LastMouseX;
-    INT LastMouseY;
-    BYTE unk_cdc[0x14];
-    FLOAT ButtonRepeatDelay;
-    BYTE RepeatKey;
-    FLOAT RepeatDelta;
-    FLOAT RepeatTime;
-    FLOAT CursorFade;
-    INT CursorStep;
-    FLOAT FastCursorFade;
-    INT FastCursorStep;
-};
 
 /* UGUIController::NativeTick */
 void UGUIController::NativeTick(FLOAT DeltaTime)

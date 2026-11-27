@@ -2335,7 +2335,7 @@
     },
     "match": {
       "bytes_sha256": "2f6f1df59da335328a73d85c9ef30ce3388c67e3f88fea1332f976067f237016",
-      "inputs_sha256": "532bb486b05c32b83ab868a38c2aefc00eb9981f8d06d2b782bb5eb96ecc3f12"
+      "inputs_sha256": "5df172cf01092c8fa62b1952537165d970b5e6e79194f71be1604d976f837f6f"
     }
   },
   {
@@ -2499,7 +2499,9 @@
       "src/versus_global_temp_objects.h",
       "src/versus_arrays.h",
       "src/versus_persistent_data_types.h",
-      "src/versus_shadow_bitmap_material.h"
+      "src/versus_shadow_bitmap_material.h",
+      "src/versus_gui_list_types.h",
+      "src/versus_script_delegate.h"
     ],
     "rebuilt_symbol": "??1UPalette@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2529,7 +2531,7 @@
     "identification": "UPalette::~UPalette at RVA 0xf4ba0 of the Versus executable. It installs the vtable at RVA 0x303fc8 (22 slots), runs the inlined UObject::ConditionalDestroy (Destroy is slot 9), destroys the member at 0x28 (TArrayLtcg<UnkType_4>, destructor RVA 0x17bf30) and calls the UObject destructor at RVA 0x15ee0. Name: the UClass registration at RVA 0xa2159 registers Engine.Palette (hardcoded name table), 0x3c bytes, with the placement constructor at RVA 0xa44a0, which installs this vtable. FAKEMATCH, open: the TArrayLtcg members stand for TArray<T> members whose destructors the link-time code generation gave a stack `this`; see src/versus_ltcg.h.",
     "match": {
       "bytes_sha256": "c7af8a15c27d905b27888337e153fdb9acdc2598cae60b6a0bb5f1089e202aab",
-      "inputs_sha256": "92b94afba0c9d0c6a54a68ef6b22f147b27404a2ec4238bdd898007e8dec18db"
+      "inputs_sha256": "a808a527e7a1737ca819ee004e9d1f8d2bb60d22907002e43094e3f2ed6caf67"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -6620,7 +6622,8 @@
       "src/unreal_types.h",
       "src/versus_build.h",
       "src/versus_arrays.h",
-      "src/versus_native_class_types.h"
+      "src/versus_native_class_types.h",
+      "src/versus_script_delegate.h"
     ],
     "rebuilt_symbol": "?StaticInitInput@UInput@@SAXXZ",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -6972,7 +6975,7 @@
     },
     "match": {
       "bytes_sha256": "6916db06efe477426e155f23f11d7f7e6a7141074650384cb295b29fdc1bff4b",
-      "inputs_sha256": "9b7f869ac53fa7b225ff375c25434f4778a8b95b0da801fa02deca5690edfcb4"
+      "inputs_sha256": "bf7d5dd53d86c3d9965c5694c91b4f0ac1ec318f1b4d73ce6c2622ed90dcb736"
     }
   },
   {
@@ -9546,87 +9549,104 @@
     "id": "versus-vd-ff300",
     "offset": 1045248,
     "size": 148,
-    "inputs": [
-      "src/versus_vd5_item_0287.cpp"
-    ],
-    "rebuilt_symbol": "?DrawTileScaled_ff300@UCanvas@@QAEXPAUUMaterial@@MMMMMMMMMUFColor@@@Z",
+    "rebuilt_symbol": "?DrawTile@UCanvas@@QAEXPAVUMaterial@@MMMMMMMMMUFColor@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd5_item_0287_vc70_ltcg_o2gygl.obj src/versus_vd5_item_0287.cpp",
-    "identification": "Complete Versus function at RVA 0xff300. Direct call at RVA 0x1014c0 in the function at RVA 0x101360, rebuilt in this batch.",
-    "link_bindings": {
-      "?RenderMaterial_104010@UMaterial@@QAEKPAUUCanvas@@@Z": {
-        "va": 278937616,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?ScaleY_ff300@@3MA": {
-        "va": 281086808,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?ScaleX_ff300@@3MA": {
-        "va": 281087360,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?DrawTile_111f50@FCanvasUtil@@QAEXMMMMMMMMMKUFColor@@@Z": {
-        "va": 278994768,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      }
-    },
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_list_drawing.obj src/versus_canvas_list_drawing.cpp",
     "ltcg_link": {
       "roots": [
-        "?Driver_ff3a0@@YAXPAUUMaterial@@PAUUCanvas@@MMMMMUFColor@@@Z"
+        "?Draw@UGUIMultiColumnList@@UAEXPAVUCanvas@@@Z"
       ],
       "stubs": [
-        "?Flush_111c60@FCanvasUtil@@QAEXXZ",
-        "?RenderMaterial_104010@UMaterial@@QAEKPAUUCanvas@@@Z",
-        "?ScaleX_ff300@@3MA",
-        "?ScaleY_ff300@@3MA",
-        "?Sink_111f50@@YAXPAHMMMMMMMMMKUFColor@@@Z",
-        "__fltused"
+        "?Draw@UGUIVertList@@UAEXPAVUCanvas@@@Z",
+        "?DrawTileScaled@UCanvas@@QAEXPAVUMaterial@@MMMM@Z",
+        "?DrawTileStretched@UCanvas@@QAEXPAVUMaterial@@MMMM@Z",
+        "?delegateOnDraw@UGUIStyles@@QAEKPAVUCanvas@@EMMMM@Z"
       ],
-      "rebuilt_offset": 1024,
-      "rebuilt_address": 268439552,
       "fields": [
         [
           2,
           "rel32",
-          "?RenderMaterial_104010@UMaterial@@QAEKPAUUCanvas@@@Z"
+          "?GetStyleMaterial@UCanvas@@QAEPAVUMaterial@@PAV2@@Z"
         ],
         [
           83,
           "abs",
-          "?ScaleY_ff300@@3MA"
+          "__real@3b088889"
         ],
         [
           103,
           "abs",
-          "?ScaleX_ff300@@3MA"
+          "__real@3acccccd"
         ],
         [
           119,
           "abs",
-          "?ScaleY_ff300@@3MA"
+          "__real@3b088889"
         ],
         [
           133,
           "abs",
-          "?ScaleX_ff300@@3MA"
+          "__real@3acccccd"
         ],
         [
           141,
           "rel32",
-          "?DrawTile_111f50@FCanvasUtil@@QAEXMMMMMMMMMKUFColor@@@Z"
+          "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z"
         ]
       ],
       "symbols": {
-        "?RenderMaterial_104010@UMaterial@@QAEKPAUUCanvas@@@Z": 268440257,
-        "?ScaleY_ff300@@3MA": 268440259,
-        "?ScaleX_ff300@@3MA": 268440258,
-        "?DrawTile_111f50@FCanvasUtil@@QAEXMMMMMMMMMKUFColor@@@Z": 268439808
-      }
+        "?GetStyleMaterial@UCanvas@@QAEPAVUMaterial@@PAV2@@Z": 268441120,
+        "__real@3b088889": 268447820,
+        "__real@3acccccd": 268447816,
+        "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z": 268441776
+      },
+      "rebuilt_address": 268439552,
+      "rebuilt_offset": 1024
     },
-    "match": {
-      "bytes_sha256": "ab0b47d37aa2753f657bbc69243aeab2f527b161e3b2c4b50c81b0143cb5e3d1",
-      "inputs_sha256": "e892e3fd68e9e037d14cb881952bdcfbd7d784cf9a41563bff1845d4b00ccc0b"
+    "ltcg_callees": [
+      "versus-canvas-style-material"
+    ],
+    "inputs": [
+      "src/versus_canvas_list_drawing.cpp",
+      "src/versus_build.h",
+      "src/versus_native_class_types.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_arrays.h",
+      "src/versus_canvas.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_canvas_util.h",
+      "src/versus_canvas_matrix.h",
+      "src/versus_material.h",
+      "src/versus_output_device.h",
+      "src/versus_viewport_types.h",
+      "src/versus_gui_controller_types.h",
+      "src/versus_gui_list_types.h",
+      "src/versus_script_delegate.h",
+      "src/versus_gui_style_types.h",
+      "src/versus_gui_style_draw.inl"
+    ],
+    "identification": "The complete registered Canvas.ExecDrawTile body and the full material overload at 0xff3a0 call this renderer. It maps its rectangle from a 640 by 480 reference to the active viewport, forwards its texture rectangle, color and style material, and submits it through the independently receipted FCanvasUtil::DrawTile. Its LTCG register convention is reproduced by the real multicolumn list draw caller.",
+    "link_bindings": {
+      "?GetStyleMaterial@UCanvas@@QAEPAVUMaterial@@PAV2@@Z": {
+        "va": 278937616,
+        "basis": "Complete public Canvas style-material selector, also called by both retail glyph draw routines."
+      },
+      "__real@3b088889": {
+        "va": 281086808,
+        "basis": "Read-only float 1/480 scales both vertical extent coordinates."
+      },
+      "__real@3acccccd": {
+        "va": 281087360,
+        "basis": "Read-only float 1/640 scales both horizontal extent coordinates."
+      },
+      "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z": {
+        "va": 278994768,
+        "basis": "Complete public FCanvasUtil::DrawTile quad batcher."
+      }
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -9635,6 +9655,86 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "ab0b47d37aa2753f657bbc69243aeab2f527b161e3b2c4b50c81b0143cb5e3d1",
+      "inputs_sha256": "7e5cb86af42c0ec3683ab7a8824d8ad2fae6c11deaf4f86ac2471d17a04d9e23"
+    }
+  },
+  {
+    "id": "versus-list-material-tile",
+    "offset": 1045408,
+    "size": 90,
+    "rebuilt_symbol": "?DrawTile@UCanvas@@QAEXPAVUMaterial@@MMMMMUFColor@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_list_drawing.obj src/versus_canvas_list_drawing.cpp",
+    "ltcg_link": {
+      "roots": [
+        "?Draw@UGUIMultiColumnList@@UAEXPAVUCanvas@@@Z"
+      ],
+      "stubs": [
+        "?Draw@UGUIVertList@@UAEXPAVUCanvas@@@Z",
+        "?DrawTileScaled@UCanvas@@QAEXPAVUMaterial@@MMMM@Z",
+        "?DrawTileStretched@UCanvas@@QAEXPAVUMaterial@@MMMM@Z",
+        "?delegateOnDraw@UGUIStyles@@QAEKPAVUCanvas@@EMMMM@Z"
+      ],
+      "fields": [
+        [
+          82,
+          "rel32",
+          "?DrawTile@UCanvas@@QAEXPAVUMaterial@@MMMMMMMMMUFColor@@@Z"
+        ]
+      ],
+      "symbols": {
+        "?DrawTile@UCanvas@@QAEXPAVUMaterial@@MMMMMMMMMUFColor@@@Z": 268439552
+      },
+      "rebuilt_address": 268439712,
+      "rebuilt_offset": 1184
+    },
+    "ltcg_callees": [
+      "versus-canvas-style-material"
+    ],
+    "inputs": [
+      "src/versus_canvas_list_drawing.cpp",
+      "src/versus_build.h",
+      "src/versus_native_class_types.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_arrays.h",
+      "src/versus_canvas.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_canvas_util.h",
+      "src/versus_canvas_matrix.h",
+      "src/versus_material.h",
+      "src/versus_output_device.h",
+      "src/versus_viewport_types.h",
+      "src/versus_gui_controller_types.h",
+      "src/versus_gui_list_types.h",
+      "src/versus_script_delegate.h",
+      "src/versus_gui_style_types.h",
+      "src/versus_gui_style_draw.inl"
+    ],
+    "identification": "UGUIMultiColumnList::Draw calls this same overload for ArrowUp and ArrowDown at RVAs 0x160605 and 0x160682. It reads each input material VSize and USize at virtual slots 27 and 26 and requests the complete texture rectangle through the independently receipted UCanvas::DrawTile overload. The multicolumn list class registration and shipped GUI.u property chain identify the caller and both arrow material fields.",
+    "link_bindings": {
+      "?DrawTile@UCanvas@@QAEXPAVUMaterial@@MMMMMMMMMUFColor@@@Z": {
+        "va": 278917888,
+        "basis": "Independently receipted UCanvas rectangle and UV overload; retail MaterialUSize/MaterialVSize fill its texture dimensions."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "a25e040fc0d34a5f4106b69d1391c324e0e183abee87543b69b5580e3eb6fcd5",
+      "inputs_sha256": "45cd958143a71cd6f3fa5c3e8ae8075d924f2638cb49e1b9028d95aad8222a17"
     }
   }
 ]

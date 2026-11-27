@@ -39,6 +39,12 @@ public:
     // Draws one line of glyphs and returns its horizontal advance.
     INT DrawGlyphLine(UFont *InFont, FLOAT ScaleX, FLOAT ScaleY, INT X, INT Y, const TCHAR *Text, DWORD Clip);
     UMaterial *GetStyleMaterial(UMaterial *Material);
+    void DrawTile(UMaterial *Material, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL,
+        FLOAT U, FLOAT V, FLOAT UL, FLOAT VL, FLOAT Z, FColor Color);
+    void DrawTile(UMaterial *Material, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL,
+        FLOAT Z, FColor Color);
+    void DrawTileStretched(UMaterial *Material, FLOAT X, FLOAT Y, FLOAT Width, FLOAT Height);
+    void DrawTileScaled(UMaterial *Material, FLOAT X, FLOAT Y, FLOAT Width, FLOAT Height);
     void ClippedPrint(UFont *InFont, FLOAT ScaleX, FLOAT ScaleY, UBOOL Centered, const TCHAR *Text);
     void WrappedPrint(UBOOL Draw, INT &XL, INT &YL, UFont *InFont, FLOAT ScaleX,
         FLOAT ScaleY, UBOOL Centered, TCHAR *Text);

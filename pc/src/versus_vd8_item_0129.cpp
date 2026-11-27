@@ -20,13 +20,6 @@ typedef char *va_list;
 enum EName { NAME_None = 0, GUI_OnDraw = 0xce74 };
 enum { LOAD_NoWarn = 0x0002 };
 
-enum EImgStyle
-{
-    ISTY_Normal    = 0,
-    ISTY_Stretched = 1,
-    ISTY_Scaled    = 2,
-};
-
 extern "C" __declspec(dllimport) UINT __cdecl wcslen(const TCHAR *);
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 extern "C" __declspec(dllimport) INT __cdecl _vsnwprintf(TCHAR *, UINT, const TCHAR *, va_list);
@@ -308,29 +301,7 @@ struct UGUIStyles_eventOnDrawText_Parms
     BITFIELD ReturnValue;
 };
 
-class UGUIStyles : public UGUI
-{
-public:
-    FString KeyName;             // +0x2c
-    BYTE RStyles[5];             // +0x38
-    UMaterial *Images[5];        // +0x40
-    BYTE ImgStyle[5];            // +0x54
-    FColor FontColors[5];        // +0x5c
-    FColor ImgColors[5];         // +0x70
-    UGUIFont *Fonts[5];          // +0x84
-    BYTE unk_98[0xe4 - 0x98];
-    DWORD unk_e4;                // +0xe4
-    FScriptDelegate OnDraw;      // +0xe8
-    FScriptDelegate OnDrawText;  // +0xf0
-
-    UBOOL delegateOnDraw(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FLOAT Top, FLOAT Width, FLOAT Height);
-    UBOOL delegateOnDrawText(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FLOAT Top, FLOAT Width, FLOAT Height, BYTE Align, const FString &Text);
-    void Draw(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FLOAT Top, FLOAT Width, FLOAT Height);
-    void DrawText(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FLOAT Top, FLOAT Width, FLOAT Height, BYTE Just, const TCHAR *Text);
-
-    void execDraw(FFrame &Stack, RESULT_DECL);
-    void execDrawText(FFrame &Stack, RESULT_DECL);
-};
+#include "versus_gui_style_types.h"
 
 // Retail keeps L"Warning: %s could not load font %s" at 0x10c46730 in writable .data.
 extern const TCHAR WarnFontLoadFmt[];
@@ -416,45 +387,7 @@ void UGUIStyles::execDrawText(FFrame &Stack, RESULT_DECL)
 }
 
 // RVA 0x1589e0: UGUIStyles::Draw
-void UGUIStyles::Draw(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FLOAT Top, FLOAT Width, FLOAT Height)
-{
-    if (MenuState > 5)
-        return;
-
-    if (delegateOnDraw(Canvas, MenuState, Left, Top, Width, Height))
-        return;
-
-    if (!Images[MenuState])
-        return;
-
-    if (MenuState == 4)
-        Canvas->DrawColor = FColor(64, 64, 64, 255);
-    else
-        Canvas->DrawColor = FColor(128, 128, 128, 255);
-
-    UMaterial *M = Images[MenuState];
-    if (!M)
-        return;
-
-    FLOAT mW = (FLOAT)M->MaterialUSize();
-    FLOAT mH = (FLOAT)M->MaterialVSize();
-
-    Canvas->Style = RStyles[MenuState];
-    Canvas->DrawColor = ImgColors[MenuState];
-
-    switch (ImgStyle[MenuState])
-    {
-        case ISTY_Normal:
-            Canvas->DrawTile(M, Left, Top, mW, mH, 0, 0, mW, mH, 0, FColor(128, 128, 128, 255));
-            break;
-        case ISTY_Stretched:
-            Canvas->DrawTileStretched(M, Left, Top, Width, Height);
-            break;
-        case ISTY_Scaled:
-            Canvas->DrawTileScaled(M, Left, Top, Width, Height);
-            break;
-    }
-}
+#include "versus_gui_style_draw.inl"
 
 // ---------------------------------------------------------------------------
 // Scaffolding for LTCG links, not part of the units.
@@ -534,7 +467,7 @@ UBOOL UGUIStyles::delegateOnDraw(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FL
     Parms.Width = Width;
     Parms.Height = Height;
     Parms.ReturnValue = 0;
-    ProcessDelegate(GUI_OnDraw, &OnDraw, &Parms, 0);
+    ProcessDelegate(GUI_OnDraw, &__OnDraw__Delegate, &Parms, 0);
     return Parms.ReturnValue;
 }
 
@@ -550,7 +483,7 @@ UBOOL UGUIStyles::delegateOnDrawText(UCanvas *Canvas, BYTE MenuState, FLOAT Left
     Parms.Align = Align;
     Parms.Text = Text;
     Parms.ReturnValue = 0;
-    ProcessDelegate(FName((EName)0xce75), &OnDrawText, &Parms, 0);
+    ProcessDelegate(FName((EName)0xce75), &__OnDrawText__Delegate, &Parms, 0);
     return Parms.ReturnValue;
 }
 
@@ -591,7 +524,7 @@ void UGUIStyles::DrawText(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FLOAT Top
     Canvas->Style = RStyles[MenuState];
     Canvas->DrawColor = FontColors[MenuState];
     Canvas->Font = Fonts[MenuState]->GetFont(Canvas->SizeX);
-    if (unk_e4 & 2)
+    if (CheckTRCButton)
         Just += 10;
     if (Canvas->Font)
         Canvas->DrawTextJustified(Just, Left, Top, Left + Width, Top + Height, Text);
