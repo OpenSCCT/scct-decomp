@@ -62,26 +62,7 @@ public:
     virtual ~ASVitre();
 };
 
-// SBase.SInteractObject: 0x364 bytes, 80 virtual functions
-class ASInteractObject : public AActor {
-public:
-    virtual ~ASInteractObject();
-    virtual UBOOL VirtualSlot78(void *Argument);
-    virtual void VirtualSlot79();
-
-    BYTE    unk_2f8[8];
-    INT     Priority;
-    FString unk_304;
-    BYTE    unk_310[0x1c];
-    BYTE    unk_32c[0x2c];
-    DWORD   unk_358;
-    BYTE    unk_35c[0x8];
-
-    DECLARE_NATIVE(execDoTouch)
-    DECLARE_NATIVE(execTriggerEventServer)
-    DECLARE_NATIVE(execUnTriggerEventServer)
-    DECLARE_NATIVE(execSetPriority)
-};
+#include "versus_sbase_interaction_types.h"
 
 // SBase.SMineProxInteraction: 0x364 bytes, 80 virtual functions
 class ASMineProxInteraction : public ASInteractObject {
@@ -452,19 +433,6 @@ public:
     BYTE    unk_330[0xc];
 };
 
-// SBase.SAlarm: 0x360 bytes, 78 virtual functions
-class ASAlarm : public AActor {
-public:
-    virtual ~ASAlarm();
-
-    TArray<UnkType_4>     unk_2f8;
-    TArrayLtcg<UnkType_4> unk_304;
-    TArrayLtcg<UnkType_8> unk_310;
-    FString               unk_31c;
-    FString               unk_328;
-    FString               unk_334;
-    BYTE                  unk_340[0x20];
-};
 
 // SBase.SAmbientSoundTrigger: 0x300 bytes, 78 virtual functions
 class ASAmbientSoundTrigger : public ATriggers {
@@ -980,13 +948,6 @@ public:
     BYTE unk_364[0x2c];
 };
 
-// SBase.STriggerInteraction: 0x380 bytes, 80 virtual functions
-class ASTriggerInteraction : public ASInteractObject {
-public:
-    virtual ~ASTriggerInteraction();
-
-    BYTE unk_364[0x1c];
-};
 
 // SBase.STriggerLight: 0x32c bytes, 78 virtual functions
 class ASTriggerLight : public ALight {

@@ -50,7 +50,11 @@
       "src/unreal_math.h",
       "src/versus_hardcoded_names.inl",
       "src/versus_game_replication_info.h",
-      "src/versus_info.h"
+      "src/versus_info.h",
+      "src/versus_hud_objective_types.h",
+      "src/versus_sbase_interaction_types.h",
+      "src/versus_native_class_init.h",
+      "src/versus_min_max.h"
     ],
     "rebuilt_symbol": "?UpdateClock@MgmPlayerHud@@UAEXXZ",
     "identification": "MgmPlayerHud::UpdateClock. Entry 18 of the table at 0x2e0fa0 updates Hud.mgm A_Chrono using the reflected GameReplicationInfo.TimeLimit and ElapsedTime. The final-minute transition selects animation frame 70 and starts playback. The text buffer is read by MgmTextContent.",
@@ -68,7 +72,7 @@
         "va": 280644064,
         "basis": "The area stores its playback flag at +0x3c and propagates the changed value to each child content at vtable slot 5."
       },
-      "$SG5861": {
+      "$SG6154": {
         "va": 281244320,
         "basis": "Private independently emitted UTF-16 clock format %u:%02u including its terminator in writable retail data."
       },
@@ -78,13 +82,161 @@
       }
     },
     "coff_private_strings": {
-      "$SG5861": {
+      "$SG6154": {
         "utf16": 16
       }
     },
     "match": {
       "bytes_sha256": "8626949466a57e712d95f01b824b2b327112f3431389bdb1cf153f52427a602b",
-      "inputs_sha256": "f6b0ab0e71ebcbd285cf77f260a8d01c66689cece11adcd6f7f6f97a959993a4"
+      "inputs_sha256": "3c18e2b7a9027414a1bec49b5e04f819eef21b9b8b011af549f6ec2f383ef3e8"
+    }
+  },
+  {
+    "id": "versus-player-hud-update-hack-timer",
+    "offset": 2295344,
+    "size": 287,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GF- /c /Folocal/versus_player_hud_timers.obj src/versus_player_hud_timers.cpp",
+    "inputs": [
+      "src/versus_player_hud_timers.cpp",
+      "src/versus_spy_hud.h",
+      "src/versus_arrays.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_hud_pages.h",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h",
+      "src/versus_pawn_action_events.h",
+      "src/unreal_math.h",
+      "src/versus_hardcoded_names.inl",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h",
+      "src/versus_hud_objective_types.h",
+      "src/versus_sbase_interaction_types.h",
+      "src/versus_native_class_init.h",
+      "src/versus_min_max.h"
+    ],
+    "rebuilt_symbol": "?UpdateHackTimer@MgmPlayerHud@@UAEXXZ",
+    "identification": "MgmPlayerHud::UpdateHackTimer. Slot 19 of the MgmPlayerHud vtable at 0x2e0fa0. The native scans SBase.SHud.ActorToDraw for an STriggerInteraction with nonzero MinTriggerTime. It formats remaining time against GameReplicationInfo.ElapsedTime, sets the A_ChronoHack text and starts its animation or hides the area when no timer qualifies. SBase.u declares the Actor element type and the float field, and Hud.mgm supplies the named area and text.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?PrivateStaticClass@ASTriggerInteraction@@2VUClass@@A": {
+        "va": 281643344,
+        "basis": "SBase.STriggerInteraction registration at 0x1ed037 installs this exact native UClass; the HUD checks the actor class chain against it."
+      },
+      "__real@00000000": {
+        "va": 281086456,
+        "basis": "The read-only IEEE binary32 constant 0 in frame and time arithmetic. Its complete compiler-emitted value is checked against retail."
+      },
+      "?SetVisible@MgmArea@@QAEXEE@Z": {
+        "va": 280643968,
+        "basis": "The area visibility byte at +0x3d and optional child propagation are used throughout the measured MGM resource finalizers."
+      },
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "MSVC x86 converts the final floating-point frame position to an integer through its CRT helper."
+      },
+      "$SG6173": {
+        "va": 281244404,
+        "basis": "This call has its own writable UTF-16 0:%02u format including its terminator. The hack and alarm routines reference two distinct objects with that text."
+      },
+      "?appSprintf@@YAHPAGPBGZZ": {
+        "va": 277935344,
+        "basis": "Formats minutes and two-digit seconds into the HUD clock buffer, as in the measured HUD resource initializer."
+      },
+      "?SetTime@MgmArea@@QAEXME@Z": {
+        "va": 280644128,
+        "basis": "Stores playback seconds and evaluates all children at this position."
+      },
+      "?SetPlaying@MgmArea@@QAEXE@Z": {
+        "va": 280644064,
+        "basis": "The area stores its playback flag at +0x3c and propagates the changed value to each child content at vtable slot 5."
+      },
+      "?GetFrame@MgmArea@@QBEHXZ": {
+        "va": 280643744,
+        "basis": "The measured MGM area playback method converts the timeline time to a frame before deciding whether to start or resume playback."
+      }
+    },
+    "coff_private_strings": {
+      "$SG6173": {
+        "utf16": 14
+      }
+    },
+    "match": {
+      "bytes_sha256": "047f85bc8013fa844106c7a079441966c717cad95c0dafcb4c1b08a2c4020be6",
+      "inputs_sha256": "220f37ca1421866d3f15a234c0c5c83defef9e46154b7d8a546e0b94096977cb"
+    }
+  },
+  {
+    "id": "versus-player-hud-update-alarm-timer",
+    "offset": 2295632,
+    "size": 229,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GF- /c /Folocal/versus_player_hud_timers.obj src/versus_player_hud_timers.cpp",
+    "inputs": [
+      "src/versus_player_hud_timers.cpp",
+      "src/versus_spy_hud.h",
+      "src/versus_arrays.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_hud_pages.h",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h",
+      "src/versus_pawn_action_events.h",
+      "src/unreal_math.h",
+      "src/versus_hardcoded_names.inl",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h",
+      "src/versus_hud_objective_types.h",
+      "src/versus_sbase_interaction_types.h",
+      "src/versus_native_class_init.h",
+      "src/versus_min_max.h"
+    ],
+    "rebuilt_symbol": "?UpdateAlarmTimer@MgmPlayerHud@@UAEXXZ",
+    "identification": "MgmPlayerHud::UpdateAlarmTimer. Slot 20 of the MgmPlayerHud vtable at 0x2e0fa0. The native uses the selected SBase.SAlarm in SBase.SHud.AlarmsList, adds its StartTime and Duration and subtracts GameReplicationInfo.ElapsedTime. When the time is positive it updates the Hud.mgm A_ChronoAlarme text and animation; otherwise it hides the area.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?FindActiveAlarm@ASHud@@QAEHXZ": {
+        "va": 279934528,
+        "basis": "The selector scans AlarmsList and returns the index with the most remaining time among sufficiently high-priority alarms."
+      },
+      "$SG6188": {
+        "va": 281244420,
+        "basis": "This call has its own writable UTF-16 0:%02u format including its terminator. The hack and alarm routines reference two distinct objects with that text."
+      },
+      "?appSprintf@@YAHPAGPBGZZ": {
+        "va": 277935344,
+        "basis": "Formats minutes and two-digit seconds into the HUD clock buffer, as in the measured HUD resource initializer."
+      },
+      "?SetVisible@MgmArea@@QAEXEE@Z": {
+        "va": 280643968,
+        "basis": "The area visibility byte at +0x3d and optional child propagation are used throughout the measured MGM resource finalizers."
+      },
+      "?SetFrame@MgmArea@@QAEXHE@Z": {
+        "va": 280127200,
+        "basis": "Converts the requested frame index to seconds using this area’s frame interval."
+      },
+      "?SetPlaying@MgmArea@@QAEXE@Z": {
+        "va": 280644064,
+        "basis": "The area stores its playback flag at +0x3c and propagates the changed value to each child content at vtable slot 5."
+      },
+      "?GetFrame@MgmArea@@QBEHXZ": {
+        "va": 280643744,
+        "basis": "The measured MGM area playback method converts the timeline time to a frame before deciding whether to start or resume playback."
+      }
+    },
+    "coff_private_strings": {
+      "$SG6188": {
+        "utf16": 14
+      }
+    },
+    "match": {
+      "bytes_sha256": "055537001ce8b48c624cb44908c7504be3b6fdbbd799d563d3ecd03848f3dc00",
+      "inputs_sha256": "4100ea3d846051f39442509e6b6db4c877c3dac275fc8885825878cd75379670"
     }
   },
   {
@@ -122,7 +274,7 @@
         "va": 280643968,
         "basis": "Sets the visibility of this MGM area and optionally propagates it to its children."
       },
-      "$SG5934": {
+      "$SG5936": {
         "va": 281243012,
         "basis": "The shipped Hud.mgm resource declares 'A_Jauge'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
@@ -130,7 +282,7 @@
         "va": 280127280,
         "basis": "The measured name overload resolves a Hud.mgm area within the current MgmPackage."
       },
-      "$SG5935": {
+      "$SG5937": {
         "va": 281243020,
         "basis": "The shipped Hud.mgm resource declares 'jaugeinterne'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
@@ -138,95 +290,95 @@
         "va": 280127328,
         "basis": "The measured name overload resolves the child within the previously selected Hud.mgm area."
       },
-      "$SG5936": {
+      "$SG5938": {
         "va": 281243036,
         "basis": "The shipped Hud.mgm resource declares 'jaugeindicator_gauche'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5937": {
+      "$SG5939": {
         "va": 281243060,
         "basis": "The shipped Hud.mgm resource declares 'jaugeindicator_droite'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5938": {
+      "$SG5940": {
         "va": 281243084,
         "basis": "The shipped Hud.mgm resource declares 'jauge_poison'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5939": {
+      "$SG5941": {
         "va": 281243100,
         "basis": "The shipped Hud.mgm resource declares 'A_Gadget'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5940": {
+      "$SG5942": {
         "va": 281243112,
         "basis": "The shipped Hud.mgm resource declares 'Gadget'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5941": {
+      "$SG5943": {
         "va": 281243120,
         "basis": "The shipped Hud.mgm resource declares 'NomGadget'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5942": {
+      "$SG5944": {
         "va": 281243132,
         "basis": "The shipped Hud.mgm resource declares 'NbGadget'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5943": {
+      "$SG5945": {
         "va": 281243144,
         "basis": "The shipped Hud.mgm resource declares 'A_Chrono'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5945": {
+      "$SG5947": {
         "va": 281243156,
         "basis": "The shipped Hud.mgm resource declares 'Chrono'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5947": {
+      "$SG5949": {
         "va": 281243164,
         "basis": "The shipped Hud.mgm resource declares 'A_Objectif'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5948": {
+      "$SG5950": {
         "va": 281243176,
         "basis": "The shipped Hud.mgm resource declares 'A_deathmatch'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5949": {
+      "$SG5951": {
         "va": 281243192,
         "basis": "The shipped Hud.mgm resource declares 'objectif'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5951": {
+      "$SG5953": {
         "va": 281243204,
         "basis": "The shipped Hud.mgm resource declares 'A_deathmatch'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5952": {
+      "$SG5954": {
         "va": 281243220,
         "basis": "The shipped Hud.mgm resource declares 'A_Objectif'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5953": {
+      "$SG5955": {
         "va": 281243232,
         "basis": "The shipped Hud.mgm resource declares 'objectif'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5954": {
+      "$SG5956": {
         "va": 281243244,
         "basis": "The shipped Hud.mgm resource declares 'A_ChronoHack'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5955": {
+      "$SG5958": {
         "va": 281243260,
         "basis": "The shipped Hud.mgm resource declares 'Chrono_Hack'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5956": {
+      "$SG5959": {
         "va": 281243272,
         "basis": "The shipped Hud.mgm resource declares 'A_ChronoObjectif'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5957": {
+      "$SG5960": {
         "va": 281243292,
         "basis": "The shipped Hud.mgm resource declares 'Chrono_Objectif'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5958": {
+      "$SG5961": {
         "va": 281243308,
         "basis": "The shipped Hud.mgm resource declares 'A_ChronoObjectif2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5959": {
+      "$SG5962": {
         "va": 281243328,
         "basis": "The shipped Hud.mgm resource declares 'Chrono_Objectif2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5960": {
+      "$SG5963": {
         "va": 281243348,
         "basis": "The shipped Hud.mgm resource declares 'A_ChronoAlarme'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5961": {
+      "$SG5965": {
         "va": 281243364,
         "basis": "The shipped Hud.mgm resource declares 'Chrono_Alarm'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
@@ -234,7 +386,7 @@
         "va": 281501332,
         "basis": "GetMgmViewport reads this same menu-system singleton; its native package list begins at +4 and its viewport lives at +0x38."
       },
-      "$SG5962": {
+      "$SG5966": {
         "va": 281243380,
         "basis": "The shipped Options.mgm package declares the name 'Options'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
@@ -242,19 +394,19 @@
         "va": 280652144,
         "basis": "The menu-system list at +4 supplies its sentinel. The search compares the requested narrow name with each MgmPackage name at package+0x40 and returns the matching package."
       },
-      "$SG5963": {
+      "$SG5967": {
         "va": 281243388,
         "basis": "The shipped Hud.mgm resource declares 'A_Ballistic'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5964": {
+      "$SG5968": {
         "va": 281243400,
         "basis": "The shipped Hud.mgm resource declares 'A_Radar'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5965": {
+      "$SG5969": {
         "va": 281243408,
         "basis": "The shipped Hud.mgm resource declares 'FondBoussole'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5970": {
+      "$SG5974": {
         "va": 281243424,
         "basis": "The shipped Hud.mgm resource declares 'IconTeammate1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
@@ -262,27 +414,27 @@
         "va": 277890272,
         "basis": "The measured FArray::Add grows the radar pointer array by one four-byte element and returns its prior count."
       },
-      "$SG5972": {
+      "$SG5976": {
         "va": 281243440,
         "basis": "The shipped Hud.mgm resource declares 'IconTeammate1Higher'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5974": {
+      "$SG5978": {
         "va": 281243460,
         "basis": "The shipped Hud.mgm resource declares 'IconTeammate1Lower'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5976": {
+      "$SG5980": {
         "va": 281243480,
         "basis": "The shipped Hud.mgm resource declares 'IconTeammate2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5978": {
+      "$SG5982": {
         "va": 281243496,
         "basis": "The shipped Hud.mgm resource declares 'IconTeammate2Higher'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5980": {
+      "$SG5984": {
         "va": 281243516,
         "basis": "The shipped Hud.mgm resource declares 'IconTeammate2Lower'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5990": {
+      "$SG5994": {
         "va": 281243536,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
@@ -298,159 +450,159 @@
         "va": 281086324,
         "basis": "The complete read-only UTF-16 allocator tag FArray is also passed to Realloc by the independently measured FArray::Add."
       },
-      "$SG5992": {
+      "$SG5996": {
         "va": 281243548,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy1Higher'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5994": {
+      "$SG5998": {
         "va": 281243568,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy1Lower'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5996": {
+      "$SG6000": {
         "va": 281243584,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemyArrow1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG5998": {
+      "$SG6002": {
         "va": 281243600,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6000": {
+      "$SG6004": {
         "va": 281243612,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy2Higher'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6002": {
+      "$SG6006": {
         "va": 281243632,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy2Lower'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6004": {
+      "$SG6008": {
         "va": 281243648,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemyArrow2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6006": {
+      "$SG6010": {
         "va": 281243664,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy3'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6008": {
+      "$SG6012": {
         "va": 281243676,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy3Higher'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6010": {
+      "$SG6014": {
         "va": 281243696,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemy3Lower'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6012": {
+      "$SG6016": {
         "va": 281243712,
         "basis": "The shipped Hud.mgm resource declares 'IconEnemyArrow3'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6017": {
+      "$SG6021": {
         "va": 281243728,
         "basis": "The shipped Hud.mgm resource declares 'Fond'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6019": {
+      "$SG6023": {
         "va": 281243736,
         "basis": "The shipped Hud.mgm resource declares 'A_MessageSystem'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6020": {
+      "$SG6024": {
         "va": 281243752,
         "basis": "The shipped Hud.mgm resource declares 'A_MessageState'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6021": {
+      "$SG6025": {
         "va": 281243768,
         "basis": "The shipped Hud.mgm resource declares 'A_MessageGame'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6022": {
+      "$SG6026": {
         "va": 281243784,
         "basis": "The shipped Hud.mgm resource declares 'A_TutoMessage'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6023": {
+      "$SG6027": {
         "va": 281243800,
         "basis": "The shipped Hud.mgm resource declares 'messageTuto'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6024": {
+      "$SG6028": {
         "va": 281243812,
         "basis": "The shipped Hud.mgm resource declares 'A_ZoneMessage'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6025": {
+      "$SG6029": {
         "va": 281243828,
         "basis": "The shipped Hud.mgm resource declares '_ZoneMessage'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6027": {
+      "$SG6031": {
         "va": 281243844,
         "basis": "The shipped Hud.mgm resource declares 'messageSystem'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6029": {
+      "$SG6033": {
         "va": 281243860,
         "basis": "The shipped Hud.mgm resource declares 'messageState'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6031": {
+      "$SG6035": {
         "va": 281243876,
         "basis": "The shipped Hud.mgm resource declares 'messageGame'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6034": {
+      "$SG6038": {
         "va": 281243888,
         "basis": "The shipped Hud.mgm resource declares 'A_Heart'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6035": {
+      "$SG6039": {
         "va": 281243896,
         "basis": "The shipped Hud.mgm resource declares 'A_Heart1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6036": {
+      "$SG6040": {
         "va": 281243908,
         "basis": "The shipped Hud.mgm resource declares 'radar_piege'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6037": {
+      "$SG6041": {
         "va": 281243920,
         "basis": "The shipped Hud.mgm resource declares 'A_PCConnectedPlayers'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6038": {
+      "$SG6042": {
         "va": 281243944,
         "basis": "The shipped Hud.mgm resource declares 'PCTextPlayer1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6039": {
+      "$SG6043": {
         "va": 281243960,
         "basis": "The shipped Hud.mgm resource declares 'PCTextPlayer2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6040": {
+      "$SG6044": {
         "va": 281243976,
         "basis": "The shipped Hud.mgm resource declares 'PCTextPlayer3'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6041": {
+      "$SG6045": {
         "va": 281243992,
         "basis": "The shipped Hud.mgm resource declares 'PCTextPlayer4'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6042": {
+      "$SG6046": {
         "va": 281244008,
         "basis": "The shipped Hud.mgm resource declares 'PCText_ObjOrKills1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6043": {
+      "$SG6047": {
         "va": 281244028,
         "basis": "The shipped Hud.mgm resource declares 'PCText_ObjOrKills2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6044": {
+      "$SG6048": {
         "va": 281244048,
         "basis": "The shipped Hud.mgm resource declares 'PCText_ObjOrKills3'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6045": {
+      "$SG6049": {
         "va": 281244068,
         "basis": "The shipped Hud.mgm resource declares 'PCText_ObjOrKills4'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6046": {
+      "$SG6050": {
         "va": 281244088,
         "basis": "The shipped Hud.mgm resource declares 'PCText_Lives1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6047": {
+      "$SG6051": {
         "va": 281244104,
         "basis": "The shipped Hud.mgm resource declares 'PCText_Lives2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6048": {
+      "$SG6052": {
         "va": 281244120,
         "basis": "The shipped Hud.mgm resource declares 'PCText_Lives3'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6049": {
+      "$SG6053": {
         "va": 281244136,
         "basis": "The shipped Hud.mgm resource declares 'PCText_Lives4'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6057": {
+      "$SG6061": {
         "va": 281497148,
         "basis": "Distinct empty UTF-16 format string passed to appSprintf when clearing the player label buffers. Its COFF .bss object and the file-backed writable retail terminator agree."
       },
@@ -458,59 +610,59 @@
         "va": 277935344,
         "basis": "Formats one empty TCHAR string into each of the player objective and lives text buffers. The neighboring native HUDs call the same formatter for nonempty labels."
       },
-      "$SG6058": {
+      "$SG6062": {
         "va": 281497152,
         "basis": "Distinct empty UTF-16 format string passed to appSprintf when clearing the player label buffers. Its COFF .bss object and the file-backed writable retail terminator agree."
       },
-      "$SG6059": {
+      "$SG6063": {
         "va": 281244152,
         "basis": "The shipped Hud.mgm resource declares 'IcoSpy1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6060": {
+      "$SG6064": {
         "va": 281244160,
         "basis": "The shipped Hud.mgm resource declares 'IcoSpy2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6061": {
+      "$SG6065": {
         "va": 281244168,
         "basis": "The shipped Hud.mgm resource declares 'IcoSpy3'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6062": {
+      "$SG6066": {
         "va": 281244176,
         "basis": "The shipped Hud.mgm resource declares 'IcoSpy4'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6063": {
+      "$SG6067": {
         "va": 281244184,
         "basis": "The shipped Hud.mgm resource declares 'IcoMerc1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6064": {
+      "$SG6068": {
         "va": 281244196,
         "basis": "The shipped Hud.mgm resource declares 'IcoMerc2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6065": {
+      "$SG6069": {
         "va": 281244208,
         "basis": "The shipped Hud.mgm resource declares 'IcoMerc3'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6066": {
+      "$SG6070": {
         "va": 281244220,
         "basis": "The shipped Hud.mgm resource declares 'IcoMerc4'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6067": {
+      "$SG6071": {
         "va": 281244232,
         "basis": "The shipped Hud.mgm resource declares 'IcoSpectator1'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6068": {
+      "$SG6072": {
         "va": 281244248,
         "basis": "The shipped Hud.mgm resource declares 'IcoSpectator2'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6069": {
+      "$SG6073": {
         "va": 281244264,
         "basis": "The shipped Hud.mgm resource declares 'IcoSpectator3'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6070": {
+      "$SG6074": {
         "va": 281244280,
         "basis": "The shipped Hud.mgm resource declares 'IcoSpectator4'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
-      "$SG6071": {
+      "$SG6075": {
         "va": 281244296,
         "basis": "The shipped Hud.mgm resource declares 'A_GameInvite'. The complete private ASCII object including its terminator agrees at this writable retail address."
       },
@@ -529,277 +681,277 @@
       }
     },
     "coff_private_strings": {
-      "$SG5934": {
+      "$SG5936": {
         "ascii": 8
       },
-      "$SG5935": {
-        "ascii": 13
-      },
-      "$SG5936": {
-        "ascii": 22
-      },
       "$SG5937": {
-        "ascii": 22
+        "ascii": 13
       },
       "$SG5938": {
-        "ascii": 13
+        "ascii": 22
       },
       "$SG5939": {
-        "ascii": 9
+        "ascii": 22
       },
       "$SG5940": {
-        "ascii": 7
+        "ascii": 13
       },
       "$SG5941": {
-        "ascii": 10
-      },
-      "$SG5942": {
         "ascii": 9
       },
+      "$SG5942": {
+        "ascii": 7
+      },
       "$SG5943": {
+        "ascii": 10
+      },
+      "$SG5944": {
         "ascii": 9
       },
       "$SG5945": {
-        "ascii": 7
+        "ascii": 9
       },
       "$SG5947": {
-        "ascii": 11
-      },
-      "$SG5948": {
-        "ascii": 13
+        "ascii": 7
       },
       "$SG5949": {
-        "ascii": 9
-      },
-      "$SG5951": {
-        "ascii": 13
-      },
-      "$SG5952": {
         "ascii": 11
       },
-      "$SG5953": {
-        "ascii": 9
-      },
-      "$SG5954": {
+      "$SG5950": {
         "ascii": 13
       },
+      "$SG5951": {
+        "ascii": 9
+      },
+      "$SG5953": {
+        "ascii": 13
+      },
+      "$SG5954": {
+        "ascii": 11
+      },
       "$SG5955": {
-        "ascii": 12
+        "ascii": 9
       },
       "$SG5956": {
-        "ascii": 17
-      },
-      "$SG5957": {
-        "ascii": 16
+        "ascii": 13
       },
       "$SG5958": {
-        "ascii": 18
+        "ascii": 12
       },
       "$SG5959": {
         "ascii": 17
       },
       "$SG5960": {
-        "ascii": 15
+        "ascii": 16
       },
       "$SG5961": {
-        "ascii": 13
+        "ascii": 18
       },
       "$SG5962": {
-        "ascii": 8
+        "ascii": 17
       },
       "$SG5963": {
-        "ascii": 12
-      },
-      "$SG5964": {
-        "ascii": 8
+        "ascii": 15
       },
       "$SG5965": {
         "ascii": 13
       },
-      "$SG5970": {
-        "ascii": 14
+      "$SG5966": {
+        "ascii": 8
       },
-      "$SG5972": {
-        "ascii": 20
-      },
-      "$SG5974": {
-        "ascii": 19
-      },
-      "$SG5976": {
-        "ascii": 14
-      },
-      "$SG5978": {
-        "ascii": 20
-      },
-      "$SG5980": {
-        "ascii": 19
-      },
-      "$SG5990": {
-        "ascii": 11
-      },
-      "$SG5992": {
-        "ascii": 17
-      },
-      "$SG5994": {
-        "ascii": 16
-      },
-      "$SG5996": {
-        "ascii": 16
-      },
-      "$SG5998": {
-        "ascii": 11
-      },
-      "$SG6000": {
-        "ascii": 17
-      },
-      "$SG6002": {
-        "ascii": 16
-      },
-      "$SG6004": {
-        "ascii": 16
-      },
-      "$SG6006": {
-        "ascii": 11
-      },
-      "$SG6008": {
-        "ascii": 17
-      },
-      "$SG6010": {
-        "ascii": 16
-      },
-      "$SG6012": {
-        "ascii": 16
-      },
-      "$SG6017": {
-        "ascii": 5
-      },
-      "$SG6019": {
-        "ascii": 16
-      },
-      "$SG6020": {
-        "ascii": 15
-      },
-      "$SG6021": {
-        "ascii": 14
-      },
-      "$SG6022": {
-        "ascii": 14
-      },
-      "$SG6023": {
+      "$SG5967": {
         "ascii": 12
       },
-      "$SG6024": {
-        "ascii": 14
+      "$SG5968": {
+        "ascii": 8
       },
-      "$SG6025": {
+      "$SG5969": {
         "ascii": 13
       },
+      "$SG5974": {
+        "ascii": 14
+      },
+      "$SG5976": {
+        "ascii": 20
+      },
+      "$SG5978": {
+        "ascii": 19
+      },
+      "$SG5980": {
+        "ascii": 14
+      },
+      "$SG5982": {
+        "ascii": 20
+      },
+      "$SG5984": {
+        "ascii": 19
+      },
+      "$SG5994": {
+        "ascii": 11
+      },
+      "$SG5996": {
+        "ascii": 17
+      },
+      "$SG5998": {
+        "ascii": 16
+      },
+      "$SG6000": {
+        "ascii": 16
+      },
+      "$SG6002": {
+        "ascii": 11
+      },
+      "$SG6004": {
+        "ascii": 17
+      },
+      "$SG6006": {
+        "ascii": 16
+      },
+      "$SG6008": {
+        "ascii": 16
+      },
+      "$SG6010": {
+        "ascii": 11
+      },
+      "$SG6012": {
+        "ascii": 17
+      },
+      "$SG6014": {
+        "ascii": 16
+      },
+      "$SG6016": {
+        "ascii": 16
+      },
+      "$SG6021": {
+        "ascii": 5
+      },
+      "$SG6023": {
+        "ascii": 16
+      },
+      "$SG6024": {
+        "ascii": 15
+      },
+      "$SG6025": {
+        "ascii": 14
+      },
+      "$SG6026": {
+        "ascii": 14
+      },
       "$SG6027": {
+        "ascii": 12
+      },
+      "$SG6028": {
         "ascii": 14
       },
       "$SG6029": {
         "ascii": 13
       },
       "$SG6031": {
-        "ascii": 12
+        "ascii": 14
       },
-      "$SG6034": {
-        "ascii": 8
+      "$SG6033": {
+        "ascii": 13
       },
       "$SG6035": {
-        "ascii": 9
-      },
-      "$SG6036": {
         "ascii": 12
       },
-      "$SG6037": {
-        "ascii": 21
-      },
       "$SG6038": {
-        "ascii": 14
+        "ascii": 8
       },
       "$SG6039": {
-        "ascii": 14
+        "ascii": 9
       },
       "$SG6040": {
-        "ascii": 14
+        "ascii": 12
       },
       "$SG6041": {
-        "ascii": 14
+        "ascii": 21
       },
       "$SG6042": {
-        "ascii": 19
+        "ascii": 14
       },
       "$SG6043": {
-        "ascii": 19
+        "ascii": 14
       },
       "$SG6044": {
-        "ascii": 19
+        "ascii": 14
       },
       "$SG6045": {
-        "ascii": 19
+        "ascii": 14
       },
       "$SG6046": {
-        "ascii": 14
+        "ascii": 19
       },
       "$SG6047": {
-        "ascii": 14
+        "ascii": 19
       },
       "$SG6048": {
-        "ascii": 14
+        "ascii": 19
       },
       "$SG6049": {
+        "ascii": 19
+      },
+      "$SG6050": {
         "ascii": 14
       },
-      "$SG6057": {
-        "utf16": 2
+      "$SG6051": {
+        "ascii": 14
       },
-      "$SG6058": {
-        "utf16": 2
+      "$SG6052": {
+        "ascii": 14
       },
-      "$SG6059": {
-        "ascii": 8
-      },
-      "$SG6060": {
-        "ascii": 8
+      "$SG6053": {
+        "ascii": 14
       },
       "$SG6061": {
-        "ascii": 8
+        "utf16": 2
       },
       "$SG6062": {
-        "ascii": 8
+        "utf16": 2
       },
       "$SG6063": {
-        "ascii": 9
+        "ascii": 8
       },
       "$SG6064": {
-        "ascii": 9
+        "ascii": 8
       },
       "$SG6065": {
-        "ascii": 9
+        "ascii": 8
       },
       "$SG6066": {
-        "ascii": 9
+        "ascii": 8
       },
       "$SG6067": {
-        "ascii": 14
+        "ascii": 9
       },
       "$SG6068": {
-        "ascii": 14
+        "ascii": 9
       },
       "$SG6069": {
-        "ascii": 14
+        "ascii": 9
       },
       "$SG6070": {
-        "ascii": 14
+        "ascii": 9
       },
       "$SG6071": {
+        "ascii": 14
+      },
+      "$SG6072": {
+        "ascii": 14
+      },
+      "$SG6073": {
+        "ascii": 14
+      },
+      "$SG6074": {
+        "ascii": 14
+      },
+      "$SG6075": {
         "ascii": 13
       }
     },
     "match": {
       "bytes_sha256": "9d8fa8c69926c015a505d3bf3acf6430373b87c1cffb78d2db435a2f18e83e95",
-      "inputs_sha256": "15728f4ecc2775e95df8027e823fe12dd133763468431278dfb2783283703158"
+      "inputs_sha256": "1b12941473f30314da9ef9bd81749791743afba2302b5827261fe96d340cdf46"
     }
   },
   {

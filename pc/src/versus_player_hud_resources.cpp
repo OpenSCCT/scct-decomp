@@ -48,7 +48,7 @@ void MgmPlayerHud::InitResources()
 
     HackTimer = FindMgmArea(Package, "A_ChronoHack");
     HackTimer->SetVisible(0, 1);
-    HackTime = FindMgmChild(HackTimer, "Chrono_Hack")->Content;
+    HackTime = static_cast<MgmTextContent *>(FindMgmChild(HackTimer, "Chrono_Hack")->Content);
     ObjectiveTimers[0] = FindMgmArea(Package, "A_ChronoObjectif");
     ObjectiveTimers[0]->SetVisible(0, 1);
     ObjectiveTimes[0] = FindMgmChild(ObjectiveTimers[0], "Chrono_Objectif")->Content;
@@ -57,7 +57,7 @@ void MgmPlayerHud::InitResources()
     ObjectiveTimes[1] = FindMgmChild(ObjectiveTimers[1], "Chrono_Objectif2")->Content;
     AlarmTimer = FindMgmArea(Package, "A_ChronoAlarme");
     AlarmTimer->SetVisible(0, 1);
-    AlarmTime = FindMgmChild(AlarmTimer, "Chrono_Alarm")->Content;
+    AlarmTime = static_cast<MgmTextContent *>(FindMgmChild(AlarmTimer, "Chrono_Alarm")->Content);
 
     Options = FindMgmPackage(&GMgmMenuSystem->Packages, "Options");
     Ballistic = FindMgmArea(Package, "A_Ballistic");

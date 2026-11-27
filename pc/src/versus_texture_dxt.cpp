@@ -3,8 +3,7 @@
 #include "versus_canvas_materials.h"
 #include "versus_lazy_archive.h"
 
-template<class T> inline T Min(T A, T B) { return A <= B ? A : B; }
-template<class T> inline T Max(T A, T B) { return A >= B ? A : B; }
+#include "versus_min_max.h"
 
 template<> class TLazyArray<BYTE> : public FLazyLoader, public TArray<BYTE> {
 public:

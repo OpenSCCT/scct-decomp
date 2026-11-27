@@ -7,6 +7,7 @@
 #include "versus_mgm_content.h"
 
 class APlayerController;
+class ASHud;
 
 class MgmPlayerHud : public MgmHudPage {
 public:
@@ -19,7 +20,8 @@ public:
     virtual void UpdateAlarmTimer();
 
     APlayerController *Controller;
-    BYTE Unknownb8[0xc0 - 0xb8];
+    ASHud *Hud;
+    BYTE Unknownbc[0xc0 - 0xbc];
     DWORD Status[3];
     MgmArea *Gauge;
     MgmImageRegion *GaugeBar;
@@ -41,12 +43,12 @@ public:
     MgmArea *Clock;
     MgmTextContent *ClockText;
     BYTE ClockActive;
-    BYTE Unknown1b5[0x1e0 - 0x1b5];
+    TCHAR HackLabel[20];
     MgmArea *HackTimer;
-    MgmContent *HackTime;
-    BYTE Unknown1e8[0x210 - 0x1e8];
+    MgmTextContent *HackTime;
+    TCHAR AlarmLabel[20];
     MgmArea *AlarmTimer;
-    MgmContent *AlarmTime;
+    MgmTextContent *AlarmTime;
     BYTE Unknown218[0x230 - 0x218];
     MgmArea *ObjectiveTimers[2];
     MgmContent *ObjectiveTimes[2];
