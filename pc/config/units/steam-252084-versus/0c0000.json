@@ -3200,6 +3200,43 @@
     }
   },
   {
+    "id": "versus-skeletal-reference-pose-archive",
+    "offset": 798208,
+    "size": 146,
+    "inputs": [
+      "src/versus_skeletal_reference_pose.cpp",
+      "src/versus_build.h",
+      "src/unreal_math.h",
+      "src/unreal_name.h",
+      "src/unreal_types.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_lazy_archive.h"
+    ],
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAUFReferenceBonePose@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_reference_pose.obj src/versus_skeletal_reference_pose.cpp",
+    "identification": "Serializes the joint pose embedded at +8 of each reference skeleton bone. USkeletalMesh::Serialize passes its RefSkeleton at +0x19c to the matched array serializer at RVA 0xc11e0; its load and save paths both pass the embedded pose to RVA 0xc2e00. Quaternion components, translation and the four trailing archive values are serialized one float at a time. The retail code addresses the extent at +0x20 twice and skips +0x24. FReferenceBonePose is a descriptive name for this 44-byte subrecord.",
+    "link_bindings": {},
+    "ltcg_link": {
+      "roots": [
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshBone@@@@@Z"
+      ],
+      "stubs": [
+        "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [],
+      "symbols": {}
+    },
+    "match": {
+      "bytes_sha256": "a8e53290199985dcadb5d059a5efc31527c6582a7da97c76ac0bd599ee5e74dd",
+      "inputs_sha256": "4eeae0507b7920bbfacd3bf6190d9156d27ad4cc67c48628a02cd47e7e0607d6"
+    }
+  },
+  {
     "id": "versus-motion-chunk-archive-record",
     "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAUMotionChunk@@@Z",
     "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_motion_chunk_archive.obj src/versus_motion_chunk_archive.cpp",

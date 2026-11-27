@@ -40,5 +40,66 @@
       "bytes_sha256": "0dee109942fddb6657b8a96a5480b4adfb40c8cfe26a6d7490bdc760afaad8bb",
       "inputs_sha256": "478c42fa9471eb70455216ddd92212c6f89429d20bd3045adf71034de7f62bf8"
     }
+  },
+  {
+    "id": "versus-pawn-play-death-animation",
+    "offset": 1961520,
+    "size": 810,
+    "inputs": [
+      "src/versus_pawn_death_animation.cpp",
+      "src/versus_pawn_action_events.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/versus_hardcoded_names.inl"
+    ],
+    "rebuilt_symbol": "?PlayDeathAnimation@ASBasePawn@@QAEXH@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_pawn_death_animation.obj src/versus_pawn_death_animation.cpp",
+    "identification": "ASBasePawn::ExecuteAction contains nine calls to this method across seven SBase.u actions, including SA_GRAB_DROPATTACKED on the shared backward-death path. The caller supplies one of six constant directions. Standing and crouching use separate verified six-entry tables. Engine.u declares the PawnType enumeration and SBase.u declares IK_Type_, SPawnType, bLyingOnGround and the twenty consecutive ADeath animation names at +0x8b4 through +0x900. The four drop-attack name indices are registered by FName::StaticInit. The virtual call at slot 73 resolves to the receipted AActor::PlayAnim. PlayDeathAnimation and the direction labels are descriptive. The recorded recipe is a byte-exact candidate.",
+    "ltcg_link": {
+      "roots": [
+        "?Driver_DeathAnimation@@YAXPAVASBasePawn@@H@Z"
+      ],
+      "stubs": [
+        "__fltused"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          42,
+          "abs",
+          "$StandingDeathDirectionTable"
+        ],
+        [
+          431,
+          "abs",
+          "$CrouchedDeathDirectionTable"
+        ]
+      ],
+      "symbols": {
+        "$StandingDeathDirectionTable": 268440364,
+        "$CrouchedDeathDirectionTable": 268440388
+      },
+      "tables": {
+        "$StandingDeathDirectionTable": 6,
+        "$CrouchedDeathDirectionTable": 6
+      }
+    },
+    "link_bindings": {
+      "$StandingDeathDirectionTable": {
+        "va": 279834972,
+        "basis": "The standing branch indexes this six-entry jump table by death direction. All six entries point to their corresponding branches within the function."
+      },
+      "$CrouchedDeathDirectionTable": {
+        "va": 279834996,
+        "basis": "The crouched branch indexes this six-entry jump table by death direction. All six entries point to their corresponding branches within the function."
+      }
+    },
+    "match": {
+      "bytes_sha256": "3fa8c88fd9dd8561fc7350972312e026772f30af90bbce40a437486aa639edd1",
+      "inputs_sha256": "4576dfaa87655a87f574c23c4a0648cc189588044687549222e8112ada17fa46"
+    }
   }
 ]
