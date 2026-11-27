@@ -77,3 +77,52 @@ USparkEmitter::~USparkEmitter()
 
 typedef char SparkData_size[sizeof(FParticleSparkData) == 0x20 ? 1 : -1];
 typedef char SparkEmitter_size[sizeof(USparkEmitter) == 0x424 ? 1 : -1];
+
+class AActor;
+
+struct FRange { FLOAT Min, Max; };
+struct FRangeVector { FRange X, Y, Z; };
+
+struct FParticleBeamEndPoint {
+    FName ActorTag;
+    FRangeVector Offset;
+    FLOAT Weight;
+};
+
+struct FParticleBeamScale {
+    FVector FrequencyScale;
+    FLOAT RelativeLength;
+};
+
+struct FParticleBeamData {
+    FVector Location;
+    FLOAT T;
+};
+
+class UBeamEmitter : public UParticleEmitter {
+public:
+    virtual ~UBeamEmitter();
+    virtual void VirtualSlot16();
+    virtual void VirtualSlot22();
+    virtual void CleanUp();
+    virtual void VirtualSlot25();
+    virtual void VirtualSlot28();
+    virtual void VirtualSlot29();
+    virtual void VirtualSlot31();
+    virtual void VirtualSlot32();
+    BYTE Unknown3e8[8];
+    TArray<FParticleBeamEndPoint> BeamEndPoints;
+    BYTE Unknown3fc[0x4c];
+    TArray<FParticleBeamScale> LFScaleFactors, HFScaleFactors;
+    BYTE Unknown460[0x6c];
+    TArray<FParticleBeamData> HFPoints;
+    TArray<FVector> LFPoints;
+    TArray<AActor *> HitActors;
+    BYTE Unknown4f0[4];
+};
+
+UBeamEmitter::~UBeamEmitter()
+{
+    ConditionalDestroy();
+}
+typedef char BeamEmitter_size[sizeof(UBeamEmitter) == 0x4f4 ? 1 : -1];
