@@ -11,6 +11,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from images import coff_symbol_offset, file_pe_data, initialized_pe_data, inspect, readonly_pe_data, span
 from link_image import place_function
+from link_coff_switch_tail import link_switch_tail, switch_tail_site
 from link_interior_objects import resolve_interior_objects
 from link_vtable_exports import resolve_vtable_exports, vtable_export_args
 from link_writable_strings import check_writable_strings
@@ -147,9 +148,13 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
             raise ValueError("original compiler and flag evidence is empty")
         fingerprints[relative] = fingerprint
     recipe = {k: v for k, v in unit.items() if k != "match"}
+    if "coff_switch_tail" in unit:
+        switch_tail_site(unit)
     if "link_bindings" in unit:
         linker = Path(__file__).with_name("link_image.py" if "ltcg_link" in unit else "link_x86.py")
         validators = [linker]
+        if "coff_switch_tail" in unit:
+            validators.append(linker.with_name("link_coff_switch_tail.py"))
         if "writable_strings" in unit.get("ltcg_link", {}):
             validators.append(linker.with_name("link_writable_strings.py"))
         if "case_selectors" in unit.get("ltcg_link", {}):
@@ -261,6 +266,8 @@ def verify(target, original):
 
 def built_unit_bytes(target, unit, output, original=None):
     """Obtain the complete function at its specified position in the linked image."""
+    if "coff_switch_tail" in unit:
+        switch_tail_site(unit)
     if "rebuilt_storage_class" in unit:
         if (type(unit["rebuilt_storage_class"]) is not int or unit["rebuilt_storage_class"] != 3
                 or "rebuilt_symbol" not in unit or "link_bindings" in unit
@@ -322,6 +329,8 @@ def built_unit_bytes(target, unit, output, original=None):
         for s in target["image"]["executable_sections"]:
             if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
                 address = s["address"] + a - s["offset"]
+                if "coff_switch_tail" in unit:
+                    return link_switch_tail(output, unit, address, original, s["offset"] + s["size"], **readers)
                 return link_function(output, unit["rebuilt_symbol"], unit["size"], address, unit["link_bindings"],
                                      **readers)
         raise ValueError("link address outside a measured code section")
