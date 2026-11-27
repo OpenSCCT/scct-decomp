@@ -19,6 +19,8 @@
 // ~FD3DResource is declared throw(): retail sets no -1 unwind state before
 // calling it.
 
+#include "versus_d3d8_format.h"
+
 typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned long DWORD;
@@ -47,7 +49,6 @@ inline void operator delete(void *, void *) {}
 
 void appMemcpy(void *Dest, const void *Src, INT Count); // RVA 0x40a0
 
-enum D3DFORMAT { D3DFMT_INDEX16 = 101, D3DFMT_INDEX32 = 102 };
 enum D3DPOOL { D3DPOOL_DEFAULT = 0, D3DPOOL_MANAGED = 1, D3DPOOL_SYSTEMMEM = 2 };
 #define D3DUSAGE_WRITEONLY          0x00000008L
 #define D3DUSAGE_SOFTWAREPROCESSING 0x00000010L

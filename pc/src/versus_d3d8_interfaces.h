@@ -3,6 +3,7 @@
 #ifndef VERSUS_D3D8_INTERFACES_H
 #define VERSUS_D3D8_INTERFACES_H
 
+#include "versus_d3d8_format.h"
 #include "windows_dispatch_types.h"
 #include "windows_iunknown.h"
 
@@ -17,7 +18,6 @@ typedef struct _D3DCAPS8 D3DCAPS8;
 typedef struct _D3DCLIPSTATUS8 D3DCLIPSTATUS8;
 typedef struct _D3DDEVICE_CREATION_PARAMETERS D3DDEVICE_CREATION_PARAMETERS;
 typedef struct _D3DDISPLAYMODE D3DDISPLAYMODE;
-typedef enum _D3DFORMAT D3DFORMAT;
 typedef struct _D3DGAMMARAMP D3DGAMMARAMP;
 typedef struct _D3DLIGHT8 D3DLIGHT8;
 typedef struct _D3DMATERIAL8 D3DMATERIAL8;
