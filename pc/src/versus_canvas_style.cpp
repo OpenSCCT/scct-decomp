@@ -13,13 +13,7 @@ static UBOOL IsChildOf(const UClass *Type, const UClass *Base) {
     return 0;
 }
 
-__forceinline UObject *ConstructObject(UClass *Type, UObject *Outer, FName InName = NAME_None,
-    DWORD Flags = 0, UObject *Template = 0, FOutputDevice *Error = GError, UObject *SubobjectRoot = 0) {
-    UObject *Object = UObject::StaticAllocateObject(Type, Outer, InName, Flags, Template, Error, 0, SubobjectRoot);
-    if (Object)
-        Type->ClassConstructor(Object);
-    return Object;
-}
+#include "versus_construct_object.h"
 extern UObject *GObjTransientPkg;
 extern UGlobalTempObjects *GGlobalTempObjects;
 

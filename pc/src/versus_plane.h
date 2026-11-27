@@ -6,6 +6,13 @@ struct FPlane : public FVector
     FLOAT W;
 
     FPlane() {}
+    FPlane(const FVector &Normal, FLOAT InW)
+    {
+        X = Normal.X;
+        Y = Normal.Y;
+        Z = Normal.Z;
+        W = InW;
+    }
     FPlane(FLOAT InX, FLOAT InY, FLOAT InZ, FLOAT InW);
     FPlane(const FVector &A, const FVector &B, const FVector &C);
     FPlane(const FVector &Base, const FVector &Normal)

@@ -1,12 +1,7 @@
 // Work item 0095: Versus RVA 0x14e750 (661 bytes).
 // Projector polygon vertex generator (vtable at 0x10c033cc; class/method name guessed).
 
-typedef unsigned char BYTE;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
-typedef double DOUBLE;
+#include "versus_projector_primitives.h"
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 
@@ -94,6 +89,7 @@ struct FColor
 
 enum EProjectorFlags
 {
+    PRF_Perspective         = 0x00000001,
     PRF_Gradient            = 0x00000004,
     PRF_ProjectOnBackfaces  = 0x00000010,
 };
@@ -108,8 +104,9 @@ struct AProjector
     INT MaxTraceDistance;       // +0x460
 };
 
-struct FProjectorRenderInfo
+class FProjectorRenderInfo
 {
+public:
     AProjector *Projector;      // +0x00
     INT unk_04;                 // +0x04
     DOUBLE LastRenderTime;      // +0x08
@@ -127,18 +124,16 @@ struct FProjectorVertex
     FVector TexCoord;           // +0x10
 };
 
-// UnnamedClass_14e750 -- vtable at 0x10c033cc (slot 0: fan indices, slot 1: vertices)
-class FProjectorPolygonStream
+// The BSP draw list constructs this primitive for a clipped projector polygon.
+class FProjectorPolygonStream : public FProjectorPrimitive
 {
 public:
-    INT unk_04;                         // +0x04
-    INT NumVertices;                    // +0x08
     UBOOL bExtraUV;                     // +0x0c
     FProjectorRenderInfo *RenderInfo;   // +0x10
     FVector *Vertices;                  // +0x14
     FVector Normal;                     // +0x18
 
-    virtual void GetIndices(void *Dest, INT BaseIndex);
+    virtual void GetIndices(_WORD *Dest, _WORD BaseVertex);
     virtual void GetVertices(void *Dest);
 };
 
@@ -181,6 +176,50 @@ void FProjectorPolygonStream::GetVertices(void *Dest)
             ExtraUV[0] = 0.0f;
             ExtraUV[1] = 0.0f;
             Dest = ExtraUV + 2;
+        }
+    }
+}
+
+void FProjectorPolygonStream::GetIndices(_WORD *Dest, _WORD BaseVertex)
+{
+    for (INT Vertex = 2; Vertex < NumVertices; ++Vertex) {
+        *Dest++ = BaseVertex;
+        *Dest++ = BaseVertex + Vertex - 1;
+        *Dest++ = BaseVertex + Vertex;
+    }
+}
+
+struct FStaticProjectorPoint {
+    FVector Position;
+    FLOAT Attenuation;
+};
+
+struct FProjectorUV {
+    FLOAT U, V;
+};
+
+void FStaticProjectorPrimitive::GetVertices(void *Dest)
+{
+    for (INT i = 0; i < ProjectorInfo->Vertices.Num(); ++i) {
+        FStaticProjectorPoint &Vertex = ProjectorInfo->Vertices(i);
+        FProjectorVertex *Out = static_cast<FProjectorVertex *>(Dest);
+        Out->Position = Vertex.Position;
+        FVector Projected = ProjectorInfo->RenderInfo->Matrix.TransformFVector(Vertex.Position);
+        if (!(ProjectorInfo->RenderInfo->ProjectorFlags & PRF_Perspective))
+            Projected.Z = 1.f;
+        Out->TexCoord = Projected;
+
+        FProjectorRenderInfo *Info = ProjectorInfo->RenderInfo;
+        FLOAT Fade = Clamp<FLOAT>(Info->Expires == 0.0 ? 1.0 : Info->Expires - Info->LastRenderTime, 0.f, 1.f);
+        BYTE Intensity = (BYTE)Clamp<INT>((INT)floor(Fade * Vertex.Attenuation * 255.f), 0, 255);
+        Out->Color = FColor(Intensity, Intensity, Intensity, Intensity);
+        Dest = Out + 1;
+
+        if (ProjectorInfo->BaseMaterial) {
+            FProjectorUV *UV = static_cast<FProjectorUV *>(Dest);
+            UV->U = ProjectorInfo->BaseUVs(i).U;
+            UV->V = ProjectorInfo->BaseUVs(i).V;
+            Dest = UV + 1;
         }
     }
 }

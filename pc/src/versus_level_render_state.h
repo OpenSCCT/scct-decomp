@@ -34,7 +34,7 @@ struct FLevelRenderState {
     TList<class FDynamicLight *> **SectionProjectors;
     FDynamicLightList **SectionLights;
 
-    void DrawActor(FDynamicActor *Actor, UBOOL UpdateLights);
+    void DrawActor(FDynamicActor *Actor, UBOOL UpdateLights, INT Pass = 1);
 };
 
 #endif

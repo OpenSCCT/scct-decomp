@@ -218,6 +218,9 @@ struct UnkType_C;
 class UClass : public UState {
 public:
     virtual ~UClass();
+    // Native class storage is constructed with a zero word before package registration.
+    // The original type of that unused constructor argument is unknown.
+    explicit UClass(INT);
 
     DWORD ClassFlags;
     UClass *ClassWithin;

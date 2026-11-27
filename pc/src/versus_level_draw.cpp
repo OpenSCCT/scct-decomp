@@ -10,6 +10,7 @@
 #include "versus_convex_volume.h"
 #include "versus_viewport_types.h"
 #include "versus_mem_stack.h"
+#include "versus_projector_batch.h"
 
 struct FBspSection {
     BYTE unk_00[0x20];
@@ -79,28 +80,18 @@ class UEngine : public USubsystem
     BITFIELD UseSound : 1;
     BITFIELD UseStaticMeshBatching : 1;
 };
-class FRenderTransformTarget
-{
-  public:
-    virtual void Slot00();
-    virtual void Slot04();
-    virtual void Slot08();
-    virtual void Slot0c();
-    virtual void Slot10();
-    virtual void Slot14();
-    virtual void SetTransform(FRenderInterface *RI, INT Type, const FMatrix &Matrix);
-};
+#include "versus_render_transform_target.h"
 enum { DT_StaticMesh = 8 };
 extern INT GRenderFlag;
 extern INT GRenderMode;
 
-inline void FLevelRenderState::DrawActor(FDynamicActor *Actor, UBOOL UpdateLights)
+inline void FLevelRenderState::DrawActor(FDynamicActor *Actor, UBOOL UpdateLights, INT Pass)
 {
     RI->PushState();
     RI->SetCullMode(SceneNode->Determinant * Actor->Determinant < 0.f);
     if (UpdateLights && Actor->Lights)
         Actor->UpdateLightFade(SceneNode);
-    Actor->Render(SceneNode, Actor->Lights, Actor->Projectors, RI, 1, &PostActors);
+    Actor->Render(SceneNode, Actor->Lights, Actor->Projectors, RI, Pass, &PostActors);
     RI->PopState();
 }
 
@@ -288,4 +279,49 @@ FConvexVolume *BuildPortalVolume(
         }
     }
     return Volume;
+}
+
+
+extern TList<FProjectorRenderBatch *> *GProjectorList;
+
+inline UBOOL IsSpecialRendMap(INT Map)
+{
+    return Map == 0x23 || Map == 0x24 || Map == 0x26;
+}
+
+void DrawLevelProjectors(FLevelRenderState &State, UBOOL AllSections, UBOOL Pass)
+{
+    FRenderInterface *RI = State.RI;
+    RI->PushState();
+    RI->TransformTarget->SetTransform(RI, 0, GIdentityMatrix);
+
+    if (AllSections) {
+        for (TList<INT> *L = State.SectionList; L; L = L->Next)
+            State.SectionDrawLists[L->Element]->Render(State.SceneNode, RI, 7);
+    } else {
+        for (TList<INT> *L = State.SectionList; L; L = L->Next)
+            if (State.SectionProjectors[L->Element])
+                State.SectionDrawLists[L->Element]->Render(State.SceneNode, RI, 2);
+            else
+                State.SectionDrawLists[L->Element]->Render(State.SceneNode, RI, 3);
+    }
+    if (IsSpecialRendMap(State.SceneNode->Viewport->Actor->RendMap)) {
+        for (TList<FDynamicActor *> *L = State.Actors; L; L = L->Next)
+            State.DrawActor(L->Element, 0, Pass);
+    } else {
+        for (TList<FDynamicActor *> *L = State.Actors; L; L = L->Next)
+            State.DrawActor(L->Element, 1, Pass);
+    }
+    if (AllSections) {
+        for (TList<FDynamicActor *> *L = State.LightFriendlyActors; L; L = L->Next)
+            State.DrawActor(L->Element, 0, Pass);
+        for (TList<FDynamicActor *> *L = State.RegularActors; L; L = L->Next)
+            State.DrawActor(L->Element, 0, Pass);
+    }
+    if (!State.SceneNode->Viewport->bHitTesting && !IsSpecialRendMap(State.SceneNode->Viewport->Actor->RendMap)) {
+        for (TList<FProjectorRenderBatch *> *L = GProjectorList; L; L = L->Next)
+            L->Element->Render(State.SceneNode, RI);
+    }
+    GProjectorList = 0;
+    RI->PopState();
 }

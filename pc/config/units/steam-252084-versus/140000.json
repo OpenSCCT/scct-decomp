@@ -1811,7 +1811,7 @@
     "identification": "The real FCameraSceneNode::Render and published Canvas.DrawPortal call this vertex pool aging pass. It unbinds streams, unlinks expired pool objects, flushes their cache IDs through the viewport render device and releases the objects. The GetVertexPool allocator and its VertexPool allocation tag identify the linked structure. Size optimization and ordinary COFF differ; VC7.1 also emits this short body with LTCG.",
     "match": {
       "bytes_sha256": "db48c802b39c77bb7ba4087a2406d874dda8518996d4347ea548f7817aba01e2",
-      "inputs_sha256": "6f8fb1e8a97c2f104fde968d23c7fbf14c6ba3f2981b983f2a5d5f7abc3b0506"
+      "inputs_sha256": "f92dbc81b67fc3af06e02287cbd6c9eb465b8bc54dc14d91375d44e6f6354ef8"
     }
   },
   {
@@ -3967,28 +3967,415 @@
     }
   },
   {
+    "id": "versus-projector-composite-components",
+    "offset": 1353824,
+    "size": 84,
+    "inputs": [
+      "src/unreal_types.h",
+      "src/versus_build.h",
+      "src/versus_composite_projector_streams.cpp",
+      "src/versus_composite_projector_streams.h",
+      "src/versus_projector_batch.h",
+      "src/versus_render_resource.h",
+      "src/versus_render_streams.h",
+      "src/versus_shader_declaration.h"
+    ],
+    "rebuilt_symbol": "?GetComponents@FCompositeVertexStream@@UAEHPAUFVertexComponent@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_composite_projector_streams.obj src/versus_composite_projector_streams.cpp",
+    "identification": "Slot 6 of the FCompositeVertexStream vtable at VA 0x10c034f4, installed by FProjectorRenderBatch::Render at retail RVA 0x14a9c0. The shipped editor installs the corresponding table at VA 0x1149fc3c in its named FProjectorRenderBatch::Render. Returns three component descriptors for position, diffuse and projected coordinates, followed by a fourth base-texture coordinate when the batch uses a base material.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "6654926d3cedb59679303b76aa4a02b0a9d312c434fca649933ca4858761ca8a",
+      "inputs_sha256": "2b3e73cff6d13989739f595595e73498fc339b8c2b5db347c630f21a28302686"
+    }
+  },
+  {
+    "id": "versus-projector-composite-raw-data",
+    "offset": 1353920,
+    "size": 13,
+    "inputs": [
+      "src/unreal_types.h",
+      "src/versus_build.h",
+      "src/versus_composite_projector_streams.cpp",
+      "src/versus_composite_projector_streams.h",
+      "src/versus_projector_batch.h",
+      "src/versus_render_resource.h",
+      "src/versus_render_streams.h",
+      "src/versus_shader_declaration.h"
+    ],
+    "rebuilt_symbol": "?GetRawStreamData@FCompositeVertexStream@@UAEXPAPAXH@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_composite_projector_streams.obj src/versus_composite_projector_streams.cpp",
+    "identification": "Slot 8 of the FCompositeVertexStream vtable at VA 0x10c034f4, installed by FProjectorRenderBatch::Render at retail RVA 0x14a9c0. The shipped editor installs the corresponding table at VA 0x1149fc3c in its named FProjectorRenderBatch::Render. A composite stream has no contiguous raw backing buffer and returns a null data pointer.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "91f97512e87eb34f8ec9d0f296a4a6e759f557783411f1e028b5759f882f9f3f",
+      "inputs_sha256": "9914bfaf8938a2faa739b6e3216fe7331dd196960cf954e5c0ee96feaf151065"
+    }
+  },
+  {
+    "id": "versus-projector-composite-stream-data",
+    "offset": 1353936,
+    "size": 106,
+    "inputs": [
+      "src/unreal_types.h",
+      "src/versus_build.h",
+      "src/versus_composite_projector_streams.cpp",
+      "src/versus_composite_projector_streams.h",
+      "src/versus_projector_batch.h",
+      "src/versus_render_resource.h",
+      "src/versus_render_streams.h",
+      "src/versus_shader_declaration.h"
+    ],
+    "rebuilt_symbol": "?GetStreamData@FCompositeVertexStream@@UAEXPAX@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_composite_projector_streams.obj src/versus_composite_projector_streams.cpp",
+    "identification": "Slot 7 of the FCompositeVertexStream vtable at VA 0x10c034f4, installed by FProjectorRenderBatch::Render at retail RVA 0x14a9c0. The shipped editor installs the corresponding table at VA 0x1149fc3c in its named FProjectorRenderBatch::Render. Walks 32-entry primitive chunks, calls the primitive vertex writer, and advances the destination by its vertex count times the stream stride.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "9b944c34f4d525b71c4ae00414d31b413717103abeac05f524b9121e1642eb7f",
+      "inputs_sha256": "d1847398a7a12a14d244a4cdab2b66f650b81669de920fe4933418fa6dd106ea"
+    }
+  },
+  {
+    "id": "versus-projector-composite-index-contents",
+    "offset": 1354048,
+    "size": 113,
+    "inputs": [
+      "src/unreal_types.h",
+      "src/versus_build.h",
+      "src/versus_composite_projector_streams.cpp",
+      "src/versus_composite_projector_streams.h",
+      "src/versus_projector_batch.h",
+      "src/versus_render_resource.h",
+      "src/versus_render_streams.h",
+      "src/versus_shader_declaration.h"
+    ],
+    "rebuilt_symbol": "?GetContents@FCompositeIndexBuffer@@UAEXPAX@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_composite_projector_streams.obj src/versus_composite_projector_streams.cpp",
+    "identification": "Slot 3 of the FCompositeIndexBuffer vtable at VA 0x10c034c4, installed by FProjectorRenderBatch::Render at retail RVA 0x14a9c0. The shipped editor installs the corresponding table at VA 0x1149fc88 in its named FProjectorRenderBatch::Render. Walks the same primitive chunks, calls the index writer with a running base vertex, and advances the destination in 16-bit indices.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "9a623be3d1e5dde4d3e42f172221dd348a1975c082f1480437f405646872af17",
+      "inputs_sha256": "9a70cfe20a6dae46d6df6b1aa66abcb1fab449db4cdcda2a1dbcf3a4bab2c771"
+    }
+  },
+  {
+    "id": "versus-projector-render-batch",
+    "offset": 1354176,
+    "size": 475,
+    "inputs": [
+      "src/versus_projector_batch.cpp",
+      "src/versus_build.h",
+      "src/versus_native_class_init.h",
+      "src/versus_native_class_types.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_malloc.h",
+      "src/versus_arrays.h",
+      "src/versus_construct_object.h",
+      "src/versus_global_temp_objects.h",
+      "src/versus_projector_material.h",
+      "src/versus_canvas_materials.h",
+      "src/versus_material.h",
+      "src/versus_texture_format.h",
+      "src/versus_canvas_matrix.h",
+      "src/unreal_math.h",
+      "src/versus_matrix_types.h",
+      "src/versus_plane.h",
+      "src/versus_composite_projector_streams.h",
+      "src/versus_render_streams.h",
+      "src/versus_render_resource.h",
+      "src/versus_shader_declaration.h",
+      "src/versus_projector_batch.h",
+      "src/versus_render_interface.h",
+      "src/versus_render_transform_target.h",
+      "src/versus_sphere.h"
+    ],
+    "rebuilt_symbol": "?Render@FProjectorRenderBatch@@QAEXPAVFLevelSceneNode@@PAVFRenderInterface@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_projector_batch.obj src/versus_projector_batch.cpp",
+    "identification": "The shipped Versus editor guard at 0x111bc06b names FProjectorRenderBatch::Render. It has the same eight ordered render-interface calls and creates the same FCompositeVertexStream and FCompositeIndexBuffer on the stack. Retail 0x13bc16 and 0x14036c render the batches of the level projector list. VC70 emits the complete 475-byte body and ret 4 from the complete level caller. VC71 emits 473 bytes and a plain ret.",
+    "ltcg_callees": [
+      "versus-level-scene-section-visible"
+    ],
+    "link_bindings": {
+      "FProjectorRenderBatch::Render::Material": {
+        "va": 281849100,
+        "basis": "All twelve retail references to this address are in Render. Its zero-initialized static pointer is lazily filled with UProjectorMaterial and its address is retained by UGlobalTempObjects."
+      },
+      "?GError@@3PAVFOutputDevice@@A": {
+        "va": 281483944,
+        "basis": "The global error device is passed to UObject::StaticAllocateObject, as in UCanvas::GetStyleMaterial."
+      },
+      "?GObjTransientPkg@@3PAVUObject@@A": {
+        "va": 281617844,
+        "basis": "The registered transient package is the outer of the temporary material, as in UCanvas::GetStyleMaterial."
+      },
+      "?PrivateStaticClass@UProjectorMaterial@@2VUClass@@A": {
+        "va": 281806360,
+        "basis": "Engine registers UProjectorMaterial with name index 0x43c, instance size 0xe0 and base URenderedMaterial at 0xa16e0. The complete Core.Class object is 0x114 bytes. ClassConstructor at +0x104 is invoked with the newly allocated object."
+      },
+      "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z": {
+        "va": 277992320,
+        "basis": "The shared UObject::StaticAllocateObject receives the registered class, transient outer, FName, flags, template, error device, supplied object and subobject root."
+      },
+      "?GGlobalTempObjects@@3PAVUGlobalTempObjects@@A": {
+        "va": 281617728,
+        "basis": "Registered UGlobalTempObjects instance stored at 0x96a80. Its GlobalObjectPtrs array at +0x28 retains the address of the local static."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "The existing FArray::Add expands GlobalObjectPtrs by one four-byte pointer."
+      },
+      "?UnwrapVisionMaterial@@YAPAVUMaterial@@PAV1@@Z": {
+        "va": 278680272,
+        "basis": "The callee checks the three registered SpecialVisionTextureModifier, HeatTextureModifier and EMFTextureModifier classes and follows UModifier::Material at +0x4c. Its function name here is descriptive."
+      },
+      "?GZeroVector@@3PAUFVector@@A": {
+        "va": 281849024,
+        "basis": "Same source vector address as the FCheckResult constructor. The lighting sphere has a zero center and radius."
+      },
+      "??_7FCompositeVertexStream@@6B@": {
+        "va": 281031924,
+        "basis": "The editor writes this local stream vtable and its slot 7 leads to the FCompositeVertexStream::GetStreamData guard at editor 0x111bbce9. Retail slot 7 points to 0x14a8d0."
+      },
+      "??_7FCompositeIndexBuffer@@6B@": {
+        "va": 281031876,
+        "basis": "The editor writes this local buffer vtable and its slot 3 leads to the FCompositeIndexBuffer::GetContents guard at editor 0x111bbe0f. Retail slot 3 points to 0x14a940."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?DrawLevelProjectors@@YAXAAUFLevelRenderState@@KK@Z"
+      ],
+      "stubs": [
+        "??0FPlane@@QAE@ABUFVector@@00@Z",
+        "??0FPlane@@QAE@MMMM@Z",
+        "??0UClass@@QAE@H@Z",
+        "??1UClass@@UAE@XZ",
+        "?Add@FArray@@QAEHHH@Z",
+        "?AllocateNewChunk@FMemStack@@QAEPAEH@Z",
+        "?Deproject@FSceneNode@@QAE?AUFVector@@ABUFPlane@@@Z",
+        "?GError@@3PAVFOutputDevice@@A",
+        "?GGlobalTempObjects@@3PAVUGlobalTempObjects@@A",
+        "?GIdentityMatrix@@3UFMatrix@@A",
+        "?GObjTransientPkg@@3PAVUObject@@A",
+        "?GProjectorList@@3PAU?$TList@PAVFProjectorRenderBatch@@@@A",
+        "?GRenderFlag@@3HA",
+        "?GRenderMode@@3HA",
+        "?GSceneMem@@3VFMemStack@@A",
+        "?GZeroVector@@3PAUFVector@@A",
+        "?GetCacheId@FCompositeIndexBuffer@@UAE_KXZ",
+        "?GetCacheId@FCompositeVertexStream@@UAE_KXZ",
+        "?GetComponents@FCompositeVertexStream@@UAEHPAUFVertexComponent@@@Z",
+        "?GetContents@FCompositeIndexBuffer@@UAEXPAX@Z",
+        "?GetRawStreamData@FCompositeVertexStream@@UAEXPAPAXH@Z",
+        "?GetRevision@FCompositeIndexBuffer@@UAEHXZ",
+        "?GetRevision@FCompositeVertexStream@@UAEHXZ",
+        "?GetSize@FCompositeIndexBuffer@@UAEHXZ",
+        "?GetSize@FCompositeVertexStream@@UAEHXZ",
+        "?GetStreamData@FCompositeVertexStream@@UAEXPAX@Z",
+        "?GetStride@FCompositeVertexStream@@UAEHXZ",
+        "?HintDynamic@FCompositeVertexStream@@UAEHXZ",
+        "?NEAR_CLIPPING_PLANE@@3MA",
+        "?PrivateStaticClass@UEMFTextureModifier@@2VUClass@@A",
+        "?PrivateStaticClass@UHeatTextureModifier@@2VUClass@@A",
+        "?PrivateStaticClass@USpecialVisionTextureModifier@@2VUClass@@A",
+        "?Render@FBspDrawList@@QAEXPAVFLevelSceneNode@@PAVFRenderInterface@@K@Z",
+        "?Render@FDynamicActor@@QAEXPAVFLevelSceneNode@@PAUFDynamicLightList@@PAXPAVFRenderInterface@@H2@Z",
+        "?SafeNormal@FVector@@QBE?AU1@XZ",
+        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z",
+        "?UpdateLightFade@FDynamicActor@@QAEXPAVFLevelSceneNode@@@Z",
+        "?UseNPatches@FCompositeVertexStream@@UAEHXZ",
+        "__fltused",
+        "__purecall",
+        "_atexit"
+      ],
+      "rebuilt_offset": 1184,
+      "rebuilt_address": 268439712,
+      "fields": [
+        [
+          1,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          15,
+          "abs",
+          "?GError@@3PAVFOutputDevice@@A"
+        ],
+        [
+          21,
+          "abs",
+          "?GObjTransientPkg@@3PAVUObject@@A"
+        ],
+        [
+          35,
+          "abs",
+          "?PrivateStaticClass@UProjectorMaterial@@2VUClass@@A"
+        ],
+        [
+          40,
+          "rel32",
+          "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z"
+        ],
+        [
+          56,
+          "abs",
+          "?PrivateStaticClass@UProjectorMaterial@@2VUClass@@A",
+          260
+        ],
+        [
+          65,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          71,
+          "abs",
+          "?GGlobalTempObjects@@3PAVUGlobalTempObjects@@A"
+        ],
+        [
+          85,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          94,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          99,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          114,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          128,
+          "rel32",
+          "?UnwrapVisionMaterial@@YAPAVUMaterial@@PAV1@@Z"
+        ],
+        [
+          134,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          148,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          163,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          174,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          186,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          216,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          255,
+          "abs",
+          "?GZeroVector@@3PAUFVector@@A"
+        ],
+        [
+          313,
+          "abs",
+          "FProjectorRenderBatch::Render::Material"
+        ],
+        [
+          348,
+          "abs",
+          "??_7FCompositeVertexStream@@6B@"
+        ],
+        [
+          374,
+          "abs",
+          "??_7FCompositeIndexBuffer@@6B@"
+        ]
+      ],
+      "symbols": {
+        "FProjectorRenderBatch::Render::Material": 268451840,
+        "?GError@@3PAVFOutputDevice@@A": 268443623,
+        "?GObjTransientPkg@@3PAVUObject@@A": 268443626,
+        "?PrivateStaticClass@UProjectorMaterial@@2VUClass@@A": 268451848,
+        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z": 268443651,
+        "?GGlobalTempObjects@@3PAVUGlobalTempObjects@@A": 268443624,
+        "?Add@FArray@@QAEHHH@Z": 268443620,
+        "?UnwrapVisionMaterial@@YAPAVUMaterial@@PAV1@@Z": 268439552,
+        "?GZeroVector@@3PAUFVector@@A": 268443631
+      },
+      "exported_vtables": [
+        "??_7FCompositeIndexBuffer@@6B@",
+        "??_7FCompositeVertexStream@@6B@"
+      ],
+      "interior_objects": {
+        "?PrivateStaticClass@UProjectorMaterial@@2VUClass@@A": 276
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "5a38c72e059c75ab4baf76eecd489dc8361bb70e0fe958dd1dd7c7b12ca7820a",
+      "inputs_sha256": "d0a19dd2a7524e174681695ed136cde1b9ca681ec154da2a71083806fa60f685"
+    }
+  },
+  {
     "id": "versus-vd-14aba0",
     "offset": 1354656,
     "size": 127,
     "inputs": [
-      "src/versus_vd8_item_0088.cpp"
+      "src/versus_vd8_item_0089.cpp",
+      "src/versus_build.h",
+      "src/versus_material.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_arrays.h",
+      "src/versus_render_streams.h",
+      "src/versus_render_resource.h",
+      "src/versus_shader_declaration.h",
+      "src/unreal_math.h"
     ],
-    "rebuilt_symbol": "??0FProjectorBatchVertexStream@@QAE@PAVUMaterial@@@Z",
+    "rebuilt_symbol": "??0FStaticMeshBatchVertexStream@@QAE@PAVUMaterial@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd8_item_0088_vc70_ltcg_o2gygl.obj src/versus_vd8_item_0088.cpp",
-    "identification": "Complete Versus function at RVA 0x14aba0. Direct call at RVA 0x14b221 in the function at RVA 0x14b1f0, rebuilt in this batch.",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd8_item_0089.obj src/versus_vd8_item_0089.cpp",
+    "identification": "FStaticMeshBatch constructs its vertex stream at +0x14 via the direct call at 0x14b221. The stream installs the nine-slot table at 0x10c03518 and chooses vertex stride from UMaterial::RequiredUVStreams. The cache identifier uses the shared 64-bit render cache counter.",
     "link_bindings": {
-      "?GStaticProjectorMaterial@@3PAVUProjectorMaterial@@A": {
-        "va": 281635124,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?GNextCacheID@@3_KA": {
+      "?GCacheCounter@@3_KA": {
         "va": 281635120,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "Both stream constructors read and increment the shared 64-bit render resource cache counter. The solid-color texture translation unit owns its storage."
       },
-      "??_7FProjectorBatchVertexStream@@6B@": {
+      "??_7FStaticMeshBatchVertexStream@@6B@": {
         "va": 281031960,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The constructor installs the primary virtual table of FStaticMeshBatchVertexStream."
       },
       "__allmul": {
         "va": 280509424,
@@ -3997,53 +4384,31 @@
     },
     "ltcg_link": {
       "roots": [
-        "?Driver_14aba0@@YAPAVFProjectorBatchVertexStream@@PAXPAVUMaterial@@@Z"
+        "??0FStaticMeshBatch@@QAE@PAVUMaterial@@K@Z"
       ],
       "stubs": [
+        "??1?$TArray@UFStaticMeshBatchElement@@@@QAE@XZ",
         "?Add@FArray@@QAEHHH@Z",
         "?Escape@@YAXPAX@Z",
-        "?GBaseMaterialClass@@3PAVUClass@@A",
-        "?GError@@3PAVFOutputDevice@@A",
-        "?GNextCacheID@@3_KA",
-        "?GObjTransientPkg@@3PAVUObject@@A",
-        "?GProjectorList@@3PAUFProjectorListNode@@A",
-        "?GStaticObjects@@3PAUFStaticObjectList@@A",
-        "?GStaticProjectorMaterial@@3PAVUProjectorMaterial@@A",
-        "?GZeroVector@@3PAUFVector@@A",
-        "?GetCacheId@FProjectorBatchVertexStream@@UAE_KXZ",
-        "?GetCacheId@FRenderResource@@UAE_KXZ",
-        "?GetCacheId@FStaticProjectorIndexBuffer@@UAE_KXZ",
-        "?GetCacheId@FStaticProjectorVertexStream@@UAE_KXZ",
-        "?GetComponents@FProjectorBatchVertexStream@@UAEHPAUFVertexComponent@@@Z",
-        "?GetComponents@FStaticProjectorVertexStream@@UAEHPAUFVertexComponent@@@Z",
-        "?GetComponents@FVertexStream@@UAEHPAUFVertexComponent@@@Z",
-        "?GetContents@FIndexBuffer@@UAEXPAX@Z",
-        "?GetContents@FStaticProjectorIndexBuffer@@UAEXPAX@Z",
-        "?GetRevision@FProjectorBatchVertexStream@@UAEHXZ",
-        "?GetRevision@FRenderResource@@UAEHXZ",
-        "?GetRevision@FStaticProjectorIndexBuffer@@UAEHXZ",
-        "?GetRevision@FStaticProjectorVertexStream@@UAEHXZ",
-        "?GetSize@FIndexBuffer@@UAEHXZ",
-        "?GetSize@FProjectorBatchVertexStream@@UAEHXZ",
-        "?GetSize@FStaticProjectorIndexBuffer@@UAEHXZ",
-        "?GetSize@FStaticProjectorVertexStream@@UAEHXZ",
-        "?GetSize@FVertexStream@@UAEHXZ",
-        "?GetStreamData@FProjectorBatchVertexStream@@UAEXPAX@Z",
-        "?GetStreamData@FStaticProjectorVertexStream@@UAEXPAX@Z",
-        "?GetStreamData@FVertexStream@@UAEXPAX@Z",
-        "?GetStride@FProjectorBatchVertexStream@@UAEHXZ",
-        "?GetStride@FStaticProjectorVertexStream@@UAEHXZ",
-        "?GetStride@FVertexStream@@UAEHXZ",
-        "?HintDynamic@FProjectorBatchVertexStream@@UAEHXZ",
-        "?HintDynamic@FStaticProjectorVertexStream@@UAEHXZ",
-        "?HintDynamic@FVertexStream@@UAEHXZ",
-        "?PrivateStaticClass@UProjectorMaterial@@2VUClass@@A",
-        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@UFName@@K1PAVFOutputDevice@@1H@Z",
-        "?UseNPatches@FProjectorBatchVertexStream@@UAEHXZ",
-        "?UseNPatches@FStaticProjectorVertexStream@@UAEHXZ",
-        "?UseNPatches@FVertexStream@@UAEHXZ",
+        "?GetCacheId@FStaticMeshBatchIndexBuffer@@UAE_KXZ",
+        "?GetCacheId@FStaticMeshBatchSortedIndexBuffer@@UAE_KXZ",
+        "?GetCacheId@FStaticMeshBatchVertexStream@@UAE_KXZ",
+        "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAUFVertexComponent@@@Z",
+        "?GetContents@FStaticMeshBatchIndexBuffer@@UAEXPAX@Z",
+        "?GetContents@FStaticMeshBatchSortedIndexBuffer@@UAEXPAX@Z",
+        "?GetRawStreamData@FStaticMeshBatchVertexStream@@UAEXPAPAXH@Z",
+        "?GetRevision@FStaticMeshBatchIndexBuffer@@UAEHXZ",
+        "?GetRevision@FStaticMeshBatchSortedIndexBuffer@@UAEHXZ",
+        "?GetRevision@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?GetSize@FStaticMeshBatchIndexBuffer@@UAEHXZ",
+        "?GetSize@FStaticMeshBatchSortedIndexBuffer@@UAEHXZ",
+        "?GetSize@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?GetStreamData@FStaticMeshBatchVertexStream@@UAEXPAX@Z",
+        "?GetStride@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?HintDynamic@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?UseNPatches@FStaticMeshBatchVertexStream@@UAEHXZ",
         "__allmul",
-        "__fltused"
+        "__purecall"
       ],
       "rebuilt_offset": 1024,
       "rebuilt_address": 268439552,
@@ -4051,17 +4416,18 @@
         [
           3,
           "abs",
-          "?GStaticProjectorMaterial@@3PAVUProjectorMaterial@@A"
+          "?GCacheCounter@@3_KA",
+          4
         ],
         [
           10,
           "abs",
-          "?GNextCacheID@@3_KA"
+          "?GCacheCounter@@3_KA"
         ],
         [
           25,
           "abs",
-          "??_7FProjectorBatchVertexStream@@6B@"
+          "??_7FStaticMeshBatchVertexStream@@6B@"
         ],
         [
           30,
@@ -4071,24 +4437,29 @@
         [
           67,
           "abs",
-          "?GNextCacheID@@3_KA"
+          "?GCacheCounter@@3_KA"
         ],
         [
           73,
           "abs",
-          "?GStaticProjectorMaterial@@3PAVUProjectorMaterial@@A"
+          "?GCacheCounter@@3_KA",
+          4
         ]
       ],
       "symbols": {
-        "?GStaticProjectorMaterial@@3PAVUProjectorMaterial@@A": 268439720,
-        "?GNextCacheID@@3_KA": 268439716,
-        "??_7FProjectorBatchVertexStream@@6B@": 268443648,
-        "__allmul": 268439754
-      }
+        "?GCacheCounter@@3_KA": 268447744,
+        "__allmul": 268440084
+      },
+      "interior_objects": {
+        "?GCacheCounter@@3_KA": 8
+      },
+      "exported_vtables": [
+        "??_7FStaticMeshBatchVertexStream@@6B@"
+      ]
     },
     "match": {
       "bytes_sha256": "2de83360617bb9f0142f87c7d70970dee6d3a5a877388ccfd2ca8bdf8f91f0b2",
-      "inputs_sha256": "28d179a5ce73eb64f97a2664f39866768bd7b570533136fcca8ae643d2c3cd2d"
+      "inputs_sha256": "07c12859f1194de0fe0dd9c5aaa0c436aed06d7136c6ed5d5b83b8f36da220f5"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4097,39 +4468,48 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
-    }
+    },
+    "ltcg_callees": [
+      "versus-solid-color-texture-ctor"
+    ]
   },
   {
     "id": "versus-vd-14b1f0",
     "offset": 1356272,
     "size": 179,
     "inputs": [
-      "src/versus_vd8_item_0089.cpp"
+      "src/versus_vd8_item_0089.cpp",
+      "src/versus_build.h",
+      "src/versus_material.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_arrays.h",
+      "src/versus_render_streams.h",
+      "src/versus_render_resource.h",
+      "src/versus_shader_declaration.h",
+      "src/unreal_math.h"
     ],
     "rebuilt_symbol": "??0FStaticMeshBatch@@QAE@PAVUMaterial@@K@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd8_item_0089_vc70_ltcg_o2gygxgl.obj src/versus_vd8_item_0089.cpp",
-    "identification": "Complete Versus function at RVA 0x14b1f0. Direct call at RVA 0xf5cd1 in the retail function at RVA 0xf5830.",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd8_item_0089.obj src/versus_vd8_item_0089.cpp",
+    "identification": "The level batching path calls the FStaticMeshBatch constructor at 0xf5cd1, then AddElement at 0xf5ce8. The constructor initializes Elements, the vertex stream and the index buffer; material sorting is queried through UMaterial slot +0x70.",
     "link_bindings": {
       "__ehhandler$??0FStaticMeshBatch@@QAE@PAVUMaterial@@K@Z": {
         "va": 280806157,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The constructor exception handler loads the VC++ FuncInfo containing one unwind state and branches to the MSVC frame handler."
       },
       "??0FStaticMeshBatchVertexStream@@QAE@PAVUMaterial@@@Z": {
         "va": 279227296,
         "basis": "Retail function, table, global or constant referenced by the complete function."
       },
-      "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAX@Z": {
-        "va": 281635124,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?GNextCacheID@@3_KA": {
+      "?GCacheCounter@@3_KA": {
         "va": 281635120,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "Both stream constructors read and increment the shared 64-bit render resource cache counter. The solid-color texture translation unit owns its storage."
       },
       "??_7FStaticMeshBatchIndexBuffer@@6B@": {
         "va": 281031908,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The constructor installs the primary virtual table of FStaticMeshBatchIndexBuffer."
       },
       "__allmul": {
         "va": 280509424,
@@ -4144,11 +4524,10 @@
         "??1?$TArray@UFStaticMeshBatchElement@@@@QAE@XZ",
         "?Add@FArray@@QAEHHH@Z",
         "?Escape@@YAXPAX@Z",
-        "?GNextCacheID@@3_KA",
         "?GetCacheId@FStaticMeshBatchIndexBuffer@@UAE_KXZ",
         "?GetCacheId@FStaticMeshBatchSortedIndexBuffer@@UAE_KXZ",
         "?GetCacheId@FStaticMeshBatchVertexStream@@UAE_KXZ",
-        "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAX@Z",
+        "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAUFVertexComponent@@@Z",
         "?GetContents@FStaticMeshBatchIndexBuffer@@UAEXPAX@Z",
         "?GetContents@FStaticMeshBatchSortedIndexBuffer@@UAEXPAX@Z",
         "?GetRawStreamData@FStaticMeshBatchVertexStream@@UAEXPAPAXH@Z",
@@ -4160,13 +4539,15 @@
         "?GetSize@FStaticMeshBatchVertexStream@@UAEHXZ",
         "?GetStreamData@FStaticMeshBatchVertexStream@@UAEXPAX@Z",
         "?GetStride@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?HintDynamic@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?UseNPatches@FStaticMeshBatchVertexStream@@UAEHXZ",
         "___CxxFrameHandler",
         "__allmul",
         "__except_list",
         "__purecall"
       ],
-      "rebuilt_offset": 1168,
-      "rebuilt_address": 268439696,
+      "rebuilt_offset": 1152,
+      "rebuilt_address": 268439680,
       "fields": [
         [
           9,
@@ -4181,12 +4562,13 @@
         [
           56,
           "abs",
-          "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAX@Z"
+          "?GCacheCounter@@3_KA",
+          4
         ],
         [
           61,
           "abs",
-          "?GNextCacheID@@3_KA"
+          "?GCacheCounter@@3_KA"
         ],
         [
           76,
@@ -4201,31 +4583,36 @@
         [
           87,
           "abs",
-          "?GNextCacheID@@3_KA"
+          "?GCacheCounter@@3_KA"
         ],
         [
           112,
           "abs",
-          "?GNextCacheID@@3_KA"
+          "?GCacheCounter@@3_KA"
         ],
         [
           126,
           "abs",
-          "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAX@Z"
+          "?GCacheCounter@@3_KA",
+          4
         ]
       ],
       "symbols": {
-        "__ehhandler$??0FStaticMeshBatch@@QAE@PAVUMaterial@@K@Z": 268439979,
+        "__ehhandler$??0FStaticMeshBatch@@QAE@PAVUMaterial@@K@Z": 268440235,
         "??0FStaticMeshBatchVertexStream@@QAE@PAVUMaterial@@@Z": 268439552,
-        "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAX@Z": 268439943,
-        "?GNextCacheID@@3_KA": 268439939,
-        "??_7FStaticMeshBatchIndexBuffer@@6B@": 268443648,
-        "__allmul": 268439956
-      }
+        "?GCacheCounter@@3_KA": 268447744,
+        "__allmul": 268440165
+      },
+      "interior_objects": {
+        "?GCacheCounter@@3_KA": 8
+      },
+      "exported_vtables": [
+        "??_7FStaticMeshBatchIndexBuffer@@6B@"
+      ]
     },
     "match": {
       "bytes_sha256": "51711855489b2f386b501d26c9f14801e4efb9f1f0b0530b47b7745165235219",
-      "inputs_sha256": "96fee443635638fea98c5d3708f2da812ba946ffad8a8b08c312461aa6e319dc"
+      "inputs_sha256": "f2c9e9c442ed08886b88dfd9a4ff9ffa810fb9366155ae4615201f2a8a1717e3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4235,18 +4622,31 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
-    }
+    },
+    "ltcg_callees": [
+      "versus-solid-color-texture-ctor"
+    ]
   },
   {
     "id": "versus-vd-14b2b0",
     "offset": 1356464,
     "size": 168,
     "inputs": [
-      "src/versus_vd8_item_0089.cpp"
+      "src/versus_vd8_item_0089.cpp",
+      "src/versus_build.h",
+      "src/versus_material.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_arrays.h",
+      "src/versus_render_streams.h",
+      "src/versus_render_resource.h",
+      "src/versus_shader_declaration.h",
+      "src/unreal_math.h"
     ],
     "rebuilt_symbol": "?AddElement@FStaticMeshBatch@@QAEHPAVAActor@@H@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd8_item_0089_vc70_ltcg_o2gygl.obj src/versus_vd8_item_0089.cpp",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd8_item_0089.obj src/versus_vd8_item_0089.cpp",
     "identification": "Complete Versus function at RVA 0x14b2b0. Direct call at RVA 0xf5ce8 in the retail function at RVA 0xf5830.",
     "link_bindings": {
       "?Add@FArray@@QAEHHH@Z": {
@@ -4262,11 +4662,11 @@
         "??1?$TArray@UFStaticMeshBatchElement@@@@QAE@XZ",
         "?Add@FArray@@QAEHHH@Z",
         "?Escape@@YAXPAX@Z",
-        "?GNextCacheID@@3_KA",
+        "?GCacheCounter@@3_KA",
         "?GetCacheId@FStaticMeshBatchIndexBuffer@@UAE_KXZ",
         "?GetCacheId@FStaticMeshBatchSortedIndexBuffer@@UAE_KXZ",
         "?GetCacheId@FStaticMeshBatchVertexStream@@UAE_KXZ",
-        "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAX@Z",
+        "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAUFVertexComponent@@@Z",
         "?GetContents@FStaticMeshBatchIndexBuffer@@UAEXPAX@Z",
         "?GetContents@FStaticMeshBatchSortedIndexBuffer@@UAEXPAX@Z",
         "?GetRawStreamData@FStaticMeshBatchVertexStream@@UAEXPAPAXH@Z",
@@ -4278,6 +4678,8 @@
         "?GetSize@FStaticMeshBatchVertexStream@@UAEHXZ",
         "?GetStreamData@FStaticMeshBatchVertexStream@@UAEXPAX@Z",
         "?GetStride@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?HintDynamic@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?UseNPatches@FStaticMeshBatchVertexStream@@UAEHXZ",
         "__allmul",
         "__purecall"
       ],
@@ -4296,7 +4698,7 @@
     },
     "match": {
       "bytes_sha256": "15acf5a564fa3c457f01dec1fdb425109429538c815674492cf6c44e3455b53d",
-      "inputs_sha256": "897193f891d41b67b239010f795f8eb05d194a5038f6fd2a6bbc734c445b4d66"
+      "inputs_sha256": "e9f7a18370bc320138de25dda29c0196ffcc4e91463e499e77e5ebba802bf7fd"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4312,16 +4714,26 @@
     "offset": 1356656,
     "size": 92,
     "inputs": [
-      "src/versus_vd8_item_0089.cpp"
+      "src/versus_vd8_item_0089.cpp",
+      "src/versus_build.h",
+      "src/versus_material.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_arrays.h",
+      "src/versus_render_streams.h",
+      "src/versus_render_resource.h",
+      "src/versus_shader_declaration.h",
+      "src/unreal_math.h"
     ],
     "rebuilt_symbol": "??0FStaticMeshBatchSortedIndexBuffer@@QAE@PAVFStaticMeshBatch@@PAHHUFVector@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd8_item_0089_vc70_ltcg_o2gygl.obj src/versus_vd8_item_0089.cpp",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd8_item_0089.obj src/versus_vd8_item_0089.cpp",
     "identification": "Complete Versus function at RVA 0x14b370. Direct call at RVA 0x14bd04 in the retail function at RVA 0x14b900.",
     "link_bindings": {
       "??_7FStaticMeshBatchSortedIndexBuffer@@6B@": {
         "va": 281031892,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The constructor installs the primary virtual table of FStaticMeshBatchSortedIndexBuffer."
       }
     },
     "ltcg_link": {
@@ -4332,11 +4744,11 @@
         "??1?$TArray@UFStaticMeshBatchElement@@@@QAE@XZ",
         "?Add@FArray@@QAEHHH@Z",
         "?Escape@@YAXPAX@Z",
-        "?GNextCacheID@@3_KA",
+        "?GCacheCounter@@3_KA",
         "?GetCacheId@FStaticMeshBatchIndexBuffer@@UAE_KXZ",
         "?GetCacheId@FStaticMeshBatchSortedIndexBuffer@@UAE_KXZ",
         "?GetCacheId@FStaticMeshBatchVertexStream@@UAE_KXZ",
-        "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAX@Z",
+        "?GetComponents@FStaticMeshBatchVertexStream@@UAEHPAUFVertexComponent@@@Z",
         "?GetContents@FStaticMeshBatchIndexBuffer@@UAEXPAX@Z",
         "?GetContents@FStaticMeshBatchSortedIndexBuffer@@UAEXPAX@Z",
         "?GetRawStreamData@FStaticMeshBatchVertexStream@@UAEXPAPAXH@Z",
@@ -4348,6 +4760,8 @@
         "?GetSize@FStaticMeshBatchVertexStream@@UAEHXZ",
         "?GetStreamData@FStaticMeshBatchVertexStream@@UAEXPAX@Z",
         "?GetStride@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?HintDynamic@FStaticMeshBatchVertexStream@@UAEHXZ",
+        "?UseNPatches@FStaticMeshBatchVertexStream@@UAEHXZ",
         "__allmul",
         "__purecall"
       ],
@@ -4360,13 +4774,14 @@
           "??_7FStaticMeshBatchSortedIndexBuffer@@6B@"
         ]
       ],
-      "symbols": {
-        "??_7FStaticMeshBatchSortedIndexBuffer@@6B@": 268443648
-      }
+      "symbols": {},
+      "exported_vtables": [
+        "??_7FStaticMeshBatchSortedIndexBuffer@@6B@"
+      ]
     },
     "match": {
       "bytes_sha256": "e64f12543a4d5e06c654aa1f8d7bd65f829d82294ae9189ba3fefe1cb053bfff",
-      "inputs_sha256": "cc992e524bab4500769b716ba1a16d1156287d0958945a5d11061437811d783b"
+      "inputs_sha256": "bfe4dad1dba91ff21bb1467c6b57ca90061bb6da053ee463568227dc8814637a"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -5378,16 +5793,68 @@
     }
   },
   {
+    "id": "versus-projector-static-bsp-fan",
+    "offset": 1369792,
+    "size": 73,
+    "rebuilt_symbol": "?GetIndices@FBspStaticProjectorPrimitive@@UAEXPAGG@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_projector_indices.obj src/versus_projector_indices.cpp",
+    "identification": "Virtual slot 0 of the Versus projector primitive vtable at RVA 0x3033d4. Writes a triangle fan from the static projector geometry vertex count. The BSP AddNode installs this derived vtable after initializing the shared static projector primitive.",
+    "coff_alignment": 16,
+    "inputs": [
+      "src/unreal_types.h",
+      "src/versus_array_storage.h",
+      "src/versus_build.h",
+      "src/versus_projector_batch.h",
+      "src/versus_projector_indices.cpp",
+      "src/versus_projector_primitives.h",
+      "src/versus_static_mesh_arrays.h"
+    ],
+    "match": {
+      "bytes_sha256": "9a7750adb9981f59965941af720c9ec462eba2ed78cd304d6c81fc197841b54a",
+      "inputs_sha256": "3854464af7953ced0794c4994b77aaf9c10e2c131d7136255a857e17b0064c60"
+    }
+  },
+  {
+    "id": "versus-projector-clipped-bsp-fan",
+    "offset": 1369872,
+    "size": 61,
+    "rebuilt_symbol": "?GetIndices@FProjectorPolygonStream@@UAEXPAGG@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_vd8_item_0095_vc70_o2gy.obj src/versus_vd8_item_0095.cpp",
+    "identification": "Virtual slot 0 of the Versus projector primitive vtable at RVA 0x3033cc. Writes a triangle fan from the clipped polygon vertex count. BSP AddNode installs this vtable before enqueueing the generated primitive; its second slot is the receipted vertex writer at RVA 0x14e750.",
+    "coff_alignment": 16,
+    "inputs": [
+      "src/unreal_types.h",
+      "src/versus_array_storage.h",
+      "src/versus_build.h",
+      "src/versus_projector_batch.h",
+      "src/versus_projector_primitives.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_vd8_item_0095.cpp"
+    ],
+    "match": {
+      "bytes_sha256": "d0d5e3fb70c415261872f38026f2bec1bc5207cab3fa443eaa80a5f515299320",
+      "inputs_sha256": "144a86d9bb65cc901e2ac464a025a6e8f3377cab7ce804e10e5aac0e548bccce"
+    }
+  },
+  {
     "id": "versus-vd-14e750",
     "offset": 1369936,
     "size": 661,
     "inputs": [
+      "src/unreal_types.h",
+      "src/versus_array_storage.h",
+      "src/versus_build.h",
+      "src/versus_projector_batch.h",
+      "src/versus_projector_primitives.h",
+      "src/versus_static_mesh_arrays.h",
       "src/versus_vd8_item_0095.cpp"
     ],
     "rebuilt_symbol": "?GetVertices@FProjectorPolygonStream@@UAEXPAX@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_vd8_item_0095_vc70_o2gy.obj src/versus_vd8_item_0095.cpp",
-    "identification": "Complete Versus function at RVA 0x14e750. No direct call reaches it; its address is stored in the retail .rdata section at RVA 0x3033d0 (a virtual method or function table).",
+    "identification": "Virtual slot 1 of the clipped BSP projector primitive at RVA 0x3033cc. FBspDrawList::AddNode installs the table at RVA 0x14f438 and enqueues the primitive in the active projector batch. FCompositeVertexStream calls the writer after loading it from the same batch.",
     "coff_alignment": 16,
     "link_bindings": {
       "?GMath@@3UFGlobalMath@@A": {
@@ -5433,7 +5900,7 @@
     },
     "match": {
       "bytes_sha256": "397e7c8ab93b824c6d7799b25f51b8311b1289a767b52a34cf1f824ee34efd3d",
-      "inputs_sha256": "9efa4cd5f348689b773f4c8874d15dab4a18289d0c98140f8bbf7c6fdf741812"
+      "inputs_sha256": "04c7d7df3759e663be11387f1543bfc2ccad90ce068e71768cff7df88e5c5927"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",

@@ -1,7 +1,9 @@
 #ifndef VERSUS_RENDER_INTERFACE_H
 #define VERSUS_RENDER_INTERFACE_H
 
+struct FSphere;
 struct FColor;
+class FIndexBuffer;
 class FRenderTarget;
 
 class FRenderInterface
@@ -17,8 +19,8 @@ public:
     virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2c();
     virtual void Slot30(); virtual void Slot34(); virtual void Slot38(); virtual void Slot3c();
     virtual void SetSectionLights(struct FDynamicLightList *Lights); virtual void Slot44(); virtual void Slot48(); virtual void Slot4c();
-    virtual void Slot50(); virtual void Slot54(); virtual void Slot58(); virtual void Slot5c();
-    virtual void Slot60(); virtual void DrawPrimitive(INT Type, INT FirstIndex, INT NumPrimitives, INT MinIndex, INT MaxIndex); virtual void Slot68(); virtual void Slot6c();
+    virtual void Slot50(); virtual void Slot54(); virtual void SetZBias(INT ZBias); virtual void Slot5c();
+    virtual INT SetDynamicIndexBuffer(FIndexBuffer *IndexBuffer, INT BaseVertexIndex); virtual void DrawPrimitive(INT Type, INT FirstIndex, INT NumPrimitives, INT MinIndex, INT MaxIndex); virtual void Slot68(); virtual void Slot6c();
     virtual void Slot70(); virtual void Slot74();
     virtual void UpdateEffects();                                  // +0x78
     virtual void Slot7c();
@@ -29,6 +31,10 @@ public:
     virtual void Effect90(INT SizeX, INT SizeY, class UTexture *Texture);     // +0x90
     virtual void Effect94(INT SizeX, INT SizeY, class UTexture *Texture);     // +0x94
     virtual void Effect98();                                       // +0x98
+    void EnableLighting(INT Dynamic, INT Static, INT Modulate, INT LightingOnly, FSphere LightSphere);
+    void SetMaterial(class UMaterial *Material, INT Flags = 0);
+    INT SetDynamicStream(INT Index, class FVertexStream *Stream);
+
     INT  Fading;                                                   // +0x04
     INT  Flashing;                                                 // +0x08
     BYTE EffectAlpha;                                              // +0x0c

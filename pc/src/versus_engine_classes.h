@@ -11,6 +11,7 @@
 #include "unreal_pawn.h"
 #include "versus_core_classes.h"
 #include "versus_canvas.h"
+#include "versus_projector_material.h"
 #include "versus_ltcg.h"
 
 #include "versus_scene_level_types.h"
@@ -622,30 +623,6 @@ public:
     BYTE                  unk_5c[0x14];
 };
 
-// Engine.HeatTextureModifier: 0x5c bytes, 35 virtual functions
-class UHeatTextureModifier : public UModifier {
-public:
-    virtual ~UHeatTextureModifier();
-
-    BYTE unk_50[0xc];
-};
-
-// Engine.EMFTextureModifier: 0x58 bytes, 35 virtual functions
-class UEMFTextureModifier : public UModifier {
-public:
-    virtual ~UEMFTextureModifier();
-
-    BYTE unk_50[0x8];
-};
-
-// Engine.SpecialVisionTextureModifier: 0x60 bytes, 35 virtual functions
-class USpecialVisionTextureModifier : public UModifier {
-public:
-    virtual ~USpecialVisionTextureModifier();
-
-    BYTE unk_50[0x10];
-};
-
 // Engine.OpacityModifier: 0x58 bytes, 35 virtual functions
 class UOpacityModifier : public UModifier {
 public:
@@ -733,14 +710,6 @@ public:
     virtual ~AShadowProjector();
 
     BYTE unk_47c[0x1c];
-};
-
-// Engine.ProjectorMaterial: 0xe0 bytes, 35 virtual functions
-class UProjectorMaterial : public URenderedMaterial {
-public:
-    virtual ~UProjectorMaterial();
-
-    BYTE unk_4c[0x94];
 };
 
 // Engine.RenderResource: 0x2c bytes, 22 virtual functions

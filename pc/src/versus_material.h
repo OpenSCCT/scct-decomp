@@ -16,9 +16,9 @@ public:
     virtual void VirtualSlot25();
     virtual INT MaterialUSize();
     virtual INT MaterialVSize();
-    virtual void VirtualSlot28();
+    virtual UBOOL RequiresSorting();
     virtual void VirtualSlot29();
-    virtual void VirtualSlot30();
+    virtual BYTE RequiredUVStreams();
     virtual void VirtualSlot31();
     virtual void VirtualSlot32();
     virtual void VirtualSlot33();
