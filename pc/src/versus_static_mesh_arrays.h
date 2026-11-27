@@ -30,6 +30,7 @@ public:
         }
         ArrayNum = ArrayMax = 0;
     }
+    void Realloc(INT ElementSize);                      // RVA 0x4600
     INT Add(INT Count, INT ElementSize);                // RVA 0x44e0
     void Empty(INT ElementSize, INT Slack);             // RVA 0x4550
     void Remove(INT Index, INT Count, INT ElementSize); // RVA 0x119c0
@@ -45,6 +46,8 @@ public:
     T &operator()(INT i) { return ((T *)Data)[i]; }
     const T &operator()(INT i) const { return ((const T *)Data)[i]; }
     INT Num() const { return ArrayNum; }
+    using FArray::Empty;
+    void Empty(INT Slack);
     void Remove(INT Index, INT Count = 1);
 };
 

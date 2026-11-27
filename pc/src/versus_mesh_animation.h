@@ -24,6 +24,7 @@ struct FCompressedVectorKey { short X, Y, Z; };
 
 struct AnalogTrack
 {
+    AnalogTrack();
     DWORD Flags;
     TArray<FCompressedQuatKey> KeyQuat;
     TArray<FCompressedVectorKey> KeyPos;
@@ -45,7 +46,7 @@ struct MotionChunk
     FLOAT TrackTime;
     INT StartBone;
     DWORD Flags;
-    TArray<INT> BoneIndices;
+    TArray<DWORD> BoneIndices;
     TArray<AnalogTrack> AnimTracks;
     AnalogTrack RootTrack;
     TArray<AnalogTrack> unk_5c;

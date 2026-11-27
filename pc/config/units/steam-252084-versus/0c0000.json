@@ -3200,6 +3200,206 @@
     }
   },
   {
+    "id": "versus-motion-chunk-archive-record",
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAUMotionChunk@@@Z",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_motion_chunk_archive.obj src/versus_motion_chunk_archive.cpp",
+    "inputs": [
+      "src/versus_motion_chunk_archive.cpp",
+      "src/versus_build.h",
+      "src/versus_mesh_animation.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_animation_sequence.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_lazy_archive.h",
+      "src/versus_compact_index.inl"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "offset": 798368,
+    "size": 120,
+    "identification": "Complete MotionChunk archive operator called by the matched TArray<MotionChunk> serializer at RVA 0xc1060. It archives the root velocity, track duration, start bone, flags, bulk bone index array, analog tracks and the embedded root track in that order. The shared mesh animation layouts are independently exercised by MotionChunk key readers and USkeletalMeshInstance::GetFrame.",
+    "link_bindings": {
+      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@K@@@Z": {
+        "va": 278672000,
+        "basis": "The DWORD array at MotionChunk+0x1c is serialized as a raw four-byte-per-element block by the receipted routine at RVA 0xc3280."
+      },
+      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UAnalogTrack@@@@@Z": {
+        "va": 278671136,
+        "basis": "The track array at MotionChunk+0x28 is passed to the archive operator for 0x28-byte AnalogTrack elements."
+      },
+      "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z": {
+        "va": 278612240,
+        "basis": "Both the root track at MotionChunk+0x34 and ordinary track elements call this archive operator. Its version-152 path visits the 8-, 6- and 2-byte key arrays at +4, +0x10 and +0x1c."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UMotionChunk@@@@@Z"
+      ],
+      "stubs": [
+        "??1MotionChunk@@UAE@XZ",
+        "??3@YAXPAX@Z",
+        "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?ArrayArchiveTag@@3QBGB",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?GetTrackCount@MotionChunk@@UAEHXZ",
+        "?GetTrackOrientation@MotionChunk@@UAEXHHAAUFQuat@@@Z",
+        "?GetTrackPosition@MotionChunk@@UAEXHHAAUFVector@@@Z",
+        "?Realloc@FArray@@QAEXH@Z",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "?SampleTrack@MotionChunk@@UAEXHMAAUFQuat@@AAUFVector@@PAVUSkeletalMeshInstance@@HKK@Z",
+        "?VirtualSlot2@MotionChunk@@UAEXXZ"
+      ],
+      "rebuilt_offset": 1440,
+      "rebuilt_address": 268439968,
+      "fields": [
+        [
+          93,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAV?$TArray@K@@@Z"
+        ],
+        [
+          101,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UAnalogTrack@@@@@Z"
+        ],
+        [
+          110,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z"
+        ]
+      ],
+      "symbols": {
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@K@@@Z": 268440096,
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UAnalogTrack@@@@@Z": 268440304,
+        "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z": 268441074
+      }
+    },
+    "match": {
+      "bytes_sha256": "7b56ac5988485ca399b6b2d5a276ed34e9268ecb2f6eb9eb9205f9328d5307df",
+      "inputs_sha256": "2ddfe4cc540d43cbbada97206d0eb86a6ba9fd1e300bf752c3c7cd9789561bb1"
+    }
+  },
+  {
+    "id": "versus-motion-chunk-archive-tracks",
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UAnalogTrack@@@@@Z",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_motion_chunk_archive.obj src/versus_motion_chunk_archive.cpp",
+    "inputs": [
+      "src/versus_motion_chunk_archive.cpp",
+      "src/versus_build.h",
+      "src/versus_mesh_animation.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_animation_sequence.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_lazy_archive.h",
+      "src/versus_compact_index.inl"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "offset": 798496,
+    "size": 200,
+    "identification": "Complete TArray<AnalogTrack> archive operator called for MotionChunk::AnimTracks. The loading path reserves the compact element count and constructs each 0x28-byte track; saving visits the existing tracks. Both paths call the same element archive operator at RVA 0xb4910.",
+    "link_bindings": {
+      "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": {
+        "va": 277998144,
+        "basis": "The already matched FCompactIndex archive operator loads or saves the array count."
+      },
+      "?Empty@?$TArray@UAnalogTrack@@@@QAEXH@Z": {
+        "va": 278671344,
+        "basis": "The receipted typed Empty destroys each 0x28-byte track then empties the underlying FArray."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "The receipted FArray::Add allocates one 0x28-byte element for placement construction."
+      },
+      "??0AnalogTrack@@QAE@XZ": {
+        "va": 278674080,
+        "basis": "The receipted AnalogTrack constructor initializes its quaternion, position and time key arrays at +4, +0x10 and +0x1c."
+      },
+      "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z": {
+        "va": 278612240,
+        "basis": "Both the root track at MotionChunk+0x34 and ordinary track elements call this archive operator. Its version-152 path visits the 8-, 6- and 2-byte key arrays at +4, +0x10 and +0x1c."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UMotionChunk@@@@@Z"
+      ],
+      "stubs": [
+        "??1MotionChunk@@UAE@XZ",
+        "??3@YAXPAX@Z",
+        "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?ArrayArchiveTag@@3QBGB",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?GetTrackCount@MotionChunk@@UAEHXZ",
+        "?GetTrackOrientation@MotionChunk@@UAEXHHAAUFQuat@@@Z",
+        "?GetTrackPosition@MotionChunk@@UAEXHHAAUFVector@@@Z",
+        "?Realloc@FArray@@QAEXH@Z",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "?SampleTrack@MotionChunk@@UAEXHMAAUFQuat@@AAUFVector@@PAVUSkeletalMeshInstance@@HKK@Z",
+        "?VirtualSlot2@MotionChunk@@UAEXXZ"
+      ],
+      "rebuilt_offset": 1776,
+      "rebuilt_address": 268440304,
+      "fields": [
+        [
+          52,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ],
+        [
+          64,
+          "rel32",
+          "?Empty@?$TArray@UAnalogTrack@@@@QAEXH@Z"
+        ],
+        [
+          87,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          104,
+          "rel32",
+          "??0AnalogTrack@@QAE@XZ"
+        ],
+        [
+          115,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z"
+        ],
+        [
+          138,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ],
+        [
+          169,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z"
+        ]
+      ],
+      "symbols": {
+        "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": 268439584,
+        "?Empty@?$TArray@UAnalogTrack@@@@QAEXH@Z": 268440944,
+        "?Add@FArray@@QAEHHH@Z": 268441075,
+        "??0AnalogTrack@@QAE@XZ": 268439552,
+        "??6@YAAAVFArchive@@AAV0@AAUAnalogTrack@@@Z": 268441074
+      }
+    },
+    "match": {
+      "bytes_sha256": "8e34c2bcbdb1cbf73fa91b9a673cde3839d26643616122b63d4175437435dadc",
+      "inputs_sha256": "03629186100ef0ce6a05db61cfd79478ec549bf024317fd6e4ec93ca20de4aaf"
+    }
+  },
+  {
     "id": "versus-vd-c2ff0",
     "offset": 798704,
     "size": 56,
@@ -5270,7 +5470,7 @@
     },
     "match": {
       "bytes_sha256": "894c09d7775741dc4557b8d0eb6ce7e87d6d454f400623bfc88761cbcc9fd77f",
-      "inputs_sha256": "ffe0713bac0939bcb847d2e34bc86037bcceffb90bbca03f4f6b9ab79335a4fd"
+      "inputs_sha256": "77b4b4d994fd596ae57ae11eca65df25c7d45deadde6fabfa62ef8178fefe250"
     }
   },
   {
@@ -5349,7 +5549,7 @@
     },
     "match": {
       "bytes_sha256": "53b35a9f0138959de56c8889ca524346bde9d8736237fd33e49b164e0abdf888",
-      "inputs_sha256": "b19412d6d448e0cee5528ce9f66ecc13192919b0771ce799b9fbcd9902ee8c98"
+      "inputs_sha256": "601701703e6eaa60d30463bc74fea324ae2ad12b3df735e7456a8c2f1a338b78"
     }
   },
   {
@@ -5531,7 +5731,7 @@
     },
     "match": {
       "bytes_sha256": "59bd95175b2edc751f6006262d19dc731908c6870fc3c543da32af6c145c56a3",
-      "inputs_sha256": "3fbfcea9a6f02cb14c6d7ea2bc657b8ba95170ab590628e452f6802267a28d45"
+      "inputs_sha256": "33641ca1303e811a9edfec81a0e12fedeed92725f8f66edf54d1193d3347d48a"
     }
   },
   {
@@ -5556,7 +5756,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "c805254d8dcf5396f756024a0476c63759ba3d40267244ea52096a1c2469c889",
-      "inputs_sha256": "652bb9b44ea84edca0385b06d02ac4b8c5cd310e279bd6b96403e36436fa29a4"
+      "inputs_sha256": "aa115dda092c05fdab03dcc648d7d4c63865939374bfdf4583fe041d15c80942"
     }
   },
   {
@@ -5581,7 +5781,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "3f11dfbb7cf2e3acd15fad72eb46363936fed563782d54d0899390a403dbf1b7",
-      "inputs_sha256": "b7834ebfef92067239743433b014d1aebf3bfe394d36e1209908ef5451ead8d7"
+      "inputs_sha256": "6977b7c5d178bf098356a462888fdd9200a222e65d987e295bedf6b3bfe645d6"
     }
   },
   {
@@ -8691,7 +8891,7 @@
     },
     "match": {
       "bytes_sha256": "31fb117aca5846a528ec49dde705df2c58e24c3b4016d3dc870ac0042522f51b",
-      "inputs_sha256": "6636d8913c4b5474f7596b47ad3df52553da52fe8053cd81ebd111c7f39d4d60"
+      "inputs_sha256": "4d8f7d534d6cd85c44891f6beff1f9444d071eb673dff604f78aa951caddea6c"
     }
   },
   {
@@ -9406,7 +9606,7 @@
     },
     "match": {
       "bytes_sha256": "26fb17d548969c52eef541e2e2be15871249099f4cc8338a8c3907cf9a6ee18c",
-      "inputs_sha256": "60353813d46de5b6d55cf69f272bf29e64390814b502c5cdab7cd38494f0cf95"
+      "inputs_sha256": "716912b6a75ae451f0a6c702ba0b1b1c1690612b9bb0dd1183ef5fe0e9c5280a"
     }
   },
   {
