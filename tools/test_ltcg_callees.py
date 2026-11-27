@@ -73,6 +73,30 @@ class UnresolvedExternalTests(unittest.TestCase):
         self.assertEqual(verify_build.unresolved_externals("Generating code\nFinished generating code\n"), [])
 
 
+class DiscoveryLinkTests(unittest.TestCase):
+    def test_successful_forced_probe_supplies_source_and_compiler_externals_to_strict_link(self):
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from unittest.mock import patch
+        from subprocess import CompletedProcess
+
+        output = ("caller.obj : error LNK2001: unresolved external symbol _external\n"
+                  " CIL library( CIL module) : error LNK2001: unresolved external symbol __fltused\n")
+        caller = unit("caller")
+        caller["ltcg_link"]["stubs"] = ["_external"]
+        with TemporaryDirectory() as directory:
+            folder = Path(directory)
+            with patch.object(verify_build.subprocess, "run", return_value=CompletedProcess([], 0, output)) as probe, \
+                 patch.object(verify_build, "run_tool") as strict, \
+                 patch.object(verify_build, "stub_object", return_value=b"stubs") as stub:
+                verify_build.link_with_callees(caller, [], folder / "caller.obj", [], folder / "cl.exe",
+                                               {}, folder, [])
+                self.assertIn("/FORCE:UNRESOLVED", probe.call_args.args[0])
+                stub.assert_called_once_with(["_external", "__fltused"])
+                self.assertNotIn("/FORCE:UNRESOLVED", strict.call_args.args[0])
+                self.assertIn(str(folder / "caller_stubs.obj"), strict.call_args.args[0])
+
+
 class StubPlanTests(unittest.TestCase):
     def test_a_declared_external_is_stubbed_once(self):
         self.assertEqual(verify_build.stub_plan(["_a", "__fltused"], ["__fltused", "_a"]),

@@ -246,11 +246,13 @@ def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, st
     linker = Path(cl).with_name("LINK.EXE")
     options = link_arguments({"roots": roots})
     objects = [str(obj), *(str(path) for path in member_objects)]
-    # This first link has no stubs, so LINK.EXE names each external that no object defines.
-    probe = subprocess.run([str(linker), *options, "/OUT:" + str(obj.with_name(obj.stem + "_probe.dll")), *objects],
+    # Continue through code generation so the discovery link also reports compiler-generated
+    # externals. The final link below remains strict and rejects unresolved symbols.
+    probe = subprocess.run([str(linker), *options, "/FORCE:UNRESOLVED",
+                            "/OUT:" + str(obj.with_name(obj.stem + "_probe.dll")), *objects],
                            cwd=build_dir, env=env, capture_output=True, text=True, errors="replace")
-    unresolved = unresolved_externals(probe.stdout) if probe.returncode else []
-    if probe.returncode and not unresolved:
+    unresolved = unresolved_externals(probe.stdout)
+    if probe.returncode:
         raise ValueError(f"{unit['id']}: LINK.EXE failed: {probe.stdout.strip()}")
     names, undeclared = stub_plan(unresolved, declared)
     if undeclared:
