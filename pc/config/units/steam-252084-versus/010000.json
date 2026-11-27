@@ -2192,6 +2192,74 @@
     }
   },
   {
+    "id": "versus-parse-command",
+    "offset": 75232,
+    "size": 163,
+    "inputs": [
+      "src/versus_parse.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "evidence/versus_parse_callers.h"
+    ],
+    "rebuilt_symbol": "?ParseCommand@@YAKPAPBGPBG@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /I. /FIevidence/versus_parse_callers.h /c /Folocal/versus_parse.obj src/versus_parse.cpp",
+    "identification": "ParseCommand skips leading spaces and tabs, compares the command without case, and rejects a following ASCII letter or digit. UViewport::Exec calls it at RVA 0x10ba9f with the wide EXEC string at VA 0x10c47f20. Its Steam editor counterpart at VA 0x10f9d160 references the ParseCommand guard name. Retail passes the stream in ESI and the match in EBX.",
+    "link_bindings": {
+      "__imp__wcslen": {
+        "va": 280884148,
+        "basis": "Retail MSVCR70.dll import wcslen at VA 0x10bdf3b4; ParseCommand loads the slot into EDI at RVA 0x125f9."
+      },
+      "__imp___wcsnicmp": {
+        "va": 280884104,
+        "basis": "Retail MSVCR70.dll import _wcsnicmp at VA 0x10bdf388; ParseCommand calls through the slot at RVA 0x12607."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?ExecMacroCommand@ParserLink@@YAKAAVViewport@1@PBGAAVFOutputDevice@1@@Z",
+        "?ExecMacroLines@ParserLink@@YAXAAVViewport@1@PBGAAVFOutputDevice@1@@Z"
+      ],
+      "stubs": [
+        "?Exec@Viewport@ParserLink@@QAEKPBGAAVFOutputDevice@2@@Z",
+        "?ExecCommand@ParserLink@@3QBGB",
+        "?ExecMacro@Viewport@ParserLink@@QAEXPBGAAVFOutputDevice@2@@Z",
+        "__imp___wcsnicmp",
+        "__imp__wcslen"
+      ],
+      "rebuilt_offset": 1248,
+      "rebuilt_address": 268439776,
+      "fields": [
+        [
+          27,
+          "abs",
+          "__imp__wcslen"
+        ],
+        [
+          41,
+          "abs",
+          "__imp___wcsnicmp"
+        ]
+      ],
+      "symbols": {
+        "__imp__wcslen": 268440452,
+        "__imp___wcsnicmp": 268440451
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "d3f0dcccd6dcd4a2f4e515952ba110010abaff06a4412a128c29cc8431722d5d",
+      "inputs_sha256": "779ff5df735781bb8a3ba0f585d5f744f2792f43327e990e084b64bafddd8002"
+    }
+  },
+  {
     "id": "versus-leaf-012690",
     "offset": 75408,
     "size": 37,
@@ -2206,6 +2274,96 @@
     "match": {
       "bytes_sha256": "c1b9a21a484c07cf7036cd322b3ca161da606cbe32913e3c5ba86d822b1be50a",
       "inputs_sha256": "5293a8a96c9afaa41a7edc41d5eca414bc655709a1eb70cdcaf41c169d43ba6d"
+    }
+  },
+  {
+    "id": "versus-parse-token",
+    "offset": 75456,
+    "size": 239,
+    "inputs": [
+      "src/versus_parse.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "evidence/versus_parse_callers.h"
+    ],
+    "rebuilt_symbol": "?ParseToken@@YAKAAPBGPAGHK@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /I. /FIevidence/versus_parse_callers.h /c /Folocal/versus_parse.obj src/versus_parse.cpp",
+    "identification": "ParseToken extracts a quoted or whitespace-delimited token with optional backslash escapes. UViewport::Exec calls it at RVA 0x10baba with the 1024-TCHAR filename buffer after matching EXEC, then calls ExecMacro. UInput::FindAlias also calls this specialization. Retail passes the stream by reference in EAX and the output in EBX.",
+    "link_bindings": {},
+    "ltcg_link": {
+      "roots": [
+        "?ExecMacroCommand@ParserLink@@YAKAAVViewport@1@PBGAAVFOutputDevice@1@@Z",
+        "?ExecMacroLines@ParserLink@@YAXAAVViewport@1@PBGAAVFOutputDevice@1@@Z"
+      ],
+      "stubs": [
+        "?Exec@Viewport@ParserLink@@QAEKPBGAAVFOutputDevice@2@@Z",
+        "?ExecCommand@ParserLink@@3QBGB",
+        "?ExecMacro@Viewport@ParserLink@@QAEXPBGAAVFOutputDevice@2@@Z",
+        "__imp___wcsnicmp",
+        "__imp__wcslen"
+      ],
+      "rebuilt_offset": 1424,
+      "rebuilt_address": 268439952,
+      "fields": [],
+      "symbols": {}
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "ce4f52d97abbcc2fd53f099313213a4c995f66f1bef2130e1a5ee4246b4427b0",
+      "inputs_sha256": "9c1403150b3ae0803cb054c9bcf639b9f20b2934be32da2ad72326de56be86d8"
+    }
+  },
+  {
+    "id": "versus-parse-line",
+    "offset": 75696,
+    "size": 248,
+    "inputs": [
+      "src/versus_parse.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "evidence/versus_parse_callers.h"
+    ],
+    "rebuilt_symbol": "?ParseLine@@YAKPAPBGPAGHK@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /I. /FIevidence/versus_parse_callers.h /c /Folocal/versus_parse.obj src/versus_parse.cpp",
+    "identification": "ParseLine reads a line while tracking quotes, comments and command separators. UViewport::ExecMacro at RVA 0x10bb40 calls it for a 256-TCHAR buffer, then executes each line. The named Steam editor ParseLine overload at VA 0x10f9d4b0 calls its buffer overload at VA 0x10f9d3d0. Retail passes the stream in ECX and the result in EAX.",
+    "link_bindings": {},
+    "ltcg_link": {
+      "roots": [
+        "?ExecMacroCommand@ParserLink@@YAKAAVViewport@1@PBGAAVFOutputDevice@1@@Z",
+        "?ExecMacroLines@ParserLink@@YAXAAVViewport@1@PBGAAVFOutputDevice@1@@Z"
+      ],
+      "stubs": [
+        "?Exec@Viewport@ParserLink@@QAEKPBGAAVFOutputDevice@2@@Z",
+        "?ExecCommand@ParserLink@@3QBGB",
+        "?ExecMacro@Viewport@ParserLink@@QAEXPBGAAVFOutputDevice@2@@Z",
+        "__imp___wcsnicmp",
+        "__imp__wcslen"
+      ],
+      "rebuilt_offset": 1664,
+      "rebuilt_address": 268440192,
+      "fields": [],
+      "symbols": {}
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "3da23801486f2fb7e2022aa075ebe7abb535324ca371b02216fb633405db445f",
+      "inputs_sha256": "420aaa28b3b81fd80f9027415b45408fe41cb1d388c220a78c8959a5c82d89e8"
     }
   },
   {
