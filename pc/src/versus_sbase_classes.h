@@ -826,13 +826,7 @@ public:
     BYTE unk_364[0x4];
 };
 
-// SBase.SPlayerCam: 0x18f0 bytes, 78 virtual functions
-class ASPlayerCam : public AActor {
-public:
-    virtual ~ASPlayerCam();
-
-    BYTE unk_2f8[0x15f8];
-};
+#include "versus_player_camera.h"
 
 // SBase.SProjGrenade: 0x354 bytes, 81 virtual functions
 class ASProjGrenade : public AProjectile {
