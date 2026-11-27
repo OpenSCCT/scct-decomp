@@ -3168,7 +3168,7 @@
     },
     "match": {
       "bytes_sha256": "dec42ace6d2353c3d216291c7cbee8deaeff7fd7e06db363db433a239c603bac",
-      "inputs_sha256": "055e84e4ad6121381ed888e1abc6cd3801af8ae2540fabe34209df50eb83dc2d"
+      "inputs_sha256": "62e4893228ef768dcf4250db55bef99b7072d7c72fe39f3444e3bc7019bdbf3b"
     }
   },
   {
@@ -3206,11 +3206,14 @@
       ],
       "symbols": {
         "__real@3f000000": 268443648
+      },
+      "constants": {
+        "__real@3f000000": 4
       }
     },
     "match": {
       "bytes_sha256": "a6fa1d81d03682108220061849b1fc7b28a002c6b5e99fc92abac67b93c68b93",
-      "inputs_sha256": "8c524e15b22fc32cdc178ea468834e75a3f6d8677cd7b14b146e56291544a748"
+      "inputs_sha256": "ce9a69cc8153801e432d37f90dcda8889e21b3c5d20bba4c262922dcc448b2f2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3226,18 +3229,26 @@
     "offset": 1147456,
     "size": 251,
     "inputs": [
-      "src/versus_vd5_item_0372.cpp"
+      "src/versus_octree_multi_node_filter.cpp",
+      "src/versus_build.h",
+      "src/unreal_containers.h",
+      "src/unreal_object.h",
+      "src/versus_octree_bounds.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_name.h"
     ],
-    "rebuilt_symbol": "?ChildrenTouched_118240@@YAHPBUFVec3@@PBUFBoxMinMax@@PAH@Z",
+    "rebuilt_symbol": "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd5_item_0372_vc70_ltcg_o2gygl.obj src/versus_vd5_item_0372.cpp",
-    "identification": "Complete Versus function at RVA 0x118240. Direct call at RVA 0x118565 in the retail function at RVA 0x118530.",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_octree_multi_node_filter.obj src/versus_octree_multi_node_filter.cpp",
+    "identification": "ULevel collision octree insertion and the node query methods call this child-selection function at RVA 0x118240. FOctreeNode::MultiNodeFilter supplies the original link context at RVA 0x118565. The three center-plane comparisons assign the X, Y and Z octant bits and append the overlapping child indices.",
     "link_bindings": {},
     "ltcg_link": {
       "roots": [
-        "?Driver_118240@@YAHPBUFVec3@@PBUFBoxMinMax@@PAH@Z"
+        "?MultiNodeFilter@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z"
       ],
       "stubs": [
+        "?StoreActor@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z",
         "__fltused"
       ],
       "rebuilt_offset": 1024,
@@ -3247,7 +3258,7 @@
     },
     "match": {
       "bytes_sha256": "afade6cb8e7c3eb5b6a7e18b57414ca689e18136eea12abe06088c77f79bcad3",
-      "inputs_sha256": "3100d3f56d882e4948a696a475cecbd72eb2fc19ac9c7f5da0fbb2f5445a0675"
+      "inputs_sha256": "3064a7b00958ea9a6f4385510b43666f82a07a2be2105b98a0764928329fe9e3"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3279,7 +3290,7 @@
     },
     "match": {
       "bytes_sha256": "7e010fdb330a9ab063b548abbcd22de693b5d08508649f43b5c4eb9d6dcf2219",
-      "inputs_sha256": "5738e39b9d9df7294712933774d24112e8c72d8d799441eac63156b7f8878edd"
+      "inputs_sha256": "8da5301ad0d448d2abf6072395f011e8eb7e0652e8f9de8faa1df4d4bb2e225a"
     }
   },
   {
@@ -3555,6 +3566,99 @@
     }
   },
   {
+    "id": "versus-octree-multi-node-filter",
+    "offset": 1148208,
+    "size": 251,
+    "inputs": [
+      "src/versus_octree_multi_node_filter.cpp",
+      "src/versus_build.h",
+      "src/unreal_containers.h",
+      "src/unreal_object.h",
+      "src/versus_octree_bounds.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_name.h"
+    ],
+    "rebuilt_symbol": "?MultiNodeFilter@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_octree_multi_node_filter.obj src/versus_octree_multi_node_filter.cpp",
+    "identification": "FCollisionOctree::AddActor and FOctreeNode::StoreActor dispatch along the multiple-node and single-node actor insertion paths. In this path, a node with children descends recursively into the children overlapped by AActor::OctreeBox unless the actor box contains the whole node. A leaf or a wholly contained node stores the actor. The existing StoreActor source calls the corresponding named MultiNodeFilter for actors without bWasSNFiltered.",
+    "ltcg_link": {
+      "roots": [
+        "?MultiNodeFilter@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z"
+      ],
+      "stubs": [
+        "?StoreActor@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1392,
+      "rebuilt_address": 268439920,
+      "fields": [
+        [
+          37,
+          "rel32",
+          "?BoxContainsNode@@YIKPBUFOctreeNodeBounds@@PBUFBox@@@Z"
+        ],
+        [
+          54,
+          "rel32",
+          "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z"
+        ],
+        [
+          89,
+          "abs",
+          "__real@3f000000"
+        ],
+        [
+          200,
+          "rel32",
+          "?MultiNodeFilter@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z"
+        ],
+        [
+          237,
+          "rel32",
+          "?StoreActor@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z"
+        ]
+      ],
+      "symbols": {
+        "?BoxContainsNode@@YIKPBUFOctreeNodeBounds@@PBUFBox@@@Z": 268439808,
+        "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": 268439552,
+        "__real@3f000000": 268443648,
+        "?MultiNodeFilter@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": 268439920,
+        "?StoreActor@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": 268440176
+      },
+      "constants": {
+        "__real@3f000000": 4
+      }
+    },
+    "link_bindings": {
+      "?BoxContainsNode@@YIKPBUFOctreeNodeBounds@@PBUFBox@@@Z": {
+        "va": 279019984,
+        "basis": "The predicate compares the node center and half-extent against both faces of the actor box along each axis."
+      },
+      "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": {
+        "va": 279020096,
+        "basis": "The existing child-index collector at RVA 0x118240 returns octants intersected by the actor box."
+      },
+      "__real@3f000000": {
+        "va": 281086480,
+        "basis": "The single-precision constant 0.5 used to halve the parent node extent."
+      },
+      "?MultiNodeFilter@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": {
+        "va": 279020848,
+        "basis": "The direct recursive call on the selected child octree node."
+      },
+      "?StoreActor@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": {
+        "va": 279021104,
+        "basis": "The existing FOctreeNode::StoreActor function at RVA 0x118630. It also calls this filter when redistributing its actors."
+      }
+    },
+    "match": {
+      "bytes_sha256": "1d7d95e40c70f4c1deee22e9dd6cbce1a611b684a2e738be6c99d3cdc6a810be",
+      "inputs_sha256": "cdab0a0a47f8f8306363407bced703bf5299e73f4f0c09420ec36ed66defcb0f"
+    }
+  },
+  {
     "id": "versus-vd-118630",
     "offset": 1148464,
     "size": 403,
@@ -3788,7 +3892,11 @@
     "offset": 1151344,
     "size": 486,
     "inputs": [
-      "src/versus_vd9_item_0376.cpp"
+      "src/versus_vd9_item_0376.cpp",
+      "src/versus_octree_bounds.h",
+      "src/versus_build.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "?ActorEncroachmentCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3811,13 +3919,17 @@
         "va": 278469600,
         "basis": "Retail function, table, global or constant referenced by the complete function."
       },
-      "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": {
+      "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": {
         "va": 279020096,
         "basis": "Retail function, table, global or constant referenced by the complete function."
       },
       "__real@3f000000": {
         "va": 281086480,
         "basis": "Retail function, table, global or constant referenced by the complete function."
+      },
+      "?ActorEncroachmentCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": {
+        "va": 279023984,
+        "basis": "The direct recursive call on the selected child octree node."
       }
     },
     "ltcg_link": {
@@ -3827,9 +3939,9 @@
       "stubs": [
         "??0FCheckResult@@QAE@MPAU0@@Z",
         "?Escape@@YAXPAX@Z",
-        "?GMalloc@@3PAVFMalloc@@A",
         "?MemChunk_Tag@@3QBGB",
         "?UnusedChunks@FMemStack@@2PAUFTaggedMemory@@A",
+        "?GMalloc@@3PAVFMalloc@@A",
         "__fltused"
       ],
       "rebuilt_offset": 1648,
@@ -3858,26 +3970,35 @@
         [
           339,
           "rel32",
-          "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z"
+          "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z"
         ],
         [
           361,
           "abs",
           "__real@3f000000"
+        ],
+        [
+          467,
+          "rel32",
+          "?ActorEncroachmentCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z"
         ]
       ],
       "symbols": {
-        "?Box1OverlapBox2@@YAKPBUFBox@@0@Z": 268439824,
+        "?Box1OverlapBox2@@YAKPBUFBox@@0@Z": 268440080,
         "??0FCheckResult@@QAE@MPAU0@@Z": 268440720,
-        "??2@YAPAXIAAVFMemStack@@HH@Z": 268439664,
-        "??0FCheckResult@@QAE@ABU0@@Z": 268439728,
-        "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": 268439920,
-        "__real@3f000000": 268443648
+        "??2@YAPAXIAAVFMemStack@@HH@Z": 268439920,
+        "??0FCheckResult@@QAE@ABU0@@Z": 268439984,
+        "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": 268439552,
+        "__real@3f000000": 268443648,
+        "?ActorEncroachmentCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": 268440176
+      },
+      "constants": {
+        "__real@3f000000": 4
       }
     },
     "match": {
       "bytes_sha256": "e679e16b94dcafff0bba2ba137f22e68d1c953bb2703b1076e093dce636a9e15",
-      "inputs_sha256": "d5933ba26c85cc1375f57ef9a226f7740ad1147d1d543ce38cb8aa3e3d34976b"
+      "inputs_sha256": "03115f97521e3eb1474129d2620214d369330bcd0114483c700dea9433ce7200"
     }
   },
   {
@@ -3885,7 +4006,11 @@
     "offset": 1151840,
     "size": 422,
     "inputs": [
-      "src/versus_vd9_item_0376.cpp"
+      "src/versus_vd9_item_0376.cpp",
+      "src/versus_octree_bounds.h",
+      "src/versus_build.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "?ActorPointCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3908,13 +4033,17 @@
         "va": 278469600,
         "basis": "Retail function, table, global or constant referenced by the complete function."
       },
-      "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": {
+      "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": {
         "va": 279020096,
         "basis": "Retail function, table, global or constant referenced by the complete function."
       },
       "__real@3f000000": {
         "va": 281086480,
         "basis": "Retail function, table, global or constant referenced by the complete function."
+      },
+      "?ActorPointCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": {
+        "va": 279024480,
+        "basis": "The direct recursive call on the selected child octree node."
       }
     },
     "ltcg_link": {
@@ -3924,9 +4053,9 @@
       "stubs": [
         "??0FCheckResult@@QAE@MPAU0@@Z",
         "?Escape@@YAXPAX@Z",
-        "?GMalloc@@3PAVFMalloc@@A",
         "?MemChunk_Tag@@3QBGB",
         "?UnusedChunks@FMemStack@@2PAUFTaggedMemory@@A",
+        "?GMalloc@@3PAVFMalloc@@A",
         "__fltused"
       ],
       "rebuilt_offset": 1648,
@@ -3955,26 +4084,35 @@
         [
           268,
           "rel32",
-          "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z"
+          "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z"
         ],
         [
           297,
           "abs",
           "__real@3f000000"
+        ],
+        [
+          403,
+          "rel32",
+          "?ActorPointCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z"
         ]
       ],
       "symbols": {
-        "?Box1OverlapBox2@@YAKPBUFBox@@0@Z": 268439824,
+        "?Box1OverlapBox2@@YAKPBUFBox@@0@Z": 268440080,
         "??0FCheckResult@@QAE@MPAU0@@Z": 268440656,
-        "??2@YAPAXIAAVFMemStack@@HH@Z": 268439664,
-        "??0FCheckResult@@QAE@ABU0@@Z": 268439728,
-        "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": 268439920,
-        "__real@3f000000": 268443648
+        "??2@YAPAXIAAVFMemStack@@HH@Z": 268439920,
+        "??0FCheckResult@@QAE@ABU0@@Z": 268439984,
+        "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": 268439552,
+        "__real@3f000000": 268443648,
+        "?ActorPointCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": 268440176
+      },
+      "constants": {
+        "__real@3f000000": 4
       }
     },
     "match": {
       "bytes_sha256": "d88062b70fbededd08157f408155d95f8d2c9a1ce19a3b0760c45e525986109d",
-      "inputs_sha256": "7eb8e75ecdf3bd19ac5c05be9d220524a496ead84b633a29966e50b12f4becd4"
+      "inputs_sha256": "853a93fb7a18bf415d9f687c77409d63bfaf4981c539eebafe5d2a72657e80c6"
     }
   },
   {
@@ -3982,7 +4120,11 @@
     "offset": 1152272,
     "size": 470,
     "inputs": [
-      "src/versus_vd9_item_0376.cpp"
+      "src/versus_vd9_item_0376.cpp",
+      "src/versus_octree_bounds.h",
+      "src/versus_build.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "?ActorRadiusCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3997,9 +4139,13 @@
         "va": 278230976,
         "basis": "Retail function, table, global or constant referenced by the complete function."
       },
-      "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": {
+      "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": {
         "va": 279020096,
         "basis": "Retail function, table, global or constant referenced by the complete function."
+      },
+      "?ActorRadiusCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": {
+        "va": 279024912,
+        "basis": "The direct recursive call on the selected child octree node."
       }
     },
     "ltcg_link": {
@@ -4009,9 +4155,9 @@
       "stubs": [
         "??0FCheckResult@@QAE@MPAU0@@Z",
         "?Escape@@YAXPAX@Z",
-        "?GMalloc@@3PAVFMalloc@@A",
         "?MemChunk_Tag@@3QBGB",
         "?UnusedChunks@FMemStack@@2PAUFTaggedMemory@@A",
+        "?GMalloc@@3PAVFMalloc@@A",
         "__fltused"
       ],
       "rebuilt_offset": 1392,
@@ -4040,23 +4186,32 @@
         [
           319,
           "rel32",
-          "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z"
+          "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z"
         ],
         [
           345,
           "abs",
           "__real@3f000000"
+        ],
+        [
+          451,
+          "rel32",
+          "?ActorRadiusCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z"
         ]
       ],
       "symbols": {
         "__real@3f000000": 268443648,
-        "?AllocateNewChunk@FMemStack@@QAEPAEH@Z": 268439552,
-        "?FindChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": 268439664
+        "?AllocateNewChunk@FMemStack@@QAEPAEH@Z": 268439808,
+        "?GetOverlappingChildren@@YAHPBUFOctreeNodeBounds@@PBUFBox@@PAH@Z": 268439552,
+        "?ActorRadiusCheck@FOctreeNode@@QAEXPAVFCollisionOctree@@PBUFOctreeNodeBounds@@@Z": 268439920
+      },
+      "constants": {
+        "__real@3f000000": 4
       }
     },
     "match": {
       "bytes_sha256": "97e628aad1a1f907884966f521b2c46850b765a8f1ad03df8f235dbc0794d6da",
-      "inputs_sha256": "d2fdb1c4ca1a7ce181ae849f46f4463861854b1c33d331b6d98f095ea76686a4"
+      "inputs_sha256": "7cabe3fa83cc68f82ff2628571006b3d3b5d190de9d51cb20075305af512d583"
     }
   },
   {

@@ -30,44 +30,6 @@ void ChildCube_118170(FCube *Out, INT Index, const FCube *In)
 }
 #pragma auto_inline(on)
 
-// 0x1181d0: is the cube wholly inside the box?
-// Near miss: retail loads W before Y for the Y+ test (fld [ecx+0xc]; fadd [ecx+4]).
-INT __fastcall CubeInsideBox_1181d0(const FCube *C, const FBoxMinMax *B)
-{
-    if (C->X - C->W < B->Min.X || C->X + C->W > B->Max.X ||
-        C->Y - C->W < B->Min.Y || C->Y + C->W > B->Max.Y ||
-        C->Z - C->W < B->Min.Z || C->Z + C->W > B->Max.Z)
-        return 0;
-    return 1;
-}
-
-// 0x118240: octree children a box touches around a centre (LTCG: ESI/EDI).
-INT ChildrenTouched_118240(const FVec3 *P, const FBoxMinMax *B, INT *Out)
-{
-    INT N = 0;
-    if (B->Max.X > P->X) {
-        if (B->Max.Y > P->Y) {
-            if (B->Max.Z > P->Z) Out[N++] = 7;
-            if (B->Min.Z < P->Z) Out[N++] = 6;
-        }
-        if (B->Min.Y < P->Y) {
-            if (B->Max.Z > P->Z) Out[N++] = 5;
-            if (B->Min.Z < P->Z) Out[N++] = 4;
-        }
-    }
-    if (B->Min.X < P->X) {
-        if (B->Max.Y > P->Y) {
-            if (B->Max.Z > P->Z) Out[N++] = 3;
-            if (B->Min.Z < P->Z) Out[N++] = 2;
-        }
-        if (B->Min.Y < P->Y) {
-            if (B->Max.Z > P->Z) Out[N++] = 1;
-            if (B->Min.Z < P->Z) Out[N++] = 0;
-        }
-    }
-    return N;
-}
-
 // 0x118340: which child holds the point, or -1 if it straddles.
 INT __fastcall ChildIndex_118340(const FBoxMinMax *B, const FVec3 *P)
 {
@@ -84,4 +46,3 @@ INT __fastcall ChildIndex_118340(const FBoxMinMax *B, const FVec3 *P)
 // Scaffolding for the LTCG link, not part of the unit.
 void Escape(void *);
 void Driver_118170(FCube *O, INT I, const FCube *C) { ChildCube_118170(O, I, C); }
-INT Driver_118240(const FVec3 *P, const FBoxMinMax *B, INT *O) { return ChildrenTouched_118240(P, B, O) + ChildrenTouched_118240(P + 1, B + 1, O + 8); }

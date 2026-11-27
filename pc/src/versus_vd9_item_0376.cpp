@@ -4,30 +4,7 @@
 // /LTCG. Field names follow UE2 where the use matches; SCCT additions are
 // neutral (FieldNNN). Node bounds are passed by pointer (FOctreeNodeBounds), as in the
 // published FCollisionOctree callers at 0x11a0a0-0x11a370.
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
-typedef unsigned char BYTE;
-typedef unsigned short TCHAR;
-
-struct FVector
-{
-    FLOAT X, Y, Z;
-    FVector() {}
-    FVector(FLOAT InX, FLOAT InY, FLOAT InZ) : X(InX), Y(InY), Z(InZ) {}
-    FVector operator+(const FVector &V) const { return FVector(X + V.X, Y + V.Y, Z + V.Z); }
-    FVector operator-(const FVector &V) const { return FVector(X - V.X, Y - V.Y, Z - V.Z); }
-    FVector operator*(FLOAT Scale) const { return FVector(X * Scale, Y * Scale, Z * Scale); }
-    FLOAT SizeSquared() const { return X * X + Y * Y + Z * Z; }
-};
-struct FBox
-{
-    FVector Min; FVector Max;
-    FVector GetCenter() const { return FVector((Min + Max) * 0.5f); }
-};
-struct FOctreeNodeBounds { FVector Center; FLOAT HalfExtent; };
-
+#include "versus_octree_bounds.h"
 
 class FMalloc
 {
@@ -225,42 +202,6 @@ __declspec(noinline) UBOOL Box1OverlapBox2(const FBox *A, const FBox *B)
     return 0;
 }
 
-// RVA 0x118240 (item 0372), defined here only for its LTCG convention.
-__declspec(noinline) INT FindChildren(const FOctreeNodeBounds *P, const FBox *B, INT *Out)
-{
-    INT N = 0;
-    if (B->Max.X > P->Center.X) {
-        if (B->Max.Y > P->Center.Y) {
-            if (B->Max.Z > P->Center.Z) Out[N++] = 7;
-            if (B->Min.Z < P->Center.Z) Out[N++] = 6;
-        }
-        if (B->Min.Y < P->Center.Y) {
-            if (B->Max.Z > P->Center.Z) Out[N++] = 5;
-            if (B->Min.Z < P->Center.Z) Out[N++] = 4;
-        }
-    }
-    if (B->Min.X < P->Center.X) {
-        if (B->Max.Y > P->Center.Y) {
-            if (B->Max.Z > P->Center.Z) Out[N++] = 3;
-            if (B->Min.Z < P->Center.Z) Out[N++] = 2;
-        }
-        if (B->Min.Y < P->Center.Y) {
-            if (B->Max.Z > P->Center.Z) Out[N++] = 1;
-            if (B->Min.Z < P->Center.Z) Out[N++] = 0;
-        }
-    }
-    return N;
-}
-
-// RVA 0x118170 in retail as a function; inlined here.
-inline void CalcChildBounds(FOctreeNodeBounds &Child, const FOctreeNodeBounds *Parent, INT Index)
-{
-    Child.HalfExtent = Parent->HalfExtent * 0.5f;
-    Child.Center.X = (FLOAT)(((Index >> 1) & 2) - 1) * Child.HalfExtent + Parent->Center.X;
-    Child.Center.Y = (FLOAT)((Index & 2) - 1) * Child.HalfExtent + Parent->Center.Y;
-    Child.Center.Z = (FLOAT)((Index & 1) * 2 - 1) * Child.HalfExtent + Parent->Center.Z;
-}
-
 template <class T> class TArray
 {
 public:
@@ -308,10 +249,9 @@ void FOctreeNode::ActorEncroachmentCheck(FCollisionOctree *o, const FOctreeNodeB
     }
     if (Children) {
         INT childIXs[8];
-        INT numChildren = FindChildren(Bounds, &o->ChkBox, childIXs);
+        INT numChildren = GetOverlappingChildren(Bounds, &o->ChkBox, childIXs);
         for (INT i = 0; i < numChildren; i++) {
-            FOctreeNodeBounds ChildBounds;
-            CalcChildBounds(ChildBounds, Bounds, childIXs[i]);
+            FOctreeNodeBounds ChildBounds(*Bounds, childIXs[i]);
             Children[childIXs[i]].ActorEncroachmentCheck(o, &ChildBounds);
         }
     }
@@ -340,10 +280,9 @@ void FOctreeNode::ActorPointCheck(FCollisionOctree *o, const FOctreeNodeBounds *
     }
     if (Children) {
         INT childIXs[8];
-        INT numChildren = FindChildren(Bounds, &o->ChkBox, childIXs);
+        INT numChildren = GetOverlappingChildren(Bounds, &o->ChkBox, childIXs);
         for (INT i = 0; i < numChildren; i++) {
-            FOctreeNodeBounds ChildBounds;
-            CalcChildBounds(ChildBounds, Bounds, childIXs[i]);
+            FOctreeNodeBounds ChildBounds(*Bounds, childIXs[i]);
             Children[childIXs[i]].ActorPointCheck(o, &ChildBounds);
         }
     }
@@ -356,7 +295,8 @@ void FOctreeNode::ActorRadiusCheck(FCollisionOctree *o, const FOctreeNodeBounds 
         AActor *testActor = Actors(i);
         if (testActor->CollisionTag != o->CollisionTag) {
             testActor->CollisionTag = o->CollisionTag;
-            if ((testActor->OctreeBox.GetCenter() - o->ChkStart).SizeSquared()
+            const FVector Offset = testActor->OctreeBox.GetCenter() - o->ChkStart;
+            if ((Offset | Offset)
                 - testActor->CollisionRadius * testActor->CollisionRadius < o->ChkRadiusSqr) {
                 FCheckResult *NewResult = new(*o->Mem) FCheckResult;
                 NewResult->Actor = testActor;
@@ -367,10 +307,9 @@ void FOctreeNode::ActorRadiusCheck(FCollisionOctree *o, const FOctreeNodeBounds 
     }
     if (Children) {
         INT childIXs[8];
-        INT numChildren = FindChildren(Bounds, &o->ChkBox, childIXs);
+        INT numChildren = GetOverlappingChildren(Bounds, &o->ChkBox, childIXs);
         for (INT i = 0; i < numChildren; i++) {
-            FOctreeNodeBounds ChildBounds;
-            CalcChildBounds(ChildBounds, Bounds, childIXs[i]);
+            FOctreeNodeBounds ChildBounds(*Bounds, childIXs[i]);
             Children[childIXs[i]].ActorRadiusCheck(o, &ChildBounds);
         }
     }
