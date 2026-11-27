@@ -1,15 +1,5 @@
 /* d3dx_curve_math.cpp -- D3DX8 vector interpolation functions */
-
-struct D3DXVECTOR2 {
-    float x;
-    float y;
-};
-
-struct D3DXVECTOR3 {
-    float x;
-    float y;
-    float z;
-};
+#include "d3dx_math_types.h"
 
 /* D3DXVec2Hermite */
 extern "C" D3DXVECTOR2 *__stdcall D3DXVec2Hermite(
@@ -88,14 +78,6 @@ extern "C" D3DXVECTOR3 *__stdcall D3DXVec3Hermite(
     pOut->z = h1 * pV1->z + h2 * pT1->z + h3 * pV2->z + h4 * pT2->z;
     return pOut;
 }
-
-/* D3DXVECTOR4 */
-struct D3DXVECTOR4 {
-    float x;
-    float y;
-    float z;
-    float w;
-};
 
 /* D3DXVec3CatmullRom */
 extern "C" D3DXVECTOR3 *__stdcall D3DXVec3CatmullRom(

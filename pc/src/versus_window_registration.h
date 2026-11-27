@@ -1,7 +1,7 @@
 #ifndef VERSUS_WINDOW_REGISTRATION_H
 #define VERSUS_WINDOW_REGISTRATION_H
 #include "versus_build.h"
-#include "versus_native_class_init.h"
+#include "versus_native_subsystem.h"
 #include "windows_dispatch_types.h"
 
 struct HBRUSH__;
@@ -74,12 +74,6 @@ public:
 class WControl : public WWindow {
 public:
     static WNDPROC RegisterWindowClass(const TCHAR *Name, const TCHAR *BaseClass);
-};
-// The native base in the Versus window-manager destructor is USubsystem.
-class USubsystem : public UObject {
-public:
-    virtual ~USubsystem();
-    virtual void Tick(FLOAT DeltaTime);
 };
 extern UObject *GTransientPackage;
 class UWindowManager : public USubsystem {

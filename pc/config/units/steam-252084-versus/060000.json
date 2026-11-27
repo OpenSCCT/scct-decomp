@@ -155,7 +155,9 @@
       "src/versus_build.h",
       "src/versus_name.h",
       "src/unreal_types.h",
-      "src/versus_registration_arrays.h"
+      "src/versus_registration_arrays.h",
+      "src/versus_native_subsystem.h",
+      "src/versus_d3d_render_device.h"
     ],
     "rebuilt_symbol": "??0UFloatProperty@@QAE@W4ECppProperty@@HVFName@@K@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -216,7 +218,7 @@
     },
     "match": {
       "bytes_sha256": "835dacc2c91ee3e9582cbd5c5f15184da5f7380336b0831d8b2cd2ff2f01e347",
-      "inputs_sha256": "0909a464f9480c9402bc94b8edf2e35767fcbcac434dd76e42e787e195858849"
+      "inputs_sha256": "c24a95d6cce63bd6c9f2cfd2992a0814e1561a777d3ae773928d619fcbd89d13"
     },
     "ltcg_callees": [
       "versus-uintproperty-link"
@@ -2001,6 +2003,73 @@
     }
   },
   {
+    "id": "versus-fd3dvertexstream-constructor",
+    "offset": 433728,
+    "size": 35,
+    "inputs": [
+      "src/versus_d3d_vertex_stream.cpp",
+      "src/versus_d3d_vertex_stream.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_native_class_init.h",
+      "src/versus_name.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_d3d8_interfaces.h",
+      "src/versus_native_subsystem.h",
+      "src/versus_d3d_render_device.h",
+      "src/windows_dispatch_types.h"
+    ],
+    "rebuilt_symbol": "??0FD3DVertexStream@@QAE@PAVUD3DRenderDevice@@_K@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /Ob1 /c /Folocal/versus_d3d_vertex_stream.obj src/versus_d3d_vertex_stream.cpp",
+    "identification": "The renderer allocates a 0x2c-byte FD3DVertexStream with the stock UTF-16 allocation tag at VA 0x10c4db10, then calls this constructor at RVA 0x798e7. SetVertexStreams also calls it at 0x78577. The constructor registers the inherited render resource, installs the vtable shared with its destructor and clears the Direct3D vertex-buffer pointer. The dynamic stream constructor at RVA 0x6a020 inlines the corresponding base initialization with cache ID zero.",
+    "link_bindings": {
+      "??0FD3DResource@@QAE@PAVUD3DRenderDevice@@_K@Z": {
+        "va": 278302528,
+        "basis": "The exact FD3DResource constructor at RVA 0x68f40 inserts the resource into the owning render device list and cache-ID hash."
+      },
+      "??_7FD3DVertexStream@@6B@": {
+        "va": 281067088,
+        "basis": "The constructor at RVA 0x69e40 and destructor at 0x69ea0 install this read-only FD3DVertexStream vtable. Its deleting destructor at 0x69e70 calls 0x69ea0, its vertex-stream query returns this, and its footprint accessor at 0x69ef0 returns the cached size."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "??0FD3DDynamicVertexStream@@QAE@PAVUD3DRenderDevice@@@Z"
+      ],
+      "stubs": [
+        "??1FD3DResource@@UAE@XZ",
+        "??3@YAXPAX@Z",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "fields": [
+        [
+          15,
+          "rel32",
+          "??0FD3DResource@@QAE@PAVUD3DRenderDevice@@_K@Z"
+        ],
+        [
+          21,
+          "abs",
+          "??_7FD3DVertexStream@@6B@"
+        ]
+      ],
+      "symbols": {
+        "??0FD3DResource@@QAE@PAVUD3DRenderDevice@@_K@Z": 268440176
+      },
+      "exported_vtables": [
+        "??_7FD3DVertexStream@@6B@"
+      ],
+      "rebuilt_offset": 1056,
+      "rebuilt_address": 268439584
+    },
+    "match": {
+      "bytes_sha256": "f41fc0b752c57106d7315ca7bb24d40953d4381c0f03d62680b51d83d327d77e",
+      "inputs_sha256": "50d30d3fdc6c943f962c5dafaf365f9d025bd91fbaded008b94cfca78416f805"
+    }
+  },
+  {
     "id": "delete-record-069e70",
     "offset": 433776,
     "size": 33,
@@ -2033,6 +2102,83 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-fd3dvertexstream-destructor",
+    "offset": 433824,
+    "size": 79,
+    "inputs": [
+      "src/versus_d3d_vertex_stream.cpp",
+      "src/versus_d3d_vertex_stream.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_native_class_init.h",
+      "src/versus_name.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_d3d8_interfaces.h",
+      "src/versus_native_subsystem.h",
+      "src/versus_d3d_render_device.h",
+      "src/windows_dispatch_types.h"
+    ],
+    "rebuilt_symbol": "??1FD3DVertexStream@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /c /Folocal/versus_d3d_vertex_stream.obj src/versus_d3d_vertex_stream.cpp",
+    "identification": "The deleting destructor at 0x69e70 is slot 0 of the vertex-stream vtable at VA 0x10c0be50. It calls this destructor, which releases the Direct3D vertex buffer before destroying the base resource. The derived destructor at 0x6a0b0 also tail-calls it.",
+    "link_bindings": {
+      "__ehhandler$??1FD3DVertexStream@@UAE@XZ": {
+        "va": 280804072,
+        "basis": "Both C++ exception handlers load FuncInfo with magic 0x19930520 and tail-call __CxxFrameHandler. Each has one unwind action, state 0 to -1, recovering this from [ebp-0x10] and tail-calling FD3DResource::~FD3DResource. In retail the handler is at 0x10bcbae8, its unwind action at 0x10bcbae0, and its base destructor at 0x10968ff0."
+      },
+      "??_7FD3DVertexStream@@6B@": {
+        "va": 281067088,
+        "basis": "The constructor at RVA 0x69e40 and destructor at 0x69ea0 install this read-only FD3DVertexStream vtable. Its deleting destructor at 0x69e70 calls 0x69ea0, its vertex-stream query returns this, and its footprint accessor at 0x69ef0 returns the cached size."
+      },
+      "??1FD3DResource@@UAE@XZ": {
+        "va": 278302704,
+        "basis": "The base deleting destructor at RVA 0x68fc0 and derived destructor at 0x69ea0 call this FD3DResource destructor. It installs the vtable at 0x10c0be00 and unlinks the resource from the owner list and hash."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "??0FD3DDynamicVertexStream@@QAE@PAVUD3DRenderDevice@@@Z"
+      ],
+      "stubs": [
+        "??1FD3DResource@@UAE@XZ",
+        "??3@YAXPAX@Z",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "fields": [
+        [
+          3,
+          "abs",
+          "__ehhandler$??1FD3DVertexStream@@UAE@XZ"
+        ],
+        [
+          31,
+          "abs",
+          "??_7FD3DVertexStream@@6B@"
+        ],
+        [
+          59,
+          "rel32",
+          "??1FD3DResource@@UAE@XZ"
+        ]
+      ],
+      "symbols": {
+        "__ehhandler$??1FD3DVertexStream@@UAE@XZ": 268440360,
+        "??1FD3DResource@@UAE@XZ": 268440336
+      },
+      "exported_vtables": [
+        "??_7FD3DVertexStream@@6B@"
+      ],
+      "rebuilt_offset": 1088,
+      "rebuilt_address": 268439616
+    },
+    "match": {
+      "bytes_sha256": "5e776aa059f372aacd1b689b71380cac16bcb4b76cb7ef4b82ce04b424dbbcb7",
+      "inputs_sha256": "178c34144d9dc15d89061816a01c7cca1b6c68f8396f3ffa791ba3129c04dd87"
     }
   },
   {
@@ -2220,6 +2366,92 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-fd3ddynamicvertexstream-destructor",
+    "offset": 434352,
+    "size": 5,
+    "inputs": [
+      "src/versus_d3d_vertex_stream.cpp",
+      "src/versus_d3d_vertex_stream.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_native_class_init.h",
+      "src/versus_name.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_d3d8_interfaces.h",
+      "src/versus_native_subsystem.h",
+      "src/versus_d3d_render_device.h",
+      "src/windows_dispatch_types.h"
+    ],
+    "rebuilt_symbol": "??1FD3DDynamicVertexStream@@UAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_d3d_vertex_stream.obj src/versus_d3d_vertex_stream.cpp",
+    "identification": "The compiler-generated destructor at RVA 0x6a0b0 tail-calls the vertex-stream base destructor at 0x69ea0. The derived deleting destructor at 0x6a080 is slot zero of the dynamic vertex stream vtable at VA 0x10c0be28. Both VC70 and VC71 reproduce the complete five-byte body; VC70 also emits the eleven retail alignment NOPs.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "??1FD3DVertexStream@@UAE@XZ": {
+        "va": 278306464,
+        "basis": "The FD3DVertexStream deleting destructor at 0x69e70 and derived destructor at 0x6a0b0 both call the complete 79-byte destructor at RVA 0x69ea0, which releases the vertex buffer and destroys FD3DResource."
+      }
+    },
+    "match": {
+      "bytes_sha256": "0caafc773f8f7f111cd3dcd73e7a6885bc8679d63e1354ef63e97ea193639daf",
+      "inputs_sha256": "dcefd13308d91b14f6628d3e8208f1a6f1b4c095029f3a48552d0415296895e3"
+    }
+  },
+  {
+    "id": "versus-fd3ddynamicvertexstream-reallocate",
+    "offset": 434368,
+    "size": 149,
+    "inputs": [
+      "src/versus_d3d_vertex_stream.cpp",
+      "src/versus_d3d_vertex_stream.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_native_class_init.h",
+      "src/versus_name.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_d3d8_interfaces.h",
+      "src/versus_native_subsystem.h",
+      "src/versus_d3d_render_device.h",
+      "src/windows_dispatch_types.h"
+    ],
+    "rebuilt_symbol": "?Reallocate@FD3DDynamicVertexStream@@QAEXH@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_d3d_vertex_stream.obj src/versus_d3d_vertex_stream.cpp",
+    "identification": "The shipped editor identifies FD3DDynamicVertexStream::Reallocate at the guard referencing 0x1147d93c. Its retail callers are the dynamic vertex-stream constructor (0x6a020) and AddVertices (0x6a160). The member releases its old vertex buffer, resets the ring position, and retries IDirect3DDevice8::CreateVertexBuffer with the software-processing usage and system-memory pool fallbacks.",
+    "link_bindings": {
+      "?UnSetVertexBuffer@FD3DDeferredState@@QAEXPAUIDirect3DVertexBuffer8@@@Z": {
+        "va": 278318336,
+        "basis": "The retail dynamic vertex stream Reallocate calls this member on the render device deferred state at +0x2fb58. It clears the matching buffer and stride in the pending and hardware stream arrays and unbinds hardware matches with IDirect3DDevice8::SetStreamSource. UnSetVertexBuffer is the descriptive spelling used by the existing renderer sources."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "??0FD3DDynamicVertexStream@@QAE@PAVUD3DRenderDevice@@@Z"
+      ],
+      "stubs": [
+        "??1FD3DResource@@UAE@XZ",
+        "??3@YAXPAX@Z"
+      ],
+      "fields": [
+        [
+          26,
+          "rel32",
+          "?UnSetVertexBuffer@FD3DDeferredState@@QAEXPAUIDirect3DVertexBuffer8@@@Z"
+        ]
+      ],
+      "symbols": {
+        "?UnSetVertexBuffer@FD3DDeferredState@@QAEXPAUIDirect3DVertexBuffer8@@@Z": 268439872
+      },
+      "rebuilt_offset": 1184,
+      "rebuilt_address": 268439712
+    },
+    "match": {
+      "bytes_sha256": "5aef1abd5d591242c25a1c20a63fbfff308172db803a3c46e3659b09aeeca4c5",
+      "inputs_sha256": "fe7ecf5d84f3ad23a6fa2bc7e30b88d3a9684be84574a81f7df7599b9dcc7997"
     }
   },
   {
@@ -3227,31 +3459,35 @@
     "offset": 445696,
     "size": 107,
     "inputs": [
-      "src/versus_vd3_item_0282.cpp"
+      "src/versus_d3d_vertex_stream.cpp",
+      "src/versus_d3d_vertex_stream.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_native_class_init.h",
+      "src/versus_name.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_d3d8_interfaces.h",
+      "src/versus_native_subsystem.h",
+      "src/versus_d3d_render_device.h",
+      "src/windows_dispatch_types.h"
     ],
-    "rebuilt_symbol": "?UnbindBuffer@UnnamedState_6cc60@@QAEXPAX@Z",
+    "rebuilt_symbol": "?UnSetVertexBuffer@FD3DDeferredState@@QAEXPAUIDirect3DVertexBuffer8@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd3_item_0282_vc70_ltcg_o2gygl.obj src/versus_vd3_item_0282.cpp",
-    "identification": "Complete Versus function at RVA 0x6cd00. Direct call at RVA 0x6a0d9 in the retail function at RVA 0x6a0c0.",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_d3d_vertex_stream.obj src/versus_d3d_vertex_stream.cpp",
+    "identification": "The retail dynamic vertex stream Reallocate calls this member on the render device deferred state at +0x2fb58. It clears the matching buffer and stride in the pending and hardware stream arrays and unbinds hardware matches with IDirect3DDevice8::SetStreamSource. UnSetVertexBuffer is the descriptive spelling used by the existing renderer sources.",
     "link_bindings": {},
     "ltcg_link": {
       "roots": [
-        "?Driver_6cd00@@YAXPAUUnnamedState_6cc60@@PAX@Z"
+        "??0FD3DDynamicVertexStream@@QAE@PAVUD3DRenderDevice@@@Z"
       ],
       "stubs": [
-        "?Escape@@YAXPAX@Z",
-        "?FMatrix_Identity@@3UFMatrix@@A",
-        "?appMemcpy@@YAXPAXPBXH@Z",
-        "__fltused"
+        "??1FD3DResource@@UAE@XZ",
+        "??3@YAXPAX@Z"
       ],
-      "rebuilt_offset": 1024,
-      "rebuilt_address": 268439552,
       "fields": [],
-      "symbols": {}
-    },
-    "match": {
-      "bytes_sha256": "0c1e024df0d882c12ba5bf7e805d6725d281e4f75d5a630733c3c3bc0fdb813b",
-      "inputs_sha256": "e4378b0cc1787d141a83925de9f01cc0affa3aa717ba2511a4265360c05e22f7"
+      "symbols": {},
+      "rebuilt_offset": 1344,
+      "rebuilt_address": 268439872
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3260,6 +3496,10 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "0c1e024df0d882c12ba5bf7e805d6725d281e4f75d5a630733c3c3bc0fdb813b",
+      "inputs_sha256": "e194ab4d43e8cc7d2828e26a1fe45774fbf3a34db05565e00d607ba7bef8698d"
     }
   },
   {

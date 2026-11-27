@@ -1,25 +1,13 @@
 /* D3DX8 scalar comparison and matrix functions from d3dxmath.obj. */
 
 #include <float.h>
+#include "d3dx_math_types.h"
 
 int WithinEpsilon(float a, float b)
 {
     float difference = a - b;
     return -FLT_EPSILON <= difference && difference <= FLT_EPSILON;
 }
-
-typedef float FLOAT;
-
-struct D3DXMATRIX {
-    FLOAT m[4][4];
-};
-
-struct D3DXQUATERNION {
-    FLOAT x;
-    FLOAT y;
-    FLOAT z;
-    FLOAT w;
-};
 
 extern "C" D3DXQUATERNION *__stdcall D3DXQuaternionRotationYawPitchRoll(
     D3DXQUATERNION *pOut,

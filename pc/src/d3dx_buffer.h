@@ -4,6 +4,11 @@
 #include "campaign_import_GUID.h"
 #include "campaign_import_HRESULT.h"
 
+extern "C" __declspec(selectany) const GUID IID_IUnknown =
+    {0, 0, 0, {0xc0, 0, 0, 0, 0, 0, 0, 0x46}};
+extern "C" __declspec(selectany) const GUID IID_ID3DXBuffer =
+    {0x932e6a7e, 0xc68e, 0x45dd, {0xa7, 0xbf, 0x53, 0xd1, 0x9c, 0x86, 0xdb, 0x1f}};
+
 struct IUnknown {
     virtual HRESULT __stdcall QueryInterface(const GUID &iid, void **out) = 0;
     virtual unsigned long __stdcall AddRef() = 0;

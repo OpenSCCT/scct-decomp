@@ -3,7 +3,7 @@
 #include "versus_native_properties.h"
 
 
-class USubsystem : public UObject {};
+#include "versus_d3d_render_device.h"
 static const DWORD RF_Public = 4;
 static const DWORD CPF_Config = 0x4000;
 #define STRUCT_OFFSET(type, member) ((INT)&((type *)0)->member)
@@ -114,56 +114,6 @@ public:
     BYTE unk_fc[0x8];
     INT unk_104;
     INT unk_108;
-};
-
-class URenderDevice : public USubsystem {
-public:
-    void StaticConstructor();
-
-    BYTE unk_28[0x4];
-    BYTE unk_2c;
-    BYTE unk_2d[0x7];
-    FString Description;
-    INT DescFlags;
-    UBOOL HighDetailActors;
-    UBOOL SuperHighDetailActors;
-    UBOOL DetailTextures;
-    BYTE unk_50[0x8];
-    UBOOL unk_58;
-    UBOOL UseStencil;
-    UBOOL Use16bit;
-    UBOOL Use16bitTextures;
-    BYTE unk_68[0x48];
-};
-
-class UD3DRenderDevice : public URenderDevice {
-public:
-    void StaticConstructor();
-
-    BYTE unk_b0[0x4018];
-    UBOOL UsePrecaching;
-    UBOOL UseTrilinear;
-    BYTE unk_40d0[0x4];
-    UBOOL UseVSync;
-    UBOOL UseHardwareTL;
-    UBOOL UseHardwareVS;
-    UBOOL UseCubemaps;
-    BYTE unk_40e4[0x10];
-    UBOOL UseTripleBuffering;
-    UBOOL ReduceMouseLag;
-    BYTE unk_40fc[0x10];
-    UBOOL CheckForOverflow;
-    UBOOL UseNPatches;
-    UBOOL DecompressTextures;
-    BYTE unk_4118[0x4];
-    INT AdapterNumber;
-    BYTE unk_4120[0x4];
-    INT MaxPixelShaderVersion;
-    INT LevelOfAnisotropy;
-    FLOAT DetailTexMipBias;
-    FLOAT DefaultTexMipBias;
-    FLOAT TesselationFactor;
-    INT DesiredRefreshRate;
 };
 
 void UNetDriver::StaticConstructor()
