@@ -6484,23 +6484,22 @@
     "inputs": [
       "src/versus_vd4_item_0384.cpp"
     ],
-    "rebuilt_symbol": "?Load@?$TLazyArray@UFUnnamedStruct_a5df0@@@@UAEXXZ",
+    "rebuilt_symbol": "?Load@?$TLazyArray@UFSkeletalVertexInfluence@@@@UAEXXZ",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd4_item_0384_vc70_ltcg_o2gygxgl.obj src/versus_vd4_item_0384.cpp",
-    "identification": "Complete Versus function at RVA 0xa5da0. No direct call reaches it; its address is stored in the retail .rdata section at RVA 0x309f88 (a virtual method or function table).",
+    "identification": "TLazyArray<FSkeletalVertexInfluence>::Load is the method stored at VA 0x10c09f88. Its call to RVA 0xa5df0 serializes eight bytes per bone influence. The shipped editor loads and multiplies the floating weight at VA 0x1119a140 and builds the two trailing 16-bit indices in the vertex and reference-skeleton loop at VA 0x1119ad32. The element and field names describe those uses.",
     "link_bindings": {
-      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFUnnamedStruct_a5df0@@@@@Z": {
+      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFSkeletalVertexInfluence@@@@@Z": {
         "va": 278552048,
         "basis": "Retail function, table, global or constant referenced by the complete function."
       }
     },
     "ltcg_link": {
       "roots": [
-        "?Driver_a5da0@@YAXPAV?$TLazyArray@UFUnnamedStruct_a5df0@@@@PAV?$TLazyArray@G@@PAV?$TArray@UFUnnamedStruct_a60a0@@@@@Z"
+        "?Driver_a5da0@@YAXPAV?$TLazyArray@UFSkeletalVertexInfluence@@@@PAV?$TLazyArray@G@@@Z"
       ],
       "stubs": [
         "??1?$TArray@G@@QAE@XZ",
-        "??1FUnnamedStruct_a60a0@@QAE@XZ",
         "??3@YAXPAX@Z",
         "?Add@FArray@@QAEHHH@Z",
         "?Empty@FArray@@QAEXHH@Z",
@@ -6509,27 +6508,25 @@
         "?OperatorShlTArray@@3QBGB",
         "?Realloc@FArray@@QAEXH@Z",
         "?Remove@FArray@@QAEXHHH@Z",
-        "?Unload@?$TLazyArray@G@@UAEXXZ",
-        "?Unload@?$TLazyArray@UFUnnamedStruct_a5df0@@@@UAEXXZ",
         "___CxxFrameHandler",
         "__except_list"
       ],
-      "rebuilt_offset": 1680,
-      "rebuilt_address": 268440208,
+      "rebuilt_offset": 2000,
+      "rebuilt_address": 268440528,
       "fields": [
         [
           41,
           "rel32",
-          "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFUnnamedStruct_a5df0@@@@@Z"
+          "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFSkeletalVertexInfluence@@@@@Z"
         ]
       ],
       "symbols": {
-        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFUnnamedStruct_a5df0@@@@@Z": 268439584
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFSkeletalVertexInfluence@@@@@Z": 268439584
       }
     },
     "match": {
       "bytes_sha256": "a41d74ce314c7a464a2ca5c3335f622cc4b1da5e591beeac539116d82c727144",
-      "inputs_sha256": "69579db174aa18e480679d0d2eb7f14916de6087dd4516f01eacb31c167c9722"
+      "inputs_sha256": "699321d1c08c0af47820e71fe0b199f96701db0fdb1a7120a7ee09f002039338"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -6539,6 +6536,315 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    }
+  },
+  {
+    "id": "versus-vd-a5df0",
+    "offset": 679408,
+    "size": 220,
+    "inputs": [
+      "src/versus_vd4_item_0384.cpp"
+    ],
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFSkeletalVertexInfluence@@@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd4_item_0384_vc70_ltcg_o2gygxgl.obj src/versus_vd4_item_0384.cpp",
+    "identification": "TLazyArray<FSkeletalVertexInfluence>::Load calls this archive operator. Each influence consists of a float weight and 16-bit vertex and bone indices. The shipped editor initializes and appends that record at VA 0x1119ad32 and reads the weight with x87 at VA 0x1119a140. The type name is descriptive.",
+    "link_bindings": {
+      "?SerializeIndex@@YAAAVFArchive@@AAV1@AAH@Z": {
+        "va": 277998144,
+        "basis": "Compact array counts use the archive index serializer at RVA 0x1ea40."
+      },
+      "?Empty@FArray@@QAEXHH@Z": {
+        "va": 277890384,
+        "basis": "The load path passes the element size and incoming count to FArray::Empty at RVA 0x4550."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "The load loop reserves one element through FArray::Add at RVA 0x44e0."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Driver_a5da0@@YAXPAV?$TLazyArray@UFSkeletalVertexInfluence@@@@PAV?$TLazyArray@G@@@Z"
+      ],
+      "stubs": [
+        "??1?$TArray@G@@QAE@XZ",
+        "??3@YAXPAX@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?Escape@@YAXPAX@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?OperatorShlTArray@@3QBGB",
+        "?Realloc@FArray@@QAEXH@Z",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "rebuilt_offset": 1056,
+      "rebuilt_address": 268439584,
+      "fields": [
+        [
+          42,
+          "rel32",
+          "?SerializeIndex@@YAAAVFArchive@@AAV1@AAH@Z"
+        ],
+        [
+          56,
+          "rel32",
+          "?Empty@FArray@@QAEXHH@Z"
+        ],
+        [
+          87,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          151,
+          "rel32",
+          "?SerializeIndex@@YAAAVFArchive@@AAV1@AAH@Z"
+        ]
+      ],
+      "symbols": {
+        "?SerializeIndex@@YAAAVFArchive@@AAV1@AAH@Z": 268439984,
+        "?Empty@FArray@@QAEXHH@Z": 268440899,
+        "?Add@FArray@@QAEHHH@Z": 268440898
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GX",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "e66b9a79e19411d05668b5c16bd0037ec53b763eebf2b1d8bb6657e952eeada9",
+      "inputs_sha256": "47604c79e18aa4c57cc0fb0873be47b4d084e446325a10d4c414572c0eeec413"
+    }
+  },
+  {
+    "id": "versus-vd-a5ed0",
+    "offset": 679632,
+    "size": 89,
+    "inputs": [
+      "src/versus_vd4_item_0384.cpp"
+    ],
+    "rebuilt_symbol": "??1?$TLazyArray@UFSkeletalVertexInfluence@@@@QAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd4_item_0384_vc70_ltcg_o2gygxgl.obj src/versus_vd4_item_0384.cpp",
+    "identification": "The FStaticLODModel destructor destroys its +0x98 influence array at RVA 0xa60fc. This destructor restores the vtable containing the influence loader, detaches the lazy loader, then destroys the eight-byte-element array base.",
+    "link_bindings": {
+      "__ehhandler$??1?$TLazyArray@UFSkeletalVertexInfluence@@@@QAE@XZ": {
+        "va": 280807561,
+        "basis": "The lazy-array destructor installs this C++ exception handler before detaching the archive and destroying its array base."
+      },
+      "??_7?$TLazyArray@UFSkeletalVertexInfluence@@@@6B@": {
+        "va": 281059208,
+        "basis": "The influence lazy-array vtable holds the verified Load at RVA 0xa5da0."
+      },
+      "??1?$TArray@UFSkeletalVertexInfluence@@@@QAE@XZ": {
+        "va": 279443104,
+        "basis": "The TArray base subobject starts at +0xc. Its destructor at RVA 0x17f6a0 removes eight-byte elements."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Driver_a5da0@@YAXPAV?$TLazyArray@UFSkeletalVertexInfluence@@@@PAV?$TLazyArray@G@@@Z"
+      ],
+      "stubs": [
+        "??1?$TArray@G@@QAE@XZ",
+        "??3@YAXPAX@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?Escape@@YAXPAX@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?OperatorShlTArray@@3QBGB",
+        "?Realloc@FArray@@QAEXH@Z",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "rebuilt_offset": 1904,
+      "rebuilt_address": 268440432,
+      "fields": [
+        [
+          3,
+          "abs",
+          "__ehhandler$??1?$TLazyArray@UFSkeletalVertexInfluence@@@@QAE@XZ"
+        ],
+        [
+          29,
+          "abs",
+          "??_7?$TLazyArray@UFSkeletalVertexInfluence@@@@6B@"
+        ],
+        [
+          67,
+          "rel32",
+          "??1?$TArray@UFSkeletalVertexInfluence@@@@QAE@XZ"
+        ]
+      ],
+      "symbols": {
+        "__ehhandler$??1?$TLazyArray@UFSkeletalVertexInfluence@@@@QAE@XZ": 268441049,
+        "??_7?$TLazyArray@UFSkeletalVertexInfluence@@@@6B@": 268443652,
+        "??1?$TArray@UFSkeletalVertexInfluence@@@@QAE@XZ": 268440784
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GX",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "abfc5d143edb22fec23ddcdc8a01cf600e68ac95c5b69cadd756dee4a9fc7c04",
+      "inputs_sha256": "66add5f96af6e42649c1e029137c086bfec281ca372f0ed3382a9efcbaa999ab"
+    }
+  },
+  {
+    "id": "versus-vd-a5f30",
+    "offset": 679728,
+    "size": 66,
+    "inputs": [
+      "src/versus_vd4_item_0384.cpp"
+    ],
+    "rebuilt_symbol": "?Load@?$TLazyArray@G@@UAEXXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd4_item_0384_vc70_ltcg_o2gygxgl.obj src/versus_vd4_item_0384.cpp",
+    "identification": "TLazyArray<unsigned short>::Load is the virtual entry at VA 0x10c09f84. It seeks to the saved archive offset, calls the verified bulk serializer at RVA 0x99710 and restores the archive position.",
+    "link_bindings": {
+      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@G@@@Z": {
+        "va": 278501136,
+        "basis": "The verified bulk word-array archive operator is at RVA 0x99710."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Driver_a5da0@@YAXPAV?$TLazyArray@UFSkeletalVertexInfluence@@@@PAV?$TLazyArray@G@@@Z"
+      ],
+      "stubs": [
+        "??1?$TArray@G@@QAE@XZ",
+        "??3@YAXPAX@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?Escape@@YAXPAX@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?OperatorShlTArray@@3QBGB",
+        "?Realloc@FArray@@QAEXH@Z",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "rebuilt_offset": 2176,
+      "rebuilt_address": 268440704,
+      "fields": [
+        [
+          41,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAV?$TArray@G@@@Z"
+        ]
+      ],
+      "symbols": {
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@G@@@Z": 268439808
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GX",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "13b1b608b0490fbdbb9861e23e3028cd31f97252645ee8548fbcbaebf68ac8cf",
+      "inputs_sha256": "fb5b27c0f64c820dfa2d45d1b7046c3781aad2afae33810d20aea22cbbaaed31"
+    }
+  },
+  {
+    "id": "versus-vd-a5f80",
+    "offset": 679808,
+    "size": 88,
+    "inputs": [
+      "src/versus_vd4_item_0384.cpp"
+    ],
+    "rebuilt_symbol": "??1?$TLazyArray@G@@QAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd4_item_0384_vc70_ltcg_o2gygxgl.obj src/versus_vd4_item_0384.cpp",
+    "identification": "TLazyArray<unsigned short> destructor. The skeletal mesh destructor at RVA 0xa56e0 destroys its lazy word arrays through this function. The installed vtable contains Load at RVA 0xa5f30 and its array base is destroyed by RVA 0xc4e0.",
+    "link_bindings": {
+      "__ehhandler$??1?$TLazyArray@G@@QAE@XZ": {
+        "va": 280807495,
+        "basis": "The lazy-array destructor installs this C++ exception handler before detaching the archive and destroying its array base."
+      },
+      "??_7?$TLazyArray@G@@6B@": {
+        "va": 281059204,
+        "basis": "The word lazy-array vtable holds Load at RVA 0xa5f30."
+      },
+      "??1?$TArray@G@@QAE@XZ": {
+        "va": 277923040,
+        "basis": "The TArray<unsigned short> destructor passes a two-byte element size to FArray::Remove."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Driver_a5da0@@YAXPAV?$TLazyArray@UFSkeletalVertexInfluence@@@@PAV?$TLazyArray@G@@@Z"
+      ],
+      "stubs": [
+        "??1?$TArray@G@@QAE@XZ",
+        "??3@YAXPAX@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?Escape@@YAXPAX@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?OperatorShlTArray@@3QBGB",
+        "?Realloc@FArray@@QAEXH@Z",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "rebuilt_offset": 2080,
+      "rebuilt_address": 268440608,
+      "fields": [
+        [
+          3,
+          "abs",
+          "__ehhandler$??1?$TLazyArray@G@@QAE@XZ"
+        ],
+        [
+          29,
+          "abs",
+          "??_7?$TLazyArray@G@@6B@"
+        ],
+        [
+          66,
+          "rel32",
+          "??1?$TArray@G@@QAE@XZ"
+        ]
+      ],
+      "symbols": {
+        "__ehhandler$??1?$TLazyArray@G@@QAE@XZ": 268440951,
+        "??_7?$TLazyArray@G@@6B@": 268443648,
+        "??1?$TArray@G@@QAE@XZ": 268440896
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GX",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "b27602b79dec633adcdbaed4d9ea5d1a01bcf0e3d0833b053dd95996367bc397",
+      "inputs_sha256": "bcd0e349c31089d4f05cd4d13adc98b98c5e82ac8e53c896f2688cb28bd9b9aa"
     }
   },
   {
