@@ -1094,6 +1094,70 @@
     }
   },
   {
+    "inputs": [
+      "src/versus_vd5_item_0120.cpp",
+      "src/versus_build.h",
+      "src/unreal_script.h",
+      "src/unreal_types.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "id": "versus-skeletal-validate-anim-channel",
+    "offset": 743696,
+    "size": 68,
+    "rebuilt_symbol": "?ValidateAnimChannel@USkeletalMeshInstance@@QAEKH@Z",
+    "identification": "USkeletalMeshInstance::ValidateAnimChannel. The SetBlendParams and ApplyBlendParams callers pass the stage index and skeletal mesh instance. The signed range check permits stages 0 through 256. It extends the array at +0x100 with zeroed 0x90-byte MeshAnimChannel records, shrinks its capacity, and returns true for a valid channel.",
+    "link_bindings": {
+      "?AddZeroed@FArray@@QAGHHH@Z": {
+        "va": 277959680,
+        "basis": "FArray::AddZeroed at RVA 0x15400 receives this, the 0x90-byte MeshAnimChannel stride, and a count of one. The retail callee appends and clears the new elements and returns with RET 12."
+      },
+      "?Shrink@?$TArray@UMeshAnimChannel@@@@QAEXXZ": {
+        "va": 278662480,
+        "basis": "TArray<MeshAnimChannel>::Shrink compares capacity with length, writes the new capacity, and invokes GMalloc->Realloc with the FArray tag and the 0x90-byte channel stride. GetFrame, ValidateAnimChannel and the shipped editor use this operation on the +0x100 Blends member."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?execAnimBlendParams@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?SetBlendParams@USkeletalMeshInstance@@QAEXHMMMVFName@@K@Z"
+      ],
+      "stubs": [
+        "?AddZeroed@FArray@@QAGHHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
+        "?MeshGetInstance@UMesh@@UAEPAVUMeshInstance@@PBVAActor@@@Z",
+        "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          41,
+          "rel32",
+          "?AddZeroed@FArray@@QAGHHH@Z"
+        ],
+        [
+          54,
+          "rel32",
+          "?Shrink@?$TArray@UMeshAnimChannel@@@@QAEXXZ"
+        ]
+      ],
+      "symbols": {
+        "?AddZeroed@FArray@@QAGHHH@Z": 268440288,
+        "?Shrink@?$TArray@UMeshAnimChannel@@@@QAEXXZ": 268440240
+      }
+    },
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_anim_blend.obj src/versus_vd5_item_0120.cpp",
+    "match": {
+      "bytes_sha256": "b1400036a4d99041bdd06b761219824e851a0ffbe2981e7aec6250c15722945f",
+      "inputs_sha256": "3cf1d2c01d909d2612a30b2a498d9ad6028729358680789ec25bc8c407512083"
+    }
+  },
+  {
     "id": "versus-vd-b5960",
     "offset": 743776,
     "size": 98,
@@ -1778,27 +1842,26 @@
     ],
     "rebuilt_symbol": "?SetBlendParams@USkeletalMeshInstance@@QAEXHMMMVFName@@K@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd5_item_0120_vc70_ltcg_o2gygl.obj src/versus_vd5_item_0120.cpp",
-    "identification": "Complete Versus function at RVA 0xb6ac0. No direct call reaches it; its address is stored in the retail .rdata section at RVA 0x30a0e0 (a virtual method or function table).",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_anim_blend.obj src/versus_vd5_item_0120.cpp",
+    "identification": "USkeletalMeshInstance::SetBlendParams occupies skeletal instance vtable slot 38. It validates the stage, checks the owning actor through virtual slot 30, and stores the requested blend parameters in the 0x90-byte channel.",
     "link_bindings": {
       "?ValidateAnimChannel@USkeletalMeshInstance@@QAEKH@Z": {
         "va": 278616336,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The callee validates the signed stage and sizes USkeletalMeshInstance::Blends at +0x100. Its complete function is independently matched at RVA 0xb5910."
       }
     },
     "ltcg_link": {
       "roots": [
-        "?Driver_b6ac0@@YAXXZ"
+        "?execAnimBlendParams@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?SetBlendParams@USkeletalMeshInstance@@QAEXHMMMVFName@@K@Z"
       ],
       "stubs": [
-        "?AddZeroed@FArray@@QAEHHH@Z",
-        "?Escape@@YAXPAX@Z",
+        "?AddZeroed@FArray@@QAGHHH@Z",
         "?GMalloc@@3PAVFMalloc@@A",
         "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
         "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
         "?MeshGetInstance@UMesh@@UAEPAVUMeshInstance@@PBVAActor@@@Z",
         "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
-        "?ShrinkingTag@@3QBGB",
         "__fltused"
       ],
       "rebuilt_offset": 1104,
@@ -1816,15 +1879,7 @@
     },
     "match": {
       "bytes_sha256": "68a0f1a7457f661aa954189aaf54c910b1aff3c3fc7be6032b72640fbb268888",
-      "inputs_sha256": "efbb61010a7990daca514246e99ba644e159e56312b158858029c7357d48c15b"
-    },
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
-      "flags": [
-        "/O2",
-        "/GL"
-      ],
-      "basis": "evidence/versus-vc70-switches.md"
+      "inputs_sha256": "f48f8e278935d82711ecd6593cd0b2f34c5962bf4e5479525ba1f9dddab4b860"
     }
   },
   {
@@ -1870,14 +1925,12 @@
         "?SetBlendParams@USkeletalMeshInstance@@QAEXHMMMVFName@@K@Z"
       ],
       "stubs": [
-        "?AddZeroed@FArray@@QAEHHH@Z",
-        "?Escape@@YAXPAX@Z",
+        "?AddZeroed@FArray@@QAGHHH@Z",
         "?GMalloc@@3PAVFMalloc@@A",
         "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
         "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
         "?MeshGetInstance@UMesh@@UAEPAVUMeshInstance@@PBVAActor@@@Z",
         "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
-        "?ShrinkingTag@@3QBGB",
         "__fltused"
       ],
       "rebuilt_offset": 1216,
@@ -1916,8 +1969,8 @@
       ],
       "symbols": {
         "?ValidateAnimChannel@USkeletalMeshInstance@@QAEKH@Z": 268439552,
-        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": 268440292,
-        "__real@3f800000": 268443648
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": 268440291,
+        "__real@3f800000": 268443664
       }
     },
     "link_bindings": {
@@ -1936,7 +1989,7 @@
     },
     "match": {
       "bytes_sha256": "694c5946a1ac630e220c84060cec5f5d4631532b107a132753bbfadb28d274fd",
-      "inputs_sha256": "cd2fc6c38dc0f2fde87cbf986d959d43758880614a7799d3ac45d27ed7be569c"
+      "inputs_sha256": "fbe5aaf3644ac4c5d76001c7d3b80d3e84200534401f82e7a43893e4e103a800"
     }
   },
   {

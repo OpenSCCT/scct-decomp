@@ -1,30 +1,22 @@
-// versus_vd5_item_0120.cpp -- skeletal animation channel blend parameters.
-/* Versus RVA 0xb6ac0: USkeletalMeshInstance vtable slot 38.
-   Matches the shape of UE2 USkeletalMeshInstance::SetBlendParams: stores the
-   blend parameters into a 144-byte animation channel and marks it blended.
-   The unit was built with VC7.0 /GL and linked /LTCG: ValidateAnimChannel
-   (0x109b5910) takes this in EBX and the stage in EDI, which is why this
-   function keeps this in EBX. Field names follow UE2 MeshAnimChannel where
-   the layout fits; the slot-30 virtual and 0x109c0d50 are unnamed. */
+// Skeletal mesh animation-channel validation and blend settings.
 #include "versus_build.h"
 #include "unreal_script.h"
+
 class FMalloc {
 public:
     virtual void *Malloc(DWORD Count, const TCHAR *Tag);
     virtual void *Realloc(void *Original, DWORD Count, const TCHAR *Tag);
 };
 extern FMalloc *GMalloc;
-extern const TCHAR ShrinkingTag[];   /* text not recovered */
 
 class FArray {
 public:
-    INT Add(INT Count, INT ElementSize);         /* 0x109044e0 */
-    INT AddZeroed(INT ElementSize, INT Count);   /* 0x10915400 */
+    INT __stdcall AddZeroed(INT ElementSize, INT Count);   /* 0x10915400 */
     void Shrink(INT ElementSize)
     {
         if (ArrayMax != ArrayNum) {
             ArrayMax = ArrayNum;
-            Data = GMalloc->Realloc(Data, ArrayMax * ElementSize, ShrinkingTag);
+            Data = GMalloc->Realloc(Data, ArrayMax * ElementSize, L"FArray");
         }
     }
     void *Data;
@@ -59,6 +51,8 @@ struct MeshAnimChannel {             /* 0x90 bytes */
 
 #define MAX_CHANNELS 256
 
+class AActor;
+
 class USkeletalMeshInstance {
 public:
     virtual void V00(); virtual void V01(); virtual void V02(); virtual void V03();
@@ -69,7 +63,7 @@ public:
     virtual void V20(); virtual void V21(); virtual void V22(); virtual void V23();
     virtual void V24(); virtual void V25(); virtual void V26(); virtual void V27();
     virtual void V28(); virtual void V29();
-    virtual UBOOL HasSkeleton();     /* slot 30, +0x78, name assumed */
+    virtual AActor *GetActor();
     UBOOL ValidateAnimChannel(INT Stage);
     INT MatchRefBone(FName Bone);
     UBOOL ApplyBlendParams(INT Stage, FLOAT Alpha, FLOAT InTime, FLOAT OutTime, FName Bone, UBOOL bGlobal);
@@ -79,17 +73,16 @@ public:
     TArray<MeshAnimChannel> Blends;  /* 0x100 */
 };
 
-/* 0x109c0d50, defined here so the link sees its register use (array in ESI); not part of the match. */
-template <class T> __declspec(noinline) void TArray<T>::Shrink() { FArray::Shrink(sizeof(T)); }
+template <class T> void TArray<T>::Shrink() { FArray::Shrink(sizeof(T)); }
 
-/* 0x109b5910, defined here so the link sees its register use; not part of the match. */
 UBOOL USkeletalMeshInstance::ValidateAnimChannel(INT Stage)
 {
     if (Stage > MAX_CHANNELS || Stage < 0)
         return 0;
     if (Blends.Num() <= Stage) {
-        while (Blends.Num() <= Stage)
+        do {
             Blends.AddZeroed();
+        } while (Blends.Num() <= Stage);
         Blends.Shrink();
     }
     return 1;
@@ -97,7 +90,7 @@ UBOOL USkeletalMeshInstance::ValidateAnimChannel(INT Stage)
 
 void USkeletalMeshInstance::SetBlendParams(INT Stage, FLOAT BlendAlpha, FLOAT InTime, FLOAT OutTime, FName BoneName, UBOOL bGlobalPose)
 {
-    if (Stage >= 0 && ValidateAnimChannel(Stage) && HasSkeleton()) {
+    if (Stage >= 0 && ValidateAnimChannel(Stage) && GetActor()) {
         MeshAnimChannel &Channel = Blends(Stage);
         Channel.BlendAlpha = BlendAlpha;
         Channel.BlendInTime = InTime;
@@ -107,8 +100,6 @@ void USkeletalMeshInstance::SetBlendParams(INT Stage, FLOAT BlendAlpha, FLOAT In
         Channel.bBlendSet = 1;
     }
 }
-
-
 
 // ApplyBlendParams immediately updates a non-base channel and resolves its reference bone.
 UBOOL USkeletalMeshInstance::ApplyBlendParams(INT Stage, FLOAT Alpha, FLOAT InTime,
@@ -148,7 +139,6 @@ class UClass : public UState {
 public:
     UClass *GetSuperClass() const { return (UClass *)SuperField; }
 };
-class AActor;
 class UPrimitive : public UObject {};
 class UMesh : public UPrimitive {
 public:
@@ -193,14 +183,4 @@ void AActor::execAnimBlendParams(FFrame &Stack, RESULT_DECL)
         USkeletalMeshInstance *Instance = (USkeletalMeshInstance *)MeshInstance;
         Instance->ApplyBlendParams(Stage, BlendAlpha, InTime, OutTime, BoneName, bGlobalPose);
     }
-}
-
-// Scaffolding for the link, not part of the unit: retail reaches this
-// function only through the vtable, so the driver takes its address.
-typedef void (USkeletalMeshInstance::*SetBlendParamsFn)(INT, FLOAT, FLOAT, FLOAT, FName, UBOOL);
-void Escape(void *);
-void Driver_b6ac0()
-{
-    SetBlendParamsFn Fn = &USkeletalMeshInstance::SetBlendParams;
-    Escape(&Fn);
 }
