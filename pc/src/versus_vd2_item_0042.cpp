@@ -1,14 +1,12 @@
+#include "versus_unicows_thunks.h"
+
 // Work item 0042: FFileManagerWindows (UnFile / FFileManagerWindows.h), RVA 0xa170-0xa4a9.
 // Bodies follow the Unreal Engine 2 FFileManagerWindows; the Win32 wide calls go through
 // the unicows-style dispatch slots (see versus_windows_dispatch.c).
 
 typedef unsigned short TCHAR;
 typedef char ANSICHAR;
-typedef int INT;
-typedef unsigned long DWORD;
 typedef DWORD UBOOL;
-typedef void *HANDLE;
-typedef int BOOL;
 
 #define NULL 0
 #define GENERIC_READ 0x80000000
@@ -32,11 +30,6 @@ void *__cdecl _alloca(unsigned int);
 }
 
 // Dispatch slots for the wide Win32 entry points.
-extern HANDLE (__stdcall *slot_CreateFileW)(const TCHAR *, DWORD, DWORD, void *, DWORD, DWORD, HANDLE);
-extern BOOL (__stdcall *slot_SetFileAttributesW)(const TCHAR *, DWORD);
-extern BOOL (__stdcall *slot_DeleteFileW)(const TCHAR *);
-extern BOOL (__stdcall *slot_MoveFileW)(const TCHAR *, const TCHAR *);
-extern BOOL (__stdcall *slot_CopyFileW)(const TCHAR *, const TCHAR *, BOOL);
 
 // The Versus build is Unicode-only, so the ANSI half of TCHAR_CALL_OS is dead code,
 // but its appAlloca still forces the frame-pointer epilogue.

@@ -1,3 +1,5 @@
+#include "versus_unicows_thunks.h"
+
 // Work item 0043 (LTCG retry): Versus RVA 0xa4f0-0xa725.
 // FFileManagerWindows directory helpers (UE2 FFileManagerWindows.h):
 //   0xa4f0 MakeDirectory, 0xa540 DeleteDirectory, 0xa5a0 FindFiles,
@@ -10,11 +12,7 @@
 
 typedef unsigned short TCHAR;
 typedef char ANSICHAR;
-typedef int INT;
-typedef unsigned long DWORD;
 typedef DWORD UBOOL;
-typedef void *HANDLE;
-typedef int BOOL;
 
 #define NULL 0
 #define INVALID_HANDLE_VALUE ((HANDLE)-1)
@@ -23,25 +21,12 @@ typedef int BOOL;
 #define FILE_ATTRIBUTE_DIRECTORY 0x10
 #define ARRAY_COUNT(a) (sizeof(a) / sizeof((a)[0]))
 
-struct WIN32_FIND_DATAW
-{
-    DWORD dwFileAttributes;
-    DWORD ftCreationTime[2];
-    DWORD ftLastAccessTime[2];
-    DWORD ftLastWriteTime[2];
-    DWORD nFileSizeHigh;
-    DWORD nFileSizeLow;
-    DWORD dwReserved0;
-    DWORD dwReserved1;
-    TCHAR cFileName[260];
-    TCHAR cAlternateFileName[14];
-};
 struct WIN32_FIND_DATAA
 {
     DWORD dwFileAttributes;
-    DWORD ftCreationTime[2];
-    DWORD ftLastAccessTime[2];
-    DWORD ftLastWriteTime[2];
+    FILETIME ftCreationTime;
+    FILETIME ftLastAccessTime;
+    FILETIME ftLastWriteTime;
     DWORD nFileSizeHigh;
     DWORD nFileSizeLow;
     DWORD dwReserved0;
@@ -66,12 +51,6 @@ void *__cdecl _alloca(unsigned int);
 #define appStricmp _wcsicmp
 
 // Wide Win32 entry points held in writable data (0x10c74b60...).
-extern BOOL   (__stdcall *slot_CreateDirectoryW)(const TCHAR *, void *);              // 0x10c74b60
-extern BOOL   (__stdcall *slot_RemoveDirectoryW)(const TCHAR *);                      // 0x10c74bc4
-extern HANDLE (__stdcall *slot_FindFirstFileW)(const TCHAR *, WIN32_FIND_DATAW *);    // 0x10c74b78
-extern BOOL   (__stdcall *slot_FindNextFileW)(HANDLE, WIN32_FIND_DATAW *);            // 0x10c74b7c
-extern BOOL   (__stdcall *slot_SetCurrentDirectoryW)(const TCHAR *);                  // 0x10c74bc8
-extern DWORD  (__stdcall *slot_GetCurrentDirectoryW)(DWORD, TCHAR *);                 // 0x10c74b90
 
 #define GUnicodeOS 1
 INT winGetSizeANSI(const TCHAR *Str);

@@ -1,3 +1,5 @@
+#include "versus_unicows_thunks.h"
+
 // Work item 0055 (LTCG retry): Core Windows platform helpers (UnVcWin32.cpp in UE2).
 // appClipboardCopy (0xdc40), appClipboardPaste (0xdc90), appLaunchURL (0xdf20),
 // appCreateProc (0xdf70). These objects were compiled /GL and linked /LTCG, so the
@@ -7,14 +9,8 @@
 typedef unsigned short TCHAR;
 typedef char ANSICHAR;
 typedef unsigned char BYTE;
-typedef int INT;
-typedef unsigned long DWORD;
 typedef DWORD UBOOL;
-typedef unsigned short WORD;
-typedef void *HANDLE;
-typedef struct HWND__ *HWND;
 typedef void *HGLOBAL;
-typedef void *HINSTANCE;
 
 extern "C" __declspec(dllimport) HWND __stdcall GetActiveWindow();
 extern "C" __declspec(dllimport) int __stdcall OpenClipboard(HWND);
@@ -150,7 +146,6 @@ ANSICHAR *winToANSI(ANSICHAR *ACh, const TCHAR *InUCh, INT Count);
 #define TCHAR_CALL_OS(funcW, funcA) (GUnicodeOS ? (funcW) : (funcA))
 
 // Dispatch slot for the wide entry point.
-extern HINSTANCE (__stdcall *slot_ShellExecuteW)(HWND, const TCHAR *, const TCHAR *, const TCHAR *, const TCHAR *, INT);
 extern "C" __declspec(dllimport) HINSTANCE __stdcall ShellExecuteA(HWND, const ANSICHAR *, const ANSICHAR *, const ANSICHAR *, const ANSICHAR *, INT);
 extern const TCHAR appLaunchURL_Empty1[]; // TEXT("") for missing Parms
 extern const TCHAR appLaunchURL_Empty2[]; // TEXT("") directory
@@ -167,30 +162,6 @@ __declspec(noinline) void appLaunchURL(const TCHAR *URL, const TCHAR *Parms, FSt
         *Error = Code <= 32 ? appLaunchURL_Failed : appLaunchURL_Empty3;
 }
 
-struct SECURITY_ATTRIBUTES {
-    DWORD nLength;
-    void *lpSecurityDescriptor;
-    UBOOL bInheritHandle;
-};
-struct STARTUPINFO {
-    DWORD cb;
-    TCHAR *lpReserved;
-    TCHAR *lpDesktop;
-    TCHAR *lpTitle;
-    DWORD dwX, dwY, dwXSize, dwYSize;
-    DWORD dwXCountChars, dwYCountChars, dwFillAttribute, dwFlags;
-    WORD wShowWindow, cbReserved2;
-    BYTE *lpReserved2;
-    HANDLE hStdInput, hStdOutput, hStdError;
-};
-struct PROCESS_INFORMATION {
-    HANDLE hProcess;
-    HANDLE hThread;
-    DWORD dwProcessId;
-    DWORD dwThreadId;
-};
-extern int (__stdcall *slot_CreateProcessW)(const TCHAR *, TCHAR *, SECURITY_ATTRIBUTES *, SECURITY_ATTRIBUTES *, UBOOL, DWORD,
-                                       void *, const TCHAR *, STARTUPINFO *, PROCESS_INFORMATION *);
 extern "C" __declspec(dllimport) int __stdcall CreateProcessA(const ANSICHAR *, ANSICHAR *, SECURITY_ATTRIBUTES *, SECURITY_ATTRIBUTES *, UBOOL, DWORD,
                                                           void *, const ANSICHAR *, void *, PROCESS_INFORMATION *);
 INT appSprintf(TCHAR *Dest, const TCHAR *Fmt, ...);
@@ -205,7 +176,7 @@ __declspec(noinline) void *appCreateProc(const TCHAR *URL, const TCHAR *Parms)
     Attr.nLength = sizeof(SECURITY_ATTRIBUTES);
     Attr.lpSecurityDescriptor = 0;
     Attr.bInheritHandle = 1;
-    STARTUPINFO StartupInfo = { sizeof(STARTUPINFO), 0, 0, 0,
+    STARTUPINFOW StartupInfo = { sizeof(STARTUPINFOW), 0, 0, 0,
         0x80000000, 0x80000000, 0x80000000, 0x80000000,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     if (!TCHAR_CALL_OS(

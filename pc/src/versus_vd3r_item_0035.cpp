@@ -1,3 +1,5 @@
+#include "versus_unicows_thunks.h"
+
 // Work item 0035 (LTCG retry): Versus RVA 0x8930.
 // A window helper that packs two values and a string into a parameter block
 // and sends it as WM_COMMAND (0x111, id 0x8018) to the window at +0x1c.
@@ -6,11 +8,7 @@
 // (0x4750) is reached with this in ESI and Other in EDI.
 
 typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
 typedef DWORD UBOOL;
-typedef struct HWND__ *HWND;
-typedef long LONG, LPARAM, LRESULT;
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const TCHAR *);
 void appMemcpy(void *Dest, const void *Src, INT Count);
@@ -55,7 +53,6 @@ FString &FString::operator=(const TCHAR *Other)
 }
 
 // SendMessageW through the writable slot at 0x10c74c4c.
-extern LRESULT (__stdcall *slot_SendMessageW)(HWND, DWORD, DWORD, long);
 
 struct FCommandParams_8930
 {

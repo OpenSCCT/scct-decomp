@@ -274,7 +274,7 @@ void *LoadGodot(void)
             unsigned long commonFilesLength;
 
             key = 0;
-            loadedRegistry = g_unicowsLoadLibraryA(s_advapi32_dll);
+            loadedRegistry = g_unicowsLoadLibraryA(advapi32_dll);
             if (g_unicowsInterlockedExchange((long *)&g_unicowsModuleCache[4].Handle,
                                              (long)loadedRegistry) != 0) {
                 g_unicowsFreeLibrary(loadedRegistry);

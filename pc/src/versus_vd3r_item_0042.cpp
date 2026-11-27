@@ -1,3 +1,5 @@
+#include "versus_unicows_thunks.h"
+
 // Work item 0042 (LTCG retry): FFileManagerWindows::CreateFileReader (RVA 0xa170)
 // and CreateFileWriter (RVA 0xa230), UE2 FFileManagerWindows.h with the SCCT
 // Versus addition of a compressed wrapper archive (fourth argument).
@@ -8,12 +10,8 @@
 
 typedef unsigned short TCHAR;
 typedef char ANSICHAR;
-typedef int INT;
-typedef unsigned long DWORD;
 typedef DWORD UBOOL;
 typedef unsigned char BYTE;
-typedef void *HANDLE;
-typedef int BOOL;
 typedef long LONG;
 
 #define NULL 0
@@ -48,8 +46,6 @@ void *__cdecl _alloca(unsigned int);
 }
 
 // Dispatch slots for the wide Win32 entry points.
-extern HANDLE (__stdcall *slot_CreateFileW)(const TCHAR *, DWORD, DWORD, void *, DWORD, DWORD, HANDLE);
-extern BOOL (__stdcall *slot_SetFileAttributesW)(const TCHAR *, DWORD);
 
 // Versus is Unicode-only; the ANSI half of TCHAR_CALL_OS is dead code but its
 // appAlloca still forces the frame-pointer epilogue.

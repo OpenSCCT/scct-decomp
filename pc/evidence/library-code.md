@@ -80,20 +80,22 @@ different build, consistent with its 7.00 linker. Names for it need a Visual C++
 
 Versus links `unicows.lib`. Its loader matches from RVA `0x22125c`: `GetOrdinal`,
 `GetProcAddressInternal`, `LoadGodot` and `ResolveThunk` of `resolve.obj`, then the `GodotFail…`
-stubs of `failure.obj`. All 62 units of `versus_windows_dispatch.c` bind their `resolve_api` to
-RVA `0x221737`, which is `ResolveThunk`, and the 14 units of `versus_windows_fallbacks.c` lie
-between the matched `GodotFail…` stubs. Those 76 units are that library's code, and the PDB that
-names the library gives their naming scheme:
+stubs of `failure.obj`. Each Unicode thunk passes its DLL name, export name, writable
+dispatch slot, optional override function pointer and `GodotFail` routine to `ResolveThunk`
+at RVA `0x221737`. The slot initially points to the thunk itself. If the fourth parameter is
+nonzero on the legacy platform path, the resolver installs that function in the slot.
 
-| committed name | library name | object |
-| --- | --- | --- |
-| `dispatch_<Api>` (37 bytes) | `<dll>_<Api>_Thunk`, for example `user32_DispatchMessageW_Thunk` | `thunk_<dll>_<Api>.obj` |
-| `unsupported_<Api>` | `GodotFail<Api>` | `failure.obj` |
-| `resolve_api` | `ResolveThunk` | `resolve.obj` |
+| Library name | Object |
+| --- | --- |
+| `<dll>_<Api>_Thunk`, for example `user32_DispatchMessageW_Thunk` | `thunk_<dll>_<Api>.obj` |
+| `GodotFail<Api>` | `failure.obj` |
+| `ResolveThunk` | `resolve.obj` |
 
-Thirteen of these are the units only MSVC 19.44 reproduced. They are Microsoft's objects, built
-with Microsoft's compiler of the day, so that they do not rebuild with 13.10.3052 says nothing
-about the compiler of the game's own code.
+The two contiguous dispatch ranges contain 74 thunks. Both begin at four-byte-aligned
+addresses, RVA `0x220e50` and RVA `0x2840f0`; each thunk occupies 37 bytes without
+intervening alignment. Seventeen currently have candidate receipts from MSVC 19.44.
+The others reproduce with a period compiler. These library receipts supply no compiler
+attribution for the game's own code.
 
 ### D3DX carries its own zlib
 

@@ -1,15 +1,13 @@
+#include "versus_unicows_thunks.h"
+
 // RVA 0xd4d0: appGetSystemErrorMessage (Core, UnVcWin32.cpp), LTCG build:
 // the error code arrives in EAX.
 typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef char *va_list;
 
 extern "C" __declspec(dllimport) DWORD __stdcall GetLastError(void);
 extern "C" __declspec(dllimport) TCHAR *wcschr(const TCHAR *, TCHAR);
 
 // Unicode-layer slot for FormatMessageW (see versus_windows_dispatch.c).
-extern DWORD (__stdcall *slot_FormatMessageW)(DWORD, const void *, DWORD, DWORD, TCHAR *, DWORD, va_list *);
 
 // Was a function-local static: static TCHAR Msg[1024].
 extern TCHAR appGetSystemErrorMessage_Msg[1024];

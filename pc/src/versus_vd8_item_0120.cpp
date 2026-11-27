@@ -1,3 +1,5 @@
+#include "versus_unicows_thunks.h"
+
 // Work item 0120 (vwork4): Versus RVA 0x155e30-0x155f17, 1 function, 231 bytes.
 //   0x155e30 UGUIController::execLaunchURL
 //
@@ -7,15 +9,9 @@
 // defined below with its published shape so the link assigns the same convention.
 
 typedef unsigned char BYTE;
-typedef unsigned short WORD;
 typedef unsigned short TCHAR;
 typedef char ANSICHAR;
-typedef int INT;
-typedef unsigned long DWORD;
 typedef DWORD UBOOL;
-typedef int BOOL;
-typedef void *HANDLE;
-typedef void *HINSTANCE;
 
 #define NULL 0
 #define GENERIC_READ          0x80000000
@@ -30,9 +26,6 @@ void *__cdecl _alloca(unsigned int);
 }
 
 // Dispatch slots for wide Win32 entry points (unicows.lib).
-extern HANDLE (__stdcall *slot_CreateFileW)(const TCHAR *, DWORD, DWORD, void *, DWORD, DWORD, HANDLE);
-extern HINSTANCE (__stdcall *slot_FindExecutableW)(const TCHAR *, const TCHAR *, TCHAR *);
-extern BOOL (__stdcall *slot_DeleteFileW)(const TCHAR *);
 
 // Literals retail keeps in writable .data (one per call site, unpooled).
 extern const TCHAR Text_MyFileHtml1[];   // L"MYFILE.html" (0x10c461ac)
@@ -121,30 +114,6 @@ ANSICHAR *winToANSI(ANSICHAR *ACh, const TCHAR *InUCh, INT Count);
 #define TCHAR_TO_ANSI(str) winToANSI((ANSICHAR *)_alloca(winGetSizeANSI(str)), str, winGetSizeANSI(str))
 #define TCHAR_CALL_OS(funcW, funcA) (GUnicodeOS ? (funcW) : (funcA))
 
-struct SECURITY_ATTRIBUTES {
-    DWORD nLength;
-    void *lpSecurityDescriptor;
-    UBOOL bInheritHandle;
-};
-struct STARTUPINFO {
-    DWORD cb;
-    TCHAR *lpReserved;
-    TCHAR *lpDesktop;
-    TCHAR *lpTitle;
-    DWORD dwX, dwY, dwXSize, dwYSize;
-    DWORD dwXCountChars, dwYCountChars, dwFillAttribute, dwFlags;
-    WORD wShowWindow, cbReserved2;
-    BYTE *lpReserved2;
-    HANDLE hStdInput, hStdOutput, hStdError;
-};
-struct PROCESS_INFORMATION {
-    HANDLE hProcess;
-    HANDLE hThread;
-    DWORD dwProcessId;
-    DWORD dwThreadId;
-};
-extern int (__stdcall *slot_CreateProcessW)(const TCHAR *, TCHAR *, SECURITY_ATTRIBUTES *, SECURITY_ATTRIBUTES *, UBOOL, DWORD,
-                                            void *, const TCHAR *, STARTUPINFO *, PROCESS_INFORMATION *);
 extern "C" __declspec(dllimport) int __stdcall CreateProcessA(const ANSICHAR *, ANSICHAR *, SECURITY_ATTRIBUTES *, SECURITY_ATTRIBUTES *, UBOOL, DWORD,
                                                               void *, const ANSICHAR *, void *, PROCESS_INFORMATION *);
 INT appSprintf(TCHAR *Dest, const TCHAR *Fmt, ...);
@@ -159,7 +128,7 @@ __declspec(noinline) void *appCreateProc(const TCHAR *URL, const TCHAR *Parms)
     Attr.nLength = sizeof(SECURITY_ATTRIBUTES);
     Attr.lpSecurityDescriptor = 0;
     Attr.bInheritHandle = 1;
-    STARTUPINFO StartupInfo = { sizeof(STARTUPINFO), 0, 0, 0,
+    STARTUPINFOW StartupInfo = { sizeof(STARTUPINFOW), 0, 0, 0,
         0x80000000, 0x80000000, 0x80000000, 0x80000000,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     if (!TCHAR_CALL_OS(

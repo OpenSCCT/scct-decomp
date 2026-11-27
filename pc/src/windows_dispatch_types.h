@@ -1,5 +1,8 @@
+#ifndef WINDOWS_DISPATCH_TYPES_H
+#define WINDOWS_DISPATCH_TYPES_H
+
 /* Windows x86 ABI types used by the dynamically resolved functions.
-   Structures passed only by pointer are intentionally incomplete. */
+   Layouts used by the file and process callers are included here. */
 typedef int BOOL, INT, INT_PTR;
 typedef unsigned int UINT, WPARAM;
 typedef long LONG, LPARAM, LRESULT;
@@ -14,6 +17,9 @@ typedef const WCHAR *LPCWSTR, *LPCWCH;
 typedef CHAR *LPSTR;
 typedef const CHAR *LPCSTR, *LPCCH;
 typedef DWORD *LPDWORD;
+typedef unsigned char BYTE;
+typedef BYTE *LPBYTE;
+typedef struct HKEY__ *HKEY, **PHKEY;
 typedef BOOL *LPBOOL;
 typedef struct HDC__ *HDC;
 typedef struct HWND__ *HWND;
@@ -21,13 +27,44 @@ typedef struct HICON__ *HICON, *HCURSOR;
 typedef struct HINSTANCE__ *HINSTANCE, *HMODULE;
 typedef struct HMENU__ *HMENU;
 typedef struct HRSRC__ *HRSRC;
-typedef struct _SECURITY_ATTRIBUTES *LPSECURITY_ATTRIBUTES;
-typedef struct _STARTUPINFOW *LPSTARTUPINFOW;
-typedef struct _PROCESS_INFORMATION *LPPROCESS_INFORMATION;
+typedef struct _SECURITY_ATTRIBUTES {
+    DWORD nLength;
+    void *lpSecurityDescriptor;
+    BOOL bInheritHandle;
+} SECURITY_ATTRIBUTES, *LPSECURITY_ATTRIBUTES;
+typedef struct _STARTUPINFOW {
+    DWORD cb;
+    LPWSTR lpReserved, lpDesktop, lpTitle;
+    DWORD dwX, dwY, dwXSize, dwYSize;
+    DWORD dwXCountChars, dwYCountChars, dwFillAttribute, dwFlags;
+    WORD wShowWindow, cbReserved2;
+    unsigned char *lpReserved2;
+    HANDLE hStdInput, hStdOutput, hStdError;
+} STARTUPINFOW, *LPSTARTUPINFOW;
+typedef struct _PROCESS_INFORMATION {
+    HANDLE hProcess, hThread;
+    DWORD dwProcessId, dwThreadId;
+} PROCESS_INFORMATION, *LPPROCESS_INFORMATION;
 typedef struct tagMSG MSG, *LPMSG;
 typedef struct tagRECT *LPRECT;
 typedef struct tagDRAWTEXTPARAMS *LPDRAWTEXTPARAMS;
-typedef struct _WIN32_FIND_DATAW *LPWIN32_FIND_DATAW;
+typedef struct _FILETIME {
+    unsigned long dwLowDateTime;
+    unsigned long dwHighDateTime;
+} FILETIME;
+
+typedef struct _WIN32_FIND_DATAW {
+    DWORD dwFileAttributes;
+    FILETIME ftCreationTime;
+    FILETIME ftLastAccessTime;
+    FILETIME ftLastWriteTime;
+    DWORD nFileSizeHigh;
+    DWORD nFileSizeLow;
+    DWORD dwReserved0;
+    DWORD dwReserved1;
+    WCHAR cFileName[260];
+    WCHAR cAlternateFileName[14];
+} WIN32_FIND_DATAW, *LPWIN32_FIND_DATAW;
 typedef struct tagWNDCLASSEXW WNDCLASSEXW, *LPWNDCLASSEXW;
 typedef struct tagMENUITEMINFOW MENUITEMINFOW, *LPMENUITEMINFOW;
 typedef const MENUITEMINFOW *LPCMENUITEMINFOW;
@@ -37,3 +74,5 @@ typedef enum { GetFileExInfoStandard, GetFileExMaxInfoLevel } GET_FILEEX_INFO_LE
 typedef int (__stdcall *FARPROC)();
 typedef LRESULT (__stdcall *WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 typedef INT_PTR (__stdcall *DLGPROC)(HWND, UINT, WPARAM, LPARAM);
+
+#endif

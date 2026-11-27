@@ -1,6 +1,8 @@
 #ifndef VERSUS_UNICOWS_RESOLVE_PRIVATE_H
 #define VERSUS_UNICOWS_RESOLVE_PRIVATE_H
 
+#include "versus_unicows_resolve.h"
+
 typedef struct UnicowsImageExportDirectory {
     unsigned long Characteristics;
     unsigned long TimeDateStamp;
@@ -30,7 +32,6 @@ typedef struct UnicowsModuleCache {
     void *Handle;
 } UnicowsModuleCache;
 
-typedef void (__stdcall *UnicowsEntry)(void);
 typedef int (__stdcall *UnicowsCompareStringA)(unsigned long, unsigned long,
                                                 const char *, int, const char *, int);
 typedef void *(__stdcall *UnicowsLoadLibraryA)(const char *);
@@ -74,7 +75,6 @@ extern UnicowsModuleCache g_unicowsModuleCache[];
 extern volatile unsigned long g_unicowsPlatformState;
 extern void *unk_374c84;
 extern UnicowsLoadHook unk_2d1b20;
-extern const char s_advapi32_dll[];
 extern const char s_windows_current_version[];
 extern const char s_common_files_dir[];
 extern const char s_mslu_directory_suffix[];
@@ -90,7 +90,6 @@ char *__stdcall strncpyC(char *, const char *, unsigned int);
 void *__stdcall GetProcAddressInternal(void *, const char *);
 void __stdcall driveandpathC(const char *, char *, char *);
 void *LoadGodot(void);
-void __stdcall resolve_api(const char *, const char *, void *, void *, UnicowsEntry);
 
 int __cdecl strcmp(const char *, const char *);
 unsigned int __cdecl strlen(const char *);
