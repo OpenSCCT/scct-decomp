@@ -3,15 +3,15 @@
 
 #include "versus_mgm_hud_pages.h"
 #include "versus_mgm_hud_context.h"
+#include "versus_mgm_keyframes.h"
 
 class AHUD;
 class MgmArea;
 class USPlayerProfile;
+struct MgmImage;
+struct MgmContent;
+struct MgmTextContent;
 
-struct MgmPoint {
-    short X, Y;
-    MgmPoint() : X(0), Y(0) {}
-};
 
 class StickyCameraHudPage : public MgmHudPage {
 public:
@@ -35,8 +35,18 @@ public:
     virtual void RefreshKeyBindings();
     virtual void UpdateZoomDisplay();
 
-    BYTE UnknownB4[0x228 - 0xb4];
+    APlayerController *Controller;
+    USPlayerProfile *PlayerProfile;
+    AHUD *Hud;
+    BYTE UnknownC0[0x1ec - 0xc0];
+    TCHAR ZoomLabels[3][10];
     MgmPoint Right, Center, Left;
+    MgmArea *Zoom;
+    MgmTextContent *ZoomValue;
+    MgmImage *ZoomInside;
+    INT ZoomLevel;
+    MgmArea *Speak;
+    MgmContent *SpeakText;
 };
 
 class MercBinocularHudPage : public MgmHudPage {

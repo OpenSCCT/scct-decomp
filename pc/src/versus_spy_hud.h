@@ -4,25 +4,7 @@
 #include "versus_arrays.h"
 #include "versus_mgm_hud_pages.h"
 #include "versus_mgm.h"
-
-// The MGM rectangle position setter preserves Right - Left and Bottom - Top.
-struct MgmImageRegion {
-    short Left, Right, Top, Bottom;
-};
-
-struct MgmImage {
-    BYTE UnknownBeforeRegion[12];
-    MgmImageRegion Region;
-};
-
-// A child owns this polymorphic object and invokes its deleting destructor.
-struct MgmContent {
-    virtual ~MgmContent();
-};
-
-struct MgmImageContent : MgmContent {
-    MgmImage *Image;
-};
+#include "versus_mgm_content.h"
 
 class MgmPlayerHud : public MgmHudPage {
 public:

@@ -8,4 +8,9 @@ inline void BindMgmArea(MgmArea *&Area, MgmPackage *Package, const ANSICHAR *Nam
     Area = FindMgmArea(Package, Name);
 }
 
+inline void HideMgmChild(MgmArea *Area, const ANSICHAR *Name)
+{
+    FindMgmChild(Area, Name)->Visible = 0;
+}
+
 #endif

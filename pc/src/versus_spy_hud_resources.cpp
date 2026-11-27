@@ -6,11 +6,6 @@ static inline void BindMgmChild(MgmChild *&Child, MgmArea *Area, const ANSICHAR 
     Child = FindMgmChild(Area, Name);
 }
 
-static inline void HideMgmChild(MgmArea *Area, const ANSICHAR *Name)
-{
-    FindMgmChild(Area, Name)->Visible = 0;
-}
-
 void SpyHud::InitResources()
 {
     Energy = FindMgmArea(Package, "A_JaugeEnergie");

@@ -1131,6 +1131,93 @@
     }
   },
   {
+    "id": "versus-mgm-keyframe-image-copy",
+    "rebuilt_symbol": "?CopyFrom@MgmImage@@UAEXABVMgmKeyframe@@@Z",
+    "inputs": [
+      "src/versus_mgm_keyframes.cpp",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
+    "offset": 2770128,
+    "size": 115,
+    "identification": "Copies the rectangle and each IMAGE-specific keyframe property: the rotation center, tiling, offset and four individual colors. The shipped keyframe table at VA 0x10bf0efc places this operation in slot 3.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "910514b9a897c9fa3aaad3f6bc9c7014b7cd2392012ca676ec0b173b711e14f2",
+      "inputs_sha256": "31ee3e384c4e6717b2dfa02ba5b18ac769a915744584c9fb29cba92222e02b0e"
+    }
+  },
+  {
+    "id": "versus-mgm-keyframe-image-constructor",
+    "rebuilt_symbol": "??0MgmImage@@QAE@XZ",
+    "inputs": [
+      "src/versus_mgm_keyframes.cpp",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
+    "offset": 2770256,
+    "size": 93,
+    "identification": "Constructs the IMAGE keyframe allocated by the MGM image content handler: a rotation center of (5,5), unit tiling, zero offset and four white corner colors. The constructor installs its native nine-slot table at VA 0x10bf0efc.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "??_7MgmImage@@6B@": {
+        "va": 280956668,
+        "basis": "This constructor installs its own nine-slot native keyframe table, validated against the complete rebuilt method order."
+      }
+    },
+    "match": {
+      "bytes_sha256": "49581a9c358df9505bcb1b072a33cbcd38d34faae31b30a069673bfca3de5503",
+      "inputs_sha256": "204b5317a9fdaac70720b027375c0c8d2721c0ce75dcf3868a56b12cc03ac641"
+    }
+  },
+  {
+    "inputs": [
+      "src/versus_mgm_keyframes.cpp",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
+    "id": "versus-mgm-keyframe-image-interpolate",
+    "rebuilt_symbol": "?Interpolate@MgmImage@@UAEXABUMgmKeyInterpolation@@@Z",
+    "offset": 2770352,
+    "size": 608,
+    "identification": "Slot 2 of the IMAGE keyframe table at VA 0x10bf0efc interpolates the rectangle, signed-short rotation center, texture tiling, texture offset and the four packed corner colors named under IMAGE in the shipped MGM data. Each IMAGE channel blend truncates to integer.",
+    "link_bindings": {
+      "?Interpolate@MgmRectKeyframe@@UAEXABUMgmKeyInterpolation@@@Z": {
+        "va": 280669968,
+        "basis": "Calls the independently matched MGM rectangle interpolation before handling IMAGE-specific fields."
+      },
+      "?GMgmInterpolator@@3PAVMgmInterpolator@@A": {
+        "va": 281849096,
+        "basis": "The same coefficient-table object used by the exact position and rectangle keyframe interpolators."
+      },
+      "?Mix@MgmInterpolator@@QAEMMMABUMgmKeyInterpolation@@@Z": {
+        "va": 280634656,
+        "basis": "The native scalar MGM interpolator uses duration, elapsed time and easing mode."
+      },
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "Compiler runtime helper converts each interpolated x87 value to integer."
+      },
+      "__real@4f800000": {
+        "va": 281086500,
+        "basis": "The 4294967296.0f object implements unsigned DWORD to float conversion on x87."
+      }
+    },
+    "match": {
+      "bytes_sha256": "2bf1a06449711ef4af656d9418c5ffa26fd302f8103dac205656badc431b5c18",
+      "inputs_sha256": "4ecc0fd864edce4b66d40821bbfcde2515515e803f22a85faade5c989f06933b"
+    }
+  },
+  {
     "id": "versus-leaf-2a4880",
     "offset": 2771072,
     "size": 12,
@@ -3342,6 +3429,48 @@
     }
   },
   {
+    "inputs": [
+      "src/versus_mgm_keyframes.cpp",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
+    "id": "versus-mgm-keyframe-interpolate",
+    "rebuilt_symbol": "?Interpolate@MgmKeyframe@@UAEXABUMgmKeyInterpolation@@@Z",
+    "offset": 2796704,
+    "size": 441,
+    "identification": "The common POSITION, RECTANGLE and IMAGE interpolation path mixes ROTATION and rounds the four channels of the MGM STATECOLOR property to the nearest byte. The stock parser reads both properties for every keyframe.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?GMgmInterpolator@@3PAVMgmInterpolator@@A": {
+        "va": 281849096,
+        "basis": "The same coefficient-table object used by the exact position and rectangle keyframe interpolators."
+      },
+      "?Mix@MgmInterpolator@@QAEMMMABUMgmKeyInterpolation@@@Z": {
+        "va": 280634656,
+        "basis": "The native scalar MGM interpolator uses duration, elapsed time and easing mode."
+      },
+      "__real@4f800000": {
+        "va": 281086500,
+        "basis": "The 4294967296.0f object implements unsigned DWORD to float conversion on x87."
+      },
+      "__real@3f000000": {
+        "va": 281086480,
+        "basis": "The 0.5f object rounds the four common StateColor channel blends to the nearest byte."
+      },
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "Compiler runtime helper converts each interpolated x87 value to integer."
+      }
+    },
+    "match": {
+      "bytes_sha256": "613e2757c820f89396d62a878d923a7a04eb789eccff971c291afa81c8cf3159",
+      "inputs_sha256": "7333daae5b3d927e0ef3900016920009315609abec2c2c0d3958a066c6e15644"
+    }
+  },
+  {
     "id": "visitor-method-2aae60",
     "size": 15,
     "offset": 2797152,
@@ -3366,6 +3495,44 @@
     }
   },
   {
+    "id": "versus-mgm-keyframe-position-interpolate",
+    "rebuilt_symbol": "?Interpolate@MgmPositionKeyframe@@UAEXABUMgmKeyInterpolation@@@Z",
+    "inputs": [
+      "src/versus_mgm_keyframes.cpp",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
+    "offset": 2797168,
+    "size": 139,
+    "identification": "Interpolates a position keyframe by applying the common rotation and state-color blend, then independently evaluating and truncating interpolated X and Y. The shipped keyframe table at VA 0x10bf0c84 places this operation in slot 2.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?Interpolate@MgmKeyframe@@UAEXABUMgmKeyInterpolation@@@Z": {
+        "va": 280669344,
+        "basis": "Common keyframe interpolation blends the rotation float and the four channels of StateColor."
+      },
+      "?GMgmInterpolator@@3PAVMgmInterpolator@@A": {
+        "va": 281849096,
+        "basis": "The shared MGM interpolation object supplies the easing lookup to all scalar keyframe components."
+      },
+      "?Mix@MgmInterpolator@@QAEMMMABUMgmKeyInterpolation@@@Z": {
+        "va": 280634656,
+        "basis": "The MGM interpolator mixes the two scalar endpoints using elapsed time, duration and interpolation mode."
+      },
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "The compiler truncates the interpolated x87 coordinate to its signed integer representation."
+      }
+    },
+    "match": {
+      "bytes_sha256": "a6b15449a6b31f4325b765b286b65c5c0d371cd670cd16b576ee03e5e75a7a3d",
+      "inputs_sha256": "27364b5726acda575a400968ab1ea9fdb21b73a97fbccf17ff04639b7ce8e76e"
+    }
+  },
+  {
     "id": "visitor-method-2aaf00",
     "size": 15,
     "offset": 2797312,
@@ -3387,6 +3554,44 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-mgm-keyframe-rectangle-interpolate",
+    "rebuilt_symbol": "?Interpolate@MgmRectKeyframe@@UAEXABUMgmKeyInterpolation@@@Z",
+    "inputs": [
+      "src/versus_mgm_keyframes.cpp",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
+    "offset": 2797328,
+    "size": 249,
+    "identification": "Interpolates a rectangle keyframe by applying the common rotation and state-color blend, then independently evaluating and truncating its left, right, top and bottom. The shipped keyframe table at VA 0x10bf0ca8 places this operation in slot 2.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?Interpolate@MgmKeyframe@@UAEXABUMgmKeyInterpolation@@@Z": {
+        "va": 280669344,
+        "basis": "Common keyframe interpolation blends the rotation float and the four channels of StateColor."
+      },
+      "?GMgmInterpolator@@3PAVMgmInterpolator@@A": {
+        "va": 281849096,
+        "basis": "The shared MGM interpolation object supplies the easing lookup to all scalar keyframe components."
+      },
+      "?Mix@MgmInterpolator@@QAEMMMABUMgmKeyInterpolation@@@Z": {
+        "va": 280634656,
+        "basis": "The MGM interpolator mixes the two scalar endpoints using elapsed time, duration and interpolation mode."
+      },
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "The compiler truncates the interpolated x87 coordinate to its signed integer representation."
+      }
+    },
+    "match": {
+      "bytes_sha256": "1fdea78722dca71d0a9411cd11852023aca6f425c68f5cdc61c09f05d0ff1ba2",
+      "inputs_sha256": "d201716216b07ba746d5623d6f6d7ac1e4a70e1f990abe592954b59973bc81eb"
     }
   },
   {
