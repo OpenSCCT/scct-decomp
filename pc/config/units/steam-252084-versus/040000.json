@@ -1099,6 +1099,89 @@
     }
   },
   {
+    "id": "versus-vector-rotate-angle-axis",
+    "offset": 265120,
+    "size": 254,
+    "inputs": [
+      "src/versus_object_turn_around_axis.cpp",
+      "src/versus_pawn_action_events.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_containers.h",
+      "src/versus_hardcoded_names.inl"
+    ],
+    "rebuilt_symbol": "?RotateAngleAxis@FVector@@QBE?AU1@HABU1@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_object_turn_around_axis.obj src/versus_object_turn_around_axis.cpp",
+    "identification": "The shipped editor counterpart at VA 0x10fe9070 receives a vector, rotation angle and axis. It calls FGlobalMath::SinCos and applies the axis-angle rotation matrix. The editor native registered as UObject_execTurnAroundAxis calls it at 0x10fef5db; retail calls it at RVA 0x47cce. UParticleEmitter::UpdateParticles also rotates particles about its three axes at retail RVAs 0xfa490, 0xfa4d4 and 0xfa518. The optimized retail member receives the angle in EDX, the axis in ESI, its receiver in EDI and its return buffer in EBX. VC71 emits a different body with the same flags.",
+    "link_bindings": {
+      "?GMath@@3UFGlobalMath@@A": {
+        "va": 281848832,
+        "basis": "FGlobalMath singleton, passed as the receiver of SinCos and initialized by its complete constructor."
+      },
+      "?SinCos@FGlobalMath@@QAEXHPAM0@Z": {
+        "va": 278137168,
+        "basis": "FGlobalMath::SinCos takes the integer angle and writes single-precision sine and cosine."
+      },
+      "__real@3f800000": {
+        "va": 281086460,
+        "basis": "The compiler-emitted, read-only IEEE-754 float constant 1.0 used for one minus cosine."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?execTurnAroundAxis@UObject@@QAEXAAUFFrame@@QAX@Z"
+      ],
+      "stubs": [
+        "?GMath@@3UFGlobalMath@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?SinCos@FGlobalMath@@QAEXHPAM0@Z",
+        "__fltused",
+        "__ftol2"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          15,
+          "abs",
+          "?GMath@@3UFGlobalMath@@A"
+        ],
+        [
+          20,
+          "rel32",
+          "?SinCos@FGlobalMath@@QAEXHPAM0@Z"
+        ],
+        [
+          58,
+          "abs",
+          "__real@3f800000"
+        ]
+      ],
+      "symbols": {
+        "?GMath@@3UFGlobalMath@@A": 268439968,
+        "?SinCos@FGlobalMath@@QAEXHPAM0@Z": 268439970,
+        "__real@3f800000": 268443648
+      },
+      "constants": {
+        "__real@3f800000": 4
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "9692c8e4818556b3f153604a88e17f228a36669b99226bcd88c9f049810da23d",
+      "inputs_sha256": "e8b0d706bf2d4490b3e9fc58d03c20ba892d384488f2c8d04237f2ea36c61b81"
+    }
+  },
+  {
     "id": "versus-vd-40ca0",
     "offset": 265376,
     "size": 225,
@@ -1131,7 +1214,6 @@
         "?GMath_UnitY@@3ABUFVector@@B",
         "?GMath_UnitZ@@3ABUFVector@@B",
         "?GMath_Zero@@3ABUFVector@@B",
-        "?One_40ba0@@3MB",
         "?SinCos@FGlobalMath@@QAEXHPAM0@Z",
         "?TransformPoint_40a30@@YAXABUFCoords@@ABUFVector@@AAU2@@Z",
         "?TransformVector_40ab0@@YAXABUFCoords@@ABUFVector@@AAU2@@Z",
@@ -1162,13 +1244,13 @@
         ]
       ],
       "symbols": {
-        "?TransformPoint_40a30@@YAXABUFCoords@@ABUFVector@@AAU2@@Z": 268439833,
-        "?TransformVector_40ab0@@YAXABUFCoords@@ABUFVector@@AAU2@@Z": 268439834
+        "?TransformPoint_40a30@@YAXABUFCoords@@ABUFVector@@AAU2@@Z": 268439832,
+        "?TransformVector_40ab0@@YAXABUFCoords@@ABUFVector@@AAU2@@Z": 268439833
       }
     },
     "match": {
       "bytes_sha256": "587f1d295c53e810dcd1eeb5cb21ddd1f30c21f19382be2b303cd2316e073170",
-      "inputs_sha256": "0a01afd6ecea87f15b0fb1bf4bbb7b30defe7f6ba8f22ab27fb0d3f3dd96591d"
+      "inputs_sha256": "148e26cdff9e651dc85dd8901dfd8edae2fb39ac01f09f727cd904272f7c28a9"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1232,7 +1314,6 @@
         "?GMath_UnitY@@3ABUFVector@@B",
         "?GMath_UnitZ@@3ABUFVector@@B",
         "?GMath_Zero@@3ABUFVector@@B",
-        "?One_40ba0@@3MB",
         "?SinCos@FGlobalMath@@QAEXHPAM0@Z",
         "?TransformPoint_40a30@@YAXABUFCoords@@ABUFVector@@AAU2@@Z",
         "?TransformVector_40ab0@@YAXABUFCoords@@ABUFVector@@AAU2@@Z",
@@ -1319,7 +1400,7 @@
       ],
       "symbols": {
         "?GMath@@3UFGlobalMath@@A": 268440466,
-        "?SinCos@FGlobalMath@@QAEXHPAM0@Z": 268440472,
+        "?SinCos@FGlobalMath@@QAEXHPAM0@Z": 268440471,
         "?GMath_Zero@@3ABUFVector@@B": 268440470,
         "?GMath_UnitZ@@3ABUFVector@@B": 268440469,
         "??XFCoords@@QAEAAU0@ABU0@@Z": 268439552,
@@ -1329,7 +1410,7 @@
     },
     "match": {
       "bytes_sha256": "6b3bdbeb314984e985a96aa3f80d37abd39f376cc274f658a29dae5f7874f643",
-      "inputs_sha256": "a01178df06056af38da19182fa2598590f7097d0bb56b8383463c100bf5d31fb"
+      "inputs_sha256": "fff428f36d288ac337010519f32ac72793a3be24dce397e89df4c50b3cc98d2b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1369,7 +1450,6 @@
         "?GMath_UnitY@@3ABUFVector@@B",
         "?GMath_UnitZ@@3ABUFVector@@B",
         "?GMath_Zero@@3ABUFVector@@B",
-        "?One_40ba0@@3MB",
         "?SinCos@FGlobalMath@@QAEXHPAM0@Z",
         "?TransformPoint_40a30@@YAXABUFCoords@@ABUFVector@@AAU2@@Z",
         "?TransformVector_40ab0@@YAXABUFCoords@@ABUFVector@@AAU2@@Z",
@@ -1390,7 +1470,7 @@
     },
     "match": {
       "bytes_sha256": "a7ed724a9f23c99d5582ddabb01e916df9700ea3b9eb1ba63298b63f0cc66942",
-      "inputs_sha256": "01391bee082c48bb086214724254cf40db3b36712423a9b13841a02d52dd3881"
+      "inputs_sha256": "539a4b1e237ae94bd667449bdfd0d1bafd0537a52e92534bbc4d3486d10e00cb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4091,6 +4171,88 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-object-turn-around-axis",
+    "offset": 293968,
+    "size": 160,
+    "inputs": [
+      "src/versus_object_turn_around_axis.cpp",
+      "src/versus_pawn_action_events.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_containers.h",
+      "src/versus_hardcoded_names.inl"
+    ],
+    "rebuilt_symbol": "?execTurnAroundAxis@UObject@@QAEXAAUFFrame@@QAX@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_object_turn_around_axis.obj src/versus_object_turn_around_axis.cpp",
+    "identification": "The shipped editor names UObject_execTurnAroundAxis beside native number 162. At editor VA 0x10ff4781 the registration installs UObject::execTurnAroundAxis (0x10fef580) as native 162. The retail registration installs the corresponding script handler at RVA 0x47c50. It evaluates two vectors and one float through GNatives, converts the float to an integer angle and calls FVector::RotateAngleAxis. VC70 and VC71 reproduce the complete native.",
+    "link_bindings": {
+      "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA": {
+        "va": 281549272,
+        "basis": "The published Versus native dispatch table, indexed by each parameter token."
+      },
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "The compiler conversion helper __ftol2 truncates the floating-point angle."
+      },
+      "?RotateAngleAxis@FVector@@QBE?AU1@HABU1@@Z": {
+        "va": 278137760,
+        "basis": "FVector::RotateAngleAxis, called with the vector, axis and integer angle."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?execTurnAroundAxis@UObject@@QAEXAAUFFrame@@QAX@Z"
+      ],
+      "stubs": [
+        "?GMath@@3UFGlobalMath@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?SinCos@FGlobalMath@@QAEXHPAM0@Z",
+        "__fltused",
+        "__ftol2"
+      ],
+      "rebuilt_offset": 1280,
+      "rebuilt_address": 268439808,
+      "fields": [
+        [
+          32,
+          "abs",
+          "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA"
+        ],
+        [
+          58,
+          "abs",
+          "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA"
+        ],
+        [
+          92,
+          "abs",
+          "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA"
+        ],
+        [
+          108,
+          "rel32",
+          "__ftol2"
+        ],
+        [
+          127,
+          "rel32",
+          "?RotateAngleAxis@FVector@@QBE?AU1@HABU1@@Z"
+        ]
+      ],
+      "symbols": {
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA": 268439969,
+        "__ftol2": 268439972,
+        "?RotateAngleAxis@FVector@@QBE?AU1@HABU1@@Z": 268439552
+      }
+    },
+    "match": {
+      "bytes_sha256": "083b406e006bf8fbe8f249fc1650694937d1e4f41f781091094bcabff04aff90",
+      "inputs_sha256": "0cbb56f05b85c1fa86bafe221debaaaab878a821d16446a554984442a04d0871"
     }
   },
   {
@@ -8391,7 +8553,7 @@
     },
     "match": {
       "bytes_sha256": "880070a3d26654d32915ded931f99919111575ca124220fba1d9a53936020a56",
-      "inputs_sha256": "c456dd55dddf12d69854fddca7e4ceaa155f9e2d6415d199bccd6ff34771ba7f"
+      "inputs_sha256": "34e26fd2de587238a342c1ffa3f6f93260e1842f8018597d80fbf2fde7ef5334"
     },
     "ltcg_callees": [
       "versus-vd-e7720"
@@ -8529,7 +8691,7 @@
     },
     "match": {
       "bytes_sha256": "4d74ef868f2d532d14b65effac129525e5f2c6a789f71dac816a5b57c097ab26",
-      "inputs_sha256": "7a93311f330a8426715db4c60cc5b3123c468210f8170a285a6d2f2db44cd67d"
+      "inputs_sha256": "d0675ef4c579e65572ba162e2a22ad235d9b9b7608feb260fafbf0a11f983548"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",

@@ -1,5 +1,5 @@
-// Work item 0155: Versus RVA 0x40ba0-0x40fed.
-// Core math: FVector::RotateAngleAxis, FCoords::operator*= (by coords and by
+// Work item 0155: Versus RVA 0x40ca0-0x40fed.
+// Core math: FCoords::operator*= (by coords and by
 // rotator) and FCoords::operator* (by rotator). These were compiled with /GL
 // and linked with /LTCG, so the retail calls use register conventions.
 
@@ -15,7 +15,6 @@ struct FVector
     FVector() {}
     FVector(FLOAT InX, FLOAT InY, FLOAT InZ) : X(InX), Y(InY), Z(InZ) {}
     FVector(const FVector &V) : X(V.X), Y(V.Y), Z(V.Z) {}
-    FVector RotateAngleAxis(const INT Angle, const FVector &Axis) const;
     FVector TransformPointBy(const FCoords &Coords) const;
     FVector TransformVectorBy(const FCoords &Coords) const;
 };
@@ -52,8 +51,6 @@ extern const FVector &GMath_UnitZ;  // 0x10ccacbc
 extern const FVector &GMath_Zero;   // 0x10ccacc0
 extern const FVector &GMath_UnitX;  // 0x10ccacc4
 
-extern const FLOAT One_40ba0;       // 0x10c109fc (1.f)
-
 // RVA 0x40a30 and 0x40ab0 (item 0154).
 void TransformPoint_40a30(const FCoords &Coords, const FVector &Point, FVector &Result);
 void TransformVector_40ab0(const FCoords &Coords, const FVector &V, FVector &Result);
@@ -72,28 +69,6 @@ FVector FVector::TransformVectorBy(const FCoords &Coords) const
     FVector Result;
     TransformVector_40ab0(Coords, *this, Result);
     return Result;
-}
-
-// RVA 0x40ba0
-__declspec(noinline) FVector FVector::RotateAngleAxis(const INT Angle, const FVector &Axis) const
-{
-    FLOAT S, C;
-    GMath.SinCos(Angle, &S, &C);
-
-    FLOAT XS = Axis.X * S;
-    FLOAT YS = Axis.Y * S;
-    FLOAT ZS = Axis.Z * S;
-
-    FLOAT OMC = One_40ba0 - C;
-
-    FLOAT XY = Axis.Y * Axis.X * OMC;
-    FLOAT YZ = Axis.Z * Axis.Y * OMC;
-    FLOAT ZX = Axis.Z * Axis.X * OMC;
-
-    return FVector(
-        (Axis.X * Axis.X * OMC + C) * X + (XY - ZS) * Y + (ZX + YS) * Z,
-        (XY + ZS) * X + (Axis.Y * Axis.Y * OMC + C) * Y + (YZ - XS) * Z,
-        (ZX - YS) * X + (YZ + XS) * Y + (Axis.Z * Axis.Z * OMC + C) * Z);
 }
 
 // RVA 0x40ca0
@@ -135,11 +110,6 @@ __declspec(noinline) FCoords FCoords::operator*(const FRotator &Rot) const
 // Scaffolding for the link, not part of the unit.
 // __declspec(noinline) above stands in for retail call sites the LTCG inliner declined.
 void Escape(void *);
-void Driver_40ba0(FVector *Out, const FVector *V, INT Angle, const FVector *Axis)
-{
-    Escape(&GMath);
-    *Out = V->RotateAngleAxis(Angle, *Axis);
-}
 void Driver_40f40(FCoords *Out, const FCoords *C, const FRotator *R)
 {
     Escape(&GMath);

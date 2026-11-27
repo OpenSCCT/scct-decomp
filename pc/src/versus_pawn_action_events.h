@@ -38,6 +38,8 @@ struct FFrame : public FOutputDevice {
     class UObject *Object;
     BYTE *Code;
     BYTE *Locals;
+
+    void Step(UObject *Context, void *const Result);
 };
 
 class FUnknown {
@@ -49,6 +51,7 @@ public:
 
 class UObject : public FUnknown {
 public:
+    void execTurnAroundAxis(FFrame &Stack, void *const Result);
     virtual ~UObject();
     virtual void ProcessEvent(UFunction *Function, void *Parms, void *Result);
     virtual void VirtualSlot5();
