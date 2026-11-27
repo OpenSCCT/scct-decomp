@@ -2320,6 +2320,113 @@
     }
   },
   {
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "id": "versus-skeletal-instance-archive-channels",
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UMeshAnimChannel@@@@@Z",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_instance_archive.obj src/versus_skeletal_instance_archive.cpp",
+    "inputs": [
+      "src/versus_skeletal_instance_archive.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_lazy_archive.h",
+      "src/versus_compact_index.inl",
+      "src/versus_element_array_archive.inl"
+    ],
+    "offset": 794208,
+    "size": 183,
+    "identification": "Complete animation channel array archive. The sole call at RVA 0xb56bb in USkeletalMeshInstance::Serialize passes the Blends array at +0x100. It counts and constructs 0x90-byte MeshAnimChannel elements and invokes the already matched channel archive operator at RVA 0xc24c0 on both load and save.",
+    "link_bindings": {
+      "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": {
+        "va": 277998144,
+        "basis": "The previously matched FCompactIndex operator archives the number of elements."
+      },
+      "?Empty@FArray@@QAEXHH@Z": {
+        "va": 277890384,
+        "basis": "FArray::Empty receives the element stride and decoded count before loading."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "FArray::Add appends a single element during the load loop."
+      },
+      "??6@YAAAVFArchive@@AAV0@AAUMeshAnimChannel@@@Z": {
+        "va": 278668480,
+        "basis": "Existing exact MeshAnimChannel record serializer. It visits the nonpersistent channel data and three FName entries in a 0x90-byte element."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Serialize@USkeletalMeshInstance@@UAEXAAVFArchive@@@Z"
+      ],
+      "stubs": [
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@K@@@Z",
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFBoneScaler@@@@@Z",
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFCoords@@@@@Z",
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFQuat@@@@@Z",
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFVector@@@@@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "?Serialize@UPrimitive@@UAEXAAVFArchive@@@Z"
+      ],
+      "rebuilt_offset": 2416,
+      "rebuilt_address": 268440944,
+      "fields": [
+        [
+          50,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ],
+        [
+          67,
+          "rel32",
+          "?Empty@FArray@@QAEXHH@Z"
+        ],
+        [
+          91,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          106,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUMeshAnimChannel@@@Z"
+        ],
+        [
+          127,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ],
+        [
+          151,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUMeshAnimChannel@@@Z"
+        ]
+      ],
+      "symbols": {
+        "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": 268439552,
+        "?Empty@FArray@@QAEXHH@Z": 268441318,
+        "?Add@FArray@@QAEHHH@Z": 268441317,
+        "??6@YAAAVFArchive@@AAV0@AAUMeshAnimChannel@@@Z": 268440160
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "37baa87392cc7e83202f9f49d83c17153818d6570b0955693ca01339378f2da6",
+      "inputs_sha256": "6ac40ed08ac38484ac45ad16ea5aa21506fd45fa978de0a01db04192dcd9abed"
+    }
+  },
+  {
     "id": "versus-vd-c1f20",
     "offset": 794400,
     "size": 288,
@@ -2408,6 +2515,113 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    }
+  },
+  {
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "id": "versus-skeletal-instance-archive-controls",
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFBoneControl@@@@@Z",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_instance_archive.obj src/versus_skeletal_instance_archive.cpp",
+    "inputs": [
+      "src/versus_skeletal_instance_archive.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_lazy_archive.h",
+      "src/versus_compact_index.inl",
+      "src/versus_element_array_archive.inl"
+    ],
+    "offset": 794688,
+    "size": 166,
+    "identification": "Complete bone adjustment array archive. The sole call at RVA 0xb56dd in USkeletalMeshInstance::Serialize passes the BoneAdjustments array at +0x118, also identified by the bone control setters. Loading constructs each 0x44-byte FBoneControl. Both archive paths call the matched element operator at RVA 0xc23e0.",
+    "link_bindings": {
+      "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": {
+        "va": 277998144,
+        "basis": "The previously matched FCompactIndex operator archives the number of elements."
+      },
+      "?Empty@FArray@@QAEXHH@Z": {
+        "va": 277890384,
+        "basis": "FArray::Empty receives the element stride and decoded count before loading."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "FArray::Add appends a single element during the load loop."
+      },
+      "??6@YAAAVFArchive@@AAV0@AAUFBoneControl@@@Z": {
+        "va": 278668256,
+        "basis": "Existing exact FBoneControl record serializer. Its operands visit the bone identity, rotation/translation, fade factors, and fading flags of one 0x44-byte struct."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?Serialize@USkeletalMeshInstance@@UAEXAAVFArchive@@@Z"
+      ],
+      "stubs": [
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@K@@@Z",
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFBoneScaler@@@@@Z",
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFCoords@@@@@Z",
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFQuat@@@@@Z",
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFVector@@@@@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "?Serialize@UPrimitive@@UAEXAAVFArchive@@@Z"
+      ],
+      "rebuilt_offset": 2608,
+      "rebuilt_address": 268441136,
+      "fields": [
+        [
+          44,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ],
+        [
+          58,
+          "rel32",
+          "?Empty@FArray@@QAEXHH@Z"
+        ],
+        [
+          79,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          91,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFBoneControl@@@Z"
+        ],
+        [
+          112,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ],
+        [
+          137,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFBoneControl@@@Z"
+        ]
+      ],
+      "symbols": {
+        "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": 268439552,
+        "?Empty@FArray@@QAEXHH@Z": 268441318,
+        "?Add@FArray@@QAEHHH@Z": 268441317,
+        "??6@YAAAVFArchive@@AAV0@AAUFBoneControl@@@Z": 268439936
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "96ee20363ff5fc173975ce10f8f3f010c15841a86a35408f08c952633213c15c",
+      "inputs_sha256": "9d54c355c5a93afb74b1ca227d5e54ec38094c8f45e38a57d247afb87de6b22a"
     }
   },
   {
@@ -3158,7 +3372,7 @@
     },
     "match": {
       "bytes_sha256": "813e3f1457b384a13ceca9194dcd55bd4ccac4da66ab23c6f17fa962a034040a",
-      "inputs_sha256": "22ab3b41ec316209f2d8111fc344e30f1019d36dd68f7c1c200bbb5c0f941606"
+      "inputs_sha256": "07d04aa08b85b80e32f30df80409ff7261d9779cc7e47438aa3e504d17024b1c"
     }
   },
   {
@@ -3233,7 +3447,7 @@
     },
     "match": {
       "bytes_sha256": "a8e53290199985dcadb5d059a5efc31527c6582a7da97c76ac0bd599ee5e74dd",
-      "inputs_sha256": "4eeae0507b7920bbfacd3bf6190d9156d27ad4cc67c48628a02cd47e7e0607d6"
+      "inputs_sha256": "d5c65eeb9be5211761d6a4eae8af7c7f3c275a6399d05393c772f330b9700ada"
     }
   },
   {
@@ -3251,7 +3465,8 @@
       "src/versus_animation_sequence.h",
       "src/versus_static_mesh_arrays.h",
       "src/versus_lazy_archive.h",
-      "src/versus_compact_index.inl"
+      "src/versus_compact_index.inl",
+      "src/versus_element_array_archive.inl"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "offset": 798368,
@@ -3318,7 +3533,7 @@
     },
     "match": {
       "bytes_sha256": "7b56ac5988485ca399b6b2d5a276ed34e9268ecb2f6eb9eb9205f9328d5307df",
-      "inputs_sha256": "2ddfe4cc540d43cbbada97206d0eb86a6ba9fd1e300bf752c3c7cd9789561bb1"
+      "inputs_sha256": "8da1fb38d99014edd741af530247d260d98fb0a2408d5c0b0d95d3dc8af8c57b"
     }
   },
   {
@@ -3336,7 +3551,8 @@
       "src/versus_animation_sequence.h",
       "src/versus_static_mesh_arrays.h",
       "src/versus_lazy_archive.h",
-      "src/versus_compact_index.inl"
+      "src/versus_compact_index.inl",
+      "src/versus_element_array_archive.inl"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "offset": 798496,
@@ -3433,7 +3649,7 @@
     },
     "match": {
       "bytes_sha256": "8e34c2bcbdb1cbf73fa91b9a673cde3839d26643616122b63d4175437435dadc",
-      "inputs_sha256": "03629186100ef0ce6a05db61cfd79478ec549bf024317fd6e4ec93ca20de4aaf"
+      "inputs_sha256": "3b9ee2f9237e4d5ad25d61d7fca31e6749446323d94c8429b84c3ab1b9b69029"
     }
   },
   {
@@ -3982,7 +4198,7 @@
     },
     "match": {
       "bytes_sha256": "90ed120e70ac8951cc9a987c7bd7d4d025a6353eab791fa86aa8002bfc0c5d43",
-      "inputs_sha256": "46a0e03b62b1024be4c5ef1db5447617edfe6d951fd2d318379b0c12c3c1b20b"
+      "inputs_sha256": "4ca75957c0787e1c238c26a55304422f4a7e3dd2802e3e2109517eccccdfbf17"
     }
   },
   {
@@ -4112,7 +4328,7 @@
     },
     "match": {
       "bytes_sha256": "1f778900a3e655c9c2cb93857c72705f8ac3ccd69aa4866d1d9d0722320c10cb",
-      "inputs_sha256": "6c400a18d381fadfd689be7e762381e426863314185c234fa62d4435d9e3d649"
+      "inputs_sha256": "90df83bca7418bc46d2bcb65d98fc69830a9e8619f64f56080c67b9c5485687f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4251,7 +4467,7 @@
     },
     "match": {
       "bytes_sha256": "1474b4d8cb53cb7a4258d1b981cdabee0493e7aabc1b8653446171c0077e3ad3",
-      "inputs_sha256": "16037a911c51cbe7ec39f930bba8ae8d5962c530765f997009a1a784841e7553"
+      "inputs_sha256": "dd0851d27d8270fb089a5846dec8e58f0a085e8a59748f9b5b3e161ea9451f9d"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4370,7 +4586,7 @@
     },
     "match": {
       "bytes_sha256": "8e1a6b4ad3aaae3fb7d2f5264fc747c60bbd2ae9f008e42b67783618b63ed550",
-      "inputs_sha256": "ca7fa2d2b063c3b6c63379b0fd91b9a3cef23c6b4cc89771fcf198e53af68773"
+      "inputs_sha256": "5793af9bb3f5fbbd3839108fbc1ec6958280a4d78b15cd3e9ef88c53d2c5b935"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4469,7 +4685,7 @@
     },
     "match": {
       "bytes_sha256": "24a52589af7e1ccb0b73e693c5bdd551ce8cc3eebab757aa5fb6c2fc6c918677",
-      "inputs_sha256": "1ca1d49a8637803b230fd273561dda76a2dd08d37f55d1ba30316c934a51a57f"
+      "inputs_sha256": "089123083e1f8e2359b8507a05f4cafad817a52426bfb49757a730af2a46b002"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4558,7 +4774,7 @@
     },
     "match": {
       "bytes_sha256": "42631b613705b0ea721052c3891bf2c8f535970c9d6192a694201127985e5575",
-      "inputs_sha256": "0eb7ba77ee1e5b9e749872bfcfab7f968299fd25064c3718885eef648008646e"
+      "inputs_sha256": "b94d1e3acf5235e601aab610b5b3d17b5d0bf928d2b1822fc36da9e4bd37200e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4614,7 +4830,7 @@
     },
     "match": {
       "bytes_sha256": "510ddaaedd6946668cbb6a71bd7848130fe9718173f3c94e9eb9dba508616a9b",
-      "inputs_sha256": "2177a5a28bcea3788507dc2495d61aafa660138c7038e016ebe2d602eb08aada"
+      "inputs_sha256": "67b6eba983416bd5f6dcd9f41185b4a976da9053f741b3dd9b68af6d3822e2fc"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -8928,7 +9144,7 @@
     },
     "match": {
       "bytes_sha256": "31fb117aca5846a528ec49dde705df2c58e24c3b4016d3dc870ac0042522f51b",
-      "inputs_sha256": "4d8f7d534d6cd85c44891f6beff1f9444d071eb673dff604f78aa951caddea6c"
+      "inputs_sha256": "63aadb47137d6dd298b388f8eac707e9af6edef1a9f2cca8ec3bfcb41bb6d2c2"
     }
   },
   {
@@ -9643,7 +9859,7 @@
     },
     "match": {
       "bytes_sha256": "26fb17d548969c52eef541e2e2be15871249099f4cc8338a8c3907cf9a6ee18c",
-      "inputs_sha256": "716912b6a75ae451f0a6c702ba0b1b1c1690612b9bb0dd1183ef5fe0e9c5280a"
+      "inputs_sha256": "c1a19a46ef2e8ef106bfcd5786c4c1a708790c2d223dc6509967579c2b84425c"
     }
   },
   {

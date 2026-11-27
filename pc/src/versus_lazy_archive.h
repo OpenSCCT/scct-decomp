@@ -36,6 +36,7 @@ public:
     INT Ver() { return ArVer; }
     UBOOL IsLoading() { return ArIsLoading; }
     UBOOL IsSaving() { return ArIsSaving; }
+    UBOOL IsPersistent() { return ArIsPersistent; }
 
     friend FArchive &operator<<(FArchive &Ar, INT &I) { Ar.Serialize(&I, 4); return Ar; }
     friend FArchive &operator<<(FArchive &Ar, FLOAT &F) { Ar.Serialize(&F, 4); return Ar; }
@@ -47,6 +48,8 @@ public:
     INT ArLicenseeVer;  // +0x0c
     UBOOL ArIsLoading;  // +0x10
     UBOOL ArIsSaving;   // +0x14
+    UBOOL ArIsTrans;    // +0x18
+    UBOOL ArIsPersistent; // +0x1c
 };
 
 extern UBOOL GLazyLoad;
