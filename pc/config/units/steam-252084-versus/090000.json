@@ -2024,6 +2024,33 @@
     }
   },
   {
+    "id": "versus-fcheckresult-constructor",
+    "offset": 599984,
+    "size": 87,
+    "inputs": [
+      "src/versus_check_result.cpp",
+      "src/versus_level_trace_types.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_level_trace_vector.h"
+    ],
+    "rebuilt_symbol": "??0FCheckResult@@QAE@MPAU0@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_check_result.obj src/versus_check_result.cpp",
+    "identification": "FCheckResult constructor accepting the initial hit time and next result pointer. The ASBasePawn::Crouch override at RVA 0x1cc960 constructs this result at 0x1cca1d before calling ULevel::MoveActor to lower the pawn. The constructor initializes the list links and both vectors, records the initial Time, sets Item to INDEX_NONE, and leaves the +0x30 payload untouched. VC7.0 and VC7.1 reproduce all 87 bytes.",
+    "link_bindings": {
+      "?GZeroVector_10ccacc0@@3PAUFVector@@A": {
+        "va": 281849024,
+        "basis": "The Versus startup at RVA 0x2d8640 stores the address of zero-vector storage 0x10ccac00 into the global at VA 0x10ccacc0. Both copies initialize FCheckResult vector members."
+      }
+    },
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "39607cdc36598a336313f102a55a6ed52a3322cad603a029698e7b8f22f0b028",
+      "inputs_sha256": "daa788e83ef7de7840a20e8fdf4d2d185e6df7370e7c49c25752e05350557c9e"
+    }
+  },
+  {
     "id": "versus-vd-92810",
     "offset": 600080,
     "size": 63,

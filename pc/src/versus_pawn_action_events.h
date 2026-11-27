@@ -5,6 +5,7 @@
 #include "versus_build.h"
 #include "unreal_types.h"
 #include "unreal_math.h"
+#include "unreal_containers.h"
 
 enum EName {
 #define REGISTER_NAME(symbol, index, flags, text) NAME_##symbol = index,
@@ -138,13 +139,26 @@ public:
     virtual void VirtualSlot76();
     virtual void VirtualSlot77();
 
-    BYTE unk_28[0x2f0 - 0x28];
+    BYTE unk_28[0xbc - 0x28];
+    FVector PrePivot;
+    BYTE unk_c8[0xe0 - 0xc8];
+    FRotator Rotation;
+    BYTE unk_ec[0x1a4 - 0xec];
+    class ULevel *XLevel;
+    BYTE unk_1a8[0x268 - 0x1a8];
+    FLOAT CollisionRadius;
+    FLOAT CollisionHeight;
+    BYTE unk_270[0x2de - 0x270];
+    BYTE Role;
+    BYTE unk_2df[0x2f0 - 0x2df];
     BITFIELD unk_2f0_0 : 13;
     BITFIELD bCollideWorld : 1;
     BITFIELD unk_2f0_14 : 18;
     BYTE unk_2f4[4];
 
     void SetCollision(UBOOL CollideActors, UBOOL BlockActors, UBOOL BlockPlayers);
+    class ULevel *GetLevel() const { return XLevel; }
+    void SetCollisionSize(FLOAT NewRadius, FLOAT NewHeight);
     void FadeChannels(INT Start, INT End, FLOAT Amount);
 };
 
@@ -176,16 +190,20 @@ public:
     virtual void VirtualSlot78();
     virtual void VirtualSlot79();
     virtual void VirtualSlot80();
-    virtual void VirtualSlot81(UBOOL Enabled);
+    virtual void Crouch(UBOOL bClientSimulation);
     virtual void VirtualSlot82();
     virtual void VirtualSlot83();
 
     BYTE unk_2f8[0x38c - 0x2f8];
     AController *Controller;
-    BYTE unk_390[0x480 - 0x390];
+    BYTE unk_390[0x400 - 0x390];
+    FLOAT CrouchHeight;
+    FLOAT CrouchRadius;
+    BYTE unk_408[0x480 - 0x408];
     FLOAT BlendChangeTime;
     BYTE unk_484[0x4a8 - 0x484];
-    BITFIELD unk_4a8_b0 : 5;
+    BITFIELD initSlowReplication : 1;
+    BITFIELD unk_4a8_b1 : 4;
     BITFIELD bIsCrouched : 1;
     BITFIELD unk_4a8_b6 : 26;
     BYTE unk_4ac[4];
@@ -232,7 +250,10 @@ public:
     FLOAT fBlendTimeWithC0;
     BYTE unk_a4c[0xaac - 0xa4c];
     FLOAT fTimeOfFeetLedge;
-    BYTE unk_ab0[0xad8 - 0xab0];
+    BYTE unk_ab0[2];
+    BYTE ZoneConfig;
+    BYTE ZoneConfigForClient;
+    BYTE unk_ab4[0xad8 - 0xab4];
     BYTE PipHFire;
     BYTE BTW;
     BYTE unk_ada;
@@ -250,6 +271,8 @@ public:
     BITFIELD unk_af0_30 : 2;
     BYTE unk_af4[0xb60 - 0xaf4];
 
+    virtual void Crouch(UBOOL bClientSimulation);
+    void eventStartCrouch(FLOAT HeightAdjust);
     BYTE StartActionRootMotion(INT Action, FVector MoveAfter, FLOAT Yaw);
     INT CheckLedgeGrab(BYTE Mode);
     void ReinitBecauseOfDivergences();
@@ -293,6 +316,8 @@ public:
 class UClass : public UState {
 public:
     DWORD ClassCastFlags;
+    BYTE unk_8c[0xac - 0x8c];
+    TArray<BYTE> Defaults;
 };
 
 struct FStateFrame : public FFrame {

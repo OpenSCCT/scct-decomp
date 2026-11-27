@@ -6,26 +6,8 @@
 //   0x11d200: ULevel::SingleLineCheck
 // Built with VC7.0 /GL and linked /LTCG.
 
-typedef unsigned char BYTE;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
-typedef double DOUBLE;
-typedef unsigned short TCHAR;
-
-struct FVector
-{
-    FLOAT X, Y, Z;
-
-    FVector() {}
-    FVector(FLOAT InX, FLOAT InY, FLOAT InZ) : X(InX), Y(InY), Z(InZ) {}
-    FVector(const FVector &V) : X(V.X), Y(V.Y), Z(V.Z) {}
-    FVector operator-(const FVector &V) const { return FVector(X - V.X, Y - V.Y, Z - V.Z); }
-    FVector operator*(FLOAT Scale) const { return FVector(X * Scale, Y * Scale, Z * Scale); }
-    FLOAT SizeSquared() const { return X * X + Y * Y + Z * Z; }
-    FVector SafeNormal() const;
-};
+#include "versus_level_trace_vector.h"
+#include "versus_level_trace_types.h"
 
 struct FBox
 {
@@ -122,25 +104,6 @@ class UPrimitive;
 class UMaterial;
 class UFunction;
 class ULevel;
-
-struct FCheckResult
-{
-    FCheckResult *Next;         // 0x00
-    AActor *Actor;              // 0x04
-    FVector Location;           // 0x08
-    FVector Normal;             // 0x14
-    UPrimitive *Primitive;      // 0x20
-    FLOAT Time;                 // 0x24
-    INT Item;                   // 0x28
-    UMaterial *Material;        // 0x2c
-    INT Field30;                // 0x30
-    UBOOL bNonBlocking;         // 0x34 (neutral: triggers Event_11db70 instead of stopping trace)
-
-    FCheckResult() {}
-    FCheckResult(FLOAT InTime, FCheckResult *InNext = 0);
-    FCheckResult(const FCheckResult &Other);
-    FCheckResult *GetNext() const { return Next; }
-};
 
 class UObject
 {

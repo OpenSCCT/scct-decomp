@@ -64,7 +64,7 @@ void ASBasePawn::ReinitBecauseOfDivergences()
     fBlendTimeWithC0 = 0.0f;
     PipHFire = NOPipH;
     fTimeOfFeetLedge = 0.0f;
-    VirtualSlot81(0);
+    Crouch(0);
     bWeaponTransit = 0;
     setPhysics(PHYS_Walking, 0, GMath_UnitZ);
     FadeChannels(1, 25, 1.0f);
