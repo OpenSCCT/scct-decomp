@@ -71,7 +71,7 @@ enum {
 enum { PHYS_Walking = 1, PHYS_OnVerticalPlane = 8, PHYS_Ledge = 9, PHYS_OnPipeH = 14 };
 enum { NoPipHFire = 1, PipH4NoFire = 4 };
 
-// Partial reconstruction of the dispatcher at 0x1d6840. These six cases provide
+// Partial reconstruction of the dispatcher at 0x1d6840. These movement and damage cases provide
 // the retail call sites for the animation helpers. The dispatcher has no receipt.
 void ASBasePawn::ExecuteAction(INT Action)
 {
@@ -84,6 +84,30 @@ void ASBasePawn::ExecuteAction(INT Action)
     USkeletalMeshInstance *Instance = static_cast<USkeletalMeshInstance *>(MeshInstance);
 
     switch (Action) {
+    case SA_DMG_ELECTRIC:
+    case SA_DMG_ELECTRIC_NOANIMS:
+        eventBeginStickySkin();
+        bStickyShocking = 1;
+        eventevStickyShockSfx(1);
+        // Fall through to the common damage response.
+    case SA_DMG_SPECIAL_LEFT:
+    case SA_DMG_SPECIAL_RIGHT:
+    case SA_DMG_SPECIAL_FRONT:
+    case SA_DMG_SPECIAL_BACK:
+    case SA_DMG_HEAD:
+    case SA_DMG_CHEST_BACK:
+    case SA_DMG_CHEST_FRONT:
+    case SA_DMG_CHEST_LEFT:
+    case SA_DMG_CHEST_RIGHT:
+    case SA_DMG_ARM_LEFT:
+    case SA_DMG_ARM_RIGHT:
+    case SA_DMG_LEG_LEFT:
+    case SA_DMG_LEG_RIGHT:
+        if (IK_TypeBeforeDamage == IKT_NONE)
+            IK_TypeBeforeDamage = IK_Type;
+        IK_Type = IKT_NONE;
+        PlayDamageAnimation(Action);
+        break;
     case SA_ONLEDGE:
         setPhysics(PHYS_Ledge, 0, GMath_UnitZ);
         Instance->ApplyBlendParams(15, 0.f, 0.f, 0.f, NAME_None, 0);

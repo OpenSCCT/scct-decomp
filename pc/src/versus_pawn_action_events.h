@@ -144,7 +144,8 @@ public:
 
     BYTE unk_28[0x80 - 0x28];
     FVector Location;
-    BYTE unk_8c[0xbc - 0x8c];
+    FVector Velocity;
+    BYTE unk_98[0xbc - 0x98];
     FVector PrePivot;
     BYTE unk_c8[0xe0 - 0xc8];
     FRotator Rotation;
@@ -235,6 +236,24 @@ public:
     BYTE unk_4ac[4];
 };
 
+enum {
+    SA_DMG_SPECIAL_LEFT = 49,
+    SA_DMG_SPECIAL_RIGHT = 50,
+    SA_DMG_SPECIAL_FRONT = 51,
+    SA_DMG_SPECIAL_BACK = 52,
+    SA_DMG_ELECTRIC = 53,
+    SA_DMG_ELECTRIC_NOANIMS = 54,
+    SA_DMG_HEAD = 57,
+    SA_DMG_CHEST_BACK = 58,
+    SA_DMG_CHEST_FRONT = 59,
+    SA_DMG_CHEST_LEFT = 60,
+    SA_DMG_CHEST_RIGHT = 61,
+    SA_DMG_ARM_LEFT = 62,
+    SA_DMG_ARM_RIGHT = 63,
+    SA_DMG_LEG_LEFT = 64,
+    SA_DMG_LEG_RIGHT = 65
+};
+
 enum PawnType { SPAWNOFFENSE, SPAWNDEFENSE };
 enum IK_Type_ { IKT_WEAPONLOADED, IKT_NONE, IKT_GRAB_FIREMODE, IKT_BTW, IKT_PIPH, IKT_JCVD };
 
@@ -253,7 +272,44 @@ public:
     BYTE IK_TypeBeforeDamage;
     BYTE unk_71c[0x75c - 0x71c];
     FLOAT fBlendCoeffWalkAnim;
-    BYTE unk_760[0x8b4 - 0x760];
+    BYTE unk_760[0x7b4 - 0x760];
+    FName ADamageStChestBack0;
+    FName ADamageStChestForward0;
+    FName ADamageStChestLeft0;
+    FName ADamageStChestRight0;
+    FName ADamageStArmRight0;
+    FName ADamageStArmLeft0;
+    FName ADamageStLegLeft0;
+    FName ADamageStLegRight0;
+    FName ADamageStElectric0;
+    FName ADamageStChestBack2;
+    FName ADamageStChestForward2;
+    FName ADamageStChestLeft2;
+    FName ADamageStChestRight2;
+    FName ADamageStArmRight2;
+    FName ADamageStArmLeft2;
+    FName ADamageStLegLeft2;
+    FName ADamageStLegRight2;
+    FName ADamageStElectric2;
+    FName ADamageCrChestBack0;
+    FName ADamageCrChestForward0;
+    FName ADamageCrChestLeft0;
+    FName ADamageCrChestRight0;
+    FName ADamageCrArmRight0;
+    FName ADamageCrArmLeft0;
+    FName ADamageCrLegLeft0;
+    FName ADamageCrLegRight0;
+    FName ADamageCrElectric0;
+    FName ADamageCrChestBack2;
+    FName ADamageCrChestForward2;
+    FName ADamageCrChestLeft2;
+    FName ADamageCrChestRight2;
+    FName ADamageCrArmRight2;
+    FName ADamageCrArmLeft2;
+    FName ADamageCrLegLeft2;
+    FName ADamageCrLegRight2;
+    FName ADamageCrElectric2;
+    BYTE unk_844[0x8b4 - 0x844];
     FName ADeathStForward;
     FName ADeathStBack;
     FName ADeathStLeft;
@@ -285,12 +341,15 @@ public:
     BYTE unk_a14[0xa48 - 0xa14];
     FLOAT fBlendTimeWithC0;
     INT ChannelForBlendWithC0;
-    BYTE unk_a50[0xaac - 0xa50];
+    BYTE unk_a50[0xa84 - 0xa50];
+    class ASWeapon *MyWeapon;
+    BYTE unk_a88[0xaac - 0xa88];
     FLOAT fTimeOfFeetLedge;
     BYTE unk_ab0[2];
     BYTE ZoneConfig;
     BYTE ZoneConfigForClient;
-    BYTE unk_ab4[0xad8 - 0xab4];
+    BYTE WeaponLoaded;
+    BYTE unk_ab5[0xad8 - 0xab5];
     BYTE PipHFire;
     BYTE BTW;
     BYTE unk_ada;
@@ -298,7 +357,9 @@ public:
     BYTE unk_adc[0xaf0 - 0xadc];
     BITFIELD unk_af0_0 : 4;
     BITFIELD bQuickGadgetHasBegun : 1;
-    BITFIELD unk_af0_5 : 9;
+    BITFIELD unk_af0_5 : 1;
+    BITFIELD bStickyShocking : 1;
+    BITFIELD unk_af0_7 : 7;
     BITFIELD bLyingOnGround : 1;
     BITFIELD bNoRunAnimation : 1;
     BITFIELD unk_af0_16 : 3;
@@ -317,6 +378,10 @@ public:
     void ReinitBecauseOfDivergences();
     void execReinitBecauseOfDivergences(struct FFrame &Stack, void *const Result);
     void ExecuteAction(INT Action);
+    void PlayDamageAnimation(INT Action);
+    void eventPlayFirstPersonDamage(INT TheAction);
+    void eventBeginStickySkin();
+    void eventevStickyShockSfx(UBOOL bSpawn);
     void PlayWalkingAction(INT Action);
     void SetLedgeAnimations();
     void SetFenceAnimations();
