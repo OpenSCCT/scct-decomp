@@ -1293,58 +1293,76 @@
     }
   },
   {
-    "id": "versus-vd-b6080",
-    "offset": 745600,
-    "size": 244,
+    "id": "versus-skeletal-mesh-instance-set-bone-location",
+    "offset": 745040,
+    "size": 264,
     "inputs": [
-      "src/versus_vd5_item_0118.cpp"
+      "src/versus_skeletal_bone_controls.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_script.h",
+      "src/unreal_name.h",
+      "src/unreal_object.h"
     ],
-    "rebuilt_symbol": "?AddEntry@UnnamedClass_b6080@@QAEKVFName@@ABUFVector@@1MH@Z",
+    "rebuilt_symbol": "?SetBoneLocation@USkeletalMeshInstance@@QAEKVFName@@ABUFVector@@MMM@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd5_item_0118_vc70_ltcg_o2gygl.obj src/versus_vd5_item_0118.cpp",
-    "identification": "Complete Versus function at RVA 0xb6080. Direct call at RVA 0x124a48 in the retail function at RVA 0x124940.",
-    "link_bindings": {
-      "?FindIndex@UnnamedClass_b6080@@QAEHVFName@@@Z": {
-        "va": 278615984,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?Add@FArray@@QAEHHH@Z": {
-        "va": 277890272,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      }
-    },
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_bone_controls.obj src/versus_skeletal_bone_controls.cpp",
     "ltcg_link": {
       "roots": [
-        "?Driver_b6080@@YAXHVFName@@MH@Z"
+        "?execSetBoneRotation@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?execSetBoneLocation@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?execSetBoneDirection@AActor@@QAEXAAUFFrame@@QAX@Z"
       ],
       "stubs": [
         "?Add@FArray@@QAEHHH@Z",
-        "?FindIndex@UnnamedClass_b6080@@QAEHVFName@@@Z",
-        "?FindOwner_b6080@@YAPAVUnnamedClass_b6080@@H@Z",
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
+        "?GMath_Zero@@3ABUFVector@@B",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?MeshGetInstance@UMesh@@QAEPAVUMeshInstance@@PBVAActor@@@Z",
+        "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
         "__fltused"
       ],
-      "rebuilt_offset": 1024,
-      "rebuilt_address": 268439552,
+      "rebuilt_offset": 1920,
+      "rebuilt_address": 268440448,
       "fields": [
         [
-          26,
+          30,
           "rel32",
-          "?FindIndex@UnnamedClass_b6080@@QAEHVFName@@@Z"
+          "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z"
         ],
         [
-          104,
+          113,
           "rel32",
           "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          196,
+          "abs",
+          "__real@00000000"
         ]
       ],
       "symbols": {
-        "?FindIndex@UnnamedClass_b6080@@QAEHVFName@@@Z": 268439873,
-        "?Add@FArray@@QAEHHH@Z": 268439872
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": 268441265,
+        "?Add@FArray@@QAEHHH@Z": 268441264,
+        "__real@00000000": 268443648
+      },
+      "constants": {
+        "__real@00000000": 4
       }
     },
-    "match": {
-      "bytes_sha256": "268c8ddd2d67fa0ae609473fcd24e19a4094ac3d8a825b6399d04c983899882e",
-      "inputs_sha256": "3ce21bba1a3f8a8dcdd3d66753963b7e898d81cd6525dd3a14c3f2d25081e704"
+    "link_bindings": {
+      "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": {
+        "va": 278615984,
+        "basis": "USkeletalMeshInstance::MatchRefBone at RVA 0xb57b0 resolves the reflected FName against the mesh reference skeleton."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "FArray::Add at RVA 0x44e0 appends a single 0x44-byte controller."
+      },
+      "__real@00000000": {
+        "va": 281086456,
+        "basis": "Read-only single-precision zero for the FadeIn > 0.0f condition."
+      }
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1353,6 +1371,170 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    },
+    "identification": "USkeletalMeshInstance::SetBoneLocation. Registered Engine.Actor.SetBoneLocation (native 1110) calls this body after resolving the mesh instance. The shipped Engine package declares BoneName, BoneTrans, Alpha, FadeIn and FadeOut. The method sets the translation fields of the 0x44-byte control keyed by bone name in the member at +0x118. The genuine VM caller and this body match in one VC7.0 LTCG link. The VC7.1 control differs in 65 bytes, and VC7.0 /O1 and /Od do not match.",
+    "match": {
+      "bytes_sha256": "9c79bcf7eacee2607cc29ceeccf35f627d2af2559cc70b089c62f08783ed2e2c",
+      "inputs_sha256": "456536f834d36f83b5503c75dd7115c8f0114f8e3623a05c09cf03b1784511c7"
+    }
+  },
+  {
+    "id": "versus-skeletal-mesh-instance-set-bone-rotation",
+    "offset": 745312,
+    "size": 274,
+    "inputs": [
+      "src/versus_skeletal_bone_controls.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_script.h",
+      "src/unreal_name.h",
+      "src/unreal_object.h"
+    ],
+    "rebuilt_symbol": "?SetBoneRotation@USkeletalMeshInstance@@QAEKVFName@@ABUFRotator@@HMMM@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_bone_controls.obj src/versus_skeletal_bone_controls.cpp",
+    "ltcg_link": {
+      "roots": [
+        "?execSetBoneRotation@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?execSetBoneLocation@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?execSetBoneDirection@AActor@@QAEXAAUFFrame@@QAX@Z"
+      ],
+      "stubs": [
+        "?Add@FArray@@QAEHHH@Z",
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
+        "?GMath_Zero@@3ABUFVector@@B",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?MeshGetInstance@UMesh@@QAEPAVUMeshInstance@@PBVAActor@@@Z",
+        "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
+        "__fltused"
+      ],
+      "rebuilt_offset": 2192,
+      "rebuilt_address": 268440720,
+      "fields": [
+        [
+          30,
+          "rel32",
+          "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z"
+        ],
+        [
+          113,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          206,
+          "abs",
+          "__real@00000000"
+        ]
+      ],
+      "symbols": {
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": 268441265,
+        "?Add@FArray@@QAEHHH@Z": 268441264,
+        "__real@00000000": 268443648
+      },
+      "constants": {
+        "__real@00000000": 4
+      }
+    },
+    "link_bindings": {
+      "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": {
+        "va": 278615984,
+        "basis": "USkeletalMeshInstance::MatchRefBone at RVA 0xb57b0 resolves the reflected FName against the mesh reference skeleton."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "FArray::Add at RVA 0x44e0 appends a single 0x44-byte controller."
+      },
+      "__real@00000000": {
+        "va": 281086456,
+        "basis": "Read-only single-precision zero for the FadeIn > 0.0f condition."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "identification": "USkeletalMeshInstance::SetBoneRotation. Registered Engine.Actor.SetBoneRotation (native 1111) calls this body. The shipped Engine package identifies the FRotator BoneTurn, integer Space, Alpha and FLOAT FadeIn/FadeOut. It updates rotation on the same per-bone control array at +0x118. The genuine VM caller and this body match in one VC7.0 LTCG link. The VC7.1 control differs in 64 bytes, and VC7.0 /O1 and /Od do not match.",
+    "match": {
+      "bytes_sha256": "3b291fd053a80d963e3d1cfc77000948ed403070944246fc3171d51c33284515",
+      "inputs_sha256": "188823467815f45e42a05485f03e0bee1a76a90972fca73d8d629c8431a0bca0"
+    }
+  },
+  {
+    "id": "versus-vd-b6080",
+    "offset": 745600,
+    "size": 244,
+    "inputs": [
+      "src/versus_skeletal_bone_controls.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_script.h",
+      "src/unreal_name.h",
+      "src/unreal_object.h"
+    ],
+    "rebuilt_symbol": "?SetBoneDirection@USkeletalMeshInstance@@QAEKVFName@@ABUFRotator@@ABUFVector@@MH@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_bone_controls.obj src/versus_skeletal_bone_controls.cpp",
+    "ltcg_link": {
+      "roots": [
+        "?execSetBoneRotation@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?execSetBoneLocation@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?execSetBoneDirection@AActor@@QAEXAAUFFrame@@QAX@Z"
+      ],
+      "stubs": [
+        "?Add@FArray@@QAEHHH@Z",
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
+        "?GMath_Zero@@3ABUFVector@@B",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?MeshGetInstance@UMesh@@QAEPAVUMeshInstance@@PBVAActor@@@Z",
+        "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
+        "__fltused"
+      ],
+      "rebuilt_offset": 2480,
+      "rebuilt_address": 268441008,
+      "fields": [
+        [
+          26,
+          "rel32",
+          "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z"
+        ],
+        [
+          104,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ]
+      ],
+      "symbols": {
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": 268441265,
+        "?Add@FArray@@QAEHHH@Z": 268441264
+      }
+    },
+    "link_bindings": {
+      "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": {
+        "va": 278615984,
+        "basis": "USkeletalMeshInstance::MatchRefBone at RVA 0xb57b0 resolves the reflected FName against the mesh reference skeleton."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "FArray::Add at RVA 0x44e0 appends a single 0x44-byte controller."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "identification": "USkeletalMeshInstance::SetBoneDirection, called from registered Engine.Actor.SetBoneDirection at RVA 0x124a48. The method stores BoneTurn (FRotator), BoneTrans (FVector), Space and both alphas in the 0x44-byte entries at +0x124. GetFrame consumes the same members in its final bone-direction loop at RVA 0xbda10.",
+    "match": {
+      "bytes_sha256": "268c8ddd2d67fa0ae609473fcd24e19a4094ac3d8a825b6399d04c983899882e",
+      "inputs_sha256": "8c2ee3e939d90d45e042bdfdc1eb6f98b7bce2728251b6f14fa0458414dc3192"
     }
   },
   {
