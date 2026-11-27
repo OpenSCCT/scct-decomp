@@ -230,7 +230,8 @@ public:
     FLOAT BlendChangeTime;
     BYTE unk_484[0x4a8 - 0x484];
     BITFIELD initSlowReplication : 1;
-    BITFIELD unk_4a8_b1 : 4;
+    BITFIELD unk_4a8_b1 : 3;
+    BITFIELD bWantsToCrouch : 1;
     BITFIELD bIsCrouched : 1;
     BITFIELD unk_4a8_b6 : 26;
     BYTE unk_4ac[4];
@@ -251,7 +252,9 @@ enum {
     SA_DMG_ARM_LEFT = 62,
     SA_DMG_ARM_RIGHT = 63,
     SA_DMG_LEG_LEFT = 64,
-    SA_DMG_LEG_RIGHT = 65
+    SA_DMG_LEG_RIGHT = 65,
+    SA_JUMP_ST_0H = 90,
+    SA_JUMP_ST_2H = 91
 };
 
 enum PawnType { SPAWNOFFENSE, SPAWNDEFENSE };
@@ -261,7 +264,9 @@ class ASBasePawn : public APawn {
 public:
     BYTE unk_4b0[0x4bc - 0x4b0];
     FVector vMoveAfterRM;
-    BYTE unk_4c8[0x62c - 0x4c8];
+    BYTE unk_4c8[0x58c - 0x4c8];
+    FVector LastZipP;
+    BYTE unk_598[0x62c - 0x598];
     class ASBasePawn *m_AttackTarget;
     ASBasePawn *m_AttackedBy;
     BYTE unk_634[0x644 - 0x634];
@@ -309,7 +314,11 @@ public:
     FName ADamageCrLegLeft2;
     FName ADamageCrLegRight2;
     FName ADamageCrElectric2;
-    BYTE unk_844[0x8b4 - 0x844];
+    BYTE unk_844[0x878 - 0x844];
+    FName AJumpForwardR;
+    FName AJumpForwardL;
+    FName AJumpStart;
+    BYTE unk_884[0x8b4 - 0x884];
     FName ADeathStForward;
     FName ADeathStBack;
     FName ADeathStLeft;
@@ -343,7 +352,9 @@ public:
     INT ChannelForBlendWithC0;
     BYTE unk_a50[0xa84 - 0xa50];
     class ASWeapon *MyWeapon;
-    BYTE unk_a88[0xaac - 0xa88];
+    BYTE unk_a88[0xa9c - 0xa88];
+    INT ClientSmoothFlags;
+    BYTE unk_aa0[0xaac - 0xaa0];
     FLOAT fTimeOfFeetLedge;
     BYTE unk_ab0[2];
     BYTE ZoneConfig;
@@ -364,7 +375,9 @@ public:
     BITFIELD bNoRunAnimation : 1;
     BITFIELD unk_af0_16 : 3;
     BITFIELD bIsRolling : 1;
-    BITFIELD unk_af0_20 : 6;
+    BITFIELD unk_af0_20 : 3;
+    BITFIELD bIsLeftPart : 1;
+    BITFIELD unk_af0_24 : 2;
     BITFIELD bBeginSpecial12Anim : 1;
     BITFIELD unk_af0_27 : 2;
     BITFIELD bWeaponTransit : 1;
@@ -383,6 +396,7 @@ public:
     void eventBeginStickySkin();
     void eventevStickyShockSfx(UBOOL bSpawn);
     void PlayWalkingAction(INT Action);
+    void PlayJumpAnimation(INT Action);
     void SetLedgeAnimations();
     void SetFenceAnimations();
     void SetHorizontalPipeAnimations();

@@ -112,7 +112,7 @@
     },
     "match": {
       "bytes_sha256": "3fa8c88fd9dd8561fc7350972312e026772f30af90bbce40a437486aa639edd1",
-      "inputs_sha256": "0cdd1b873048cfbd93f8d9d215bddfe7d7be0ed9ca63ce848eef17bd6e4e87d1"
+      "inputs_sha256": "0d15a5039663a4f74ccc17f207aba670d8dac0c84aa63b5bdcd9114054d91f97"
     }
   },
   {
@@ -247,9 +247,9 @@
         ]
       ],
       "symbols": {
-        "?FindFunctionChecked@UObject@@QAEPAVUFunction@@VFName@@H@Z": 268444592,
+        "?FindFunctionChecked@UObject@@QAEPAVUFunction@@VFName@@H@Z": 268444720,
         "$PawnDamageSpecialTable": 268441712,
-        "?ApplyBlendParams@USkeletalMeshInstance@@QAEKHMMMVFName@@K@Z": 268443440,
+        "?ApplyBlendParams@USkeletalMeshInstance@@QAEKHMMMVFName@@K@Z": 268443568,
         "__real@00000000": 268447760,
         "$PawnDamageStandingArmedTable": 268441728,
         "$PawnDamageStandingUnarmedTable": 268441780,
@@ -305,7 +305,82 @@
     },
     "match": {
       "bytes_sha256": "12e3df191dcf66ce28f026ac51b2c249a515e09d6a8658195f9d239bb9d2ffb5",
-      "inputs_sha256": "17f9f39ec63e4eec85be1b244b23755e7cc75978ed0c6405dcb0565fa1e20a3c"
+      "inputs_sha256": "394001cf39bba9aa3ae245df467df0763f92af1e072ce04fcad1860b4296ed3c"
+    }
+  },
+  {
+    "id": "versus-pawn-play-jump-animation",
+    "offset": 1964688,
+    "size": 422,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "identification": "ASBasePawn::ExecuteAction actions SA_JUMP_ST_0H and SA_JUMP_ST_2H set ClientSmoothFlags and call this shared helper at 0x1d88a4. SBase.u names the jump-start and left/right forward sequences, bIsLeftPart and LastZipP. The linked Engine.u Pawn Boolean chain establishes bWantsToCrouch at +0x4a8 mask 0x10. The two standing actions select the jump sequence from planar velocity and the normalized channel-four frame. Its C++ method name describes this role. VC70 and VC71 both reproduce the full body.",
+    "inputs": [
+      "src/versus_pawn_jump_animation.cpp",
+      "src/versus_pawn_action_events.h",
+      "src/versus_mesh_instance_types.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_containers.h",
+      "src/versus_hardcoded_names.inl"
+    ],
+    "rebuilt_symbol": "?PlayJumpAnimation@ASBasePawn@@QAEXH@Z",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /GX /c /Folocal/versus_pawn_jump_animation.obj src/versus_pawn_jump_animation.cpp",
+    "ltcg_callees": [
+      "versus-pawn-set-ledge-animations"
+    ],
+    "ltcg_link": {
+      "roots": [
+        "?ExecuteAction@ASBasePawn@@QAEXH@Z"
+      ],
+      "stubs": [],
+      "fields": [
+        [
+          147,
+          "abs",
+          "__real@4024000000000000"
+        ],
+        [
+          220,
+          "abs",
+          "__real@3dcccccd"
+        ],
+        [
+          233,
+          "abs",
+          "__real@3f19999a"
+        ]
+      ],
+      "symbols": {
+        "__real@4024000000000000": 268443680,
+        "__real@3dcccccd": 268443676,
+        "__real@3f19999a": 268443672
+      },
+      "constants": {
+        "__real@4024000000000000": 8,
+        "__real@3dcccccd": 4,
+        "__real@3f19999a": 4
+      },
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552
+    },
+    "link_bindings": {
+      "__real@4024000000000000": {
+        "va": 281087120,
+        "basis": "The locked jump helper reads this 8-byte floating-point constant for its planar speed threshold or normalized frame window. Its contents are checked in both images."
+      },
+      "__real@3dcccccd": {
+        "va": 281086440,
+        "basis": "The locked jump helper reads this 4-byte floating-point constant for its planar speed threshold or normalized frame window. Its contents are checked in both images."
+      },
+      "__real@3f19999a": {
+        "va": 281086476,
+        "basis": "The locked jump helper reads this 4-byte floating-point constant for its planar speed threshold or normalized frame window. Its contents are checked in both images."
+      }
+    },
+    "match": {
+      "bytes_sha256": "d6fedd32a5efbacdd35b0364c4e8bac34c7c09c118d4c2b1b779e2b7bede82da",
+      "inputs_sha256": "7f06a5ff2308f1c1833b44ea08b7766fc618f3bf93af023cef9b78f4e0851712"
     }
   }
 ]

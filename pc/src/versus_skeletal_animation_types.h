@@ -61,6 +61,7 @@ public:
     TArray<FBoneControl> BoneDirections;          // +0x124
 
     UBOOL ApplyBlendParams(INT Stage, FLOAT Alpha, FLOAT InTime, FLOAT OutTime, FName Bone, UBOOL bGlobal);
+    void BlendToAlpha(INT Channel, FLOAT TargetAlpha, FLOAT Seconds);
     UBOOL StopAnimating(UBOOL ClearAllButBase);
     UBOOL SetAnimLinkup(UMeshAnimation *Anim, UMesh *RefMesh);
     void ActualizeAnimLinkups();

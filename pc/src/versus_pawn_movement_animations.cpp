@@ -68,7 +68,7 @@ enum {
     SA_ONLEDGE = 112, SA_ONFENCE = 128, SA_ROLLING = 130, SA_ROLLINGUP = 131,
     SA_ON_PIPEH = 207, SA_ON_PIPEH_4 = 209
 };
-enum { PHYS_Walking = 1, PHYS_OnVerticalPlane = 8, PHYS_Ledge = 9, PHYS_OnPipeH = 14 };
+enum { PHYS_Walking = 1, PHYS_Falling = 2, PHYS_OnVerticalPlane = 8, PHYS_Ledge = 9, PHYS_OnPipeH = 14 };
 enum { NoPipHFire = 1, PipH4NoFire = 4 };
 
 // Partial reconstruction of the dispatcher at 0x1d6840. These movement and damage cases provide
@@ -107,6 +107,18 @@ void ASBasePawn::ExecuteAction(INT Action)
             IK_TypeBeforeDamage = IK_Type;
         IK_Type = IKT_NONE;
         PlayDamageAnimation(Action);
+        break;
+    case SA_JUMP_ST_0H:
+    case SA_JUMP_ST_2H:
+        ClientSmoothFlags = 7;
+        PlayJumpAnimation(Action);
+        setPhysics(PHYS_Falling, 0, GMath_UnitZ);
+        Instance->ApplyBlendParams(1, 0.f, 0.f, 0.f, NAME_None, 0);
+        if (bQuickGadgetHasBegun) {
+            Instance->BlendToAlpha(22, 0.f, .1f);
+            bQuickGadgetHasBegun = 0;
+            eventNotifyQuickLaunch();
+        }
         break;
     case SA_ONLEDGE:
         setPhysics(PHYS_Ledge, 0, GMath_UnitZ);
