@@ -234,10 +234,8 @@ void AGameInfo::execParseKillMessage(FFrame &Stack, void *const Result)
 
 #pragma pack(pop)
 
-// Scaffolding for the LTCG link of execParseKillMessage (0x129b70), not part of the unit.
-// Retail FString::Left (0xf7d0) and FString::FString(INT, const TCHAR *) (0x4af0) are LTCG-linked
-// Core methods; defining them here lets the linker assign retail's custom calling convention to
-// FString::Left (ECX = this, EDX = Count, EAX = hidden return buffer).
+// Core string operations used by execParseKillMessage and the script string intrinsics.
+// RVA 0x4af0
 FString::FString(INT InCount, const TCHAR *InSrc)
     : FArray(InCount ? InCount + 1 : 0, sizeof(TCHAR))
 {
@@ -245,6 +243,7 @@ FString::FString(INT InCount, const TCHAR *InSrc)
         appStrncpy((TCHAR *)Data, InSrc, InCount + 1);
 }
 
+// RVA 0xf7d0
 FString FString::Left(INT Count) const
 {
     return FString(Clamp(Count, 0, Len()), **this);

@@ -835,6 +835,90 @@
     }
   },
   {
+    "id": "versus-vd-4af0",
+    "offset": 19184,
+    "size": 89,
+    "inputs": [
+      "src/versus_vd7_item_0036.cpp"
+    ],
+    "rebuilt_symbol": "??0FString@@QAE@HPBG@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd7_item_0036_vc70_ltcg_o2gygxgl.obj src/versus_vd7_item_0036.cpp",
+    "identification": "FString::Mid at RVA 0xf820 and FString::Left at RVA 0xf7d0 both call this sized FString constructor. A nonempty prefix allocates InCount + 1 TCHARs, copies the characters through wcsncpy, and writes the terminator.",
+    "link_bindings": {
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "GMalloc is loaded for virtual allocation or release of the array storage."
+      },
+      "??_C@_1CO@KNADCEMJ@?$AAF?$AAa?$AAr?$AAr?$AAa?$AAy?$AA?3?$AA?3?$AAp?$AAr?$AAo?$AAt?$AAe?$AAc?$AAt?$AAe?$AAd?$AAc?$AAs?$AAt@": {
+        "va": 281086276,
+        "basis": "The allocator tag at VA 0x10c10944 reads Farray::protectedcstor, the tag for the sized FArray constructor."
+      },
+      "__imp__wcsncpy": {
+        "va": 280884160,
+        "basis": "This import address is MSVCR70 wcsncpy. The constructor copies InCount + 1 wide characters and explicitly terminates the result."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?execParseKillMessage@AGameInfo@@QAEXAAUFFrame@@QAX@Z"
+      ],
+      "stubs": [
+        "??0FString@@QAE@PBG@Z",
+        "??1FString@@QAE@XZ",
+        "??4FString@@QAEAAV0@ABV0@@Z",
+        "??YFString@@QAEAAV0@PBG@Z",
+        "?GEmptyString@@3QBGB",
+        "?GKillMsgKillerToken@@3QBGB",
+        "?GKillMsgVictimToken@@3QBGB",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?Right@FString@@QBE?AV1@H@Z",
+        "___CxxFrameHandler",
+        "__except_list",
+        "__imp__wcsncpy",
+        "__imp__wcsstr"
+      ],
+      "rebuilt_offset": 1776,
+      "rebuilt_address": 268440304,
+      "fields": [
+        [
+          30,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          37,
+          "abs",
+          "??_C@_1CO@KNADCEMJ@?$AAF?$AAa?$AAr?$AAr?$AAa?$AAy?$AA?3?$AA?3?$AAp?$AAr?$AAo?$AAt?$AAe?$AAc?$AAt?$AAe?$AAd?$AAc?$AAs?$AAt@"
+        ],
+        [
+          68,
+          "abs",
+          "__imp__wcsncpy"
+        ]
+      ],
+      "symbols": {
+        "?GMalloc@@3PAVFMalloc@@A": 268440487,
+        "??_C@_1CO@KNADCEMJ@?$AAF?$AAa?$AAr?$AAr?$AAa?$AAy?$AA?3?$AA?3?$AAp?$AAr?$AAo?$AAt?$AAe?$AAc?$AAt?$AAe?$AAd?$AAc?$AAs?$AAt@": 268443652,
+        "__imp__wcsncpy": 268440492
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GX",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "cb7c64a6973a324733d371ee289d2b4b6a9cb79b2832d61cc37de1f1d52dd120",
+      "inputs_sha256": "ed50b0942c6a8288e0fcc7fc2bf8fb674f10dc00d13b202ec4b671708010b5ee"
+    }
+  },
+  {
     "id": "versus-vd-4b50",
     "offset": 19280,
     "size": 28,
@@ -10734,6 +10818,85 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    }
+  },
+  {
+    "id": "versus-vd-f7d0",
+    "offset": 63440,
+    "size": 71,
+    "inputs": [
+      "src/versus_vd7_item_0036.cpp"
+    ],
+    "rebuilt_symbol": "?Left@FString@@QBE?AV1@H@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd7_item_0036_vc70_ltcg_o2gygxgl.obj src/versus_vd7_item_0036.cpp",
+    "identification": "The script intrinsic UObject::execLeft at RVA 0x48eb0 and AGameInfo::execParseKillMessage at RVA 0x129b70 call this prefix operation. It clamps the requested count to the string length and calls the sized FString constructor.",
+    "link_bindings": {
+      "??_C@_11LOCGONAA@?$AA?$AA@": {
+        "va": 281086248,
+        "basis": "For zero array length the FString dereference yields the empty wide string at VA 0x10c10928."
+      },
+      "??0FString@@QAE@HPBG@Z": {
+        "va": 277891824,
+        "basis": "The sized FString constructor at RVA 0x4af0 takes the clamped number of characters and the string data."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?execParseKillMessage@AGameInfo@@QAEXAAUFFrame@@QAX@Z"
+      ],
+      "stubs": [
+        "??0FString@@QAE@PBG@Z",
+        "??1FString@@QAE@XZ",
+        "??4FString@@QAEAAV0@ABV0@@Z",
+        "??YFString@@QAEAAV0@PBG@Z",
+        "?GEmptyString@@3QBGB",
+        "?GKillMsgKillerToken@@3QBGB",
+        "?GKillMsgVictimToken@@3QBGB",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?Right@FString@@QBE?AV1@H@Z",
+        "___CxxFrameHandler",
+        "__except_list",
+        "__imp__wcsncpy",
+        "__imp__wcsstr"
+      ],
+      "rebuilt_offset": 1872,
+      "rebuilt_address": 268440400,
+      "fields": [
+        [
+          24,
+          "abs",
+          "??_C@_11LOCGONAA@?$AA?$AA@"
+        ],
+        [
+          45,
+          "rel32",
+          "??0FString@@QAE@HPBG@Z"
+        ],
+        [
+          62,
+          "rel32",
+          "??0FString@@QAE@HPBG@Z"
+        ]
+      ],
+      "symbols": {
+        "??_C@_11LOCGONAA@?$AA?$AA@": 268443648,
+        "??0FString@@QAE@HPBG@Z": 268440304
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GX",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "d0d6f5ef942f6c13f9e66799134a1ba2515f6d0272754c72554a19e0c336138b",
+      "inputs_sha256": "0f41b86fe4369e669abe784b097542a9d9d84e6db8257814e4af77f72da561dd"
     }
   },
   {
