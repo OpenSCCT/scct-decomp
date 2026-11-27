@@ -802,6 +802,44 @@
     }
   },
   {
+    "id": "versus-fstring-printf",
+    "offset": 72480,
+    "size": 83,
+    "inputs": [
+      "src/versus_fstring_printf.cpp",
+      "src/versus_engine_stats.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_object.h"
+    ],
+    "rebuilt_symbol": "?Printf@FString@@SA?AV1@PBGZZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_fstring_printf.obj src/versus_fstring_printf.cpp",
+    "system_headers": {
+      "stdarg.h": "11b87f5674aa76a03911af441e83fb32c7226bb949761fddfdbd6f6c8f3bdc23"
+    },
+    "identification": "FStats::Render at RVA 0xce3f0 calls this wide variadic formatter 248 times. The covered FEngineStats::Init and UClient::Exec bind the same RVA to FString::Printf. The complete body passes its 4096-element buffer and variable arguments to the imported _vsnwprintf and constructs the returned FString in caller-provided storage. VC70 and VC71 both reproduce the function body.",
+    "link_bindings": {
+      "__chkstk": {
+        "va": 280509024,
+        "basis": "Same large-frame stack probe as the covered FFileManagerGeneric::Copy at RVA 0x8bd0."
+      },
+      "__imp___vsnwprintf": {
+        "va": 280884156,
+        "basis": "Locked PE import table names the wide variadic formatter at this address."
+      },
+      "??0FString@@QAE@PBG@Z": {
+        "va": 277890752,
+        "basis": "Matched wide-string constructor at RVA 0x46c0."
+      }
+    },
+    "match": {
+      "bytes_sha256": "9365aa46c0831a8151305d00b915c0a453533e3bde10b7eebb201402582420e8",
+      "inputs_sha256": "b3b58d8830847b887fe00a1b7c095c3a7fa3b6b9b2c80dbce390f29d8fa18a5c"
+    }
+  },
+  {
     "id": "versus-vd-11ec0",
     "offset": 73408,
     "size": 132,
