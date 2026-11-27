@@ -5,7 +5,7 @@
 #include "versus_build.h"
 #include "unreal_object.h"
 #include "unreal_math.h"
-#include "versus_static_mesh_arrays.h"
+#include "versus_animation_sequence.h"
 
 class USkeletalMeshInstance;
 class UAnimNotify;
@@ -15,24 +15,6 @@ struct FNamedBone
     FName Name;
     DWORD Flags;
     INT ParentIndex;
-};
-
-struct FMeshAnimNotify
-{
-    FLOAT Time;
-    FName Function;
-    UAnimNotify *NotifyObject;
-};
-
-struct FMeshAnimSeq
-{
-    FName Name;
-    TArray<FName> Groups;
-    INT StartFrame;
-    INT NumFrames;
-    FLOAT Rate;
-    TArray<FMeshAnimNotify> Notifys;
-    INT unk_28;
 };
 
 // MotionChunk's key readers at 0xb3760
@@ -72,6 +54,7 @@ struct MotionChunk
 class UMeshAnimation : public UObject
 {
 public:
+    virtual ~UMeshAnimation();
     virtual FMeshAnimSeq *FindAnimSeq(FName Name);
     virtual void VirtualSlot23();
     virtual MotionChunk *FindMotionChunk(FName Name);

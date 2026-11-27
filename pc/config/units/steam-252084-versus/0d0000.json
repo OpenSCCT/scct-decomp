@@ -6879,42 +6879,130 @@
     }
   },
   {
-    "id": "versus-vd-df670",
-    "offset": 915056,
-    "size": 108,
+    "id": "versus-mesh-anim-sequence-update-old-notifies",
+    "offset": 914912,
+    "size": 144,
     "inputs": [
-      "src/versus_vd9_item_0176.cpp"
+      "src/versus_vd5_item_0109.cpp",
+      "src/versus_animation_sequence.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_static_mesh_arrays.h"
     ],
-    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAUFMeshAnimSeq@@@Z",
+    "rebuilt_symbol": "?UpdateOldNotifies@FMeshAnimSeq@@QAEXPAVUObject@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd9_item_0176_vc70_ltcg_o2gygl.obj src/versus_vd9_item_0176.cpp",
-    "identification": "Complete Versus function at RVA 0xdf670. Direct call at RVA 0x85ed5 in the retail function at RVA 0x85e70.",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_animation_postload.obj src/versus_vd5_item_0109.cpp",
+    "identification": "FMeshAnimSeq::UpdateOldNotifies converts legacy notify function names to UAnimNotify_Script objects, retains the new object, and clears the old FName. Retail UMeshAnimation::PostLoad and UVertMesh::PostLoad both call it with the mesh outer. Engine.u export 5814 is AnimNotify_Script.NotifyName, a NameProperty, and the Notify method reads the same name at +0x2c. The registered class object at RVA 0x3c1220 supplies its ClassConstructor at +0x104. Both VC7.0 and VC7.1 reproduce the complete function under /O2 /GL in this context.",
     "link_bindings": {
-      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@VFName@@@@@Z": {
-        "va": 278003072,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+      "?GObjTransientPkg@@3PAVUObject@@A": {
+        "va": 281617844,
+        "basis": "UObject transient package, selected for the sentinel outer by ConstructObject."
       },
-      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshAnimNotify@@@@@Z": {
-        "va": 278787808,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+      "?GError@@3PAVFOutputDevice@@A": {
+        "va": 281483944,
+        "basis": "Global GError supplied to UObject::StaticAllocateObject, also present in the existing UMesh::MeshGetInstance receipt."
+      },
+      "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A": {
+        "va": 281809440,
+        "basis": "Registered UAnimNotify_Script UClass; its finalizer at RVA 0x2dd090 and the Engine.u class identity corroborate the static object."
+      },
+      "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z": {
+        "va": 277992320,
+        "basis": "UObject::StaticAllocateObject, the same eight-argument constructor allocation used by the receipted UMesh::MeshGetInstance."
+      },
+      "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A+0x104": {
+        "va": 281809700,
+        "basis": "UAnimNotify_Script::PrivateStaticClass.ClassConstructor, at +0x104 inside the same registered class object in both the source link and the retail image."
       }
     },
     "ltcg_link": {
       "roots": [
-        "?Driver_df670@@YAXPAVFArchive@@PAUFMeshAnimSeq@@@Z"
+        "?PostLoad@UMeshAnimation@@UAEXXZ",
+        "?PostLoad@UVertMesh@@UAEXXZ"
       ],
       "stubs": [
-        "?Add@FArray@@QAEHHH@Z",
-        "?Empty@FArray@@QAEXHH@Z",
-        "?Escape@@YAXPAX@Z",
+        "?FName_Names@@3V?$TArray@PAUFStoredNameEntry@@@@A",
         "?GError@@3PAVFOutputDevice@@A",
+        "?GLocalizedPackageRemaps@@3PAUFLocalizedPackageRemap@@A",
         "?GObjTransientPkg@@3PAVUObject@@A",
-        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z",
-        "?UAnimNotify_Script_PrivateStaticClass@@3VUClass@@A",
-        "?UMeshInstance_PrivateStaticClass@@3VUClass@@A"
+        "?LoadLocalizedStruct@@YAXPAVUStruct@@PBGVFName@@22PAE@Z",
+        "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A",
+        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z"
       ],
       "rebuilt_offset": 1024,
       "rebuilt_address": 268439552,
+      "fields": [
+        [
+          41,
+          "abs",
+          "?GObjTransientPkg@@3PAVUObject@@A"
+        ],
+        [
+          47,
+          "abs",
+          "?GError@@3PAVFOutputDevice@@A"
+        ],
+        [
+          63,
+          "abs",
+          "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A"
+        ],
+        [
+          68,
+          "rel32",
+          "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z"
+        ],
+        [
+          84,
+          "abs",
+          "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A+0x104"
+        ]
+      ],
+      "symbols": {
+        "?GObjTransientPkg@@3PAVUObject@@A": 268440083,
+        "?GError@@3PAVFOutputDevice@@A": 268440081,
+        "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A": 268440085,
+        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z": 268440086,
+        "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A+0x104": 268440345
+      }
+    },
+    "match": {
+      "bytes_sha256": "f4c702c08c99294385f79bc6daed33d1f8819ffc4ffcd08ba879aadaacda63f7",
+      "inputs_sha256": "ca245b3ac7a0a9b4eeaecb1dbdc1cd0ed9b2c355a73c6790df759f6cf54dd191"
+    }
+  },
+  {
+    "id": "versus-vd-df670",
+    "offset": 915056,
+    "size": 108,
+    "inputs": [
+      "src/versus_animation_archive.cpp",
+      "src/versus_animation_sequence.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_lazy_archive.h"
+    ],
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAUFMeshAnimSeq@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_animation_archive.obj src/versus_animation_archive.cpp",
+    "identification": "Complete FMeshAnimSeq archive operator. Called for both loading and saving by the sequence array serializer at RVA 0x85e70. Version 115 introduces the integer at +0x28. The established name and notify array operators used here also match retail. VC7.0 and VC7.1 reproduce this body.",
+    "ltcg_link": {
+      "roots": [
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshAnimSeq@@@@@Z"
+      ],
+      "stubs": [
+        "??3@YAXPAX@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1456,
+      "rebuilt_address": 268439984,
       "fields": [
         [
           46,
@@ -6928,13 +7016,101 @@
         ]
       ],
       "symbols": {
-        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@VFName@@@@@Z": 268440080,
-        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshAnimNotify@@@@@Z": 268440240
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@VFName@@@@@Z": 268440128,
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshAnimNotify@@@@@Z": 268440288
+      }
+    },
+    "link_bindings": {
+      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@VFName@@@@@Z": {
+        "va": 278003072,
+        "basis": "Exact archive operator for the sequence Groups array of FName values."
+      },
+      "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshAnimNotify@@@@@Z": {
+        "va": 278787808,
+        "basis": "Exact archive operator for the sequence Notifys array of 12-byte FMeshAnimNotify values."
       }
     },
     "match": {
       "bytes_sha256": "92019485f2c209c17881c979b9fed52626350c7396e0f94e32a215e101c8658b",
-      "inputs_sha256": "2e46347dd2a0326f8e0ec75471c949903bf3691aca37f6c1c0340e6d6497b18d"
+      "inputs_sha256": "c173273b69fd617858e12280634ca5875b88c77e2fbccadd9419a575f759fcf1"
+    }
+  },
+  {
+    "id": "versus-archive-mesh-animation-notify-array",
+    "offset": 915168,
+    "size": 348,
+    "inputs": [
+      "src/versus_animation_archive.cpp",
+      "src/versus_animation_sequence.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_lazy_archive.h"
+    ],
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshAnimNotify@@@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_animation_archive.obj src/versus_animation_archive.cpp",
+    "identification": "FArchive operator for TArray<FMeshAnimNotify>. FMeshAnimSeq serialization calls this operator at 0xdf6c2 for Notifys at +0x1c. The 12-byte entries contain time, script function name and notify object. Archives before version 112 clear the object and serialize only the time and name. Later archives serialize all three. VC7.0 and VC7.1 reproduce the complete body.",
+    "ltcg_link": {
+      "roots": [
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshAnimSeq@@@@@Z"
+      ],
+      "stubs": [
+        "??3@YAXPAX@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1760,
+      "rebuilt_address": 268440288,
+      "fields": [
+        [
+          59,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ],
+        [
+          73,
+          "rel32",
+          "?Empty@FArray@@QAEXHH@Z"
+        ],
+        [
+          103,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          217,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ]
+      ],
+      "symbols": {
+        "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": 268439552,
+        "?Empty@FArray@@QAEXHH@Z": 268441010,
+        "?Add@FArray@@QAEHHH@Z": 268441009
+      }
+    },
+    "link_bindings": {
+      "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": {
+        "va": 277998144,
+        "basis": "Existing exact FCompactIndex archive operator for the TArray element count, emitted in this link and independently matched in full."
+      },
+      "?Empty@FArray@@QAEXHH@Z": {
+        "va": 277890384,
+        "basis": "FArray::Empty after loading the compact element count, using the count as initial slack."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "FArray::Add allocates each element through TArray placement new."
+      }
+    },
+    "match": {
+      "bytes_sha256": "69a995316997614ccc9875bce9094128a4bb86dfe4c7bc4401423f2b6e5f1cce",
+      "inputs_sha256": "6209a59342e3788e04d9fa31c629a255c2fc4800157e4f3139ec52780013eb93"
     }
   },
   {

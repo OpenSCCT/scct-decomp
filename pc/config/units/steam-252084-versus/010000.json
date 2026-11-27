@@ -7075,6 +7075,75 @@
     }
   },
   {
+    "id": "versus-object-load-localized",
+    "offset": 94064,
+    "size": 156,
+    "inputs": [
+      "src/versus_vd5_item_0109.cpp",
+      "src/versus_build.h",
+      "src/versus_animation_sequence.h",
+      "src/unreal_name.h",
+      "src/unreal_types.h",
+      "src/versus_static_mesh_arrays.h"
+    ],
+    "rebuilt_symbol": "?LoadLocalized@UObject@@QAEXXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_object_load_localized.obj src/versus_vd5_item_0109.cpp",
+    "identification": "UObject::LoadLocalized. The named UObject::PostLoad caller at RVA 0x107e10 and the UMeshAnimation::PostLoad path at 0xb3890 conditionally call this complete function on the object in ESI. It checks CLASS_Localized (0x20), derives the package, section and optional key prefix from the object or class name and outer, and dispatches to the recursive property loader. The package remap table and name-table fallback provide the genuine helper context.",
+    "link_bindings": {
+      "?GetLocalizedPackageName@@YAPBGVFName@@@Z": {
+        "va": 278003840,
+        "basis": "Both package branches call the shared FName-to-localization-package remap lookup at RVA 0x20080."
+      },
+      "?LoadLocalizedStruct@@YAXPAVUStruct@@PBGVFName@@22PAE@Z": {
+        "va": 277966128,
+        "basis": "Dispatch to the recursive localized UStruct property loader at RVA 0x16d30."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?PostLoad@UMeshAnimation@@UAEXXZ",
+        "?PostLoad@UVertMesh@@UAEXXZ"
+      ],
+      "stubs": [
+        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z",
+        "?GLocalizedPackageRemaps@@3PAUFLocalizedPackageRemap@@A",
+        "?GObjTransientPkg@@3PAVUObject@@A",
+        "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A",
+        "?LoadLocalizedStruct@@YAXPAVUStruct@@PBGVFName@@22PAE@Z",
+        "?FName_Names@@3V?$TArray@PAUFStoredNameEntry@@@@A",
+        "?GError@@3PAVFOutputDevice@@A"
+      ],
+      "rebuilt_offset": 1168,
+      "rebuilt_address": 268439696,
+      "fields": [
+        [
+          51,
+          "rel32",
+          "?GetLocalizedPackageName@@YAPBGVFName@@@Z"
+        ],
+        [
+          87,
+          "rel32",
+          "?GetLocalizedPackageName@@YAPBGVFName@@@Z"
+        ],
+        [
+          144,
+          "rel32",
+          "?LoadLocalizedStruct@@YAXPAVUStruct@@PBGVFName@@22PAE@Z"
+        ]
+      ],
+      "symbols": {
+        "?GetLocalizedPackageName@@YAPBGVFName@@@Z": 268440032,
+        "?LoadLocalizedStruct@@YAXPAVUStruct@@PBGVFName@@22PAE@Z": 268440084
+      }
+    },
+    "match": {
+      "bytes_sha256": "ec399908ecd5d9d7e330f6203d6a7a56490bb4d40de35cf9830a1c5b7090aebe",
+      "inputs_sha256": "5841a937b9f8a524d24ab5c8a81e110c667737f9c365aedbdd9cd929f6851ea2"
+    }
+  },
+  {
     "id": "versus-vd-17010",
     "offset": 94224,
     "size": 1003,
@@ -11040,6 +11109,92 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    }
+  },
+  {
+    "id": "versus-archive-name-array",
+    "offset": 130432,
+    "size": 155,
+    "inputs": [
+      "src/versus_animation_archive.cpp",
+      "src/versus_animation_sequence.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_lazy_archive.h"
+    ],
+    "rebuilt_symbol": "??6@YAAAVFArchive@@AAV0@AAV?$TArray@VFName@@@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_animation_archive.obj src/versus_animation_archive.cpp",
+    "identification": "FArchive operator for TArray<FName>. FMeshAnimSeq serialization calls this function for Groups at +0x04. UEnum::Serialize also calls it for Names. The compact-index count and all 155 bytes match at RVA 0x1fd80. In the same LTCG context the VC7.1 /O2 and VC7.0 /O1 controls differ.",
+    "ltcg_link": {
+      "roots": [
+        "??6@YAAAVFArchive@@AAV0@AAV?$TArray@UFMeshAnimSeq@@@@@Z"
+      ],
+      "stubs": [
+        "??3@YAXPAX@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1600,
+      "rebuilt_address": 268440128,
+      "fields": [
+        [
+          42,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ],
+        [
+          56,
+          "rel32",
+          "?Empty@FArray@@QAEXHH@Z"
+        ],
+        [
+          77,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          111,
+          "rel32",
+          "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z"
+        ]
+      ],
+      "symbols": {
+        "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": 268439552,
+        "?Empty@FArray@@QAEXHH@Z": 268441010,
+        "?Add@FArray@@QAEHHH@Z": 268441009
+      }
+    },
+    "link_bindings": {
+      "??6@YAAAVFArchive@@AAV0@AAUFCompactIndex@@@Z": {
+        "va": 277998144,
+        "basis": "Existing exact FCompactIndex archive operator for the TArray element count, emitted in this link and independently matched in full."
+      },
+      "?Empty@FArray@@QAEXHH@Z": {
+        "va": 277890384,
+        "basis": "FArray::Empty after loading the compact element count, using the count as initial slack."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "FArray::Add allocates each element through TArray placement new."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "6b193c7f787524845fffae7165766b6ef921ff2dbf6403700e81d42b82475e5b",
+      "inputs_sha256": "f087563071336f26265a24c2a63b4a1f50e5c333586d0cb004aa9a8455d1b44e"
     }
   },
   {

@@ -625,7 +625,8 @@
       "src/unreal_name.h",
       "src/unreal_object.h",
       "src/unreal_math.h",
-      "src/versus_static_mesh_arrays.h"
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_animation_sequence.h"
     ],
     "rebuilt_symbol": "?GetTrackOrientation@MotionChunk@@UAEXHHAAUFQuat@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -640,7 +641,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "d6fb377a5959863fcf1438de4d7972885b2fe74a1bcf09b3d7a6bd3746f675ea",
-      "inputs_sha256": "15265eaa47a2d6b1960a507b1548b69f65d9e51492516f32d62b5a4e2156173a"
+      "inputs_sha256": "d1d79172ddbda60bf1e7a1f6f7f55c173f38487da456e5ec37a309ef30791d81"
     }
   },
   {
@@ -655,7 +656,8 @@
       "src/unreal_name.h",
       "src/unreal_object.h",
       "src/unreal_math.h",
-      "src/versus_static_mesh_arrays.h"
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_animation_sequence.h"
     ],
     "rebuilt_symbol": "?GetTrackPosition@MotionChunk@@UAEXHHAAUFVector@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -670,7 +672,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "f41cd0dc006fb98e5ddb9f2892b778e0a960e6d4c14cf4345eb6804011502213",
-      "inputs_sha256": "87bef687f42af4120b47e19857ffd09d431cd9e09affd61d0d93521021562e70"
+      "inputs_sha256": "58b9f898d214d05d7941687b34ef1aea03a45e375df1d88bf829b7b1ce23576d"
     }
   },
   {
@@ -678,38 +680,43 @@
     "offset": 735376,
     "size": 78,
     "inputs": [
-      "src/versus_vd5_item_0109.cpp"
+      "src/versus_vd5_item_0109.cpp",
+      "src/versus_animation_sequence.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_static_mesh_arrays.h"
     ],
     "rebuilt_symbol": "?PostLoad@UMeshAnimation@@UAEXXZ",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_vd5_item_0109_vc70_ltcg_o2ob1gygl.obj src/versus_vd5_item_0109.cpp",
-    "identification": "Complete Versus function at RVA 0xb3890. No direct call reaches it; its address is stored in the retail .rdata section at RVA 0x304980 (a virtual method or function table).",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_animation_postload.obj src/versus_vd5_item_0109.cpp",
+    "identification": "UMeshAnimation::PostLoad is slot 8 of the registered UMeshAnimation vtable at RVA 0x304960. After UObject::PostLoad it updates legacy notifies on the 44-byte FMeshAnimSeq elements in AnimSeqs at +0x44. The adjacent UMeshAnimation::Serialize receipt and GetFrame lookups distinguish these from the 104-byte MotionChunk elements in Moves at +0x38. Both VC7.0 and VC7.1 reproduce the complete function under /O2 /GL in this context.",
     "link_bindings": {
       "?LoadLocalized@UObject@@QAEXXZ": {
         "va": 277966704,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "UObject::LoadLocalized, called when RF_PerObjectLocalized is set in UObject::PostLoad."
       },
-      "?Fixup@MotionChunk@@QAEXPAVUObject@@@Z": {
+      "?UpdateOldNotifies@FMeshAnimSeq@@QAEXPAVUObject@@@Z": {
         "va": 278787552,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "FMeshAnimSeq::UpdateOldNotifies in this link, independently compared in full against the retail callee."
       }
     },
     "ltcg_link": {
       "roots": [
-        "?Driver_b3890@@YAXPAVUMeshAnimation@@@Z"
+        "?PostLoad@UMeshAnimation@@UAEXXZ",
+        "?PostLoad@UVertMesh@@UAEXXZ"
       ],
       "stubs": [
-        "?Escape@@YAXPAX@Z",
+        "?FName_Names@@3V?$TArray@PAUFStoredNameEntry@@@@A",
         "?GError@@3PAVFOutputDevice@@A",
+        "?GLocalizedPackageRemaps@@3PAUFLocalizedPackageRemap@@A",
         "?GObjTransientPkg@@3PAVUObject@@A",
-        "?GetLocalizedPackageName@@YAPBGH@Z",
-        "?LoadLocalizedStruct@@YAXPAXPBGHHH0@Z",
-        "?StaticConstructObject@@YAPAVUObject@@PAVUClass@@PAV1@HK1PAVFOutputDevice@@11@Z",
-        "?TrackClass@@3VUClass@@A",
-        "?TrackClass_ClassConstructor@@3P6AXPAX@ZA"
+        "?LoadLocalizedStruct@@YAXPAVUStruct@@PBGVFName@@22PAE@Z",
+        "?PrivateStaticClass@UAnimNotify_Script@@2VUClass@@A",
+        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z"
       ],
-      "rebuilt_offset": 1024,
-      "rebuilt_address": 268439552,
+      "rebuilt_offset": 1328,
+      "rebuilt_address": 268439856,
       "fields": [
         [
           24,
@@ -719,17 +726,17 @@
         [
           58,
           "rel32",
-          "?Fixup@MotionChunk@@QAEXPAVUObject@@@Z"
+          "?UpdateOldNotifies@FMeshAnimSeq@@QAEXPAVUObject@@@Z"
         ]
       ],
       "symbols": {
-        "?LoadLocalized@UObject@@QAEXXZ": 268439632,
-        "?Fixup@MotionChunk@@QAEXPAVUObject@@@Z": 268439792
+        "?LoadLocalized@UObject@@QAEXXZ": 268439696,
+        "?UpdateOldNotifies@FMeshAnimSeq@@QAEXPAVUObject@@@Z": 268439552
       }
     },
     "match": {
       "bytes_sha256": "acf74128ba5f4af1bc34bb70a49b31bbad02c4325099a171f54f81309862924a",
-      "inputs_sha256": "bd88ea251abfb6625931640058edbf68e68cc5096ab7adaf8132c77fd370c2af"
+      "inputs_sha256": "fc9c01e0069294eb8f80bb5ef68fa5c9cd68ad58ee258be5f75e393122b84133"
     }
   },
   {
