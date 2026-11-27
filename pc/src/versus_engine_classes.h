@@ -4,7 +4,7 @@
 
 #include "versus_build.h"
 #include "unreal_actor.h"
-#include "unreal_commandlet.h"
+#include "versus_commandlet.h"
 #include "unreal_containers.h"
 #include "unreal_interaction.h"
 #include "unreal_object.h"
@@ -476,12 +476,6 @@ public:
     virtual ~UPlayerInput();
 
     BYTE unk_28[0x54];
-};
-
-// Engine.ServerCommandlet: 0x1dc bytes, 23 virtual functions
-class UServerCommandlet : public UCommandlet {
-public:
-    virtual ~UServerCommandlet();
 };
 
 #include "versus_global_temp_objects.h"

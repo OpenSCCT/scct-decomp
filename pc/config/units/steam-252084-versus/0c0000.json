@@ -11197,6 +11197,107 @@
     }
   },
   {
+    "id": "versus-stats-clear",
+    "offset": 844176,
+    "size": 289,
+    "inputs": [
+      "src/versus_stats_clear.cpp",
+      "src/versus_build.h",
+      "src/versus_engine_stats.h",
+      "src/versus_commandlet.h",
+      "src/unreal_types.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h"
+    ],
+    "rebuilt_symbol": "?Clear@FStats@@QAEXXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_stats_clear.obj src/versus_stats_clear.cpp",
+    "identification": "FStats::Clear. The shipped editor guard for this method at RVA 0x34d821 names the code at RVA 0x34d6f0, which copies the same active integer, float and string counter families, then clears them. Retail calls it with GStats at RVAs 0x7f22 and 0x97065 during the main and dedicated-server frame loops. The two inlined Win32 zero-fill blocks have the same register sequence in the editor, in retail and in independent allocations such as retail RVA 0x1217d0.",
+    "ltcg_callees": [
+      "versus-vd-4750"
+    ],
+    "ltcg_link": {
+      "roots": [
+        "?Main@UServerCommandlet@@UAEHPBG@Z"
+      ],
+      "stubs": [
+        "?appSeconds@@YANXZ",
+        "?appMemcpy@@YAXPAXPBXH@Z",
+        "?GIsRunning@@3KA",
+        "?SetLanguage@@YAXPBG@Z",
+        "?GStats@@3VFStats@@A",
+        "?GUnknown_96910@@3KA",
+        "?GIsRequestingExit@@3KA",
+        "??4FString@@QAEAAV0@ABV0@@Z",
+        "?StaticConstructObject@@YAPAVUObject@@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@1PAX@Z",
+        "?GObjTransientPkg@@3PAVUObject@@A",
+        "__imp__Sleep@4",
+        "?GConfig@@3PAVFConfigCache@@A",
+        "?UEngine_PrivateStaticClass@@3VUClass@@A",
+        "?GError@@3PAVFOutputDevice@@A",
+        "?StaticLoadClass@@YAPAVUClass@@PAV1@PAVUObject@@VFName@@22PBGKPAVUPackageMap@@@Z",
+        "__ftol2"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "symbols": {
+        "?appMemcpy@@YAXPAXPBXH@Z": 268440497,
+        "??4FString@@QAEAAV0@ABV0@@Z": 268440503,
+        "?EmptyStatString@@3PAGA": 268447744,
+        "??4FString@@QAEAAV0@PBG@Z": 268440288
+      },
+      "fields": [
+        [
+          27,
+          "rel32",
+          "?appMemcpy@@YAXPAXPBXH@Z"
+        ],
+        [
+          58,
+          "rel32",
+          "?appMemcpy@@YAXPAXPBXH@Z"
+        ],
+        [
+          104,
+          "rel32",
+          "??4FString@@QAEAAV0@ABV0@@Z"
+        ],
+        [
+          252,
+          "abs",
+          "?EmptyStatString@@3PAGA"
+        ],
+        [
+          257,
+          "rel32",
+          "??4FString@@QAEAAV0@PBG@Z"
+        ]
+      ]
+    },
+    "link_bindings": {
+      "?appMemcpy@@YAXPAXPBXH@Z": {
+        "va": 277889184,
+        "basis": "The shared engine byte-copy routine at RVA 0x40a0 copies Num() * 4 bytes for both numeric arrays."
+      },
+      "??4FString@@QAEAAV0@ABV0@@Z": {
+        "va": 277891072,
+        "basis": "FString copy assignment at RVA 0x4800, the existing complete versus-vd-4800 match; the source and destination use the preceding and current arrays at a 12-byte FString stride."
+      },
+      "?EmptyStatString@@3PAGA": {
+        "va": 281617680,
+        "basis": "Descriptive name for the distinct two-byte writable static used by the final assignment. RVA 0x392510 is in the zero-filled virtual tail of the retail .data section and is referenced only here. The editor uses an analogous writable zero-filled TCHAR at VA 0x11825218."
+      },
+      "??4FString@@QAEAAV0@PBG@Z": {
+        "va": 277890896,
+        "basis": "The linked FString character-pointer assignment at RVA 0x4750 has an existing complete match. It receives the current string in ESI and the zero-terminated TCHAR sequence in EDI."
+      }
+    },
+    "match": {
+      "bytes_sha256": "da757d6898140929bc042c0bf061cdb44e128545dc3a6e39aef766517a1e44f8",
+      "inputs_sha256": "f86198714d77dc9a7230963216d1a1600c5174fcccd4364f67dd414b26c461b0"
+    }
+  },
+  {
     "id": "versus-stats-smooth-integer-counter",
     "offset": 844480,
     "size": 301,
@@ -11280,7 +11381,7 @@
     "identification": "FStats integer-counter moving average (local name SmoothCounter). FStats::Render calls this body 17 times across three mesh displays, always with a window of 40. The method grows the history at +0x114, skips three warm-up frames, advances the sample ring and writes the mean into GStats.Integers.Current. The recorded link roots the seven consecutive calls from the fourth render page. A separate reconstruction of the complete renderer produces the same 301 bytes.",
     "match": {
       "bytes_sha256": "d54ded5f98d580fe39f759ea27092a3fe13095eb8c84ef75036a833f3745dc16",
-      "inputs_sha256": "0403b62cf98f3af8f0da757fe65b50f2e41a12209a824efa190e0b5e59cd7a50"
+      "inputs_sha256": "ed75af3c43fd772097eb71fa3829f08769257c85668945f622eb5ea61d03f8b3"
     }
   }
 ]

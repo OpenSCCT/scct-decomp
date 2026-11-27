@@ -56,6 +56,8 @@ class FString : public TArray<TCHAR> {
 public:
     FString(const TCHAR *In);
     ~FString();
+    FString &operator=(const FString &Other);
+    FString &operator=(const TCHAR *Other);
     const TCHAR *operator*() const { return ArrayNum ? (const TCHAR *)Data : L""; }
     static FString __cdecl Printf(const TCHAR *Format, ...);
 };
@@ -118,6 +120,7 @@ public:
         TArray<DWORD> Samples;
     };
     TArray<FMovingAverage> History;
+    void Clear();
     void SmoothCounter(INT Index, INT Window);
     INT RegisterStats(EStatsType Type, EStatsDataType DataType, FString Description,
                       FString SectionDescription, EStatsUnit Unit);
