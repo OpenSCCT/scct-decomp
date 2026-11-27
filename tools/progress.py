@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from images import coff_symbol_offset, file_pe_data, initialized_pe_data, inspect, readonly_pe_data, span
 from link_image import place_function
 from link_interior_objects import resolve_interior_objects
+from link_vtable_exports import resolve_vtable_exports, vtable_export_args
 from link_writable_strings import check_writable_strings
 from link_case_selectors import check_case_selectors
 from link_x86 import link_function
@@ -155,6 +156,9 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
             validators.append(linker.with_name("link_case_selectors.py"))
         if "interior_objects" in unit.get("ltcg_link", {}):
             validators.append(linker.with_name("link_interior_objects.py"))
+        if {"exported_vtables", "vtable_slots"}.intersection(unit.get("ltcg_link", {})):
+            vtable_export_args(unit["ltcg_link"])
+            validators.append(linker.with_name("link_vtable_exports.py"))
         for validator in validators:
             if validator not in file_cache:
                 file_cache[validator] = hashlib.sha256(validator.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
@@ -270,6 +274,8 @@ def built_unit_bytes(target, unit, output, original=None):
         for s in target["image"]["executable_sections"]:
             if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
                 link, bindings = unit["ltcg_link"], unit["link_bindings"]
+                if "exported_vtables" in link or "vtable_slots" in link:
+                    link = resolve_vtable_exports(output, original, link, bindings)
                 if "interior_objects" in link:
                     link, bindings = resolve_interior_objects(output, original, link, bindings)
                 if "writable_strings" in link:

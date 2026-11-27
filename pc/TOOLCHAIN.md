@@ -212,6 +212,16 @@ images. The verifier checks that its full extent fits in writable PE data,
 including zero-filled storage, then checks the emitted pointer against the
 linked base plus the recorded offset. The array contributes no code bytes.
 
+VC7.0 can place class vtables in a different order when the temporary build
+directory changes. For a function that installs a vtable, list its decorated
+name in `ltcg_link.exported_vtables` and omit its fixed DLL address from
+`symbols`. The verifier exports the real table by name in the rebuilt DLL,
+reads its address from the PE export directory and checks the function's
+absolute operand against it. Both vtables must be in read-only storage with
+an executable first entry. For a pointer to a slot, `vtable_slots` maps its
+operand name to `[exported_table, index, method]`. The slot must point to the
+specified method in both images.
+
 A unit can name other units in `ltcg_callees`, by unit ID, so that a call from it to a helper
 resolves to the helper's real code instead of a stub. This is needed when the helper takes `this`
 or an argument in a register (for example `this` in ESI and the argument in EDI): the link chooses

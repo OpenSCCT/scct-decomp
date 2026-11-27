@@ -19,6 +19,7 @@ PC = Path(__file__).resolve().parent
 sys.path.insert(0, str(PC.parent / "tools"))
 from progress import callee_units, compare_unit, summary, verify, write
 from link_image import link_arguments, stub_object
+from link_vtable_exports import vtable_export_args
 from manifests import load_target, save_receipts
 
 
@@ -244,7 +245,8 @@ def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, st
     roots = list(dict.fromkeys(root for link in links for root in link["roots"]))
     declared = list(dict.fromkeys(name for link in links for name in link["stubs"]))
     linker = Path(cl).with_name("LINK.EXE")
-    options = link_arguments({"roots": roots})
+    exports = sorted({arg for link in links for arg in vtable_export_args(link)})
+    options = [*link_arguments({"roots": roots}), *exports]
     objects = [str(obj), *(str(path) for path in member_objects)]
     # Continue through code generation so the discovery link also reports compiler-generated
     # externals. The final link below remains strict and rejects unresolved symbols.
@@ -255,6 +257,8 @@ def link_with_callees(unit, callees, obj, member_objects, cl, env, build_dir, st
     if probe.returncode:
         raise ValueError(f"{unit['id']}: LINK.EXE failed: {probe.stdout.strip()}")
     names, undeclared = stub_plan(unresolved, declared)
+    if any(name in names for link in links for name in link.get("exported_vtables", [])):
+        raise ValueError("the link cannot satisfy an exported vtable with a stub")
     if undeclared:
         raise ValueError(f"{unit['id']}: unresolved external {undeclared[0]}: no linked object defines it "
                          "and no record declares it as a stub")
@@ -283,7 +287,8 @@ def rebuild_unit(unit, cl, env, build_dir, streams, callees=(), found=None):
         dll = obj.with_suffix(".dll")
         stubs.write_bytes(stub_object(unit["ltcg_link"]["stubs"]))
         linker = Path(cl).with_name("LINK.EXE")
-        run_tool([str(linker), *link_arguments(unit["ltcg_link"]), "/OUT:" + str(dll), str(obj), str(stubs)],
+        run_tool([str(linker), *link_arguments(unit["ltcg_link"]), *vtable_export_args(unit["ltcg_link"]),
+                  "/OUT:" + str(dll), str(obj), str(stubs)],
                  streams, cwd=build_dir, env=env, stdout=subprocess.DEVNULL)
         return dll
     if callees:
@@ -410,7 +415,7 @@ def main():
             callees = callee_units(target["units"], unit)
             headers = unit.get("system_headers")
             key = (unit["toolchain"], unit["build_command"], tuple(sorted(unit["inputs"])),
-                   link and (tuple(link["roots"]), tuple(link["stubs"])),
+                   link and (tuple(link["roots"]), tuple(link["stubs"]), tuple(vtable_export_args(link))),
                    headers is not None and tuple(sorted(headers.items())))
             if callees:
                 # A unit linked with callees has a recipe of its own, since the callees are part of its build.

@@ -9,6 +9,7 @@ sys.path.insert(0, str(repo / 'tools'))
 from manifests import load_target
 from progress import built_unit_bytes, span, verify
 from link_image import link_arguments, stub_object
+from link_vtable_exports import vtable_export_args
 
 CL = sys.argv[1]
 LINK = str(Path(CL).with_name('LINK.EXE'))
@@ -58,7 +59,8 @@ def run(job):
             if 'ltcg_link' in u:
                 stubs = o.with_name(f'{o.stem}_{i}_stubs.obj'); dll = o.with_name(f'{o.stem}_{i}.dll')
                 stubs.write_bytes(stub_object(u['ltcg_link']['stubs']))
-                subprocess.run([LINK, *link_arguments(u['ltcg_link']), '/OUT:' + str(dll), str(o), str(stubs)],
+                subprocess.run([LINK, *link_arguments(u['ltcg_link']), *vtable_export_args(u['ltcg_link']),
+                                '/OUT:' + str(dll), str(o), str(stubs)],
                                capture_output=True, check=True)
                 built = dll.read_bytes()
             a, b = span(u['offset'], u['size'], len(original))
