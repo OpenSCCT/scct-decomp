@@ -4,13 +4,8 @@
 //           function structurally).
 // 0x14cdd0: RenderSortedStaticMeshSection (MATCH, LTCG, RI in EBX).
 
-typedef unsigned char BYTE;
-typedef unsigned short _WORD;
-typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
+#include "versus_static_mesh_arrays.h"
+
 typedef unsigned __int64 QWORD;
 
 extern "C" void *__cdecl memset(void *Dest, int Value, unsigned int Count);
@@ -71,22 +66,6 @@ public:
     {
         return TransformFPlane(FPlane(V.X, V.Y, V.Z, 1.0f));
     }
-};
-
-class FArray
-{
-public:
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-};
-
-template<class T> class TArray : public FArray
-{
-public:
-    T &operator()(INT i) { return ((T *)Data)[i]; }
-    const T &operator()(INT i) const { return ((const T *)Data)[i]; }
-    INT Num() const { return ArrayNum; }
 };
 
 struct FStaticMeshSection
@@ -154,13 +133,6 @@ public:
     DWORD Flags;                            // +0x34
 
     __declspec(noinline) FLOAT SampleIntensity(FVector Position, FVector Normal);
-};
-
-struct FStaticMeshLightInfo
-{
-    AActor *LightActor;             // +0x00
-    TArray<BYTE> VisibilityBits;    // +0x04
-    UBOOL Applied;                  // +0x10
 };
 
 class UStaticMeshInstance
