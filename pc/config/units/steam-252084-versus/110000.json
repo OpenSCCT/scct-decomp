@@ -161,7 +161,7 @@
     },
     "match": {
       "bytes_sha256": "43ee030fa8174bd08a0c428787f92742c75b6f51a86dc1840a059768f5e76c04",
-      "inputs_sha256": "ffa6e700693cadad442130cd437ed4d0444e4be745294e93823eeedc76d7709e"
+      "inputs_sha256": "340263e96cdc70e3893a5651193f82ea040dacac1e2d514570def18a893508ae"
     }
   },
   {
@@ -260,7 +260,7 @@
     },
     "match": {
       "bytes_sha256": "3e45361178d8edd546145aa1f57233f475ff86f206465f195beb8f777840cff2",
-      "inputs_sha256": "e575b455411c361d0784ad215a7989d96bc8ffb1b705b0b7d4855ee8b0e4ca83"
+      "inputs_sha256": "b942f2ed6e00242722aac219dd7ccf1eda6182871707ca9d9dbd99efe007d0ea"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -368,7 +368,7 @@
     },
     "match": {
       "bytes_sha256": "1c1a03e973c2eb1e39b0b89de87e8aa05c4bb5eb673defcb915951b244543f08",
-      "inputs_sha256": "141304b88b658cb8e43df56165b36b5bf2f0c645b27ce6181b495e16744e799b"
+      "inputs_sha256": "588667ed5543fd9dd27c59b60f46b88d2e732b94a4f7877999fed29424034a26"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2314,7 +2314,7 @@
     },
     "match": {
       "bytes_sha256": "09632ce947910ea3f2c111fd13b9215005c1f63c80a362385ca53565d99ae777",
-      "inputs_sha256": "13c628acfad00a4a6320971a6e5958bba641b3bc7dca608a5a98540d97af6f91"
+      "inputs_sha256": "88d7fdd65709c31282dc76929e3f7ce97379c8aa2db40733fca175f2f02e57cb"
     }
   },
   {
@@ -2549,11 +2549,93 @@
     }
   },
   {
+    "id": "versus-scene-node-child-constructor",
+    "offset": 1125488,
+    "size": 234,
+    "inputs": [
+      "src/versus_scene_child.cpp",
+      "src/versus_build.h",
+      "src/versus_native_class_types.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_malloc.h",
+      "src/versus_arrays.h",
+      "src/versus_output_device.h",
+      "src/versus_viewport_types.h",
+      "src/versus_base_texture.h",
+      "src/versus_render_resource.h",
+      "src/versus_texture_format.h",
+      "src/versus_scene_node_types.h",
+      "src/versus_render_interface.h",
+      "src/versus_canvas_matrix.h",
+      "src/unreal_math.h",
+      "src/versus_scene_child.inl",
+      "src/versus_level_scene_child.inl"
+    ],
+    "rebuilt_symbol": "??0FSceneNode@@QAE@PAV0@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_scene_child_vc70_ltcg.obj src/versus_scene_child.cpp",
+    "identification": "The level scene constructor calls this base constructor at RVA 0x115547 with its child in EBX and parent in EDX. It installs the FSceneNode vtable, inherits the parent viewport, render target, six matrices and three view vectors, increments the recursion level, and recomputes the world-to-screen determinant. The link roots the real level scene constructor and uses the Canvas translation unit for the four-float FPlane constructor and FMatrix determinant. Both VC70 and VC71 reproduce all 234 bytes.",
+    "link_bindings": {
+      "??_7FSceneNode@@6B@": {
+        "va": 281032188,
+        "basis": "The constructor installs this nine-slot FSceneNode vtable. The derived level constructor at RVA 0x115553 replaces it with the FLevelSceneNode vtable."
+      },
+      "?Determinant@FMatrix@@QBEMXZ": {
+        "va": 278200208,
+        "basis": "The direct call at RVA 0x112d4a receives the newly copied WorldToScreen matrix in EAX. The determinant has its own previously verified 186-byte receipt."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "??0FLevelSceneNode@@QAE@PAV0@HUFMatrix@@@Z"
+      ],
+      "stubs": [
+        "??3@YAXPAX@Z",
+        "?Render@FLevelSceneNode@@UAEXPAVFRenderInterface@@K@Z",
+        "?TransformFPlane@FMatrix@@QBE?AUFPlane@@ABU2@@Z",
+        "?VirtualSlot10@FLevelSceneNode@@UAEKPBVAActor@@@Z",
+        "?VirtualSlot12@FLevelSceneNode@@UAEKPBX@Z",
+        "?VirtualSlot9@FLevelSceneNode@@UAEXXZ",
+        "__purecall"
+      ],
+      "rebuilt_offset": 1072,
+      "rebuilt_address": 268439600,
+      "fields": [
+        [
+          5,
+          "abs",
+          "??_7FSceneNode@@6B@"
+        ],
+        [
+          219,
+          "rel32",
+          "?Determinant@FMatrix@@QBEMXZ"
+        ]
+      ],
+      "symbols": {
+        "?Determinant@FMatrix@@QBEMXZ": 268440912
+      },
+      "exported_vtables": [
+        "??_7FSceneNode@@6B@"
+      ]
+    },
+    "ltcg_callees": [
+      "versus-vd-e7720"
+    ],
+    "match": {
+      "bytes_sha256": "a6ab6f6a9a262d9c81244bf78588f5cf9691c4eb389062b290369f0508b4a314",
+      "inputs_sha256": "da9f5afc43d85658b23b5a1afb6200fd57a2afa4d50e0a8b4f10ae905fae3c3b"
+    }
+  },
+  {
     "id": "versus-vd-112d60",
     "offset": 1125728,
     "size": 109,
     "inputs": [
-      "src/versus_vd5_item_0356.cpp"
+      "src/versus_vd5_item_0356.cpp",
+      "src/versus_scene_child.inl"
     ],
     "rebuilt_symbol": "?Project@FSceneNode@@QAE?AUFPlane@@ABUFVector@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2600,7 +2682,7 @@
     },
     "match": {
       "bytes_sha256": "8b2d4d855a7bed9af04a3ce074b54c728a6be93164a52bef02c73763c0d07987",
-      "inputs_sha256": "733e3b102107c65d0754e163dd5e08fefaa51450a83b5eefaeb1c9acf9f34e31"
+      "inputs_sha256": "1f5c06009381c36d7c98f8bb85a80298adf99084aa70f3b62921d607d680a374"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2616,7 +2698,8 @@
     "offset": 1126128,
     "size": 97,
     "inputs": [
-      "src/versus_vd5_item_0356.cpp"
+      "src/versus_vd5_item_0356.cpp",
+      "src/versus_scene_child.inl"
     ],
     "rebuilt_symbol": "?AddItem@UnnamedTable_112e30@@QAEXH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2625,7 +2708,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "f90e9150fe570414db939cd50328e513810490f276b537aecc06b98a5888bd35",
-      "inputs_sha256": "6eccb63bd9fc67b4c721d12852ad7721079becfb741cf729b541a16136f6222f"
+      "inputs_sha256": "f08edc5ac4dd7b096a9f7882e73bd39093ea9f5684ba5d4a6b13416452407938"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3030,7 +3113,7 @@
     "identification": "Slot 2 at Versus VA 0x10c036f8 implements the camera-scene override. It pushes render state, calls the base level renderer and the viewport first-person pass, updates vertex pools, flushes the viewport Canvas and pops render state. The corresponding derived actor slot in the editor identifies FActorSceneNode::Render. VC7.1 also emits these 69 bytes with LTCG. The retail Rich header identifies VC7.0 as its only LTCG producer; size optimization and ordinary COFF diverge.",
     "match": {
       "bytes_sha256": "b80a4b97f89f33439c3d186e4ce84387fe021e4a9c0e32d913af21e088d7235e",
-      "inputs_sha256": "64a3e886de3a062916a27359af5ead5b7d60ef6fa2597987c7d53087fa45c24b"
+      "inputs_sha256": "107a0d73e9e46d8df3ad6ba31f55b9092da2485005fa76527d43cd65700f9b69"
     }
   },
   {
@@ -3194,7 +3277,9 @@
     "inputs": [
       "src/versus_vd9_item_0369.cpp",
       "src/versus_matrix_product.inl",
-      "src/versus_matrix_inverse.inl"
+      "src/versus_matrix_inverse.inl",
+      "src/versus_scene_child.inl",
+      "src/versus_level_scene_child.inl"
     ],
     "rebuilt_symbol": "??0FMirrorSceneNode@@QAE@PAVFLevelSceneNode@@ABUFPlane@@HH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3259,7 +3344,7 @@
     },
     "match": {
       "bytes_sha256": "c6ce635b2419eff3160331b627e9bee79778ef76d3599968dfd122946e7c81eb",
-      "inputs_sha256": "266adf4c6fde002b06e1aca8321d767bdcca4ae36eec58119c08d049991518f4"
+      "inputs_sha256": "2f70985c25ca2467bd6547a1a3d388f9d6f2528581f1603004d7748a44325111"
     }
   },
   {

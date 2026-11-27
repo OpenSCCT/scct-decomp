@@ -79,24 +79,8 @@ public:
     FVector Deproject(const FPlane &Screen);
 };
 
-// 0x112c70 (near: LTCG picks this=edx/parent=eax here, retail this=ebx/parent=edx and returns this)
-FSceneNode::FSceneNode(FSceneNode *InParent)
-{
-    Parent = InParent;
-    Viewport = InParent->Viewport;
-    RenderTarget = InParent->RenderTarget;
-    Recursion = InParent->Recursion + 1;
-    WorldToCamera = InParent->WorldToCamera;
-    CameraToScreen = InParent->CameraToScreen;
-    ScreenToCamera = InParent->ScreenToCamera;
-    CameraToWorld = InParent->CameraToWorld;
-    WorldToScreen = InParent->WorldToScreen;
-    ScreenToWorld = InParent->ScreenToWorld;
-    ViewOrigin = InParent->ViewOrigin;
-    CameraX = InParent->CameraX;
-    CameraY = InParent->CameraY;
-    Determinant = WorldToScreen.Determinant();
-}
+// Child FSceneNode constructor, also used by the level-scene caller at 0x115530.
+#include "versus_scene_child.inl"
 
 // 0x112d60
 FPlane FSceneNode::Project(const FVector &Point)

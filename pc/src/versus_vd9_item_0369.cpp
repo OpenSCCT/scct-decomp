@@ -154,17 +154,16 @@ public:
     virtual ~FSceneNode() {}
 };
 
-extern const FLOAT GSceneNodeScreenScale;   // 0x10c10acc (2.0, shared float constant)
 
 class FLevelSceneNode : public FSceneNode
 {
 public:
     ULevel* Level;              // 0x1bc
     UModel* Model;              // 0x1c0
-    DWORD StencilMask;          // 0x1c4
+    AActor* ViewActor;          // 0x1c4
     INT ViewZone;               // 0x1c8
     INT InvisibleZone;          // 0x1cc
-    DWORD StencilBit;           // 0x1d0
+    DWORD StencilRef;           // 0x1d0
 
     FLevelSceneNode(FLevelSceneNode* InParent, INT InViewZone, FMatrix LocalToParent);
     virtual ~FLevelSceneNode() {}
@@ -251,46 +250,9 @@ __declspec(noinline) FInverseRotationMatrix::FInverseRotationMatrix(const FRotat
     *this *= FMatrix(FPlane(GMath_UnitX, 0.f), FPlane(0.f, +C, -S, 0.f), FPlane(0.f, +S, +C, 0.f), W);
 }
 // RVA 0x115530 (item 0363): InParent in EAX, this on the stack.
-FLevelSceneNode::FLevelSceneNode(FLevelSceneNode* InParent, INT InViewZone, FMatrix LocalToParent)
-    : FSceneNode(InParent)
-{
-    Level = InParent->Level;
-    Model = InParent->Model;
-    ViewZone = InViewZone;
-    InvisibleZone = -1;
-    StencilMask = 0;
-    StencilBit = Viewport->NextStencilBit;
-    Viewport->NextStencilBit <<= 1;
+#include "versus_level_scene_child.inl"
 
-    FMatrix ParentToLocal = LocalToParent.Inverse();
-    { FMatrix T = Parent->WorldToCamera * LocalToParent; WorldToCamera = T; }
-    { FMatrix T = ParentToLocal * Parent->CameraToWorld; CameraToWorld = T; }
-    { FMatrix T = CameraToScreen * WorldToCamera; WorldToScreen = T; }
-    { FMatrix T = CameraToWorld * ScreenToCamera; ScreenToWorld = T; }
-    Determinant = WorldToScreen.Determinant();
-
-    ViewOrigin = ParentToLocal.TransformFVector(Parent->ViewOrigin);
-    CameraX = ScreenToWorld.TransformNormal(FVector(GSceneNodeScreenScale / Viewport->SizeX, 0.f, 0.f));
-    CameraY = ScreenToWorld.TransformNormal(FVector(0.f, GSceneNodeScreenScale / Viewport->SizeY, 0.f));
-}
-
-FSceneNode::FSceneNode(FSceneNode* InParent)
-{
-    Parent = InParent;
-    Viewport = InParent->Viewport;
-    RenderTarget = InParent->RenderTarget;
-    Recursion = InParent->Recursion + 1;
-    WorldToCamera = InParent->WorldToCamera;
-    CameraToScreen = InParent->CameraToScreen;
-    ScreenToCamera = InParent->ScreenToCamera;
-    CameraToWorld = InParent->CameraToWorld;
-    WorldToScreen = InParent->WorldToScreen;
-    ScreenToWorld = InParent->ScreenToWorld;
-    ViewOrigin = InParent->ViewOrigin;
-    CameraX = InParent->CameraX;
-    CameraY = InParent->CameraY;
-    Determinant = WorldToScreen.Determinant();
-}
+#include "versus_scene_child.inl"
 #include "versus_matrix_inverse.inl"
 
 FLOAT FMatrix::Determinant() const

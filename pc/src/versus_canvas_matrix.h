@@ -14,6 +14,15 @@ struct FMatrix
     FMatrix() {}
     FMatrix(const FPlane& InX, const FPlane& InY, const FPlane& InZ, const FPlane& InW);
     FMatrix operator*(const FMatrix& Other) const;             // retail 0x1097b110
+    FPlane TransformFPlane(const FPlane& Plane) const;
+    FVector TransformFVector(const FVector& Point) const
+    {
+        return TransformFPlane(FPlane(Point.X, Point.Y, Point.Z, 1.f));
+    }
+    FPlane TransformNormal(const FVector& Normal) const
+    {
+        return TransformFPlane(FPlane(Normal.X, Normal.Y, Normal.Z, 0.f));
+    }
     FLOAT Determinant() const;
     FMatrix Inverse() const;                                   // retail 0x10953af0
 };

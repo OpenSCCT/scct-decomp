@@ -10,6 +10,7 @@ class FLevelSceneNode;
 class FCameraSceneNode;
 class FActorSceneNode;
 #include "versus_render_interface.h"
+#include "versus_canvas_matrix.h"
 
 class FSceneNode {
 public:
@@ -23,6 +24,7 @@ public:
     virtual FSceneNode *VirtualSlot7() { return 0; }
     virtual FSceneNode *VirtualSlot8() { return 0; }
 
+    FSceneNode(FSceneNode *InParent);
     FSceneNode(UViewport *InViewport, FRenderTarget *InTarget)
         : Viewport(InViewport), RenderTarget(InTarget), Parent(0), Recursion(0) {}
 
@@ -30,15 +32,22 @@ public:
     FRenderTarget *RenderTarget;
     FSceneNode *Parent;
     INT Recursion;
-    BYTE unk_14[0x194 - 0x14];
+    FMatrix WorldToCamera;
+    FMatrix CameraToWorld;
+    FMatrix CameraToScreen;
+    FMatrix ScreenToCamera;
+    FMatrix WorldToScreen;
+    FMatrix ScreenToWorld;
     FVector ViewOrigin;
-    BYTE unk_1a0[0x1b8 - 0x1a0];
+    FVector CameraX;
+    FVector CameraY;
     FLOAT Determinant;
 };
 
 class FLevelSceneNode : public FSceneNode {
 public:
     virtual FLevelSceneNode *AsLevelSceneNode() { return this; }
+    FLevelSceneNode(FLevelSceneNode *InParent, INT InViewZone, FMatrix LocalToParent);
     FLevelSceneNode(UViewport *InViewport, FRenderTarget *InTarget);
     virtual void Render(FRenderInterface *RI, UBOOL Clear);
     virtual void VirtualSlot9();

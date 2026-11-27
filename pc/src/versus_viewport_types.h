@@ -84,7 +84,9 @@ public:
     DOUBLE CurrentTime;
     BYTE unk_138[0x140 - 0x138];
     FRenderInterface *RI;
-    BYTE unk_144[8];
+    BYTE unk_144[4];
+    BYTE NextStencilBit;
+    BYTE unk_149[3];
     UBOOL Precaching;
     UBOOL PendingPresent;
     UBOOL bHitTesting;
