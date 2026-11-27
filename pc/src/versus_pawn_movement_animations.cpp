@@ -65,6 +65,7 @@ void ASBasePawn::PlayRollUpAnimation()
 }
 
 enum {
+    SA_WAIT_CR2ST_2H = 81, SA_WAIT_CR2ST_0H = 84, SA_WALK_ST_0H = 85, SA_WALK_ST_0H_AFTERFL = 201,
     SA_ONLEDGE = 112, SA_ONFENCE = 128, SA_ROLLING = 130, SA_ROLLINGUP = 131,
     SA_ON_PIPEH = 207, SA_ON_PIPEH_4 = 209
 };
@@ -119,6 +120,35 @@ void ASBasePawn::ExecuteAction(INT Action)
             bQuickGadgetHasBegun = 0;
             eventNotifyQuickLaunch();
         }
+        break;
+    case SA_WAIT_CR2ST_0H:
+        Instance->ApplyBlendParams(15, 0.f, 0.f, 0.f, NAME_None, 0);
+        setPhysics(PHYS_Walking, 0, GMath_UnitZ);
+        PlayWalkingAction(SA_WAIT_CR2ST_0H);
+        if (bIsRolling) {
+            bIsRolling = 0;
+            ResetLocomotionChannels();
+        }
+        PlayAnim(0, AWaitCrOut0, 1.f, 0.f);
+        break;
+    case SA_WAIT_CR2ST_2H:
+        Instance->ApplyBlendParams(15, 0.f, 0.f, 0.f, NAME_None, 0);
+        setPhysics(PHYS_Walking, 0, GMath_UnitZ);
+        PlayWalkingAction(SA_WAIT_CR2ST_2H);
+        if (bIsRolling) {
+            bIsRolling = 0;
+            ResetLocomotionChannels();
+        }
+        PlayAnim(0, AWaitCrOut2, 1.f, 0.f);
+        break;
+    case SA_WALK_ST_0H_AFTERFL:
+        Instance->ApplyBlendParams(14, 0.f, 0.f, 0.f, NAME_None, 0);
+        Instance->SetAnimRate(14, 0.f);
+        Instance->ApplyBlendParams(15, 0.f, 0.f, 0.f, NAME_None, 0);
+        setPhysics(PHYS_Walking, 0, GMath_UnitZ);
+        PlayWalkingAction(SA_WALK_ST_0H);
+        Velocity = RunningSpeed * Rotation.Vector();
+        ResetWalkingChannels();
         break;
     case SA_ONLEDGE:
         setPhysics(PHYS_Ledge, 0, GMath_UnitZ);

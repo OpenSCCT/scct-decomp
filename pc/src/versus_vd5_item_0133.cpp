@@ -1,5 +1,5 @@
 /* Versus RVA 0xc0120-0xc03ba: USkeletalMeshInstance animation channel helpers.
-   Blends (0x100) is the array of MeshAnimChannel (0x90-byte elements) also
+   Channels (0x100) is the array of MeshAnimChannel (0x90-byte elements) also
    seen in items 0115-0124. Names of channel fields and of the non-virtual
    helpers are assumed from UE2 (CopyAnimation, SetAnimRate, SetBlendAlpha,
    UpdateBlendAlpha, SetAnimSequence); 0xc0250 is vtable slot 62. */
@@ -41,7 +41,7 @@ struct MeshAnimChannel {                          /* 0x90 bytes */
     UBOOL bNotifies;                              /* 0x34 */
     DWORD Field38;                                /* 0x38 */
     DWORD Pad3c[5];
-    FLOAT BlendAlpha;                             /* 0x50 */
+    FLOAT CurrentAlpha;                             /* 0x50 */
     DWORD Pad54[2];
     DWORD Field5c;                                /* 0x5c */
     DWORD Field60;                                /* 0x60 */
@@ -87,10 +87,10 @@ public:
     __declspec(noinline) void UpdateBlendAlpha(INT Channel, FLOAT Target, FLOAT Rate);
     void SetAnimSequence(INT Channel, FName Sequence);
 
-    MeshAnimChannel &Chan(INT i) { return ((MeshAnimChannel *)Blends.Data)[i]; }
+    MeshAnimChannel &Chan(INT i) { return ((MeshAnimChannel *)Channels.Data)[i]; }
 
     unsigned char Pad04[0xfc];
-    FArray Blends;                                /* 0x100 */
+    FArray Channels;                                /* 0x100 */
 };
 
 /* retail 0x109b5910, defined so the linker sees its body (as in item 0124) */
@@ -98,10 +98,10 @@ UBOOL USkeletalMeshInstance::ValidateAnimChannel(INT Channel)
 {
     if (Channel > 256 || Channel < 0)
         return 0;
-    if (Blends.Num() <= Channel) {
+    if (Channels.Num() <= Channel) {
         do {
-            Blends.AddZeroed(sizeof(MeshAnimChannel));
-        } while (Blends.Num() <= Channel);
+            Channels.AddZeroed(sizeof(MeshAnimChannel));
+        } while (Channels.Num() <= Channel);
         InitChannels_c0d50();
     }
     return 1;
@@ -110,7 +110,7 @@ UBOOL USkeletalMeshInstance::ValidateAnimChannel(INT Channel)
 /* 0xc0120 */
 void USkeletalMeshInstance::CopyAnimation(INT SrcChannel, INT DestChannel)
 {
-    if (SrcChannel < 0 || SrcChannel >= Blends.Num() || DestChannel < 0)
+    if (SrcChannel < 0 || SrcChannel >= Channels.Num() || DestChannel < 0)
         return;
     if (!ValidateAnimChannel(DestChannel))
         return;
@@ -121,7 +121,7 @@ void USkeletalMeshInstance::CopyAnimation(INT SrcChannel, INT DestChannel)
     Dst.AnimRate = Src.AnimRate;
     Dst.OrigRate = Src.OrigRate;
     Dst.AnimFrame = Src.AnimFrame;
-    Dst.BlendAlpha = Src.BlendAlpha;
+    Dst.CurrentAlpha = Src.CurrentAlpha;
     Dst.AnimLast = Src.AnimLast;
     Dst.bNotifies = Src.bNotifies;
     Dst.Field2c = Src.Field2c;
@@ -136,7 +136,7 @@ void USkeletalMeshInstance::CopyAnimation(INT SrcChannel, INT DestChannel)
 /* 0xc01c0 */
 void USkeletalMeshInstance::SetAnimRate(INT Channel, FLOAT Rate)
 {
-    if (Channel >= 0 && Channel < Blends.Num())
+    if (Channel >= 0 && Channel < Channels.Num())
     {
         MeshAnimChannel &C = Chan(Channel);
         C.AnimRate = Rate * C.OrigRate;
@@ -146,16 +146,16 @@ void USkeletalMeshInstance::SetAnimRate(INT Channel, FLOAT Rate)
 /* 0xc01f0 */
 void USkeletalMeshInstance::SetBlendAlpha(INT Channel, FLOAT Alpha)
 {
-    if (Channel >= 0 && Channel < Blends.Num()) {
+    if (Channel >= 0 && Channel < Channels.Num()) {
         MeshAnimChannel &C = Chan(Channel);
-        C.BlendAlpha = Clamp(Alpha, 0.f, 1.f);
+        C.CurrentAlpha = Clamp(Alpha, 0.f, 1.f);
     }
 }
 
 /* 0xc0250, vtable slot 62 */
 void USkeletalMeshInstance::SetAnimFrame(INT Channel, FLOAT Frame, INT UnitFlag)
 {
-    if (Channel >= 0 && Channel < Blends.Num()) {
+    if (Channel >= 0 && Channel < Channels.Num()) {
         MeshAnimChannel &C = Chan(Channel);
         if (UnitFlag == 0) {
             C.AnimFrame = Frame;
@@ -167,33 +167,7 @@ void USkeletalMeshInstance::SetAnimFrame(INT Channel, FLOAT Frame, INT UnitFlag)
 }
 
 /* 0xc02d0 */
-void USkeletalMeshInstance::UpdateBlendAlpha(INT Channel, FLOAT Target, FLOAT Rate)
-{
-    if (Channel >= 0 && Channel < Blends.Num()) {
-        MeshAnimChannel &C = Chan(Channel);
-        if (Abs(C.BlendAlpha - Target) <= Rate)
-            C.BlendAlpha = Target;
-        else if (Target > C.BlendAlpha)
-            C.BlendAlpha += Rate;
-        else
-            C.BlendAlpha -= Rate;
-    }
-}
-
-/* 0xc0340 */
-void USkeletalMeshInstance::SetAnimSequence(INT Channel, FName Sequence)
-{
-    if (Channel >= 0 && Channel < Blends.Num()) {
-        MeshAnimChannel &C = Chan(Channel);
-        C.AnimSequence = Sequence;
-        HMeshAnim Anim = GetAnimNamed(Sequence);
-        C.bNotifies = AnimGetNotifyCount(Anim) != 0;
-        if (Anim)
-            C.OrigRate = AnimGetRate(Anim) / AnimGetFrameCount(Anim);
-        else
-            C.OrigRate = 0.f;
-    }
-}
+#include "versus_skeletal_channel_alpha.inl"
 
 // Scaffolding for the link, not part of the unit.
 void Escape(void *);

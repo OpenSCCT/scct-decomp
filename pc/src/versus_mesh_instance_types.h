@@ -44,9 +44,9 @@ public:
     virtual void VirtualSlot42();
     virtual void VirtualSlot43();
     virtual void VirtualSlot44();
-    virtual void VirtualSlot45();
+    virtual FLOAT AnimGetFrameCount(void *Anim);
     virtual FLOAT AnimGetRate(void *Anim);
-    virtual void VirtualSlot47();
+    virtual INT AnimGetNotifyCount(void *Anim);
     virtual void VirtualSlot48();
     virtual void VirtualSlot49();
     virtual void VirtualSlot50();
@@ -61,7 +61,7 @@ public:
     virtual FName GetActiveAnimSequence(INT Channel);
     virtual FLOAT GetActiveAnimRate(INT Channel);
     virtual FLOAT GetActiveAnimFrame(INT Channel);
-    virtual void VirtualSlot62();
+    virtual void SetAnimFrame(INT Channel, FLOAT Frame, INT UnitFlag);
     virtual void VirtualSlot63();
     virtual void VirtualSlot64();
     virtual void VirtualSlot65();

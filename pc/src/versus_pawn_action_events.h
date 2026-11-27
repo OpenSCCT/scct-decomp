@@ -300,7 +300,11 @@ public:
     BYTE IK_TypeBeforeDamage;
     BYTE unk_71c[0x75c - 0x71c];
     FLOAT fBlendCoeffWalkAnim;
-    BYTE unk_760[0x7b4 - 0x760];
+    BYTE unk_760[0x780 - 0x760];
+    FName AWaitCrOut0;
+    BYTE unk_784[0x79c - 0x784];
+    FName AWaitCrOut2;
+    BYTE unk_7a0[0x7b4 - 0x7a0];
     FName ADamageStChestBack0;
     FName ADamageStChestForward0;
     FName ADamageStChestLeft0;
@@ -365,9 +369,14 @@ public:
     BYTE unk_904[0x9e4 - 0x904];
     FName RightAnim;
     FName ForwardAnim;
-    BYTE unk_9ec[0xa00 - 0x9ec];
+    FName RunAnim;
+    FName TurnAnim;
+    FName CopyForwardAnim;
+    FName CopyRightAnim;
+    FName CopyRunAnim;
     FName LeftAnim;
-    BYTE unk_a04[0xa0c - 0xa04];
+    FLOAT RunningSpeed;
+    BYTE unk_a08[4];
     FLOAT fWalkSpeedLimit;
     FLOAT fRunSpeedLimit;
     BYTE unk_a14[0xa48 - 0xa14];
@@ -419,6 +428,8 @@ public:
     void eventBeginStickySkin();
     void eventevStickyShockSfx(UBOOL bSpawn);
     void PlayWalkingAction(INT Action);
+    void ResetLocomotionChannels();
+    void ResetWalkingChannels();
     void PlayJumpAnimation(INT Action);
     void SetLedgeAnimations();
     void SetFenceAnimations();

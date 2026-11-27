@@ -62,6 +62,9 @@ public:
 
     UBOOL ApplyBlendParams(INT Stage, FLOAT Alpha, FLOAT InTime, FLOAT OutTime, FName Bone, UBOOL bGlobal);
     void BlendToAlpha(INT Channel, FLOAT TargetAlpha, FLOAT Seconds);
+    void UpdateBlendAlpha(INT Channel, FLOAT Target, FLOAT Rate);
+    void SetAnimSequence(INT Channel, FName Sequence);
+    void SetAnimRate(INT Channel, FLOAT Rate);
     UBOOL StopAnimating(UBOOL ClearAllButBase);
     UBOOL SetAnimLinkup(UMeshAnimation *Anim, UMesh *RefMesh);
     void ActualizeAnimLinkups();

@@ -4,7 +4,9 @@
 
 #include "versus_build.h"
 #include "unreal_math.h"
+#if !defined(VERSUS_PAWN_ACTION_EVENTS_H)
 #include "unreal_name.h"
+#endif
 
 struct FBoneScaler
 {
@@ -34,9 +36,11 @@ struct MeshAnimChannel
     FName AnimSequence;
     FLOAT AnimRate, AnimFrame;
     FLOAT LastFrame, TweenRate;
-    INT unk_1c[4];
+    INT unk_1c;
+    FLOAT OrigRate;
+    INT unk_24[2];
     UBOOL bAnimFinished, bAnimLoop;
-    INT unk_34;
+    UBOOL bNotifies;
     FLOAT unk_38;
     INT unk_3c, unk_40;
     UBOOL bAnimBackwards;

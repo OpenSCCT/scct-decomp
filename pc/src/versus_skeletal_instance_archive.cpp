@@ -138,13 +138,13 @@ FArchive &operator<<(FArchive &Ar, MeshAnimChannel &Channel)
         Ar << Channel.AnimFrame;
         Ar << Channel.LastFrame;
         Ar << Channel.TweenRate;
-        Ar << Channel.unk_1c[0];
-        Ar << Channel.unk_1c[1];
-        Ar << Channel.unk_1c[2];
-        Ar << Channel.unk_1c[3];
+        Ar << Channel.unk_1c;
+        Ar << Channel.OrigRate;
+        Ar << Channel.unk_24[0];
+        Ar << Channel.unk_24[1];
         Ar << Channel.bAnimFinished;
         Ar << Channel.bAnimLoop;
-        Ar << Channel.unk_34;
+        Ar << Channel.bNotifies;
         Ar << Channel.unk_38;
         Ar << Channel.unk_3c;
         Ar << Channel.unk_40;
