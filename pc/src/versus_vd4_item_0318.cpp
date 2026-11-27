@@ -6,14 +6,8 @@
 // - 0x86bb0: bulk operator<< for TArray<FVector>; array in EBX, archive in EAX.
 // - 0x86c50 / 0x86cc0: USpriteEmitter::Initialize and UpdateParticles (vtable
 //   slots 22 and 29 of USpriteEmitter at 0x30b5b8). Layout as in item 0306.
-typedef unsigned char BYTE;
-typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
-
-class UObject;
+#include "versus_build.h"
+#include "unreal_object.h"
 
 class FMalloc
 {
@@ -95,6 +89,7 @@ struct FBox
     FBox() {}
     FBox(const FVector &InMin, const FVector &InMax);   // 0x81ad0
     FBox &operator+=(const FVector &Other);            // 0x4f820
+    UBOOL IsValid() const { return Min.X - Max.X != 1.f; }
     FBox ExpandBy(FLOAT W) const;                      // 0x81a70
 };
 
@@ -149,23 +144,22 @@ FArchive &operator<<(FArchive &Ar, TArray<FVector> &A)
     return Ar;
 }
 
-class UParticleEmitter
+class UParticleEmitter : public UObject
 {
 public:
     UParticleEmitter();
     virtual ~UParticleEmitter();
-#define SLOT(n) virtual void Slot##n();
-    SLOT(1) SLOT(2) SLOT(3) SLOT(4) SLOT(5) SLOT(6) SLOT(7) SLOT(8) SLOT(9) SLOT(10)
-    SLOT(11) SLOT(12) SLOT(13) SLOT(14) SLOT(15) SLOT(16) SLOT(17) SLOT(18) SLOT(19) SLOT(20) SLOT(21)
-#undef SLOT
-    virtual void Initialize(INT InMaxParticles);     // slot 22 (0x1f8f50)
+    virtual void Initialize(INT InMaxParticles);     // slot 22 (0xf8f50)
     virtual void CleanUp();                          // slot 23
 #define SLOT(n) virtual void Slot##n();
     SLOT(24) SLOT(25) SLOT(26) SLOT(27) SLOT(28)
 #undef SLOT
-    virtual INT UpdateParticles(FLOAT DeltaTime);    // slot 29 (0x1f9ff0)
+    virtual INT UpdateParticles(FLOAT DeltaTime);    // slot 29 (0xf9ff0)
 
-    BYTE Pad04[0xc0 - 0x04];
+    virtual void Slot30();
+    virtual void Slot31();
+
+    BYTE Pad28[0xc0 - 0x28];
     FBox BoundingBox;            // 0xc0
     BYTE Padd8[0x1e0 - 0xd8];
     DWORD Flags1e0 : 27;
@@ -175,15 +169,17 @@ public:
     FRangeVector StartSizeRange; // 0x294
     BYTE Pad2ac[0x3d8 - 0x2ac];
     FLOAT Scale3d8;              // 0x3d8 (neutral name)
+    BYTE Pad3dc[0x3e8 - 0x3dc];
 };
 
 class USpriteEmitter : public UParticleEmitter
 {
 public:
-    BYTE Pad3dc[0x3e8 - 0x3dc];
+    virtual void Slot32();
     FVector ProjectionNormal;     // 0x3e8
     FVector RealProjectionNormal; // 0x3f4
     BYTE Byte400;                 // 0x400 (neutral name)
+    BYTE Pad401[0x408 - 0x401];
 
     USpriteEmitter() {}
     void Initialize(INT InMaxParticles);
@@ -202,7 +198,7 @@ void USpriteEmitter::Initialize(INT InMaxParticles)
 INT USpriteEmitter::UpdateParticles(FLOAT DeltaTime)
 {
     INT Result = UParticleEmitter::UpdateParticles(DeltaTime);
-    if (BoundingBox.Min.X - BoundingBox.Max.X != 1.f) {
+    if (BoundingBox.IsValid()) {
         FLOAT Size = Scale3d8;
         if (UniformSize)
             Size *= StartSizeRange.X.GetMax();
@@ -275,7 +271,7 @@ __declspec(noinline) FVector FVector::SafeNormal() const
 // RVA 0x4f820 (this in ECX, Other in EDX).
 __declspec(noinline) FBox &FBox::operator+=(const FVector &Other)
 {
-    if (Min.X - Max.X != 1.f)
+    if (IsValid())
     {
         Min.X = ::Min(Min.X, Other.X); Min.Y = ::Min(Min.Y, Other.Y); Min.Z = ::Min(Min.Z, Other.Z);
         Max.X = ::Max(Max.X, Other.X); Max.Y = ::Max(Max.Y, Other.Y); Max.Z = ::Max(Max.Z, Other.Z);
@@ -332,7 +328,7 @@ struct Holder_86bb0
     TArray<FVector> B;
 };
 
-void Driver_86b40(FArchive *Ar, TArray<UnnamedStruct_86b40> *A, Holder_86bb0 *H, USpriteEmitter *E, INT N, FLOAT D, void *Mem)
+void Driver_86b40(FArchive *Ar, TArray<UnnamedStruct_86b40> *A, Holder_86bb0 *H, void *Mem)
 {
     // Constructing one emits the vtable, so the virtuals keep the plain thiscall convention.
     Escape(new (Mem) USpriteEmitter);
@@ -345,11 +341,4 @@ void Driver_86b40(FArchive *Ar, TArray<UnnamedStruct_86b40> *A, Holder_86bb0 *H,
     *Ar << R[0] << R[1] << R[2];
     Escape(R);
     *Ar << H->A << H->B;
-    // Retail reaches these through the vtable; several direct calls keep them out of line.
-    E->USpriteEmitter::Initialize(N);
-    E->USpriteEmitter::Initialize(N + 1);
-    E->USpriteEmitter::Initialize(N + 2);
-    Escape((void *)E->USpriteEmitter::UpdateParticles(D));
-    Escape((void *)E->USpriteEmitter::UpdateParticles(D * 2));
-    Escape((void *)E->USpriteEmitter::UpdateParticles(D * 3));
 }
