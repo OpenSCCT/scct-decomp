@@ -66,7 +66,7 @@ void ASBasePawn::PlayRollUpAnimation()
 
 enum {
     SA_WAIT_CR2ST_2H = 81, SA_WAIT_CR2ST_0H = 84, SA_WALK_ST_0H = 85, SA_WALK_ST_0H_AFTERFL = 201,
-    SA_ONLEDGE = 112, SA_ONFENCE = 128, SA_ROLLING = 130, SA_ROLLINGUP = 131,
+    SA_FALL_INERTE = 106, SA_ONLEDGE = 112, SA_ONFENCE = 128, SA_ROLLING = 130, SA_ROLLINGUP = 131,
     SA_ON_PIPEH = 207, SA_ON_PIPEH_4 = 209
 };
 enum { PHYS_Walking = 1, PHYS_Falling = 2, PHYS_OnVerticalPlane = 8, PHYS_Ledge = 9, PHYS_OnPipeH = 14 };
@@ -163,6 +163,23 @@ void ASBasePawn::ExecuteAction(INT Action)
         PlayAnim(0, NAME_FencStAlNt0, 1.f, 0.f, 1);
         SetFenceAnimations();
         break;
+    case SA_FALL_INERTE:
+        SetCollision(1, 0, 0);
+        bBeginSpecial12Anim = 0;
+        IK_Type = IKT_NONE;
+        PipHFire = 0;
+        SetColAfterPipe4(0);
+        bWeaponTransit = 0;
+        if (bIsZipSpeed)
+            UnZipSpeed(0);
+        setPhysics(PHYS_Falling, 0, GMath_UnitZ);
+        if (!bIsRolling)
+            Instance->ApplyBlendParams(15, 0.f, 0.f, 0.f, NAME_None, 0);
+        Instance->ApplyBlendParams(14, 0.f, 0.f, 0.f, NAME_B_Spine1, 0);
+        Instance->SetAnimRate(14, 0.f);
+        PlayAnim(0, NAME_FallStXxBk2, 1.f, .2f);
+        break;
+
     case SA_ROLLING:
         setPhysics(PHYS_Walking, 0, GMath_UnitZ);
         PlayRollAnimation();

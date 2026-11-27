@@ -4,7 +4,9 @@
 
 #include "versus_build.h"
 #include "unreal_types.h"
+#ifndef VERSUS_PAWN_COLLISION_MATH_H
 #include "unreal_math.h"
+#endif
 #if !defined(VERSUS_ARRAYS_H)
 #include "unreal_containers.h"
 #endif
@@ -397,7 +399,10 @@ public:
     BYTE unk_a14[0xa48 - 0xa14];
     FLOAT fBlendTimeWithC0;
     INT ChannelForBlendWithC0;
-    BYTE unk_a50[0xa84 - 0xa50];
+    BYTE unk_a50[0xa6c - 0xa50];
+    FLOAT ZipHeight;
+    FLOAT Pipe4Height;
+    BYTE unk_a74[0xa84 - 0xa74];
     class ASWeapon *MyWeapon;
     BYTE unk_a88[0xa9c - 0xa88];
     INT ClientSmoothFlags;
@@ -422,7 +427,9 @@ public:
     BITFIELD bNoRunAnimation : 1;
     BITFIELD unk_af0_16 : 3;
     BITFIELD bIsRolling : 1;
-    BITFIELD unk_af0_20 : 3;
+    BITFIELD bIsZipSpeed : 1;
+    BITFIELD bSleeping : 1;
+    BITFIELD bIsPipe4Decal : 1;
     BITFIELD bIsLeftPart : 1;
     BITFIELD unk_af0_24 : 2;
     BITFIELD bBeginSpecial12Anim : 1;
@@ -442,6 +449,10 @@ public:
     void eventPlayFirstPersonDamage(INT TheAction);
     void eventBeginStickySkin();
     void eventevStickyShockSfx(UBOOL bSpawn);
+    BYTE UnZipSpeed(UBOOL bTest);
+    BYTE SetColAfterPipe4(UBOOL bTest);
+    void execCanUnZipSpeed(FFrame &Stack, void *const Result);
+    void execCanSetColAfterPipe4(FFrame &Stack, void *const Result);
     void PlayWalkingAction(INT Action);
     void ResetLocomotionChannels();
     void ResetWalkingChannels();
