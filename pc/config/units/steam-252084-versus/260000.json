@@ -753,6 +753,114 @@
     }
   },
   {
+    "id": "versus-secure-hash-algorithm1-init",
+    "offset": 2512896,
+    "size": 61,
+    "inputs": [
+      "src/versus_secure_hash_stream.cpp",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?Init@SecureHashAlgorithm1@@QAEXXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
+    "coff_alignment": 16,
+    "identification": "The constructor at RVA 0x265750 installs the SecureHashAlgorithm1 vtable at VA 0x10be1d80, then calls this initialization member. It clears the 92-byte state context before assigning the five SHA-1 initial words and both bit counters.",
+    "match": {
+      "bytes_sha256": "5548085483bcb769bf097a044b773e74611380cee2afb1e857ccc25e31606cbf",
+      "inputs_sha256": "8d46ef483e16326b3ad3acb4e5c65ae09df88c9409439cfd8acf0334359be556"
+    }
+  },
+  {
+    "id": "versus-secure-hash-algorithm1-update",
+    "offset": 2512960,
+    "size": 270,
+    "inputs": [
+      "src/versus_secure_hash_stream.cpp",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?Update@SecureHashAlgorithm1@@QAEXPBEK@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
+    "coff_alignment": 16,
+    "identification": "The SHA-1 update member called from RVAs 0x264dc9 and 0x264e13 advances a split 64-bit bit count, completes an existing partial block, transforms each complete 64-byte chunk and buffers the tail. Both compression calls receive the five-word state and the sixteen-word buffer.",
+    "link_bindings": {
+      "?ByteReverse@SecureHashAlgorithm1@@AAEXPAKK@Z": {
+        "va": 280393488,
+        "basis": "Update and Final pass their sixteen-word buffer and either 64 or 56 bytes to the per-word byte reversal at RVA 0x267710."
+      },
+      "?Transform@SecureHashAlgorithm1@@AAEXPAKPBK@Z": {
+        "va": 280386048,
+        "basis": "The complete SHA-1 compression starting at RVA 0x265a00 consumes the five-word state and the 64-byte word buffer."
+      }
+    },
+    "match": {
+      "bytes_sha256": "08691b0919410db0a75955e60f7b464705d9687cb54f5f9d6e4540109fd1ab8b",
+      "inputs_sha256": "5866b1e3a4edf4e68719c9d5c2be95a25b6840ace1e89b60bb62d61a41493fd9"
+    }
+  },
+  {
+    "id": "versus-secure-hash-algorithm1-final",
+    "offset": 2513232,
+    "size": 170,
+    "inputs": [
+      "src/versus_secure_hash_stream.cpp",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?Final@SecureHashAlgorithm1@@QAEXPAE@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
+    "coff_alignment": 16,
+    "identification": "The SHA-1 finalization member called from RVA 0x264e55 places the padding bit, appends the two big-endian length words, invokes the compression and 20-byte output helpers, then wipes the complete context. It uses a second block when the 64-bit length does not fit.",
+    "link_bindings": {
+      "?ByteReverse@SecureHashAlgorithm1@@AAEXPAKK@Z": {
+        "va": 280393488,
+        "basis": "Update and Final pass their sixteen-word buffer and either 64 or 56 bytes to the per-word byte reversal at RVA 0x267710."
+      },
+      "?Transform@SecureHashAlgorithm1@@AAEXPAKPBK@Z": {
+        "va": 280386048,
+        "basis": "The complete SHA-1 compression starting at RVA 0x265a00 consumes the five-word state and the 64-byte word buffer."
+      },
+      "?CopyDigest@SecureHashAlgorithm1@@AAEXPAEPBEK@Z": {
+        "va": 280393552,
+        "basis": "Final calls RVA 0x267750 with the output pointer, internal five-word state and a length of 20 bytes; the callee writes each group of four bytes in reverse order."
+      }
+    },
+    "match": {
+      "bytes_sha256": "2a68b89da0b79a9a6903e4726a042620f043eeabe9fc728990b53c71d3a79c3b",
+      "inputs_sha256": "56ac58e2777c73196a3af90c5626a5aa76892f13b421389a1603161f199a09cc"
+    }
+  },
+  {
+    "id": "versus-secure-hash-algorithm1-byte-reverse",
+    "offset": 2520848,
+    "size": 56,
+    "inputs": [
+      "src/versus_secure_hash_stream.cpp",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?ByteReverse@SecureHashAlgorithm1@@AAEXPAKK@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
+    "coff_alignment": 16,
+    "identification": "SHA-1 per-word byte reversal over the requested byte length divided by four. Calls from Update and Final supply 64 bytes for complete blocks or 56 bytes before the length words. The scalar operations exchange adjacent bytes and then the high and low halfwords.",
+    "match": {
+      "bytes_sha256": "113f587fc39c724c1ca64a950c1627454d39b2d9b2df805dfaf589ad18a1cb64",
+      "inputs_sha256": "3817e26cca6b78b338c2ebee526319831edc18ef6cfb8599d7512858039b346a"
+    }
+  },
+  {
     "id": "delete-record-267810",
     "offset": 2521104,
     "size": 27,
