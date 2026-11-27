@@ -47,6 +47,7 @@ public:
     INT CachedWidth, CachedHeight, CachedFirstMip, CachedMipCount;
     D3DFORMAT CachedFormat;
     TArray<INT> ChildRevisions;
+    virtual INT CalculateFootprint();
     UBOOL Cache(FBaseTexture *source);
 };
 
