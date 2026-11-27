@@ -7953,6 +7953,58 @@
     }
   },
   {
+    "id": "versus-uobject-process-registrants",
+    "offset": 97376,
+    "size": 327,
+    "rebuilt_symbol": "?ProcessRegistrants@UObject@@SAXXZ",
+    "inputs": [
+      "src/versus_process_registrants.cpp",
+      "src/versus_native_class_init.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_build.h",
+      "src/unreal_name.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_process_registrants.obj src/versus_process_registrants.cpp",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?GRegistrationDepth@@3HA": {
+        "va": 281617832,
+        "basis": "Reentrant registration counter, incremented upon entry and decremented on both exits. Only depth one processes the pending objects."
+      },
+      "?GAutoRegister@@3PAVUObject@@A": {
+        "va": 281617840,
+        "basis": "The pending native registration list populated by UObject::InitNative and consumed here at RVA 0x17d21."
+      },
+      "?GObjRegistrants@UObject@@2V?$TArray@PAVUObject@@@@A": {
+        "va": 281845448,
+        "basis": "UObject::GObjRegistrants is the pending array from the exact ConditionalRegister receipt. Its Data, ArrayNum and ArrayMax fields use offsets 0, 4 and 8."
+      },
+      "?Empty@FArray@@QAEXHH@Z": {
+        "va": 277890384,
+        "basis": "FArray::Empty reserves space for the counted pending objects, using four bytes per pointer."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "Versus allocator global used by the matching array growth and release routines."
+      },
+      "?FArrayAddTag@@3QBGB": {
+        "va": 281086368,
+        "basis": "The locked wide allocation tag reads FArray::Add."
+      },
+      "?FArrayTag@@3QBGB": {
+        "va": 281086324,
+        "basis": "The locked wide reallocation tag reads FArray."
+      }
+    },
+    "identification": "The shipped editor names UObject::ProcessRegistrants in the guard referenced at VA 0x10fa9116 and calls its separately named UObject::ConditionalRegister in the per-object loop. Both executables count and drain the same pending list through the temporarily reused export-index field. The editor asserts i!=GObjRegistrants.Num() after the list search in ConditionalRegister and checks !GAutoRegister after draining it. The outer recursion counter name is descriptive. VC7.0 13.00.9466 and VC7.1 13.10.3052 both reproduce the complete function without LTCG. The VC7.0 COFF alignment bytes after the return are outside the measured body.",
+    "match": {
+      "bytes_sha256": "2e43b5feca18557f07bd450a4f723b9efdb165260c313ef465109a33d529c112",
+      "inputs_sha256": "1eb880967a1a216d9665a78ba2be867f41f8f31f1488b01033e1f3dd8c5b9a2b"
+    }
+  },
+  {
     "id": "versus-vd-180b0",
     "offset": 98480,
     "size": 157,

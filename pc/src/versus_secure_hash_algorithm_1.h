@@ -20,11 +20,12 @@ public:
     void Final(BYTE *Digest);
 
 private:
-    enum { BlockSize = 64, DigestSize = 20 };
     union Block {
-        BYTE Bytes[BlockSize];
-        DWORD Words[BlockSize / sizeof(DWORD)];
+        enum { Size = 64 };
+        BYTE Bytes[Size];
+        DWORD Words[Size / sizeof(DWORD)];
     };
+    enum { BlockSize = sizeof(Block), DigestSize = 20 };
     struct {
         DWORD State[5];
         DWORD Count[2];
@@ -33,6 +34,6 @@ private:
 
     void Transform(DWORD *State, const DWORD *Data);
     void ByteReverse(DWORD *Data, DWORD Length);
-    void CopyDigest(BYTE *Output, const BYTE *Input, DWORD Length);
+    void CopyDigest(BYTE *Output, const DWORD *Words, DWORD Length);
 };
 #endif

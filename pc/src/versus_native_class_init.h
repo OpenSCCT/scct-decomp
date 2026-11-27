@@ -71,6 +71,9 @@ public:
     UClass *Class;
     static UClass PrivateStaticClass;
 
+    static TArray<UObject *> GObjRegistrants;
+    static void ProcessRegistrants();
+    void ConditionalRegister();
     static UBOOL GObjInitialized;
     static FName StaticConfigName()
     {

@@ -103,7 +103,11 @@ template <class T> inline void *operator new(size_t Size, TArray<T> &Array)
 }
 
 struct FPlane { FLOAT X, Y, Z, W; };
-class FCollisionOctree;
+class AActor;
+class FCollisionOctree {
+public:
+    void __stdcall RemoveActor(AActor *Actor);
+};
 class FOctreeNode;
 
 class AActor
@@ -156,6 +160,15 @@ void FOctreeNode::StoreActor(AActor *Actor, FCollisionOctree *o, const FPlane *N
         Actors.AddItem(Actor);
         Actor->OctreeNodes.AddItem(this);
     }
+}
+
+void __stdcall FCollisionOctree::RemoveActor(AActor *Actor)
+{
+    if (!Actor)
+        return;
+    for (INT Index = 0; Index < Actor->OctreeNodes.Num(); Index++)
+        Actor->OctreeNodes(Index)->Actors.RemoveItem(Actor);
+    Actor->OctreeNodes.Empty();
 }
 
 // RVA 0x1187d0: first child octant a ray enters (UE2 UnOctree.cpp FirstNode).

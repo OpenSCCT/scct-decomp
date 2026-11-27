@@ -3754,7 +3754,7 @@
     },
     "match": {
       "bytes_sha256": "8bb5f3768e4c83cd8ddf93e048dd60bb5b25a36d62129c671e8374b6ba62fcbb",
-      "inputs_sha256": "30c2c77ed5b076ef70d438b2fb6b67179480f1b808d948f1de2631b4ce4808e3"
+      "inputs_sha256": "a99df7f010bbb490cf1e861d2648ff1acb2315a5c7a2c0b63a27c716e198bbdb"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -4204,6 +4204,100 @@
     "match": {
       "bytes_sha256": "83db2e618aca797d7457bf73024a474678c1eb104c1bfcf4a942d50c113b5658",
       "inputs_sha256": "f4f85f30aafd43be03faef3f5fe491f6a03a4ed4a01ddbc045fffd8fdb9c7b23"
+    }
+  },
+  {
+    "id": "versus-collision-octree-remove-actor",
+    "offset": 1153568,
+    "size": 120,
+    "inputs": [
+      "src/versus_vd5_item_0374.cpp"
+    ],
+    "rebuilt_symbol": "?RemoveActor@FCollisionOctree@@QAGXPAVAActor@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_octree_remove_actor.obj src/versus_vd5_item_0374.cpp",
+    "identification": "The receipted FCollisionOctree::AddActor calls this function to remove actors already in the tree. Receipted FOctreeNode::StoreActor establishes that each node begins with its Actors array, and AActor::OctreeNodes at +0x1e8 stores the reciprocal node pointers. After removing this actor from every node through the receipted TArray<AActor *>::RemoveItem, the function empties the actor node array. The independent ULevel movement declarations also use the stack-passed stdcall member convention. The guard returns immediately for a null actor.",
+    "link_bindings": {
+      "__except_list": {
+        "va": 0,
+        "basis": "The x86 C runtime defines __except_list at absolute offset zero in the thread information block. The function installs and restores its exception frame through FS."
+      },
+      "?RemoveItem@?$TArray@PAVAActor@@@@QAEHABQAVAActor@@@Z": {
+        "va": 278969696,
+        "basis": "The previously receipted TArray<AActor *>::RemoveItem at RVA 0x10bd60 removes occurrences using the address of this actor pointer."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "GMalloc is the shared engine allocator used by FArray::Empty, through its virtual Free slot at +8."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?RemoveActor@FCollisionOctree@@QAGXPAVAActor@@@Z"
+      ],
+      "stubs": [
+        "?Escape@@YAXPAX@Z",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "??_M@YGXPAXIHP6EX0@Z@Z",
+        "?Visit@@YAXH@Z",
+        "??_L@YGXPAXIHP6EX0@Z1@Z",
+        "??3@YAXPAX@Z",
+        "?FOctreeNode_Tag@@3QBGB",
+        "?MultiNodeFilter@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFPlane@@@Z",
+        "?SingleNodeFilter@FOctreeNode@@QAEXPAVAActor@@PAVFCollisionOctree@@PBUFPlane@@@Z",
+        "??1FOctreeNode@@QAE@XZ",
+        "??0FOctreeNode@@QAE@XZ",
+        "?FArray_ProtectedCstorTag@@3QBGB",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "__fltused",
+        "___CxxFrameHandler",
+        "__except_list",
+        "__ftol2"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          28,
+          "abs",
+          "__except_list"
+        ],
+        [
+          47,
+          "rel32",
+          "?RemoveItem@?$TArray@PAVAActor@@@@QAEHABQAVAActor@@@Z"
+        ],
+        [
+          77,
+          "abs",
+          "__except_list"
+        ],
+        [
+          86,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          102,
+          "abs",
+          "__except_list"
+        ],
+        [
+          112,
+          "abs",
+          "__except_list"
+        ]
+      ],
+      "symbols": {
+        "__except_list": 0,
+        "?RemoveItem@?$TArray@PAVAActor@@@@QAEHABQAVAActor@@@Z": 268439680,
+        "?GMalloc@@3PAVFMalloc@@A": 268439757
+      }
+    },
+    "match": {
+      "bytes_sha256": "29fe8796868157142c41582c3300dac485a2de93a0b5e69350b5b9a1e5ad7b10",
+      "inputs_sha256": "353ffa871012d7c2ff1eb4ba38027c2982017ddd4b0a56f429c1bbd571073fb9"
     }
   },
   {

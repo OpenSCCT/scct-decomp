@@ -41,7 +41,24 @@ public:
     ~TArray();
     T &operator()(INT Index) { return ((T *)Data)[Index]; }
     INT Num() const { return ArrayNum; }
-    void Empty(INT Slack = 0) { FArray::Empty(sizeof(T), Slack); }
+    INT AddItem(const T &Item)
+    {
+        INT Index = Add(1, sizeof(T));
+        (*this)(Index) = Item;
+        return Index;
+    }
+    void Empty()
+    {
+        for (INT i = 0; i < ArrayNum; ++i)
+            (*this)(i).~T();
+        ArrayNum = 0;
+        if (Data) {
+            GMalloc->Free(Data);
+            Data = 0;
+            ArrayMax = 0;
+        }
+    }
+    void Empty(INT Slack) { FArray::Empty(sizeof(T), Slack); }
     INT AddUniqueItem(const T &Item)
     {
         INT Index;

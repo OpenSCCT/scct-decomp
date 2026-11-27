@@ -744,7 +744,7 @@
     },
     "match": {
       "bytes_sha256": "dd543b8348cf5f8cd287db4b41248a476475918d4086fe0af82f1e6a0d941109",
-      "inputs_sha256": "865c62e3790e77d0837c088c78643cc58dccaf6410ba3e190df5ccedfbc2def6"
+      "inputs_sha256": "0affde6a69b2a3122220eee24283041502767316f4abe04e648cb23a44602e08"
     }
   },
   {
@@ -771,7 +771,7 @@
     },
     "match": {
       "bytes_sha256": "ab3a1681cc70b1df098419c1b8215125bcbb4bde146329f8bdfded522f7e3781",
-      "inputs_sha256": "bf9c4740e9ab721c1ca1328c149ac5d8ba825dfe9683982947d93683a4b98fb8"
+      "inputs_sha256": "b703ccd2c420c86356888ca20a795da959d3da56b1e09f768683e68c8fc5d9cc"
     }
   },
   {
@@ -786,13 +786,13 @@
       "src/versus_cldata.h"
     ],
     "rebuilt_symbol": "?Init@SecureHashAlgorithm1@@QAEXXZ",
-    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
     "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
     "coff_alignment": 16,
     "identification": "The constructor at RVA 0x265750 installs the SecureHashAlgorithm1 vtable at VA 0x10be1d80, then calls this initialization member. It clears the 92-byte state context before assigning the five SHA-1 initial words and both bit counters.",
     "match": {
       "bytes_sha256": "5548085483bcb769bf097a044b773e74611380cee2afb1e857ccc25e31606cbf",
-      "inputs_sha256": "c6a7fbb21ecb99bb84cef82484f7a79591ab9366eb61ad66e3bde5ee58b05dc6"
+      "inputs_sha256": "e4636c85f99738258707d9e3b13adee6081b56ba027edd95f7e1bf8996df603d"
     }
   },
   {
@@ -807,7 +807,7 @@
       "src/versus_cldata.h"
     ],
     "rebuilt_symbol": "?Update@SecureHashAlgorithm1@@QAEXPBEK@Z",
-    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
     "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
     "coff_alignment": 16,
     "identification": "The SHA-1 update member called from RVAs 0x264dc9 and 0x264e13 advances a split 64-bit bit count, completes an existing partial block, transforms each complete 64-byte chunk and buffers the tail. Both compression calls receive the five-word state and the sixteen-word buffer.",
@@ -823,7 +823,7 @@
     },
     "match": {
       "bytes_sha256": "08691b0919410db0a75955e60f7b464705d9687cb54f5f9d6e4540109fd1ab8b",
-      "inputs_sha256": "a44e800e418ec80b506d687bffdeb1975eb79a21873acff8c8f17a84af6d55a8"
+      "inputs_sha256": "cc3562aefbfb6905cb6a0eb25d45ba5f9e32f103e02d837a086ac194b1e48f1e"
     }
   },
   {
@@ -838,7 +838,7 @@
       "src/versus_cldata.h"
     ],
     "rebuilt_symbol": "?Final@SecureHashAlgorithm1@@QAEXPAE@Z",
-    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
     "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
     "coff_alignment": 16,
     "identification": "The SHA-1 finalization member called from RVA 0x264e55 places the padding bit, appends the two big-endian length words, invokes the compression and 20-byte output helpers, then wipes the complete context. It uses a second block when the 64-bit length does not fit.",
@@ -851,14 +851,14 @@
         "va": 280386048,
         "basis": "The complete SHA-1 compression starting at RVA 0x265a00 consumes the five-word state and the 64-byte word buffer."
       },
-      "?CopyDigest@SecureHashAlgorithm1@@AAEXPAEPBEK@Z": {
+      "?CopyDigest@SecureHashAlgorithm1@@AAEXPAEPBKK@Z": {
         "va": 280393552,
         "basis": "Final calls RVA 0x267750 with the output pointer, internal five-word state and a length of 20 bytes; the callee writes each group of four bytes in reverse order."
       }
     },
     "match": {
       "bytes_sha256": "2a68b89da0b79a9a6903e4726a042620f043eeabe9fc728990b53c71d3a79c3b",
-      "inputs_sha256": "8a43a7a6f8a7029180770c161366a5c693e8c89297a165e417fb53c9e10f5f81"
+      "inputs_sha256": "4a40b23b92860c3e3c59fde7bcf22c0eb609afd39c3962f1c39681c4e72d36ee"
     }
   },
   {
@@ -873,13 +873,34 @@
       "src/versus_cldata.h"
     ],
     "rebuilt_symbol": "?ByteReverse@SecureHashAlgorithm1@@AAEXPAKK@Z",
-    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
     "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
     "coff_alignment": 16,
     "identification": "SHA-1 per-word byte reversal over the requested byte length divided by four. Calls from Update and Final supply 64 bytes for complete blocks or 56 bytes before the length words. The scalar operations exchange adjacent bytes and then the high and low halfwords.",
     "match": {
       "bytes_sha256": "113f587fc39c724c1ca64a950c1627454d39b2d9b2df805dfaf589ad18a1cb64",
-      "inputs_sha256": "3c6ffe81d07a59828a93fbd190a54b250c7712b2f7b390e3b13aae9b2edeebbe"
+      "inputs_sha256": "5fb074bde119fc6fd6bc208ab1833a330859d103a38d933ca2c3f323abfe6411"
+    }
+  },
+  {
+    "id": "versus-secure-hash-algorithm1-copy-digest",
+    "offset": 2520912,
+    "size": 72,
+    "inputs": [
+      "src/versus_secure_hash_stream.cpp",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?CopyDigest@SecureHashAlgorithm1@@AAEXPAEPBKK@Z",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_secure_hash_stream.obj src/versus_secure_hash_stream.cpp",
+    "coff_alignment": 16,
+    "identification": "The SHA-1 finalizer calls this member at RVA 0x2659e6 with the destination, the five state DWORDs and a byte count of 20. It encodes each word in big-endian order by writing its low through high bytes at descending offsets within each group of four. CopyDigest describes the operation; the original method spelling is unknown.",
+    "match": {
+      "bytes_sha256": "6d884ceb85a9832ed57fa550fd7a45f3a223ad650915f4d9369b5fc41c05a764",
+      "inputs_sha256": "c4ab4ff9f86694c1058a707f50cfe3548f71f7eec6218ab38897f6a18c165783"
     }
   },
   {
@@ -1002,7 +1023,7 @@
     },
     "match": {
       "bytes_sha256": "15e26dd6cda12305d6472bdc8b3a266d8ad56ea1b547b95a002789c129e60a09",
-      "inputs_sha256": "1f216dccb8a6c8a7dad6be555baeb0ad800a55c9b69167ada3c5d66611061478"
+      "inputs_sha256": "13368569dddfa1498c0910fa1e155e9ee02d757b5085643c1c3f0af123803e7c"
     }
   },
   {

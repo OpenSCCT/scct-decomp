@@ -66,19 +66,25 @@ void SecureHashAlgorithm1::Final(BYTE *Digest)
     Context.Buffer.Words[15] = Context.Count[0];
     ByteReverse(Context.Buffer.Words, BlockSize - 8);
     Transform(Context.State, Context.Buffer.Words);
-    CopyDigest(Digest, (const BYTE *)Context.State, DigestSize);
+    CopyDigest(Digest, Context.State, DigestSize);
     memset(&Context, 0, sizeof(Context));
 }
 
 void SecureHashAlgorithm1::ByteReverse(DWORD *Data, DWORD Length)
 {
-    const DWORD LowBytes = 0x00ff00ff;
     for (DWORD Words = Length / sizeof(DWORD); Words; --Words) {
-        const DWORD Word = *Data;
-        const DWORD Up = Word << 8;
-        const DWORD Down = Word >> 8;
-        // Select alternate bytes from each shift, then exchange the two halfwords.
-        const DWORD Swapped = Up ^ ((Down ^ Up) & LowBytes);
-        *Data++ = (Swapped << 16) | (Swapped >> 16);
+        DWORD Word = *Data;
+        Word = ((Word & 0xff00ff00) >> 8) | ((Word & 0x00ff00ff) << 8);
+        *Data++ = (Word >> 16) | (Word << 16);
+    }
+}
+
+void SecureHashAlgorithm1::CopyDigest(BYTE *Output, const DWORD *Words, DWORD Length)
+{
+    for (DWORD Word = 0, Byte = 0; Byte < Length; ++Word, Byte += 4) {
+        Output[Byte + 3] = (BYTE)(Words[Word] & 0xff);
+        Output[Byte + 2] = (BYTE)((Words[Word] >> 8) & 0xff);
+        Output[Byte + 1] = (BYTE)((Words[Word] >> 16) & 0xff);
+        Output[Byte] = (BYTE)((Words[Word] >> 24) & 0xff);
     }
 }
