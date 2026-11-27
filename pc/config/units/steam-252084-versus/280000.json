@@ -8336,6 +8336,176 @@
     }
   },
   {
+    "id": "versus-d3dx-get-reg-value",
+    "offset": 2674321,
+    "size": 92,
+    "inputs": [
+      "src/d3dx_settings.cpp",
+      "src/d3dx_settings.h",
+      "src/windows_dispatch_types.h"
+    ],
+    "rebuilt_symbol": "?GetD3DRegValue@@YAHKPADPAXK@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O1 /Gy /c /Folocal/d3dx_settings.obj src/d3dx_settings.cpp",
+    "identification": "The original DirectX 8.1 cpudetect.obj names GetD3DRegValue. The complete body opens the Direct3D machine settings key, queries one typed value, closes the key and returns whether the requested type was read.",
+    "link_bindings": {
+      "??_C@_0BM@IHHDGEAJ@Software?2Microsoft?2Direct3D?$AA@": {
+        "va": 280937072,
+        "basis": "Both the named original COFF literal and the rebuilt literal contain the full Direct3D registry key including its terminating zero. It occurs in the locked read-only image at this address."
+      },
+      "__imp__RegOpenKeyA@12": {
+        "va": 280883200,
+        "basis": "The locked PE import directory identifies this IAT entry as ADVAPI32.dll!RegOpenKeyA. The original cpudetect.obj names the same import at +0x19."
+      },
+      "__imp__RegQueryValueExA@24": {
+        "va": 280883204,
+        "basis": "The locked PE import directory identifies this IAT entry as ADVAPI32.dll!RegQueryValueExA. The original cpudetect.obj names the same import at +0x37."
+      },
+      "__imp__RegCloseKey@4": {
+        "va": 280883208,
+        "basis": "The locked PE import directory identifies this IAT entry as ADVAPI32.dll!RegCloseKey. The original cpudetect.obj names the same import at +0x42."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "original_compiler": "Microsoft C/C++ 13.00.9176 for x86",
+      "flags": [
+        "/O1"
+      ],
+      "basis": "evidence/versus-d3dx8-registry.md"
+    },
+    "match": {
+      "bytes_sha256": "24b046186f24700d7fbf6180c4780518b1f8f7af28199caade0a571ff3119989",
+      "inputs_sha256": "e7974317370cb0161bc70133198a69826283e1f82aeefc9e6d0adfbba8168b1e"
+    },
+    "system_headers": {
+      "mmintrin.h": "c6a74ffc34c290fdc7fc4705117e31d34a6e6e375da5cfab20bfd1d5a5e4152c"
+    }
+  },
+  {
+    "id": "versus-d3dx-is-mmx-processor",
+    "offset": 2674450,
+    "size": 176,
+    "inputs": [
+      "src/d3dx_settings.cpp",
+      "src/d3dx_settings.h",
+      "src/windows_dispatch_types.h"
+    ],
+    "system_headers": {
+      "mmintrin.h": "c6a74ffc34c290fdc7fc4705117e31d34a6e6e375da5cfab20bfd1d5a5e4152c"
+    },
+    "rebuilt_symbol": "?isMMXprocessor@@YAHXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O1 /Gy /c /Folocal/d3dx_settings.obj src/d3dx_settings.cpp",
+    "identification": "The original DX8.1 cpudetect.obj identifies isMMXprocessor through its DisableMMX setting, cached isMMX global and named _asm_isMMX callee. Retail additionally calls GetSystemInfo and requires an Intel architecture processor at least at level 5 before the feature probe. The original section is 153 bytes; the 176-byte retail build is retained as a candidate.",
+    "link_bindings": {
+      "??_C@_0BM@IHHDGEAJ@Software?2Microsoft?2Direct3D?$AA@": {
+        "va": 280937072,
+        "basis": "The pooled Direct3D registry string matches in full, including its null terminator, in the original COFF, rebuilt COFF and locked image."
+      },
+      "__imp__RegOpenKeyA@12": {
+        "va": 280883200,
+        "basis": "The locked PE imports ADVAPI32.dll!RegOpenKeyA at this IAT entry."
+      },
+      "??_C@_0L@FLOHHHAO@DisableMMX?$AA@": {
+        "va": 280937100,
+        "basis": "The pooled Direct3D registry string matches in full, including its null terminator, in the original COFF, rebuilt COFF and locked image."
+      },
+      "__imp__RegQueryValueExA@24": {
+        "va": 280883204,
+        "basis": "The locked PE imports ADVAPI32.dll!RegQueryValueExA at this IAT entry."
+      },
+      "__imp__RegCloseKey@4": {
+        "va": 280883208,
+        "basis": "The locked PE imports ADVAPI32.dll!RegCloseKey at this IAT entry."
+      },
+      "_isMMX": {
+        "va": 281266400,
+        "basis": "The five references agree on the cached feature state. Both the release cpudetect.obj and reconstructed C++ name isMMX and initialize the writable integer to -1, as at this address in the locked image."
+      },
+      "__imp__GetSystemInfo@4": {
+        "va": 280883432,
+        "basis": "The locked PE imports KERNEL32.dll!GetSystemInfo at this IAT entry."
+      },
+      "?_asm_isMMX@@YAHXZ": {
+        "va": 280547053,
+        "basis": "The release object names _asm_isMMX and its entire relocation-free 37-byte section matches at file offset 0x28ceed."
+      }
+    },
+    "match": {
+      "bytes_sha256": "33ab0b335193e7c08122d5e55aefd977797375160ece63675fc288a93a9b2282",
+      "inputs_sha256": "bf1f0de087357f770eb121b2bc7c7c6902b8592885b309e02c2ea40f905e989e"
+    }
+  },
+  {
+    "id": "versus-d3dx-cpu-optimizations-28d067",
+    "offset": 2674791,
+    "size": 221,
+    "inputs": [
+      "src/d3dx_math_cpu_control.cpp",
+      "src/d3dx_math_cpu_control.h",
+      "src/d3dx_fast_table.h",
+      "src/d3dx_settings.h",
+      "src/d3dx_math_types.h",
+      "src/d3d8_viewport.h",
+      "src/windows_dispatch_types.h"
+    ],
+    "rebuilt_symbol": "_D3DXCpuOptimizations@4",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O1 /Gy /c /Folocal/d3dx_math_cpu_control.obj src/d3dx_math_cpu_control.cpp",
+    "identification": "The named DirectX math CPU selector restores the 57 entries of g_D3DXFastTableC and initializes the available processor implementation. g_CpuOptimization has the original decorated enum type. The Versus executable queries the processor features through an inline switch and returns the cached enum. Both its complete code and the DisablePSGP registry read are verified in the locked image.",
+    "link_bindings": {
+      "??_C@_0M@GCJEAAPG@DisablePSGP?$AA@": {
+        "va": 280937128,
+        "basis": "The retail selector passes this DisablePSGP literal to GetD3DRegValue. The complete ASCII text and terminator occur at this read-only image address."
+      },
+      "?GetD3DRegValue@@YAHKPADPAXK@Z": {
+        "va": 280546961,
+        "basis": "The private DirectX 8.1 helper reads the DWORD DisablePSGP from the Direct3D registry key. Its complete stock function starts here."
+      },
+      "?IsIntelSSEProcessor@@YAKXZ": {
+        "va": 280547266,
+        "basis": "The named DirectX processor probe returns a feature mask. The inlined feature switch tests its SSE2 bit 8 at this call."
+      },
+      "?g_CpuOptimization@@3W4_D3DX_CPU_OPTIMIZATION@@A": {
+        "va": 281266404,
+        "basis": "The 8.1 cpudetect object names this mutable enum. The initializer and disabled-state store are 0xffff. The return loads the same object."
+      },
+      "?g_D3DXFastTable@@3UD3DXFASTTABLE@@A": {
+        "va": 281263992,
+        "basis": "The 57-pointer writable dispatch table is the destination of both copies; each installer receives this same address."
+      },
+      "?g_D3DXFastTableC@@3UD3DXFASTTABLE@@A": {
+        "va": 281264224,
+        "basis": "This 57-pointer scalar table is copied in both configuration branches. The archive declares the named table as a non-const D3DXFASTTABLE."
+      },
+      "?sse2_D3DXInitFastTable@@YAXPAUD3DXFASTTABLE@@@Z": {
+        "va": 280548880,
+        "basis": "The sse2 installer has this start address and updates its processor-specific entries in the same D3DXFASTTABLE."
+      },
+      "?sse_D3DXInitFastTable@@YAXPAUD3DXFASTTABLE@@@Z": {
+        "va": 280548592,
+        "basis": "The sse installer has this start address and updates its processor-specific entries in the same D3DXFASTTABLE."
+      },
+      "?x3d_D3DXInitFastTable@@YAXPAUD3DXFASTTABLE@@@Z": {
+        "va": 280549381,
+        "basis": "The x3d installer has this start address and updates its processor-specific entries in the same D3DXFASTTABLE."
+      },
+      "?x86_D3DXInitFastTable@@YAXPAUD3DXFASTTABLE@@@Z": {
+        "va": 280551047,
+        "basis": "The x86 installer has this start address and updates its processor-specific entries in the same D3DXFASTTABLE."
+      },
+      "__imp__IsProcessorFeaturePresent@4": {
+        "va": 280883556,
+        "basis": "The image imports IsProcessorFeaturePresent from KERNEL32.dll through this slot; the selector queries features 7 and 6."
+      }
+    },
+    "match": {
+      "bytes_sha256": "7b9cd10997a49022dd403c909716c66cd9d3dab0aeaba3109c874ffa6768bad2",
+      "inputs_sha256": "5b94771b798bbd7c73730b4c0f71aefb94ad2cace09bcdbf946b4fcb9cfa780e"
+    }
+  },
+  {
     "id": "record-initializer-28d144",
     "offset": 2675012,
     "size": 16,
