@@ -1,5 +1,6 @@
-// Work item 0385: Versus RVA 0xa6050-0xa6394 (Engine, skeletal mesh LOD data;
+// Work item 0385: Versus RVA 0xa5fe0-0xa6394 (Engine, skeletal mesh LOD data;
 // LTCG objects).
+// 0xa5fe0 TArray<FStaticLODModel>::~TArray, called for USkeletalMesh +0x1ac.
 // 0xa6050 TArray<FStaticLODModel>::Remove (Index in EDI, this and Count on
 //         the stack, ret 8).
 // 0xa60a0 FStaticLODModel::~FStaticLODModel (compiler generated; this on the
