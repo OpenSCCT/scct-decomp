@@ -1,9 +1,8 @@
 // Work item 0226: Versus RVA 0x55c50-0x5600f.
-// RVAs 0x55cf0, 0x55dc0, 0x55e30 and 0x55f20 are UArrayProperty vtable slots
-// 27..30 (vtable 0x10d0d380). The two functions before them loop over Inner
-// (0x58) Count (0x5c) times: by layout this is UFixedArrayProperty (name
-// inferred from UE2, not from a label). Virtual names for slots 27, 36, 37
-// are guesses from the argument shapes.
+// UArrayProperty's vtable is at 0x10c0d380. Slots 27 through 30 operate on
+// its Inner property at +0x58. UFixedArrayProperty's vtable is at 0x10c0caa8.
+// Its slot 35 copies one fixed array through the inner property's slot 36,
+// and its slot 37 destroys it. The class placement functions store these tables.
 // Bit 31 of PropertyFlags selects an 8-byte array header (Data, Num) instead
 // of the 12-byte FArray (Data, Num, Max); the name CPF_CompactArray is ours.
 
@@ -139,7 +138,7 @@ public:
 	virtual void Virtual32();
 	virtual void Virtual33();
 	virtual void Virtual34();
-	virtual void Virtual35();
+	virtual void CopySingleValue(void *Dest, void *Src, UObject *SuperObject); // +0x8c
 	virtual void CopyCompleteValue(void *Dest, void *Src, UObject *SuperObject); // 0x90
 	virtual void DestroyValue(void *Dest);                              // 0x94
 };
@@ -169,12 +168,12 @@ public:
 	UProperty *Inner;         // 0x58
 	INT Count;                // 0x5c
 
-	void CopyCompleteValue(void *Dest, void *Src, UObject *SuperObject);
+	void CopySingleValue(void *Dest, void *Src, UObject *SuperObject);
 	void DestroyValue(void *Dest);
 };
 
 // 0x55c50
-void UFixedArrayProperty::CopyCompleteValue(void *Dest, void *Src, UObject *SuperObject)
+void UFixedArrayProperty::CopySingleValue(void *Dest, void *Src, UObject *SuperObject)
 {
 	for (INT i = 0; i < Count; i++)
 		Inner->CopyCompleteValue((BYTE *)Dest + i * Inner->ElementSize, Src ? (BYTE *)Src + i * Inner->ElementSize : 0, 0);
