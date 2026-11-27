@@ -1,24 +1,9 @@
-// Work item 0122 (w3): Versus RVA 0xb6f00-0xb707a, USkeletalMeshInstance
-// animation lookups (vtable slots 39-41 of USkeletalMeshInstance@30a048 and
-// the channel rate helper). LTCG object: helpers get register conventions
-// (ActualizeAnimLinkups: this in EAX; ValidateAnimChannel: this in EBX,
-// channel in EDI; GetActiveAnimRate: this in ECX, channel in EAX).
-// Member names follow UE2 UnSkeletalMesh.h where the layout agrees.
+// Skeletal mesh animation linkups, active-channel lookups and sequence counts.
+#include "versus_build.h"
+#include "versus_mesh_animation_channels.h"
 
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
 typedef void *HMeshAnim;
 
-class FName
-{
-public:
-    INT Index;
-    UBOOL operator==(const FName &Other) const { return Index == Other.Index; }
-};
-
-typedef unsigned short TCHAR;
 class FMalloc
 {
 public:
@@ -36,7 +21,7 @@ public:
     INT ArrayNum;
     INT ArrayMax;
     INT Num() const { return ArrayNum; }
-    INT AddZeroed(INT ElementSize, INT n); // RVA 0x15400
+    INT __stdcall AddZeroed(INT ElementSize, INT n); // RVA 0x15400
     void Shrink(INT ElementSize)
     {
         if (ArrayMax != ArrayNum)
@@ -75,28 +60,22 @@ public:
 };
 
 class UMeshAnimation;
+class UMesh;
 class USkeletalMesh
 {
 public:
     char Pad0[0x1dc];
     UMeshAnimation *DefaultAnim; // 0x1dc
-    void *DefaultRefMesh;        // 0x1e0
+    UMesh *DefaultRefMesh;        // 0x1e0
 };
 
 // 0x18 bytes.
 struct MeshAnimLinkup
 {
     UMeshAnimation *Anim;
-    void *RefMesh;
-    char Pad8[0x10];
-};
-
-// 0x90 bytes.
-struct MeshAnimChannel
-{
-    INT Pad0[2];
-    FName AnimSeq; // 0x08
-    char PadC[0x84];
+    UMesh *RefMesh;
+    BYTE unk_08[4];
+    TArray<INT> BoneLinks;
 };
 
 extern const FLOAT GZeroFloat;       // 0x10c109f8, 0.0f
@@ -133,13 +112,13 @@ public:
 
     USkeletalMeshInstance() {}
 
-    UBOOL SetAnimLinkup(UMeshAnimation *Anim, void *RefMesh);
+    UBOOL SetAnimLinkup(UMeshAnimation *Anim, UMesh *RefMesh);
     void ActualizeAnimLinkups();
     UBOOL ValidateAnimChannel(INT Channel);
     FName GetActiveAnimSequence(INT Channel)
     {
         FName Result;
-        Result.Index = (Channel >= 0 && Channel < Channels.Num()) ? Channels(Channel).AnimSeq.Index : 0;
+        Result.Index = (Channel >= 0 && Channel < Channels.Num()) ? Channels(Channel).AnimSequence.Index : 0;
         return Result;
     }
     FLOAT GetActiveAnimRate(INT Channel);
@@ -153,36 +132,7 @@ template <class T> void TArray<T>::Shrink()
     FArray::Shrink(sizeof(T));
 }
 
-// RVA 0xb6d10 (another function; defined for its EBX convention).
-UBOOL USkeletalMeshInstance::SetAnimLinkup(UMeshAnimation *Anim, void *RefMesh)
-{
-    if (Anim)
-    {
-        INT Found = -1;
-        for (INT i = 0; i < AnimLinkups.Num(); i++)
-            if (AnimLinkups(i).Anim == Anim)
-            {
-                Found = i;
-                break;
-            }
-        if (Found == -1)
-        {
-            INT Index = AnimLinkups.Num();
-            AnimLinkups.AddZeroed(sizeof(MeshAnimLinkup), 1);
-            AnimLinkups(Index).Anim = Anim;
-            AnimLinkups(Index).RefMesh = RefMesh;
-        }
-        LinkupsChanged();
-    }
-    return 1;
-}
-
-// RVA 0xb6d80 (another function; defined so the link gives it its EAX convention).
-void USkeletalMeshInstance::ActualizeAnimLinkups()
-{
-    if (this && AnimLinkups.Num() == 0 && GetMesh() && GetMesh()->DefaultAnim)
-        SetAnimLinkup(GetMesh()->DefaultAnim, GetMesh()->DefaultRefMesh);
-}
+#include "versus_skeletal_animation_linkups.inl"
 
 // RVA 0xb5910 (another function; defined so the link gives it its EBX/EDI convention).
 UBOOL USkeletalMeshInstance::ValidateAnimChannel(INT Channel)

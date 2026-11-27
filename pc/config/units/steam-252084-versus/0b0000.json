@@ -1238,6 +1238,68 @@
     }
   },
   {
+    "id": "versus-skeletal-stop-animating",
+    "offset": 743888,
+    "size": 237,
+    "rebuilt_symbol": "?StopAnimating@USkeletalMeshInstance@@QAEKK@Z",
+    "inputs": [
+      "src/versus_vd7_item_0005.cpp",
+      "src/versus_build.h",
+      "src/unreal_script.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_object.h",
+      "src/versus_skeletal_animation_instance.h",
+      "src/versus_mesh_instance.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_arrays.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd7_item_0005.obj src/versus_vd7_item_0005.cpp",
+    "identification": "The registered AActor::execStopAnimating calls the complete USkeletalMeshInstance::StopAnimating at 0x123ae3; the shipped editor names the Actor native. The 0x90-byte channels, two arrays of 0x44-byte bone controllers, and fields cleared agree with the independent animation-channel archive and GetFrame. The 237-byte span includes both internal loop alignment sequences and ends at RET 4.",
+    "ltcg_link": {
+      "roots": [
+        "?execStopAnimating@AActor@@QAEXAAUFFrame@@QAX@Z"
+      ],
+      "stubs": [
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?MeshGetInstance@UMesh@@QAEPAVUMeshInstance@@PBVAActor@@@Z",
+        "?PrivateStaticClass@USkeletalMeshInstance@@2VUClass@@A",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          96,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ],
+        [
+          136,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ]
+      ],
+      "symbols": {
+        "?GMalloc@@3PAVFMalloc@@A": 268439920
+      }
+    },
+    "link_bindings": {
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "The existing Versus array constructor/destructor receipts identify GMalloc; both controller Empty calls load that global and dispatch Free at vtable offset 8."
+      }
+    },
+    "match": {
+      "bytes_sha256": "960cab8dda981e38dd0fcf1db61bd7454a00fb9a517657d4c6dbb3372da2849b",
+      "inputs_sha256": "1b7f241946f3f52810e7919c9ef77d9d25493f07a11286d673d40a5e40de968e"
+    }
+  },
+  {
     "id": "versus-vd-b5ac0",
     "offset": 744128,
     "size": 199,
@@ -1938,10 +2000,16 @@
     "size": 40,
     "inputs": [
       "src/versus_skeletal_force_refresh.cpp",
+      "src/versus_skeletal_animation_instance.h",
       "src/versus_build.h",
+      "src/versus_mesh_instance.h",
+      "src/unreal_object.h",
       "src/unreal_types.h",
       "src/unreal_name.h",
-      "src/unreal_object.h"
+      "src/versus_registration_arrays.h",
+      "src/versus_arrays.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h"
     ],
     "rebuilt_symbol": "?ForceBoneRefresh@USkeletalMeshInstance@@UAEXXZ",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1950,7 +2018,113 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "117e9a81ef36d78baa72676233c9b9b320e97fe4b550e42de7588d054f95e9d0",
-      "inputs_sha256": "c9fea8deeef76a5747685b98e128e154aa5aecb22be0120c071fbb36a553aaba"
+      "inputs_sha256": "59248e7194494427773008abcfb7df845101d1836d798edac85e2cc83c293a47"
+    }
+  },
+  {
+    "id": "versus-skeletal-add-animation-linkup",
+    "offset": 748816,
+    "size": 109,
+    "rebuilt_symbol": "?SetAnimLinkup@USkeletalMeshInstance@@QAEKPAVUMeshAnimation@@PAVUMesh@@@Z",
+    "inputs": [
+      "src/versus_skeletal_animation_linkups.cpp",
+      "src/versus_skeletal_animation_instance.h",
+      "src/versus_build.h",
+      "src/versus_mesh_instance.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_arrays.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h",
+      "src/versus_skeletal_animation_linkups.inl"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_animation_linkups.obj src/versus_skeletal_animation_linkups.cpp",
+    "identification": "The registered AActor::execLinkSkelAnim passes its MeshAnimation and Mesh object parameters to this function at 0x123e07. Its other caller loads the default pair from the skeletal mesh. The editor counterpart at VA 0x111004c0 likewise scans 24-byte linkups, appends the animation and reference mesh when missing and dispatches the refresh virtual. SetAnimLinkup is descriptive.",
+    "ltcg_link": {
+      "roots": [
+        "?CurrentSkelAnim@USkeletalMeshInstance@@UAEPAVUMeshAnimation@@H@Z"
+      ],
+      "stubs": [
+        "?AddZeroed@FArray@@QAGHHH@Z"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          63,
+          "rel32",
+          "?AddZeroed@FArray@@QAGHHH@Z"
+        ]
+      ],
+      "symbols": {
+        "?AddZeroed@FArray@@QAGHHH@Z": 268439872
+      }
+    },
+    "link_bindings": {
+      "?AddZeroed@FArray@@QAGHHH@Z": {
+        "va": 277959680,
+        "basis": "The AddZeroed entry takes the array, 24-byte linkup size and count 1. The existing ValidateAnimChannel and GetMeshVerts callers identify the same FArray operation."
+      }
+    },
+    "match": {
+      "bytes_sha256": "0075a5c6eb46c1d202733e0a8d6482df39a49f1e654ea2c9f23cb6e5ac42d3a2",
+      "inputs_sha256": "1a0ba04202a529883273a0fd1ba0f19705dd38a542dbe93911e42c1f048eec3a"
+    }
+  },
+  {
+    "id": "versus-skeletal-actualize-animation-linkups",
+    "offset": 748928,
+    "size": 92,
+    "rebuilt_symbol": "?ActualizeAnimLinkups@USkeletalMeshInstance@@QAEXXZ",
+    "inputs": [
+      "src/versus_skeletal_animation_linkups.cpp",
+      "src/versus_skeletal_animation_instance.h",
+      "src/versus_build.h",
+      "src/versus_mesh_instance.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_arrays.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h",
+      "src/versus_skeletal_animation_linkups.inl"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_animation_linkups.obj src/versus_skeletal_animation_linkups.cpp",
+    "identification": "Called by CurrentSkelAnim before the channel lookup. The corresponding shipped editor routine at VA 0x11100540 tests the same empty array, makes four virtual mesh queries, and passes the default animation and reference mesh to VA 0x111004c0. ActualizeAnimLinkups is descriptive.",
+    "ltcg_link": {
+      "roots": [
+        "?CurrentSkelAnim@USkeletalMeshInstance@@UAEPAVUMeshAnimation@@H@Z"
+      ],
+      "stubs": [
+        "?AddZeroed@FArray@@QAGHHH@Z"
+      ],
+      "rebuilt_offset": 1136,
+      "rebuilt_address": 268439664,
+      "fields": [
+        [
+          86,
+          "rel32",
+          "?SetAnimLinkup@USkeletalMeshInstance@@QAEKPAVUMeshAnimation@@PAVUMesh@@@Z"
+        ]
+      ],
+      "symbols": {
+        "?SetAnimLinkup@USkeletalMeshInstance@@QAEKPAVUMeshAnimation@@PAVUMesh@@@Z": 268439552
+      }
+    },
+    "link_bindings": {
+      "?SetAnimLinkup@USkeletalMeshInstance@@QAEKPAVUMeshAnimation@@PAVUMesh@@@Z": {
+        "va": 278621456,
+        "basis": "The default animation and mesh arguments reach the same SetAnimLinkup named by the registered Actor.LinkSkelAnim caller at RVA 0x123e07."
+      }
+    },
+    "match": {
+      "bytes_sha256": "2d2647b228d4e57f360c45edc5021fc49bcfd7e205e484e7b16e4b8d3727d6a2",
+      "inputs_sha256": "77dcd47bf7474bfe6ed105ad7bd64b3d41de81eb07cef12ee41ddc9c648e5587"
     }
   },
   {
@@ -2043,11 +2217,70 @@
     }
   },
   {
+    "id": "versus-skeletal-current-animation",
+    "offset": 749200,
+    "size": 111,
+    "rebuilt_symbol": "?CurrentSkelAnim@USkeletalMeshInstance@@UAEPAVUMeshAnimation@@H@Z",
+    "inputs": [
+      "src/versus_skeletal_animation_linkups.cpp",
+      "src/versus_skeletal_animation_instance.h",
+      "src/versus_build.h",
+      "src/versus_mesh_instance.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_arrays.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h",
+      "src/versus_skeletal_animation_linkups.inl"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_skeletal_animation_linkups.obj src/versus_skeletal_animation_linkups.cpp",
+    "identification": "Slot 75 of the USkeletalMeshInstance vtable at RVA 0x30a048, invoked by GetFrame at 0xbad95. The shipped editor counterpart at VA 0x11100670 is slot 78 in its expanded table. Both refresh defaults, read MeshAnimIndex from a 144-byte channel and resolve the object through a 24-byte linkup before falling back to the default animation. CurrentSkelAnim is descriptive.",
+    "ltcg_link": {
+      "roots": [
+        "?CurrentSkelAnim@USkeletalMeshInstance@@UAEPAVUMeshAnimation@@H@Z"
+      ],
+      "stubs": [
+        "?AddZeroed@FArray@@QAGHHH@Z"
+      ],
+      "rebuilt_offset": 1232,
+      "rebuilt_address": 268439760,
+      "fields": [
+        [
+          6,
+          "rel32",
+          "?ActualizeAnimLinkups@USkeletalMeshInstance@@QAEXXZ"
+        ]
+      ],
+      "symbols": {
+        "?ActualizeAnimLinkups@USkeletalMeshInstance@@QAEXXZ": 268439664
+      }
+    },
+    "link_bindings": {
+      "?ActualizeAnimLinkups@USkeletalMeshInstance@@QAEXXZ": {
+        "va": 278621568,
+        "basis": "The same default-animation helper begins the two adjacent independently matched GetAnimCount and GetAnimNamed routines."
+      }
+    },
+    "match": {
+      "bytes_sha256": "86711898e728c109f663842b4864a41a99316fed010f47eee7c3991078c508e7",
+      "inputs_sha256": "43758a021788b2ce978bb041248d5169e5771aa3718cc17aeb9d7f157010b368"
+    }
+  },
+  {
     "id": "versus-vd-b6f00",
     "offset": 749312,
     "size": 49,
     "inputs": [
-      "src/versus_vd5_item_0122.cpp"
+      "src/versus_vd5_item_0122.cpp",
+      "src/versus_build.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_skeletal_animation_linkups.inl"
     ],
     "rebuilt_symbol": "?GetAnimCount@USkeletalMeshInstance@@UAEHXZ",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2056,7 +2289,7 @@
     "link_bindings": {
       "?ActualizeAnimLinkups@USkeletalMeshInstance@@QAEXXZ": {
         "va": 278621568,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The same default-animation helper begins the two adjacent independently matched GetAnimCount and GetAnimNamed routines."
       }
     },
     "ltcg_link": {
@@ -2064,9 +2297,8 @@
         "?Driver_b6f40@@YAMPAXHH@Z"
       ],
       "stubs": [
-        "?AddZeroed@FArray@@QAEHHH@Z",
+        "?AddZeroed@FArray@@QAGHHH@Z",
         "?AnimGetRate@USkeletalMeshInstance@@UAEMPAX@Z",
-        "?CurrentSkelAnim@USkeletalMeshInstance@@UAEPAVUMeshAnimation@@H@Z",
         "?DefaultAnimRate@@3MB",
         "?Escape@@YAXPAX@Z",
         "?FArray_Tag@@3QBGB",
@@ -2145,8 +2377,8 @@
         "?Slot9@USkeletalMeshInstance@@UAEXXZ",
         "__fltused"
       ],
-      "rebuilt_offset": 1344,
-      "rebuilt_address": 268439872,
+      "rebuilt_offset": 1456,
+      "rebuilt_address": 268439984,
       "fields": [
         [
           6,
@@ -2160,7 +2392,7 @@
     },
     "match": {
       "bytes_sha256": "a53956e543ceb9729d0269df2b2e4572fa30d9b9c3a73bb04ae28852ba9af59a",
-      "inputs_sha256": "ddcdb64fca57dc7a9d08083150ae6660f3df3d1984a32688ddf57d580615b720"
+      "inputs_sha256": "19a8c067de419409098ed91e2f238e65e5048d66dd88f2cb3c7cc36dca7a877b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2176,7 +2408,13 @@
     "offset": 749376,
     "size": 93,
     "inputs": [
-      "src/versus_vd5_item_0122.cpp"
+      "src/versus_vd5_item_0122.cpp",
+      "src/versus_build.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_skeletal_animation_linkups.inl"
     ],
     "rebuilt_symbol": "?GetActiveAnimRate@USkeletalMeshInstance@@QAEMH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2201,9 +2439,8 @@
         "?Driver_b6f40@@YAMPAXHH@Z"
       ],
       "stubs": [
-        "?AddZeroed@FArray@@QAEHHH@Z",
+        "?AddZeroed@FArray@@QAGHHH@Z",
         "?AnimGetRate@USkeletalMeshInstance@@UAEMPAX@Z",
-        "?CurrentSkelAnim@USkeletalMeshInstance@@UAEPAVUMeshAnimation@@H@Z",
         "?DefaultAnimRate@@3MB",
         "?Escape@@YAXPAX@Z",
         "?FArray_Tag@@3QBGB",
@@ -2282,8 +2519,8 @@
         "?Slot9@USkeletalMeshInstance@@UAEXXZ",
         "__fltused"
       ],
-      "rebuilt_offset": 1408,
-      "rebuilt_address": 268439936,
+      "rebuilt_offset": 1520,
+      "rebuilt_address": 268440048,
       "fields": [
         [
           7,
@@ -2302,14 +2539,14 @@
         ]
       ],
       "symbols": {
-        "?ValidateAnimChannel@USkeletalMeshInstance@@QAEKH@Z": 268439760,
-        "?GZeroFloat@@3MB": 268440327,
-        "?DefaultAnimRate@@3MB": 268440323
+        "?ValidateAnimChannel@USkeletalMeshInstance@@QAEKH@Z": 268439872,
+        "?GZeroFloat@@3MB": 268440438,
+        "?DefaultAnimRate@@3MB": 268440434
       }
     },
     "match": {
       "bytes_sha256": "ed1fefc734b7532691a5c842ce7d2fdccce28648acf5d5d1e241e0f90c83daea",
-      "inputs_sha256": "ec3ab4bac542cc29e2953fedf64812a3afaf6c3733719bc975c5c384a115edb4"
+      "inputs_sha256": "539fda2755447710beaaacd4829cedfa607772e30facb04411ab11aa309599c2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2325,7 +2562,13 @@
     "offset": 749472,
     "size": 83,
     "inputs": [
-      "src/versus_vd5_item_0122.cpp"
+      "src/versus_vd5_item_0122.cpp",
+      "src/versus_build.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_skeletal_animation_linkups.inl"
     ],
     "rebuilt_symbol": "?GetAnimIndexed@USkeletalMeshInstance@@UAEPAXH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2337,9 +2580,8 @@
         "?Driver_b6f40@@YAMPAXHH@Z"
       ],
       "stubs": [
-        "?AddZeroed@FArray@@QAEHHH@Z",
+        "?AddZeroed@FArray@@QAGHHH@Z",
         "?AnimGetRate@USkeletalMeshInstance@@UAEMPAX@Z",
-        "?CurrentSkelAnim@USkeletalMeshInstance@@UAEPAVUMeshAnimation@@H@Z",
         "?DefaultAnimRate@@3MB",
         "?Escape@@YAXPAX@Z",
         "?FArray_Tag@@3QBGB",
@@ -2418,14 +2660,14 @@
         "?Slot9@USkeletalMeshInstance@@UAEXXZ",
         "__fltused"
       ],
-      "rebuilt_offset": 1504,
-      "rebuilt_address": 268440032,
+      "rebuilt_offset": 1616,
+      "rebuilt_address": 268440144,
       "fields": [],
       "symbols": {}
     },
     "match": {
       "bytes_sha256": "f35a4aef3c9ca27c9730862336e2f8cca5de3277a4eb6df6bbfed4630a03c66b",
-      "inputs_sha256": "9903bd5baddf05f9f1314b54b0115394abd971d466c9685dddbfdd4a285c7589"
+      "inputs_sha256": "d0904d7e2762fcf0a9fd305da2b1a466157624d5855d9c0e18521a43feceaa4f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2441,7 +2683,13 @@
     "offset": 749568,
     "size": 122,
     "inputs": [
-      "src/versus_vd5_item_0122.cpp"
+      "src/versus_vd5_item_0122.cpp",
+      "src/versus_build.h",
+      "src/versus_mesh_animation_channels.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/versus_skeletal_animation_linkups.inl"
     ],
     "rebuilt_symbol": "?GetAnimNamed@USkeletalMeshInstance@@UAEPAXVFName@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2450,7 +2698,7 @@
     "link_bindings": {
       "?ActualizeAnimLinkups@USkeletalMeshInstance@@QAEXXZ": {
         "va": 278621568,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The same default-animation helper begins the two adjacent independently matched GetAnimCount and GetAnimNamed routines."
       }
     },
     "ltcg_link": {
@@ -2458,9 +2706,8 @@
         "?Driver_b6f40@@YAMPAXHH@Z"
       ],
       "stubs": [
-        "?AddZeroed@FArray@@QAEHHH@Z",
+        "?AddZeroed@FArray@@QAGHHH@Z",
         "?AnimGetRate@USkeletalMeshInstance@@UAEMPAX@Z",
-        "?CurrentSkelAnim@USkeletalMeshInstance@@UAEPAVUMeshAnimation@@H@Z",
         "?DefaultAnimRate@@3MB",
         "?Escape@@YAXPAX@Z",
         "?FArray_Tag@@3QBGB",
@@ -2539,8 +2786,8 @@
         "?Slot9@USkeletalMeshInstance@@UAEXXZ",
         "__fltused"
       ],
-      "rebuilt_offset": 1600,
-      "rebuilt_address": 268440128,
+      "rebuilt_offset": 1712,
+      "rebuilt_address": 268440240,
       "fields": [
         [
           10,
@@ -2554,7 +2801,7 @@
     },
     "match": {
       "bytes_sha256": "c4b79aff92b0ec7061f340fa820e59a324378a7f439d038a9c6df2c50e41934a",
-      "inputs_sha256": "399a34ee66ee54211c244188cc62cbd157274b2f85d972980b40dcc24af890dd"
+      "inputs_sha256": "a6463b1a118023bd8284f932b47b3954a396c0d182221b4e89b48f508608abd4"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3462,9 +3709,10 @@
       "src/versus_skeletal_get_mesh_verts.cpp",
       "src/versus_build.h",
       "src/unreal_math.h",
+      "src/unreal_types.h",
       "src/unreal_object.h",
       "src/unreal_name.h",
-      "src/unreal_types.h"
+      "src/versus_mesh_instance.h"
     ],
     "rebuilt_symbol": "?GetMeshVerts@USkeletalMeshInstance@@UAEXPAVAActor@@PAUFVector@@HAAH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3533,7 +3781,7 @@
     },
     "match": {
       "bytes_sha256": "49929243470acbafec1c261ab03aaf28de2d929813c70a1fd939f9f7e32f0f28",
-      "inputs_sha256": "0678aa4427af210190e3fb479b87659045faa0cd681ab88962b6bc21399dc78d"
+      "inputs_sha256": "25a33cb80dfc35d8c7dd06f4a7eeba0359a224e25c5a125cd00b9f99c429a282"
     }
   },
   {
