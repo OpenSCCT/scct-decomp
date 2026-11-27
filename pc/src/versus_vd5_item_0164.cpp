@@ -2,10 +2,8 @@
 // The object was built with VC7.0 /GL and linked /LTCG (0xcb020 calls
 // 0xcb060 with `this` in EAX, which calls the TArray destructor with
 // `this` on the stack).
-typedef int INT;
-typedef unsigned long DWORD;
-typedef unsigned short TCHAR;
-typedef unsigned char BYTE;
+#include "versus_build.h"
+#include "versus_static_mesh_triangle.h"
 
 class FMalloc {
 public:
@@ -90,10 +88,6 @@ void UStaticMesh::Destroy()
     UObject::Destroy();
 }
 
-typedef float FLOAT;
-
-class FName { public: INT Index; };
-
 class FArchive {
 public:
     virtual ~FArchive();
@@ -112,24 +106,15 @@ public:
     friend FArchive &operator<<(FArchive &Ar, FLOAT &F) { Ar.ByteOrderSerialize(&F, sizeof(F)); return Ar; }
 };
 
-class FVector {
-public:
-    FLOAT X, Y, Z;
-    friend FArchive &operator<<(FArchive &Ar, FVector &V) { return Ar << V.X << V.Y << V.Z; }
-};
+inline FArchive &operator<<(FArchive &Ar, FVector &V) { return Ar << V.X << V.Y << V.Z; }
+inline FArchive &operator<<(FArchive &Ar, FColor &C) { return Ar << C.R << C.G << C.B << C.A; }
+inline FArchive &operator<<(FArchive &Ar, FStaticMeshUV &UV) { return Ar << UV.U << UV.V; }
 
-class FColor {
-public:
-    BYTE B, G, R, A;
-    FColor() {}
-    FColor(BYTE InR, BYTE InG, BYTE InB, BYTE InA) : B(InB), G(InG), R(InR), A(InA) {}
-    friend FArchive &operator<<(FArchive &Ar, FColor &C) { return Ar << C.R << C.G << C.B << C.A; }
-};
-
-struct FStaticMeshUV {
-    FLOAT U, V;
-    friend FArchive &operator<<(FArchive &Ar, FStaticMeshUV &UV) { return Ar << UV.U << UV.V; }
-};
+inline FColor MeshColor(BYTE R, BYTE G, BYTE B, BYTE A)
+{
+    FColor Color = {B, G, R, A};
+    return Color;
+}
 
 // Pre-version-111 vertex record (32 bytes); its serializer is RVA 0x86b40
 // (LTCG: archive in ESI, vertex in EAX). Neutral name.
@@ -143,18 +128,6 @@ FArchive &operator<<(FArchive &Ar, FStaticMeshVertexLegacy_86b40 &V)
     return Ar << V.Position << V.Normal << V.UV;
 }
 
-// UE2 FStaticMeshTriangle layout (0x104 bytes).
-struct FStaticMeshTriangle {
-    FVector Vertices[3];          // 0x00
-    FStaticMeshUV UVs[3][8];      // 0x24
-    FColor Colors[3];             // 0xe4
-    INT MaterialIndex;            // 0xf0
-    INT SmoothingMask;            // 0xf4
-    INT NumUVs;                   // 0xf8
-    FName LegacyMaterialName;     // 0xfc
-    DWORD LegacyPolyFlags;        // 0x100
-};
-
 // RVA 0xcb070 (LTCG: archive in EDI, triangle in EAX, returns the archive).
 FArchive &operator<<(FArchive &Ar, FStaticMeshTriangle &T)
 {
@@ -164,13 +137,13 @@ FArchive &operator<<(FArchive &Ar, FStaticMeshTriangle &T)
         Ar << OldVertices[0] << OldVertices[1] << OldVertices[2];
         T.Vertices[0] = OldVertices[0].Position;
         T.UVs[0][0] = OldVertices[0].UV;
-        T.Colors[0] = FColor(255, 255, 255, 255);
+        T.Colors[0] = MeshColor(255, 255, 255, 255);
         T.Vertices[1] = OldVertices[1].Position;
         T.UVs[1][0] = OldVertices[1].UV;
-        T.Colors[1] = FColor(255, 255, 255, 255);
+        T.Colors[1] = MeshColor(255, 255, 255, 255);
         T.Vertices[2] = OldVertices[2].Position;
         T.UVs[2][0] = OldVertices[2].UV;
-        T.Colors[2] = FColor(255, 255, 255, 255);
+        T.Colors[2] = MeshColor(255, 255, 255, 255);
         T.NumUVs = 1;
     }
     else

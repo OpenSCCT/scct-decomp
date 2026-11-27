@@ -1,4 +1,4 @@
-// versus_static_mesh_arrays.h -- the arrays used to store static-mesh lighting
+// versus_static_mesh_arrays.h -- array storage for static-mesh lighting and geometry
 #ifndef VERSUS_STATIC_MESH_ARRAYS_H
 #define VERSUS_STATIC_MESH_ARRAYS_H
 
@@ -30,6 +30,8 @@ public:
         }
         ArrayNum = ArrayMax = 0;
     }
+    INT Add(INT Count, INT ElementSize);                // RVA 0x44e0
+    void Empty(INT ElementSize, INT Slack);             // RVA 0x4550
     void Remove(INT Index, INT Count, INT ElementSize); // RVA 0x119c0
 };
 
