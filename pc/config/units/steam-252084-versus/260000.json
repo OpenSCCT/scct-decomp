@@ -939,30 +939,187 @@
     }
   },
   {
+    "id": "versus-md5-init",
+    "offset": 2521184,
+    "size": 68,
+    "inputs": [
+      "src/versus_md5_stream.cpp",
+      "src/versus_md5.h",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?Init@MD5@@QAEXXZ",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_md5_stream.obj src/versus_md5_stream.cpp",
+    "identification": "The MD5 complete-object locator at VA 0x10c12d28 names the class and the same allocator bases as SecureHashAlgorithm1. The constructor at RVA 0x2677a0 calls this member; it resets the finalized flag, split 64-bit count and buffers and installs the four MD5 initial words.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "455794b4964aa892867850e71dd71e384fb8d66442929b8c44a5c7cb375de64f",
+      "inputs_sha256": "ed66d6368238ce8bb2954567722a5076aaf2ca2791d8e96dd0b354947fa9141a"
+    }
+  },
+  {
+    "id": "versus-md5-update",
+    "offset": 2521264,
+    "size": 194,
+    "inputs": [
+      "src/versus_md5_stream.cpp",
+      "src/versus_md5.h",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?Update@MD5@@QAEXPBEK@Z",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_md5_stream.obj src/versus_md5_stream.cpp",
+    "identification": "MD5 update at RVA 0x2678b0 rejects input after finalization, updates the bit count, completes buffered input and dispatches each complete 64-byte block to the existing exact transform at RVA 0x267a20. The finalizer calls Update for both padding and the encoded 64-bit length.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?Transform@MD5@@AAEXPBE@Z": {
+        "va": 280394272,
+        "basis": "The MD5 compression member consumes the 64-byte block and updates the four state words at this+8."
+      }
+    },
+    "match": {
+      "bytes_sha256": "7c61d3a689510177983c714569882db7eb272700112c954d9a853268a5cf4d0e",
+      "inputs_sha256": "ca838c13f23d3cd72ac2f94b9b1b0c38c5c23b7e0d8203a70c7d1f3a4b8c7a53"
+    }
+  },
+  {
+    "id": "versus-md5-final",
+    "offset": 2521472,
+    "size": 146,
+    "inputs": [
+      "src/versus_md5_stream.cpp",
+      "src/versus_md5.h",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?Final@MD5@@QAEXPAE@Z",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_md5_stream.obj src/versus_md5_stream.cpp",
+    "identification": "The MD5 finalizer encodes the 64-bit bit count, pads the input to 56 bytes modulo 64, encodes the four digest words, sets the finalized flag, and copies 16 bytes to the caller. Its final two stores clear exactly one byte of each internal byte array.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?Encode@MD5@@CGXPAEPBKK@Z": {
+        "va": 280396736,
+        "basis": "The MD5 byte encoder writes each DWORD in little-endian order. Final passes byte counts 8 and 16."
+      },
+      "_Padding": {
+        "va": 281259168,
+        "basis": "The writable 64-byte MD5 padding array begins with 0x80 and contains 63 zero bytes. The finalizer passes its address to Update along with the required prefix length."
+      },
+      "?Update@MD5@@QAEXPBEK@Z": {
+        "va": 280393904,
+        "basis": "The MD5 streaming update consumes the padding and separately the encoded length."
+      }
+    },
+    "match": {
+      "bytes_sha256": "629c56c6e061bd5840d22a913404144f5b052417d2bda6ad9b1972656dd9acd2",
+      "inputs_sha256": "9304fcc06821fbd41c0833cf788cd4349d41510f01f0f4f9272facd8bd2434a8"
+    }
+  },
+  {
     "id": "versus-mid-267a20",
     "offset": 2521632,
     "size": 2452,
     "coff_alignment": 16,
     "inputs": [
-      "src/versus_mid_267a20.cpp"
+      "src/versus_mid_267a20.cpp",
+      "src/versus_md5.h",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
     ],
-    "rebuilt_symbol": "?Unk_10b67a20@UnkType_10b67a20@@QAEXPBE@Z",
+    "rebuilt_symbol": "?Transform@MD5@@AAEXPBE@Z",
     "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mid_267a20.obj src/versus_mid_267a20.cpp",
     "link_bindings": {
-      "_FUN_10b68410@12": {
+      "?Decode@MD5@@CGXPAKPBEK@Z": {
         "va": 280396816,
-        "basis": "Retail call target at VA 0x10b68410 (file offset 0x268410), an unmatched function. stdcall with three stack arguments (ret 0xc): the block decoder."
+        "basis": "The MD5 block decoder takes sixteen output DWORDs, the 64-byte input block, and the byte length. Its entire implementation has a separate receipt."
       },
-      "_FUN_10b68460@28": {
+      "?II@MD5@@CGXAAKKKKKKK@Z": {
         "va": 280396896,
-        "basis": "Retail call target at VA 0x10b68460 (file offset 0x268460), an unmatched function. stdcall with seven stack arguments (ret 0x1c): one round-4 MD5 step, *a = b + rotl(*a + I(b, c, d) + x + t, s)."
+        "basis": "The final seven operations call the same MD5 fourth-round step whose source serves all sixteen call sites. The complete 72-byte out-of-line copy has a separate receipt."
       }
     },
-    "identification": "Complete Versus function at file offset 0x267a20 (VA 0x10b67a20), 2452 bytes: a __thiscall method that runs one MD5 block transform (RFC 1321) on the four chaining words at +0x8 of the object. FUN_10b68410 decodes the 64-byte block into 16 words (retail VA 0x10b68410, stdcall, three arguments). Steps 58 to 64 call FUN_10b68460 (retail VA 0x10b68460, stdcall, seven arguments: the round-4 step out of line); steps 1 to 57 are inline. The MD5 identification comes from the bytes: the 64 sine constants, the rotation amounts and the round functions. Invented names: class UnkType_10b67a20 (the owning class is unknown), method Unk_10b67a20, extern functions FUN_10b68410 and FUN_10b68460, members unk_0 (the eight bytes before the chaining words, not touched here) and unk_8 (the four chaining words; their original member names are not recovered), and locals a, b, c, d and x, which follow the RFC 1321 text.",
+    "identification": "The MD5 vtable complete-object locator at VA 0x10c12d28 names the class. Update calls this transform on the completed buffer and incoming 64-byte blocks. The transform decodes sixteen little-endian words and updates MD5.State across 64 operations. One source helper serves every operation in each round. VC6 inlines the first 57 operations and emits direct calls to II for the final seven.",
     "match": {
       "bytes_sha256": "d4d9d5e0211a39b85cda414c7964382925100dbc280fb457829e51c82ab8819d",
-      "inputs_sha256": "c2fe8462ee64ec895478e095d4ae8a44b88a6184e538f423943bdcce8baad6b5"
+      "inputs_sha256": "e068b1b17d0f1aeea2d7047fc64fa8f526e379d1e9c0e39af3789225a636271e"
+    }
+  },
+  {
+    "id": "versus-md5-encode",
+    "offset": 2524096,
+    "size": 70,
+    "inputs": [
+      "src/versus_md5_stream.cpp",
+      "src/versus_md5.h",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?Encode@MD5@@CGXPAEPBKK@Z",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_md5_stream.obj src/versus_md5_stream.cpp",
+    "identification": "The MD5 finalizer calls this member with its two little-endian bit-count words and its four digest words. Each input DWORD contributes its four low-to-high bytes to consecutive output locations.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "f225a92d55ac929b6291f5b861f9d8bb7f8de1b9c77ab48f7228d31911af0439",
+      "inputs_sha256": "a67c72e512f2c5ec8adb3eea8cc39031aa157c54a97f7439f876de9ea97b4555"
+    }
+  },
+  {
+    "id": "versus-md5-decode",
+    "offset": 2524176,
+    "size": 78,
+    "inputs": [
+      "src/versus_md5_stream.cpp",
+      "src/versus_md5.h",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?Decode@MD5@@CGXPAKPBEK@Z",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
+    "build_command": "cl /nologo /O2 /Gy /G5 /Ob1 /c /Folocal/versus_md5_stream.obj src/versus_md5_stream.cpp",
+    "identification": "The receipted MD5 transform at RVA 0x267a20 calls this three-stack-argument routine to decode its 64-byte block. Every four little-endian bytes form one DWORD.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "506a72a26a70095febe17c6151a2b12f5d9ebb71754bd1bd7aac9113b3444f75",
+      "inputs_sha256": "453ceb5c33aff42c18d09f630604a7c4a384f91b288910c0b6addb3c3d8ec162"
+    }
+  },
+  {
+    "id": "versus-md5-ii",
+    "offset": 2524256,
+    "size": 72,
+    "inputs": [
+      "src/versus_mid_267a20.cpp",
+      "src/versus_md5.h",
+      "src/versus_secure_hash_algorithm_1.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_cldata.h"
+    ],
+    "rebuilt_symbol": "?II@MD5@@CGXAAKKKKKKK@Z",
+    "toolchain": "Microsoft C/C++ 12.00.8804 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mid_267a20.obj src/versus_mid_267a20.cpp",
+    "identification": "Seven direct calls from the exact MD5 transform at RVA 0x267a20 apply the fourth-round function, rotate by the specified count, add B, and replace A. The first nine steps of this round are inlined in that caller.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "40e442ca164bb0014d571dd18ad398f2103bd9014aba80211555a5a7aa00c690",
+      "inputs_sha256": "fc7354f26000ed343b3082c55a3a56a6b88c2cb2f25909878fb4843013913275"
     }
   },
   {
