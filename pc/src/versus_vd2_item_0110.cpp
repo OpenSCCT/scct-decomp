@@ -7,10 +7,8 @@
 // The helpers marked "defined only for its link convention" also match retail
 // byte for byte (0xf6b0, 0x3b590, 0x1ff70, 0xa32b0, 0xa3320, 0xa3370).
 // 0x1d1a0 is plain __stdcall in retail (callee pops, no LTCG register use).
-typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
+#include "versus_build.h"
+#include "versus_name.h"
 
 class FMalloc
 {
@@ -142,20 +140,6 @@ UnnamedClass_1d130::~UnnamedClass_1d130()
 }
 
 // ---- 0x1d1e0: make a unique object name ----
-enum EFindName { FNAME_Find, FNAME_Add, FNAME_Intrinsic };
-class FName
-{
-public:
-    FName(const TCHAR *Name, EFindName FindType);   // 0x1091ff70 (this in EBX, Name in EAX)
-    INT Index;
-};
-struct FNameEntry
-{
-    INT Index;
-    DWORD Flags;
-    FNameEntry *HashNext;
-    TCHAR Name[64];
-};
 extern TArray<FNameEntry *> FName_Names;         // 0x10cc9e5c, FName::Names
 extern TArray<INT> FName_Available;              // 0x10cc9e68, FName::Available
 extern FNameEntry *FName_NameHash[4096];         // 0x10c7d4d8, FName::NameHash

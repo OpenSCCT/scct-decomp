@@ -1,9 +1,8 @@
 #ifndef VERSUS_NAME_REGISTRY_H
 #define VERSUS_NAME_REGISTRY_H
 
-#include "unreal_types.h"
+#include "versus_name.h"
 
-enum EFindName { FNAME_Find = 0, FNAME_Add = 1, FNAME_Intrinsic = 2 };
 #define RF_Native 0x04000000
 
 class FMalloc
@@ -57,27 +56,9 @@ public:
     }
 };
 
-struct FNameEntry
-{
-    INT Index;
-    DWORD Flags;
-    FNameEntry *HashNext;
-    TCHAR Name[64];
-};
 extern TArray<FNameEntry *> FName_Names;         // 0x10cc9e5c, FName::Names
 extern TArray<INT> FName_Available;              // 0x10cc9e68, FName::Available
 extern FNameEntry *FName_NameHash[4096];         // 0x10c7d4d8, FName::NameHash
-
-class FName
-{
-public:
-    INT Index;
-    FName() {}
-    FName(const TCHAR *Name, EFindName FindType);
-    static DWORD Initialized;
-    static void StaticInit();
-    static void Hardcode(FNameEntry *AutoName);
-};
 
 FNameEntry *AllocateNameEntry(const TCHAR *Name, DWORD Index, DWORD Flags, FNameEntry *HashNext);
 

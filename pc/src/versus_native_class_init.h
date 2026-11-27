@@ -1,7 +1,7 @@
 #ifndef VERSUS_NATIVE_CLASS_INIT_H
 #define VERSUS_NATIVE_CLASS_INIT_H
 
-#include "unreal_name.h"
+#include "versus_name.h"
 #include "versus_registration_arrays.h"
 
 class FArchive;
