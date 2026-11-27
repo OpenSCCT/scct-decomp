@@ -1397,6 +1397,40 @@
     }
   },
   {
+    "id": "versus-array-vector-destructor",
+    "offset": 550736,
+    "size": 99,
+    "inputs": [
+      "src/versus_vd4_item_0317.cpp"
+    ],
+    "rebuilt_symbol": "??1?$TArray@UFVector@@@@QAE@XZ",
+    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_array_vector_destructor.obj src/versus_vd4_item_0317.cpp",
+    "identification": "TArray<FVector>::~TArray. The verified AActor::execGetAllPlayingSounds at RVA 0x1259b0 uses this address for the Locations array destructor, distinct from the element-size-four sound ID array. USkeletalMeshInstance::GetFrame directly calls the same implementation. FStats also takes its address for TArray<FStatsData>, another 12-byte trivial element. VC7.0 and VC7.1 reproduce the complete body.",
+    "link_bindings": {
+      "__ehhandler$??1?$TArray@UFVector@@@@QAE@XZ": {
+        "va": 280816072,
+        "basis": "Function-specific C++ EH handler pushed on entry before installation of the FS exception frame."
+      },
+      "__except_list": {
+        "va": 0,
+        "basis": "Windows x86 SEH head at FS:[0], saved on entry and restored before return."
+      },
+      "?Remove@FArray@@QAEXHHH@Z": {
+        "va": 277944768,
+        "basis": "FArray::Remove at RVA 0x119c0, removing ArrayNum elements starting at zero, with element size sizeof(FVector)."
+      },
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "Shared GMalloc singleton, invoked through FMalloc::Free on the remaining allocation."
+      }
+    },
+    "match": {
+      "bytes_sha256": "0d688b4b51295cc8d443c5c61f6d9b64fab0eb906095817420a2fab4bfae5a49",
+      "inputs_sha256": "f5580b946c3992d3c362270b0bb917025ef8f7ab6d3ae2a882c5fff79b815a45"
+    }
+  },
+  {
     "id": "versus-vd-867c0",
     "offset": 550848,
     "size": 99,
