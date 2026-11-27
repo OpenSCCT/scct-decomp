@@ -3169,6 +3169,85 @@
     }
   },
   {
+    "id": "versus-end-game-hud-page-init-resources",
+    "offset": 2256704,
+    "size": 197,
+    "rebuilt_symbol": "?InitResources@EndGameHudPage@@UAEXXZ",
+    "inputs": [
+      "src/versus_hud_end_game_resources.cpp",
+      "src/versus_build.h",
+      "src/versus_sbase_classes.h",
+      "src/unreal_actor.h",
+      "src/unreal_containers.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h",
+      "src/versus_ltcg.h",
+      "src/unreal_pawn.h",
+      "src/versus_engine_classes.h",
+      "src/unreal_commandlet.h",
+      "src/unreal_interaction.h",
+      "src/versus_core_classes.h",
+      "src/versus_canvas.h",
+      "src/versus_material.h",
+      "src/versus_ipdrv_classes.h",
+      "src/versus_canvas_viewport.h",
+      "src/unreal_script.h",
+      "src/versus_mgm_hud_pages.h",
+      "src/versus_ansi_fstring.h",
+      "src/versus_mgm_hud_context.h",
+      "src/versus_mgm_bindings.h",
+      "src/versus_mgm.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Gf /c /Folocal/versus_hud_end_game_resources.obj src/versus_hud_end_game_resources.cpp",
+    "identification": "Slot 6 of the P_EndGame screen resolves A_YouWin, A_YouLose, A_Finish and A_FinishSpect from the shipped Hud.mgm. It hides each area and its children, initializes the shared HUD page, and sets the reflected SBase.SPlayerController.bEndGame bit for a present local player.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "??_C@_08MIGGOCLG@A_YouWin?$AA@": {
+        "va": 281238240,
+        "basis": "Distinct writable MGM area name A_YouWin is verified in retail memory and occurs in the shipped Hud.mgm."
+      },
+      "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z": {
+        "va": 280127280,
+        "basis": "Looks up one of the four named MGM areas in the package."
+      },
+      "??_C@_09BMOFCGNF@A_YouLose?$AA@": {
+        "va": 281238252,
+        "basis": "Distinct writable MGM area name A_YouLose is verified in retail memory and occurs in the shipped Hud.mgm."
+      },
+      "??_C@_08MPIGEFKN@A_Finish?$AA@": {
+        "va": 281238264,
+        "basis": "Distinct writable MGM area name A_Finish is verified in retail memory and occurs in the shipped Hud.mgm."
+      },
+      "??_C@_0O@PDFFALLH@A_FinishSpect?$AA@": {
+        "va": 281238276,
+        "basis": "Distinct writable MGM area name A_FinishSpect is verified in retail memory and occurs in the shipped Hud.mgm."
+      },
+      "?SetVisible@MgmArea@@QAEXEE@Z": {
+        "va": 280643968,
+        "basis": "Hides the MGM area and propagates visibility to its children."
+      },
+      "?InitResources@MgmHudPage@@UAEXXZ": {
+        "va": 280165808,
+        "basis": "The immediate MGM HUD class implements this base resource initializer at its own slot 6."
+      },
+      "?GetMgmViewport@@YAPAVUViewport@@XZ": {
+        "va": 280127760,
+        "basis": "Returns the active MGM viewport from its menu system."
+      },
+      "?GetMgmPlayerController@@YAPAVAPlayerController@@XZ": {
+        "va": 280163808,
+        "basis": "Returns the local APlayerController, which the game specializes as SBase.SPlayerController."
+      }
+    },
+    "match": {
+      "bytes_sha256": "7ab6299566023870c8951b06fb1687fc53690839f1e69fb7d9dac3441bec1aec",
+      "inputs_sha256": "55faa18a5384a0e22df349425ccf826ea6890faa3c0bf1cf0df324559f7102d7"
+    }
+  },
+  {
     "id": "versus-end-game-hud-page-constructor",
     "offset": 2256928,
     "size": 141,
@@ -3220,7 +3299,7 @@
     },
     "match": {
       "bytes_sha256": "82157ab592e5ff8399ffd02b045ab227ee18be0fd87f14513a1f6e02d010a466",
-      "inputs_sha256": "fdbe8e4e002cf03c74c63762176935d696b97fc2ec37fd4c200491094a3871e1"
+      "inputs_sha256": "8877aa97b17319cb88f63d8922edf11c17f89f8b83dc9f87d1d511ca18009e8e"
     }
   },
   {
@@ -3289,6 +3368,941 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-spy-hud-init-resources",
+    "offset": 2285136,
+    "size": 1154,
+    "inputs": [
+      "src/versus_spy_hud_resources.cpp",
+      "src/versus_spy_hud.h",
+      "src/versus_arrays.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_hud_pages.h",
+      "src/versus_ansi_fstring.h",
+      "src/versus_build.h",
+      "src/versus_mgm.h",
+      "src/versus_mgm_bindings.h"
+    ],
+    "rebuilt_symbol": "?InitResources@SpyHud@@UAEXXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GF- /c /Folocal/versus_spy_hud_resources.obj src/versus_spy_hud_resources.cpp",
+    "identification": "Slot 6 of the Spy HUD page P_HudATT initializes its energy gauge and indicators, sticky-camera buttons and labels, radar alarms, cooperative-move prompts, voice icons and speed indicator. Every area and child has a matching case-insensitive entry in the shipped Hud.mgm. The common player HUD initializer is the terminal base call; the Spy constructor naming P_HudATT installs this vtable at 0x10be0e00.",
+    "ltcg_link": {
+      "roots": [
+        "?InitResources@SpyHud@@UAEXXZ"
+      ],
+      "stubs": [
+        "?Add@FArray@@QAEHHH@Z",
+        "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z",
+        "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z",
+        "?InitResources@MgmPlayerHud@@UAEXXZ",
+        "?SetVisible@MgmArea@@QAEXEE@Z",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          10,
+          "abs",
+          "$SG744"
+        ],
+        [
+          16,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          21,
+          "abs",
+          "$SG746"
+        ],
+        [
+          33,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          53,
+          "abs",
+          "$SG748"
+        ],
+        [
+          65,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          85,
+          "abs",
+          "$SG750"
+        ],
+        [
+          97,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          114,
+          "abs",
+          "$SG751"
+        ],
+        [
+          146,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          151,
+          "abs",
+          "$SG753"
+        ],
+        [
+          163,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          180,
+          "abs",
+          "$SG754"
+        ],
+        [
+          192,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          220,
+          "abs",
+          "$SG757"
+        ],
+        [
+          226,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          242,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          258,
+          "abs",
+          "$SG759"
+        ],
+        [
+          264,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          280,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          296,
+          "abs",
+          "$SG761"
+        ],
+        [
+          302,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          318,
+          "rel32",
+          "?Add@FArray@@QAEHHH@Z"
+        ],
+        [
+          337,
+          "rel32",
+          "?SetVisible@MgmArea@@QAEXEE@Z"
+        ],
+        [
+          345,
+          "abs",
+          "$SG762"
+        ],
+        [
+          351,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          356,
+          "abs",
+          "$SG763"
+        ],
+        [
+          368,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          382,
+          "abs",
+          "$SG764"
+        ],
+        [
+          388,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          402,
+          "abs",
+          "$SG765"
+        ],
+        [
+          408,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          422,
+          "abs",
+          "$SG766"
+        ],
+        [
+          428,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          442,
+          "abs",
+          "$SG767"
+        ],
+        [
+          448,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          462,
+          "abs",
+          "$SG768"
+        ],
+        [
+          468,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          482,
+          "abs",
+          "$SG769"
+        ],
+        [
+          488,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          505,
+          "abs",
+          "$SG770"
+        ],
+        [
+          511,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          525,
+          "abs",
+          "$SG771"
+        ],
+        [
+          531,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          545,
+          "abs",
+          "$SG772"
+        ],
+        [
+          551,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          565,
+          "abs",
+          "$SG773"
+        ],
+        [
+          571,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          585,
+          "abs",
+          "$SG774"
+        ],
+        [
+          591,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          605,
+          "abs",
+          "$SG775"
+        ],
+        [
+          611,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          625,
+          "abs",
+          "$SG776"
+        ],
+        [
+          631,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          645,
+          "abs",
+          "$SG777"
+        ],
+        [
+          651,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          668,
+          "abs",
+          "$SG778"
+        ],
+        [
+          674,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          688,
+          "abs",
+          "$SG779"
+        ],
+        [
+          694,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          708,
+          "abs",
+          "$SG780"
+        ],
+        [
+          714,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          728,
+          "abs",
+          "$SG781"
+        ],
+        [
+          734,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          748,
+          "abs",
+          "$SG782"
+        ],
+        [
+          754,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          765,
+          "abs",
+          "$SG783"
+        ],
+        [
+          771,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          785,
+          "abs",
+          "$SG784"
+        ],
+        [
+          791,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          805,
+          "abs",
+          "$SG785"
+        ],
+        [
+          811,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          828,
+          "abs",
+          "$SG786"
+        ],
+        [
+          834,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          857,
+          "rel32",
+          "?SetVisible@MgmArea@@QAEXEE@Z"
+        ],
+        [
+          871,
+          "rel32",
+          "?SetVisible@MgmArea@@QAEXEE@Z"
+        ],
+        [
+          882,
+          "abs",
+          "$SG787"
+        ],
+        [
+          888,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          905,
+          "abs",
+          "$SG788"
+        ],
+        [
+          911,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          928,
+          "abs",
+          "$SG789"
+        ],
+        [
+          934,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          951,
+          "abs",
+          "$SG790"
+        ],
+        [
+          957,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          971,
+          "abs",
+          "$SG791"
+        ],
+        [
+          977,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          982,
+          "abs",
+          "$SG792"
+        ],
+        [
+          994,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          1014,
+          "abs",
+          "$SG793"
+        ],
+        [
+          1020,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          1034,
+          "abs",
+          "$SG794"
+        ],
+        [
+          1040,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          1057,
+          "abs",
+          "$SG795"
+        ],
+        [
+          1063,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          1077,
+          "abs",
+          "$SG796"
+        ],
+        [
+          1083,
+          "rel32",
+          "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z"
+        ],
+        [
+          1094,
+          "abs",
+          "$SG797"
+        ],
+        [
+          1100,
+          "rel32",
+          "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z"
+        ],
+        [
+          1150,
+          "rel32",
+          "?InitResources@MgmPlayerHud@@UAEXXZ"
+        ]
+      ],
+      "symbols": {
+        "$SG744": 268443648,
+        "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z": 268440721,
+        "$SG746": 268443664,
+        "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z": 268440722,
+        "$SG748": 268443680,
+        "$SG750": 268443704,
+        "$SG751": 268443728,
+        "$SG753": 268443752,
+        "$SG754": 268443764,
+        "$SG757": 268443776,
+        "?Add@FArray@@QAEHHH@Z": 268440720,
+        "$SG759": 268443788,
+        "$SG761": 268443800,
+        "?SetVisible@MgmArea@@QAEXEE@Z": 268440724,
+        "$SG762": 268443812,
+        "$SG763": 268443820,
+        "$SG764": 268443832,
+        "$SG765": 268443852,
+        "$SG766": 268443868,
+        "$SG767": 268443884,
+        "$SG768": 268443896,
+        "$SG769": 268443916,
+        "$SG770": 268443932,
+        "$SG771": 268443948,
+        "$SG772": 268443960,
+        "$SG773": 268443980,
+        "$SG774": 268443996,
+        "$SG775": 268444012,
+        "$SG776": 268444024,
+        "$SG777": 268444044,
+        "$SG778": 268444060,
+        "$SG779": 268444076,
+        "$SG780": 268444088,
+        "$SG781": 268444108,
+        "$SG782": 268444124,
+        "$SG783": 268444140,
+        "$SG784": 268444152,
+        "$SG785": 268444164,
+        "$SG786": 268444176,
+        "$SG787": 268444188,
+        "$SG788": 268444204,
+        "$SG789": 268444220,
+        "$SG790": 268444236,
+        "$SG791": 268444252,
+        "$SG792": 268444264,
+        "$SG793": 268444280,
+        "$SG794": 268444292,
+        "$SG795": 268444304,
+        "$SG796": 268444316,
+        "$SG797": 268444328,
+        "?InitResources@MgmPlayerHud@@UAEXXZ": 268440723
+      },
+      "writable_strings": {
+        "$SG744": {
+          "ascii": 15
+        },
+        "$SG746": {
+          "ascii": 13
+        },
+        "$SG748": {
+          "ascii": 22
+        },
+        "$SG750": {
+          "ascii": 22
+        },
+        "$SG751": {
+          "ascii": 23
+        },
+        "$SG753": {
+          "ascii": 10
+        },
+        "$SG754": {
+          "ascii": 9
+        },
+        "$SG757": {
+          "ascii": 12
+        },
+        "$SG759": {
+          "ascii": 12
+        },
+        "$SG761": {
+          "ascii": 12
+        },
+        "$SG762": {
+          "ascii": 8
+        },
+        "$SG763": {
+          "ascii": 11
+        },
+        "$SG764": {
+          "ascii": 17
+        },
+        "$SG765": {
+          "ascii": 16
+        },
+        "$SG766": {
+          "ascii": 16
+        },
+        "$SG767": {
+          "ascii": 11
+        },
+        "$SG768": {
+          "ascii": 17
+        },
+        "$SG769": {
+          "ascii": 16
+        },
+        "$SG770": {
+          "ascii": 16
+        },
+        "$SG771": {
+          "ascii": 11
+        },
+        "$SG772": {
+          "ascii": 17
+        },
+        "$SG773": {
+          "ascii": 16
+        },
+        "$SG774": {
+          "ascii": 16
+        },
+        "$SG775": {
+          "ascii": 11
+        },
+        "$SG776": {
+          "ascii": 17
+        },
+        "$SG777": {
+          "ascii": 16
+        },
+        "$SG778": {
+          "ascii": 16
+        },
+        "$SG779": {
+          "ascii": 11
+        },
+        "$SG780": {
+          "ascii": 17
+        },
+        "$SG781": {
+          "ascii": 16
+        },
+        "$SG782": {
+          "ascii": 16
+        },
+        "$SG783": {
+          "ascii": 10
+        },
+        "$SG784": {
+          "ascii": 11
+        },
+        "$SG785": {
+          "ascii": 11
+        },
+        "$SG786": {
+          "ascii": 11
+        },
+        "$SG787": {
+          "ascii": 13
+        },
+        "$SG788": {
+          "ascii": 13
+        },
+        "$SG789": {
+          "ascii": 13
+        },
+        "$SG790": {
+          "ascii": 13
+        },
+        "$SG791": {
+          "ascii": 11
+        },
+        "$SG792": {
+          "ascii": 14
+        },
+        "$SG793": {
+          "ascii": 9
+        },
+        "$SG794": {
+          "ascii": 9
+        },
+        "$SG795": {
+          "ascii": 9
+        },
+        "$SG796": {
+          "ascii": 9
+        },
+        "$SG797": {
+          "ascii": 12
+        }
+      }
+    },
+    "link_bindings": {
+      "$SG744": {
+        "va": 281240508,
+        "basis": "The writable MGM resource name A_JaugeEnergie is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "?FindMgmArea@@YAPAVMgmArea@@PAVMgmPackage@@PBD@Z": {
+        "va": 280127280,
+        "basis": "Named MGM package area lookup."
+      },
+      "$SG746": {
+        "va": 281240524,
+        "basis": "The writable MGM resource name jaugeinterne is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "?FindMgmChild@@YAPAVMgmChild@@PAVMgmArea@@PBD@Z": {
+        "va": 280127328,
+        "basis": "Named MGM area child lookup."
+      },
+      "$SG748": {
+        "va": 281240540,
+        "basis": "The writable MGM resource name jaugeindicator_gauche is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG750": {
+        "va": 281240564,
+        "basis": "The writable MGM resource name jaugeindicator_droite is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG751": {
+        "va": 281240588,
+        "basis": "The writable MGM resource name A_InteractionStickyCam is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG753": {
+        "va": 281240612,
+        "basis": "The writable MGM resource name PC_Button is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG754": {
+        "va": 281240624,
+        "basis": "The writable MGM resource name A_Button is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG757": {
+        "va": 281240636,
+        "basis": "The writable MGM resource name textSticky1 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "?Add@FArray@@QAEHHH@Z": {
+        "va": 277890272,
+        "basis": "FArray::Add grows the typed sticky-camera text array by one four-byte pointer."
+      },
+      "$SG759": {
+        "va": 281240648,
+        "basis": "The writable MGM resource name textSticky2 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG761": {
+        "va": 281240660,
+        "basis": "The writable MGM resource name textSticky3 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "?SetVisible@MgmArea@@QAEXEE@Z": {
+        "va": 280643968,
+        "basis": "Sets area visibility and propagates it when requested."
+      },
+      "$SG762": {
+        "va": 281240672,
+        "basis": "The writable MGM resource name A_Radar is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG763": {
+        "va": 281240680,
+        "basis": "The writable MGM resource name IconAlarm1 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG764": {
+        "va": 281240692,
+        "basis": "The writable MGM resource name IconAlarm1Higher is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG765": {
+        "va": 281240712,
+        "basis": "The writable MGM resource name IconAlarm1Lower is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG766": {
+        "va": 281240728,
+        "basis": "The writable MGM resource name IconAlarmArrow1 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG767": {
+        "va": 281240744,
+        "basis": "The writable MGM resource name IconAlarm2 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG768": {
+        "va": 281240756,
+        "basis": "The writable MGM resource name IconAlarm2Higher is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG769": {
+        "va": 281240776,
+        "basis": "The writable MGM resource name IconAlarm2Lower is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG770": {
+        "va": 281240792,
+        "basis": "The writable MGM resource name IconAlarmArrow2 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG771": {
+        "va": 281240808,
+        "basis": "The writable MGM resource name IconAlarm3 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG772": {
+        "va": 281240820,
+        "basis": "The writable MGM resource name IconAlarm3Higher is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG773": {
+        "va": 281240840,
+        "basis": "The writable MGM resource name IconAlarm3Lower is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG774": {
+        "va": 281240856,
+        "basis": "The writable MGM resource name IconAlarmArrow3 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG775": {
+        "va": 281240872,
+        "basis": "The writable MGM resource name IconAlarm4 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG776": {
+        "va": 281240884,
+        "basis": "The writable MGM resource name IconAlarm4Higher is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG777": {
+        "va": 281240904,
+        "basis": "The writable MGM resource name IconAlarm4Lower is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG778": {
+        "va": 281240920,
+        "basis": "The writable MGM resource name IconAlarmArrow4 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG779": {
+        "va": 281240936,
+        "basis": "The writable MGM resource name IconAlarm5 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG780": {
+        "va": 281240948,
+        "basis": "The writable MGM resource name IconAlarm5Higher is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG781": {
+        "va": 281240968,
+        "basis": "The writable MGM resource name IconAlarm5Lower is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG782": {
+        "va": 281240984,
+        "basis": "The writable MGM resource name IconAlarmArrow5 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG783": {
+        "va": 281241000,
+        "basis": "The writable MGM resource name Move_coop is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG784": {
+        "va": 281241012,
+        "basis": "The writable MGM resource name Move_coop2 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG785": {
+        "va": 281241024,
+        "basis": "The writable MGM resource name Move_coop3 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG786": {
+        "va": 281241036,
+        "basis": "The writable MGM resource name Move_coop4 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG787": {
+        "va": 281241048,
+        "basis": "The writable MGM resource name button_White is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG788": {
+        "va": 281241064,
+        "basis": "The writable MGM resource name button_White is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG789": {
+        "va": 281241080,
+        "basis": "The writable MGM resource name button_White is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG790": {
+        "va": 281241096,
+        "basis": "The writable MGM resource name button_White is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG791": {
+        "va": 281241112,
+        "basis": "The writable MGM resource name A_SpeakATT is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG792": {
+        "va": 281241124,
+        "basis": "The writable MGM resource name _TextSpeakATT is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG793": {
+        "va": 281241140,
+        "basis": "The writable MGM resource name Element1 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG794": {
+        "va": 281241152,
+        "basis": "The writable MGM resource name Element2 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG795": {
+        "va": 281241164,
+        "basis": "The writable MGM resource name Element3 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG796": {
+        "va": 281241176,
+        "basis": "The writable MGM resource name Element4 is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "$SG797": {
+        "va": 281241188,
+        "basis": "The writable MGM resource name A_Spy_Speed is present in the shipped Hud.mgm; its full terminated ASCII bytes agree in the rebuilt and retail images."
+      },
+      "?InitResources@MgmPlayerHud@@UAEXXZ": {
+        "va": 280172768,
+        "basis": "The Spy screen finishes by initializing the shared player HUD. The parent vtable installed by the base constructor 0x233210 has this function in slot 6."
+      }
+    },
+    "match": {
+      "bytes_sha256": "bd8a8440ffea233e38f57e2608c622f432d91ee0656ea5564ac8cd63c36a0596",
+      "inputs_sha256": "73520ae15fe1d247c416258a37145290df0dd54e1f9ea96582fe896d0f555f80"
     }
   },
   {
@@ -3377,7 +4391,7 @@
     },
     "match": {
       "bytes_sha256": "163fda27f727f391b2943f5925af8e0cfc8039df37f53d8f7959d61b73ae28d5",
-      "inputs_sha256": "904f6620b35fdb470dd0e27904f2b624e922671840e4158af9a2601976669dee"
+      "inputs_sha256": "7a3abd314d604b82962975bb72f54dd0b1c4e12afd7767eebdee469a4a3ba87a"
     }
   },
   {
@@ -3437,7 +4451,7 @@
     },
     "match": {
       "bytes_sha256": "18ee73af4fa5ecadd741f0ca5a85033016773aaf32149a5f3dfb7d2baf41d302",
-      "inputs_sha256": "5434c7cee8dd0b811d1c0a92b387eaaa93ed91b075f03feedb0eec223b83b62c"
+      "inputs_sha256": "2e0f35ae4ccfb11d82ef92f2ce67d06f0f2d48cc07edf062f1a1e8f7607bf9bd"
     }
   },
   {

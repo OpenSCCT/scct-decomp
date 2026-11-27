@@ -1,7 +1,9 @@
 #ifndef VERSUS_MGM_HUD_PAGES_H
 #define VERSUS_MGM_HUD_PAGES_H
 
+#if !defined(UNREAL_CONTAINERS_H) && !defined(VERSUS_ARRAYS_H)
 #include "versus_ansi_fstring.h"
+#endif
 
 class MgmArea;
 class MgmPackage;

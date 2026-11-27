@@ -16,7 +16,17 @@ class ASPlayerController : public APlayerController {
 public:
     BYTE  unk_604[0xb10 - 0x604];
     FLOAT unk_b10;              // CheckGEForWallJump reads this trace parameter.
-    BYTE  unk_b14[0xc70 - 0xb14];
+    BYTE  unk_b14[0xc40 - 0xb14];
+    // Final word of the 72 consecutive BoolProperties in SBase.SPlayerController.
+    BITFIELD MuteInitialized : 1;
+    BITFIELD bForceReplicationForSpecTarget : 1;
+    BITFIELD AllPlayersAtStart : 1;
+    BITFIELD bChangeROF : 1;
+    BITFIELD bFirstPersonWithPawn : 1;
+    BITFIELD bFastSpeed : 1;
+    BITFIELD bEndGame : 1;
+    BITFIELD bDedicatedServerinSpyingMode : 1;
+    BYTE  unk_c44[0xc70 - 0xc44];
 
     DECLARE_NATIVE(execCheckCeilingForLadder)
 };
