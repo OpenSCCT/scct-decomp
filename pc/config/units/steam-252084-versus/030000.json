@@ -742,7 +742,7 @@
     },
     "match": {
       "bytes_sha256": "03d9deff5660cae9f6b4644d907f6458ebd072ac75a880d4c74b2d1c48b5104b",
-      "inputs_sha256": "08af13e4d1007b49cc021ee70d033952082010fc1930983e33763a84fe3a3e80"
+      "inputs_sha256": "8a2674bc2b509f2d09c684f38716502f611dfa01d11ca4daf7532bedd5a6088d"
     }
   },
   {
@@ -1300,7 +1300,7 @@
     },
     "match": {
       "bytes_sha256": "1f9bf6f60aa479891884e2730a1a4f6f99975d53642193ea4ef2caff1209b50e",
-      "inputs_sha256": "f2119a04e564e5642aeaaa718ae25f4ed4d7f71608d2c3f3a710454cb23df4ce"
+      "inputs_sha256": "cad20712315ee94e6da0eb706b3eb0e717dd8fcd81154c85ebe9eb075068d8b5"
     }
   },
   {
@@ -1860,6 +1860,111 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-ucommandlet-internal-constructor",
+    "offset": 254880,
+    "size": 63,
+    "inputs": [
+      "src/versus_commandlet_polys_placement.cpp",
+      "src/versus_build.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_poly.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_commandlet_polys_placement.obj src/versus_commandlet_polys_placement.cpp",
+    "rebuilt_symbol": "?InternalConstructor@UCommandlet@@SAXPAX@Z",
+    "identification": "The stock Core class registration at RVA 0x3f89c passes this 63-byte callback for Commandlet (name 34, package 20, size 0x1dc). Its normal call reaches the existing exact UCommandlet constructor at RVA 0x1ebc0. The registered Engine.ServerCommandlet placement function calls that same base constructor. The VC7.1 speed/LTCG, VC7.0 size/LTCG, ordinary COFF and no-EH controls all diverge.",
+    "ltcg_link": {
+      "roots": [
+        "?InternalConstructor@UServerCommandlet@@SAXPAX@Z",
+        "?InternalConstructor@UPolys@@SAXPAX@Z",
+        "?InternalConstructor@UCommandlet@@SAXPAX@Z",
+        "??1UPolys@@UAE@XZ",
+        "??1FArray@@QAE@XZ"
+      ],
+      "stubs": [
+        "??1FString@@QAE@XZ",
+        "??1UCommandlet@@UAE@XZ",
+        "??1UObject@@UAE@XZ",
+        "??1UServerCommandlet@@UAE@XZ",
+        "??3@YAXPAX@Z",
+        "??_L@YGXPAXIHP6EX0@Z1@Z",
+        "??_M@YGXPAXIHP6EX0@Z@Z",
+        "?AddRef@FUnknown@@UAGKXZ",
+        "?Destroy@UObject@@UAEXXZ",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?Main@UCommandlet@@UAEHPBG@Z",
+        "?Main@UServerCommandlet@@UAEHPBG@Z",
+        "?NetDirty@UObject@@UAEXPAVUProperty@@@Z",
+        "?ProcessEvent@UObject@@UAEXPAVUFunction@@PAX1@Z",
+        "?QueryInterface@FUnknown@@UAGKABUFGuid@@PAPAX@Z",
+        "?Realloc@FArray@@QAEXH@Z",
+        "?Release@FUnknown@@UAGKXZ",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "?VirtualSlot10@UObject@@UAEXXZ",
+        "?VirtualSlot11@UObject@@UAEXXZ",
+        "?VirtualSlot12@UObject@@UAEXXZ",
+        "?VirtualSlot13@UObject@@UAEXXZ",
+        "?VirtualSlot14@UObject@@UAEXXZ",
+        "?VirtualSlot15@UObject@@UAEXXZ",
+        "?VirtualSlot16@UObject@@UAEXXZ",
+        "?VirtualSlot17@UObject@@UAEXXZ",
+        "?VirtualSlot18@UObject@@UAEXXZ",
+        "?VirtualSlot19@UObject@@UAEXXZ",
+        "?VirtualSlot20@UObject@@UAEXXZ",
+        "?VirtualSlot5@UObject@@UAEXXZ",
+        "?VirtualSlot6@UObject@@UAEXXZ",
+        "?VirtualSlot7@UObject@@UAEXXZ",
+        "?VirtualSlot8@UObject@@UAEXXZ",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "rebuilt_offset": 1280,
+      "rebuilt_address": 268439808,
+      "fields": [
+        [
+          3,
+          "abs",
+          "__ehhandler$?InternalConstructor@UCommandlet@@SAXPAX@Z"
+        ],
+        [
+          44,
+          "rel32",
+          "??0UCommandlet@@QAE@XZ"
+        ]
+      ],
+      "symbols": {
+        "__ehhandler$?InternalConstructor@UCommandlet@@SAXPAX@Z": 268440609,
+        "??0UCommandlet@@QAE@XZ": 268439632
+      }
+    },
+    "link_bindings": {
+      "__ehhandler$?InternalConstructor@UCommandlet@@SAXPAX@Z": {
+        "va": 280842561,
+        "basis": "Function-specific x86 unwind frame. The state transitions and actions match the registered placement callback in the locked image."
+      },
+      "??0UCommandlet@@QAE@XZ": {
+        "va": 277998528,
+        "basis": "The previously receipted UCommandlet base constructor, also emitted by this translation unit."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GX",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "7346269cb57d002d722e5692337d3f52c39ef4b99731c343304adf8373b1211f",
+      "inputs_sha256": "baeafe4f9b771ec05d3b3515cd4d785d2059f6a847a001f9f3a60a08bd1decb2"
     }
   },
   {

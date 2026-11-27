@@ -52,30 +52,7 @@ enum ESplitType
     SP_Split    = 3,
 };
 
-class FPoly
-{
-public:
-    enum { MAX_VERTICES = 16, VERTEX_THRESHOLD = MAX_VERTICES - 2 };
-
-    FVector Base;                   // +0x00
-    FVector Normal;                 // +0x0C
-    FVector Vertex[MAX_VERTICES];   // +0x18
-    DWORD   PolyFlags;              // +0xD8
-    DWORD   Unknown_dc;             // +0xDC
-    _WORD   NumVertices;            // +0xE0
-
-    void Init()
-    {
-        Base        = GMath_Zero;
-        Normal      = GMath_Zero;
-        PolyFlags   = 0;
-        Unknown_dc  = 0;
-        NumVertices = 0;
-    }
-    FLOAT Area();
-    INT SplitWithPlaneFast(const FPlane &Plane, FPoly *FrontPoly, FPoly *BackPoly) const;
-    INT Split(const FVector &Normal, const FVector &Base, INT NoOverflow);
-};
+#include "versus_poly.h"
 
 // RVA 0xe7670 (item 0210); defined here so LTCG gives it the retail convention.
 __declspec(noinline) FVector FLinePlaneIntersection(const FVector &Point1, const FVector &Point2, const FPlane &Plane)

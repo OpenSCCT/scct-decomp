@@ -5,6 +5,8 @@
 #include "versus_registration_arrays.h"
 
 class FArchive;
+class FOutputDevice;
+extern FOutputDevice *GError;
 class UObject;
 class UClass;
 class UProperty;
@@ -71,6 +73,10 @@ public:
     UClass *Class;
     static UClass PrivateStaticClass;
 
+    static UObject *StaticAllocateObject(UClass *ObjectClass, UObject *InOuter, FName InName,
+        DWORD SetFlags, UObject *Template = 0, FOutputDevice *Error = GError,
+        UObject *Ptr = 0, UObject *SubobjectRoot = 0);
+    UClass *GetClass() const { return Class; }
     static TArray<UObject *> GObjRegistrants;
     static void ProcessRegistrants();
     void ConditionalRegister();
@@ -88,11 +94,14 @@ public:
 class UField : public UObject {
 public:
     virtual ~UField();
-    virtual void VirtualSlot22();
+    virtual void AddCppProperty(UProperty *Property);
     virtual void VirtualSlot23();
     virtual void VirtualSlot24();
     virtual void VirtualSlot25();
     virtual INT GetPropertiesSize();
+
+    UField() {}
+    UField(UField *Super) : SuperField(Super) {}
 
     UField *SuperField;
     UField *Next;
