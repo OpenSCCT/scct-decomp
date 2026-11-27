@@ -59,3 +59,35 @@ D3DXVECTOR3 *__stdcall c_D3DXPlaneIntersectLine(
     out->z = a->z + t * (b->z - a->z);
     return out;
 }
+
+D3DXMATRIX *__stdcall c_D3DXMatrixShadow(
+    D3DXMATRIX *out, const D3DXVECTOR4 *light, const D3DXPLANE *plane)
+{
+    D3DXPLANE unit;
+    D3DXPlaneNormalize(&unit, plane);
+
+    FLOAT dot = unit.a * light->x + unit.b * light->y
+              + unit.c * light->z + unit.d * light->w;
+    D3DXPLANE negative = { -unit.a, -unit.b, -unit.c, -unit.d };
+
+    out->m[0][0] = dot + negative.a * light->x;
+    out->m[1][0] = negative.b * light->x;
+    out->m[2][0] = negative.c * light->x;
+    out->m[3][0] = negative.d * light->x;
+
+    out->m[0][1] = negative.a * light->y;
+    out->m[1][1] = dot + negative.b * light->y;
+    out->m[2][1] = negative.c * light->y;
+    out->m[3][1] = negative.d * light->y;
+
+    out->m[0][2] = negative.a * light->z;
+    out->m[1][2] = negative.b * light->z;
+    out->m[2][2] = dot + negative.c * light->z;
+    out->m[3][2] = negative.d * light->z;
+
+    out->m[0][3] = negative.a * light->w;
+    out->m[1][3] = negative.b * light->w;
+    out->m[2][3] = negative.c * light->w;
+    out->m[3][3] = dot + negative.d * light->w;
+    return out;
+}

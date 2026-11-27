@@ -304,3 +304,50 @@ D3DXQUATERNION *__stdcall c_D3DXQuaternionBaryCentric(D3DXQUATERNION *out,
     }
     return out;
 }
+
+D3DXQUATERNION *__stdcall c_D3DXQuaternionLn(D3DXQUATERNION *out, const D3DXQUATERNION *q)
+{
+    if (q->w < 1.0f) {
+        FLOAT theta = static_cast<FLOAT>(acos(q->w));
+        FLOAT sine = static_cast<FLOAT>(sin(theta));
+        if (!WithinEpsilon(sine, 0.0f)) {
+            FLOAT scale = theta / sine;
+            out->x = scale * q->x;
+            out->y = scale * q->y;
+            out->z = scale * q->z;
+        } else {
+            out->x = q->x;
+            out->y = q->y;
+            out->z = q->z;
+        }
+    } else {
+        out->x = q->x;
+        out->y = q->y;
+        out->z = q->z;
+    }
+    out->w = 0.0f;
+    return out;
+}
+
+D3DXQUATERNION *__stdcall c_D3DXQuaternionSlerp(D3DXQUATERNION *out,
+    const D3DXQUATERNION *q1, const D3DXQUATERNION *q2, FLOAT t)
+{
+    FLOAT start = 1.0f - t;
+
+    FLOAT dot = q1->x * q2->x + q1->z * q2->z + q1->y * q2->y + q1->w * q2->w;
+    FLOAT sign = dot >= 0.0f ? 1.0f : -1.0f;
+    dot *= sign;
+    if (1.0f - dot > FLT_EPSILON) {
+        FLOAT sine = static_cast<FLOAT>(sqrt(1.0f - dot * dot));
+        FLOAT theta = static_cast<FLOAT>(atan2(sine, dot));
+        FLOAT inverseSine = 1.0f / sine;
+        start = static_cast<FLOAT>(sin(start * theta)) * inverseSine;
+        t = static_cast<FLOAT>(sin(t * theta)) * inverseSine;
+    }
+    t *= sign;
+    out->x = start * q1->x + t * q2->x;
+    out->y = start * q1->y + t * q2->y;
+    out->z = start * q1->z + t * q2->z;
+    out->w = start * q1->w + t * q2->w;
+    return out;
+}

@@ -4,6 +4,8 @@
 // FD3DRenderInterface::Locked (0x60ac0) with this in ESI and the arguments in
 // EAX, ECX, EDX, so Locked is defined here too so the linker sees its body.
 
+#include "d3d8_viewport.h"
+
 typedef unsigned short TCHAR;
 typedef int INT;
 typedef unsigned int UINT;
@@ -52,7 +54,6 @@ struct FColor
     FColor(BYTE InR, BYTE InG, BYTE InB, BYTE InA = 255) : R(InR), G(InG), B(InB), A(InA) {}
 };
 
-struct D3DVIEWPORT8 { DWORD X, Y, Width, Height; FLOAT MinZ, MaxZ; };
 struct D3DLOCKED_RECT { INT Pitch; void *pBits; };
 struct D3DSURFACE_DESC { INT Format; INT Type; DWORD Usage; INT Pool; UINT Size; INT MultiSampleType; UINT Width; UINT Height; };
 
