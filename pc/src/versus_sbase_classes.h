@@ -666,6 +666,11 @@ public:
     void Unk_10abf4c0(ASInteractObject *Item);
     UBOOL Unk_10abee10();
     UBOOL Unk_10abeed0();
+    UBOOL Unk_10abed10(void);
+
+    DECLARE_NATIVE(execHasUsableInteractions)
+    DECLARE_NATIVE(execSelectFirstViewAbleItem)
+    DECLARE_NATIVE(execSelectNextItem)
 
     ASInteractObject *InteractionList[15];
     INT                InteractionCount;
