@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 extern const char advapi32_dll[];
+void *__stdcall GetProcAddressInternal(void *module, const char *name);
 void __stdcall ResolveThunk(const char *module, const char *name, void *slot,
                             UnicowsEntry overrideEntry, UnicowsEntry fallback);
 

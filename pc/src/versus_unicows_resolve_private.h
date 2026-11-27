@@ -87,7 +87,6 @@ unsigned char *__stdcall ImageEntryToDataC(const unsigned char *, unsigned short
                                            unsigned long *);
 int __stdcall strcmpiC(const char *, const char *);
 char *__stdcall strncpyC(char *, const char *, unsigned int);
-void *__stdcall GetProcAddressInternal(void *, const char *);
 void __stdcall driveandpathC(const char *, char *, char *);
 void *LoadGodot(void);
 

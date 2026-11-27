@@ -97,6 +97,13 @@ intervening alignment. Seventeen currently have candidate receipts from MSVC 19.
 The others reproduce with a period compiler. These library receipts supply no compiler
 attribution for the game's own code.
 
+The 74 thunk operands identify 30 distinct failure routines totaling 772 bytes.
+Several exports share the same error return after identical-code folding. In 13
+routines, the stock body names the DLL and export it tries before setting
+`ERROR_PROC_NOT_FOUND`. These strings distinguish two ambiguous masked signatures
+in the cross-game table. RVA `0x221a00` forwards `GetClipboardData`, and RVA
+`0x221b47` forwards `TextOutW`. Their calling thunks identify the same two exports.
+
 ### D3DX carries its own zlib
 
 The D3DX matches include `huft_build`, `inflate_blocks_reset`, `d3dx_inflate_fast` and
