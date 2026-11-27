@@ -6,15 +6,29 @@
 #include <string.h>
 
 namespace _STL {
-    struct forward_iterator_tag {};
+    struct input_iterator_tag {};
+    struct forward_iterator_tag : input_iterator_tag {};
+    struct bidirectional_iterator_tag : forward_iterator_tag {};
+    struct random_access_iterator_tag : bidirectional_iterator_tag {};
+    struct false_type {};
+
+    template<class T> inline random_access_iterator_tag iterator_category(const T *)
+    {
+        return random_access_iterator_tag();
+    }
 
     template<class T, class Traits, class Alloc> class basic_string {
     public:
-        basic_string &append(const T *First, const T *Last, const forward_iterator_tag &);
+        basic_string &_M_append(const T *First, const T *Last, const forward_iterator_tag &);
+
+        basic_string &_M_append_dispatch(const T *First, const T *Last, const false_type &)
+        {
+            return _M_append(First, Last, iterator_category(First));
+        }
 
         basic_string &append(const T *First, const T *Last)
         {
-            return append(First, Last, forward_iterator_tag());
+            return _M_append_dispatch(First, Last, false_type());
         }
 
         basic_string &append(const T *Text)
