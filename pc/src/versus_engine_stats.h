@@ -22,7 +22,7 @@ public:
     ~FArray() { if (Data) GMalloc->Free(Data); }
     void Remove(INT Index, INT Count, INT ElementSize);
     INT Add(INT Count, INT ElementSize);
-    INT AddZeroed(INT ElementSize, INT Count);
+    INT __stdcall AddZeroed(INT ElementSize, INT Count);
 };
 
 template<class T> class TArray : public FArray {

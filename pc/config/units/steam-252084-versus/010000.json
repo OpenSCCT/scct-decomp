@@ -940,36 +940,6 @@
     }
   },
   {
-    "id": "versus-format-decimal-integer",
-    "offset": 73552,
-    "size": 52,
-    "inputs": [
-      "src/versus_integer_text.cpp",
-      "src/versus_memory.h",
-      "src/versus_build.h",
-      "src/unreal_types.h"
-    ],
-    "rebuilt_symbol": "?FormatDecimalInteger@@YAPAGH@Z",
-    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_integer_text.obj src/versus_integer_text.cpp",
-    "coff_alignment": 16,
-    "identification": "Formats an integer in base ten into a static 20-TCHAR buffer. The imported MSVCR70 _itow returns the buffer pointer. Retail callers at RVAs 0x1609d8 and 0x22eb6e consume that return value. The function name is descriptive.",
-    "link_bindings": {
-      "?Buffer@?1??FormatDecimalInteger@@YAPAGH@Z@4PAGA": {
-        "va": 282392176,
-        "basis": "Both the zero-fill destination and the second _itow argument are the same writable buffer. The clear covers 40 bytes."
-      },
-      "__imp___itow": {
-        "va": 280884064,
-        "basis": "The locked PE import directory identifies the MSVCR70.dll _itow entry."
-      }
-    },
-    "match": {
-      "bytes_sha256": "1cbbdd830a8dde276b88e2c7a08d5505f778f5849b3b54bc6d5c29625ee1cdd7",
-      "inputs_sha256": "4afbfdcaa33f517877d681f26e5875687d7c2d3511a59aa25e3fe1f786c3969e"
-    }
-  },
-  {
     "id": "versus-vd-11f90",
     "offset": 73616,
     "size": 180,
@@ -5486,68 +5456,6 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
-    }
-  },
-  {
-    "id": "versus-farray-add-zeroed",
-    "offset": 87040,
-    "size": 90,
-    "rebuilt_symbol": "?AddZeroed@FArray@@QAEHHH@Z",
-    "inputs": [
-      "src/versus_stats_smoothing.cpp",
-      "src/versus_engine_stats.h",
-      "src/versus_build.h",
-      "src/unreal_types.h",
-      "src/unreal_name.h",
-      "src/unreal_object.h",
-      "src/versus_memory.h"
-    ],
-    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /Ob1 /c /Folocal/versus_stats_smoothing.obj src/versus_stats_smoothing.cpp",
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
-      "flags": [
-        "/O2",
-        "/Ob1",
-        "/GL"
-      ],
-      "basis": "evidence/versus-array-zeroing.md"
-    },
-    "identification": "FArray::AddZeroed. The byte-exact FStats moving average and USkeletalMeshInstance::SetBoneScale pass an array, element size and count. The function appends with FArray::Add and clears the new tail using the Win32 appMemzero helper also present at RVA 0x42a0. The genuine moving-average caller produces the stack convention from an ordinary member declaration. VC7.1 /O2 /Ob1 produces 70 bytes, VC7.0 /O1 /Ob1 produces 77, and /Od produces 88.",
-    "link_bindings": {
-      "?Add@FArray@@QAEHHH@Z": {
-        "va": 277890272,
-        "basis": "The FArray::Add function at RVA 0x44e0 grows the array and returns its previous count."
-      }
-    },
-    "ltcg_link": {
-      "roots": [
-        "?SmoothMeshCounters@@YAXAAVFStats@@@Z"
-      ],
-      "stubs": [
-        "?Add@FArray@@QAEHHH@Z",
-        "?GEngineStats@@3VFEngineStats@@A",
-        "?GMalloc@@3PAVFMalloc@@A",
-        "?GStats@@3VFStats@@A",
-        "__alldiv",
-        "__fltused"
-      ],
-      "rebuilt_address": 268439552,
-      "rebuilt_offset": 1024,
-      "symbols": {
-        "?Add@FArray@@QAEHHH@Z": 268440048
-      },
-      "fields": [
-        [
-          20,
-          "rel32",
-          "?Add@FArray@@QAEHHH@Z"
-        ]
-      ]
-    },
-    "match": {
-      "bytes_sha256": "ca2ea3e80b832f3626447437eb788b16980d4ba2637b4b7ca460275887e8dfcc",
-      "inputs_sha256": "39a9f7ced20705eaef4ed3385ca77523338107113881dfce487ab02afe4ccdc3"
     }
   },
   {
