@@ -5,6 +5,7 @@
 #include "unreal_types.h"
 
 class UMaterial;
+class FProjectorRenderInfo;
 class FLevelSceneNode;
 class FRenderInterface;
 
@@ -22,11 +23,21 @@ struct FProjectorPrimitiveChunk {
     FProjectorPrimitiveChunk *Next;
 };
 
-class FProjectorRenderBatch {
+class FProjectorPrimitiveList {
 public:
     FProjectorPrimitiveChunk *FirstChunk;
     FProjectorPrimitiveChunk *LastChunk;
     INT NumPrimitives;
+    FProjectorPrimitiveList()
+    {
+        FirstChunk = LastChunk = 0;
+        NumPrimitives = 0;
+    }
+    void Add(FProjectorPrimitive *Primitive);
+};
+
+class FProjectorRenderBatch : public FProjectorPrimitiveList {
+public:
     UMaterial *BaseMaterial;
     UMaterial *ProjectedMaterial;
     INT MaterialBlendingOp;
@@ -37,6 +48,13 @@ public:
     INT VertexDataSize;
     DWORD IndexDataSize;
 
+    FProjectorRenderBatch(UMaterial *Base, FProjectorRenderInfo *Info, UBOOL TwoSided);
+    void AddPrimitive(FProjectorPrimitive *Primitive)
+    {
+        Add(Primitive);
+        VertexDataSize += Primitive->NumVertices * VertexStride;
+        IndexDataSize += Primitive->NumIndices * sizeof(_WORD);
+    }
     void Render(FLevelSceneNode *SceneNode, FRenderInterface *RI);
 };
 

@@ -199,7 +199,7 @@
     },
     "match": {
       "bytes_sha256": "8b3a97981cc4d29984703685c400a065a3edad19639936ef161a8dd5c4524633",
-      "inputs_sha256": "bf8ecb0d815ef4717f33132b2b61945794b2ed3fa5cb0a43b8bd1a6858f7f6cc"
+      "inputs_sha256": "357d050a13ab6e5c7c83d4eaf3cc3bf8349fdcd8f6e6cce7e7b142e3abdecd3d"
     }
   },
   {
@@ -248,7 +248,7 @@
     },
     "match": {
       "bytes_sha256": "711f9c574acd39283ce2f9ff8e75f57c5dc4d9100e5a9004d1e6ee14050f1f92",
-      "inputs_sha256": "68ca46587c71141da041d60f17447c0b598ff2613c94259a45641a9512078d0c"
+      "inputs_sha256": "8cfbfbef1fc368faf2e1d154363995516b2a951beee0b53cc21cd0e191ea8884"
     }
   },
   {
@@ -328,7 +328,7 @@
     },
     "match": {
       "bytes_sha256": "b37aa9efb547b315786abf0754023c88d6069cf38b3dca4ed7305a6f19d07862",
-      "inputs_sha256": "8f2542221c1a7d6576a065a4246818a4ddbdfed6721ef087537f70a0a3940a34"
+      "inputs_sha256": "f2c6ece04e290472ed37f0ab387ffe6b2dc20c97ed336ea84f9694ce92fe8bac"
     }
   },
   {
@@ -1456,7 +1456,7 @@
     },
     "match": {
       "bytes_sha256": "1f6abaaea764b3cab29e6e12a36a51c7cd3e7cfb0176be3b4d4d9891ef5020ee",
-      "inputs_sha256": "5a1b2407dc16fe2f6ba71214cc980a22b6b06692050d473d3ba3c46306c7c078"
+      "inputs_sha256": "7b01ca93d556e6df8160d243a743f6f426124c9f1674c6e5e6db054475f3d235"
     }
   },
   {
@@ -2321,7 +2321,7 @@
     "identification": "The viewport constructs its dedicated render-target subtype at +0xe4 and installs vtable 0x10c03a90. The concrete class spelling is descriptive. Slot zero returns the QWORD at target +8. The viewport constructor writes this ID at 0x10abb6 and 0x10abbc. The same code address occupies seven retail vtables and counts once.",
     "match": {
       "bytes_sha256": "f8cc610e96661a7cacc1abcc71503689f5019106569e57d1c87f4cec6c282cb8",
-      "inputs_sha256": "1ceea0325b6f52c06e57b7eb856162718cc37d6831a26f5a9866ec0161d9c6dd"
+      "inputs_sha256": "00172701859a58e6754b0d87eced4e6d0b60a13570c7f5fc9d90339ce6fcdc17"
     }
   },
   {
@@ -3060,83 +3060,85 @@
     "offset": 589792,
     "size": 91,
     "inputs": [
-      "src/versus_vd4_item_0326.cpp"
+      "src/unreal_types.h",
+      "src/versus_array_storage.h",
+      "src/versus_build.h",
+      "src/versus_projector_batch.h",
+      "src/versus_projector_primitives.h",
+      "src/versus_projector_render_info.h",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_vd8_item_0095.cpp"
     ],
-    "rebuilt_symbol": "??1UnnamedRecord_8ffe0@@QAE@XZ",
+    "rebuilt_symbol": "??1FStaticProjectorInfo@@QAE@XZ",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_vd4_item_0326_vc70_ltcg_o2gygxgl.obj src/versus_vd4_item_0326.cpp",
-    "identification": "Complete Versus function at RVA 0x8ffe0. Direct call at RVA 0x8fefe in the retail function at RVA 0x8fe00.",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_static_projector_info.obj src/versus_vd8_item_0095.cpp",
+    "identification": "The real UESoftBody::Render caller deletes its expired static-projector geometry record. Its implicit member destruction and exception-unwind states cover the indices, base UV coordinates and the static projector points. The native context retains the stack calling convention for the final two destructors. VC7.1 also emits the 91-byte outer body, but differs at 27 positions in both complete member-array destructors. VC7.0 reproduces all three from the same C++ object.",
     "link_bindings": {
-      "__ehhandler$??1UnnamedRecord_8ffe0@@QAE@XZ": {
+      "__ehhandler$??1FStaticProjectorInfo@@QAE@XZ": {
         "va": 280807946,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The C++ frame information has two unwind states. Their funclets destroy Vertices at +8 and BaseUVs at +0x14 using the same typed array destructors as the ordinary return path."
       },
-      "??1FString@@QAE@XZ": {
+      "??1?$TArray@G@@QAE@XZ": {
         "va": 277923040,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The ordinary-thiscall TArray<unsigned short> destructor removes the two-byte indices at +0x20. Its independent complete COFF receipt uses this exact specialization."
       },
-      "??1?$TArray@UFElement8@@@@QAE@XZ": {
+      "??1?$TArray@UFProjectorUV@@@@QAE@XZ": {
         "va": 279443104,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The eight-byte U,V element destructor receives the +0x14 array on the stack, shared in retail with other trivial eight-byte element arrays."
       },
-      "??1?$TArray@UFElement16@@@@QAE@XZ": {
+      "??1?$TArray@UFStaticProjectorPoint@@@@QAE@XZ": {
         "va": 279950544,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The sixteen-byte Position and Attenuation element destructor receives the +0x08 array on the stack, shared in retail with other trivial sixteen-byte element arrays."
       }
     },
     "ltcg_link": {
       "roots": [
-        "?Driver_8ffe0@@YAXPAUUnnamedRecord_8ffe0@@@Z"
+        "?Render@UESoftBody@@UAEXPAUFDynamicActor@@PAVFLevelSceneNode@@PAUFDynamicLightList@@PAU?$TList@PAVFProjectorRenderInfo@@@@PAVFRenderInterface@@@Z"
       ],
       "stubs": [
-        "??1FString@@QAE@XZ",
-        "??3@YAXPAX@Z",
-        "?Escape@@YAXPAX@Z",
-        "?FCollisionHash_RemoveActor@@YGXPAVFCollisionHash@@PAVAActor@@@Z",
-        "?GMalloc@@3PAVFMalloc@@A",
-        "?GMem@@3VFMemStack@@A",
-        "?Remove@FArray@@QAEXHHH@Z",
-        "?RemoveItem@?$TArray@PAVAActor@@@@QAEHABQAVAActor@@@Z",
-        "?UnusedChunks@FMemStack@@2PAUFTaggedMemory@@A",
-        "?eventUnTouch@AActor@@QAEXPAV1@@Z",
+        "??1?$TArray@G@@QAE@XZ",
+        "??KFCoords@@QBE?AU0@ABUFRotator@@@Z",
+        "?GMath@@3UFGlobalMath@@A",
+        "__imp__floor",
+        "?TransformFPlane@FMatrix@@QBE?AUFPlane@@ABU2@@Z",
+        "__ftol2",
         "___CxxFrameHandler",
-        "__except_list",
-        "__fltused"
+        "__except_list"
       ],
-      "rebuilt_offset": 1072,
-      "rebuilt_address": 268439600,
       "fields": [
         [
           9,
           "abs",
-          "__ehhandler$??1UnnamedRecord_8ffe0@@QAE@XZ"
+          "__ehhandler$??1FStaticProjectorInfo@@QAE@XZ"
         ],
         [
           38,
           "rel32",
-          "??1FString@@QAE@XZ"
+          "??1?$TArray@G@@QAE@XZ"
         ],
         [
           52,
           "rel32",
-          "??1?$TArray@UFElement8@@@@QAE@XZ"
+          "??1?$TArray@UFProjectorUV@@@@QAE@XZ"
         ],
         [
           69,
           "rel32",
-          "??1?$TArray@UFElement16@@@@QAE@XZ"
+          "??1?$TArray@UFStaticProjectorPoint@@@@QAE@XZ"
         ]
       ],
       "symbols": {
-        "__ehhandler$??1UnnamedRecord_8ffe0@@QAE@XZ": 268440090,
-        "??1FString@@QAE@XZ": 268440016,
-        "??1?$TArray@UFElement8@@@@QAE@XZ": 268439888,
-        "??1?$TArray@UFElement16@@@@QAE@XZ": 268439760
-      }
+        "__ehhandler$??1FStaticProjectorInfo@@QAE@XZ": 268441578,
+        "??1?$TArray@G@@QAE@XZ": 268441488,
+        "??1?$TArray@UFProjectorUV@@@@QAE@XZ": 268440320,
+        "??1?$TArray@UFStaticProjectorPoint@@@@QAE@XZ": 268440208
+      },
+      "rebuilt_address": 268440112,
+      "rebuilt_offset": 1584
     },
     "match": {
       "bytes_sha256": "1dc32527ca9451682cc5c651b1af90100169a72de59c73f5d673a00eb6537179",
-      "inputs_sha256": "e8594a93173fe84e88925b275c5f94cd9eedb40d4583c934e0f57223c660b299"
+      "inputs_sha256": "b3e32d24d14fffa2f2d5fcaeeb7723415f9ce2bf58b0ed892c49592a5deaeba1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3146,6 +3148,9 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
-    }
+    },
+    "ltcg_callees": [
+      "versus-projector-primitive-list-add"
+    ]
   }
 ]

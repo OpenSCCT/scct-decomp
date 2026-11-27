@@ -112,52 +112,6 @@ __declspec(noinline) BYTE *FMemStack::AllocateNewChunk(INT MinSize)
     return Top;
 }
 
-// Neutral names: the global object at retail 0x10c9245c and the chain of
-// pointers 0x9e510 tests through it.
-struct FUnnamed_9e510_Inner { BYTE Pad[0x58]; INT Flag; };
-struct FUnnamed_9e510_Mid { BYTE Pad[0x38]; FUnnamed_9e510_Inner *Inner; };
-struct FUnnamed_9e510_Global
-{
-    BYTE Pad0[0x28];
-    FUnnamed_9e510_Mid *Mid;    // 0x28
-    BYTE Pad2C[0x4c - 0x2c];
-    INT A;                      // 0x4c
-    BYTE Pad50[4];
-    INT B;                      // 0x54
-};
-extern FUnnamed_9e510_Global *GUnnamed_c9245c;
-
-// Neutral name: a reference-counted record with two time stamps.
-struct FTimedRecord_9e510
-{
-    void *Unknown0;
-    INT RefCount;               // 0x04
-    DOUBLE LastTime;            // 0x08
-    DOUBLE ExpireTime;          // 0x10
-    UBOOL Refresh(DOUBLE Time);
-};
-
-// RVA 0x9e510 (LTCG: this in EDX, Time on the stack, ret 8). Refreshes the
-// record's time, or drops a reference to it and returns 0 when it expired.
-__declspec(noinline) UBOOL FTimedRecord_9e510::Refresh(DOUBLE Time)
-{
-    if (ExpireTime != 0.0 && !(GUnnamed_c9245c->A && GUnnamed_c9245c->B && GUnnamed_c9245c->Mid->Inner->Flag))
-        goto Expired;
-    if (ExpireTime != 0.0)
-    {
-        if (ExpireTime <= Time)
-            goto Expired;
-        if (LastTime != 0.0 && Time - LastTime > 1.0)
-            goto Expired;
-    }
-    LastTime = Time;
-    return 1;
-Expired:
-    if (--RefCount == 0)
-        GMalloc->Free(this);
-    return 0;
-}
-
 struct FPlane : public FVector
 {
     FLOAT W;
@@ -351,11 +305,6 @@ void *Driver_9e4d0(FMemStack *M, unsigned int S, INT C, INT A)
     void *P = operator new(S, *M, C, A);
     Escape(P);
     return operator new(S + 4, *M, C + 1, A * 2);
-}
-UBOOL Driver_9e510(FTimedRecord_9e510 *R, DOUBLE T)
-{
-    Escape(&GMalloc); Escape(&GUnnamed_c9245c);
-    return R->Refresh(T) + R[1].Refresh(T + 1.0);
 }
 void Driver_9e330(FVector *Out, const FMatrix *M, const FVector *V)
 {

@@ -91,7 +91,9 @@ public:
 #else
     TArray<FSnapCameraFloorStruct> MapFloors;
 #endif
-    BYTE                  unk_3a0[0x40];
+    BYTE                  unk_3a0[0x10];
+    FLOAT                 TimeSeconds;
+    BYTE                  unk_3b4[0x3e0 - 0x3b4];
     FString               unk_3e0;
     FString               unk_3ec;
     FString               unk_3f8;

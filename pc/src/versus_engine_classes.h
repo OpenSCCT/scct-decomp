@@ -901,41 +901,7 @@ public:
     BYTE                   unk_32c[0x68];
 };
 
-// Engine.ESoftBody: 0x15c bytes, 58 virtual functions
-class UESoftBody : public UPrimitive {
-public:
-    virtual ~UESoftBody();
-    virtual void VirtualSlot30();
-    virtual void VirtualSlot31();
-    virtual void VirtualSlot32();
-    virtual void VirtualSlot33();
-    virtual void VirtualSlot34();
-    virtual void VirtualSlot35();
-    virtual void VirtualSlot36();
-    virtual void VirtualSlot37();
-    virtual void VirtualSlot38();
-    virtual void VirtualSlot39();
-    virtual void VirtualSlot40();
-    virtual void VirtualSlot41();
-    virtual void VirtualSlot42();
-    virtual void VirtualSlot43();
-    virtual void VirtualSlot44();
-    virtual void VirtualSlot45();
-    virtual void VirtualSlot46();
-    virtual void VirtualSlot47();
-    virtual void VirtualSlot48();
-    virtual void VirtualSlot49();
-    virtual void VirtualSlot50();
-    virtual void VirtualSlot51();
-    virtual void VirtualSlot52();
-    virtual void VirtualSlot53();
-    virtual void VirtualSlot54();
-    virtual void VirtualSlot55();
-    virtual void VirtualSlot56();
-    virtual void VirtualSlot57();
-
-    BYTE unk_50[0x10c];
-};
+#include "versus_softbody.h"
 
 // Engine.SLogManager: 0x354 bytes, 78 virtual functions
 class ASLogManager : public AActor {

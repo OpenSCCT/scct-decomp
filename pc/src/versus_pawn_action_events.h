@@ -172,7 +172,8 @@ public:
     class UMeshInstance *MeshInstance;
     BYTE unk_1d8[0x210 - 0x1d8];
     TArray<class FProjectorRenderInfo *> Projectors;
-    BYTE unk_21c[0x268 - 0x21c];
+    TArray<struct FStaticProjectorInfo *> StaticProjectors;
+    BYTE unk_228[0x268 - 0x228];
     FLOAT CollisionRadius;
     FLOAT CollisionHeight;
     BYTE unk_270[0x2d1 - 0x270];

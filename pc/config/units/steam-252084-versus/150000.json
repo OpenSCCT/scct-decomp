@@ -76,32 +76,44 @@
     "offset": 1378432,
     "size": 17,
     "inputs": [
-      "src/campaign_release_buffer.cpp",
-      "src/unreal_containers.h",
-      "src/unreal_math.h",
-      "src/unreal_types.h"
+      "src/unreal_types.h",
+      "src/versus_build.h",
+      "src/versus_delete.cpp",
+      "src/versus_malloc.h"
     ],
-    "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/campaign_release_buffer.obj src/campaign_release_buffer.cpp",
-    "rebuilt_symbol": "_release_engine_buffer",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_delete.obj src/versus_delete.cpp",
+    "rebuilt_symbol": "??3@YAXPAX@Z",
     "link_bindings": {
       "?GMalloc@@3PAVFMalloc@@A": {
         "va": 281492464,
         "basis": "Shared engine heap used by the independently identified registered string finalizers."
       }
     },
-    "identification": "Direct call at retail VA 0x10b8c2d8. The engine heap wrapper has the same complete extent in default Ghidra analysis and the rebuilt object.",
+    "identification": "The uniform global C++ operator delete calls GMalloc->Free. Multiple independently placed scalar-deleting and D3DX destructors call this same entry at RVA 0x150880, including the retail call at 0x28c2d8. The soft-body renderer inlines the same deallocation. Both VC7.0 and VC7.1 reproduce the complete function.",
     "match": {
       "bytes_sha256": "81c12a4563e380536f2439d8d64dd6131fe42fd5484eac55c1b73c18b333f430",
-      "inputs_sha256": "ec5200116d3fbea5891200787f92a50d751ab61fac6b4b2dd6f98d199a0fd1b7"
+      "inputs_sha256": "6033987d2e28799b85a5ec3fc9c0e6450ad77aa496a3a16357fe474d3ec34a43"
     },
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
-      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
-      "flags": [
-        "/O2"
+    "ltcg_link": {
+      "roots": [
+        "??3@YAXPAX@Z"
       ],
-      "basis": "evidence/versus-vc71-o2.md"
+      "stubs": [
+        "?GMalloc@@3PAVFMalloc@@A"
+      ],
+      "fields": [
+        [
+          2,
+          "abs",
+          "?GMalloc@@3PAVFMalloc@@A"
+        ]
+      ],
+      "symbols": {
+        "?GMalloc@@3PAVFMalloc@@A": 268439584
+      },
+      "rebuilt_address": 268439552,
+      "rebuilt_offset": 1024
     }
   },
   {

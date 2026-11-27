@@ -1,17 +1,5 @@
-/* Work item 0005: FString members (Unreal Engine 2 UnTemplate.h shapes).
-   Strings: L"Farray::protectedcstor", L"FString::=", L"FArray". */
-typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
-
-class FMalloc
-{
-public:
-    virtual void *Malloc(DWORD Count, const TCHAR *Tag) = 0;
-    virtual void *Realloc(void *Original, DWORD Count, const TCHAR *Tag) = 0;
-    virtual void Free(void *Original) = 0;
-};
-extern FMalloc *GMalloc;
+#include "versus_build.h"
+#include "versus_malloc.h"
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const TCHAR *);
 extern "C" __declspec(dllimport) TCHAR *__cdecl wcscpy(TCHAR *, const TCHAR *);
@@ -39,7 +27,14 @@ public:
     INT ArrayMax;
 };
 
-class FString : public FArray
+template <class T> class TArray : public FArray
+{
+public:
+    TArray(INT InNum) : FArray(InNum, sizeof(T)) {}
+    ~TArray();
+};
+
+class FString : public TArray<TCHAR>
 {
 public:
     FString(const FString &Other);
@@ -52,14 +47,14 @@ public:
 };
 
 FString::FString(const FString &Other)
-    : FArray(Other.ArrayNum, sizeof(TCHAR))
+    : TArray<TCHAR>(Other.ArrayNum)
 {
     if (ArrayNum)
         appMemcpy(Data, Other.Data, ArrayNum * sizeof(TCHAR));
 }
 
 FString::FString(const TCHAR *In)
-    : FArray(*In ? appStrlen(In) + 1 : 0, sizeof(TCHAR))
+    : TArray<TCHAR>(*In ? appStrlen(In) + 1 : 0)
 {
     if (ArrayNum)
         appMemcpy(Data, In, ArrayNum * sizeof(TCHAR));

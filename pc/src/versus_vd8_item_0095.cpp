@@ -87,34 +87,17 @@ struct FColor
     FColor(BYTE InR, BYTE InG, BYTE InB, BYTE InA = 255) : B(InB), G(InG), R(InR), A(InA) {}
 };
 
-enum EProjectorFlags
-{
-    PRF_Perspective         = 0x00000001,
-    PRF_Gradient            = 0x00000004,
-    PRF_ProjectOnBackfaces  = 0x00000010,
-};
+#include "versus_projector_render_info.h"
 
-struct AProjector
+class AProjector
 {
+public:
     BYTE unk_00[0x80];
     FVector Location;           // +0x80
     BYTE unk_8c[0x54];
     FRotator Rotation;          // +0xe0
     BYTE unk_ec[0x374];
     INT MaxTraceDistance;       // +0x460
-};
-
-class FProjectorRenderInfo
-{
-public:
-    AProjector *Projector;      // +0x00
-    INT unk_04;                 // +0x04
-    DOUBLE LastRenderTime;      // +0x08
-    DOUBLE Expires;             // +0x10
-    BYTE unk_18[0x0c];          // +0x18
-    FMatrix Matrix;             // +0x24
-    BYTE unk_64[0xf8];          // +0x64
-    DWORD ProjectorFlags;       // +0x15c
 };
 
 struct FProjectorVertex
@@ -222,4 +205,17 @@ void FStaticProjectorPrimitive::GetVertices(void *Dest)
             Dest = UV + 1;
         }
     }
+}
+
+void FStaticProjectorPrimitive::GetIndices(_WORD *Dest, _WORD BaseVertex)
+{
+    for (INT Index = 0; Index < ProjectorInfo->Indices.Num(); ++Index)
+        *Dest++ = BaseVertex + ProjectorInfo->Indices(Index);
+}
+
+// The 16-bit index array destructor is instantiated in versus_word_array.cpp.
+extern template TArray<_WORD>::~TArray();
+
+FStaticProjectorInfo::~FStaticProjectorInfo()
+{
 }

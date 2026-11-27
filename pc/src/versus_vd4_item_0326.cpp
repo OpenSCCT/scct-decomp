@@ -1,4 +1,4 @@
-// Work item 0326: Versus RVA 0x8ffe0-0x903cb (LTCG object, AActor methods).
+// Work item 0326: Versus AActor methods (LTCG object).
 // Names: AActor field names follow UE2 (XLevel at 0x1a4, ObjectFlags at 0x1c,
 // Class at 0x24, collision bits at 0x2f0); others are neutral offsets.
 typedef unsigned short TCHAR;
@@ -35,38 +35,12 @@ public:
     }
 };
 
-// FString destructor (RVA 0xc4e0, ordinary thiscall, not part of this unit).
-class FString : public FArray
-{
-public:
-    ~FString();
-};
-
-// TArray<T> of plain elements; the destructors retail calls out of line
-// (RVA 0x17f6a0 for 8-byte elements, RVA 0x1fb4d0 for 16-byte elements) are
-// defined below as scaffolding.
 template<class T> class TArray : public FArray
 {
 public:
     T &operator()(INT i) { return ((T *)Data)[i]; }
     INT RemoveItem(const T &Item);
     ~TArray();
-};
-
-struct FElement8 { DWORD A, B; };
-struct FElement16 { DWORD A, B, C, D; };
-
-// RVA 0x8ffe0: implicit-member destructor of an unidentified record (neutral
-// name). Members destroyed in reverse order: FString at 0x20, 8-byte array at
-// 0x14, 16-byte array at 0x08.
-struct UnnamedRecord_8ffe0
-{
-    DWORD Field0;
-    DWORD Field4;
-    TArray<FElement16> Items16;     // 0x08
-    TArray<FElement8> Items8;       // 0x14
-    FString Text;                   // 0x20
-    ~UnnamedRecord_8ffe0() {}
 };
 
 class UClass
@@ -467,6 +441,3 @@ template<class T> __declspec(noinline) TArray<T>::~TArray()
 {
     Remove(0, ArrayNum, sizeof(T));
 }
-#pragma inline_depth(0)
-void Driver_8ffe0(UnnamedRecord_8ffe0 *R) { Escape(&GMalloc); R->~UnnamedRecord_8ffe0(); }
-#pragma inline_depth()

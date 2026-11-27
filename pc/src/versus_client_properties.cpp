@@ -52,49 +52,7 @@ static const EName NAME_VeryLow = (EName)439;
 static const EName NAME_WindowedViewportX = (EName)407;
 static const EName NAME_WindowedViewportY = (EName)408;
 
-class UEngine;
-class UViewport;
-
-class UClient : public UObject {
-public:
-    void StaticConstructor();
-
-    UEngine *Engine;
-    TArray<UViewport *> Viewports;
-    UBOOL CaptureMouse;
-    UBOOL NoLighting;
-    UBOOL NoFractalAnim;
-    UBOOL DecoLayers;
-    UBOOL ScreenFlashes;
-    UBOOL Decals;
-    UBOOL Coronas;
-    UBOOL Projectors;
-    UBOOL ReportDynamicUploads;
-    INT WindowedViewportX;
-    INT WindowedViewportY;
-    FLOAT MinDesiredFrameRate;
-    INT FullscreenViewportX;
-    INT FullscreenViewportY;
-    FLOAT Brightness;
-    FLOAT Contrast;
-    FLOAT Gamma;
-    BYTE unk_7c[0x4];
-    BYTE TextureDetailWorld;
-    BYTE unk_81[0x3];
-    BYTE TextureDetailPlayerSkin;
-    BYTE unk_85[0x3];
-    BYTE TextureDetailWeaponSkin;
-    BYTE unk_89[0x3];
-    BYTE TextureDetailTerrain;
-    BYTE unk_8d[0x3];
-    BYTE TextureDetailInterface;
-    BYTE unk_91[0x3];
-    BYTE TextureDetailRenderMap;
-    BYTE unk_95[0x3];
-    BYTE TextureDetailLightmap;
-    BYTE unk_99[0x7];
-    UEnum *TextureDetailEnum;
-};
+#include "versus_client_types.h"
 
 void UClient::StaticConstructor()
 {

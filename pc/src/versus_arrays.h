@@ -12,6 +12,7 @@ public:
     FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
     void Empty(INT ElementSize, INT Slack);
     INT Add(INT Count, INT ElementSize);
+    void Remove(INT Index, INT Count, INT ElementSize);
     INT __stdcall AddZeroed(INT ElementSize, INT Count);
 };
 
@@ -25,6 +26,12 @@ public:
         INT Index = Add(1, sizeof(T));
         (*this)(Index) = Item;
         return Index;
+    }
+    void Remove(INT Index, INT Count = 1)
+    {
+        for (INT i = Index; i < Index + Count; ++i)
+            (&(*this)(i))->~T();
+        FArray::Remove(Index, Count, sizeof(T));
     }
     void Empty();
     void Empty(INT Slack) { FArray::Empty(sizeof(T), Slack); }

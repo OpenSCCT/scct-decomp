@@ -300,31 +300,23 @@ public:
 
 // ---- Projector / Level / Mesh / Primitive / Viewport ----
 
-struct FTimedGlobal_Inner { BYTE Pad[0x58]; INT Flag; };
-struct FTimedGlobal_Mid { BYTE Pad[0x38]; FTimedGlobal_Inner *Inner; };
-struct FTimedGlobal
-{
-    BYTE Pad0[0x28];
-    FTimedGlobal_Mid *Mid;
-    BYTE Pad2C[0x4c - 0x2c];
-    INT A;
-    BYTE Pad50[4];
-    INT B;
-};
-extern FTimedGlobal *GUnnamed_c9245c;
+#include "versus_client_types.h"
+#include "versus_projector_render_info.h"
 
-class AProjector;
-class FProjectorRenderInfo
-{
+class USubsystem : public UObject {};
+class URenderDevice : public USubsystem {
 public:
-    AProjector *Projector;
-    INT ReferenceCount;     // 0x04
-    DOUBLE LastTime;        // 0x08
-    DOUBLE ExpireTime;      // 0x10
-
-    FProjectorRenderInfo *AddReference() { ReferenceCount++; return this; }
-    UBOOL Render(DOUBLE Time);
+    BYTE unk_28[0x58 - 0x28];
+    UBOOL unk_58;
 };
+class UEngine : public USubsystem {
+public:
+    BYTE unk_28[8];
+    UClient *Client;
+    class UAudioSubsystem *Audio;
+    URenderDevice *GRenDev;
+};
+extern UClient *GClient;
 
 class ALevelInfo
 {
@@ -585,25 +577,7 @@ __declspec(noinline) void FLineBatcher::DrawLine(FVector P1, FVector P2, FColor 
     new(Vertices) FLineVertex(P2, Color);
 }
 
-// Callees of 0x12a2a0 (retail 0x9e510 from item 0360, 0xc9bb0 from item 0160).
-__declspec(noinline) UBOOL FProjectorRenderInfo::Render(DOUBLE Time)
-{
-    if (ExpireTime != 0.0 && !(GUnnamed_c9245c->A && GUnnamed_c9245c->B && GUnnamed_c9245c->Mid->Inner->Flag))
-        goto Expired;
-    if (ExpireTime != 0.0)
-    {
-        if (ExpireTime <= Time)
-            goto Expired;
-        if (LastTime != 0.0 && Time - LastTime > 1.0)
-            goto Expired;
-    }
-    LastTime = Time;
-    return 1;
-Expired:
-    if (--ReferenceCount == 0)
-        GMalloc->Free(this);
-    return 0;
-}
+#include "versus_projector_render_info.inl"
 
 template <class T> __declspec(noinline) INT TArray<T>::AddUniqueItem(const T &Item)
 {
@@ -679,7 +653,7 @@ void Driver_12a280(AActor *A, FFrame *S, void *R)
 void Driver_12a2a0(AActor *A, AProjector *P)
 {
     Escape(&GMalloc);
-    Escape(&GUnnamed_c9245c);
+    Escape(&GClient);
     A->AttachProjector(P);
     A[1].AttachProjector(P);
 }
