@@ -285,37 +285,32 @@
     "size": 100,
     "offset": 17632,
     "inputs": [
-      "src/versus_arrays.c"
+      "src/versus_array_growth.cpp",
+      "src/versus_static_mesh_arrays.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
-    "rebuilt_symbol": "@add_array@12",
+    "rebuilt_symbol": "?Add@FArray@@QAEHHH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /G6 /Gy /c /Folocal/versus_arrays.obj src/versus_arrays.c",
-    "identification": "Stock function at RVA 0x44e0 with a decoded incoming transfer at RVA 0x4955. Returns the old index, increases the count and grows storage using the FArray slack formula.",
+    "build_command": "cl /nologo /O2 /G6 /Gy /c /Folocal/versus_array_growth.obj src/versus_array_growth.cpp",
+    "identification": "FArray::Add(INT Count, INT ElementSize). The function returns the old count and grows the array with the FArray slack formula. It uses the shared FArray fields and the Malloc and Realloc virtual slots on GMalloc. Stock GetFrame calls it eleven times, including the 16-byte FQuat allocation at 0xba70d and 12-byte FVector allocation at 0xba725.",
     "link_bindings": {
-      "_engine_allocator": {
+      "?GMalloc@@3PAVFMalloc@@A": {
         "va": 281492464,
         "basis": "Engine allocator object used in all three array methods. Slots 0, 1 and 2 allocate, resize and release storage."
       },
-      "_add_tag": {
+      "??_C@_1BI@EOMAHLKO@?$AAF?$AAA?$AAr?$AAr?$AAa?$AAy?$AA?3?$AA?3?$AAA?$AAd?$AAd?$AA?$AA@": {
         "va": 281086368,
         "basis": "UTF-16 allocator tag 'FArray::Add' passed to the Steam Versus heap."
       },
-      "_array_tag": {
+      "??_C@_1O@PFKPDBEB@?$AAF?$AAA?$AAr?$AAr?$AAa?$AAy?$AA?$AA@": {
         "va": 281086324,
         "basis": "UTF-16 allocator tag 'FArray' passed to the Steam Versus heap."
       }
     },
     "match": {
       "bytes_sha256": "258157ba0fa642b4e75877e7101ae42f8a29336414fffa72746f964e04d08131",
-      "inputs_sha256": "e4f1f41b09f54809983901850cc2c5c614b8c882ef17141bfe5372f6839569fe"
-    },
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
-      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
-      "flags": [
-        "/O2"
-      ],
-      "basis": "evidence/versus-vc71-o2.md"
+      "inputs_sha256": "fe9b1bebdc5e5a29ad8c9fd1c2828ab4f3934924d615803c5e05ff4a282e58ba"
     }
   },
   {
@@ -375,7 +370,7 @@
     },
     "match": {
       "bytes_sha256": "388b1679db563d2113e454a6618f6c5d39617a6c9ba77686fc43ad993ee4fce9",
-      "inputs_sha256": "aad44db45c9184c348af61f02c5dc15808d27bfd28414d2fe282a6e8db1f9e92"
+      "inputs_sha256": "cea9f9398eea4336288c0d5f9aabfb93c4959817a16ad3eba277c9c83842921f"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -437,7 +432,7 @@
     "identification": "Stock function at RVA 0x4630 with a decoded incoming transfer at RVA 0xb345. Initializes the FArray data pointer, element count and capacity.",
     "match": {
       "bytes_sha256": "1e09d34a9de7a48bd061703ef73f341df8596595468b282c5f19c36b6bf0b98d",
-      "inputs_sha256": "f6a7919217d9d692beee7b8f916cd5bd65b5c3573eeb993757755892e4800aaf"
+      "inputs_sha256": "96d4598fcc534f94e5efdbf22e889ec2d33aea28428abe72f089f838ad8baa73"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",

@@ -23,17 +23,8 @@ struct AllocatorOps {
 };
 struct Allocator { const struct AllocatorOps *ops; };
 extern struct Allocator *engine_allocator;
-extern const unsigned short array_tag[], add_tag[], simple_tag[];
+extern const unsigned short array_tag[], simple_tag[];
 __declspec(dllimport) void *__cdecl memmove(void *dest, const void *src, unsigned size);
-
-static __forceinline void *allocate(int size, const unsigned short *tag)
-{
-    struct SizeArg bytes;
-    struct TagArg label;
-    bytes.value = size;
-    label.value = tag;
-    return engine_allocator->ops->allocate(engine_allocator, bytes, label);
-}
 
 static __forceinline void *reallocate(const struct BufferArg *data, int size, const unsigned short *tag)
 {
@@ -67,25 +58,6 @@ void __fastcall release_array(struct Array *array)
     }
     array->capacity = 0;
     array->count = 0;
-}
-
-int __fastcall add_array(struct Array *array, struct SizeArg amount, struct SizeArg element)
-{
-    int index = array->count;
-    array->count += amount.value;
-    if (array->count > array->capacity) {
-        int bytes;
-        array->capacity = array->count + (3 * array->count) / 8 + 32;
-        bytes = array->capacity * element.value;
-        if (!array->data.bytes)
-            array->data.bytes = allocate(bytes, add_tag);
-        else {
-            struct BufferArg old;
-            old.value = array->data.bytes;
-            array->data.bytes = reallocate(&old, bytes, array_tag);
-        }
-    }
-    return index;
 }
 
 void __fastcall remove_array(struct Array *array, struct SizeArg index, struct SizeArg amount, struct SizeArg element)

@@ -14,6 +14,7 @@ public:
 
 class SecureHashAlgorithm1 : public clExtalloc_Override_Baseclass {
 public:
+    virtual ~SecureHashAlgorithm1();
     void Init();
     void Update(const BYTE *Input, DWORD Length);
     void Final(BYTE *Digest);
