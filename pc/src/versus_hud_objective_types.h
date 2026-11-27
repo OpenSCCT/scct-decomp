@@ -18,7 +18,9 @@ public:
     TArray<AActor *> ActorToDraw;
     TArray<class UTexRotator *> TexRotObj;
     TArray<ASAlarm *> AlarmsList;
-    BYTE Unknown524[0x898 - 0x524];
+    BYTE Unknown524[0x5b8 - 0x524];
+    FString sTutoMap;
+    BYTE Unknown5c4[0x898 - 0x5c4];
 
     INT FindActiveAlarm();
 };

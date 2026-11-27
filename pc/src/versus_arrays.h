@@ -42,6 +42,7 @@ public:
 
 class FString : public TArray<TCHAR> {
 public:
+    INT Len() const { return ArrayNum ? ArrayNum - 1 : 0; }
     ~FString();
     FString &operator=(const FString &Other);
     FString &operator=(const TCHAR *Other);

@@ -1041,9 +1041,4 @@ public:
 
 #include "versus_persistent_data_types.h"
 
-inline ALevelInfo *ULevel::GetLevelInfo() const
-{
-    return static_cast<ALevelInfo *>(Actors(0));
-}
-
 #endif // VERSUS_ENGINE_CLASSES_H

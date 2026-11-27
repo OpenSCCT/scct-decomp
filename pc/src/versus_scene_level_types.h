@@ -1,7 +1,9 @@
 #ifndef VERSUS_SCENE_LEVEL_TYPES_H
 #define VERSUS_SCENE_LEVEL_TYPES_H
 
+#if !defined(VERSUS_ARRAYS_H)
 #include "versus_ltcg.h"
+#endif
 
 struct FCheckResult;
 class FMemStack;
@@ -59,7 +61,18 @@ public:
     BYTE                  unk_2f8[0xc];
     FString               unk_304;
     BYTE                  unk_310[0x24];
-    TArrayLtcg<UnkType_4> unk_334;
+#ifdef VERSUS_LTCG_H
+    TArrayLtcg<UnkType_4> ManualExcludes;
+#else
+    TArray<AZoneInfo *> ManualExcludes;
+#endif
+};
+
+enum ENetMode { NM_Standalone, NM_DedicatedServer, NM_ListenServer, NM_Client };
+
+struct FSnapCameraFloorStruct {
+    FLOAT FloorZ;
+    class UTexture *FloorMapTexture;
 };
 
 // Engine.LevelInfo: 0x55c bytes, 78 virtual functions
@@ -70,7 +83,11 @@ public:
     BYTE                  unk_340[4];
     class UTexture       *pThermalTexture_A;
     BYTE                  unk_348[0x394 - 0x348];
-    TArrayLtcg<UnkType_8> unk_394;
+#ifdef VERSUS_LTCG_H
+    TArrayLtcg<UnkType_8> MapFloors;
+#else
+    TArray<FSnapCameraFloorStruct> MapFloors;
+#endif
     BYTE                  unk_3a0[0x40];
     FString               unk_3e0;
     FString               unk_3ec;
@@ -79,20 +96,35 @@ public:
     BYTE                  unk_410[0xc];
     FString               unk_41c;
     FString               unk_428;
-    BYTE                  unk_434[0x78];
+    BYTE                  unk_434[0x4a8 - 0x434];
+    BYTE                  NetMode;
     FString               unk_4ac;
     FString               unk_4b8;
     FString               unk_4c4;
     FString               unk_4d0;
     BYTE                  unk_4dc[0x1c];
-    TArray<UnkType_4>     unk_4f8;
+#ifdef VERSUS_LTCG_H
+    TArray<UnkType_4>     ActionPoints;
+#else
+    TArray<INT> ActionPoints;
+#endif
     BYTE                  unk_504[0x14];
     FString               unk_518;
     BYTE                  unk_524[0x10];
-    TArrayLtcg<UnkType_4> unk_534;
-    TArrayLtcg<UnkType_4> unk_540;
+#ifdef VERSUS_LTCG_H
+    TArrayLtcg<UnkType_4> PrecacheMaterials;
+    TArrayLtcg<UnkType_4> PrecacheStaticMeshes;
+#else
+    TArray<class UMaterial *> PrecacheMaterials;
+    TArray<class UStaticMesh *> PrecacheStaticMeshes;
+#endif
     BYTE                  unk_54c[0x10];
 };
+
+inline ALevelInfo *ULevel::GetLevelInfo() const
+{
+    return static_cast<ALevelInfo *>(Actors(0));
+}
 
 // Engine.Primitive: 0x50 bytes, 30 virtual functions
 class UPrimitive : public UObject {

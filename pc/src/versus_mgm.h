@@ -48,6 +48,7 @@ public:
     INT MillisecondsPerFrame;
     BYTE Playing, Visible;
 
+    INT NumChildren() const { return Children == 0 ? 0 : ChildrenEnd - Children; }
     void SetTime(FLOAT Seconds, BYTE Update);
     void SetFrame(INT Frame, BYTE Update);
     void SetPlaying(BYTE Value);

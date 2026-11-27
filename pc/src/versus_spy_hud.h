@@ -6,11 +6,13 @@
 #include "versus_mgm.h"
 #include "versus_mgm_content.h"
 
+struct FVector;
 class ASPlayerController;
 class ASHud;
 
 class MgmPlayerHud : public MgmHudPage {
 public:
+    virtual bool UpdateScreen(INT Message, INT Argument);
     virtual void InitResources();
     virtual void PlayerHudSlot15();
     virtual void UpdateGauge();
@@ -20,6 +22,16 @@ public:
     virtual void UpdateAlarmTimer();
     virtual bool UpdateObjectiveTimers();
     virtual void UpdateObjective();
+    virtual void UpdateRadar();
+    virtual bool PositionRadarIcons(MgmChild *Icon, MgmChild *Higher, MgmChild *Lower,
+                                   MgmChild *Arrow, FVector Location, FLOAT Sine, FLOAT Cosine);
+    virtual bool UpdateRadarIcon(FVector Location, FLOAT Sine, FLOAT Cosine, INT Team, INT Index);
+    virtual void UpdateBallistic();
+    virtual void UpdateMessages();
+    virtual void UpdateTutorialMessage();
+    virtual void UpdateSpeak();
+    virtual void UpdateRadarTrap();
+    virtual void UpdateConnectedPlayers();
 
     ASPlayerController *Controller;
     ASHud *Hud;
@@ -75,7 +87,9 @@ public:
     TArray<MgmChild *> EnemyArrows;
     MgmArea *Ballistic;
     INT BallisticState;
-    BYTE Unknown2f0[0x2af0 - 0x2f0];
+    BYTE Unknown2f0[0x1af0 - 0x2f0];
+    TCHAR TutorialLabel[1024];
+    BYTE Unknown22f0[0x2af0 - 0x22f0];
     MgmArea *ZoneMessage;
     MgmArea *SystemMessage;
     MgmArea *StateMessage;
