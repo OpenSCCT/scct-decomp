@@ -1,8 +1,9 @@
 #include "d3dx_math_types.h"
+#include <float.h>
 
 extern "C" D3DXPLANE *__stdcall D3DXPlaneNormalize(D3DXPLANE *out, const D3DXPLANE *plane);
 
-extern "C" D3DXPLANE *__stdcall D3DXPlaneFromPointNormal(
+D3DXPLANE *__stdcall c_D3DXPlaneFromPointNormal(
     D3DXPLANE *out, const D3DXVECTOR3 *point, const D3DXVECTOR3 *normal)
 {
     out->a = normal->x;
@@ -12,7 +13,7 @@ extern "C" D3DXPLANE *__stdcall D3DXPlaneFromPointNormal(
     return out;
 }
 
-extern "C" D3DXMATRIX *__stdcall D3DXMatrixReflect(D3DXMATRIX *out, const D3DXPLANE *plane)
+D3DXMATRIX *__stdcall c_D3DXMatrixReflect(D3DXMATRIX *out, const D3DXPLANE *plane)
 {
     D3DXPLANE unit;
     D3DXPlaneNormalize(&unit, plane);
@@ -39,5 +40,22 @@ extern "C" D3DXMATRIX *__stdcall D3DXMatrixReflect(D3DXMATRIX *out, const D3DXPL
     out->m[3][1] = unit.d * y;
     out->m[3][2] = unit.d * z;
     out->m[3][3] = 1.0f;
+    return out;
+}
+
+D3DXVECTOR3 *__stdcall c_D3DXPlaneIntersectLine(
+    D3DXVECTOR3 *out, const D3DXPLANE *plane, const D3DXVECTOR3 *a, const D3DXVECTOR3 *b)
+{
+    FLOAT startDistance = plane->a * a->x + plane->b * a->y + plane->c * a->z;
+    FLOAT endDistance = plane->a * b->x + plane->b * b->y + plane->c * b->z;
+    FLOAT difference = startDistance - endDistance;
+    if (!difference)
+        return 0;
+    FLOAT t = (startDistance + plane->d) / difference;
+    if (!_finite(t))
+        return 0;
+    out->x = a->x + t * (b->x - a->x);
+    out->y = a->y + t * (b->y - a->y);
+    out->z = a->z + t * (b->z - a->z);
     return out;
 }

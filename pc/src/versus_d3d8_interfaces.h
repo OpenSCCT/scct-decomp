@@ -4,17 +4,13 @@
 #define VERSUS_D3D8_INTERFACES_H
 
 #include "windows_dispatch_types.h"
+#include "windows_iunknown.h"
 
-typedef long HRESULT;
-typedef unsigned long ULONG;
 typedef DWORD D3DCOLOR;
 typedef struct tagRECT RECT;
 typedef struct tagPOINT POINT;
 typedef struct tagPALETTEENTRY PALETTEENTRY;
 typedef struct _RGNDATA RGNDATA;
-struct _GUID;
-typedef const _GUID &REFGUID;
-typedef const _GUID &REFIID;
 
 typedef enum _D3DBACKBUFFER_TYPE D3DBACKBUFFER_TYPE;
 typedef struct _D3DCAPS8 D3DCAPS8;
@@ -50,12 +46,6 @@ struct IDirect3DSwapChain8;
 struct IDirect3DTexture8;
 struct IDirect3DVertexBuffer8;
 struct IDirect3DVolumeTexture8;
-
-struct IUnknown {
-    virtual HRESULT __stdcall QueryInterface(REFIID riid, void **ppvObj) = 0;
-    virtual ULONG __stdcall AddRef() = 0;
-    virtual ULONG __stdcall Release() = 0;
-};
 
 struct IDirect3DResource8 : public IUnknown {
     virtual HRESULT __stdcall GetDevice(IDirect3DDevice8 **ppDevice) = 0;

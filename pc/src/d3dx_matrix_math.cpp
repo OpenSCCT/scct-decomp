@@ -1,6 +1,7 @@
 /* D3DX8 scalar comparison and matrix functions from d3dxmath.obj. */
 
 #include <float.h>
+#include <math.h>
 #include "d3dx_math_types.h"
 
 int WithinEpsilon(float a, float b)
@@ -165,5 +166,26 @@ extern "C" D3DXQUATERNION *__stdcall D3DXQuaternionSquad(D3DXQUATERNION *out,
     D3DXQuaternionSlerp(&endpoints, q1, q4, t);
     D3DXQuaternionSlerp(&controls, q2, q3, t);
     D3DXQuaternionSlerp(out, &endpoints, &controls, 2.0f * (t * (1.0f - t)));
+    return out;
+}
+
+D3DXPLANE *__stdcall c_D3DXPlaneNormalize(D3DXPLANE *out, const D3DXPLANE *plane)
+{
+    FLOAT lengthSq = plane->a * plane->a + plane->b * plane->b + plane->c * plane->c;
+    if (WithinEpsilon(lengthSq, 1.0f)) {
+        if (out != plane)
+            *out = *plane;
+    } else if (lengthSq > FLT_MIN) {
+        FLOAT scale = 1.0f / static_cast<FLOAT>(sqrt(lengthSq));
+        out->a = scale * plane->a;
+        out->b = scale * plane->b;
+        out->c = scale * plane->c;
+        out->d = scale * plane->d;
+    } else {
+        out->a = 0.0f;
+        out->b = 0.0f;
+        out->c = 0.0f;
+        out->d = 0.0f;
+    }
     return out;
 }

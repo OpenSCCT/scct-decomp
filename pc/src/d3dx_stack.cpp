@@ -1,11 +1,10 @@
 // D3DX8 cd3dxstack.obj, DWORD and string stack storage.
 
-typedef long HRESULT;
-typedef unsigned long DWORD;
+#include "d3dx_buffer.h"
+#include "windows_dispatch_types.h"
 
 static const HRESULT E_OUTOFMEMORY = (HRESULT)0x8007000EL;
 static const HRESULT E_FAIL = (HRESULT)0x80004005L;
-static const HRESULT S_OK = 0;
 static const unsigned int StackGrowth = 16;
 
 extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
@@ -17,6 +16,7 @@ public:
     ~CD3DXDwStack();
     HRESULT Push(DWORD value);
     HRESULT Pop(DWORD *value);
+    HRESULT GetLastError();
 
 private:
     DWORD *values;
@@ -67,7 +67,9 @@ class CD3DXSzStack {
 public:
     CD3DXSzStack();
     ~CD3DXSzStack();
-    HRESULT Push(const char *value);
+    HRESULT Push(char *value);
+    HRESULT GetLastError();
+    HRESULT GenerateStringBuffer(ID3DXBuffer **buffer);
 
 private:
     char **values;
@@ -92,7 +94,7 @@ CD3DXSzStack::~CD3DXSzStack() {
 extern "C" unsigned int __cdecl strlen(const char *);
 #pragma intrinsic(strlen)
 
-HRESULT CD3DXSzStack::Push(const char *value) {
+HRESULT CD3DXSzStack::Push(char *value) {
     if (count == capacity) {
         char **grown = new char *[capacity + StackGrowth];
         if (!grown)
@@ -117,5 +119,48 @@ HRESULT CD3DXSzStack::Push(const char *value) {
         values[count] = 0;
     }
     ++count;
+    return S_OK;
+}
+
+HRESULT CD3DXSzStack::GetLastError()
+{
+    HRESULT last = error;
+    error = S_OK;
+    return last;
+}
+
+HRESULT CD3DXDwStack::GetLastError()
+{
+    HRESULT last = error;
+    error = S_OK;
+    return last;
+}
+
+HRESULT CD3DXSzStack::GenerateStringBuffer(ID3DXBuffer **buffer)
+{
+    *buffer = 0;
+    if (!totalLength)
+        return S_OK;
+
+    CD3DXBuffer *result = new CD3DXBuffer;
+    if (!result)
+        return E_OUTOFMEMORY;
+    HRESULT hr = result->Init(totalLength + count + 1);
+    if (FAILED(hr)) {
+        delete result;
+        return hr;
+    }
+
+    char *out = static_cast<char *>(result->GetBufferPointer());
+    for (unsigned int i = 0; i < count; ++i) {
+        if (values[i]) {
+            unsigned int length = strlen(values[i]);
+            memcpy(out, values[i], length);
+            out += length;
+            *out++ = '\n';
+        }
+    }
+    *out = 0;
+    *buffer = result;
     return S_OK;
 }
