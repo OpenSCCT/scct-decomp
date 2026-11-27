@@ -20,12 +20,6 @@ ADecorationList::~ADecorationList()
     ConditionalDestroy();
 }
 
-// USparkEmitter::~USparkEmitter
-USparkEmitter::~USparkEmitter()
-{
-    ConditionalDestroy();
-}
-
 // AEmitter::~AEmitter
 AEmitter::~AEmitter()
 {

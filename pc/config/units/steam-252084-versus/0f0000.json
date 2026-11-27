@@ -2465,7 +2465,7 @@
     "identification": "UPalette::~UPalette at RVA 0xf4ba0 of the Versus executable. It installs the vtable at RVA 0x303fc8 (22 slots), runs the inlined UObject::ConditionalDestroy (Destroy is slot 9), destroys the member at 0x28 (TArrayLtcg<UnkType_4>, destructor RVA 0x17bf30) and calls the UObject destructor at RVA 0x15ee0. Name: the UClass registration at RVA 0xa2159 registers Engine.Palette (hardcoded name table), 0x3c bytes, with the placement constructor at RVA 0xa44a0, which installs this vtable. FAKEMATCH, open: the TArrayLtcg members stand for TArray<T> members whose destructors the link-time code generation gave a stack `this`; see src/versus_ltcg.h.",
     "match": {
       "bytes_sha256": "c7af8a15c27d905b27888337e153fdb9acdc2598cae60b6a0bb5f1089e202aab",
-      "inputs_sha256": "7aa05ed8dc1eb89d4810dbb4c9857f34e539d7acdecf4f35e0f3268460dc4b8c"
+      "inputs_sha256": "425dd4b3667aa7142caf5d177174530cd380612813e28c73eea0c979e0e5e856"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -5453,6 +5453,89 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-particle-emitter-destroy",
+    "offset": 1019504,
+    "size": 16,
+    "inputs": [
+      "src/versus_spark_data_array.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h"
+    ],
+    "rebuilt_symbol": "?Destroy@UParticleEmitter@@UAEXXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /GL /c /Folocal/versus_spark_data_array.obj src/versus_spark_data_array.cpp",
+    "ltcg_link": {
+      "roots": [
+        "??1USparkEmitter@@UAE@XZ"
+      ],
+      "stubs": [
+        "??1UParticleEmitter@@UAE@XZ",
+        "??3@YAXPAX@Z",
+        "?AddRef@FUnknown@@UAGKXZ",
+        "?CleanUp@UParticleEmitter@@UAEXXZ",
+        "?Destroy@UObject@@UAEXXZ",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?NetDirty@UObject@@UAEXPAVUProperty@@@Z",
+        "?ProcessEvent@UObject@@UAEXPAVUFunction@@PAX1@Z",
+        "?QueryInterface@FUnknown@@UAGKABUFGuid@@PAPAX@Z",
+        "?Release@FUnknown@@UAGKXZ",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "?VirtualSlot10@UObject@@UAEXXZ",
+        "?VirtualSlot11@UObject@@UAEXXZ",
+        "?VirtualSlot12@UObject@@UAEXXZ",
+        "?VirtualSlot13@UObject@@UAEXXZ",
+        "?VirtualSlot14@UObject@@UAEXXZ",
+        "?VirtualSlot15@UObject@@UAEXXZ",
+        "?VirtualSlot16@UObject@@UAEXXZ",
+        "?VirtualSlot17@UObject@@UAEXXZ",
+        "?VirtualSlot18@UObject@@UAEXXZ",
+        "?VirtualSlot19@UObject@@UAEXXZ",
+        "?VirtualSlot20@UObject@@UAEXXZ",
+        "?VirtualSlot22@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot24@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot25@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot26@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot27@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot28@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot29@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot30@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot31@UParticleEmitter@@UAEXXZ",
+        "?VirtualSlot5@UObject@@UAEXXZ",
+        "?VirtualSlot6@UObject@@UAEXXZ",
+        "?VirtualSlot7@UObject@@UAEXXZ",
+        "?VirtualSlot8@UObject@@UAEXXZ",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "rebuilt_offset": 1056,
+      "rebuilt_address": 268439584,
+      "fields": [
+        [
+          12,
+          "rel32",
+          "?Destroy@UObject@@UAEXXZ"
+        ]
+      ],
+      "symbols": {
+        "?Destroy@UObject@@UAEXXZ": 268439876
+      }
+    },
+    "link_bindings": {
+      "?Destroy@UObject@@UAEXXZ": {
+        "va": 277961952,
+        "basis": "UObject primary vtable slot 9 and the body reached by the tail call at the end of UParticleEmitter::Destroy."
+      }
+    },
+    "identification": "UParticleEmitter::Destroy. UParticleEmitter and USparkEmitter use this override in vtable slot 9. The named shipped editor UParticleEmitter::Destroy at VA 0x110eb080 dispatches UParticleEmitter::CleanUp (guarded editor function at 0x110ebb40), then calls its base. Retail dispatches the same shifted slot at +0x5c before tail-calling UObject::Destroy at RVA 0x15ce0.",
+    "match": {
+      "bytes_sha256": "d4060c5204160f875bc685f6bdcb78aff0dd776de3b59d6640536e73088f5026",
+      "inputs_sha256": "58de2897a94cd7f42d31fb811cfe8940e1a9cc14a54696a2c026af23030c1eec"
     }
   },
   {
