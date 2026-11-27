@@ -2,39 +2,7 @@
 #ifndef VERSUS_STATIC_MESH_ARRAYS_H
 #define VERSUS_STATIC_MESH_ARRAYS_H
 
-#include "versus_build.h"
-#include "unreal_types.h"
-
-class FMalloc
-{
-public:
-    virtual void *Malloc(DWORD Count, const TCHAR *Tag);
-    virtual void *Realloc(void *Original, DWORD Count, const TCHAR *Tag);
-    virtual void Free(void *Original);
-};
-extern FMalloc *GMalloc;
-
-class FArray
-{
-public:
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
-    ~FArray()
-    {
-        if (Data)
-        {
-            GMalloc->Free(Data);
-            Data = 0;
-        }
-        ArrayNum = ArrayMax = 0;
-    }
-    void Realloc(INT ElementSize);                      // RVA 0x4600
-    INT Add(INT Count, INT ElementSize);                // RVA 0x44e0
-    void Empty(INT ElementSize, INT Slack);             // RVA 0x4550
-    void Remove(INT Index, INT Count, INT ElementSize); // RVA 0x119c0
-};
+#include "versus_array_storage.h"
 
 template <class T> class TArray : public FArray
 {

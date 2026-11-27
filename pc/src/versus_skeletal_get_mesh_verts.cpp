@@ -1,34 +1,15 @@
 #include "versus_build.h"
 #include "unreal_math.h"
 #include "unreal_object.h"
+#include "versus_array_storage.h"
+#include "versus_app_memzero.h"
 
-class FMalloc {
-public:
-    virtual void *Malloc(DWORD Count, const TCHAR *Tag);
-    virtual void *Realloc(void *Original, DWORD Count, const TCHAR *Tag);
-    virtual void Free(void *Original);
-};
-extern FMalloc *GMalloc;
-
-class FArray {
-public:
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-
-    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
-    ~FArray()
-    {
-        if (Data) {
-            GMalloc->Free(Data);
-            Data = 0;
-        }
-        ArrayNum = ArrayMax = 0;
-    }
-    // Retail FArray::AddZeroed pops this and both integer arguments.
-    INT __stdcall AddZeroed(INT ElementSize, INT Count);
-    void Remove(INT Index, INT Count, INT ElementSize);
-};
+INT FArray::AddZeroed(INT ElementSize, INT Count)
+{
+    INT Index = Add(Count, ElementSize);
+    appMemzero(static_cast<BYTE *>(Data) + Index * ElementSize, Count * ElementSize);
+    return Index;
+}
 
 template<class T> class TArray : public FArray {
 public:
