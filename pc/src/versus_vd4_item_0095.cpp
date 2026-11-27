@@ -7,12 +7,9 @@
 // Layout follows Unreal Engine 2 UObject (Index 4, HashNext 8, StateFrame 0xc,
 // _Linker 0x10, _LinkerIndex 0x14, Outer 0x18, ObjectFlags 0x1c, Name 0x20,
 // Class 0x24).
-typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
+#include "versus_build.h"
+#include "unreal_name.h"
 typedef unsigned __int64 QWORD;
-typedef unsigned char BYTE;
 
 // Core is built with 4-byte packing (FStateFrame::ProbeMask sits at 0x1c).
 #pragma pack(push, 4)
@@ -84,7 +81,7 @@ public:
     virtual void Preload(UObject *Object);                  // +0x10
     virtual void CountBytes(DWORD InNum, DWORD InMax);      // +0x14
     // MSVC lays overloaded virtuals out in reverse order.
-    virtual FArchive &operator<<(INT &N);                   // +0x1c, FName
+    virtual FArchive &operator<<(FName &N);                 // +0x1c
     virtual FArchive &operator<<(UObject *&Res);            // +0x18
 
     INT Ver() { return ArVer; }
@@ -135,18 +132,40 @@ struct FStateFrame : public FFrame
     virtual void Serialize(const TCHAR *V, INT Event);
 };
 
-class UObject
+struct FGuid;
+class UFunction;
+class UProperty;
+
+class FUnknown {
+public:
+    virtual DWORD __stdcall QueryInterface(const FGuid &RefIID, void **InterfacePtr);
+    virtual DWORD __stdcall AddRef();
+    virtual DWORD __stdcall Release();
+};
+
+class UObject : public FUnknown
 {
 public:
     UObject() {}
     virtual ~UObject();
-    virtual void V01(); virtual void V02(); virtual void V03(); virtual void V04();
-    virtual void V05(); virtual void V06(); virtual void V07(); virtual void V08();
-    virtual void V09(); virtual void V10(); virtual void V11(); virtual void V12();
-    virtual void V13(); virtual void V14(); virtual void V15(); virtual void V16();
-    virtual void V17(); virtual void V18();
-    virtual void Register();                 // +0x4c
+    virtual void ProcessEvent(UFunction *Function, void *Parms, void *Result);
+    virtual void VirtualSlot5();
+    virtual void VirtualSlot6();
+    virtual void VirtualSlot7();
+    virtual void PostLoad();
+    virtual void Destroy();
     virtual void Serialize(FArchive &Ar);
+    virtual void VirtualSlot11();
+    virtual void VirtualSlot12();
+    virtual UBOOL GotoLabel(FName Label);
+    virtual void InitExecution();
+    virtual void VirtualSlot15();
+    virtual void VirtualSlot16();
+    virtual void VirtualSlot17();
+    virtual void VirtualSlot18();
+    virtual void Register();
+    virtual void VirtualSlot20();
+    virtual void NetDirty(UProperty *Property);
 
     INT Index;
     UObject *HashNext;
@@ -155,7 +174,7 @@ public:
     INT _LinkerIndex;
     UObject *Outer;
     DWORD ObjectFlags;
-    INT Name;
+    FName Name;
     UClass *Class;
 
     void SetFlags(DWORD NewFlags) { ObjectFlags |= NewFlags; }
@@ -176,7 +195,7 @@ extern UBOOL GIsCriticalError;
 class UStruct : public UObject
 {
 public:
-    virtual void V21(); virtual void V22(); virtual void V23();
+    virtual void V22(); virtual void V23();
     virtual void V24(); virtual void V25();
     virtual INT GetPropertiesSize();                                          // +0x68
     virtual void V27(); virtual void V28();
@@ -211,7 +230,7 @@ FStateFrame::FStateFrame(UObject *InObject)
 // RVA 0x1d2d0 (item 0111). The hash only uses the name.
 void UObject::UnhashObject(INT OuterIndex)
 {
-    UObject **Hash = &GObjHash[Name & 4095];
+    UObject **Hash = &GObjHash[Name.Index & 4095];
     while (*Hash != 0) {
         if (*Hash != this)
             Hash = &(*Hash)->HashNext;
@@ -280,6 +299,7 @@ UObject::~UObject()
 {
     if (Index != INDEX_NONE && GObjInitialized && !GIsCriticalError) {
         ConditionalDestroy();
+        // The editor passes the +0x14 member here. Retail LTCG elides this unused argument.
         UnhashObject(_LinkerIndex);
         GObjObjects(Index) = 0;
         GObjAvailable.AddItem(Index);
@@ -297,7 +317,7 @@ void UObject::Serialize(FArchive &Ar)
     if (Class != UClass::StaticClass())
         Ar.Preload(Class);
 
-    // Special info.
+    // These two archive versions visit the linker on opposite sides of the object references.
     if (Ar.Ver() == 175) {
         if (!Ar.IsLoading() && !Ar.IsSaving())
             Ar << Name << Outer << *(UObject **)&Class;
