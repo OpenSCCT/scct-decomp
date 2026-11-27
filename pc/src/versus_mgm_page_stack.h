@@ -5,7 +5,17 @@
 #include "unreal_types.h"
 #include <vector>
 
+#include "versus_mgm_keyframes.h"
+
 class MgmArea;
+
+struct MgmMouseEvent {
+    DWORD Unknown00;
+    MgmPoint Position;
+
+    MgmMouseEvent(DWORD InValue, const MgmPoint &InPosition)
+        : Unknown00(InValue), Position(InPosition) {}
+};
 
 struct MgmPageStackEntry {
     MgmArea *Page;
@@ -19,7 +29,10 @@ public:
     std::vector<MgmPageStackEntry> Entries;
     INT TopLevelIndex;
     bool Active, PlayOnShow;
-    BYTE Unknown16[4];
+    MgmPoint MousePosition;
+
+    MgmPageStack(bool InPlayOnShow, bool InActive);
+    void UpdateTopLevelIndex();
     void PushPage(MgmArea *Page, bool TopLevel, signed char Priority);
     void PopPage(bool All, signed char MaxPriority);
 };

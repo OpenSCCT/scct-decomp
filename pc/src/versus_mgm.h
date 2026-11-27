@@ -36,6 +36,8 @@ public:
     void Tick(FLOAT Seconds, FLOAT DeltaSeconds, INT MillisecondsPerFrame, BYTE Update);
 };
 
+struct MgmMouseEvent;
+
 class MgmArea {
 public:
     BYTE UnknownBeforeId[0x20];
@@ -47,6 +49,12 @@ public:
     FLOAT Time;
     INT MillisecondsPerFrame;
     BYTE Playing, Visible;
+
+    void Activate();
+    void Deactivate();
+    void PagePushed(MgmArea *Page);
+    void PagePopped(MgmArea *Page);
+    bool UpdateMouse(const MgmMouseEvent &Mouse);
 
     INT NumChildren() const { return Children == 0 ? 0 : ChildrenEnd - Children; }
     void SetTime(FLOAT Seconds, BYTE Update);
