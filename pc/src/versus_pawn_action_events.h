@@ -152,19 +152,35 @@ public:
     FVector PrePivot;
     BYTE unk_c8[0xe0 - 0xc8];
     FRotator Rotation;
-    BYTE unk_ec[0x1a0 - 0xec];
+    BYTE unk_ec[0x100 - 0xec];
+    class UStaticMesh *StaticMesh;
+    AActor *Owner;
+    AActor *Base;
+    BYTE unk_10c[0x1a0 - 0x10c];
     class ALevelInfo *Level;
     class ULevel *XLevel;
     BYTE unk_1a8[0x1bc - 0x1a8];
     class UMesh *Mesh;
     BYTE unk_1c0[0x1d4 - 0x1c0];
     class UMeshInstance *MeshInstance;
-    BYTE unk_1d8[0x268 - 0x1d8];
+    BYTE unk_1d8[0x210 - 0x1d8];
+    TArray<class FProjectorRenderInfo *> Projectors;
+    BYTE unk_21c[0x268 - 0x21c];
     FLOAT CollisionRadius;
     FLOAT CollisionHeight;
-    BYTE unk_270[0x2de - 0x270];
+    BYTE unk_270[0x2d9 - 0x270];
+    BYTE DrawType;
+    BYTE unk_2da[0x2de - 0x2da];
     BYTE Role;
-    BYTE unk_2df[0x2f0 - 0x2df];
+    BYTE unk_2df[0x2e8 - 0x2df];
+    BITFIELD unk_2e8_b0 : 11;
+    BITFIELD bStatic : 1;
+    BITFIELD unk_2e8_b12 : 20;
+    BITFIELD unk_2ec_b0 : 28;
+    BITFIELD bUseLightingFromBase : 1;
+    BITFIELD bIgnoreEchelonLighting : 1;
+    BITFIELD bIgnoreDynamicEchelonLighting : 1;
+    BITFIELD unk_2ec_b31 : 1;
     BITFIELD unk_2f0_0 : 13;
     BITFIELD bCollideWorld : 1;
     BITFIELD unk_2f0_14 : 18;
@@ -172,6 +188,7 @@ public:
 
     void SetCollision(UBOOL CollideActors, UBOOL BlockActors, UBOOL BlockPlayers);
     class ULevel *GetLevel() const { return XLevel; }
+    AActor *GetLightingActor();
     void SetCollisionSize(FLOAT NewRadius, FLOAT NewHeight);
     void FadeChannels(INT Start, INT End, FLOAT Amount);
 };

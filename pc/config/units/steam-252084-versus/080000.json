@@ -197,7 +197,7 @@
     },
     "match": {
       "bytes_sha256": "8b3a97981cc4d29984703685c400a065a3edad19639936ef161a8dd5c4524633",
-      "inputs_sha256": "f9fc2fd14eab719e78be3888afd7dcd84c47b9b1f4ed0529d85c44c5ba9bb0c9"
+      "inputs_sha256": "0488584baa016bb9ca51298b0937bcb40956f8d430309b721699ac81e6a08bf7"
     }
   },
   {
@@ -244,7 +244,7 @@
     },
     "match": {
       "bytes_sha256": "711f9c574acd39283ce2f9ff8e75f57c5dc4d9100e5a9004d1e6ee14050f1f92",
-      "inputs_sha256": "808aa946eecb5e1ab1f67aa6d62b0823b0aeeb60b1a111116a0ac4875e8deac8"
+      "inputs_sha256": "df336d6214720ce2aa0366cafe1898186101d42d5854507b6fa3266a61cf7cc0"
     }
   },
   {
@@ -1362,6 +1362,68 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    }
+  },
+  {
+    "id": "versus-actor-get-lighting-actor",
+    "offset": 549376,
+    "size": 30,
+    "inputs": [
+      "src/versus_level_draw.cpp",
+      "src/versus_build.h",
+      "src/versus_pawn_action_events.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_containers.h",
+      "src/versus_hardcoded_names.inl",
+      "src/versus_scene_level_types.h",
+      "src/versus_ltcg.h",
+      "src/versus_info.h",
+      "src/versus_scene_node_types.h",
+      "src/versus_render_interface.h",
+      "src/versus_canvas_matrix.h",
+      "src/versus_scene_model_types.h"
+    ],
+    "rebuilt_symbol": "?GetLightingActor@AActor@@QAEPAV1@XZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_level_draw.obj src/versus_level_draw.cpp",
+    "identification": "The actor light-list builder at 0x137610 checks bUseLightingFromBase and calls the same Base-chain lookup at 0x1377b8. The Engine.u Actor property order puts bUseLightingFromBase at bit 28 of the DWORD at 0x2ec, directly before bIgnoreEchelonLighting and bIgnoreDynamicEchelonLighting. The assembly follows Actor.Base at +0x108, confirmed by ULevel::SpawnActor, returns the actor when the flag or Base is absent, and tail-calls itself for Base otherwise. GetLightingActor is descriptive.",
+    "link_bindings": {
+      "?GetLightingActor@AActor@@QAEPAV1@XZ": {
+        "va": 278422016,
+        "basis": "Tail recursion follows AActor::Base and transfers to the same mapped function entry at RVA 0x86200."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?DrawLevelPass@@YAXAAUFLevelRenderState@@HKPAVFLevelSceneNode@@@Z",
+        "?GetLightingActor@AActor@@QAEPAV1@XZ"
+      ],
+      "stubs": [
+        "?GIdentityMatrix@@3UFMatrix@@A",
+        "?GRenderFlag@@3HA",
+        "?GRenderMode@@3HA",
+        "?Render@FBspDrawList@@QAEXPAVFLevelSceneNode@@PAVFRenderInterface@@K@Z",
+        "?Render@FDynamicActor@@QAEXPAVFLevelSceneNode@@PAUFDynamicLightList@@PAXPAVFRenderInterface@@H2@Z",
+        "?UpdateLightFade@FDynamicActor@@QAEXPAVFLevelSceneNode@@@Z",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          25,
+          "rel32",
+          "?GetLightingActor@AActor@@QAEPAV1@XZ"
+        ]
+      ],
+      "symbols": {
+        "?GetLightingActor@AActor@@QAEPAV1@XZ": 268439552
+      }
+    },
+    "match": {
+      "bytes_sha256": "1f6abaaea764b3cab29e6e12a36a51c7cd3e7cfb0176be3b4d4d9891ef5020ee",
+      "inputs_sha256": "337feb06f07500191fd515443c4b202fac1c1e6c793fd16f7a6305015e9c0a33"
     }
   },
   {

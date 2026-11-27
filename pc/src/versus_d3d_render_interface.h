@@ -22,7 +22,7 @@ struct FD3DStageState;
 class FD3DRenderInterface : public FRenderInterface
 {
 public:
-    BYTE unk_10[0x108 - 0x10];
+    BYTE unk_18[0x108 - 0x18];
     UD3DRenderDevice *RenderDevice;             // 0x108
     UViewport *Viewport;                        // 0x10c
     BYTE unk_110[0x2af10 - 0x110];

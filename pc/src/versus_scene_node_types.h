@@ -60,7 +60,9 @@ public:
     INT ViewZone;
     INT InvisibleZone;
     DWORD StencilRef;
-    BYTE unk_1d4[4];
+    struct FLevelRenderState *RenderState;
+    UBOOL IsBspSectionVisible(INT Section) const;
+    UBOOL IsActorVisible(AActor *Actor, bool UseStaticMeshLists) const;
 };
 
 class FCameraSceneNode : public FLevelSceneNode {

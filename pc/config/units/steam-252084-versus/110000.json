@@ -2626,7 +2626,7 @@
     ],
     "match": {
       "bytes_sha256": "a6ab6f6a9a262d9c81244bf78588f5cf9691c4eb389062b290369f0508b4a314",
-      "inputs_sha256": "de366567b75d9adc40a76a86b851147393a6a65ac846083c87f47d34166ed72c"
+      "inputs_sha256": "2d1ab456a0c5d7520d8d1eb777f869811e1341f27ffb81c9c70eaba62f7687de"
     }
   },
   {
@@ -3113,7 +3113,7 @@
     "identification": "Slot 2 at Versus VA 0x10c036f8 implements the camera-scene override. It pushes render state, calls the base level renderer and the viewport first-person pass, updates vertex pools, flushes the viewport Canvas and pops render state. The corresponding derived actor slot in the editor identifies FActorSceneNode::Render. VC7.1 also emits these 69 bytes with LTCG. The retail Rich header identifies VC7.0 as its only LTCG producer; size optimization and ordinary COFF diverge.",
     "match": {
       "bytes_sha256": "b80a4b97f89f33439c3d186e4ce84387fe021e4a9c0e32d913af21e088d7235e",
-      "inputs_sha256": "182380c55c54304b77fa3fd342e0b17abd34b1468a12b7cf23798b24f6094a02"
+      "inputs_sha256": "d4532eb59bbce82327243c8ecde8c3030778c2623a69e4f9cbffed371b757fa5"
     }
   },
   {
@@ -3268,6 +3268,104 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-level-scene-section-visible",
+    "offset": 1143280,
+    "size": 83,
+    "inputs": [
+      "src/versus_level_draw.cpp",
+      "src/versus_build.h",
+      "src/versus_pawn_action_events.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_containers.h",
+      "src/versus_hardcoded_names.inl",
+      "src/versus_scene_level_types.h",
+      "src/versus_ltcg.h",
+      "src/versus_info.h",
+      "src/versus_scene_node_types.h",
+      "src/versus_render_interface.h",
+      "src/versus_canvas_matrix.h",
+      "src/versus_scene_model_types.h"
+    ],
+    "rebuilt_symbol": "?IsBspSectionVisible@FLevelSceneNode@@QBEKH@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_level_draw.obj src/versus_level_draw.cpp",
+    "identification": "The six retail RenderLevel draw-pass calls correspond to the six calls from the shipped editor into its UnRenderVisibility.cpp pass at 0x111a8b20. Its first section membership call is 0x111a8b77 -> 0x110a1a20. The retail counterpart at 0x13afd6 and 0x13b096 tests the per-section draw list and then checks FBspNode::iSection for each BSP entry in the translucent list. RenderLevel initializes the render state attached at scene-node offset 0x1d4. IsBspSectionVisible is descriptive.",
+    "link_bindings": {},
+    "ltcg_link": {
+      "roots": [
+        "?DrawLevelPass@@YAXAAUFLevelRenderState@@HKPAVFLevelSceneNode@@@Z",
+        "?GetLightingActor@AActor@@QAEPAV1@XZ"
+      ],
+      "stubs": [
+        "?GIdentityMatrix@@3UFMatrix@@A",
+        "?GRenderFlag@@3HA",
+        "?GRenderMode@@3HA",
+        "?Render@FBspDrawList@@QAEXPAVFLevelSceneNode@@PAVFRenderInterface@@K@Z",
+        "?Render@FDynamicActor@@QAEXPAVFLevelSceneNode@@PAUFDynamicLightList@@PAXPAVFRenderInterface@@H2@Z",
+        "?UpdateLightFade@FDynamicActor@@QAEXPAVFLevelSceneNode@@@Z",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1056,
+      "rebuilt_address": 268439584,
+      "fields": [],
+      "symbols": {}
+    },
+    "match": {
+      "bytes_sha256": "f842fb0d211b0601985a8f70ecb125f0e86eafd3ec7e5dabc1c58b52cd830542",
+      "inputs_sha256": "d324273f0455d1036719258fd3483f3cb8738753ce6f1987634d059a5451a509"
+    }
+  },
+  {
+    "id": "versus-level-scene-actor-visible",
+    "offset": 1143376,
+    "size": 158,
+    "inputs": [
+      "src/versus_level_draw.cpp",
+      "src/versus_build.h",
+      "src/versus_pawn_action_events.h",
+      "src/unreal_types.h",
+      "src/unreal_math.h",
+      "src/unreal_containers.h",
+      "src/versus_hardcoded_names.inl",
+      "src/versus_scene_level_types.h",
+      "src/versus_ltcg.h",
+      "src/versus_info.h",
+      "src/versus_scene_node_types.h",
+      "src/versus_render_interface.h",
+      "src/versus_canvas_matrix.h",
+      "src/versus_scene_model_types.h"
+    ],
+    "rebuilt_symbol": "?IsActorVisible@FLevelSceneNode@@QBEKPAVAActor@@_N@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_level_draw.obj src/versus_level_draw.cpp",
+    "identification": "The draw pass at 0x13af80 supplies the actor and ULevelBase::Engine->UseStaticMeshBatching at four sites, first at 0x13b04c. For a static DT_StaticMesh actor without Projectors or UseVertexColor it scans the static list, otherwise the ordinary actor list, then checks actor entries in the translucent list. The two neighboring arrays in the Engine.u Actor field chain locate Projectors at 0x210. UStaticMesh::StaticConstructor registers UseVertexColor at 0x148. The corresponding editor draw pass calls the actor predicate at 0x111a8c2c. IsActorVisible is descriptive.",
+    "link_bindings": {},
+    "ltcg_link": {
+      "roots": [
+        "?DrawLevelPass@@YAXAAUFLevelRenderState@@HKPAVFLevelSceneNode@@@Z",
+        "?GetLightingActor@AActor@@QAEPAV1@XZ"
+      ],
+      "stubs": [
+        "?GIdentityMatrix@@3UFMatrix@@A",
+        "?GRenderFlag@@3HA",
+        "?GRenderMode@@3HA",
+        "?Render@FBspDrawList@@QAEXPAVFLevelSceneNode@@PAVFRenderInterface@@K@Z",
+        "?Render@FDynamicActor@@QAEXPAVFLevelSceneNode@@PAUFDynamicLightList@@PAXPAVFRenderInterface@@H2@Z",
+        "?UpdateLightFade@FDynamicActor@@QAEXPAVFLevelSceneNode@@@Z",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1152,
+      "rebuilt_address": 268439680,
+      "fields": [],
+      "symbols": {}
+    },
+    "match": {
+      "bytes_sha256": "23a9aab46abe0c32632b41e1db44d89094dd1d84d7e406796fbdeefd2973d7e5",
+      "inputs_sha256": "bc1767ee0c9c6ca0f455cd95ff3accabb1a7c629e5f62dd268d34dc76caa2394"
     }
   },
   {

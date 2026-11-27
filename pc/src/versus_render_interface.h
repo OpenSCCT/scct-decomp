@@ -13,10 +13,10 @@ public:
     virtual void SetViewport(INT X, INT Y, INT Width, INT Height); // +0x0c
     virtual void Clear(UBOOL UseColor, FColor Color, UBOOL UseDepth, FLOAT Depth,
                        UBOOL UseStencil, DWORD Stencil);           // +0x10
-    virtual void PushHit(const BYTE *Data, INT Count); virtual void PopHit(INT Count, UBOOL Force); virtual void Slot1c();
+    virtual void PushHit(const BYTE *Data, INT Count); virtual void PopHit(INT Count, UBOOL Force); virtual void SetCullMode(INT Mode);
     virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2c();
     virtual void Slot30(); virtual void Slot34(); virtual void Slot38(); virtual void Slot3c();
-    virtual void Slot40(); virtual void Slot44(); virtual void Slot48(); virtual void Slot4c();
+    virtual void SetSectionLights(struct FDynamicLightList *Lights); virtual void Slot44(); virtual void Slot48(); virtual void Slot4c();
     virtual void Slot50(); virtual void Slot54(); virtual void Slot58(); virtual void Slot5c();
     virtual void Slot60(); virtual void DrawPrimitive(INT Type, INT FirstIndex, INT NumPrimitives, INT MinIndex, INT MaxIndex); virtual void Slot68(); virtual void Slot6c();
     virtual void Slot70(); virtual void Slot74();
@@ -32,6 +32,9 @@ public:
     INT  Fading;                                                   // +0x04
     INT  Flashing;                                                 // +0x08
     BYTE EffectAlpha;                                              // +0x0c
+    BYTE unk_d[0x10 - 0xd];
+    INT CurrentPass;
+    class FRenderTransformTarget *TransformTarget;
 };
 
 #endif

@@ -26,7 +26,9 @@ class ULevelBase : public UObject, public FNetworkNotify {
 public:
     virtual INT NotifyAcceptingConnection();
     TTransArray<AActor *> Actors;
-    BYTE unk_3c[0x13c - 0x3c];
+    BYTE unk_3c[0xf0 - 0x3c];
+    class UEngine *Engine;
+    BYTE unk_f4[0x13c - 0xf4];
 };
 
 // Engine.Level derives from LevelBase and is 0x4af0 bytes in the registration.

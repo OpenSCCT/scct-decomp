@@ -4,7 +4,9 @@
 struct FBspNode {
     BYTE unk_00[0x2c];
     INT iSurf;
-    BYTE unk_30[0x5c - 0x30];
+    BYTE unk_30[0x50 - 0x30];
+    short iSection;
+    BYTE unk_52[0x5c - 0x52];
 };
 
 struct FBspSurf {
