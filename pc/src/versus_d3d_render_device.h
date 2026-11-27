@@ -2,6 +2,7 @@
 #define VERSUS_D3D_RENDER_DEVICE_H
 
 #include "versus_native_subsystem.h"
+#include "versus_texture_format.h"
 
 class UViewport;
 class FRenderInterface;
@@ -62,7 +63,8 @@ public:
     UBOOL HighDetailActors;
     UBOOL SuperHighDetailActors;
     UBOOL DetailTextures;
-    BYTE unk_50[0x8];
+    DWORD unk_50;
+    UBOOL SupportsCubemaps;
     UBOOL unk_58;
     UBOOL UseStencil;
     UBOOL Use16bit;
@@ -74,6 +76,7 @@ class UD3DRenderDevice : public URenderDevice {
 public:
     void StaticConstructor();
 
+    UBOOL SupportsTextureFormat(ETextureFormat Format) const;
     FD3DResource *ResourceList;
     FD3DResource *ResourceHash[4096];
     BYTE unk_40b4[0x40bc - 0x40b4];
@@ -86,7 +89,8 @@ public:
     UBOOL UseHardwareTL;
     UBOOL UseHardwareVS;
     UBOOL UseCubemaps;
-    BYTE unk_40e4[0x10];
+    UBOOL SupportsMipCubeMap;
+    UBOOL SupportsDXT1, SupportsDXT3, SupportsDXT5;
     UBOOL UseTripleBuffering;
     UBOOL ReduceMouseLag;
     BYTE unk_40fc[0x10];
@@ -95,19 +99,25 @@ public:
     UBOOL DecompressTextures;
     BYTE unk_4118[0x4];
     INT AdapterNumber;
-    BYTE unk_4120[0x4];
+    INT FirstColoredMip;
     INT MaxPixelShaderVersion;
     INT LevelOfAnisotropy;
     FLOAT DetailTexMipBias;
     FLOAT DefaultTexMipBias;
     FLOAT TesselationFactor;
     INT DesiredRefreshRate;
-    BYTE unk_413c[0x41d0 - 0x413c];
+    BYTE unk_413c[0x4194 - 0x413c];
+    INT MaxTextureWidth, MaxTextureHeight;
+    BYTE unk_419c[0x41d0 - 0x419c];
     DWORD MaxTextureBlendStages;
     BYTE unk_41d4[0x41f4 - 0x41d4];
     DWORD MaxVertexIndex;
     INT MaxStreams;
-    BYTE unk_41fc[0x4698 - 0x41fc];
+    BYTE unk_41fc[0x4654 - 0x41fc];
+    DWORD DepthFormat;
+    BYTE unk_4658[0x4684 - 0x4658];
+    UViewport *LockedViewport;
+    BYTE unk_4688[0x4698 - 0x4688];
     INT FrameCounter;
     BYTE unk_469c[0x46a4 - 0x469c];
     IDirect3DDevice8 *Direct3DDevice8;

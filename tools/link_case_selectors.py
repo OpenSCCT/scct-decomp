@@ -13,21 +13,30 @@ def selector_bytes(image, address, size, site, selector, table, entries):
         raise ValueError("case selector and jump table must follow the body in its read-execute code section")
 
     body = image[offset + address - base:offset + address - base + size]
-    # cmp r32, imm8; ja rel32; movzx r32, byte ptr [index + selector]; jmp [r32*4 + table]
-    if site < 12 or site + 11 > size:
+    # cmp r32, imm8; ja rel8/rel32; movzx r32, byte ptr [index + selector]; jmp [r32*4 + table]
+    if site < 8 or site + 11 > size:
         raise ValueError("case selector operand is outside the bounded switch dispatch")
-    code = body[site - 12:site + 11]
-    index, maximum = code[1] & 7, code[2]
-    load, jump = code[11], code[18]
-    if (code[0] != 0x83 or code[1] != 0xf8 + index or maximum >= 128
-            or code[3:5] != b"\x0f\x87" or code[9:11] != b"\x0f\xb6"
-            or load & 0xc7 != 0x80 + index or index == 4 or code[16:18] != b"\xff\x24"
+    if site >= 12 and body[site - 9:site - 7] == b"\x0f\x87":
+        compare = site - 12
+        displacement = struct.unpack_from("<i", body, site - 7)[0]
+    elif body[site - 5] == 0x77:
+        compare = site - 8
+        displacement = struct.unpack_from("<b", body, site - 4)[0]
+    else:
+        raise ValueError("case selector requires a checked x86 unsigned bounds branch")
+
+    index, maximum = body[compare + 1] & 7, body[compare + 2]
+    load, jump = body[site - 1], body[site + 6]
+    if (body[compare] != 0x83 or body[compare + 1] != 0xf8 + index or maximum >= 128
+            or body[site - 3:site - 1] != b"\x0f\xb6" or load & 0xc7 != 0x80 + index
+            or index == 4 or body[site + 4:site + 6] != b"\xff\x24"
             or jump != 0x85 + (load & 0x38) or (load >> 3) & 7 == 4):
         raise ValueError("case selector requires a checked x86 byte lookup feeding the indexed jump")
-    default = site - 3 + struct.unpack_from("<i", code, 5)[0]
+    default = site - 3 + displacement
     if not 0 <= default < size:
         raise ValueError("case selector default branch leaves the function")
-    if struct.unpack_from("<I", code, 12)[0] != selector or struct.unpack_from("<I", code, 19)[0] != table:
+    if (struct.unpack_from("<I", body, site)[0] != selector
+            or struct.unpack_from("<I", body, site + 7)[0] != table):
         raise ValueError("case selector dispatch addresses disagree with the recorded tables")
     if selector + maximum + 1 > base + length:
         raise ValueError("case selector extends beyond its read-execute code section")

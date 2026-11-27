@@ -273,7 +273,7 @@ struct FMipmap {
     FLazyByteArray DataArray; // 0x10
 };
 
-enum { TEXF_DXT1 = 3, TEXF_RGBA8 = 5, TEXF_DXT3 = 7, TEXF_DXT5 = 8 };
+#include "versus_texture_format.h"
 
 class UTexture : public UObject {
 public:

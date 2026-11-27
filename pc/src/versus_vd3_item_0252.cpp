@@ -419,35 +419,6 @@ void UD3DRenderDevice::ReadPixels(UViewport *Viewport, FColor *Pixels)
     BackBuffer->Release();
 }
 
-// 0x5e5a0: a capability query on an object whose class is not identified
-// (ECX object, selector in EAX under LTCG). Neutral name. Matched with
-// /O2 /Ob1 /Gy: at /Ob2 the link-time inliner folds it into the driver.
-class UnnamedClass_5e5a0
-{
-public:
-    BYTE Pad00[0x64];
-    INT Field64;                                // 0x64
-    BYTE Pad68[0x40e8 - 0x68];
-    UBOOL Value40e8;                            // 0x40e8
-    UBOOL Value40ec;                            // 0x40ec
-    UBOOL Value40f0;                            // 0x40f0
-
-    UBOOL Query(INT Kind);
-};
-
-UBOOL UnnamedClass_5e5a0::Query(INT Kind)
-{
-    switch (Kind)
-    {
-    case 3: return Value40e8;
-    case 7: return Value40ec;
-    case 8: return Value40f0;
-    case 4:
-    case 5: return Field64 == 0;
-    default: return 1;
-    }
-}
-
 // Scaffolding for the link, not part of the unit.
 void Escape(void *);
 inline void *operator new(unsigned int, void *P) { return P; }
@@ -457,8 +428,4 @@ void Driver_5e010(void *Mem)
     Escape(&GTimestamp);
     Escape(&UD3DRenderDevice_Present_LastPresentTime);
     Escape(new (Mem) UD3DRenderDevice);
-}
-UBOOL Driver_5e5a0(UnnamedClass_5e5a0 *A, UnnamedClass_5e5a0 *B, INT K)
-{
-    return A->Query(K) + B->Query(K + 1);
 }

@@ -27,6 +27,7 @@ class UTexture : public UBitmapMaterial {
 public:
     static UClass PrivateStaticClass;
     virtual ~UTexture();
+    BYTE ConvertMip(INT MipIndex, UBOOL NoDXT1, UBOOL NoData, BYTE **Dest);
     virtual void VirtualSlot37();
     virtual void VirtualSlot38();
     virtual void VirtualSlot39();

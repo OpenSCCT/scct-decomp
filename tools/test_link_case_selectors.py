@@ -76,6 +76,44 @@ class CaseSelectorTests(unittest.TestCase):
             with self.subTest(site=site), self.assertRaisesRegex(ValueError, "checked x86|default branch"):
                 self.place(bytes(other), bytes(other))
 
+    def short_switch(self):
+        self.body = self.body[:3] + bytes.fromhex("77 0e") + self.body[9:]
+        targets = struct.pack("<3I", self.address, self.address + 19, self.address + 21)
+        self.raw = image(self.body.ljust(0x40, b"\x90") + targets + bytes([2, 0, 1]))
+        self.unit["size"] = len(self.body)
+        self.link["fields"] = [[8, "abs", "selector"], [15, "abs", "targets"]]
+
+    def test_unsigned_short_branch_selects_the_checked_targets(self):
+        self.short_switch()
+        self.assertEqual(self.place(), self.body)
+
+    def test_checks_each_short_dispatch_operand_in_both_images(self):
+        self.short_switch()
+        for site, value, error in (
+            (0x201, 0xf9, "checked x86"),       # compare a different index
+            (0x203, 0x7f, "unsigned bounds"),   # signed jg
+            (0x204, 0x80, "default branch"),    # branch backwards past the start
+            (0x204, 0x7f, "default branch"),    # branch forwards past the end
+            (0x207, 0x89, "checked x86"),       # different selector base register
+            (0x20e, 0x85, "checked x86"),       # jump indexes a different register
+            (0x24c, 1, "differ"),              # valid index but wrong mapping
+            (0x24d, 3, "outside the jump table"),
+            (0x240, 0xff, "outside its function|differs from retail"),
+        ):
+            other = bytearray(self.raw)
+            other[site] = value
+            for side in ("rebuilt", "original"):
+                with self.subTest(site=site, side=side), self.assertRaisesRegex(ValueError, error):
+                    self.place(**{side: bytes(other)})
+
+    def test_long_displacement_byte_77_is_not_a_short_bounds_branch(self):
+        # The apparent short JA is inside the displacement of a real near JA.
+        fake_short = bytearray(self.raw)
+        fake_short[0x207] = 0x77
+        for side in ("rebuilt", "original"):
+            with self.subTest(side=side), self.assertRaisesRegex(ValueError, "default branch"):
+                self.place(**{side: bytes(fake_short)})
+
     def test_table_and_selector_must_be_in_the_same_read_execute_section(self):
         wrong = bytearray(self.raw)
         self.link["symbols"].update(selector=BASE + 0x200c, targets=BASE + 0x2000)

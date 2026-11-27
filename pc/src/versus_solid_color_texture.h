@@ -1,16 +1,10 @@
 #ifndef VERSUS_SOLID_COLOR_TEXTURE_H
 #define VERSUS_SOLID_COLOR_TEXTURE_H
 
-#include "versus_build.h"
+#include "versus_render_resource.h"
 #include "unreal_math.h"
 
 extern unsigned __int64 GCacheCounter;
-
-class FRenderResource {
-public:
-    virtual unsigned __int64 GetCacheId() = 0;
-    virtual INT GetRevision() = 0;
-};
 
 // The first two resource methods have independent retail bodies. Later slots
 // of the texture interface are not used by the material getter.
