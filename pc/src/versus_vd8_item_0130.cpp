@@ -439,6 +439,7 @@ struct UGUIStyles_eventOnDrawText_Parms
 UBOOL UGUIStyles::delegateOnDrawText(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FLOAT Top, FLOAT Width, FLOAT Height, BYTE Align, const FString &Text)
 {
     UGUIStyles_eventOnDrawText_Parms Parms;
+    Parms.ReturnValue = 0;
     Parms.Canvas = Canvas;
     Parms.MenuState = MenuState;
     Parms.Left = Left;
@@ -447,7 +448,6 @@ UBOOL UGUIStyles::delegateOnDrawText(UCanvas *Canvas, BYTE MenuState, FLOAT Left
     Parms.Height = Height;
     Parms.Align = Align;
     Parms.Text = Text;
-    Parms.ReturnValue = 0;
     ProcessDelegate(GUI_OnDrawText, &__OnDrawText__Delegate, &Parms, 0);
     return Parms.ReturnValue;
 }

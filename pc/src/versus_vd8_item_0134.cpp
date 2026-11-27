@@ -31,7 +31,11 @@ enum EInputAction
 
 // Versus registers these GUI script names before it loads packages.
 enum {
+    GUI_OnHitTest = 0xce7c,
+    GUI_OnCapturedMouseMove = 0xce97,
+    GUI_OnDblClick = 0xce88,
     GUI_OnKeyEvent = 0xce95,
+    GUI_MenuStateChange = 0xcea4,
     GUI_NextControl = 0xceae,
     GUI_PrevControl = 0xceaf,
     GUI_NextPage = 0xceb0,
@@ -287,6 +291,12 @@ struct UGUIComponent_eventOnDblClick_Parms
     BITFIELD ReturnValue;
 };
 
+struct UGUIComponent_eventOnHitTest_Parms
+{
+    FLOAT MouseX;
+    FLOAT MouseY;
+};
+
 struct UGUIComponent_eventOnCapturedMouseMove_Parms
 {
     FLOAT deltaX;
@@ -382,7 +392,9 @@ public:
     BITFIELD bRequireReleaseClick : 1; // +0x5c bit 9 (0x200)
     BYTE unk_60[0x38];
     BYTE OnClickSound;          // +0x98
-    BYTE unk_99[0x97];
+    BYTE unk_99[0x77];
+    FScriptDelegate __OnHitTest__Delegate;               // +0x110
+    BYTE unk_118[0x18];
     FScriptDelegate __OnClick__Delegate;              // +0x130
     FScriptDelegate __OnDblClick__Delegate;           // +0x138
     BYTE unk_140[0x08];
@@ -404,7 +416,7 @@ public:
     {
         UGUIComponent_eventMenuStateChange_Parms Parms;
         Parms.NewState = NewState;
-        ProcessEvent(FindFunctionChecked(FName(0xcea4), 0), &Parms, 0);
+        ProcessEvent(FindFunctionChecked(FName(GUI_MenuStateChange), 0), &Parms, 0);
     }
 
     void delegateOnMousePressed(UGUIComponent *Sender, BITFIELD bRepeat)
@@ -436,10 +448,11 @@ public:
         UGUIComponent_eventOnDblClick_Parms Parms;
         Parms.Sender = Sender;
         Parms.ReturnValue = 0;
-        ProcessDelegate(FName(0xce88), &__OnDblClick__Delegate, &Parms, 0);
+        ProcessDelegate(FName(GUI_OnDblClick), &__OnDblClick__Delegate, &Parms, 0);
         return Parms.ReturnValue;
     }
 
+    void delegateOnHitTest(FLOAT MouseX, FLOAT MouseY);
     BITFIELD delegateOnCapturedMouseMove(FLOAT deltaX, FLOAT deltaY);
 
     __declspec(noinline) BITFIELD delegateOnKeyEvent(BYTE &Key, BYTE &State, FLOAT delta)
@@ -651,6 +664,24 @@ UBOOL UGUIComponent::NativeKeyType(BYTE &iKey, TCHAR Unicode)
     }
 
     return delegateOnKeyType(iKey, FString::Printf(GFormatChar, Unicode));
+}
+
+void UGUIComponent::delegateOnHitTest(FLOAT MouseX, FLOAT MouseY)
+{
+    UGUIComponent_eventOnHitTest_Parms Parms;
+    Parms.MouseX = MouseX;
+    Parms.MouseY = MouseY;
+    ProcessDelegate(FName(GUI_OnHitTest), &__OnHitTest__Delegate, &Parms, 0);
+}
+
+BITFIELD UGUIComponent::delegateOnCapturedMouseMove(FLOAT deltaX, FLOAT deltaY)
+{
+    UGUIComponent_eventOnCapturedMouseMove_Parms Parms;
+    Parms.ReturnValue = 0;
+    Parms.deltaX = deltaX;
+    Parms.deltaY = deltaY;
+    ProcessDelegate(FName(GUI_OnCapturedMouseMove), &__OnCapturedMouseMove__Delegate, &Parms, 0);
+    return Parms.ReturnValue;
 }
 
 // Scaffolding for the LTCG link, not part of the unit.
