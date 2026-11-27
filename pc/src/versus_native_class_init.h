@@ -76,6 +76,8 @@ public:
     static UObject *StaticAllocateObject(UClass *ObjectClass, UObject *InOuter, FName InName,
         DWORD SetFlags, UObject *Template = 0, FOutputDevice *Error = GError,
         UObject *Ptr = 0, UObject *SubobjectRoot = 0);
+    static UObject *StaticConstructObject(UClass *InClass, UObject *InOuter, FName InName,
+        DWORD SetFlags, UObject *InTemplate, FOutputDevice *Error, UObject *SubobjectRoot);
     FName GetFName() const { return Name; }
     static UObject *StaticFindObject(UClass *ObjectClass, UObject *InOuter, FName Package,
         FName Group, FName ObjectName, UBOOL ExactClass);

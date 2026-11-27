@@ -124,6 +124,7 @@ public:
 
 class UObjectProperty : public UProperty {
 public:
+    virtual void CopyCompleteValue(void *Dest, void *Src, UObject *SuperObject);
     virtual void CleanupDestroyed(BYTE *Data);
     virtual UBOOL Identical(const void *A, const void *B) const;
     virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
@@ -142,6 +143,7 @@ public:
 
 class UStructProperty : public UProperty {
 public:
+    virtual void CleanupDestroyed(BYTE *Data);
     static UClass PrivateStaticClass;
     UStruct *Struct;
     virtual UBOOL Identical(const void *A, const void *B) const;
@@ -161,6 +163,26 @@ public:
     UProperty *Inner;
     INT Count;
     virtual UBOOL Identical(const void *A, const void *B) const;
+    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
+    virtual void ExportTextItem(TCHAR *Text, BYTE *Value, BYTE *Default, INT PortFlags) const;
+};
+
+class UMapProperty : public UProperty {
+public:
+    UProperty *Key;
+    UProperty *Value;
+    virtual const TCHAR *ImportText(const TCHAR *Buffer, BYTE *Data, INT PortFlags) const;
+};
+
+struct FScriptDelegate {
+    UObject *Object;
+    FName FunctionName;
+};
+
+class UDelegateProperty : public UProperty {
+public:
+    virtual INT Link(FArchive &Ar, UProperty *Prev);
+    virtual void CopyCompleteValue(void *Dest, void *Src, UObject *SuperObject);
 };
 
 #undef DECLARE_NATIVE_PROPERTY
