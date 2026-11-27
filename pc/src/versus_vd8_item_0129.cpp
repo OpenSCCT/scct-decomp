@@ -17,7 +17,7 @@ typedef unsigned char BYTE;
 typedef float FLOAT;
 typedef char *va_list;
 
-enum EName { NAME_None = 0 };
+enum EName { NAME_None = 0, GUI_OnDraw = 0xce74 };
 enum { LOAD_NoWarn = 0x0002 };
 
 enum EImgStyle
@@ -132,7 +132,7 @@ public:
     virtual void Vf00();
     virtual void Vf04();
     virtual void Vf08();
-    virtual void Vf0c();
+    virtual ~UObject();
     virtual void Vf10();
     virtual void ProcessDelegate(FName DelegateName, FScriptDelegate *Delegate, void *Parms, void *Result);
 
@@ -534,7 +534,7 @@ UBOOL UGUIStyles::delegateOnDraw(UCanvas *Canvas, BYTE MenuState, FLOAT Left, FL
     Parms.Width = Width;
     Parms.Height = Height;
     Parms.ReturnValue = 0;
-    ProcessDelegate((EName)0xce74, &OnDraw, &Parms, 0);
+    ProcessDelegate(GUI_OnDraw, &OnDraw, &Parms, 0);
     return Parms.ReturnValue;
 }
 

@@ -76,10 +76,10 @@ struct FScriptDelegate
 class UObject
 {
 public:
-    virtual ~UObject();
+    virtual void VSlot0();
     virtual void VSlot1();
     virtual void VSlot2();
-    virtual void VSlot3();
+    virtual ~UObject();
     virtual void ProcessEvent(UFunction *Function, void *Parms, void *Result = 0);
     virtual void ProcessDelegate(FName DelegateName, FScriptDelegate *Delegate, void *Parms, void *Result = 0);
     virtual void VSlot6();

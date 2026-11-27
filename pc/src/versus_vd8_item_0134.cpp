@@ -29,6 +29,15 @@ enum EInputAction
     IST_Repeat = 2,
 };
 
+// Versus registers these GUI script names before it loads packages.
+enum {
+    GUI_OnKeyEvent = 0xce95,
+    GUI_NextControl = 0xceae,
+    GUI_PrevControl = 0xceaf,
+    GUI_NextPage = 0xceb0,
+    GUI_PrevPage = 0xceb1,
+};
+
 class FName
 {
 public:
@@ -87,10 +96,10 @@ public:
 class UObject
 {
 public:
-    virtual ~UObject();
+    virtual void VSlot00();
     virtual void VSlot01();
     virtual void VSlot02();
-    virtual void VSlot03();
+    virtual ~UObject();
     virtual void ProcessEvent(UFunction *Function, void *Parms, void *Result = 0);
     virtual void ProcessDelegate(FName DelegateName, FScriptDelegate *Delegate, void *Parms, void *Result = 0);
     virtual void VSlot06();
@@ -440,7 +449,7 @@ public:
         Parms.State = State;
         Parms.delta = delta;
         Parms.ReturnValue = 0;
-        ProcessDelegate(FName(0xce95), &__OnKeyEvent__Delegate, &Parms, 0);
+        ProcessDelegate(FName(GUI_OnKeyEvent), &__OnKeyEvent__Delegate, &Parms, 0);
         Key = Parms.Key;
         State = Parms.State;
         return Parms.ReturnValue;
@@ -461,7 +470,7 @@ public:
     {
         UGUIComponent_eventNextPage_Parms Parms;
         Parms.ReturnValue = 0;
-        ProcessEvent(FindFunctionChecked(FName(0xceb0), 0), &Parms, 0);
+        ProcessEvent(FindFunctionChecked(FName(GUI_NextPage), 0), &Parms, 0);
         return Parms.ReturnValue;
     }
 
@@ -469,7 +478,7 @@ public:
     {
         UGUIComponent_eventPrevPage_Parms Parms;
         Parms.ReturnValue = 0;
-        ProcessEvent(FindFunctionChecked(FName(0xceb1), 0), &Parms, 0);
+        ProcessEvent(FindFunctionChecked(FName(GUI_PrevPage), 0), &Parms, 0);
         return Parms.ReturnValue;
     }
 
@@ -478,7 +487,7 @@ public:
         UGUIComponent_eventNextControl_Parms Parms;
         Parms.Sender = Sender;
         Parms.ReturnValue = 0;
-        ProcessEvent(FindFunctionChecked(FName(0xceae), 0), &Parms, 0);
+        ProcessEvent(FindFunctionChecked(FName(GUI_NextControl), 0), &Parms, 0);
         return Parms.ReturnValue;
     }
 
@@ -487,7 +496,7 @@ public:
         UGUIComponent_eventPrevControl_Parms Parms;
         Parms.Sender = Sender;
         Parms.ReturnValue = 0;
-        ProcessEvent(FindFunctionChecked(FName(0xceaf), 0), &Parms, 0);
+        ProcessEvent(FindFunctionChecked(FName(GUI_PrevControl), 0), &Parms, 0);
         return Parms.ReturnValue;
     }
 };
