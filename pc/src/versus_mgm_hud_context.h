@@ -2,6 +2,7 @@
 #define VERSUS_MGM_HUD_CONTEXT_H
 #include "versus_build.h"
 #include "unreal_types.h"
+#include "versus_mgm_page_stack.h"
 
 class UViewport;
 class MgmPackage;
@@ -15,7 +16,9 @@ struct MgmPackageList {
 struct MgmMenuSystem {
     BYTE Unknown00[4];
     MgmPackageList Packages;
-    BYTE UnknownBeforeViewport[0x38 - 0xc];
+    BYTE Unknown0c[4];
+    MgmPageStack PageStack;
+    BYTE UnknownAfterStack[0x38 - 0x10 - sizeof(MgmPageStack)];
     UViewport *Viewport;
 };
 extern MgmMenuSystem *GMgmMenuSystem;

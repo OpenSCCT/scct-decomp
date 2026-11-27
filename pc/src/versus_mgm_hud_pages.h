@@ -37,7 +37,9 @@ public:
     FString PageName;
     MgmPackage *Package;
     MgmArea *Page;
-    BYTE Unknown2c[0xb4 - 0x2c];
+    UBOOL DeleteOnClose;
+    UBOOL TopLevel;
+    BYTE Unknown34[0xb4 - 0x34];
 };
 
 class MgmGameScreen : public MgmScreen {
