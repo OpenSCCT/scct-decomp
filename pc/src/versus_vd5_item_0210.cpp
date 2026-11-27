@@ -291,6 +291,7 @@ public:
     virtual void gpad45(); virtual void gpad46(); virtual void gpad47();
     virtual UBOOL Browse(FURL URL, const void *TravelInfo, FString &Error); // slot 48 (+0xc0)
 
+    static void InternalConstructor(void *Storage);
     UGameEngine();
     DWORD HashKey_e77b0(INT Key);
     void DrawFirstViewport_e7720();
@@ -445,4 +446,10 @@ void Driver_e7880(UGameEngine *E, const TCHAR *T)
     void (UGameEngine::*P)() = &UGameEngine::BrowseInitialMap_e7880;
     Escape(&P);
     E->BrowseInitialMap_e7880();
+}
+
+// InternalConstructor constructs the registered class in storage supplied by the object system.
+void UGameEngine::InternalConstructor(void *Storage)
+{
+    new(Storage) UGameEngine;
 }

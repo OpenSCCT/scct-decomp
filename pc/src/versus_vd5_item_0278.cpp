@@ -296,6 +296,7 @@ public:
     TArray<UObject *> AliasObjects[20];     // 0x1a68
     UBOOL AliasesBuilt;               // 0x1b58
 
+    static void InternalConstructor(void *Storage);
     UInput();
     static UClass *StaticClass() { return &PrivateStaticClass; }
     static UClass PrivateStaticClass;     // 0x10cbd468
@@ -503,3 +504,11 @@ void Driver_fcf50(UObject *I) { Escape(&GMalloc); I->Destroy(); }
 void Driver_fcf70(UInput *I) { Escape(&GMalloc); Escape(&UInput_Slot32_Initialized); I->Slot33(); }
 void Driver_fcfd0(UInput *I) { Escape(&GMalloc); I->UInput::Slot33(); }
 void Driver_fd080(UInput *I) { Escape(&GMalloc); I->UInput::ClearBindings(); }
+
+inline void operator delete(void *, void *) {}
+
+// InternalConstructor constructs the registered class in storage supplied by the object system.
+void UInput::InternalConstructor(void *Storage)
+{
+    new(Storage) UInput;
+}

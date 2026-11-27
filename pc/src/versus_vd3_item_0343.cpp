@@ -56,6 +56,7 @@ class UGlobalTempObjects : public UObject
 {
 public:
 	TArray<UObject**> GlobalObjectPtrs;   // 0x28
+	static void InternalConstructor(void *Storage);
 	UGlobalTempObjects();
 	virtual ~UGlobalTempObjects();
 };
@@ -394,4 +395,14 @@ void Driver_97140(void* X)
 void Driver2_97140(void* X)
 {
 	new(X) UGlobalTempObjects;
+}
+
+enum EInternal { EC_Internal };
+inline void *operator new(unsigned int, EInternal *Storage) { return Storage; }
+inline void operator delete(void *, EInternal *) {}
+
+// InternalConstructor constructs the registered class in storage supplied by the object system.
+void UGlobalTempObjects::InternalConstructor(void *Storage)
+{
+    new((EInternal *)Storage) UGlobalTempObjects;
 }
