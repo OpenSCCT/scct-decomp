@@ -6,56 +6,11 @@
 // 0xc3a30 TArray<FUnnamedElem6>::~TArray (this on the stack)
 // 0xc3aa0 FUnnamedRecord_c39d0::FUnnamedRecord_c39d0 (this in EAX)
 // The lazy-array template is the one matched in w3_item_0139 (0xc1950).
-typedef unsigned short TCHAR;
-typedef unsigned short _WORD;
-typedef unsigned char BYTE;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
+#include "versus_build.h"
+#include "versus_lazy_archive.h"
+#include "unreal_math.h"
+
 extern "C" __declspec(dllimport) double floor(double);   // MSVCR70
-
-struct FCompactIndex { INT Value; };
-#define AR_INDEX(intref) (*(FCompactIndex *)&(intref))
-
-class FLazyLoader;
-
-class FArchive
-{
-public:
-    virtual ~FArchive();
-    virtual void Serialize(void *V, INT Length);            // +0x04
-    virtual void SerializeBits(void *V, INT LengthBits);    // +0x08
-    virtual void SerializeInt(DWORD &Value, DWORD Max);     // +0x0c
-    virtual void Preload(void *Object);                     // +0x10
-    virtual void CountBytes(DWORD InNum, DWORD InMax);      // +0x14
-    virtual void Slot18();                                  // +0x18
-    virtual void Slot1c();                                  // +0x1c
-    virtual void Slot20();                                  // +0x20
-    virtual void Slot24();                                  // +0x24
-    virtual INT Tell();                                     // +0x28
-    virtual INT TotalSize();                                // +0x2c
-    virtual UBOOL AtEnd();                                  // +0x30
-    virtual void Slot34();                                  // +0x34
-    virtual void Slot38();                                  // +0x38
-    virtual void Seek(INT InPos);                           // +0x3c
-    virtual void AttachLazyLoader(FLazyLoader *LazyLoader); // +0x40
-
-    INT Ver() { return ArVer; }
-    UBOOL IsLoading() { return ArIsLoading; }
-    UBOOL IsSaving() { return ArIsSaving; }
-
-    friend FArchive &operator<<(FArchive &Ar, INT &I) { Ar.Serialize(&I, 4); return Ar; }
-    friend FArchive &operator<<(FArchive &Ar, FLOAT &F) { Ar.Serialize(&F, 4); return Ar; }
-    friend FArchive &operator<<(FArchive &Ar, BYTE &B) { Ar.Serialize(&B, 1); return Ar; }
-    friend FArchive &operator<<(FArchive &Ar, FCompactIndex &I);
-
-    INT ArVer;          // +0x04
-    INT ArNetVer;       // +0x08
-    INT ArLicenseeVer;  // +0x0c
-    UBOOL ArIsLoading;  // +0x10
-    UBOOL ArIsSaving;   // +0x14
-};
 
 class FMalloc
 {
@@ -68,9 +23,6 @@ extern FMalloc *GMalloc;                 // 0x10c73bf0
 // Retail keeps these literals in writable data.
 extern const TCHAR OperatorShlTArray[];  // L"operator<<(TArray)", 0x10c748fc
 extern const TCHAR FSArray_Tag[];        // L"FSArray"
-
-extern UBOOL GLazyLoad;          // 0xc96924
-extern DWORD GUglyHackFlags;     // 0xc968ec
 
 class FArray
 {
@@ -101,65 +53,9 @@ public:
 };
 template <class T> class TSArray : public FSArray {};
 
-class FLazyLoader
-{
-public:
-    virtual void Load();
-    FArchive *SavedAr;
-    INT SavedPos;
-};
-
-template <class T> class TLazyArray : public FLazyLoader, public TArray<T> {};
-
-template <class T> __declspec(noinline) FArchive &operator<<(FArchive &Ar, TLazyArray<T> &This)
-{
-    if (Ar.IsLoading()) {
-        INT SeekPos = 0;
-        if (Ar.Ver() <= 61) {
-            Ar.AttachLazyLoader(&This);
-            INT SkipCount;
-            Ar << AR_INDEX(SkipCount);
-            // SCCT drops the old-format skip: the position is read and discarded.
-            Ar.Tell();
-            return Ar;
-        }
-        if (Ar.Ver() >= 0xaf) {
-            INT Skip;
-            Ar << Skip << (TArray<T> &)This;
-            return Ar;
-        }
-        Ar << SeekPos;
-        if (GUglyHackFlags & 8)
-            Ar << (TArray<T> &)This;
-        else
-            Ar.AttachLazyLoader(&This);
-        if (!GLazyLoad)
-            This.Load();
-        Ar.Seek(SeekPos);
-    } else if (Ar.IsSaving() && Ar.Ver() > 61) {
-        if (Ar.Ver() >= 0xaf) {
-            INT Skip = 0;
-            Ar << Skip << (TArray<T> &)This;
-        } else {
-            // Save out count for skipping over this data.
-            INT CountPos = Ar.Tell();
-            Ar << CountPos << (TArray<T> &)This;
-            INT EndPos = Ar.Tell();
-            Ar.Seek(CountPos);
-            Ar << EndPos;
-            Ar.Seek(EndPos);
-        }
-    } else {
-        Ar << (TArray<T> &)This;
-    }
-    return Ar;
-}
-
-
 inline void *operator new(unsigned int, void *Mem) { return Mem; }
 
 // UE2 element types (UnSkeletalMesh.h / UnMath.h).
-struct FVector { FLOAT X, Y, Z; };
 struct FMeshUV
 {
     FLOAT U, V;
@@ -242,10 +138,6 @@ template FArchive &operator<<(FArchive &Ar, TLazyArray<FVector> &This);
 // RVA 0xc3910: packs a vector into three clamped fixed-point shorts
 // (1/32 unit steps). Neutral name; the struct's UE2 name is not recovered.
 inline INT appFloor(FLOAT F) { return (INT)floor(F); }
-template <class T> inline T Clamp(const T X, const T Min, const T Max)
-{
-    return X < Min ? Min : X < Max ? X : Max;
-}
 struct FPackedVector_c3910
 {
     short X, Y, Z;
