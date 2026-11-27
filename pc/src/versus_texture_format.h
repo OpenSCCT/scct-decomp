@@ -7,4 +7,6 @@ enum ETextureFormat {
     TEXF_NODATA, TEXF_DXT3, TEXF_DXT5, TEXF_L8, TEXF_G16, TEXF_RRRGGGBBB, TEXF_P4
 };
 
+enum ETexClampMode { TC_Wrap, TC_Clamp };
+
 #endif

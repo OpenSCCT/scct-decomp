@@ -5,15 +5,6 @@
 #include "versus_d3d8_textures.h"
 #include "versus_base_texture.h"
 
-class UTexture;
-class FTexture : public FBaseTexture {
-public:
-    virtual void *GetRawTextureData(INT MipIndex) = 0;
-    virtual void GetTextureData(INT mip, void *dest, INT pitch, ETextureFormat format, UBOOL coloredMips) = 0;
-    virtual void UnloadRawTextureData(INT MipIndex) = 0;
-    virtual UTexture *GetUTexture() = 0;
-};
-class FCubemap : public FBaseTexture { public: virtual FTexture *GetFace(INT face) = 0; };
 class FCompositeTexture : public FBaseTexture {
 public:
     virtual INT GetNumChildren() = 0;

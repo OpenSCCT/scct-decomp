@@ -35,6 +35,7 @@ public:
 class UTexture : public UBitmapMaterial {
 public:
     static UClass PrivateStaticClass;
+    UTexture();
     virtual ~UTexture();
     ETextureFormat ConvertDXT(INT MipIndex, UBOOL NoDXT1, UBOOL NoData, BYTE **Dest);
     virtual void VirtualSlot37();
@@ -49,7 +50,11 @@ public:
 
     BYTE unk_64[0xc];
     TArray<FMipmap> Mips;
-    BYTE unk_7c[0x44];
+    BYTE unk_7c[0xb4 - 0x7c];
+    DWORD : 5;
+    DWORD bRealtimeChanged : 1;
+    DWORD : 26;
+    BYTE unk_b8[8];
 };
 
 // Engine.Shader: 0x74 bytes, 35 virtual functions

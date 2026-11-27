@@ -890,13 +890,7 @@ public:
     BYTE                  unk_34[0x8];
 };
 
-// Engine.Cubemap: 0xdc bytes, 46 virtual functions
-class UCubemap : public UTexture {
-public:
-    virtual ~UCubemap();
-
-    BYTE unk_c0[0x1c];
-};
+#include "versus_cubemap.h"
 
 // Engine.TrailEmitter: 0x424 bytes, 32 virtual functions
 class UTrailEmitter : public UParticleEmitter {

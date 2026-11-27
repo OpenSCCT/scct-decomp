@@ -28,8 +28,8 @@ public:
     virtual INT GetFirstMip();
     virtual INT GetNumMips();
     virtual ETextureFormat GetFormat();
-    virtual BYTE GetUClamp();
-    virtual BYTE GetVClamp();
+    virtual ETexClampMode GetUClamp();
+    virtual ETexClampMode GetVClamp();
 
     UViewport *Viewport;
     unsigned __int64 CacheId;

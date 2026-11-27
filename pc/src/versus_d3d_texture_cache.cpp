@@ -363,8 +363,6 @@ FD3DTexture *FD3DRenderInterface::CacheTexture(FBaseTexture *Texture)
     return Cached;
 }
 
-enum ETexClampMode { TC_Wrap, TC_Clamp };
-
 enum D3DTEXTUREADDRESS { D3DTADDRESS_WRAP = 1, D3DTADDRESS_CLAMP = 3 };
 
 // Texture and address fields at the start of each D3D material stage.

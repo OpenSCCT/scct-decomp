@@ -20,9 +20,19 @@ public:
     virtual INT GetFirstMip() = 0;
     virtual INT GetNumMips() = 0;
     virtual ETextureFormat GetFormat() = 0;
-    virtual BYTE GetUClamp() = 0;
-    virtual BYTE GetVClamp() = 0;
+    virtual ETexClampMode GetUClamp() = 0;
+    virtual ETexClampMode GetVClamp() = 0;
 };
+
+class UTexture;
+class FTexture : public FBaseTexture {
+public:
+    virtual void *GetRawTextureData(INT MipIndex) = 0;
+    virtual void GetTextureData(INT mip, void *dest, INT pitch, ETextureFormat format, UBOOL coloredMips) = 0;
+    virtual void UnloadRawTextureData(INT MipIndex) = 0;
+    virtual UTexture *GetUTexture() = 0;
+};
+class FCubemap : public FBaseTexture { public: virtual FTexture *GetFace(INT face) = 0; };
 
 class FRenderTarget : public FBaseTexture {
 public:
