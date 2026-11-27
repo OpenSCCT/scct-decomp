@@ -48,7 +48,7 @@ public:
     void Remove(INT Index, INT Count = 1);
 };
 
-template <class T> __declspec(noinline) void TArray<T>::Remove(INT Index, INT Count)
+template <class T> void TArray<T>::Remove(INT Index, INT Count)
 {
     for (INT i = Index; i < Index + Count; i++)
         (&(*this)(i))->~T();
