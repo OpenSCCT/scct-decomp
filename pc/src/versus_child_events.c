@@ -6,7 +6,6 @@ struct Word { unsigned value; };
 struct ChildArgument { struct Child *child; };
 typedef unsigned char (__fastcall *Event)(struct Listener *, struct ChildArgument);
 typedef void (__fastcall *Run)(struct Handler *);
-typedef void (__fastcall *TimeEvent)(struct Handler *, float);
 struct Listener { Event *methods; unsigned reserved; unsigned char enabled; };
 struct Handler { void **methods; };
 struct Child {
@@ -21,7 +20,6 @@ struct Child {
 };
 extern struct Service *ui_service;
 extern void __fastcall prepare_child(struct Service *, struct Word);
-extern void __fastcall evaluate_time(struct Child *, float, struct Word, struct Word);
 
 static __forceinline void visit(struct Child *child, unsigned slot)
 {
@@ -44,10 +42,4 @@ void __fastcall run_child(struct Child *child)
     visit(child, 1);
     ((Run)child->handler->methods[2])(child->handler);
     visit(child, 2);
-}
-
-void __fastcall update_child(struct Child *child, float time, struct Word interval, struct Word mode)
-{
-    evaluate_time(child, time, interval, mode);
-    ((TimeEvent)child->handler->methods[7])(child->handler, time);
 }

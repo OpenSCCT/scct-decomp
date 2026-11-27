@@ -1374,7 +1374,7 @@
     "identification": "The MGM area child search calls this getter to return the child ID at +0x24 by value. MSVC returns its four-byte class using a hidden destination, which distinguishes this member from a source-level out parameter.",
     "match": {
       "bytes_sha256": "882927cd2d4bab506455a07314226c5d31f3136be456d6b2f0cb52820be5ad56",
-      "inputs_sha256": "c384defe29852e62f66839098c5fa00fe2a45a90ace784275fd60cb26c453939"
+      "inputs_sha256": "a79329f8d7912e3727b8f94d0297965cedf52a35d54df0fb154e516de5dcc555"
     }
   },
   {
@@ -1402,27 +1402,66 @@
     }
   },
   {
-    "id": "component-child-update-2a4980",
-    "size": 43,
-    "offset": 2771328,
+    "id": "versus-mgm-area-get-frame",
+    "offset": 2771104,
+    "size": 88,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GF- /c /Folocal/versus_mgm_area_timeline.obj src/versus_mgm_area_timeline.cpp",
     "inputs": [
-      "src/versus_component_timing.c"
+      "src/versus_mgm_area_timeline.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h"
     ],
-    "rebuilt_symbol": "@set_enabled@16",
+    "rebuilt_symbol": "?GetFrame@MgmArea@@QBEHXZ",
+    "identification": "MgmArea::GetFrame. The shared hack and alarm clock updates at 0x230630 and 0x230750 test its result before restarting animation. It converts the area’s time back to a frame index and rounds using the fractional frame.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "__real@447a0000": {
+        "va": 281086736,
+        "basis": "The read-only IEEE binary32 constant 1000 in frame and time arithmetic. Its complete compiler-emitted value is checked against retail."
+      },
+      "__real@3f800000": {
+        "va": 281086460,
+        "basis": "The read-only IEEE binary32 constant 1 in frame and time arithmetic. Its complete compiler-emitted value is checked against retail."
+      },
+      "__real@3f000000": {
+        "va": 281086480,
+        "basis": "The read-only IEEE binary32 constant 0.5 in frame and time arithmetic. Its complete compiler-emitted value is checked against retail."
+      },
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "MSVC x86 converts the final floating-point frame position to an integer through its CRT helper."
+      }
+    },
+    "match": {
+      "bytes_sha256": "4df29f50af34b2ce5761fc7fd8f93f590a05536edcc948461fbbd2a9e1d6644c",
+      "inputs_sha256": "02dc6885f87245d951d39f8ec77b70a37013f83e1e07a339ba72232caadf7d69"
+    }
+  },
+  {
+    "id": "component-child-update-2a4980",
+    "offset": 2771328,
+    "size": 43,
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_component_timing.obj src/versus_component_timing.c",
-    "identification": "Complete indexed Versus method at RVA 0x2a4980. Sets the component enabled byte and optionally propagates it to each child.",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_area_timeline.obj src/versus_mgm_area_timeline.cpp",
+    "inputs": [
+      "src/versus_mgm_area_timeline.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h"
+    ],
+    "rebuilt_symbol": "?SetVisible@MgmArea@@QAEXEE@Z",
+    "identification": "MgmArea::SetVisible. Stores its visibility at +0x3d and optionally propagates it to each MgmChild’s +4 visibility field. The measured player, spy and spectator HUD resource methods use this same area operation. Both the prior C reconstruction and this typed member reproduce every measured byte with VC7.0 13.00.9466 and VC7.1 13.10.3052 /O2 /Gy. VC7.0 also reproduces the retail alignment padding. These instructions do not identify the original compiler.",
     "match": {
       "bytes_sha256": "1ee5447ff6747700b7f0c172ae487764ffc826aee825e4a6d3b85f03c7ab9419",
-      "inputs_sha256": "c24b670c064e0b410aaf5faa91f7d95c9ed9d042f3a79fdf914eacfc0665f44c"
-    },
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
-      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
-      "flags": [
-        "/O2"
-      ],
-      "basis": "evidence/versus-vc71-o2.md"
+      "inputs_sha256": "54c8a2523517bc39221bc2dbfa49fb247ed91986139c470383cb9dec51f726ec"
     }
   },
   {
@@ -1435,7 +1474,7 @@
     "rebuilt_symbol": "@run_children@4",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_component_timing.obj src/versus_component_timing.c",
-    "identification": "Complete indexed Versus method at RVA 0x2a49b0. Calls the child update method for every child when the component is enabled.",
+    "identification": "Complete indexed Versus method at RVA 0x2a49b0. Calls the child update method for every child when the component is enabled. The same original C source rebuilds all measured instructions with both VC7.0 13.00.9466 and VC7.1 13.10.3052 /O2 /Gy. VC7.0’s complete alignment tail also matches the following retail NOPs; the compiler discriminator used by the earlier attribution does not distinguish this function.",
     "link_bindings": {
       "@run_child@4": {
         "va": 280692176,
@@ -1444,39 +1483,110 @@
     },
     "match": {
       "bytes_sha256": "b52150c24c572b740db854007400f4cf35c0f267dac927501bd06c5c64979754",
-      "inputs_sha256": "d99e08a70e288b6256d8f8aab3aab8ca015bc904564b6f57c7b5f2a234cec88a"
-    },
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
-      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
-      "flags": [
-        "/O2"
-      ],
-      "basis": "evidence/versus-vc71-o2.md"
+      "inputs_sha256": "bdc06cd0da019233f813243e3123f9c91c58aefd249663561fcbe58949391ccb"
     }
   },
   {
     "id": "component-child-update-2a49e0",
-    "size": 59,
     "offset": 2771424,
-    "inputs": [
-      "src/versus_component_timing.c"
-    ],
-    "rebuilt_symbol": "@set_flag@8",
+    "size": 59,
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_component_timing.obj src/versus_component_timing.c",
-    "identification": "Complete indexed Versus method at RVA 0x2a49e0. Notifies child handler slot 5 when the component flag changes.",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_area_timeline.obj src/versus_mgm_area_timeline.cpp",
+    "inputs": [
+      "src/versus_mgm_area_timeline.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h"
+    ],
+    "rebuilt_symbol": "?SetPlaying@MgmArea@@QAEXE@Z",
+    "identification": "MgmArea::SetPlaying. Stores its playback state at +0x3c if it changed and forwards the changed state to virtual slot 5 of every child content. MgmPlayerHud::UpdateClock calls it when the final minute begins. Both the prior C reconstruction and this typed member reproduce every measured byte with VC7.0 13.00.9466 and VC7.1 13.10.3052 /O2 /Gy. VC7.0 also reproduces the retail alignment padding. These instructions do not identify the original compiler.",
     "match": {
       "bytes_sha256": "780a2ee40c76ff663d570e22f98c8edd787f6581ff336db1a9f47fb562bb8c57",
-      "inputs_sha256": "3fe129f5c220ad045567e37c76ac59680af96441fbb43fb7681e2bbd7c3fd470"
+      "inputs_sha256": "a4796d354c8629b0f1b55363286c939eac286918be3898752d5c5c795b856974"
+    }
+  },
+  {
+    "id": "versus-mgm-area-set-time",
+    "offset": 2771488,
+    "size": 62,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GF- /c /Folocal/versus_mgm_area_timeline.obj src/versus_mgm_area_timeline.cpp",
+    "inputs": [
+      "src/versus_mgm_area_timeline.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h"
+    ],
+    "rebuilt_symbol": "?SetTime@MgmArea@@QAEXME@Z",
+    "identification": "MgmArea::SetTime. The frame setter at 0x2266e0 calls this function. It writes the area’s playback time at +0x34 and walks the child range, passing the same time, its frame interval and the update flag to each child.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?SetTime@MgmChild@@QAEXMHE@Z": {
+        "va": 280692080,
+        "basis": "Evaluates the child keys then calls content vtable slot 7 with the requested playback position."
+      }
     },
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
-      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
-      "flags": [
-        "/O2"
-      ],
-      "basis": "evidence/versus-vc71-o2.md"
+    "match": {
+      "bytes_sha256": "957d55839b848d4883109d08a44160d1175c879961a7ab6508e73f12daeeae74",
+      "inputs_sha256": "f080a312c7151db40258b7944a7ea853a321179393acac14ab7f2fb3932e8d48"
+    }
+  },
+  {
+    "id": "versus-mgm-area-tick",
+    "offset": 2771552,
+    "size": 68,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GF- /c /Folocal/versus_mgm_area_timeline.obj src/versus_mgm_area_timeline.cpp",
+    "inputs": [
+      "src/versus_mgm_area_timeline.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h"
+    ],
+    "rebuilt_symbol": "?Tick@MgmArea@@QAEXM@Z",
+    "identification": "MgmArea::Tick. The menu-system tick at 0x2a7135 calls this function. While playing, it advances the area’s timeline by DeltaSeconds. It then ticks every child with the current time, elapsed seconds and the frame interval.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?Tick@MgmChild@@QAEXMMHE@Z": {
+        "va": 280692128,
+        "basis": "Evaluates the child keys then calls the content tick with the timeline position and delta."
+      }
+    },
+    "match": {
+      "bytes_sha256": "9ae825f6ada528eb3951cf4ef0b2295f35830538d2c8da9edcc78db8d08f60b1",
+      "inputs_sha256": "3aaeba6e405a81f042688252273864aa7f3557df5c08aa2251f44f7c90cfbca6"
+    }
+  },
+  {
+    "id": "versus-mgm-area-get-bounds",
+    "offset": 2771632,
+    "size": 187,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GF- /c /Folocal/versus_mgm_area_timeline.obj src/versus_mgm_area_timeline.cpp",
+    "inputs": [
+      "src/versus_mgm_area_timeline.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h"
+    ],
+    "rebuilt_symbol": "?GetBounds@MgmArea@@QBEAAUMgmImageRegion@@AAU2@@Z",
+    "identification": "MgmArea::GetBounds. At 0x230a63 and 0x230abf the HUD supplies an eight-byte rectangle to this function. It obtains each child content’s bounds at virtual slot 4 and accumulates the minimum left/top and maximum right/bottom signed coordinates. The return value points to the caller’s output region.",
+    "coff_alignment": 16,
+    "match": {
+      "bytes_sha256": "fa49b646e7f85e9ad816250c45b13cc61df24c36ccacf749c558d56f326361b5",
+      "inputs_sha256": "27e4c63570457c05d2cba6824a2831c3283e4a9e3099fa6bfc90e75e9166a4c3"
     }
   },
   {
@@ -1501,7 +1611,7 @@
     },
     "match": {
       "bytes_sha256": "dc2828f54e4de1cad62123478353dc5e3893aad13e5d72c397275b11d0e3b16c",
-      "inputs_sha256": "8e508f26a6d537b126233c843922060b8497158a9658d8d47d31df7b387d1980"
+      "inputs_sha256": "e03bd6f602270eeced2ec82656882f885fcb09dc1de3a80effa5d8142dab5706"
     }
   },
   {
@@ -1554,7 +1664,7 @@
     "identification": "The MGM package lookup calls this getter for each area or page, returning the ID stored at +0x20 by value. P_HudATT and A_JaugeEnergie match the IDs in the shipped Hud.mgm package.",
     "match": {
       "bytes_sha256": "9a634b06cf67a6a46d9d1999aa003d3390bc89406ef199d448c5c6d66568e1e9",
-      "inputs_sha256": "9287a8abaf19c206c0f2dac927e750816a0d4a310314e51a16ca1d3348b42480"
+      "inputs_sha256": "4da600ae607b4c30effbcb33162c2cbefb07f4cdb98131bbf15ed0e89e55d92a"
     }
   },
   {
@@ -1678,7 +1788,7 @@
     },
     "match": {
       "bytes_sha256": "6a5ade839ade50cf52d1019af1cbd4528a77775053394938f92369b8f4004ecf",
-      "inputs_sha256": "44a662617651080155e3b825c4101b7a987668fd3b2ac633790a32e6d2f86f5e"
+      "inputs_sha256": "be20de08bff324de6d7071e4e7fcc30c8fe3c9b1d3070c92493a42c32f9f44c7"
     }
   },
   {

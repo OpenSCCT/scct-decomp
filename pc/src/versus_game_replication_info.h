@@ -27,7 +27,11 @@ public:
 
     FString               unk_2f8;
     FString               unk_304;
-    BYTE                  unk_310[0x68];
+    DWORD                 GameFlags;
+    INT                   RemainingTime, ElapsedTime, RemainingMinute;
+    FLOAT                 SecondCount;
+    INT                   TimeLimit;
+    BYTE                  unk_328[0x378 - 0x328];
     FString               unk_378;
     FString               unk_384;
     FString               unk_390;

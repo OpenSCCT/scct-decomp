@@ -99,32 +99,59 @@
   },
   {
     "id": "child-event-2b0570",
-    "size": 40,
     "offset": 2819440,
-    "inputs": [
-      "src/versus_child_events.c"
-    ],
-    "rebuilt_symbol": "@update_child@16",
+    "size": 40,
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_child_events.obj src/versus_child_events.c",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_child_timeline.obj src/versus_mgm_child_timeline.cpp",
+    "inputs": [
+      "src/versus_mgm_child_timeline.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h"
+    ],
+    "rebuilt_symbol": "?SetTime@MgmChild@@QAEXMHE@Z",
+    "identification": "MgmChild::SetTime. Each MgmArea::SetTime iteration calls this member. It evaluates the current keys with the real frame interval and event flag, then passes the new playback position to content vtable slot 7. Both the prior C reconstruction and this typed member reproduce every measured byte with VC7.0 13.00.9466 and VC7.1 13.10.3052 /O2 /Gy. VC7.0 also reproduces the retail alignment padding. These instructions do not identify the original compiler.",
     "link_bindings": {
-      "@evaluate_time@16": {
+      "?EvaluateTime@MgmChild@@QAEXMHE@Z": {
         "va": 280691760,
-        "basis": "Indexed retail child processing helper."
+        "basis": "The shared keyframe evaluator locates the active key, interpolates or copies its state, and dispatches events on an index change when requested."
       }
     },
-    "identification": "Complete indexed child event method at RVA 0x2b0570. Evaluates the child time and forwards it to handler slot 7.",
     "match": {
       "bytes_sha256": "30ee44705186c8d0996fad41beb290766454a3bf91143344bece98b1ada9240c",
-      "inputs_sha256": "8785735f58ad3d28c059eca41e84b00d5f4008a5dae159400223529ca0a0b379"
+      "inputs_sha256": "5bd4484c75bc23926323f193ae0e817ce7e07d1a4f75d8acc309fb44b7379680"
+    }
+  },
+  {
+    "id": "versus-mgm-child-tick",
+    "offset": 2819488,
+    "size": 45,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GF- /c /Folocal/versus_mgm_child_timeline.obj src/versus_mgm_child_timeline.cpp",
+    "inputs": [
+      "src/versus_mgm_child_timeline.cpp",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h"
+    ],
+    "rebuilt_symbol": "?Tick@MgmChild@@QAEXMMHE@Z",
+    "identification": "MgmChild::Tick. The area timeline calls this for each child at 0x2a4a8f. It first evaluates the keys at the current time then passes time and delta to content vtable slot 6.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?EvaluateTime@MgmChild@@QAEXMHE@Z": {
+        "va": 280691760,
+        "basis": "The shared keyframe evaluator locates the active key, interpolates or copies its state, and dispatches events on an index change when requested."
+      }
     },
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
-      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
-      "flags": [
-        "/O2"
-      ],
-      "basis": "evidence/versus-vc71-o2.md"
+    "match": {
+      "bytes_sha256": "73b7217ef4b684702a83519cfe735a8364c1eda8273a692121171221154effd9",
+      "inputs_sha256": "b72fd0b52477d8fccf0716480c5bfccd27eef6a7c008bdfbbe2699a0d2880d66"
     }
   },
   {
@@ -147,18 +174,10 @@
         "basis": "Indexed retail child processing helper."
       }
     },
-    "identification": "Complete indexed child event method at RVA 0x2b05d0. Runs the handler between two reverse-order listener passes when the child is active.",
+    "identification": "Complete indexed child event method at RVA 0x2b05d0. Runs the handler between two reverse-order listener passes when the child is active. The same original C source rebuilds all measured instructions with both VC7.0 13.00.9466 and VC7.1 13.10.3052 /O2 /Gy. VC7.0’s complete alignment tail also matches the following retail NOPs; the compiler discriminator used by the earlier attribution does not distinguish this function.",
     "match": {
       "bytes_sha256": "c129fc301b3f6972cf1b751fe5a574aff609e9f60f5e9f8c39fe2becb21d1bac",
-      "inputs_sha256": "9e6dcf954e6bfeba577f723669c2f6a77f63f918d16c9171f4538dc1a871f251"
-    },
-    "recipe_evidence": {
-      "compiler": "Microsoft C/C++ 13.10.3052 for x86",
-      "original_compiler": "Microsoft C/C++ 13.10.3077 for x86",
-      "flags": [
-        "/O2"
-      ],
-      "basis": "evidence/versus-vc71-o2.md"
+      "inputs_sha256": "ccd4289f712ad7efccedc67890dad8ef7e4ac0f64fcbe703863ab54d05babb9a"
     }
   },
   {

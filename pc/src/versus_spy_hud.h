@@ -11,6 +11,12 @@ class APlayerController;
 class MgmPlayerHud : public MgmHudPage {
 public:
     virtual void InitResources();
+    virtual void PlayerHudSlot15();
+    virtual void UpdateGauge();
+    virtual void UpdateGadget();
+    virtual void UpdateClock();
+    virtual void UpdateHackTimer();
+    virtual void UpdateAlarmTimer();
 
     APlayerController *Controller;
     BYTE Unknownb8[0xc0 - 0xb8];
@@ -31,9 +37,9 @@ public:
     BYTE Unknown140[0x17c - 0x140];
     MgmContent *GadgetName;
     MgmPackage *Options;
-    BYTE Unknown184[0x1ac - 0x184];
+    TCHAR ClockLabel[20];
     MgmArea *Clock;
-    MgmContent *ClockText;
+    MgmTextContent *ClockText;
     BYTE ClockActive;
     BYTE Unknown1b5[0x1e0 - 0x1b5];
     MgmArea *HackTimer;

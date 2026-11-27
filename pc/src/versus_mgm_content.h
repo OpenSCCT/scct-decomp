@@ -6,6 +6,13 @@
 // A child owns this polymorphic object and invokes its deleting destructor.
 struct MgmContent {
     virtual ~MgmContent();
+    virtual void ContentSlot1();
+    virtual void ContentSlot2();
+    virtual void ContentSlot3();
+    virtual void GetBounds(MgmImageRegion &Region) const;
+    virtual void SetPlaying(BYTE Value);
+    virtual void Tick(FLOAT Seconds, FLOAT DeltaSeconds);
+    virtual void SetTime(FLOAT Seconds);
 };
 
 struct MgmImageContent : MgmContent {

@@ -35,7 +35,7 @@ void MgmPlayerHud::InitResources()
     GadgetNumber = FindMgmChild(Gadget, "NbGadget")->Content;
 
     Clock = FindMgmArea(Package, "A_Chrono");
-    ClockText = FindMgmChild(Clock, "Chrono")->Content;
+    ClockText = static_cast<MgmTextContent *>(FindMgmChild(Clock, "Chrono")->Content);
     if (Controller->GameReplicationInfo->GameMode == GM_DeathMatch) {
         FindMgmArea(Package, "A_Objectif")->SetVisible(0, 1);
         Objective = FindMgmArea(Package, "A_deathmatch");
