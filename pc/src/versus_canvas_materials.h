@@ -51,7 +51,8 @@ public:
     BYTE unk_64[0xc];
     TArray<FMipmap> Mips;
     BYTE unk_7c[0xb4 - 0x7c];
-    DWORD : 5;
+    DWORD : 4;
+    DWORD bParametric : 1;
     DWORD bRealtimeChanged : 1;
     DWORD : 26;
     BYTE unk_b8[8];
