@@ -2,9 +2,7 @@
 // Neutral names: the class owning this constructor is not identified yet.
 // It builds a packed code list from a 16-group table of (a,b) pairs and
 // links itself into the owner's list at owner+0x40b4.
-typedef unsigned short TCHAR;
-typedef int INT;
-typedef unsigned long DWORD;
+#include "versus_shader_declaration.h"
 
 class FMalloc
 {
@@ -42,36 +40,6 @@ public:
     }
 };
 
-struct FPair_6a2f0
-{
-    INT A;
-    INT B;
-    FPair_6a2f0(); // 0x68f30
-};
-
-struct FGroup_6a2f0
-{
-    FPair_6a2f0 Pairs[8];
-    INT NumPairs;
-    FGroup_6a2f0() : NumPairs(0) {}
-};
-
-// 0x444 bytes, initialised by its constructor (FUN_1096ac30).
-class FTable_6a2f0
-{
-public:
-    FGroup_6a2f0 Groups[16];
-    INT NumGroups;
-    FTable_6a2f0();
-};
-
-// RVA 0x6ac30 (not part of this item; defined here so the LTCG link gives it
-// the same this-on-stack convention retail uses at the call site).
-FTable_6a2f0::FTable_6a2f0()
-{
-    NumGroups = 0;
-}
-
 class UnnamedClass_6a2f0;
 
 struct FOwner_6a2f0
@@ -84,31 +52,31 @@ class UnnamedClass_6a2f0
 {
 public:
     INT Unknown0;
-    FTable_6a2f0 Table;
+    FShaderDeclaration Table;
     TArray<DWORD> Codes;
     INT Unknown454;
     FOwner_6a2f0 *Owner;
     UnnamedClass_6a2f0 *Next;
 
-    UnnamedClass_6a2f0(FOwner_6a2f0 *InOwner, const FTable_6a2f0 &InTable);
+    UnnamedClass_6a2f0(FOwner_6a2f0 *InOwner, const FShaderDeclaration &InTable);
 };
 
-UnnamedClass_6a2f0::UnnamedClass_6a2f0(FOwner_6a2f0 *InOwner, const FTable_6a2f0 &InTable)
+UnnamedClass_6a2f0::UnnamedClass_6a2f0(FOwner_6a2f0 *InOwner, const FShaderDeclaration &InTable)
 {
     Owner = InOwner;
     Table = InTable;
-    for (INT i = 0; i < Table.NumGroups; i++) {
+    for (INT i = 0; i < Table.NumStreams; i++) {
         Codes.AddItem(i | 0x20000000);
-        for (INT j = 0; j < Table.Groups[i].NumPairs; j++) {
+        for (INT j = 0; j < Table.Streams[i].NumComponents; j++) {
             DWORD Hi = 0;
             DWORD Lo = 0;
-            INT A = Table.Groups[i].Pairs[j].A;
+            INT A = Table.Streams[i].Components[j].Type;
             if (A == 0) Hi = 3;
             else if (A == 1) Hi = 2;
             else if (A == 2) Hi = 1;
             else if (A == 3) Hi = 0;
             else if (A == 4) Hi = 4;
-            INT B = Table.Groups[i].Pairs[j].B;
+            INT B = Table.Streams[i].Components[j].Function;
             if (B == 0) Lo = 0;
             else if (B == 1) Lo = 3;
             else if (B == 2) Lo = 5;
@@ -133,7 +101,7 @@ UnnamedClass_6a2f0::UnnamedClass_6a2f0(FOwner_6a2f0 *InOwner, const FTable_6a2f0
 void Escape(void *);
 inline void *operator new(unsigned int, void *Mem) { return Mem; }
 inline void operator delete(void *, void *) {}
-void Driver_6a2f0(void *Mem, FOwner_6a2f0 *O, const FTable_6a2f0 *T)
+void Driver_6a2f0(void *Mem, FOwner_6a2f0 *O, const FShaderDeclaration *T)
 {
     Escape(&GMalloc);
     new (Mem) UnnamedClass_6a2f0(O, *T);

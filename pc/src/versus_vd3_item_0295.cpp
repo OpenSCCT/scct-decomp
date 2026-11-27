@@ -8,11 +8,8 @@
 // Both LTCG functions are reached from virtual wrappers (0x770d0, 0x77100)
 // by tail jumps, so they keep a standard stack convention with the render
 // interface as the first argument; the drivers take their addresses for that.
-typedef int INT;
-typedef unsigned long DWORD;
-typedef float FLOAT;
-typedef unsigned short TCHAR;
-typedef unsigned char BYTE;
+#include "versus_shader_declaration.h"
+
 typedef unsigned __int64 QWORD;
 
 struct D3DXMATRIX { FLOAT m[4][4]; };
@@ -95,11 +92,6 @@ inline void operator delete(void *Ptr, const TCHAR *Tag) { GMalloc->Free(Ptr); }
 extern const TCHAR FD3DVertexStream_Tag[];          // L"FD3DVertexStream"
 extern const TCHAR FD3DDynamicVertexStream_Tag[];   // L"FD3DDynamicVertexStream"
 
-struct FVertexComponent {
-    DWORD Type;
-    DWORD Function;
-};
-
 class FVertexStream {
 public:
     virtual QWORD GetCacheId();                         // +0x00
@@ -112,20 +104,8 @@ public:
     virtual void GetStreamData(void *Dest);             // +0x1c
 };
 
-struct FStreamDeclaration {
-    FVertexComponent Components[8];
-    INT NumComponents;
-    FStreamDeclaration() { NumComponents = 0; }
-    FStreamDeclaration(FVertexStream *Stream) { NumComponents = Stream->GetComponents(Components); }
-};
-
-// Retail 0x6ac30.
-struct FShaderDeclaration {
-    FStreamDeclaration Streams[16];
-    INT NumStreams;
-    FShaderDeclaration();
-    ~FShaderDeclaration() {}
-};
+inline FStreamDeclaration::FStreamDeclaration(FVertexStream *Stream)
+    : NumComponents(Stream->GetComponents(Components)) {}
 
 struct IDirect3DVertexBuffer8 {
     virtual void __stdcall S0(); virtual void __stdcall S1(); virtual long __stdcall Release();
@@ -351,15 +331,6 @@ INT __stdcall SetDynamicStream(FD3DRenderInterface *RI, INT Shader, FVertexStrea
 // stand-in bodies only so the linker sees them as /GL code and picks register
 // conventions as retail did.
 void Escape(void *);
-void __stdcall InitComponents(FVertexComponent *Components, INT Size, INT Count);
-__declspec(noinline) FShaderDeclaration::FShaderDeclaration()
-{
-    for (INT i = 0; i < 16; i++) {
-        InitComponents(Streams[i].Components, 8, 8);
-        Streams[i].NumComponents = 0;
-    }
-    NumStreams = 0;
-}
 __declspec(noinline) FD3DResource::FD3DResource(UD3DRenderDevice *InRenDev, QWORD InCacheId)
 {
     RenDev = InRenDev;

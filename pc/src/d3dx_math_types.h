@@ -30,6 +30,19 @@ struct D3DXQUATERNION {
     FLOAT y;
     FLOAT z;
     FLOAT w;
+
+    D3DXQUATERNION() {}
+    D3DXQUATERNION(FLOAT x, FLOAT y, FLOAT z, FLOAT w)
+        : x(x), y(y), z(z), w(w) {}
+
+    operator FLOAT *() { return &x; }
+    operator const FLOAT *() const { return &x; }
+
+    D3DXQUATERNION operator-() const;
+    D3DXQUATERNION operator+(const D3DXQUATERNION &q) const;
+    D3DXQUATERNION operator-(const D3DXQUATERNION &q) const;
+    D3DXQUATERNION operator*(const D3DXQUATERNION &q) const;
+    D3DXQUATERNION operator*(FLOAT scale) const;
 };
 
 struct D3DXPLANE {

@@ -252,7 +252,7 @@ D3DXQUATERNION *__stdcall c_D3DXQuaternionNormalize(D3DXQUATERNION *out, const D
             *out = *v;
     } else if (lengthSq > FLT_MIN) {
         FLOAT scale = 1.0f / static_cast<FLOAT>(sqrt(lengthSq));
-        D3DXQUATERNION scaled = { v->x * scale, v->y * scale, v->z * scale, v->w * scale };
+        D3DXQUATERNION scaled(v->x * scale, v->y * scale, v->z * scale, v->w * scale);
         *out = scaled;
     } else {
         out->x = 0.0f;
@@ -285,6 +285,22 @@ D3DXQUATERNION *__stdcall c_D3DXQuaternionInverse(D3DXQUATERNION *out, const D3D
         out->y = 0.0f;
         out->z = 0.0f;
         out->w = 0.0f;
+    }
+    return out;
+}
+
+D3DXQUATERNION *__stdcall c_D3DXQuaternionBaryCentric(D3DXQUATERNION *out,
+    const D3DXQUATERNION *a, const D3DXQUATERNION *b, const D3DXQUATERNION *c, FLOAT f, FLOAT g)
+{
+    FLOAT sum = f + g;
+    if (WithinEpsilon(sum, 0.0f)) {
+        if (out != a)
+            *out = *a;
+    } else {
+        D3DXQUATERNION ab, ac;
+        D3DXQuaternionSlerp(&ab, a, b, sum);
+        D3DXQuaternionSlerp(&ac, a, c, sum);
+        D3DXQuaternionSlerp(out, &ab, &ac, g / sum);
     }
     return out;
 }
