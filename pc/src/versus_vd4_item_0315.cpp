@@ -1,59 +1,12 @@
 // Work item 0315: Versus RVA 0x861a0-0x86542.
 // FVector/FCoords/FScale math helpers (Core UnMath.h) plus an owner-chain walk.
 
-typedef unsigned char BYTE;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
+#include "versus_global_math.h"
 
 template <class T> inline T Abs(const T A) { return (A >= (T)0) ? A : -A; }
 template <class T> inline T Max(const T A, const T B) { return (A >= B) ? A : B; }
 
-struct FVector {
-    FLOAT X, Y, Z;
-    FVector() {}
-    FVector(FLOAT InX, FLOAT InY, FLOAT InZ) : X(InX), Y(InY), Z(InZ) {}
-    FVector(const FVector &V) : X(V.X), Y(V.Y), Z(V.Z) {}
-    FVector &operator-=(const FVector &V) { X -= V.X; Y -= V.Y; Z -= V.Z; return *this; }
-    FVector operator*=(const FVector &V) { X *= V.X; Y *= V.Y; Z *= V.Z; return *this; }
-    FLOAT GetAbsMax() const;
-};
-
-struct FScale {
-    FVector Scale;
-    FLOAT SheerRate;
-    BYTE SheerAxis;
-};
-
-enum ESheerAxis {
-    SHEER_None = 0,
-    SHEER_XY = 1,
-    SHEER_XZ = 2,
-    SHEER_YX = 3,
-    SHEER_YZ = 4,
-    SHEER_ZX = 5,
-    SHEER_ZY = 6,
-};
-
 FLOAT FSheerSnap(FLOAT Sheer);
-
-struct FCoords {
-    FVector Origin;
-    FVector XAxis;
-    FVector YAxis;
-    FVector ZAxis;
-    FCoords &operator*=(const FCoords &TransformCoords);
-    FCoords &operator*=(const FVector &Point) { Origin -= Point; return *this; }
-    FCoords operator*(const FVector &Point) const;
-    FCoords &operator*=(const FScale &Scale);
-    FCoords operator*(const FScale &Scale) const;
-};
-
-struct FGlobalMath {
-    FCoords UnitCoords;
-};
-extern FGlobalMath GMath;
 
 // 0x86230
 FLOAT FVector::GetAbsMax() const

@@ -19010,6 +19010,62 @@
     }
   },
   {
+    "id": "versus-global-math-initializer",
+    "offset": 2983472,
+    "size": 10,
+    "inputs": [
+      "src/versus_global_math.cpp",
+      "src/versus_global_math.h",
+      "src/versus_level_trace_vector.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "rebuilt_symbol": "_$E1",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_global_math.obj src/versus_global_math.cpp",
+    "identification": "MSVC static initialization of GMath. The CRT initializer table at RVA 0x3347c4 holds this function, which loads the GMath address into EAX and tail-jumps to the constructor at RVA 0x50050. The next six initializer entries set reference pointers into the same object’s coordinate axes, origin and scale.",
+    "ltcg_link": {
+      "roots": [
+        "?GMath@@3UFGlobalMath@@A"
+      ],
+      "stubs": [
+        "__fltused"
+      ],
+      "rebuilt_offset": 1152,
+      "rebuilt_address": 268439680,
+      "fields": [
+        [
+          1,
+          "abs",
+          "?GMath@@3UFGlobalMath@@A"
+        ],
+        [
+          6,
+          "rel32",
+          "??0FGlobalMath@@QAE@XZ"
+        ]
+      ],
+      "symbols": {
+        "?GMath@@3UFGlobalMath@@A": 268443648,
+        "??0FGlobalMath@@QAE@XZ": 268439552
+      }
+    },
+    "link_bindings": {
+      "?GMath@@3UFGlobalMath@@A": {
+        "va": 281848832,
+        "basis": "The same GMath address is used by the coordinate and trigonometry code, including the SinCos member call at RVA 0x40da6. The following six static initializers independently bind member references into its 0x74-byte layout."
+      },
+      "??0FGlobalMath@@QAE@XZ": {
+        "va": 278200400,
+        "basis": "The sole direct transfer into the complete FGlobalMath constructor at RVA 0x50050. Its source reproduces all 99 bytes in this same link."
+      }
+    },
+    "match": {
+      "bytes_sha256": "4aaf64aef23323bb272e476b5cb6c69682d82e08540577a7cb656914ef7a8321",
+      "inputs_sha256": "ef7a2a67615e1172ea7594ad74cc2166a76752b5a6cba5131c6e1e707262bb84"
+    }
+  },
+  {
     "id": "startup-default-2d8640",
     "size": 11,
     "offset": 2983488,
@@ -20163,6 +20219,83 @@
         "/O2"
       ],
       "basis": "evidence/versus-vc71-o2.md"
+    }
+  },
+  {
+    "id": "versus-matrix-identity-initializer",
+    "offset": 2984544,
+    "size": 163,
+    "inputs": [
+      "src/versus_canvas_update.cpp",
+      "src/versus_build.h",
+      "src/versus_canvas.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_canvas_util.h",
+      "src/versus_arrays.h",
+      "src/versus_canvas_matrix.h",
+      "src/versus_canvas_viewport.h",
+      "src/unreal_script.h",
+      "src/versus_viewport_types.h",
+      "src/versus_matrix_determinant.inl",
+      "src/versus_matrix_inverse.inl",
+      "src/versus_matrix_product.inl"
+    ],
+    "rebuilt_symbol": "_$E1",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_update.obj src/versus_canvas_update.cpp",
+    "identification": "The pointer at RVA 0x334744 selects this dynamic initializer of the 64-byte matrix copied by FMatrix::Inverse for singular inputs. The CRT initialization routine passes the containing table bounds at RVA 0x2837fc to its iterator. The rebuilt .CRT$XCU slot selects the compiler-generated initializer independently. It creates the four unit-axis planes and calls FMatrix::FMatrix at RVA 0x4fbc0.",
+    "link_bindings": {
+      "?GIdentityMatrix@@3UFMatrix@@A": {
+        "va": 281843040,
+        "basis": "The full 64-byte dynamic identity matrix constructed at startup."
+      },
+      "??0FMatrix@@QAE@ABUFPlane@@000@Z": {
+        "va": 278199232,
+        "basis": "The verified four-plane FMatrix constructor at RVA 0x4fbc0 receives the four rows and the address of the identity matrix."
+      }
+    },
+    "ltcg_link": {
+      "roots": [
+        "?GIdentityMatrix@@3UFMatrix@@A"
+      ],
+      "stubs": [],
+      "rebuilt_offset": 2032,
+      "rebuilt_address": 268440560,
+      "fields": [
+        [
+          22,
+          "abs",
+          "?GIdentityMatrix@@3UFMatrix@@A"
+        ],
+        [
+          155,
+          "rel32",
+          "??0FMatrix@@QAE@ABUFPlane@@000@Z"
+        ]
+      ],
+      "symbols": {
+        "?GIdentityMatrix@@3UFMatrix@@A": 268443648,
+        "??0FMatrix@@QAE@ABUFPlane@@000@Z": 268439552
+      }
+    },
+    "ltcg_callees": [
+      "versus-vd-4fbc0",
+      "versus-object-find-function"
+    ],
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "8384205a79438a898b127f5d298f89a02a54b764cf17387307ca957cd3cb6d02",
+      "inputs_sha256": "83de072cf3fbd8c4603c622d6d39dcb4e192db59157d58f53229f6fca83097fb"
     }
   },
   {
