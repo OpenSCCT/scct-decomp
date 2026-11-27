@@ -1,10 +1,13 @@
 #ifndef VERSUS_MD5_H
 #define VERSUS_MD5_H
 
-#include "versus_secure_hash_algorithm_1.h"
+#include "versus_build.h"
+#include "unreal_types.h"
+#include "versus_cl_extalloc.h"
 
 class MD5 : public clExtalloc_Override_Baseclass {
 public:
+    MD5();
     virtual ~MD5();
     void Init();
     void Update(const BYTE *Input, DWORD Length);

@@ -17,6 +17,7 @@ from link_vtable_exports import resolve_vtable_exports, vtable_export_args
 from link_writable_strings import check_writable_strings
 from link_case_selectors import check_case_selectors
 from link_x86 import link_function
+from link_coff_rtti_vtables import check_rtti_spec, link_rtti_function
 from manifests import load_target, save_receipt
 
 
@@ -148,11 +149,15 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
             raise ValueError("original compiler and flag evidence is empty")
         fingerprints[relative] = fingerprint
     recipe = {k: v for k, v in unit.items() if k != "match"}
+    if "coff_rtti_vtable" in unit:
+        check_rtti_spec(unit)
     if "coff_switch_tail" in unit:
         switch_tail_site(unit)
     if "link_bindings" in unit:
         linker = Path(__file__).with_name("link_image.py" if "ltcg_link" in unit else "link_x86.py")
         validators = [linker]
+        if "coff_rtti_vtable" in unit:
+            validators.append(linker.with_name("link_coff_rtti_vtables.py"))
         if "coff_switch_tail" in unit:
             validators.append(linker.with_name("link_coff_switch_tail.py"))
         if "writable_strings" in unit.get("ltcg_link", {}):
@@ -266,6 +271,10 @@ def verify(target, original):
 
 def built_unit_bytes(target, unit, output, original=None):
     """Obtain the complete function at its specified position in the linked image."""
+    if "coff_rtti_vtable" in unit:
+        check_rtti_spec(unit)
+        if original is None:
+            raise ValueError("COFF RTTI verification needs the retail image")
     if "coff_switch_tail" in unit:
         switch_tail_site(unit)
     if "rebuilt_storage_class" in unit:
@@ -313,7 +322,9 @@ def built_unit_bytes(target, unit, output, original=None):
                 if not tail or address % alignment or end + tail > section["offset"] + section["size"]:
                     raise ValueError("COFF alignment extends beyond the code section or has invalid bounds")
                 length = unit["size"] + tail
-                if "link_bindings" in unit:
+                if "coff_rtti_vtable" in unit:
+                    contribution = link_rtti_function(output, unit, length, address, original, **readers)
+                elif "link_bindings" in unit:
                     contribution = link_function(output, unit["rebuilt_symbol"], length, address,
                                                  unit["link_bindings"], **readers)
                 else:
@@ -331,6 +342,8 @@ def built_unit_bytes(target, unit, output, original=None):
                 address = s["address"] + a - s["offset"]
                 if "coff_switch_tail" in unit:
                     return link_switch_tail(output, unit, address, original, s["offset"] + s["size"], **readers)
+                if "coff_rtti_vtable" in unit:
+                    return link_rtti_function(output, unit, unit["size"], address, original, **readers)
                 return link_function(output, unit["rebuilt_symbol"], unit["size"], address, unit["link_bindings"],
                                      **readers)
         raise ValueError("link address outside a measured code section")

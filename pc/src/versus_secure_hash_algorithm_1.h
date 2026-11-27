@@ -5,15 +5,11 @@
 #include "versus_build.h"
 #include "unreal_types.h"
 
-#include "versus_cldata.h"
-
-class clExtalloc_Override_Baseclass : public virtual ExtAlloc::OverrideAllocOperators {
-public:
-    virtual ~clExtalloc_Override_Baseclass();
-};
+#include "versus_cl_extalloc.h"
 
 class SecureHashAlgorithm1 : public clExtalloc_Override_Baseclass {
 public:
+    SecureHashAlgorithm1();
     virtual ~SecureHashAlgorithm1();
     void Init();
     void Update(const BYTE *Input, DWORD Length);

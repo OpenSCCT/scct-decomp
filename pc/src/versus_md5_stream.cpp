@@ -6,6 +6,11 @@ extern "C" void *__cdecl memset(void *, int, unsigned int);
 
 static BYTE Padding[64] = {0x80};
 
+MD5::MD5()
+{
+    Init();
+}
+
 void MD5::Init()
 {
     Finalized = false;
