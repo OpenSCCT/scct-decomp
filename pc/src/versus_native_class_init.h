@@ -6,6 +6,7 @@
 
 class FArchive;
 class FOutputDevice;
+struct FFrame;
 extern FOutputDevice *GError;
 class UObject;
 class UClass;
@@ -42,6 +43,7 @@ public:
 class UObject : public FUnknown {
 public:
     virtual ~UObject();
+    void execUndefined(FFrame &Stack, void *const Result);
     virtual void ProcessEvent(UFunction *Function, void *Parms, void *Result);
     virtual void ProcessDelegate(FName DelegateName, FScriptDelegate *Delegate, void *Parms, void *Result);
     virtual void ProcessState(FLOAT DeltaSeconds);
