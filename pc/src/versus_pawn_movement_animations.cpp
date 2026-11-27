@@ -66,7 +66,7 @@ void ASBasePawn::PlayRollUpAnimation()
 
 enum {
     SA_WAIT_CR2ST_2H = 81, SA_WAIT_CR2ST_0H = 84, SA_WALK_ST_0H = 85, SA_WALK_ST_0H_AFTERFL = 201,
-    SA_FALL_INERTE = 106, SA_ONLEDGE = 112, SA_ONFENCE = 128, SA_ROLLING = 130, SA_ROLLINGUP = 131,
+    SA_FALL_INERTE = 106, SA_DBL_JUMP_IMP = 110, SA_ONLEDGE = 112, SA_ONFENCE = 128, SA_ROLLING = 130, SA_ROLLINGUP = 131,
     SA_ON_PIPEH = 207, SA_ON_PIPEH_4 = 209
 };
 enum { PHYS_Walking = 1, PHYS_Falling = 2, PHYS_OnVerticalPlane = 8, PHYS_Ledge = 9, PHYS_OnPipeH = 14 };
@@ -162,6 +162,10 @@ void ASBasePawn::ExecuteAction(INT Action)
         setPhysics(PHYS_OnVerticalPlane, 0, GMath_UnitZ);
         PlayAnim(0, NAME_FencStAlNt0, 1.f, 0.f, 1);
         SetFenceAnimations();
+        break;
+    case SA_DBL_JUMP_IMP:
+        setPhysics(PHYS_Falling, 0, GMath_UnitZ);
+        MyDoJump();
         break;
     case SA_FALL_INERTE:
         SetCollision(1, 0, 0);

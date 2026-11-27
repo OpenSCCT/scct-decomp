@@ -179,9 +179,11 @@ public:
     BYTE unk_270[0x2d1 - 0x270];
     BYTE LightType;
     BYTE LightEffect;
-    BYTE unk_2d3[0x2d9 - 0x2d3];
+    BYTE unk_2d3[0x2d8 - 0x2d3];
+    BYTE Physics;
     BYTE DrawType;
-    BYTE unk_2da[0x2de - 0x2da];
+    BYTE unk_2da[3];
+    BYTE RemoteRole;
     BYTE Role;
     BYTE unk_2df[0x2e8 - 0x2df];
     BITFIELD unk_2e8_b0 : 11;
@@ -190,7 +192,9 @@ public:
     BITFIELD bDeleteMe : 1;
     BITFIELD bTicked : 1;
     BITFIELD bDynamicLight : 1;
-    BITFIELD unk_2e8_b18 : 14;
+    BITFIELD unk_2e8_b18 : 6;
+    BITFIELD bWorldGeometry : 1;
+    BITFIELD unk_2e8_b25 : 7;
     BITFIELD unk_2ec_b0 : 17;
     BITFIELD UsesLightBeam : 1;
     BITFIELD unk_2ec_b18 : 10;
@@ -264,7 +268,9 @@ public:
 
     BYTE unk_2f8[0x38c - 0x2f8];
     AController *Controller;
-    BYTE unk_390[0x400 - 0x390];
+    BYTE unk_390[0x3dc - 0x390];
+    FLOAT JumpZ;
+    BYTE unk_3e0[0x20];
     FLOAT CrouchHeight;
     FLOAT CrouchRadius;
     BYTE unk_408[0x480 - 0x408];
@@ -307,7 +313,9 @@ public:
     FVector vMoveAfterRM;
     BYTE unk_4c8[0x58c - 0x4c8];
     FVector LastZipP;
-    BYTE unk_598[0x62c - 0x598];
+    BYTE unk_598[0x5bc - 0x598];
+    FVector vWallJumpDir;
+    BYTE unk_5c8[0x62c - 0x5c8];
     class ASBasePawn *m_AttackTarget;
     ASBasePawn *m_AttackedBy;
     BYTE unk_634[0x644 - 0x634];
@@ -316,7 +324,9 @@ public:
     BYTE IK_Type;
     BYTE unk_719[2];
     BYTE IK_TypeBeforeDamage;
-    BYTE unk_71c[0x75c - 0x71c];
+    BYTE unk_71c[4];
+    INT sAction;
+    BYTE unk_724[0x75c - 0x724];
     FLOAT fBlendCoeffWalkAnim;
     BYTE unk_760[0x780 - 0x760];
     FName AWaitCrOut0;
@@ -397,7 +407,8 @@ public:
     BYTE unk_a08[4];
     FLOAT fWalkSpeedLimit;
     FLOAT fRunSpeedLimit;
-    BYTE unk_a14[0xa48 - 0xa14];
+    BYTE unk_a14[0xa44 - 0xa14];
+    INT nJumpNumber;
     FLOAT fBlendTimeWithC0;
     INT ChannelForBlendWithC0;
     BYTE unk_a50[0xa6c - 0xa50];
@@ -445,6 +456,8 @@ public:
     INT CheckLedgeGrab(BYTE Mode);
     void ReinitBecauseOfDivergences();
     void execReinitBecauseOfDivergences(struct FFrame &Stack, void *const Result);
+    void MyDoJump();
+    void execMyDoJump(FFrame &Stack, void *const Result);
     void ExecuteAction(INT Action);
     void PlayDamageAnimation(INT Action);
     void eventPlayFirstPersonDamage(INT TheAction);

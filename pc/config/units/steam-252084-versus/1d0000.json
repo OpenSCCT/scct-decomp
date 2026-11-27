@@ -118,7 +118,7 @@
     },
     "match": {
       "bytes_sha256": "3fa8c88fd9dd8561fc7350972312e026772f30af90bbce40a437486aa639edd1",
-      "inputs_sha256": "1fdd133923895194fbe3cbea7c9fd82b03f37d38d618aac8856fcf278946f2ed"
+      "inputs_sha256": "90c80b74387cbb665d75d6032e7a7505e3e8f463cf4649907cc4a493347224e9"
     }
   },
   {
@@ -253,9 +253,9 @@
         ]
       ],
       "symbols": {
-        "?FindFunctionChecked@UObject@@QAEPAVUFunction@@VFName@@H@Z": 268445424,
+        "?FindFunctionChecked@UObject@@QAEPAVUFunction@@VFName@@H@Z": 268445472,
         "$PawnDamageSpecialTable": 268441712,
-        "?ApplyBlendParams@USkeletalMeshInstance@@QAEKHMMMVFName@@K@Z": 268444272,
+        "?ApplyBlendParams@USkeletalMeshInstance@@QAEKHMMMVFName@@K@Z": 268444320,
         "__real@00000000": 268447760,
         "$PawnDamageStandingArmedTable": 268441728,
         "$PawnDamageStandingUnarmedTable": 268441780,
@@ -311,7 +311,7 @@
     },
     "match": {
       "bytes_sha256": "12e3df191dcf66ce28f026ac51b2c249a515e09d6a8658195f9d239bb9d2ffb5",
-      "inputs_sha256": "bb4ddde8933799a508dac722cc907aa97d0f1c722cfeac5cdddeee7b9b1a7f66"
+      "inputs_sha256": "29b2b914fe39a6a931bb7650016a19105dd2d2babf892573ee953e26e72c418e"
     }
   },
   {
@@ -386,7 +386,138 @@
     },
     "match": {
       "bytes_sha256": "d6fedd32a5efbacdd35b0364c4e8bac34c7c09c118d4c2b1b779e2b7bede82da",
-      "inputs_sha256": "1671e91396058e6266041d151d1569ae1e3ea6a35e784fb7d1f79acbebcbf4e2"
+      "inputs_sha256": "1c059705e437c2ce09ddb8f12854218e63a43337a8fdbbe0f252e6be99fdae66"
+    }
+  },
+  {
+    "id": "versus-pawn-my-do-jump",
+    "offset": 1965824,
+    "size": 422,
+    "inputs": [
+      "src/versus_pawn_jump_physics.cpp",
+      "src/versus_pawn_action_events.h",
+      "src/versus_pawn_collision_math.h",
+      "src/versus_level_trace_vector.h",
+      "src/versus_global_math.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_containers.h",
+      "src/versus_hardcoded_names.inl"
+    ],
+    "rebuilt_symbol": "?MyDoJump@ASBasePawn@@QAEXXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /GX /c /Folocal/versus_pawn_jump_physics.obj src/versus_pawn_jump_physics.cpp",
+    "identification": "The shipped editor guard names ASBasePawn::MyDoJump at editor RVA 0x3f9ed5. Steam native 1412 calls the function at 0x1e00be and the SA_DBL_JUMP_IMP case calls it at 0x1d8e85. SBase.u identifies nJumpNumber, vWallJumpDir and sAction. The Engine.u Actor field chain identifies bWorldGeometry, and EPhysics supplies all seven physics values. VC70 emits the full 422 bytes, including the distinct vector product on the second jump. VC71 13.10.3052 instead emits a 416-byte body with a different x87 schedule.",
+    "ltcg_link": {
+      "roots": [
+        "?execMyDoJump@ASBasePawn@@QAEXAAUFFrame@@QAX@Z"
+      ],
+      "stubs": [
+        "??D@YA?AUFVector@@MABU0@@Z",
+        "??KFCoords@@QBE?AU0@ABUFRotator@@@Z",
+        "?GMath@@3UFGlobalMath@@A",
+        "?GMath_UnitZ@@3ABUFVector@@B",
+        "__fltused"
+      ],
+      "fields": [
+        [
+          79,
+          "abs",
+          "?GMath_UnitZ@@3ABUFVector@@B"
+        ],
+        [
+          137,
+          "rel32",
+          "??D@YA?AUFVector@@MABU0@@Z"
+        ],
+        [
+          303,
+          "abs",
+          "?GMath@@3UFGlobalMath@@A"
+        ],
+        [
+          308,
+          "rel32",
+          "??KFCoords@@QBE?AU0@ABUFRotator@@@Z"
+        ],
+        [
+          318,
+          "abs",
+          "__real@c3480000"
+        ],
+        [
+          344,
+          "abs",
+          "__real@c3480000"
+        ],
+        [
+          362,
+          "abs",
+          "__real@c3480000"
+        ],
+        [
+          388,
+          "abs",
+          "__real@42480000"
+        ],
+        [
+          399,
+          "abs",
+          "?GMath_UnitZ@@3ABUFVector@@B"
+        ]
+      ],
+      "symbols": {
+        "?GMath_UnitZ@@3ABUFVector@@B": 268440019,
+        "??D@YA?AUFVector@@MABU0@@Z": 268440016,
+        "?GMath@@3UFGlobalMath@@A": 268440018,
+        "??KFCoords@@QBE?AU0@ABUFRotator@@@Z": 268440017,
+        "__real@c3480000": 268443652,
+        "__real@42480000": 268443648
+      },
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "constants": {
+        "__real@c3480000": 4,
+        "__real@42480000": 4
+      }
+    },
+    "link_bindings": {
+      "?GMath_UnitZ@@3ABUFVector@@B": {
+        "va": 281849020,
+        "basis": "The startup routine at 0x2d8670 assigns this slot the address of the Z axis in GMath.UnitCoords. Each change to falling physics passes it as the floor normal."
+      },
+      "??D@YA?AUFVector@@MABU0@@Z": {
+        "va": 278136176,
+        "basis": "The scalar-left FVector product at 0x40570 receives 250 and the SBasePawn.vWallJumpDir vector. The complete product has its own byte receipt."
+      },
+      "?GMath@@3UFGlobalMath@@A": {
+        "va": 281848832,
+        "basis": "The existing global-math constructor and all four Versus axis/zero pointer initializers identify GMath and its leading UnitCoords."
+      },
+      "??KFCoords@@QBE?AU0@ABUFRotator@@@Z": {
+        "va": 278139296,
+        "basis": "The complete FCoords rotator-division receipt at 0x411a0 identifies this call on GMath.UnitCoords with the pawn Rotation."
+      },
+      "__real@c3480000": {
+        "va": 281087596,
+        "basis": "The float constant -200 scales the surface-relative forward axis."
+      },
+      "__real@42480000": {
+        "va": 281086896,
+        "basis": "The float constant 50 increases the Z velocity after pushing away from a surface."
+      }
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "839ff3a7dca845f6b535a0dfb623d32f3bd6e2e7a19fab989505a1aeb4d54a33",
+      "inputs_sha256": "efa975157f5a81432ae5609cdda9020ff2e4126b9ea7027630858427dc26e5ef"
     }
   }
 ]

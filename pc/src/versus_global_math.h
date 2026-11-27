@@ -17,6 +17,8 @@ struct FScale {
         : Scale(InScale), SheerRate(InSheerRate), SheerAxis(InSheerAxis) {}
 };
 
+struct FRotator;
+
 struct FCoords {
     FVector Origin;
     FVector XAxis;
@@ -35,6 +37,7 @@ struct FCoords {
     FCoords operator*(const FVector &Point) const;
     FCoords &operator*=(const FScale &Scale);
     FCoords operator*(const FScale &Scale) const;
+    FCoords operator/(const FRotator &Rotation) const;
 };
 
 struct FGlobalMath {
