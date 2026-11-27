@@ -195,3 +195,23 @@ extern "C" D3DXVECTOR4 *__stdcall D3DXVec4BaryCentric(
     pOut->w = f * (pV2->w - pV1->w) + g * (pV3->w - pV1->w) + pV1->w;
     return pOut;
 }
+
+extern "C" D3DXVECTOR4 *__stdcall D3DXVec4Cross(
+    D3DXVECTOR4 *out, const D3DXVECTOR4 *a, const D3DXVECTOR4 *b, const D3DXVECTOR4 *c)
+{
+    D3DXVECTOR4 cross;
+    cross.x = (c->w * b->z - c->z * b->w) * a->y
+        - (c->w * b->y - c->y * b->w) * a->z
+        + (c->z * b->y - c->y * b->z) * a->w;
+    cross.y = (c->z * b->w - c->w * b->z) * a->x
+        - (c->x * b->w - c->w * b->x) * a->z
+        + (c->x * b->z - c->z * b->x) * a->w;
+    cross.z = (c->w * b->y - c->y * b->w) * a->x
+        - (c->w * b->x - c->x * b->w) * a->y
+        + (c->y * b->x - c->x * b->y) * a->w;
+    cross.w = (c->y * b->z - c->z * b->y) * a->x
+        - (c->x * b->z - c->z * b->x) * a->y
+        + (c->x * b->y - c->y * b->x) * a->z;
+    *out = cross;
+    return out;
+}

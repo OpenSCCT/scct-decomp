@@ -130,3 +130,52 @@ extern "C" D3DXMATRIX *__stdcall D3DXMatrixRotationYawPitchRoll(
     D3DXMatrixRotationQuaternion(pOut, &quaternion);
     return pOut;
 }
+
+extern "C" D3DXMATRIX *__stdcall D3DXMatrixRotationQuaternion(D3DXMATRIX *out, const D3DXQUATERNION *q)
+{
+    float x2 = q->x * 2.0f;
+    float y2 = q->y * 2.0f;
+    float z2 = q->z * 2.0f;
+    float wx = q->w * x2;
+    float wy = q->w * y2;
+    float wz = q->w * z2;
+    float xx = q->x * x2;
+    float xy = q->x * y2;
+    float xz = q->x * z2;
+    float yy = q->y * y2;
+    float yz = q->y * z2;
+    float zz = q->z * z2;
+
+    out->m[0][0] = 1.0f - yy - zz;
+    out->m[0][1] = xy + wz;
+    out->m[0][2] = xz - wy;
+    out->m[0][3] = 0.0f;
+    out->m[1][0] = xy - wz;
+    out->m[1][1] = 1.0f - xx - zz;
+    out->m[1][2] = yz + wx;
+    out->m[1][3] = 0.0f;
+    out->m[2][0] = xz + wy;
+    out->m[2][1] = yz - wx;
+    out->m[2][2] = 1.0f - xx - yy;
+    out->m[2][3] = 0.0f;
+    out->m[3][0] = 0.0f;
+    out->m[3][1] = 0.0f;
+    out->m[3][2] = 0.0f;
+    out->m[3][3] = 1.0f;
+    return out;
+}
+
+extern "C" D3DXQUATERNION *__stdcall D3DXQuaternionSlerp(
+    D3DXQUATERNION *out, const D3DXQUATERNION *start,
+    const D3DXQUATERNION *end, float t);
+
+extern "C" D3DXQUATERNION *__stdcall D3DXQuaternionSquad(D3DXQUATERNION *out,
+    const D3DXQUATERNION *q1, const D3DXQUATERNION *q2,
+    const D3DXQUATERNION *q3, const D3DXQUATERNION *q4, float t)
+{
+    D3DXQUATERNION endpoints, controls;
+    D3DXQuaternionSlerp(&endpoints, q1, q4, t);
+    D3DXQuaternionSlerp(&controls, q2, q3, t);
+    D3DXQuaternionSlerp(out, &endpoints, &controls, 2.0f * (t * (1.0f - t)));
+    return out;
+}
