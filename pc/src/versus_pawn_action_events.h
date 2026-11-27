@@ -259,7 +259,9 @@ public:
     BYTE unk_ada;
     BYTE SPawnType;
     BYTE unk_adc[0xaf0 - 0xadc];
-    BITFIELD unk_af0_0 : 14;
+    BITFIELD unk_af0_0 : 4;
+    BITFIELD bQuickGadgetHasBegun : 1;
+    BITFIELD unk_af0_5 : 9;
     BITFIELD bLyingOnGround : 1;
     BITFIELD bNoRunAnimation : 1;
     BITFIELD unk_af0_16 : 3;
@@ -278,6 +280,7 @@ public:
     void ReinitBecauseOfDivergences();
     void execReinitBecauseOfDivergences(struct FFrame &Stack, void *const Result);
     void PlayWalkingAction(INT Action);
+    void eventNotifyQuickLaunch();
     void eventEvSetWeaponLoaded(INT num);
     void PlayDeathAnimation(INT Direction);
 };
