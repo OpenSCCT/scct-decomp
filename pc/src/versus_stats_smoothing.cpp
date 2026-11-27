@@ -1,5 +1,13 @@
 #include "versus_build.h"
 #include "versus_engine_stats.h"
+#include "versus_memory.h"
+
+INT FArray::AddZeroed(INT ElementSize, INT Count)
+{
+    INT first = Add(Count, ElementSize);
+    appMemzero((BYTE *)Data + first * ElementSize, Count * ElementSize);
+    return first;
+}
 
 // SmoothCounter is a descriptive name. The three mesh displays in FStats::Render
 // all apply this moving average to the current integer counters.
