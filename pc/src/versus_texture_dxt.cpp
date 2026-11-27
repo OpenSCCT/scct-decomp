@@ -190,17 +190,20 @@ void DecompressDXT1(const DWORD *Src, INT Width, INT Height, DWORD *Dest)
             Color[2] = (((G1 * 11 + G0 * 21) & 0x1fe000) | ((B1 * 11 + B0 * 21) & 0x1fe0) | ((R1 * 11 + R0 * 21) & 0x1fe00000)) >> 5;
             Color[3] = (((G1 * 21 + G0 * 11) & 0x1fe000) | ((B1 * 21 + B0 * 11) & 0x1fe0) | ((R1 * 21 + R0 * 11) & 0x1fe00000)) >> 5;
 
-            UBOOL UseTransparent = Color[1] >= Color[0];
+            const INT UseTransparent = Color[0] <= Color[1];
             DWORD *Row = Block;
             for (INT y = 0; y < BlockH; y++)
             {
-                DWORD *Pixel = Row;
-                for (INT x = 0; x < BlockW; x++, Pixel++)
+                for (INT x = 0; x < BlockW; x++)
                 {
+                    DWORD *Pixel = &Row[x];
                     if (Pixel >= End)
                         return;
                     DWORD Index = Indices & 3;
-                    *Pixel = Index == 3 && UseTransparent ? Color[3] : (0xff000000 | Color[Index]);
+                    if (Index == 3 && UseTransparent)
+                        *Pixel = Color[Index];
+                    else
+                        *Pixel = Color[Index] | 0xff000000;
                     Indices >>= 2;
                 }
                 Row += Width;

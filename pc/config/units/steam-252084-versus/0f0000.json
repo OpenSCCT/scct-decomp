@@ -1791,7 +1791,7 @@
     },
     "match": {
       "bytes_sha256": "1c355befd63fa5c05faaa06cefb6abd3aa2e510e882fe86072b923fc94966d68",
-      "inputs_sha256": "f98de64f6566f68c7934f7b6da7151e9395da1e490aaae463d18d0e82c6ed3c9"
+      "inputs_sha256": "34482ab61e76d9a33bff8c2c45875c43097d3d1bce579973ab5a5ca280e273bd"
     }
   },
   {
@@ -1880,7 +1880,7 @@
     },
     "match": {
       "bytes_sha256": "c2ba006cb17a4e0ce9969e4dd166894585a5f6e7c9a23a6924e173c87862c071",
-      "inputs_sha256": "c7e323f50ca01129f713a04cabce6fbebb7adbe1741e1c9f5354e084146fb71a"
+      "inputs_sha256": "657541731cc258edba35d4f79a4ee492a91394ea56cda4b6c43ca1b0fcd72779"
     }
   },
   {
@@ -1969,7 +1969,50 @@
     },
     "match": {
       "bytes_sha256": "3fc64794fd2115ec3a0365d50199692fdb8e53c2199c33fc3f3dfb180e974eae",
-      "inputs_sha256": "f1ef377b2bcb8295df255283637eca0e4ac32d534471110b49b1bbf0e8855597"
+      "inputs_sha256": "7ed589e6b724e876b8bb6237f3f0f499236a61307c5c82cf4657af1e35990404"
+    }
+  },
+  {
+    "id": "versus-texture-decompress-dxt1",
+    "offset": 996048,
+    "size": 641,
+    "inputs": [
+      "src/versus_texture_dxt.cpp",
+      "src/versus_build.h",
+      "src/versus_native_class_types.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_malloc.h",
+      "src/versus_arrays.h",
+      "src/versus_canvas_materials.h",
+      "src/versus_material.h",
+      "src/versus_texture_format.h",
+      "src/versus_lazy_archive.h",
+      "src/versus_archive.h",
+      "src/versus_dxt5_decode.inl"
+    ],
+    "rebuilt_symbol": "?DecompressDXT1@@YAXPBKHHPAK@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /c /Folocal/versus_texture_dxt.obj src/versus_texture_dxt.cpp",
+    "identification": "UTexture::ConvertDXT calls this complete DXT1 ARGB decoder at file offset 0xf3035 after allocating four bytes per output pixel. The editor DXT1 conversion calls the same 641 bytes at editor VA 0x11097000. Both routines expand RGB565 endpoints, select interpolated colors from the two-bit texel indices and preserve transparent entries when the endpoint ordering selects that mode. The decoder name is descriptive.",
+    "ltcg_callees": [
+      "versus-texture-is-dxt-compressed"
+    ],
+    "link_bindings": {},
+    "ltcg_link": {
+      "roots": [
+        "?Cache@FD3DTexture@@QAEKPAVFBaseTexture@@@Z"
+      ],
+      "stubs": [],
+      "fields": [],
+      "symbols": {},
+      "rebuilt_offset": 1904,
+      "rebuilt_address": 268440432
+    },
+    "match": {
+      "bytes_sha256": "bd9ebc72642b34546029695ad0aa861a4dcc51d5631fd0e9f79b9fc24a4dd19b",
+      "inputs_sha256": "67cec0e4e2b743ec84b0317949c4bc2afe43222b174886489c49e459aa4f4c2d"
     }
   },
   {
