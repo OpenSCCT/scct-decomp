@@ -81,6 +81,65 @@ class LinkImageTests(unittest.TestCase):
         self.assertIn("/LTCG", link_arguments(self.link))
 
 
+class InteriorObjectTests(unittest.TestCase):
+    def setUp(self):
+        self.base = BASE + 0x2000
+        self.original = self.base + 0x40
+        self.link = {"rebuilt_offset": 0x200, "rebuilt_address": BASE + 0x1000,
+                     "fields": [[1, "abs", "_array", 39], [6, "abs", "_array"]],
+                     "symbols": {"_array": self.base}, "interior_objects": {"_array": 256}}
+        self.bindings = {"_array": {"va": self.original, "basis": "fixture array"}}
+
+    @staticmethod
+    def code(base, index):
+        return b"\x68" + struct.pack("<I", base + index) + b"\x68" + struct.pack("<I", base) + b"\xc3"
+
+    def place(self, index=39, built_flags=0xc0000040, retail_flags=0xc0000040):
+        rebuilt = bytearray(image(self.code(self.base, index), data_flags=built_flags))
+        # The array has only virtual storage in the DLL.
+        struct.pack_into("<I", rebuilt, 0x40 + 24 + 0xe0 + 40 + 16, 0)
+        retail = image(self.code(self.original, 39), data_flags=retail_flags)
+        unit = {"offset": 0x200, "size": 11, "ltcg_link": self.link, "link_bindings": self.bindings}
+        return built_unit_bytes({"image": inspect(retail)}, unit, rebuilt, retail)
+
+    def test_base_and_element_are_placed_separately(self):
+        self.assertEqual(self.place(), self.code(self.original, 39))
+
+    def test_changed_element_or_base_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "does not refer"):
+            self.place(index=40)
+        self.link["symbols"]["_array"] += 1
+        with self.assertRaisesRegex(ValueError, "does not refer"):
+            self.place()
+
+    def test_offset_is_strictly_inside_the_named_object(self):
+        for addend in (0, -1, 256, True):
+            self.link["fields"][0][3] = addend
+            with self.subTest(addend=addend), self.assertRaisesRegex(ValueError, "strictly inside"):
+                self.place()
+
+    def test_whole_extent_needs_writable_data_in_both_images(self):
+        for key in ("built_flags", "retail_flags"):
+            for flags in (0x40000040, 0xe0000040):
+                with self.subTest(key=key, flags=flags), self.assertRaisesRegex(ValueError, "writable"):
+                    self.place(**{key: flags})
+        self.link["interior_objects"]["_array"] = 0x200
+        with self.assertRaisesRegex(ValueError, "whole object"):
+            self.place()
+
+    def test_stubs_and_relative_or_absent_element_references_are_refused(self):
+        self.link["stubs"] = ["_array"]
+        with self.assertRaisesRegex(ValueError, "own writable storage"):
+            self.place()
+        self.link["stubs"] = []
+        self.link["fields"][0][1] = "rel32"
+        with self.assertRaisesRegex(ValueError, "absolute reference"):
+            self.place()
+        self.link["fields"] = self.link["fields"][1:]
+        with self.assertRaisesRegex(ValueError, "no interior reference"):
+            self.place()
+
+
 class WritableStringTests(unittest.TestCase):
     symbol = "?NameText_None@@3QBGB"
     value = "None\0".encode("utf-16le")

@@ -11,6 +11,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from images import coff_symbol_offset, file_pe_data, initialized_pe_data, inspect, readonly_pe_data, span
 from link_image import place_function
+from link_interior_objects import resolve_interior_objects
 from link_writable_strings import check_writable_strings
 from link_case_selectors import check_case_selectors
 from link_x86 import link_function
@@ -152,6 +153,8 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
             validators.append(linker.with_name("link_writable_strings.py"))
         if "case_selectors" in unit.get("ltcg_link", {}):
             validators.append(linker.with_name("link_case_selectors.py"))
+        if "interior_objects" in unit.get("ltcg_link", {}):
+            validators.append(linker.with_name("link_interior_objects.py"))
         for validator in validators:
             if validator not in file_cache:
                 file_cache[validator] = hashlib.sha256(validator.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
@@ -266,13 +269,15 @@ def built_unit_bytes(target, unit, output, original=None):
         a, b = span(unit["offset"], unit["size"], len(original))
         for s in target["image"]["executable_sections"]:
             if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
-                if "writable_strings" in unit["ltcg_link"]:
-                    check_writable_strings(output, original, unit["ltcg_link"], unit["link_bindings"])
+                link, bindings = unit["ltcg_link"], unit["link_bindings"]
+                if "interior_objects" in link:
+                    link, bindings = resolve_interior_objects(output, original, link, bindings)
+                if "writable_strings" in link:
+                    check_writable_strings(output, original, link, bindings)
                 address = s["address"] + a - s["offset"]
-                if "case_selectors" in unit["ltcg_link"]:
-                    check_case_selectors(output, original, unit["size"], address, unit["ltcg_link"], unit["link_bindings"])
-                return place_function(output, unit["size"], address, unit["ltcg_link"],
-                                      unit["link_bindings"],
+                if "case_selectors" in link:
+                    check_case_selectors(output, original, unit["size"], address, link, bindings)
+                return place_function(output, unit["size"], address, link, bindings,
                                       read_constant=lambda va, size: readonly_pe_data(original, va, size),
                                       read_table=lambda va, size: file_pe_data(original, va, size))
         raise ValueError("link address outside a measured code section")

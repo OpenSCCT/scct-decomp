@@ -205,6 +205,13 @@ the range check and indexed jump in both images, compares every selector byte,
 and checks each jump destination relative to the function. Tables after the
 function contribute zero additional matched bytes.
 
+For an absolute pointer into a writable array, record its base symbol and byte
+size in `ltcg_link.interior_objects`. Its field has four entries
+(`[site, "abs", symbol, byte_offset]`). Bind the base of the array in both
+images. The verifier checks that its full extent fits in writable PE data,
+including zero-filled storage, then checks the emitted pointer against the
+linked base plus the recorded offset. The array contributes no code bytes.
+
 A unit can name other units in `ltcg_callees`, by unit ID, so that a call from it to a helper
 resolves to the helper's real code instead of a stub. This is needed when the helper takes `this`
 or an argument in a register (for example `this` in ESI and the argument in EDI): the link chooses
