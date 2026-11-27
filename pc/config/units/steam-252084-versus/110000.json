@@ -1416,33 +1416,114 @@
     }
   },
   {
+    "id": "versus-convex-volume-clip-polygon",
+    "offset": 1119104,
+    "size": 340,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "inputs": [
+      "src/versus_convex_volume.cpp",
+      "src/versus_polygon_splitting.inl",
+      "src/versus_build.h",
+      "src/versus_level_trace_vector.h",
+      "src/unreal_types.h",
+      "src/versus_plane.h",
+      "src/versus_poly.h",
+      "src/versus_convex_volume.h"
+    ],
+    "rebuilt_symbol": "?ClipPolygon@FConvexVolume@@QBE?AVFPoly@@V2@@Z",
+    "identification": "The shipped editor and the ZoneRenderers BSP portal and dynamic-light callers identify FConvexVolume::ClipPolygon. It clips a by-value FPoly against each bounding plane, rejects a wholly back polygon and removes successive vertices within squared distance 0.001. The two calls resolve to FPoly::Split and the FPoly copy constructor.",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_convex_volume.obj src/versus_convex_volume.cpp",
+    "ltcg_callees": [
+      "versus-vd-e7720"
+    ],
+    "ltcg_link": {
+      "roots": [
+        "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z"
+      ],
+      "stubs": [
+        "?GMath_Zero@@3ABUFVector@@B"
+      ],
+      "fields": [
+        [
+          122,
+          "rel32",
+          "?Split@FPoly@@QAEHABUFVector@@0H@Z"
+        ],
+        [
+          217,
+          "abs",
+          "__real@3a83126f"
+        ],
+        [
+          312,
+          "rel32",
+          "??0FPoly@@QAE@ABV0@@Z"
+        ]
+      ],
+      "symbols": {
+        "?Split@FPoly@@QAEHABUFVector@@0H@Z": 268440480,
+        "__real@3a83126f": 268447776,
+        "??0FPoly@@QAE@ABV0@@Z": 268441216
+      },
+      "constants": {
+        "__real@3a83126f": 4
+      },
+      "rebuilt_offset": 2336,
+      "rebuilt_address": 268440864
+    },
+    "link_bindings": {
+      "?Split@FPoly@@QAEHABUFVector@@0H@Z": {
+        "va": 278820080,
+        "basis": "The plane loop clips the polygon with the independently rebuilt FPoly::Split."
+      },
+      "__real@3a83126f": {
+        "va": 281086536,
+        "basis": "The read-only single-precision squared-distance threshold is 0.001f in both images."
+      },
+      "??0FPoly@@QAE@ABV0@@Z": {
+        "va": 278992096,
+        "basis": "The return object is constructed by the independently rebuilt FPoly copy constructor."
+      }
+    },
+    "match": {
+      "bytes_sha256": "c7b5ac845d05c3bc833f73c83ae12d8daf804bd5341d2b39f38bb435dbf8a4c3",
+      "inputs_sha256": "86be32b1ddd291bf8f72c3e7af18985e421c63c401b49eb7574549257df19034"
+    }
+  },
+  {
     "id": "versus-vd-1114e0",
     "offset": 1119456,
     "size": 132,
     "inputs": [
-      "src/versus_vd5_item_0348.cpp"
+      "src/versus_convex_volume.cpp",
+      "src/versus_polygon_splitting.inl",
+      "src/versus_build.h",
+      "src/versus_level_trace_vector.h",
+      "src/unreal_types.h",
+      "src/versus_plane.h",
+      "src/versus_poly.h",
+      "src/versus_convex_volume.h"
     ],
-    "rebuilt_symbol": "??0FConvexPoly@@QAE@ABV0@@Z",
+    "rebuilt_symbol": "??0FPoly@@QAE@ABV0@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_vd5_item_0348_vc70_ltcg_o2gygl.obj src/versus_vd5_item_0348.cpp",
-    "identification": "Complete Versus function at RVA 0x1114e0. Direct call at RVA 0x1114b7 in the retail function at RVA 0x111380.",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_convex_volume.obj src/versus_convex_volume.cpp",
+    "identification": "Both FConvexVolume::ClipPolygon and the six-face light-frustum intersection function pass a by-value FPoly through this copy constructor. It copies the two vectors, all sixteen vertices, two 32-bit fields and the final word count of the shared 0xe4-byte FPoly.",
     "link_bindings": {},
     "ltcg_link": {
       "roots": [
-        "?Driver_1114e0@@YAXPAVFConvexPoly@@0@Z"
+        "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z"
       ],
       "stubs": [
-        "?SplitWithPlane@FConvexPoly@@QBEHABVFVector@@0PAV1@1H@Z",
-        "__fltused"
+        "?GMath_Zero@@3ABUFVector@@B"
       ],
-      "rebuilt_offset": 1024,
-      "rebuilt_address": 268439552,
       "fields": [],
-      "symbols": {}
+      "symbols": {},
+      "rebuilt_offset": 2688,
+      "rebuilt_address": 268441216
     },
     "match": {
       "bytes_sha256": "9cd58b2cfce821676f8063779aba5a16a4bc72c34eaf90ce4686cb39701c43f6",
-      "inputs_sha256": "59f58d9a6b29d49cbb2ed18bf8c3053ca6e6e362fdd526fad996407344a28eaa"
+      "inputs_sha256": "a4c0ac27b6044a2a41cad21bff900256fb4781ab0aedaa6c67ceedd975dd87b2"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1451,6 +1532,92 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    },
+    "ltcg_callees": [
+      "versus-vd-e7720"
+    ]
+  },
+  {
+    "id": "versus-light-frustum-intersects-faces",
+    "offset": 1119600,
+    "size": 332,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "inputs": [
+      "src/versus_convex_volume.cpp",
+      "src/versus_polygon_splitting.inl",
+      "src/versus_build.h",
+      "src/versus_level_trace_vector.h",
+      "src/unreal_types.h",
+      "src/versus_plane.h",
+      "src/versus_poly.h",
+      "src/versus_convex_volume.h"
+    ],
+    "rebuilt_symbol": "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z",
+    "identification": "The retail lighting caller at RVA 0x135beb passes the frustum at FDynamicLight+0x50 and the convex volume. This function clips each of the six quadrilateral faces and returns whether any survives. Shipped editor VA 0x11176b30 uses the same eight vertices, six planes and 96-byte face-index table. The function and table names describe their observed uses.",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_convex_volume.obj src/versus_convex_volume.cpp",
+    "ltcg_callees": [
+      "versus-vd-e7720"
+    ],
+    "ltcg_link": {
+      "roots": [
+        "?IntersectsFrustumFaces@@YAKABUFLightFrustum@@ABVFConvexVolume@@@Z"
+      ],
+      "stubs": [
+        "?GMath_Zero@@3ABUFVector@@B"
+      ],
+      "fields": [
+        [
+          32,
+          "abs",
+          "?GFrustumFaceVertices@@3PAY03HA",
+          4
+        ],
+        [
+          237,
+          "rel32",
+          "??0FPoly@@QAE@ABV0@@Z"
+        ],
+        [
+          254,
+          "rel32",
+          "?ClipPolygon@FConvexVolume@@QBE?AVFPoly@@V2@@Z"
+        ],
+        [
+          297,
+          "abs",
+          "?GFrustumFaceVertices@@3PAY03HA",
+          100
+        ]
+      ],
+      "symbols": {
+        "?GFrustumFaceVertices@@3PAY03HA": 268451840,
+        "??0FPoly@@QAE@ABV0@@Z": 268441216,
+        "?ClipPolygon@FConvexVolume@@QBE?AVFPoly@@V2@@Z": 268440864
+      },
+      "box_face_cursor": {
+        "symbol": "?GFrustumFaceVertices@@3PAY03HA",
+        "sha256": "71046608c99e41093532c4893c4974441fab1d18fe88e7e8dbee09704fdab5ff"
+      },
+      "rebuilt_offset": 2832,
+      "rebuilt_address": 268441360
+    },
+    "link_bindings": {
+      "?ClipPolygon@FConvexVolume@@QBE?AVFPoly@@V2@@Z": {
+        "va": 278991744,
+        "basis": "The frustum clips its four-vertex face against the given convex volume."
+      },
+      "??0FPoly@@QAE@ABV0@@Z": {
+        "va": 278992096,
+        "basis": "The four-vertex face is passed by value using the shared FPoly copy constructor."
+      },
+      "?GFrustumFaceVertices@@3PAY03HA": {
+        "va": 281495472,
+        "basis": "The initialized 6 by 4 array holds indices into the eight frustum vertices. Retail and editor have the same 24 integers. The two address operands are the second entry and the column-biased loop sentinel."
+      }
+    },
+    "match": {
+      "bytes_sha256": "87a65c6ffee37b69454475ff67a3d806d655c0b789f56acfa876fa76cbd43a97",
+      "inputs_sha256": "1c256b862e79ab63cc54361eeb14bfc12982233d190171ce9dc66acc61c84d54"
     }
   },
   {
@@ -2220,7 +2387,8 @@
       "src/versus_material.h",
       "src/unreal_object.h",
       "src/unreal_name.h",
-      "src/versus_canvas_matrix.h"
+      "src/versus_canvas_matrix.h",
+      "src/versus_plane.h"
     ],
     "rebuilt_symbol": "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -2314,7 +2482,7 @@
     },
     "match": {
       "bytes_sha256": "09632ce947910ea3f2c111fd13b9215005c1f63c80a362385ca53565d99ae777",
-      "inputs_sha256": "88d7fdd65709c31282dc76929e3f7ce97379c8aa2db40733fca175f2f02e57cb"
+      "inputs_sha256": "ebee3a819377fa0e021b7fa919d3eafc30c70bfb5f7b8a017a84c07e1701ad93"
     }
   },
   {
@@ -2569,6 +2737,7 @@
       "src/versus_scene_node_types.h",
       "src/versus_render_interface.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_plane.h",
       "src/unreal_math.h",
       "src/versus_scene_child.inl",
       "src/versus_level_scene_child.inl"
@@ -2626,7 +2795,7 @@
     ],
     "match": {
       "bytes_sha256": "a6ab6f6a9a262d9c81244bf78588f5cf9691c4eb389062b290369f0508b4a314",
-      "inputs_sha256": "2d1ab456a0c5d7520d8d1eb777f869811e1341f27ffb81c9c70eaba62f7687de"
+      "inputs_sha256": "e3698efdbee71628d8ccad567c987c6961c7a2daf558ff66dfcab3bf6234a8a8"
     }
   },
   {
@@ -3093,6 +3262,7 @@
       "src/versus_scene_node_types.h",
       "src/versus_canvas_util.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_plane.h",
       "src/versus_render_device.h",
       "src/versus_malloc.h",
       "src/versus_vertex_pool_update.inl",
@@ -3113,7 +3283,7 @@
     "identification": "Slot 2 at Versus VA 0x10c036f8 implements the camera-scene override. It pushes render state, calls the base level renderer and the viewport first-person pass, updates vertex pools, flushes the viewport Canvas and pops render state. The corresponding derived actor slot in the editor identifies FActorSceneNode::Render. VC7.1 also emits these 69 bytes with LTCG. The retail Rich header identifies VC7.0 as its only LTCG producer; size optimization and ordinary COFF diverge.",
     "match": {
       "bytes_sha256": "b80a4b97f89f33439c3d186e4ce84387fe021e4a9c0e32d913af21e088d7235e",
-      "inputs_sha256": "d4532eb59bbce82327243c8ecde8c3030778c2623a69e4f9cbffed371b757fa5"
+      "inputs_sha256": "f2446593e31b2ec4fa081c5ab371b4aad062c6ed89149546dc4931b420decb25"
     }
   },
   {
@@ -3288,6 +3458,7 @@
       "src/versus_scene_node_types.h",
       "src/versus_render_interface.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_plane.h",
       "src/versus_scene_model_types.h"
     ],
     "rebuilt_symbol": "?IsBspSectionVisible@FLevelSceneNode@@QBEKH@Z",
@@ -3316,7 +3487,7 @@
     },
     "match": {
       "bytes_sha256": "f842fb0d211b0601985a8f70ecb125f0e86eafd3ec7e5dabc1c58b52cd830542",
-      "inputs_sha256": "d324273f0455d1036719258fd3483f3cb8738753ce6f1987634d059a5451a509"
+      "inputs_sha256": "32316b42a27d6507af811f54aa0bed96c4ecf9d66c108bba99a2d476a3c0c8d2"
     }
   },
   {
@@ -3337,6 +3508,7 @@
       "src/versus_scene_node_types.h",
       "src/versus_render_interface.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_plane.h",
       "src/versus_scene_model_types.h"
     ],
     "rebuilt_symbol": "?IsActorVisible@FLevelSceneNode@@QBEKPAVAActor@@_N@Z",
@@ -3365,7 +3537,7 @@
     },
     "match": {
       "bytes_sha256": "23a9aab46abe0c32632b41e1db44d89094dd1d84d7e406796fbdeefd2973d7e5",
-      "inputs_sha256": "bc1767ee0c9c6ca0f455cd95ff3accabb1a7c629e5f62dd268d34dc76caa2394"
+      "inputs_sha256": "46bc38fa608cefcff3944fe7ed19a3df2f18a43d8bd1c3a0badabeb3f0e46aaa"
     }
   },
   {
@@ -6219,7 +6391,7 @@
     },
     "match": {
       "bytes_sha256": "fcd15dbcf13509cb8dc54fe8d1e3e362004e3efe0515b036cce3279525b0dc60",
-      "inputs_sha256": "8b0dfc740b813c1551942db3053ad58ac0252e84a8b5d37591fc504308fbc684"
+      "inputs_sha256": "6d2727c9db16936d5cef5bb69e5c787da4cc8e98479b81f98f65704b29673535"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",

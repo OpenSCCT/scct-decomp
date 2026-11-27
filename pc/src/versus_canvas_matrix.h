@@ -3,11 +3,8 @@
 
 #include "unreal_math.h"
 
-struct FPlane : public FVector
-{
-    FLOAT W;
-    FPlane(FLOAT InX, FLOAT InY, FLOAT InZ, FLOAT InW);
-};
+#include "versus_plane.h"
+
 struct FMatrix
 {
     FLOAT M[4][4];

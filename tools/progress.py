@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from images import coff_symbol_offset, file_pe_data, initialized_pe_data, inspect, readonly_pe_data, span
 from link_image import place_function
 from link_coff_switch_tail import link_switch_tail, switch_tail_site
+from link_box_face_cursor import box_face_export_args, resolve_box_face_cursor
 from link_interior_objects import resolve_interior_objects
 from link_vtable_exports import resolve_vtable_exports, vtable_export_args
 from link_writable_strings import check_writable_strings
@@ -196,6 +197,10 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
             validators.append(linker.with_name("link_writable_strings.py"))
         if "case_selectors" in unit.get("ltcg_link", {}):
             validators.append(linker.with_name("link_case_selectors.py"))
+        if "box_face_cursor" in unit.get("ltcg_link", {}):
+            box_face_export_args(unit["ltcg_link"])
+            validators.extend(linker.with_name(name) for name in
+                              ("link_box_face_cursor.py", "link_vtable_exports.py", "images.py"))
         if "interior_objects" in unit.get("ltcg_link", {}):
             validators.append(linker.with_name("link_interior_objects.py"))
         if {"exported_vtables", "vtable_slots"}.intersection(unit.get("ltcg_link", {})):
@@ -326,11 +331,13 @@ def built_unit_bytes(target, unit, output, original=None):
                 link, bindings = unit["ltcg_link"], unit["link_bindings"]
                 if "exported_vtables" in link or "vtable_slots" in link:
                     link = resolve_vtable_exports(output, original, link, bindings)
+                address = s["address"] + a - s["offset"]
+                if "box_face_cursor" in link:
+                    link, bindings = resolve_box_face_cursor(output, original, unit["size"], address, link, bindings)
                 if "interior_objects" in link:
                     link, bindings = resolve_interior_objects(output, original, link, bindings)
                 if "writable_strings" in link:
                     check_writable_strings(output, original, link, bindings)
-                address = s["address"] + a - s["offset"]
                 if "case_selectors" in link:
                     check_case_selectors(output, original, unit["size"], address, link, bindings)
                 return place_function(output, unit["size"], address, link, bindings,
