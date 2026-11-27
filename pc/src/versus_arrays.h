@@ -44,6 +44,7 @@ class FString : public TArray<TCHAR> {
 public:
     ~FString();
     FString &operator=(const FString &Other);
+    FString &operator=(const TCHAR *Other);
 };
 
 #endif

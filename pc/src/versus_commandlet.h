@@ -2,7 +2,9 @@
 #ifndef VERSUS_COMMANDLET_H
 #define VERSUS_COMMANDLET_H
 
+#ifndef VERSUS_NATIVE_CLASS_TYPES_H
 #include "unreal_object.h"
+#endif
 
 #ifdef SCCT_VERSUS
 

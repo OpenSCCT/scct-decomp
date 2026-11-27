@@ -119,64 +119,7 @@ struct FUnnamedRecord_2c
     ~FUnnamedRecord_2c();
 };
 
-class UObject
-{
-public:
-    virtual void Slots00_4c_0(); virtual void S1(); virtual void S2(); virtual void S3();
-    virtual void S4(); virtual void S5(); virtual void S6(); virtual void S7();
-    virtual void S8(); virtual void S9(); virtual void S10(); virtual void S11();
-    virtual void S12(); virtual void S13(); virtual void S14(); virtual void S15();
-    virtual void S16(); virtual void S17(); virtual void S18(); virtual void S19();
-    virtual void LanguageChange();       // +0x50
-    static void SetLanguage(const TCHAR *LangExt);
-};
-
-extern TArray<UObject *> GObjObjects;    // 0x10cc9e80
-extern TCHAR GLanguage[];                // 0x10c6f868
-extern TCHAR GTrue[];                    // 0x10c71ab8
-extern TCHAR GFalse[];                   // 0x10c71ac8
-
-// Iterator over every live object (no class filter in this build).
-class FObjectIterator
-{
-public:
-    FObjectIterator();
-    ~FObjectIterator();                  // RVA 0x4a550 (folded empty `ret 4`)
-    void operator++()
-    {
-        while (++Index < Objects->Num() && !(*Objects)(Index))
-            ;
-    }
-    operator UBOOL() { return Index < Objects->Num(); }
-    UObject *operator->() { return (*Objects)(Index); }
-protected:
-    TArray<UObject *> *Objects;
-    INT Index;
-};
-
-// RVA 0x1f470 (published elsewhere; defined so the link gives it its convention).
-FObjectIterator::FObjectIterator()
-    : Objects(&GObjObjects), Index(-1)
-{
-    ++*this;
-}
-
-// Folded into the empty `ret 4` at 0x4a550.
-__declspec(noinline) FObjectIterator::~FObjectIterator()
-{
-}
-
-// RVA 0x1ee10: UObject::SetLanguage (LTCG: LangExt in EAX).
-void UObject::SetLanguage(const TCHAR *LangExt)
-{
-    if (_wcsicmp(LangExt, GLanguage) != 0) {
-        wcscpy(GLanguage, LangExt);
-        wcscpy(GTrue, L"True");
-        wcscpy(GFalse, L"False");
-        for (FObjectIterator It; It; ++It)
-            It->LanguageChange();
-    }
-}
+class UObject;
 
 // RVA 0x1eeb0: TArray<FString>::FindItem (LTCG: this in EDI, Item in EBX, Index in ESI).
 template UBOOL TArray<FString>::FindItem(const FString &, INT &) const;
@@ -188,11 +131,6 @@ template UBOOL TArray<FString>::FindItem(const FString &, INT &) const;
 // Scaffolding for the link, not part of the unit.
 inline void *operator new(unsigned int, void *Mem) { return Mem; }
 void Escape(void *);
-void Driver_1ee10(const TCHAR *L)
-{
-    Escape(&GLanguage); Escape(&GTrue); Escape(&GFalse); Escape(&GObjObjects);
-    UObject::SetLanguage(L);
-}
 UBOOL Driver_1eeb0(const TArray<FString> *A, const FString *S, INT *I) { return A->FindItem(*S, *I); }
 void Driver_1ef20(TArray<UObject *> *A)
 {

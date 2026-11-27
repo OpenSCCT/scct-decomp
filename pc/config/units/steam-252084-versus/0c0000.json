@@ -8292,7 +8292,7 @@
     },
     "match": {
       "bytes_sha256": "ce0dad984ed4f0fc3cab455fe12cbf917ed9d05f39bea2f3c2efbacafbce0ea8",
-      "inputs_sha256": "e39e35570b332e4794dd459c0499fc3dac2552c3c29f014dbca449efb15de0e1"
+      "inputs_sha256": "50efd8ab05a797fc39431911369413402c5e1c3eeef423194fe73d03453b43ec"
     }
   },
   {
@@ -11204,16 +11204,22 @@
     "size": 289,
     "inputs": [
       "src/versus_stats_clear.cpp",
+      "src/versus_server_object_loading.inl",
+      "src/versus_app_memzero.h",
       "src/versus_build.h",
-      "src/versus_engine_stats.h",
-      "src/versus_commandlet.h",
+      "src/versus_native_subsystem.h",
+      "src/versus_native_class_init.h",
+      "src/versus_native_class_types.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_arrays.h",
+      "src/versus_name.h",
       "src/unreal_types.h",
-      "src/unreal_object.h",
-      "src/unreal_name.h"
+      "src/versus_stats_data.h",
+      "src/versus_commandlet.h"
     ],
     "rebuilt_symbol": "?Clear@FStats@@QAEXXZ",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_stats_clear.obj src/versus_stats_clear.cpp",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /c /Folocal/versus_stats_clear.obj src/versus_stats_clear.cpp",
     "identification": "FStats::Clear. The shipped editor guard for this method at RVA 0x34d821 names the code at RVA 0x34d6f0, which copies the same active integer, float and string counter families, then clears them. Retail calls it with GStats at RVAs 0x7f22 and 0x97065 during the main and dedicated-server frame loops. The two inlined Win32 zero-fill blocks have the same register sequence in the editor, in retail and in independent allocations such as retail RVA 0x1217d0.",
     "ltcg_callees": [
       "versus-vd-4750"
@@ -11223,30 +11229,45 @@
         "?Main@UServerCommandlet@@UAEHPBG@Z"
       ],
       "stubs": [
+        "?appThrowf@@YAXPBGZZ",
+        "__imp___wcsicmp",
+        "?SafeLoadError@@YAXKPBG0ZZ",
         "?appSeconds@@YANXZ",
         "?appMemcpy@@YAXPAXPBXH@Z",
+        "?StaticAllocateObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@11@Z",
+        "?GetPathName@UObject@@QBEPBGPAV1@PAG@Z",
+        "?StaticLoadObject@UObject@@SAPAV1@PAVUClass@@PAV1@VFName@@22PBGKPAVUPackageMap@@@Z",
         "?GIsRunning@@3KA",
-        "?SetLanguage@@YAXPBG@Z",
+        "?GNames@@3PAPAUFNameEntry@@A",
+        "?GLanguage@@3PAGA",
         "?GStats@@3VFStats@@A",
         "?GUnknown_96910@@3KA",
         "?GIsRequestingExit@@3KA",
+        "?appSprintf@@YAHPAGPBGZZ",
         "??4FString@@QAEAAV0@ABV0@@Z",
-        "?StaticConstructObject@@YAPAVUObject@@PAVUClass@@PAV1@VFName@@K1PAVFOutputDevice@@1PAX@Z",
+        "?GTrue@@3PAGA",
+        "?PrivateStaticClass@UEngine@@2VUClass@@A",
         "?GObjTransientPkg@@3PAVUObject@@A",
         "__imp__Sleep@4",
+        "?GFalse@@3PAGA",
+        "?GObjObjects@@3V?$TArray@PAVUObject@@@@A",
         "?GConfig@@3PAVFConfigCache@@A",
-        "?UEngine_PrivateStaticClass@@3VUClass@@A",
+        "?PrivateStaticClass@UClass@@2V1@A",
+        "?GFullNameBuffer@@3PAGA",
+        "??_7type_info@@6B@",
+        "__imp__wcscpy",
         "?GError@@3PAVFOutputDevice@@A",
-        "?StaticLoadClass@@YAPAVUClass@@PAV1@PAVUObject@@VFName@@22PBGKPAVUPackageMap@@@Z",
-        "__ftol2"
+        "__ftol2",
+        "___CxxFrameHandler",
+        "__except_list"
       ],
       "rebuilt_offset": 1024,
       "rebuilt_address": 268439552,
       "symbols": {
-        "?appMemcpy@@YAXPAXPBXH@Z": 268440497,
-        "??4FString@@QAEAAV0@ABV0@@Z": 268440503,
-        "?EmptyStatString@@3PAGA": 268447744,
-        "??4FString@@QAEAAV0@PBG@Z": 268440288
+        "?appMemcpy@@YAXPAXPBXH@Z": 268441028,
+        "??4FString@@QAEAAV0@ABV0@@Z": 268441039,
+        "?EmptyStatString@@3PAGA": 268447760,
+        "??4FString@@QAEAAV0@PBG@Z": 268440816
       },
       "fields": [
         [
@@ -11296,7 +11317,7 @@
     },
     "match": {
       "bytes_sha256": "da757d6898140929bc042c0bf061cdb44e128545dc3a6e39aef766517a1e44f8",
-      "inputs_sha256": "f86198714d77dc9a7230963216d1a1600c5174fcccd4364f67dd414b26c461b0"
+      "inputs_sha256": "fe7e198c983b8db6c357ab07d7fd4b0ee86a8e461b52d08f9e6cfb25516b8208"
     }
   },
   {
@@ -11309,7 +11330,8 @@
       "src/versus_build.h",
       "src/unreal_types.h",
       "src/unreal_name.h",
-      "src/unreal_object.h"
+      "src/unreal_object.h",
+      "src/versus_stats_data.h"
     ],
     "rebuilt_symbol": "?SmoothCounter@FStats@@QAEXHH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -11383,7 +11405,7 @@
     "identification": "FStats integer-counter moving average (local name SmoothCounter). FStats::Render calls this body 17 times across three mesh displays, always with a window of 40. The method grows the history at +0x114, skips three warm-up frames, advances the sample ring and writes the mean into GStats.Integers.Current. The recorded link roots the seven consecutive calls from the fourth render page. A separate reconstruction of the complete renderer produces the same 301 bytes.",
     "match": {
       "bytes_sha256": "d54ded5f98d580fe39f759ea27092a3fe13095eb8c84ef75036a833f3745dc16",
-      "inputs_sha256": "ed75af3c43fd772097eb71fa3829f08769257c85668945f622eb5ea61d03f8b3"
+      "inputs_sha256": "9ad1bd821456f9afa85a68058419a3dfd806d3223cc19004ce9a9405d00769aa"
     }
   }
 ]

@@ -17,6 +17,8 @@ class ULinkerLoad;
 struct FStateFrame;
 struct FScriptDelegate;
 
+class UPackageMap;
+
 struct FGuid {
     DWORD A, B, C, D;
 
@@ -60,7 +62,7 @@ public:
     virtual void VirtualSlot17();
     virtual void VirtualSlot18();
     virtual void Register();
-    virtual void VirtualSlot20();
+    virtual void LanguageChange();
     virtual void NetDirty(UProperty *Property);
 
     INT Index;
@@ -74,6 +76,13 @@ public:
     FName Name;
     UClass *Class;
     static UClass PrivateStaticClass;
+    static void SetLanguage(const TCHAR *LangExt);
+    static UClass *StaticLoadClass(UClass *BaseClass, UObject *Outer, FName Package, FName Group,
+        FName ObjectName, const TCHAR *Filename, DWORD LoadFlags, UPackageMap *Sandbox);
+    static UObject *StaticLoadObject(UClass *ObjectClass, UObject *Outer, FName Package, FName Group,
+        FName ObjectName, const TCHAR *Filename, DWORD LoadFlags, UPackageMap *Sandbox);
+    const TCHAR *GetPathName(UObject *StopOuter, TCHAR *Buffer) const;
+    const TCHAR *GetFullName(TCHAR *Buffer = 0) const;
 
     static UObject *StaticAllocateObject(UClass *ObjectClass, UObject *InOuter, FName InName,
         DWORD SetFlags, UObject *Template = 0, FOutputDevice *Error = GError,
