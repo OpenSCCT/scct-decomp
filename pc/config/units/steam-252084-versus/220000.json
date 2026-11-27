@@ -3057,6 +3057,36 @@
     }
   },
   {
+    "id": "versus-mgm-get-viewport",
+    "offset": 2255120,
+    "size": 9,
+    "rebuilt_symbol": "?GetMgmViewport@@YAPAVUViewport@@XZ",
+    "inputs": [
+      "src/versus_mgm_hud_context.cpp",
+      "src/versus_mgm_hud_context.h",
+      "src/versus_canvas_viewport.h",
+      "src/versus_build.h",
+      "src/unreal_script.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_object.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_hud_context.obj src/versus_mgm_hud_context.cpp",
+    "identification": "The MGM screen loader also reaches the global menu system at 0x10c75e94. This accessor returns its viewport field at +0x38, consumed by the shared UPlayer::Actor accessor.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?GMgmMenuSystem@@3PAUMgmMenuSystem@@A": {
+        "va": 281501332,
+        "basis": "Common MGM page loading and dispatch at 0x2267b0 and 0x226910 read the same menu-system global."
+      }
+    },
+    "match": {
+      "bytes_sha256": "5d9e188efd3c43c1d7c8223c8f9afa1903fe827524b323f375909b6666140688",
+      "inputs_sha256": "fa8ea7773efecf8e590fae335c5040691ed643801cd17b8f81ecaf3ff0dc1a6d"
+    }
+  },
+  {
     "id": "versus-leaf-226c10",
     "offset": 2255888,
     "size": 5,
@@ -3348,6 +3378,36 @@
     "match": {
       "bytes_sha256": "163fda27f727f391b2943f5925af8e0cfc8039df37f53d8f7959d61b73ae28d5",
       "inputs_sha256": "904f6620b35fdb470dd0e27904f2b624e922671840e4158af9a2601976669dee"
+    }
+  },
+  {
+    "id": "versus-mgm-get-player-controller",
+    "offset": 2291168,
+    "size": 9,
+    "rebuilt_symbol": "?GetMgmPlayerController@@YAPAVAPlayerController@@XZ",
+    "inputs": [
+      "src/versus_mgm_hud_context.cpp",
+      "src/versus_mgm_hud_context.h",
+      "src/versus_canvas_viewport.h",
+      "src/versus_build.h",
+      "src/unreal_script.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_object.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_hud_context.obj src/versus_mgm_hud_context.cpp",
+    "identification": "Returns the local APlayerController by reading the Actor field of the current UViewport. The sticky camera and camera-network page constructors both use this accessor.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?GetMgmViewport@@YAPAVUViewport@@XZ": {
+        "va": 280127760,
+        "basis": "Reads the active UViewport pointer at +0x38 from the global MGM menu system."
+      }
+    },
+    "match": {
+      "bytes_sha256": "b5ab848f449ee6246e2bf22e0d3aab3042987f363e5710a7b8b11a84ebc72cc1",
+      "inputs_sha256": "15608dc10cbf9b8c84e9f5c3315d1bf8e7edec368f05cf17a64f6962d53f3d97"
     }
   },
   {
