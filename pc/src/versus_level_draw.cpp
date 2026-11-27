@@ -1,9 +1,15 @@
 #include "versus_build.h"
+#include "versus_arrays.h"
 #include "versus_pawn_action_events.h"
 #include "versus_scene_level_types.h"
 #include "versus_scene_node_types.h"
 #include "versus_scene_model_types.h"
 #include "versus_canvas_matrix.h"
+
+#include "versus_level_render_state.h"
+#include "versus_convex_volume.h"
+#include "versus_viewport_types.h"
+#include "versus_mem_stack.h"
 
 struct FBspSection {
     BYTE unk_00[0x20];
@@ -88,36 +94,15 @@ enum { DT_StaticMesh = 8 };
 extern INT GRenderFlag;
 extern INT GRenderMode;
 
-struct FLevelRenderState {
-    FLevelSceneNode *SceneNode;
-    FRenderInterface *RI;
-    ULevel *Level;
-    UModel *Model;
-    BYTE unk_10[0x244 - 0x10];
-    TList<FDynamicActor *> *Actors;
-    TList<FDynamicActor *> *RegularActors;
-    TList<FDynamicActor *> *LightFriendlyActors;
-    TList<FDynamicActor *> *StaticActors;
-    FTranslucentListNode *Translucent;
-    TList<FDynamicActor *> *PostActors;
-    DWORD unk_25c;
-    TList<FDynamicActor *> *AdditionalActors;
-    BYTE unk_264[0x280 - 0x264];
-    FBspDrawList **SectionDrawLists;
-    TList<INT> *SectionList;
-    TList<class FDynamicLight *> **SectionProjectors;
-    FDynamicLightList **SectionLights;
-
-    inline void DrawActor(FDynamicActor *Actor, UBOOL UpdateLights)
-    {
-        RI->PushState();
-        RI->SetCullMode(SceneNode->Determinant * Actor->Determinant < 0.f);
-        if (UpdateLights && Actor->Lights)
-            Actor->UpdateLightFade(SceneNode);
-        Actor->Render(SceneNode, Actor->Lights, Actor->Projectors, RI, 1, &PostActors);
-        RI->PopState();
-    }
-};
+inline void FLevelRenderState::DrawActor(FDynamicActor *Actor, UBOOL UpdateLights)
+{
+    RI->PushState();
+    RI->SetCullMode(SceneNode->Determinant * Actor->Determinant < 0.f);
+    if (UpdateLights && Actor->Lights)
+        Actor->UpdateLightFade(SceneNode);
+    Actor->Render(SceneNode, Actor->Lights, Actor->Projectors, RI, 1, &PostActors);
+    RI->PopState();
+}
 
 AActor *AActor::GetLightingActor() { return bUseLightingFromBase && Base ? Base->GetLightingActor() : this; }
 
@@ -264,4 +249,43 @@ void DrawLevelPass(FLevelRenderState &State, INT Pass, UBOOL LightFriendly, FLev
         }
     }
     RI->PopState();
+}
+
+FConvexVolume *BuildPortalVolume(
+    FLevelRenderState *Context,
+    FPoly *Poly,
+    UBOOL bUseFog)
+{
+    FConvexVolume *Volume = new(GSceneMem) FConvexVolume;
+    const FVector &Normal = Poly->Normal;
+    const FPlane PortalPlane(Poly->Vertex[0], Normal);
+    Volume->BoundingPlanes[Volume->NumPlanes++] = PortalPlane;
+    for (INT i = 0; i < (INT)Poly->NumVertices && Volume->NumPlanes < FConvexVolume::MaxPlanes - 1; i++)
+    {
+        FPlane Plane(
+            Context->SceneNode->ViewOrigin,
+            Poly->Vertex[i],
+            Poly->Vertex[(i + 1) % Poly->NumVertices]);
+        Volume->BoundingPlanes[Volume->NumPlanes++] = Plane;
+    }
+    if (bUseFog)
+    {
+        FLevelSceneNode *SceneNode = Context->SceneNode;
+        ULevel *Level = Context->Level;
+        UModel *Model = Level->Model;
+        AZoneInfo *ZoneInfo;
+        if (SceneNode->ViewZone < Model->Zones.Num() && Model->Zones(SceneNode->ViewZone).ZoneActor)
+            ZoneInfo = Model->Zones(SceneNode->ViewZone).ZoneActor;
+        else
+            ZoneInfo = Level->GetLevelInfo();
+        if (ZoneInfo->bDistanceFog &&
+            SceneNode->Viewport->Actor->RendMap != 0x26 &&
+            SceneNode->Viewport->Actor->RendMap != 0x24)
+        {
+            FLOAT FogEnd = ZoneInfo->DistanceFogEnd;
+            FVector ViewNormal = (SceneNode->Deproject(FPlane(0.f, 0.f, 0.f, NEAR_CLIPPING_PLANE)) - SceneNode->ViewOrigin).SafeNormal();
+            Volume->BoundingPlanes[Volume->NumPlanes++] = FPlane(Context->SceneNode->ViewOrigin + ViewNormal * FogEnd, ViewNormal);
+        }
+    }
+    return Volume;
 }

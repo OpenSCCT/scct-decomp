@@ -60,7 +60,10 @@ public:
 
     BYTE                  unk_2f8[0xc];
     FString               unk_304;
-    BYTE                  unk_310[0x24];
+    BITFIELD              bDistanceFog : 1;
+    BYTE                  unk_314[0x10];
+    FLOAT                 DistanceFogEnd;
+    BYTE                  unk_328[0x0c];
 #ifdef VERSUS_LTCG_H
     TArrayLtcg<UnkType_4> ManualExcludes;
 #else

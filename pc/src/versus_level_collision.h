@@ -6,17 +6,7 @@
 
 #include "versus_scene_model_types.h"
 
-struct FTaggedMemory;
-
-class FMemStack {
-public:
-    BYTE *Top;
-    BYTE *End;
-    INT DefaultChunkSize;
-    FTaggedMemory *TopChunk;
-
-    void FreeChunks(FTaggedMemory *NewTopChunk);
-};
+#include "versus_mem_stack.h"
 
 extern FMemStack GMem;
 
@@ -35,7 +25,7 @@ public:
 private:
     FMemStack *Mem;
     BYTE *Top;
-    FTaggedMemory *SavedChunk;
+    FMemStack::FTaggedMemory *SavedChunk;
 };
 
 #endif

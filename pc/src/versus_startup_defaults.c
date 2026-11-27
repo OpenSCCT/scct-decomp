@@ -2,7 +2,6 @@
 
 extern int __cdecl atexit(void (__cdecl *callback)(void));
 extern void __cdecl finalize_2dc650(void);
-extern void __cdecl finalize_2dd500(void);
 extern void __cdecl finalize_2dd5d0(void);
 
 void __cdecl initialize_2d8600(void)
@@ -38,11 +37,6 @@ void __cdecl initialize_2d8680(void)
 void __cdecl initialize_2d8690(void)
 {
     selected_3cabf8 = storage_3cac30;
-}
-
-void __cdecl initialize_2da3f0(void)
-{
-    atexit(finalize_2dd500);
 }
 
 void __cdecl initialize_2da430(void)

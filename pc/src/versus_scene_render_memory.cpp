@@ -1,8 +1,5 @@
 // FMemStack (Core/UnMem.cpp), Unreal Engine 2.
-typedef unsigned char BYTE;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef unsigned short TCHAR;
+#include "versus_mem_stack.h"
 
 class FMalloc
 {
@@ -17,29 +14,6 @@ extern const TCHAR MemChunk_Tag[]; // L"MemChunk"
 inline void *appMalloc(INT Size, const TCHAR *Tag) { return GMalloc->Malloc(Size, Tag); }
 inline void appFree(void *Ptr) { GMalloc->Free(Ptr); }
 template <class T> inline T Max(const T A, const T B) { return (A >= B) ? A : B; }
-
-class FMemStack
-{
-public:
-    struct FTaggedMemory
-    {
-        FTaggedMemory *Next;
-        INT DataSize;
-        BYTE Data[1];
-    };
-
-    BYTE *Top;
-    BYTE *End;
-    INT DefaultChunkSize;
-    FTaggedMemory *TopChunk;
-
-    static FTaggedMemory *UnusedChunks;
-
-    void Tick() {}
-    void Exit();
-    BYTE *AllocateNewChunk(INT MinSize);
-    void FreeChunks(FTaggedMemory *NewTopChunk);
-};
 
 void FMemStack::Exit()
 {
@@ -101,9 +75,11 @@ void FMemStack::FreeChunks(FTaggedMemory *NewTopChunk)
     }
 }
 
+FMemStack GSceneMem = { 0, 0, 32768, 0 };
+FLOAT NEAR_CLIPPING_PLANE = 2.f;
+
 // Scaffolding for the link, not part of the unit.
 void Escape(void *);
-void Driver_57780(FMemStack *S) { Escape(&GMalloc); Escape(&FMemStack::UnusedChunks); S->Exit(); }
 BYTE *Driver_577c0(FMemStack *S, INT N) { Escape(&GMalloc); Escape(&FMemStack::UnusedChunks); return S->AllocateNewChunk(N); }
 #pragma inline_depth(0)
 void Driver_57830(FMemStack *S, FMemStack::FTaggedMemory *M) { Escape(&FMemStack::UnusedChunks); S->FreeChunks(M); }

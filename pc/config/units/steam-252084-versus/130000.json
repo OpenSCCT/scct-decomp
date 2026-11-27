@@ -511,7 +511,7 @@
     },
     "match": {
       "bytes_sha256": "ac29c3dd07ca44059cc97f4ec3b45129074db51ed77dec627386cc27adba629b",
-      "inputs_sha256": "55198ace64208b1df4897fe7b92ea5ae3750fa1f01d0cdaebec0eee416a310a7"
+      "inputs_sha256": "0d5e2679d3fabaaa00a71d0f09cc18e0adb742303f7aab99c3406736e8c7cdc6"
     }
   },
   {
@@ -3863,7 +3863,7 @@
     },
     "match": {
       "bytes_sha256": "d42b977bec1f7f201c552d0182b93364d72e723409402b8fab5eee17078e80f7",
-      "inputs_sha256": "be63bd4b010f6791d4eba3cda377b349ac7341ee55a18ed299bd607c15653f7f"
+      "inputs_sha256": "8dd677a035e4f0cdb39324863cba94712fd7d72b3a7343d7aafa84c9a7edd429"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -5070,11 +5070,180 @@
     }
   },
   {
+    "id": "versus-render-build-portal-volume",
+    "offset": 1286112,
+    "size": 702,
+    "inputs": [
+      "src/versus_level_draw.cpp",
+      "src/versus_build.h",
+      "src/versus_arrays.h",
+      "src/unreal_types.h",
+      "src/versus_pawn_action_events.h",
+      "src/unreal_math.h",
+      "src/versus_hardcoded_names.inl",
+      "src/versus_scene_level_types.h",
+      "src/versus_info.h",
+      "src/versus_scene_node_types.h",
+      "src/versus_canvas_matrix.h",
+      "src/versus_matrix_types.h",
+      "src/versus_plane.h",
+      "src/versus_scene_base_node.h",
+      "src/versus_render_interface.h",
+      "src/versus_scene_model_types.h",
+      "src/versus_level_render_state.h",
+      "src/versus_convex_volume.h",
+      "src/versus_poly.h",
+      "src/versus_viewport_types.h",
+      "src/versus_base_texture.h",
+      "src/versus_render_resource.h",
+      "src/versus_texture_format.h",
+      "src/versus_mem_stack.h"
+    ],
+    "rebuilt_symbol": "?BuildPortalVolume@@YAPAVFConvexVolume@@PAUFLevelRenderState@@PAVFPoly@@K@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_level_draw.obj src/versus_level_draw.cpp",
+    "identification": "The BSP portal branch in ProcessNode calls this routine at RVA 0x13a9ee. It reserves a convex volume on the scene stack, builds the portal plane and edge planes, and optionally adds the level zone's distance-fog plane. The shipped editor performs the same work. The function spelling describes its role. VC7.1 changes the first plane stores at +0xab. VC7.0 size optimization changes the stack checks. Its primary source uses the ordinary /O2 and /GL recipe.",
+    "link_bindings": {
+      "?GSceneMem@@3VFMemStack@@A": {
+        "va": 281492652,
+        "basis": "The renderer scene stack is the 16-byte object with initial default chunk size 32768. The first two words hold Top and End. Its C++ cleanup uses this same object."
+      },
+      "?NEAR_CLIPPING_PLANE@@3MA": {
+        "va": 281492232,
+        "basis": "The writable near clipping distance initializes to 2.0f and is passed in the fourth component of the deprojection input."
+      },
+      "?AllocateNewChunk@FMemStack@@QAEPAEH@Z": {
+        "va": 278230976,
+        "basis": "The independently rebuilt FMemStack::AllocateNewChunk services the placement allocation when the 0x204-byte convex volume exceeds the current chunk."
+      },
+      "??0FPlane@@QAE@ABUFVector@@00@Z": {
+        "va": 278699056,
+        "basis": "The independently rebuilt three-point plane constructor receives the viewpoint and adjacent portal vertices."
+      },
+      "?Deproject@FSceneNode@@QAE?AUFVector@@ABUFPlane@@@Z": {
+        "va": 278998480,
+        "basis": "FSceneNode::Deproject transforms the homogeneous clip-space position through ScreenToWorld."
+      },
+      "?SafeNormal@FVector@@QBE?AU1@XZ": {
+        "va": 278203696,
+        "basis": "The independently rebuilt FVector::SafeNormal normalizes the fog direction."
+      }
+    },
+    "ltcg_callees": [
+      "versus-scene-node-deproject"
+    ],
+    "ltcg_link": {
+      "roots": [
+        "?BuildPortalVolume@@YAPAVFConvexVolume@@PAUFLevelRenderState@@PAVFPoly@@K@Z"
+      ],
+      "stubs": [],
+      "fields": [
+        [
+          2,
+          "abs",
+          "?GSceneMem@@3VFMemStack@@A",
+          4
+        ],
+        [
+          13,
+          "abs",
+          "?GSceneMem@@3VFMemStack@@A"
+        ],
+        [
+          34,
+          "abs",
+          "?GSceneMem@@3VFMemStack@@A"
+        ],
+        [
+          46,
+          "abs",
+          "?GSceneMem@@3VFMemStack@@A"
+        ],
+        [
+          51,
+          "rel32",
+          "?AllocateNewChunk@FMemStack@@QAEPAEH@Z"
+        ],
+        [
+          57,
+          "abs",
+          "?GSceneMem@@3VFMemStack@@A"
+        ],
+        [
+          74,
+          "abs",
+          "?GSceneMem@@3VFMemStack@@A"
+        ],
+        [
+          252,
+          "rel32",
+          "??0FPlane@@QAE@ABUFVector@@00@Z"
+        ],
+        [
+          442,
+          "abs",
+          "?NEAR_CLIPPING_PLANE@@3MA"
+        ],
+        [
+          488,
+          "rel32",
+          "?Deproject@FSceneNode@@QAE?AUFVector@@ABUFPlane@@@Z"
+        ],
+        [
+          539,
+          "rel32",
+          "?SafeNormal@FVector@@QBE?AU1@XZ"
+        ]
+      ],
+      "symbols": {
+        "?GSceneMem@@3VFMemStack@@A": 268451844,
+        "?AllocateNewChunk@FMemStack@@QAEPAEH@Z": 268443424,
+        "??0FPlane@@QAE@ABUFVector@@00@Z": 268443008,
+        "?NEAR_CLIPPING_PLANE@@3MA": 268451840,
+        "?Deproject@FSceneNode@@QAE?AUFVector@@ABUFPlane@@@Z": 268443264,
+        "?SafeNormal@FVector@@QBE?AU1@XZ": 268442896
+      },
+      "interior_objects": {
+        "?GSceneMem@@3VFMemStack@@A": 16
+      },
+      "object_order": [
+        "versus-render-build-portal-volume",
+        "versus-scene-node-deproject",
+        "versus-level-scene-actor-visible",
+        "cleanup-stack-object-2dd500",
+        "versus-vd-e7720",
+        "versus-object-find-function"
+      ],
+      "rebuilt_address": 268442192,
+      "rebuilt_offset": 3664
+    },
+    "recipe_evidence": {
+      "compiler": "Microsoft C/C++ 13.00.9466 for x86",
+      "flags": [
+        "/O2",
+        "/GL"
+      ],
+      "basis": "evidence/versus-vc70-switches.md"
+    },
+    "match": {
+      "bytes_sha256": "e9ea54bd50e0a7d369db6b43950e47b820e5e3905729efe13989d264d632f180",
+      "inputs_sha256": "89f9200e91e3835e0a5df9de2cb5a4162f7a4ac0b27245361ce0561243f291d3"
+    }
+  },
+  {
     "id": "versus-vd-13a2a0",
     "offset": 1286816,
     "size": 198,
     "inputs": [
-      "src/versus_vd8_item_0067.cpp"
+      "src/versus_vd8_item_0067.cpp",
+      "src/versus_mem_stack.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_level_trace_vector.h",
+      "src/versus_scene_base_node.h",
+      "src/versus_render_interface.h",
+      "src/versus_matrix_types.h",
+      "src/versus_plane.h"
     ],
     "rebuilt_symbol": "?AddProjector_13a2a0@@YAXPAUFBspNode_13a2a0@@PAUFVisibilityContext_139fe0@@PAUFProjectorVolume_13a2a0@@@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -5091,11 +5260,7 @@
       },
       "?GSceneMem@@3VFMemStack@@A": {
         "va": 281492652,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?UnusedChunks@FMemStack@@2PAUFTaggedMemory@@A": {
-        "va": 281492656,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
+        "basis": "The renderer scene stack is the 16-byte object with initial default chunk size 32768. The first two words hold Top and End. Its C++ cleanup uses this same object."
       },
       "?AllocateNewChunk@FMemStack@@QAEPAEH@Z": {
         "va": 278230976,
@@ -5108,14 +5273,8 @@
       ],
       "stubs": [
         "?Escape@@YAXPAX@Z",
-        "?GMalloc@@3PAVFMalloc@@A",
-        "?GSceneMem@@3VFMemStack@@A",
-        "?MemChunk_Tag@@3QBGB",
-        "?NEAR_CLIPPING_PLANE@@3MA",
-        "?TransformFPlane@FMatrix@@QBE?AUFPlane@@ABU2@@Z",
-        "?UnusedChunks@FMemStack@@2PAUFTaggedMemory@@A",
-        "__fltused",
-        "__imp_?GZeroVector@@3UFVector@@B"
+        "__imp_?GZeroVector@@3UFVector@@B",
+        "?TransformFPlane@FMatrix@@QBE?AUFPlane@@ABU2@@Z"
       ],
       "rebuilt_offset": 1024,
       "rebuilt_address": 268439552,
@@ -5138,7 +5297,8 @@
         [
           82,
           "abs",
-          "?UnusedChunks@FMemStack@@2PAUFTaggedMemory@@A"
+          "?GSceneMem@@3VFMemStack@@A",
+          4
         ],
         [
           99,
@@ -5167,16 +5327,18 @@
         ]
       ],
       "symbols": {
-        "?StraddlesBox_51dc0@FPlane@@QBEKPBUFVector@@@Z": 268439872,
-        "?SphereCheck@UnnamedFrustum_117ca0@@QAEKABUFSphere@@@Z": 268440448,
-        "?GSceneMem@@3VFMemStack@@A": 268440626,
-        "?UnusedChunks@FMemStack@@2PAUFTaggedMemory@@A": 268440630,
-        "?AllocateNewChunk@FMemStack@@QAEPAEH@Z": 268439760
+        "?StraddlesBox_51dc0@FPlane@@QBEKPBUFVector@@@Z": 268439760,
+        "?SphereCheck@UnnamedFrustum_117ca0@@QAEKABUFSphere@@@Z": 268440336,
+        "?GSceneMem@@3VFMemStack@@A": 268447748,
+        "?AllocateNewChunk@FMemStack@@QAEPAEH@Z": 268440576
+      },
+      "interior_objects": {
+        "?GSceneMem@@3VFMemStack@@A": 16
       }
     },
     "match": {
       "bytes_sha256": "283b96c5210056b9f952cf690fe16dab06d06f4778e538025b0b693a069b69db",
-      "inputs_sha256": "9f2127f1e2326b3a50ca5fb85a0a21bf7237aa3df09896f374f6b2bd56f68915"
+      "inputs_sha256": "10199970c3b19fd794b5a87eb36e00b8fc4f894dcd92a3bf644a4d1359ec9eec"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -5185,7 +5347,11 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
-    }
+    },
+    "ltcg_callees": [
+      "cleanup-stack-object-2dd500",
+      "versus-vd-e7720"
+    ]
   },
   {
     "id": "versus-vd-13bff0",

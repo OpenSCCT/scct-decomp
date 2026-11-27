@@ -1488,7 +1488,7 @@
     },
     "match": {
       "bytes_sha256": "c7b5ac845d05c3bc833f73c83ae12d8daf804bd5341d2b39f38bb435dbf8a4c3",
-      "inputs_sha256": "87acc84020cba0ab54f4e38f9c1ddc176e95a3a7d22f9552097547894875e93b"
+      "inputs_sha256": "1294d025856d76382334d80ef43c8019fec19360d4b7590ddef37cf49e30ce9e"
     }
   },
   {
@@ -1525,7 +1525,7 @@
     },
     "match": {
       "bytes_sha256": "9cd58b2cfce821676f8063779aba5a16a4bc72c34eaf90ce4686cb39701c43f6",
-      "inputs_sha256": "3afb90698081c4d496aa6171e220d7d1d1f12c00bd8ba6883f7fe51990acfc3a"
+      "inputs_sha256": "744837bfc19efac4e51e4153d15be960ed283668d3e55dbf7be28e5afb28b9a1"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1620,7 +1620,7 @@
     },
     "match": {
       "bytes_sha256": "87a65c6ffee37b69454475ff67a3d806d655c0b789f56acfa876fa76cbd43a97",
-      "inputs_sha256": "d7d8f268285bba005b28e835e373ba5beec8d86ca48bb2b2cb8cfa01c6558121"
+      "inputs_sha256": "7340a7b12e3fcc316754d335a5e747ed34cd88cbd5e67bfd0073f0e833bf2289"
     }
   },
   {
@@ -2391,6 +2391,7 @@
       "src/unreal_object.h",
       "src/unreal_name.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_matrix_types.h",
       "src/versus_plane.h"
     ],
     "rebuilt_symbol": "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z",
@@ -2485,7 +2486,7 @@
     },
     "match": {
       "bytes_sha256": "09632ce947910ea3f2c111fd13b9215005c1f63c80a362385ca53565d99ae777",
-      "inputs_sha256": "7cdfb359ddbd1f9da18fb466be00a03353f25259ef2892906f9b726be3dfbb11"
+      "inputs_sha256": "fc2a7c3091b60f2a9998441b481b52f1679d337ea2f9f58d709ef9d750f085d3"
     }
   },
   {
@@ -2797,8 +2798,10 @@
       "src/versus_render_resource.h",
       "src/versus_texture_format.h",
       "src/versus_scene_node_types.h",
+      "src/versus_scene_base_node.h",
       "src/versus_render_interface.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_matrix_types.h",
       "src/versus_plane.h",
       "src/unreal_math.h",
       "src/versus_scene_child.inl",
@@ -2857,7 +2860,7 @@
     ],
     "match": {
       "bytes_sha256": "a6ab6f6a9a262d9c81244bf78588f5cf9691c4eb389062b290369f0508b4a314",
-      "inputs_sha256": "af436c5b01573c4e089a37e93fea67cf4d83bb4a897fc3a444a1f03837f37185"
+      "inputs_sha256": "f60b79d25f20c5bbd1c38e53a5f6bbd1698342137c1d182db53f732503da41a2"
     }
   },
   {
@@ -2922,6 +2925,62 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    }
+  },
+  {
+    "id": "versus-scene-node-deproject",
+    "offset": 1125840,
+    "size": 88,
+    "inputs": [
+      "src/versus_vd8_item_0067.cpp",
+      "src/versus_mem_stack.h",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_level_trace_vector.h",
+      "src/versus_scene_base_node.h",
+      "src/versus_render_interface.h",
+      "src/versus_matrix_types.h",
+      "src/versus_plane.h"
+    ],
+    "rebuilt_symbol": "?Deproject@FSceneNode@@QAE?AUFVector@@ABUFPlane@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_scene_deprojection.obj src/versus_vd8_item_0067.cpp",
+    "identification": "The portal builder passes its level scene node and homogeneous near plane to this routine. It scales the clip coordinates by W, uses the ScreenToWorld matrix and returns the three spatial coordinates. Retail function RVA 0xc44e0 also calls it three times.",
+    "link_bindings": {
+      "?TransformFPlane@FMatrix@@QBE?AUFPlane@@ABU2@@Z": {
+        "va": 278199904,
+        "basis": "The 212-byte matrix routine multiplies the input plane by the sixteen ScreenToWorld coefficients and returns the resulting four-component value."
+      }
+    },
+    "ltcg_callees": [
+      "versus-level-scene-actor-visible",
+      "cleanup-stack-object-2dd500",
+      "versus-vd-e7720"
+    ],
+    "ltcg_link": {
+      "roots": [
+        "?BuildPortalVolume@@YAPAVFConvexVolume@@PAUFLevelRenderState@@PAVFPoly@@K@Z"
+      ],
+      "stubs": [
+        "__imp_?GZeroVector@@3UFVector@@B",
+        "?TransformFPlane@FMatrix@@QBE?AUFPlane@@ABU2@@Z"
+      ],
+      "fields": [
+        [
+          60,
+          "rel32",
+          "?TransformFPlane@FMatrix@@QBE?AUFPlane@@ABU2@@Z"
+        ]
+      ],
+      "symbols": {
+        "?TransformFPlane@FMatrix@@QBE?AUFPlane@@ABU2@@Z": 268446289
+      },
+      "rebuilt_address": 268439920,
+      "rebuilt_offset": 1392
+    },
+    "match": {
+      "bytes_sha256": "36634e34c69420ed0c964ff3b65354e75f0395c0d819b324c363e548186cd7b3",
+      "inputs_sha256": "066931e9f2d14f80f01b82744c9c526a3ebf73beb7a79e4587319fedd7af4df6"
     }
   },
   {
@@ -3322,8 +3381,10 @@
       "src/versus_canvas.h",
       "src/versus_viewport_types.h",
       "src/versus_scene_node_types.h",
+      "src/versus_scene_base_node.h",
       "src/versus_canvas_util.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_matrix_types.h",
       "src/versus_plane.h",
       "src/versus_render_device.h",
       "src/versus_malloc.h",
@@ -3345,7 +3406,7 @@
     "identification": "Slot 2 at Versus VA 0x10c036f8 implements the camera-scene override. It pushes render state, calls the base level renderer and the viewport first-person pass, updates vertex pools, flushes the viewport Canvas and pops render state. The corresponding derived actor slot in the editor identifies FActorSceneNode::Render. VC7.1 also emits these 69 bytes with LTCG. The retail Rich header identifies VC7.0 as its only LTCG producer; size optimization and ordinary COFF diverge.",
     "match": {
       "bytes_sha256": "b80a4b97f89f33439c3d186e4ce84387fe021e4a9c0e32d913af21e088d7235e",
-      "inputs_sha256": "bbfcaa9017781db2ed66d2b414fd16eb8d81b9448d1e5d12d08cd6f237139241"
+      "inputs_sha256": "8960e321f99851df2bcceac1c1e5ff5ffd8862f8ffa672f3693dc67438bc726e"
     }
   },
   {
@@ -3509,19 +3570,28 @@
     "inputs": [
       "src/versus_level_draw.cpp",
       "src/versus_build.h",
-      "src/versus_pawn_action_events.h",
+      "src/versus_arrays.h",
       "src/unreal_types.h",
+      "src/versus_pawn_action_events.h",
       "src/unreal_math.h",
-      "src/unreal_containers.h",
       "src/versus_hardcoded_names.inl",
       "src/versus_scene_level_types.h",
-      "src/versus_ltcg.h",
       "src/versus_info.h",
       "src/versus_scene_node_types.h",
-      "src/versus_render_interface.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_matrix_types.h",
       "src/versus_plane.h",
-      "src/versus_scene_model_types.h"
+      "src/versus_scene_base_node.h",
+      "src/versus_render_interface.h",
+      "src/versus_scene_model_types.h",
+      "src/versus_level_render_state.h",
+      "src/versus_convex_volume.h",
+      "src/versus_poly.h",
+      "src/versus_viewport_types.h",
+      "src/versus_base_texture.h",
+      "src/versus_render_resource.h",
+      "src/versus_texture_format.h",
+      "src/versus_mem_stack.h"
     ],
     "rebuilt_symbol": "?IsBspSectionVisible@FLevelSceneNode@@QBEKH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3540,7 +3610,14 @@
         "?Render@FBspDrawList@@QAEXPAVFLevelSceneNode@@PAVFRenderInterface@@K@Z",
         "?Render@FDynamicActor@@QAEXPAVFLevelSceneNode@@PAUFDynamicLightList@@PAXPAVFRenderInterface@@H2@Z",
         "?UpdateLightFade@FDynamicActor@@QAEXPAVFLevelSceneNode@@@Z",
-        "__fltused"
+        "__fltused",
+        "?GSceneMem@@3VFMemStack@@A",
+        "?SafeNormal@FVector@@QBE?AU1@XZ",
+        "?Deproject@FSceneNode@@QAE?AUFVector@@ABUFPlane@@@Z",
+        "?AllocateNewChunk@FMemStack@@QAEPAEH@Z",
+        "??0FPlane@@QAE@MMMM@Z",
+        "??0FPlane@@QAE@ABUFVector@@00@Z",
+        "?NEAR_CLIPPING_PLANE@@3MA"
       ],
       "rebuilt_offset": 1056,
       "rebuilt_address": 268439584,
@@ -3549,7 +3626,7 @@
     },
     "match": {
       "bytes_sha256": "f842fb0d211b0601985a8f70ecb125f0e86eafd3ec7e5dabc1c58b52cd830542",
-      "inputs_sha256": "a756880e6c9b9eaea4ba53d850685b004f5c0ee88bbca05cfdb052e42b202b11"
+      "inputs_sha256": "f5aa645b3c0b55b692dad7b3a1863873ad86850d494588a46157c40b44282664"
     }
   },
   {
@@ -3559,19 +3636,28 @@
     "inputs": [
       "src/versus_level_draw.cpp",
       "src/versus_build.h",
-      "src/versus_pawn_action_events.h",
+      "src/versus_arrays.h",
       "src/unreal_types.h",
+      "src/versus_pawn_action_events.h",
       "src/unreal_math.h",
-      "src/unreal_containers.h",
       "src/versus_hardcoded_names.inl",
       "src/versus_scene_level_types.h",
-      "src/versus_ltcg.h",
       "src/versus_info.h",
       "src/versus_scene_node_types.h",
-      "src/versus_render_interface.h",
       "src/versus_canvas_matrix.h",
+      "src/versus_matrix_types.h",
       "src/versus_plane.h",
-      "src/versus_scene_model_types.h"
+      "src/versus_scene_base_node.h",
+      "src/versus_render_interface.h",
+      "src/versus_scene_model_types.h",
+      "src/versus_level_render_state.h",
+      "src/versus_convex_volume.h",
+      "src/versus_poly.h",
+      "src/versus_viewport_types.h",
+      "src/versus_base_texture.h",
+      "src/versus_render_resource.h",
+      "src/versus_texture_format.h",
+      "src/versus_mem_stack.h"
     ],
     "rebuilt_symbol": "?IsActorVisible@FLevelSceneNode@@QBEKPAVAActor@@_N@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -3590,7 +3676,14 @@
         "?Render@FBspDrawList@@QAEXPAVFLevelSceneNode@@PAVFRenderInterface@@K@Z",
         "?Render@FDynamicActor@@QAEXPAVFLevelSceneNode@@PAUFDynamicLightList@@PAXPAVFRenderInterface@@H2@Z",
         "?UpdateLightFade@FDynamicActor@@QAEXPAVFLevelSceneNode@@@Z",
-        "__fltused"
+        "__fltused",
+        "?GSceneMem@@3VFMemStack@@A",
+        "?SafeNormal@FVector@@QBE?AU1@XZ",
+        "?Deproject@FSceneNode@@QAE?AUFVector@@ABUFPlane@@@Z",
+        "?AllocateNewChunk@FMemStack@@QAEPAEH@Z",
+        "??0FPlane@@QAE@MMMM@Z",
+        "??0FPlane@@QAE@ABUFVector@@00@Z",
+        "?NEAR_CLIPPING_PLANE@@3MA"
       ],
       "rebuilt_offset": 1152,
       "rebuilt_address": 268439680,
@@ -3599,7 +3692,7 @@
     },
     "match": {
       "bytes_sha256": "23a9aab46abe0c32632b41e1db44d89094dd1d84d7e406796fbdeefd2973d7e5",
-      "inputs_sha256": "948b66503f5ddcc823f231c9b6e0c6f5966368af33e08357a1129898e9e5a4af"
+      "inputs_sha256": "6e508b01b858dd0b845ebacb7607091fedb1e1490ca9fd522813f418388283fe"
     }
   },
   {

@@ -1,16 +1,17 @@
 #ifndef VERSUS_CONVEX_VOLUME_H
 #define VERSUS_CONVEX_VOLUME_H
 
-#include "versus_level_trace_vector.h"
 #include "versus_plane.h"
 #include "versus_poly.h"
 
 class FConvexVolume
 {
 public:
-    FPlane BoundingPlanes[32];
+    enum { MaxPlanes = 32 };
+    FPlane BoundingPlanes[MaxPlanes];
     INT NumPlanes;
 
+    FConvexVolume() : NumPlanes(0) {}
     FPoly ClipPolygon(FPoly Polygon) const;
 };
 
