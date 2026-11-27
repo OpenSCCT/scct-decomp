@@ -13,6 +13,47 @@ D3DXPLANE *__stdcall c_D3DXPlaneFromPointNormal(
     return out;
 }
 
+extern "C" D3DXVECTOR3 *__stdcall D3DXVec3Normalize(
+    D3DXVECTOR3 *out, const D3DXVECTOR3 *vector);
+
+static inline D3DXVECTOR3 *D3DXVec3Subtract(
+    D3DXVECTOR3 *out, const D3DXVECTOR3 *a, const D3DXVECTOR3 *b)
+{
+    out->x = a->x - b->x;
+    out->y = a->y - b->y;
+    out->z = a->z - b->z;
+    return out;
+}
+
+static inline D3DXVECTOR3 *D3DXVec3Cross(
+    D3DXVECTOR3 *out, const D3DXVECTOR3 *a, const D3DXVECTOR3 *b)
+{
+    D3DXVECTOR3 cross;
+    cross.x = a->y * b->z - a->z * b->y;
+    cross.y = a->z * b->x - a->x * b->z;
+    cross.z = a->x * b->y - a->y * b->x;
+    *out = cross;
+    return out;
+}
+
+D3DXPLANE *__stdcall c_D3DXPlaneFromPoints(
+    D3DXPLANE *out, const D3DXVECTOR3 *first,
+    const D3DXVECTOR3 *second, const D3DXVECTOR3 *third)
+{
+    D3DXVECTOR3 edge1, edge2;
+    D3DXVECTOR3 *normal = reinterpret_cast<D3DXVECTOR3 *>(out);
+    D3DXVec3Subtract(&edge1, first, second);
+    D3DXVec3Subtract(&edge2, first, third);
+    D3DXVec3Cross(normal, &edge1, &edge2);
+    D3DXVec3Normalize(normal, normal);
+
+    FLOAT distance = normal->z * first->z;
+    distance += normal->y * first->y;
+    distance += normal->x * first->x;
+    out->d = -distance;
+    return out;
+}
+
 D3DXMATRIX *__stdcall c_D3DXMatrixReflect(D3DXMATRIX *out, const D3DXPLANE *plane)
 {
     D3DXPLANE unit;

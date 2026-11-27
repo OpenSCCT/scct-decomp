@@ -1,8 +1,7 @@
 /* d3dx_curve_math.cpp -- D3DX8 vector interpolation functions */
 #include "d3dx_math_types.h"
 
-/* D3DXVec2Hermite */
-extern "C" D3DXVECTOR2 *__stdcall D3DXVec2Hermite(
+D3DXVECTOR2 *__stdcall c_D3DXVec2Hermite(
     D3DXVECTOR2 *pOut,
     const D3DXVECTOR2 *pV1,
     const D3DXVECTOR2 *pT1,
@@ -22,8 +21,7 @@ extern "C" D3DXVECTOR2 *__stdcall D3DXVec2Hermite(
     return pOut;
 }
 
-/* D3DXVec2CatmullRom */
-extern "C" D3DXVECTOR2 *__stdcall D3DXVec2CatmullRom(
+D3DXVECTOR2 *__stdcall c_D3DXVec2CatmullRom(
     D3DXVECTOR2 *pOut,
     const D3DXVECTOR2 *pV1,
     const D3DXVECTOR2 *pV2,
@@ -43,8 +41,7 @@ extern "C" D3DXVECTOR2 *__stdcall D3DXVec2CatmullRom(
     return pOut;
 }
 
-/* D3DXVec2BaryCentric */
-extern "C" D3DXVECTOR2 *__stdcall D3DXVec2BaryCentric(
+D3DXVECTOR2 *__stdcall c_D3DXVec2BaryCentric(
     D3DXVECTOR2 *pOut,
     const D3DXVECTOR2 *pV1,
     const D3DXVECTOR2 *pV2,
@@ -57,8 +54,7 @@ extern "C" D3DXVECTOR2 *__stdcall D3DXVec2BaryCentric(
     return pOut;
 }
 
-/* D3DXVec3Hermite */
-extern "C" D3DXVECTOR3 *__stdcall D3DXVec3Hermite(
+D3DXVECTOR3 *__stdcall c_D3DXVec3Hermite(
     D3DXVECTOR3 *pOut,
     const D3DXVECTOR3 *pV1,
     const D3DXVECTOR3 *pT1,
@@ -79,8 +75,7 @@ extern "C" D3DXVECTOR3 *__stdcall D3DXVec3Hermite(
     return pOut;
 }
 
-/* D3DXVec3CatmullRom */
-extern "C" D3DXVECTOR3 *__stdcall D3DXVec3CatmullRom(
+D3DXVECTOR3 *__stdcall c_D3DXVec3CatmullRom(
     D3DXVECTOR3 *pOut,
     const D3DXVECTOR3 *pV1,
     const D3DXVECTOR3 *pV2,
@@ -101,8 +96,7 @@ extern "C" D3DXVECTOR3 *__stdcall D3DXVec3CatmullRom(
     return pOut;
 }
 
-/* D3DXVec3BaryCentric */
-extern "C" D3DXVECTOR3 *__stdcall D3DXVec3BaryCentric(
+D3DXVECTOR3 *__stdcall c_D3DXVec3BaryCentric(
     D3DXVECTOR3 *pOut,
     const D3DXVECTOR3 *pV1,
     const D3DXVECTOR3 *pV2,
@@ -116,8 +110,7 @@ extern "C" D3DXVECTOR3 *__stdcall D3DXVec3BaryCentric(
     return pOut;
 }
 
-/* D3DXVec4Hermite */
-extern "C" D3DXVECTOR4 *__stdcall D3DXVec4Hermite(
+D3DXVECTOR4 *__stdcall c_D3DXVec4Hermite(
     D3DXVECTOR4 *pOut,
     const D3DXVECTOR4 *pV1,
     const D3DXVECTOR4 *pT1,
@@ -139,8 +132,7 @@ extern "C" D3DXVECTOR4 *__stdcall D3DXVec4Hermite(
     return pOut;
 }
 
-/* D3DXVec4CatmullRom */
-extern "C" D3DXVECTOR4 *__stdcall D3DXVec4CatmullRom(
+D3DXVECTOR4 *__stdcall c_D3DXVec4CatmullRom(
     D3DXVECTOR4 *pOut,
     const D3DXVECTOR4 *pV1,
     const D3DXVECTOR4 *pV2,
@@ -162,8 +154,7 @@ extern "C" D3DXVECTOR4 *__stdcall D3DXVec4CatmullRom(
     return pOut;
 }
 
-/* D3DXVec4BaryCentric */
-extern "C" D3DXVECTOR4 *__stdcall D3DXVec4BaryCentric(
+D3DXVECTOR4 *__stdcall c_D3DXVec4BaryCentric(
     D3DXVECTOR4 *pOut,
     const D3DXVECTOR4 *pV1,
     const D3DXVECTOR4 *pV2,
@@ -178,7 +169,7 @@ extern "C" D3DXVECTOR4 *__stdcall D3DXVec4BaryCentric(
     return pOut;
 }
 
-extern "C" D3DXVECTOR4 *__stdcall D3DXVec4Cross(
+D3DXVECTOR4 *__stdcall c_D3DXVec4Cross(
     D3DXVECTOR4 *out, const D3DXVECTOR4 *a, const D3DXVECTOR4 *b, const D3DXVECTOR4 *c)
 {
     D3DXVECTOR4 cross;

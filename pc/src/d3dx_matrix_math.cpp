@@ -20,8 +20,7 @@ extern "C" D3DXMATRIX *__stdcall D3DXMatrixRotationQuaternion(
     D3DXMATRIX *pOut,
     const D3DXQUATERNION *pQ);
 
-/* D3DXMatrixTranspose */
-extern "C" D3DXMATRIX *__stdcall D3DXMatrixTranspose(
+D3DXMATRIX *__stdcall c_D3DXMatrixTranspose(
     D3DXMATRIX *pOut,
     const D3DXMATRIX *pM)
 {
@@ -54,8 +53,7 @@ extern "C" D3DXMATRIX *__stdcall D3DXMatrixTranspose(
     return pOut;
 }
 
-/* D3DXMatrixScaling */
-extern "C" D3DXMATRIX *__stdcall D3DXMatrixScaling(
+D3DXMATRIX *__stdcall c_D3DXMatrixScaling(
     D3DXMATRIX *pOut,
     FLOAT sx,
     FLOAT sy,
@@ -80,8 +78,7 @@ extern "C" D3DXMATRIX *__stdcall D3DXMatrixScaling(
     return pOut;
 }
 
-/* D3DXMatrixTranslation */
-extern "C" D3DXMATRIX *__stdcall D3DXMatrixTranslation(
+D3DXMATRIX *__stdcall c_D3DXMatrixTranslation(
     D3DXMATRIX *pOut,
     FLOAT x,
     FLOAT y,
@@ -106,8 +103,7 @@ extern "C" D3DXMATRIX *__stdcall D3DXMatrixTranslation(
     return pOut;
 }
 
-/* D3DXMatrixRotationYawPitchRoll */
-extern "C" D3DXMATRIX *__stdcall D3DXMatrixRotationYawPitchRoll(
+D3DXMATRIX *__stdcall c_D3DXMatrixRotationYawPitchRoll(
     D3DXMATRIX *pOut,
     FLOAT yaw,
     FLOAT pitch,
@@ -120,7 +116,7 @@ extern "C" D3DXMATRIX *__stdcall D3DXMatrixRotationYawPitchRoll(
     return pOut;
 }
 
-extern "C" D3DXMATRIX *__stdcall D3DXMatrixRotationQuaternion(D3DXMATRIX *out, const D3DXQUATERNION *q)
+D3DXMATRIX *__stdcall c_D3DXMatrixRotationQuaternion(D3DXMATRIX *out, const D3DXQUATERNION *q)
 {
     float x2 = q->x * 2.0f;
     float y2 = q->y * 2.0f;
@@ -158,7 +154,7 @@ extern "C" D3DXQUATERNION *__stdcall D3DXQuaternionSlerp(
     D3DXQUATERNION *out, const D3DXQUATERNION *start,
     const D3DXQUATERNION *end, float t);
 
-extern "C" D3DXQUATERNION *__stdcall D3DXQuaternionSquad(D3DXQUATERNION *out,
+D3DXQUATERNION *__stdcall c_D3DXQuaternionSquad(D3DXQUATERNION *out,
     const D3DXQUATERNION *q1, const D3DXQUATERNION *q2,
     const D3DXQUATERNION *q3, const D3DXQUATERNION *q4, float t)
 {
