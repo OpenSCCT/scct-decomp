@@ -67,6 +67,7 @@ public:
     virtual void VirtualSlot20();
     virtual void VirtualSlot21();
 
+    UBOOL IsA(class UClass *SomeBase) const;
     UObject *FindInStateOrClass(FName InName, INT Global);
     UFunction *FindFunctionChecked(FName InName, INT Global);
     INT Index;
@@ -145,7 +146,11 @@ public:
     FRotator Rotation;
     BYTE unk_ec[0x1a4 - 0xec];
     class ULevel *XLevel;
-    BYTE unk_1a8[0x268 - 0x1a8];
+    BYTE unk_1a8[0x1bc - 0x1a8];
+    class UMesh *Mesh;
+    BYTE unk_1c0[0x1d4 - 0x1c0];
+    class UMeshInstance *MeshInstance;
+    BYTE unk_1d8[0x268 - 0x1d8];
     FLOAT CollisionRadius;
     FLOAT CollisionHeight;
     BYTE unk_270[0x2de - 0x270];
@@ -229,7 +234,9 @@ public:
     BYTE IK_Type;
     BYTE unk_719[2];
     BYTE IK_TypeBeforeDamage;
-    BYTE unk_71c[0x8b4 - 0x71c];
+    BYTE unk_71c[0x75c - 0x71c];
+    FLOAT fBlendCoeffWalkAnim;
+    BYTE unk_760[0x8b4 - 0x760];
     FName ADeathStForward;
     FName ADeathStBack;
     FName ADeathStLeft;
@@ -250,9 +257,18 @@ public:
     FName ADeathCrLeft2H;
     FName ADeathCrRight2H;
     FName ADeathCrDown2H;
-    BYTE unk_904[0xa48 - 0x904];
+    BYTE unk_904[0x9e4 - 0x904];
+    FName RightAnim;
+    FName ForwardAnim;
+    BYTE unk_9ec[0xa00 - 0x9ec];
+    FName LeftAnim;
+    BYTE unk_a04[0xa0c - 0xa04];
+    FLOAT fWalkSpeedLimit;
+    FLOAT fRunSpeedLimit;
+    BYTE unk_a14[0xa48 - 0xa14];
     FLOAT fBlendTimeWithC0;
-    BYTE unk_a4c[0xaac - 0xa4c];
+    INT ChannelForBlendWithC0;
+    BYTE unk_a50[0xaac - 0xa50];
     FLOAT fTimeOfFeetLedge;
     BYTE unk_ab0[2];
     BYTE ZoneConfig;
@@ -283,7 +299,15 @@ public:
     INT CheckLedgeGrab(BYTE Mode);
     void ReinitBecauseOfDivergences();
     void execReinitBecauseOfDivergences(struct FFrame &Stack, void *const Result);
+    void ExecuteAction(INT Action);
     void PlayWalkingAction(INT Action);
+    void SetLedgeAnimations();
+    void SetFenceAnimations();
+    void SetHorizontalPipeAnimations();
+    void SetProneHorizontalPipeAnimations();
+    void PlayRollAnimation();
+    void PlayRollUpAnimation();
+    void PlayAnimBlendingWithC0(INT Channel, FName Sequence, FLOAT BlendTime, FLOAT Rate);
     void eventNotifyQuickLaunch();
     void eventEvSetWeaponLoaded(INT num);
     void PlayDeathAnimation(INT Direction);
