@@ -1120,6 +1120,36 @@
     }
   },
   {
+    "id": "versus-integer-to-text",
+    "offset": 73552,
+    "size": 52,
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_integer_text.obj src/versus_integer_text.cpp",
+    "inputs": [
+      "src/versus_integer_text.cpp",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/versus_app_memzero.h"
+    ],
+    "rebuilt_symbol": "?IntToString@@YAPAGH@Z",
+    "identification": "IntToString (descriptive name). Formats a signed integer in base ten into a shared 20-TCHAR buffer. The stock routine clears exactly 40 bytes using the corroborated Win32 appMemzero expansion, then returns the result from the MSVCR70 _itow import. The gadget display at 0x2304a1 passes this return pointer to wcscpy. Earlier partial sources named the operation IntToString but missed the clearing expansion and return type.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?Buffer@?1??IntToString@@YAPAGH@Z@4PAGA": {
+        "va": 282392176,
+        "basis": "Both absolute operands address the same static 20-TCHAR buffer. Retail clears 0x28 bytes then passes this address as the output of _itow. The full buffer is in the zero-initialized virtual tail of writable retail .data, and the compiler emits a 40-byte writable BSS contribution."
+      },
+      "__imp___itow": {
+        "va": 280884064,
+        "basis": "The locked Versus import table identifies this IAT entry as MSVCR70.dll!_itow. It receives the signed integer, the shared output buffer and radix 10."
+      }
+    },
+    "match": {
+      "bytes_sha256": "1cbbdd830a8dde276b88e2c7a08d5505f778f5849b3b54bc6d5c29625ee1cdd7",
+      "inputs_sha256": "d009459295b7c509e151283f3ba30cfdb472e65cb359f3975ca91479f6db85e9"
+    }
+  },
+  {
     "id": "versus-vd-11f90",
     "offset": 73616,
     "size": 180,

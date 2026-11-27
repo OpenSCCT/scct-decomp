@@ -39,3 +39,18 @@ MgmChild *MgmArea::FindChild(MgmId Id)
     }
     return 0;
 }
+
+MgmMaterial *FindMgmMaterial(MgmPackage *Package, const ANSICHAR *Name)
+{
+    return Package->FindMaterial(MgmNameId(Name));
+}
+
+MgmMaterial *MgmPackage::FindMaterial(MgmId Id)
+{
+    MgmMaterial **End = MaterialsEnd;
+    for (MgmMaterial **It = Materials; It != End; ++It) {
+        if ((*It)->GetId() == Id)
+            return *It;
+    }
+    return 0;
+}

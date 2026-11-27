@@ -60,14 +60,26 @@ public:
     void SetVisible(BYTE Value, BYTE IncludeChildren);
 };
 
+class MgmMaterial {
+public:
+    BYTE UnknownBeforeId[0x20];
+    MgmId Id;
+    MgmId GetId() const;
+};
+
 class MgmPackage {
 public:
     BYTE UnknownBeforeAreas[8];
     MgmArea **Areas;
     MgmArea **AreasEnd;
+    MgmArea **AreasCapacity;
+    BYTE Unknown14[4];
+    MgmMaterial **Materials, **MaterialsEnd, **MaterialsCapacity;
+    MgmMaterial *FindMaterial(MgmId Id);
     MgmArea *FindArea(MgmId Id);
 };
 
+MgmMaterial *FindMgmMaterial(MgmPackage *Package, const ANSICHAR *Name);
 MgmArea *FindMgmArea(MgmPackage *Package, const ANSICHAR *Name);
 MgmArea *FindMgmArea(MgmPackage *Package, MgmId Id);
 MgmChild *FindMgmChild(MgmArea *Area, const ANSICHAR *Name);
