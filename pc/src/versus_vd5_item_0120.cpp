@@ -1,3 +1,4 @@
+// versus_vd5_item_0120.cpp -- skeletal animation channel blend parameters.
 /* Versus RVA 0xb6ac0: USkeletalMeshInstance vtable slot 38.
    Matches the shape of UE2 USkeletalMeshInstance::SetBlendParams: stores the
    blend parameters into a 144-byte animation channel and marks it blended.
@@ -5,19 +6,8 @@
    (0x109b5910) takes this in EBX and the stage in EDI, which is why this
    function keeps this in EBX. Field names follow UE2 MeshAnimChannel where
    the layout fits; the slot-30 virtual and 0x109c0d50 are unnamed. */
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef float FLOAT;
-
-class FName {
-public:
-    INT Index;
-};
-
-typedef unsigned short TCHAR;
-typedef unsigned char BYTE;
-
+#include "versus_build.h"
+#include "unreal_script.h"
 class FMalloc {
 public:
     virtual void *Malloc(DWORD Count, const TCHAR *Tag);
@@ -51,7 +41,14 @@ public:
 };
 
 struct MeshAnimChannel {             /* 0x90 bytes */
-    unsigned char Pad0[0x78];
+    BYTE unk_0[0x38];
+    FLOAT unk_38;
+    BYTE unk_3c[0x4c - 0x3c];
+    UBOOL bGlobalPoseCurrent;
+    FLOAT CurrentAlpha, CurrentInTime, CurrentOutTime;
+    BYTE unk_5c[0x68 - 0x5c];
+    INT StartBoneIndex;
+    BYTE unk_6c[0x78 - 0x6c];
     FLOAT BlendAlpha;                /* 0x78 */
     FLOAT BlendInTime;               /* 0x7c */
     FLOAT BlendOutTime;              /* 0x80 */
@@ -74,6 +71,8 @@ public:
     virtual void V28(); virtual void V29();
     virtual UBOOL HasSkeleton();     /* slot 30, +0x78, name assumed */
     UBOOL ValidateAnimChannel(INT Stage);
+    INT MatchRefBone(FName Bone);
+    UBOOL ApplyBlendParams(INT Stage, FLOAT Alpha, FLOAT InTime, FLOAT OutTime, FName Bone, UBOOL bGlobal);
     void SetBlendParams(INT Stage, FLOAT BlendAlpha, FLOAT InTime, FLOAT OutTime, FName BoneName, UBOOL bGlobalPose);
 
     unsigned char Pad[0xfc];
@@ -109,6 +108,92 @@ void USkeletalMeshInstance::SetBlendParams(INT Stage, FLOAT BlendAlpha, FLOAT In
     }
 }
 
+
+
+// ApplyBlendParams immediately updates a non-base channel and resolves its reference bone.
+UBOOL USkeletalMeshInstance::ApplyBlendParams(INT Stage, FLOAT Alpha, FLOAT InTime,
+                                            FLOAT OutTime, FName Bone, UBOOL bGlobal)
+{
+    if (!ValidateAnimChannel(Stage))
+        return 0;
+    if (!Stage)
+        return 0;
+    INT BoneIndex = MatchRefBone(Bone);
+    if (BoneIndex < 0)
+        BoneIndex = 0;
+    MeshAnimChannel &Channel = Blends(Stage);
+    Channel.CurrentAlpha = Alpha;
+    Channel.CurrentInTime = InTime <= 1.f ? InTime : 1.f;
+    Channel.CurrentOutTime = OutTime <= 1.f ? OutTime : 1.f;
+    Channel.StartBoneIndex = BoneIndex;
+    Channel.unk_38 = 0.f;
+    Channel.bGlobalPoseCurrent = bGlobal != 0;
+    return 1;
+}
+
+class UField : public UObject {
+public:
+    UField *SuperField;
+    UField *Next;
+};
+class UStruct : public UField {
+public:
+    BYTE unk_30[0x68 - 0x30];
+};
+class UState : public UStruct {
+public:
+    BYTE unk_68[0x88 - 0x68];
+};
+class UClass : public UState {
+public:
+    UClass *GetSuperClass() const { return (UClass *)SuperField; }
+};
+class AActor;
+class UPrimitive : public UObject {};
+class UMesh : public UPrimitive {
+public:
+    virtual class UMeshInstance *MeshGetInstance(const AActor *Owner);
+};
+class ULodMesh : public UMesh {};
+class USkeletalMesh : public ULodMesh {
+public:
+    static UClass PrivateStaticClass;
+    static USkeletalMesh *Cast(UMesh *Mesh) {
+        if (Mesh) {
+            for (UClass *Cls = Mesh->GetClass(); Cls; Cls = Cls->GetSuperClass()) {
+                if (Cls == &PrivateStaticClass)
+                    return (USkeletalMesh *)Mesh;
+            }
+        }
+        return 0;
+    }
+};
+class AActor : public UObject {
+public:
+    BYTE unk_28[0x1bc - 0x28];
+    UMesh *Mesh;
+    BYTE unk_1c0[0x1d4 - 0x1c0];
+    UMeshInstance *MeshInstance;
+    DECLARE_NATIVE(execAnimBlendParams)
+};
+
+// execAnimBlendParams reads the six parameters exposed by Engine.Actor.AnimBlendParams.
+void AActor::execAnimBlendParams(FFrame &Stack, RESULT_DECL)
+{
+    P_GET_INT(Stage);
+    P_GET_FLOAT_OPTX(BlendAlpha, 0.f);
+    P_GET_FLOAT_OPTX(InTime, 0.f);
+    P_GET_FLOAT_OPTX(OutTime, 0.f);
+    P_GET_NAME_OPTX(BoneName, NAME_None);
+    P_GET_UBOOL_OPTX(bGlobalPose, 0);
+    P_FINISH;
+    USkeletalMesh *SkeletalMesh = USkeletalMesh::Cast(Mesh);
+    if (SkeletalMesh) {
+        SkeletalMesh->UMesh::MeshGetInstance(this);
+        USkeletalMeshInstance *Instance = (USkeletalMeshInstance *)MeshInstance;
+        Instance->ApplyBlendParams(Stage, BlendAlpha, InTime, OutTime, BoneName, bGlobalPose);
+    }
+}
 
 // Scaffolding for the link, not part of the unit: retail reaches this
 // function only through the vtable, so the driver takes its address.

@@ -1769,7 +1769,12 @@
     "offset": 748224,
     "size": 105,
     "inputs": [
-      "src/versus_vd5_item_0120.cpp"
+      "src/versus_vd5_item_0120.cpp",
+      "src/versus_build.h",
+      "src/unreal_script.h",
+      "src/unreal_types.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h"
     ],
     "rebuilt_symbol": "?SetBlendParams@USkeletalMeshInstance@@QAEXHMMMVFName@@K@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1789,6 +1794,10 @@
         "?AddZeroed@FArray@@QAEHHH@Z",
         "?Escape@@YAXPAX@Z",
         "?GMalloc@@3PAVFMalloc@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
+        "?MeshGetInstance@UMesh@@UAEPAVUMeshInstance@@PBVAActor@@@Z",
+        "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
         "?ShrinkingTag@@3QBGB",
         "__fltused"
       ],
@@ -1807,7 +1816,7 @@
     },
     "match": {
       "bytes_sha256": "68a0f1a7457f661aa954189aaf54c910b1aff3c3fc7be6032b72640fbb268888",
-      "inputs_sha256": "17fef0837687414434781beb2cbc961281bbfc8fefb45d62f34f8f1ab9988bed"
+      "inputs_sha256": "efbb61010a7990daca514246e99ba644e159e56312b158858029c7357d48c15b"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.00.9466 for x86",
@@ -1837,6 +1846,97 @@
     "match": {
       "bytes_sha256": "117e9a81ef36d78baa72676233c9b9b320e97fe4b550e42de7588d054f95e9d0",
       "inputs_sha256": "c9fea8deeef76a5747685b98e128e154aa5aecb22be0120c071fbb36a553aaba"
+    }
+  },
+  {
+    "id": "versus-skeletal-apply-blend-params",
+    "offset": 749024,
+    "size": 165,
+    "inputs": [
+      "src/versus_vd5_item_0120.cpp",
+      "src/versus_build.h",
+      "src/unreal_script.h",
+      "src/unreal_types.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h"
+    ],
+    "rebuilt_symbol": "?ApplyBlendParams@USkeletalMeshInstance@@QAEKHMMMVFName@@K@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_anim_blend.obj src/versus_vd5_item_0120.cpp",
+    "identification": "USkeletalMeshInstance channel updater. AActor::execAnimBlendParams passes Stage, BlendAlpha, InTime, OutTime, BoneName and bGlobalPose as declared in Engine.u. The ASBasePawn::ExecuteAction dispatcher independently calls this method at 63 sites. The method checks the stage, resolves the bone, caps both times at 1.0 and updates the active 144-byte channel. ApplyBlendParams is a descriptive spelling. Both VC7.0 and VC7.1 reproduce the full body.",
+    "ltcg_link": {
+      "roots": [
+        "?execAnimBlendParams@AActor@@QAEXAAUFFrame@@QAX@Z",
+        "?SetBlendParams@USkeletalMeshInstance@@QAEXHMMMVFName@@K@Z"
+      ],
+      "stubs": [
+        "?AddZeroed@FArray@@QAEHHH@Z",
+        "?Escape@@YAXPAX@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?GNatives@@3PAP8UObject@@AEXAAUFFrame@@QAX@ZA",
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z",
+        "?MeshGetInstance@UMesh@@UAEPAVUMeshInstance@@PBVAActor@@@Z",
+        "?PrivateStaticClass@USkeletalMesh@@2VUClass@@A",
+        "?ShrinkingTag@@3QBGB",
+        "__fltused"
+      ],
+      "rebuilt_offset": 1216,
+      "rebuilt_address": 268439744,
+      "fields": [
+        [
+          7,
+          "rel32",
+          "?ValidateAnimChannel@USkeletalMeshInstance@@QAEKH@Z"
+        ],
+        [
+          34,
+          "rel32",
+          "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z"
+        ],
+        [
+          58,
+          "abs",
+          "__real@3f800000"
+        ],
+        [
+          92,
+          "abs",
+          "__real@3f800000"
+        ],
+        [
+          105,
+          "abs",
+          "__real@3f800000"
+        ],
+        [
+          124,
+          "abs",
+          "__real@3f800000"
+        ]
+      ],
+      "symbols": {
+        "?ValidateAnimChannel@USkeletalMeshInstance@@QAEKH@Z": 268439552,
+        "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": 268440292,
+        "__real@3f800000": 268443648
+      }
+    },
+    "link_bindings": {
+      "?ValidateAnimChannel@USkeletalMeshInstance@@QAEKH@Z": {
+        "va": 278616336,
+        "basis": "The stage validator used by the existing SetBlendParams receipt."
+      },
+      "?MatchRefBone@USkeletalMeshInstance@@QAEHVFName@@@Z": {
+        "va": 278615984,
+        "basis": "Looks up the name supplied by Engine.Actor.AnimBlendParams.BoneName in the mesh reference skeleton."
+      },
+      "__real@3f800000": {
+        "va": 281086460,
+        "basis": "Shared single-precision upper bound of 1.0 for the blend times."
+      }
+    },
+    "match": {
+      "bytes_sha256": "694c5946a1ac630e220c84060cec5f5d4631532b107a132753bbfadb28d274fd",
+      "inputs_sha256": "cd2fc6c38dc0f2fde87cbf986d959d43758880614a7799d3ac45d27ed7be569c"
     }
   },
   {
