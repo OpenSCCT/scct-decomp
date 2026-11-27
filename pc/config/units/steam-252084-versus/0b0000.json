@@ -3185,6 +3185,88 @@
     }
   },
   {
+    "id": "versus-skeletal-instance-get-mesh-verts",
+    "offset": 753616,
+    "size": 291,
+    "inputs": [
+      "src/versus_skeletal_get_mesh_verts.cpp",
+      "src/versus_build.h",
+      "src/unreal_math.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h",
+      "src/unreal_types.h"
+    ],
+    "rebuilt_symbol": "?GetMeshVerts@USkeletalMeshInstance@@UAEXPAVAActor@@PAUFVector@@HAAH@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /GX /Ob1 /c /Folocal/versus_skeletal_get_mesh_verts.obj src/versus_skeletal_get_mesh_verts.cpp",
+    "identification": "USkeletalMeshInstance::GetMeshVerts, retail virtual slot 71. The shipped editor counterpart at VA 0x111098b0 has the guard string USkeletalMeshInstance::GetMeshVerts at VA 0x11495054. Both implementations size a 32-byte temporary stream from LOD model zero, call GetFrame, select LOD zero for software skinning, and copy vertex positions into the caller’s strided destination up to its requested count. The source describes the skinner and its stream element by their observed roles.",
+    "ltcg_link": {
+      "roots": [
+        "?GetMeshVerts@USkeletalMeshInstance@@UAEXPAVAActor@@PAUFVector@@HAAH@Z"
+      ],
+      "stubs": [
+        "?AddZeroed@FArray@@QAGHHH@Z",
+        "?GMalloc@@3PAVFMalloc@@A",
+        "?Remove@FArray@@QAEXHHH@Z",
+        "?SkinMeshVertices@@YAXPAVUSkeletalMesh@@PAVUSkeletalMeshInstance@@PAUFSkinVertex@@HAAH@Z",
+        "___CxxFrameHandler",
+        "__except_list"
+      ],
+      "rebuilt_offset": 1056,
+      "rebuilt_address": 268439584,
+      "fields": [
+        [
+          9,
+          "abs",
+          "__ehhandler$?GetMeshVerts@USkeletalMeshInstance@@UAEXPAVAActor@@PAUFVector@@HAAH@Z"
+        ],
+        [
+          90,
+          "rel32",
+          "?AddZeroed@FArray@@QAGHHH@Z"
+        ],
+        [
+          162,
+          "rel32",
+          "?SkinMeshVertices@@YAXPAVUSkeletalMesh@@PAVUSkeletalMeshInstance@@PAUFSkinVertex@@HAAH@Z"
+        ],
+        [
+          240,
+          "rel32",
+          "??1?$TArray@UFSkinVertex@@@@QAE@XZ"
+        ]
+      ],
+      "symbols": {
+        "__ehhandler$?GetMeshVerts@USkeletalMeshInstance@@UAEXPAVAActor@@PAUFVector@@HAAH@Z": 268440058,
+        "?AddZeroed@FArray@@QAGHHH@Z": 268440000,
+        "?SkinMeshVertices@@YAXPAVUSkeletalMesh@@PAVUSkeletalMeshInstance@@PAUFSkinVertex@@HAAH@Z": 268440003,
+        "??1?$TArray@UFSkinVertex@@@@QAE@XZ": 268439888
+      }
+    },
+    "link_bindings": {
+      "__ehhandler$?GetMeshVerts@USkeletalMeshInstance@@UAEXPAVAActor@@PAUFVector@@HAAH@Z": {
+        "va": 280807130,
+        "basis": "Function-specific C++ exception handler pushed at entry. Both linked and retail handlers move the address of the FuncInfo into EAX and tail-jump to frame handling. Each unwind map has one action for the temporary vertex array."
+      },
+      "?AddZeroed@FArray@@QAGHHH@Z": {
+        "va": 277959680,
+        "basis": "FArray::AddZeroed receives the address of the local container, a 32-byte element size and the first LOD model’s vertex count. Its implementation at RVA 0x15400 calls FArray::Add and zero-initializes the new elements. Three other receipted callers bind it."
+      },
+      "?SkinMeshVertices@@YAXPAVUSkeletalMesh@@PAVUSkeletalMeshInstance@@PAUFSkinVertex@@HAAH@Z": {
+        "va": 278628448,
+        "basis": "The retail software skinner selects Mesh->LODModels[Instance->CurrentLOD] with a 0x110 stride at RVA 0xb88b4. The shipped editor GetMeshVerts calls its counterpart at VA 0x11106120 with the same five arguments and 32-byte output stride. SkinMeshVertices is a descriptive name."
+      },
+      "??1?$TArray@UFSkinVertex@@@@QAE@XZ": {
+        "va": 279897360,
+        "basis": "The independently receipted destructor of the 32-byte-element TArray at RVA 0x1ee510. The instantiation emitted by this translation unit independently matches the entire 100-byte function, including its stack-passed this."
+      }
+    },
+    "match": {
+      "bytes_sha256": "49929243470acbafec1c261ab03aaf28de2d929813c70a1fd939f9f7e32f0f28",
+      "inputs_sha256": "0678aa4427af210190e3fb479b87659045faa0cd681ab88962b6bc21399dc78d"
+    }
+  },
+  {
     "id": "versus-vd-b8800",
     "offset": 755712,
     "size": 38,
