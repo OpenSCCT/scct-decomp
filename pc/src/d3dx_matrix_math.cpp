@@ -1,4 +1,12 @@
-/* d3dx_matrix_math.cpp -- D3DX8 matrix functions */
+/* D3DX8 scalar comparison and matrix functions from d3dxmath.obj. */
+
+#include <float.h>
+
+int WithinEpsilon(float a, float b)
+{
+    float difference = a - b;
+    return -FLT_EPSILON <= difference && difference <= FLT_EPSILON;
+}
 
 typedef float FLOAT;
 
