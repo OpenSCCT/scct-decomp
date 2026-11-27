@@ -223,12 +223,12 @@ void ALevelInfo::execGetLevelBrief(FFrame &Stack, RESULT_DECL)
 // RVA 0x1227b0
 UTexture *ALevelInfo::GetLevelBrief(FString MapName)
 {
-    if (MapName.Right(4) == TEXT("_ERR"))
+    if (MapName.Right(4) == TEXT("?ERR"))
         return NULL;
     if (XLevel)
     {
         TCHAR Buffer[256];
-        appSprintf(Buffer, TEXT("%s.i_Briefing"), *MapName);
+        appSprintf(Buffer, TEXT("%s-i.Briefing"), *MapName);
         return (UTexture *)UObject::StaticLoadObject(
             UTexture::StaticClass(), NULL, Buffer, NULL, LOAD_NoWarn | LOAD_Quiet, NULL);
     }
@@ -238,12 +238,12 @@ UTexture *ALevelInfo::GetLevelBrief(FString MapName)
 // RVA 0x1228e0
 UTexture *ALevelInfo::GetLevelPicture(FString MapName)
 {
-    if (MapName.Right(4) == TEXT("_ERR"))
+    if (MapName.Right(4) == TEXT("?ERR"))
         return NULL;
     if (XLevel)
     {
         TCHAR Buffer[256];
-        appSprintf(Buffer, TEXT("%s.i_Menu"), *MapName);
+        appSprintf(Buffer, TEXT("%s-i.Menu"), *MapName);
         return (UTexture *)UObject::StaticLoadObject(
             UTexture::StaticClass(), NULL, Buffer, NULL, LOAD_NoWarn | LOAD_Quiet, NULL);
     }
