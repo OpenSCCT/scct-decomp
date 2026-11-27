@@ -75,6 +75,386 @@
     }
   },
   {
+    "id": "versus-canvas-wrapped-print",
+    "offset": 1050000,
+    "size": 717,
+    "inputs": [
+      "src/versus_canvas_wrapped_text.cpp",
+      "src/versus_build.h",
+      "src/versus_canvas.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_canvas_font.h",
+      "src/unreal_containers.h",
+      "src/versus_canvas_util.h",
+      "src/versus_canvas_viewport.h",
+      "src/unreal_script.h"
+    ],
+    "rebuilt_symbol": "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_wrapped_text.obj src/versus_canvas_wrapped_text.cpp",
+    "identification": "The shipped editor function at VA 0x110b5f40 retains the UCanvas::WrappedPrint guard. The three retail variadic members reach this body with draw or measure modes. It measures remapped UFont glyphs, chooses a fitting whitespace boundary, checks visibility through the UViewport height, temporarily terminates each drawn line and updates canvas cursor and output dimensions. Its unclaimed callee at RVA 0xff400 draws the glyphs and returns their horizontal advance.",
+    "ltcg_link": {
+      "roots": [
+        "?WrappedStrLenf@UCanvas@@QAAXPAVUFont@@AAH1PBGZZ",
+        "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@KPBGZZ",
+        "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@MMKPBGZZ",
+        "?ClippedPrint@UCanvas@@QAEXPAVUFont@@MMKPBG@Z"
+      ],
+      "stubs": [
+        "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z",
+        "?GetStyleMaterial@UCanvas@@QAEPAVUMaterial@@PAV2@@Z",
+        "__chkstk",
+        "__fltused",
+        "__ftol2",
+        "__imp___vsnwprintf",
+        "__imp__floor"
+      ],
+      "rebuilt_offset": 1392,
+      "rebuilt_address": 268439920,
+      "fields": [
+        [
+          16,
+          "abs",
+          "__real@00000000"
+        ],
+        [
+          36,
+          "abs",
+          "__real@00000000"
+        ],
+        [
+          73,
+          "rel32",
+          "__ftol2"
+        ],
+        [
+          253,
+          "rel32",
+          "__ftol2"
+        ],
+        [
+          276,
+          "rel32",
+          "__ftol2"
+        ],
+        [
+          505,
+          "abs",
+          "__real@00000000"
+        ],
+        [
+          533,
+          "abs",
+          "__real@3f000000"
+        ],
+        [
+          541,
+          "rel32",
+          "__ftol2"
+        ],
+        [
+          573,
+          "rel32",
+          "__ftol2"
+        ],
+        [
+          602,
+          "rel32",
+          "?DrawGlyphLine@UCanvas@@QAEHPAVUFont@@MMHHPBGK@Z"
+        ]
+      ],
+      "symbols": {
+        "__real@00000000": 268443652,
+        "__ftol2": 268441732,
+        "__real@3f000000": 268443648,
+        "?DrawGlyphLine@UCanvas@@QAEHPAVUFont@@MMHHPBGK@Z": 268441040
+      }
+    },
+    "link_bindings": {
+      "__real@00000000": {
+        "va": 281086456,
+        "basis": "Zero constant used for the clipping and visibility comparisons."
+      },
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "The integer-coordinate, scaled-width and scaled-height conversions use the same float-to-integer helper as the existing UCanvas::ClippedPrint receipt at RVA 0x103ed0."
+      },
+      "__real@3f000000": {
+        "va": 281086480,
+        "basis": "The F32 half used when centering is also consumed by DrawGlyphLine and the public RotRandWithAngle match."
+      },
+      "?DrawGlyphLine@UCanvas@@QAEHPAVUFont@@MMHHPBGK@Z": {
+        "va": 278918144,
+        "basis": "The full glyph loop at RVA 0xff400 shares the UFont hash table and dimensions with measure-text at RVA 0x1009d0, then applies the canvas origin, clips its glyph textures, draws tiles, and returns horizontal advance. WrappedPrint passes an explicitly terminated line and consumes its width."
+      }
+    },
+    "system_headers": {
+      "stdarg.h": "d78d66edcb09cf1517db0386859e0880858a9aa9b4c682a3a0c539d2e65196fd"
+    },
+    "match": {
+      "bytes_sha256": "750a8e650301c15cd19afb0afbed11bf81a3165b856022f96a6471d43f51fcb7",
+      "inputs_sha256": "95bc7ea929638dc892eb1b3d563b767841c863cd6ff2378c64477862e18105bc"
+    }
+  },
+  {
+    "id": "versus-canvas-wrapped-text-measure",
+    "offset": 1050720,
+    "size": 107,
+    "inputs": [
+      "src/versus_canvas_wrapped_text.cpp",
+      "src/versus_build.h",
+      "src/versus_canvas.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_canvas_font.h",
+      "src/unreal_containers.h",
+      "src/versus_canvas_util.h",
+      "src/versus_canvas_viewport.h",
+      "src/unreal_script.h"
+    ],
+    "rebuilt_symbol": "?WrappedStrLenf@UCanvas@@QAAXPAVUFont@@AAH1PBGZZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_wrapped_text.obj src/versus_canvas_wrapped_text.cpp",
+    "identification": "Variadic UCanvas member used by FStats::Render to measure text at scale 1. Its buffer holds 4096 wide characters. The shipped editor retains the corresponding wrapper names and UCanvas::WrappedPrint at VA 0x110b5f40. Retail WrappedPrint at RVA 0x100590 uses glyph metrics and the viewport clipping rectangle. UViewport stores its canvas at object offset +0x68 and passes itself to the initializer at RVA 0x100ae0, which stores it in Canvas.Viewport at +0x78.",
+    "ltcg_link": {
+      "roots": [
+        "?WrappedStrLenf@UCanvas@@QAAXPAVUFont@@AAH1PBGZZ",
+        "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@KPBGZZ",
+        "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@MMKPBGZZ",
+        "?ClippedPrint@UCanvas@@QAEXPAVUFont@@MMKPBG@Z"
+      ],
+      "stubs": [
+        "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z",
+        "?GetStyleMaterial@UCanvas@@QAEPAVUMaterial@@PAV2@@Z",
+        "__chkstk",
+        "__fltused",
+        "__ftol2",
+        "__imp___vsnwprintf",
+        "__imp__floor"
+      ],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552,
+      "fields": [
+        [
+          6,
+          "rel32",
+          "__chkstk"
+        ],
+        [
+          38,
+          "abs",
+          "__imp___vsnwprintf"
+        ],
+        [
+          96,
+          "rel32",
+          "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z"
+        ]
+      ],
+      "symbols": {
+        "__chkstk": 268441730,
+        "__imp___vsnwprintf": 268441733,
+        "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z": 268439920
+      }
+    },
+    "link_bindings": {
+      "__chkstk": {
+        "va": 280509024,
+        "basis": "Same stack probe as the matched FString::Printf at RVA 0x11b20."
+      },
+      "__imp___vsnwprintf": {
+        "va": 280884156,
+        "basis": "Locked PE import address table names MSVCR70.dll!_vsnwprintf."
+      },
+      "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z": {
+        "va": 278922640,
+        "basis": "The three variadic UCanvas members call the same word-wrapping body. The shipped editor identifies UCanvas::WrappedPrint in its guard."
+      }
+    },
+    "system_headers": {
+      "stdarg.h": "d78d66edcb09cf1517db0386859e0880858a9aa9b4c682a3a0c539d2e65196fd"
+    },
+    "match": {
+      "bytes_sha256": "42016189acb1240d56c43be54f2cd2c7eb72b25c34324293cc8c04018c0db9a2",
+      "inputs_sha256": "1d32fa3d5fdf84f9346b387ed6b1f4230cadc319754b2572c1aa9334358bbe4c"
+    }
+  },
+  {
+    "id": "versus-canvas-wrapped-text-draw",
+    "offset": 1050832,
+    "size": 117,
+    "inputs": [
+      "src/versus_canvas_wrapped_text.cpp",
+      "src/versus_build.h",
+      "src/versus_canvas.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_canvas_font.h",
+      "src/unreal_containers.h",
+      "src/versus_canvas_util.h",
+      "src/versus_canvas_viewport.h",
+      "src/unreal_script.h"
+    ],
+    "rebuilt_symbol": "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@KPBGZZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_wrapped_text.obj src/versus_canvas_wrapped_text.cpp",
+    "identification": "Variadic UCanvas member used by FStats::Render to draw text at scale 1. Its buffer holds 4096 wide characters. The shipped editor retains the corresponding wrapper names and UCanvas::WrappedPrint at VA 0x110b5f40. Retail WrappedPrint at RVA 0x100590 uses glyph metrics and the viewport clipping rectangle. UViewport stores its canvas at object offset +0x68 and passes itself to the initializer at RVA 0x100ae0, which stores it in Canvas.Viewport at +0x78.",
+    "ltcg_link": {
+      "roots": [
+        "?WrappedStrLenf@UCanvas@@QAAXPAVUFont@@AAH1PBGZZ",
+        "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@KPBGZZ",
+        "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@MMKPBGZZ",
+        "?ClippedPrint@UCanvas@@QAEXPAVUFont@@MMKPBG@Z"
+      ],
+      "stubs": [
+        "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z",
+        "?GetStyleMaterial@UCanvas@@QAEPAVUMaterial@@PAV2@@Z",
+        "__chkstk",
+        "__fltused",
+        "__ftol2",
+        "__imp___vsnwprintf",
+        "__imp__floor"
+      ],
+      "rebuilt_offset": 1136,
+      "rebuilt_address": 268439664,
+      "fields": [
+        [
+          6,
+          "rel32",
+          "__chkstk"
+        ],
+        [
+          38,
+          "abs",
+          "__imp___vsnwprintf"
+        ],
+        [
+          106,
+          "rel32",
+          "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z"
+        ]
+      ],
+      "symbols": {
+        "__chkstk": 268441730,
+        "__imp___vsnwprintf": 268441733,
+        "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z": 268439920
+      }
+    },
+    "link_bindings": {
+      "__chkstk": {
+        "va": 280509024,
+        "basis": "Same stack probe as the matched FString::Printf at RVA 0x11b20."
+      },
+      "__imp___vsnwprintf": {
+        "va": 280884156,
+        "basis": "Locked PE import address table names MSVCR70.dll!_vsnwprintf."
+      },
+      "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z": {
+        "va": 278922640,
+        "basis": "The three variadic UCanvas members call the same word-wrapping body. The shipped editor identifies UCanvas::WrappedPrint in its guard."
+      }
+    },
+    "system_headers": {
+      "stdarg.h": "d78d66edcb09cf1517db0386859e0880858a9aa9b4c682a3a0c539d2e65196fd"
+    },
+    "match": {
+      "bytes_sha256": "239058bc8baf9fb382b97e8468e77291bb9fca74df6153e7f6a45f7884802596",
+      "inputs_sha256": "d2edb501f122ac347be5dd89c20f29a9f1e2474109001f8e323c3e45d2bd6c36"
+    }
+  },
+  {
+    "id": "versus-canvas-scaled-wrapped-text-draw",
+    "offset": 1050960,
+    "size": 123,
+    "inputs": [
+      "src/versus_canvas_wrapped_text.cpp",
+      "src/versus_build.h",
+      "src/versus_canvas.h",
+      "src/unreal_object.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_math.h",
+      "src/versus_canvas_font.h",
+      "src/unreal_containers.h",
+      "src/versus_canvas_util.h",
+      "src/versus_canvas_viewport.h",
+      "src/unreal_script.h"
+    ],
+    "rebuilt_symbol": "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@MMKPBGZZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_canvas_wrapped_text.obj src/versus_canvas_wrapped_text.cpp",
+    "identification": "Variadic UCanvas member used by FStats::Render to draw text at the supplied X and Y scales. Its buffer holds 4096 wide characters. The shipped editor retains the corresponding wrapper names and UCanvas::WrappedPrint at VA 0x110b5f40. Retail WrappedPrint at RVA 0x100590 uses glyph metrics and the viewport clipping rectangle. UViewport stores its canvas at object offset +0x68 and passes itself to the initializer at RVA 0x100ae0, which stores it in Canvas.Viewport at +0x78.",
+    "ltcg_link": {
+      "roots": [
+        "?WrappedStrLenf@UCanvas@@QAAXPAVUFont@@AAH1PBGZZ",
+        "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@KPBGZZ",
+        "?WrappedPrintf@UCanvas@@QAAXPAVUFont@@MMKPBGZZ",
+        "?ClippedPrint@UCanvas@@QAEXPAVUFont@@MMKPBG@Z"
+      ],
+      "stubs": [
+        "?DrawTile@FCanvasUtil@@QAEXMMMMMMMMMPAVUMaterial@@UFColor@@@Z",
+        "?GetStyleMaterial@UCanvas@@QAEPAVUMaterial@@PAV2@@Z",
+        "__chkstk",
+        "__fltused",
+        "__ftol2",
+        "__imp___vsnwprintf",
+        "__imp__floor"
+      ],
+      "rebuilt_offset": 1264,
+      "rebuilt_address": 268439792,
+      "fields": [
+        [
+          6,
+          "rel32",
+          "__chkstk"
+        ],
+        [
+          38,
+          "abs",
+          "__imp___vsnwprintf"
+        ],
+        [
+          112,
+          "rel32",
+          "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z"
+        ]
+      ],
+      "symbols": {
+        "__chkstk": 268441730,
+        "__imp___vsnwprintf": 268441733,
+        "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z": 268439920
+      }
+    },
+    "link_bindings": {
+      "__chkstk": {
+        "va": 280509024,
+        "basis": "Same stack probe as the matched FString::Printf at RVA 0x11b20."
+      },
+      "__imp___vsnwprintf": {
+        "va": 280884156,
+        "basis": "Locked PE import address table names MSVCR70.dll!_vsnwprintf."
+      },
+      "?WrappedPrint@UCanvas@@QAEXKAAH0PAVUFont@@MMKPAG@Z": {
+        "va": 278922640,
+        "basis": "The three variadic UCanvas members call the same word-wrapping body. The shipped editor identifies UCanvas::WrappedPrint in its guard."
+      }
+    },
+    "system_headers": {
+      "stdarg.h": "d78d66edcb09cf1517db0386859e0880858a9aa9b4c682a3a0c539d2e65196fd"
+    },
+    "match": {
+      "bytes_sha256": "e5c50ebd037d273b5459058f51f515e2c22c79485c7be23855f5abcef4d97d49",
+      "inputs_sha256": "9e49b8745442c5c6fd2f3f9bf3d3724689c67d0cdf4d2c9098048df5b33a8fd6"
+    }
+  },
+  {
     "id": "versus-vd-101360",
     "offset": 1053536,
     "size": 398,
@@ -2450,7 +2830,8 @@
       "src/versus_ipdrv_classes.h",
       "src/versus_sbase_classes.h",
       "src/versus_softbody_classes.h",
-      "src/versus_window_classes.h"
+      "src/versus_window_classes.h",
+      "src/versus_canvas.h"
     ],
     "rebuilt_symbol": "??1AERainVolume@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -2485,7 +2866,7 @@
     },
     "match": {
       "bytes_sha256": "2766753bed34f0cd64497805fa2de6a35d7e578b7b93645f7cec01d1c1c2830e",
-      "inputs_sha256": "7263051d2bbf8785b8bfe3e078dcc764db91c14bbaf3fe9d873bfdb504f46de3"
+      "inputs_sha256": "ca3c30556963dc54e39b8d309b57e5762e2d3f560ad9acd743e32d27633e5d79"
     }
   },
   {

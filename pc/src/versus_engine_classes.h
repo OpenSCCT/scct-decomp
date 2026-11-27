@@ -10,6 +10,7 @@
 #include "unreal_object.h"
 #include "unreal_pawn.h"
 #include "versus_core_classes.h"
+#include "versus_canvas.h"
 #include "versus_ltcg.h"
 
 struct FCheckResult;
@@ -447,20 +448,6 @@ public:
     TArray<UnkType_C>      unk_4d8;
     TArrayLtcg<UnkType_4>  unk_4e4;
     BYTE                   unk_4f0[0x4];
-};
-
-// Engine.Canvas: 0x80 bytes, 22 virtual functions
-class UFont;
-
-class UCanvas : public UObject {
-public:
-    virtual ~UCanvas();
-
-    BYTE unk_28[0x58];
-
-    DECLARE_NATIVE(execRenderMotionTracking)
-    void RenderMotionTracking(INT A0, INT A1, INT A2);
-    void StrLen(UFont *InFont, FLOAT ScaleX, FLOAT ScaleY, INT &XL, INT &YL, const TCHAR *Text);
 };
 
 // Engine.Channel: 0x58 bytes, 28 virtual functions
