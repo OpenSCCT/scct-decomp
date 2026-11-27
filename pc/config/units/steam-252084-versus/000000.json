@@ -749,6 +749,33 @@
     }
   },
   {
+    "id": "versus-fstring-string-accessor",
+    "offset": 18720,
+    "size": 16,
+    "inputs": [
+      "src/versus_engine_stats.cpp",
+      "src/versus_engine_stat_list.inl",
+      "src/versus_build.h",
+      "src/unreal_types.h",
+      "src/unreal_name.h",
+      "src/unreal_object.h"
+    ],
+    "rebuilt_symbol": "??DFString@@QBEPBGXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GX /c /Folocal/versus_stats_string_access.obj src/versus_engine_stats.cpp",
+    "identification": "FString::operator*() const. FStats::Render directly calls this body 163 times to read stat descriptions, headings and formatted temporaries. An empty string returns the wide empty literal, otherwise it returns the stored TCHAR array. Both VC7.0 13.00.9466 and VC7.1 13.10.3052 reproduce all 16 bytes with /O2.",
+    "link_bindings": {
+      "??_C@_11LOCGONAA@?$AA?$AA@": {
+        "va": 281086248,
+        "basis": "The mov eax operand at RVA 0x492b names the zero-terminated empty wide string. Inlined copies in FStats::Render select the same literal when ArrayNum is zero."
+      }
+    },
+    "match": {
+      "bytes_sha256": "022e1b0a8c9c88e1372f34536713b4e25681ad457c9625edad63f07138d49371",
+      "inputs_sha256": "c047d9e0eeb6825d13accb8dbdcdcbc826d1129bcb1af7c156ccd0bb4325bc55"
+    }
+  },
+  {
     "id": "versus-vd-4930",
     "offset": 18736,
     "size": 95,

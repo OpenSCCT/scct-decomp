@@ -91,12 +91,6 @@ public:
     FVector TransformVectorBy(const class FCoords &Coords) const;
 };
 
-class FRotator
-{
-public:
-    INT Pitch, Yaw, Roll;
-};
-
 class FCoords
 {
 public:
@@ -104,8 +98,8 @@ public:
     FCoords() {}
     FCoords(const FVector &InOrigin, const FVector &InX, const FVector &InY, const FVector &InZ)
         : Origin(InOrigin), XAxis(InX), YAxis(InY), ZAxis(InZ) {}
-    FCoords &operator*=(const FRotator &Rot);
-    FCoords operator*(const FRotator &Rot) const;
+    FCoords &operator*=(const FCoords &Coords);
+    FCoords operator*(const FCoords &Coords) const;
     FCoords Transpose() const;
 };
 
@@ -132,13 +126,13 @@ FCoords FCoords::Transpose() const
 }
 
 // RVA 0x92d00
-FCoords FCoords::operator*(const FRotator &Rot) const
+FCoords FCoords::operator*(const FCoords &Coords) const
 {
-    return FCoords(*this) *= Rot;
+    return FCoords(*this) *= Coords;
 }
 
 // Scaffolding for the link, not part of the unit.
 UBOOL Driver_92b80(UnnamedActor_92b80 *A) { return A->CheckA(); }
 UBOOL Driver_92bb0(UnnamedActor_92b80 *A) { return A->CheckB(); }
 void Driver_92c40(FCoords *Out, const FCoords *C) { *Out = C->Transpose(); }
-void Driver_92d00(FCoords *Out, const FCoords *C, const FRotator *R) { *Out = *C * *R; }
+void Driver_92d00(FCoords *Out, const FCoords *C, const FCoords *Transform) { *Out = *C * *Transform; }
