@@ -545,19 +545,157 @@
     }
   },
   {
-    "id": "versus-leaf-2a2500",
-    "offset": 2761984,
-    "size": 18,
-    "rebuilt_symbol": "?GetUnk04Table@UnkType_10ba2500@@QAEMHH@Z",
+    "id": "versus-mgm-interpolator-destructor",
+    "rebuilt_symbol": "??1MgmInterpolator@@QAE@XZ",
     "inputs": [
-      "src/versus_leaf_2a2500.cpp"
+      "src/versus_mgm_interpolator.cpp",
+      "src/versus_mgm_interpolator.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_interpolator.obj src/versus_mgm_interpolator.cpp",
+    "system_headers": {
+      "math.h": "621f2a2481acccb1e99ed754edaaee5ba5e2c6b4b4959a8995225cfcc53fe2ed"
+    },
+    "offset": 2761488,
+    "size": 36,
+    "identification": "Called by the destructor which owns the global MGM interpolator and by HUD gauge teardown on the embedded instance. Releases the six allocated coefficient tables.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "_release_engine_buffer": {
+        "va": 279251072,
+        "basis": "The previously rebuilt engine-buffer release passes the table allocation to GMalloc->Free."
+      }
+    },
+    "match": {
+      "bytes_sha256": "35e3eb58278411a3fc59c9563857f8206d737feefa138672457cf3b1e3bf27c7",
+      "inputs_sha256": "d8fd51850300a19b4a4e4e72642ed371c511bc4b6b3f212ecaad27b4b1b02249"
+    }
+  },
+  {
+    "id": "versus-mgm-interpolator-build-tables",
+    "rebuilt_symbol": "?BuildTables@MgmInterpolator@@QAEXH@Z",
+    "inputs": [
+      "src/versus_mgm_interpolator.cpp",
+      "src/versus_mgm_interpolator.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_interpolator.obj src/versus_mgm_interpolator.cpp",
+    "system_headers": {
+      "math.h": "621f2a2481acccb1e99ed754edaaee5ba5e2c6b4b4959a8995225cfcc53fe2ed"
+    },
+    "offset": 2761536,
+    "size": 435,
+    "identification": "Builds six equally spaced MGM coefficient tables for the modes named by the retail INTERPOLATION string array at VA 0x10c40080: Linear, Square, Root, Sin, Circle and CircleDecel. None has no table. The native constructor requests 300 samples, and the live HUD gauge rebuilds its own table for a gauge change.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "_allocate_engine_buffer": {
+        "va": 279251040,
+        "basis": "The published engine allocation wrapper substitutes its static magma tag when given a null tag."
+      },
+      "__real@3ff0000000000000": {
+        "va": 281086680,
+        "basis": "The double constant 1.0 normalizes samples and supplies the unit circle radius."
+      },
+      "__real@3ff921fb54442d11": {
+        "va": 280956336,
+        "basis": "The binary64 MGM half-pi constant scales the quarter-sine table input."
+      },
+      "__real@3f800000": {
+        "va": 281086460,
+        "basis": "The float constant 1.0 complements the reversed circular curve."
+      }
+    },
+    "match": {
+      "bytes_sha256": "ccb3b8968d6dc30482a4acd84ac89e2d8c1217128fbb61157fb5dd69ef78902e",
+      "inputs_sha256": "367eee0cbebb472a24b2ae1201f2cb46fbdeaf6b7e87d26020803d63016b1361"
+    }
+  },
+  {
+    "id": "versus-leaf-2a2500",
+    "rebuilt_symbol": "?GetCoefficient@MgmInterpolator@@QBEMW4EMgmInterpolationMode@@H@Z",
+    "inputs": [
+      "src/versus_mgm_interpolator.cpp",
+      "src/versus_mgm_interpolator.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
     ],
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_leaf_2a2500.obj src/versus_leaf_2a2500.cpp",
-    "identification": "Complete Versus function at file offset 0x2a2500 (VA 0x10ba2500): returns a float from a two-index table reached through the pointer at 4. The class, method and element struct names are invented placeholders; the offsets, the element stride and the argument sizes are the binary's.",
+    "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_interpolator.obj src/versus_mgm_interpolator.cpp",
+    "system_headers": {
+      "math.h": "2166614bad58c169d8f35c6164e8a45134abd95d9b88dadab00301cd44ad58da"
+    },
+    "offset": 2761984,
+    "size": 18,
+    "identification": "Looks up the chosen curve and sample of the MGM interpolator. The HUD gauge accesses CircleDecel, mode 6 in the INTERPOLATION string array. The native MGM keyframe scalar interpolation uses the same lookup for nonlinear modes.",
     "match": {
       "bytes_sha256": "021382f5e2ea23d8c5954c26f0c71b7124188b9b1a719701159aca4b88877731",
-      "inputs_sha256": "9749d196a8d295c618f6b7d6740bdb2369e225b77505e649e6a41c27eddaca63"
+      "inputs_sha256": "d4cb83b47e7e878649bda9d45a5877cfcb34da6cc69b27671af1797e20b7e452"
+    }
+  },
+  {
+    "id": "versus-mgm-interpolator-mix",
+    "rebuilt_symbol": "?Mix@MgmInterpolator@@QAEMMMABUMgmKeyInterpolation@@@Z",
+    "inputs": [
+      "src/versus_mgm_interpolator.cpp",
+      "src/versus_mgm_interpolator.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_interpolator.obj src/versus_mgm_interpolator.cpp",
+    "system_headers": {
+      "math.h": "621f2a2481acccb1e99ed754edaaee5ba5e2c6b4b4959a8995225cfcc53fe2ed"
+    },
+    "offset": 2762016,
+    "size": 56,
+    "identification": "Blends between two scalar endpoints. The Linear mode uses elapsed time divided by duration directly. Other modes use this fraction to select a coefficient from the corresponding table. The POSITION, rectangle and IMAGE keyframe interpolators use this operation for all animated properties.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "__ftol2": {
+        "va": 280509088,
+        "basis": "Compiler runtime conversion truncates the scaled sample position."
+      },
+      "?GetCoefficient@MgmInterpolator@@QBEMW4EMgmInterpolationMode@@H@Z": {
+        "va": 280634624,
+        "basis": "The independently matched typed MGM interpolation table lookup."
+      }
+    },
+    "match": {
+      "bytes_sha256": "79b7c582e8204a1511e3ff8e73d66d2a2ab96094b186ed144da0598457735f55",
+      "inputs_sha256": "17d10b9b678dcfccc5a10bf35df2d5c261d08f79edb5408b113879e063c1a92a"
+    }
+  },
+  {
+    "id": "versus-mgm-interpolator-constructor",
+    "rebuilt_symbol": "??0MgmInterpolator@@QAE@XZ",
+    "inputs": [
+      "src/versus_mgm_interpolator.cpp",
+      "src/versus_mgm_interpolator.h",
+      "src/versus_build.h",
+      "src/unreal_types.h"
+    ],
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /Ob1 /c /Folocal/versus_mgm_interpolator.obj src/versus_mgm_interpolator.cpp",
+    "system_headers": {
+      "math.h": "621f2a2481acccb1e99ed754edaaee5ba5e2c6b4b4959a8995225cfcc53fe2ed"
+    },
+    "offset": 2762080,
+    "size": 39,
+    "identification": "Constructs the global MGM interpolator or an embedded HUD gauge interpolator. It starts with no allocated buffers and builds six 300-sample curves.",
+    "coff_alignment": 16,
+    "link_bindings": {
+      "?BuildTables@MgmInterpolator@@QAEXH@Z": {
+        "va": 280634176,
+        "basis": "Builds the six sampled curves for this MGM interpolation object."
+      }
+    },
+    "match": {
+      "bytes_sha256": "71cd1163b757355eabec440ecc7de847ccd62e2cd88d5ebc64c96265a3e39da1",
+      "inputs_sha256": "d827708c7cb7e0dd1c4418333e2d32224694906b66dfcf205d16e9a6cf99590b"
     }
   },
   {
@@ -1137,7 +1275,8 @@
       "src/versus_mgm_keyframes.cpp",
       "src/versus_mgm_keyframes.h",
       "src/versus_build.h",
-      "src/unreal_types.h"
+      "src/unreal_types.h",
+      "src/versus_mgm_interpolator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
@@ -1147,7 +1286,7 @@
     "coff_alignment": 16,
     "match": {
       "bytes_sha256": "910514b9a897c9fa3aaad3f6bc9c7014b7cd2392012ca676ec0b173b711e14f2",
-      "inputs_sha256": "31ee3e384c4e6717b2dfa02ba5b18ac769a915744584c9fb29cba92222e02b0e"
+      "inputs_sha256": "132a26b60adde1ed9e99407234369509bbcae3bd7ccb1ee9fd2d8ce1ac6b0938"
     }
   },
   {
@@ -1157,7 +1296,8 @@
       "src/versus_mgm_keyframes.cpp",
       "src/versus_mgm_keyframes.h",
       "src/versus_build.h",
-      "src/unreal_types.h"
+      "src/unreal_types.h",
+      "src/versus_mgm_interpolator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
@@ -1173,7 +1313,7 @@
     },
     "match": {
       "bytes_sha256": "49581a9c358df9505bcb1b072a33cbcd38d34faae31b30a069673bfca3de5503",
-      "inputs_sha256": "204b5317a9fdaac70720b027375c0c8d2721c0ce75dcf3868a56b12cc03ac641"
+      "inputs_sha256": "fb22de778ef9ece450f74c8ec51775f370709425dbc9790b167b3d3a2460b65b"
     }
   },
   {
@@ -1181,7 +1321,8 @@
       "src/versus_mgm_keyframes.cpp",
       "src/versus_mgm_keyframes.h",
       "src/versus_build.h",
-      "src/unreal_types.h"
+      "src/unreal_types.h",
+      "src/versus_mgm_interpolator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
@@ -1214,7 +1355,7 @@
     },
     "match": {
       "bytes_sha256": "2bf1a06449711ef4af656d9418c5ffa26fd302f8103dac205656badc431b5c18",
-      "inputs_sha256": "4ecc0fd864edce4b66d40821bbfcde2515515e803f22a85faade5c989f06933b"
+      "inputs_sha256": "e7b617444bac72094ca8cb539cc31fa42c4bbb7c0d1cdadd16fcacaaf0aad08f"
     }
   },
   {
@@ -3433,7 +3574,8 @@
       "src/versus_mgm_keyframes.cpp",
       "src/versus_mgm_keyframes.h",
       "src/versus_build.h",
-      "src/unreal_types.h"
+      "src/unreal_types.h",
+      "src/versus_mgm_interpolator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
@@ -3467,7 +3609,7 @@
     },
     "match": {
       "bytes_sha256": "613e2757c820f89396d62a878d923a7a04eb789eccff971c291afa81c8cf3159",
-      "inputs_sha256": "7333daae5b3d927e0ef3900016920009315609abec2c2c0d3958a066c6e15644"
+      "inputs_sha256": "fc5f31750e4d198b343347f194b1107d6c54ebe37d5e2d4735fcf0d09223e9db"
     }
   },
   {
@@ -3501,7 +3643,8 @@
       "src/versus_mgm_keyframes.cpp",
       "src/versus_mgm_keyframes.h",
       "src/versus_build.h",
-      "src/unreal_types.h"
+      "src/unreal_types.h",
+      "src/versus_mgm_interpolator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
@@ -3529,7 +3672,7 @@
     },
     "match": {
       "bytes_sha256": "a6b15449a6b31f4325b765b286b65c5c0d371cd670cd16b576ee03e5e75a7a3d",
-      "inputs_sha256": "27364b5726acda575a400968ab1ea9fdb21b73a97fbccf17ff04639b7ce8e76e"
+      "inputs_sha256": "a70a6d948f17f3444aa512e2a6d106d44a35fbdfb588c09bad330085a7cbd1c9"
     }
   },
   {
@@ -3563,7 +3706,8 @@
       "src/versus_mgm_keyframes.cpp",
       "src/versus_mgm_keyframes.h",
       "src/versus_build.h",
-      "src/unreal_types.h"
+      "src/unreal_types.h",
+      "src/versus_mgm_interpolator.h"
     ],
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
     "build_command": "cl /nologo /O2 /Gy /c /Folocal/versus_mgm_keyframes.obj src/versus_mgm_keyframes.cpp",
@@ -3591,7 +3735,7 @@
     },
     "match": {
       "bytes_sha256": "1fdea78722dca71d0a9411cd11852023aca6f425c68f5cdc61c09f05d0ff1ba2",
-      "inputs_sha256": "d201716216b07ba746d5623d6f6d7ac1e4a70e1f990abe592954b59973bc81eb"
+      "inputs_sha256": "f59f5015e813cba3702c62474d4466d85e77f9a48562457f662f1aba1a19a071"
     }
   },
   {

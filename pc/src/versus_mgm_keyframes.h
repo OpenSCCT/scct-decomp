@@ -3,6 +3,7 @@
 
 #include "versus_build.h"
 #include "unreal_types.h"
+#include "versus_mgm_interpolator.h"
 
 struct MgmPoint {
     short X, Y;
@@ -18,20 +19,6 @@ struct MgmImageRegion {
 };
 
 class MgmKeyframeVisitor;
-class MgmKeyframe;
-struct MgmKeyInterpolation {
-    FLOAT Duration, Elapsed;
-    INT Mode;
-    BYTE Unknown0c[4];
-    const MgmKeyframe *From, *To;
-};
-
-class MgmInterpolator {
-public:
-    FLOAT Mix(FLOAT From, FLOAT To, const MgmKeyInterpolation &Blend);
-};
-
-extern MgmInterpolator *GMgmInterpolator;
 class MgmPositionKeyframe;
 
 // MGM serializes ROTATION and STATECOLOR for every keyframe.
