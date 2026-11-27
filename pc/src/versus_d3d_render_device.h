@@ -76,6 +76,7 @@ class UD3DRenderDevice : public URenderDevice {
 public:
     void StaticConstructor();
 
+    FD3DResource *GetCachedResource(unsigned __int64 CacheId);
     UBOOL SupportsTextureFormat(ETextureFormat Format) const;
     FD3DResource *ResourceList;
     FD3DResource *ResourceHash[4096];
@@ -115,7 +116,8 @@ public:
     INT MaxStreams;
     BYTE unk_41fc[0x4654 - 0x41fc];
     DWORD DepthFormat;
-    BYTE unk_4658[0x4684 - 0x4658];
+    DWORD DefaultTexAddress;
+    BYTE unk_465c[0x4684 - 0x465c];
     UViewport *LockedViewport;
     BYTE unk_4688[0x4698 - 0x4688];
     INT FrameCounter;

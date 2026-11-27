@@ -308,3 +308,129 @@ UBOOL FD3DTexture::Cache(FBaseTexture *source)
     CachedFormat = destFormat;
     return failed;
 }
+
+#include "versus_output_device.h"
+#include "versus_viewport_types.h"
+#include "versus_d3d_render_interface.h"
+
+extern const TCHAR FD3DSetRenderTargetTextureTag[] = L"FD3DTexture";
+extern const TCHAR FD3DCacheTextureTag[] = L"FD3DTexture";
+inline void *operator new(unsigned int Size, const TCHAR *Tag)
+{
+    return GMalloc->Malloc(Size, Tag);
+}
+inline void operator delete(void *Data, const TCHAR *Tag)
+{
+    GMalloc->Free(Data);
+}
+
+UBOOL FD3DRenderInterface::SetRenderTarget(FRenderTarget *RenderTarget)
+{
+    QWORD CacheId = RenderTarget->GetCacheId();
+    FD3DTexture *RenderTexture = static_cast<FD3DTexture *>(RenderDevice->GetCachedResource(CacheId));
+    if (!RenderTexture)
+        RenderTexture = new(FD3DSetRenderTargetTextureTag) FD3DTexture(RenderDevice, CacheId);
+
+    if (RenderTexture->CachedRevision != RenderTarget->GetRevision() &&
+        RenderTexture->Cache(RenderTarget))
+        return 0;
+
+    if (!RenderTexture->RenderTargetSurface || !RenderTexture->DepthStencilSurface)
+        return 0;
+    if (CurrentState->RenderTarget == RenderTexture->RenderTargetSurface &&
+        CurrentState->DepthStencilSurface == RenderTexture->DepthStencilSurface)
+        return 0;
+
+    RenderDevice->Direct3DDevice8->SetRenderTarget(RenderTexture->RenderTargetSurface, RenderTexture->DepthStencilSurface);
+    CurrentState->RenderTarget = RenderTexture->RenderTargetSurface;
+    CurrentState->DepthStencilSurface = RenderTexture->DepthStencilSurface;
+    CurrentState->ViewportX = 0;
+    CurrentState->ViewportY = 0;
+    CurrentState->ViewportWidth = RenderTexture->CachedWidth;
+    CurrentState->ViewportHeight = RenderTexture->CachedHeight;
+    return 1;
+}
+
+FD3DTexture *FD3DRenderInterface::CacheTexture(FBaseTexture *Texture)
+{
+    QWORD CacheId = Texture->GetCacheId();
+    FD3DTexture *Cached = static_cast<FD3DTexture *>(RenderDevice->GetCachedResource(CacheId));
+    if (!Cached)
+        Cached = new(FD3DCacheTextureTag) FD3DTexture(RenderDevice, CacheId);
+    if (Cached->CachedRevision != Texture->GetRevision())
+        Cached->Cache(Texture);
+    Cached->LastFrameUsed = RenderDevice->FrameCounter;
+    return Cached;
+}
+
+enum ETexClampMode { TC_Wrap, TC_Clamp };
+
+enum D3DTEXTUREADDRESS { D3DTADDRESS_WRAP = 1, D3DTADDRESS_CLAMP = 3 };
+
+// Texture and address fields at the start of each D3D material stage.
+struct FD3DStageState {
+    FD3DTexture *Texture;
+    INT AddressU, AddressV, AddressW;
+};
+
+void FD3DRenderInterface::SetStageTexture(FD3DStageState *Stage, UBitmapMaterial *Texture)
+{
+    if (Texture) {
+        UBitmapMaterial *frame = Texture->Get(Viewport->CurrentTime, Viewport);
+        Stage->Texture = CacheTexture(static_cast<FBaseTexture *>(frame->GetRenderInterface()));
+        if (Stage->Texture->CubeTexture) {
+            Stage->AddressU = RenderDevice->DefaultTexAddress;
+            Stage->AddressV = RenderDevice->DefaultTexAddress;
+            Stage->AddressW = RenderDevice->DefaultTexAddress;
+            return;
+        }
+        switch (Texture->UClampMode) {
+        case TC_Wrap: Stage->AddressU = D3DTADDRESS_WRAP; break;
+        case TC_Clamp: Stage->AddressU = D3DTADDRESS_CLAMP; break;
+        }
+        switch (Texture->VClampMode) {
+        case TC_Wrap: Stage->AddressV = D3DTADDRESS_WRAP; break;
+        case TC_Clamp: Stage->AddressV = D3DTADDRESS_CLAMP; break;
+        }
+        Stage->AddressW = RenderDevice->DefaultTexAddress;
+    } else {
+        Stage->Texture = 0;
+    }
+}
+
+inline INT GetResourceHashIndex(QWORD CacheId)
+{
+    return ((DWORD)CacheId & 0xfff) ^
+           ((((DWORD)CacheId >> 16) & 0xf) + (((DWORD)CacheId >> 4) & 0xff0));
+}
+
+FD3DResource::FD3DResource(UD3DRenderDevice *InRenDev, QWORD InCacheId)
+    : RenDev(InRenDev), CacheId(InCacheId)
+{
+    CachedRevision = 0;
+
+    NextResource = RenDev->ResourceList;
+    RenDev->ResourceList = this;
+
+    HashIndex = GetResourceHashIndex(CacheId);
+    HashNext = RenDev->ResourceHash[HashIndex];
+    RenDev->ResourceHash[HashIndex] = this;
+
+    LastFrameUsed = 0;
+}
+
+FD3DResource *UD3DRenderDevice::GetCachedResource(QWORD CacheId)
+{
+    for (FD3DResource *resource = ResourceHash[GetResourceHashIndex(CacheId)]; resource; resource = resource->HashNext)
+        if (resource->CacheId == CacheId)
+            return resource;
+    return 0;
+}
+
+FD3DTexture::FD3DTexture(UD3DRenderDevice *Device, QWORD Id) : FD3DResource(Device, Id)
+{
+    RenderTargetSurface = 0;
+    DepthStencilSurface = 0;
+    Texture = 0;
+    CubeTexture = 0;
+}

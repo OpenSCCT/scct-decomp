@@ -1,6 +1,8 @@
 #ifndef VERSUS_VIEWPORT_TYPES_H
 #define VERSUS_VIEWPORT_TYPES_H
 
+#include "versus_base_texture.h"
+
 class FExec {
 public:
     virtual UBOOL Exec(const TCHAR *Cmd, FOutputDevice &Ar) = 0;
@@ -13,18 +15,26 @@ class FRenderInterface;
 
 class AActor;
 class URenderDevice;
-class FRenderTarget {
+class UViewport;
+
+// The viewport owns its render target. Its cache ID and owner are set by UViewport's constructor.
+#pragma pack(push, 4)
+class FViewportRenderTarget : public FRenderTarget {
 public:
-    virtual void VirtualSlot0();
-    virtual void VirtualSlot1();
-    virtual void VirtualSlot2();
-    virtual void VirtualSlot3();
-    virtual void VirtualSlot4();
-    virtual void VirtualSlot5();
-    virtual void VirtualSlot6();
+    virtual unsigned __int64 GetCacheId();
+    virtual INT GetRevision();
     virtual INT GetWidth();
     virtual INT GetHeight();
+    virtual INT GetFirstMip();
+    virtual INT GetNumMips();
+    virtual ETextureFormat GetFormat();
+    virtual BYTE GetUClamp();
+    virtual BYTE GetVClamp();
+
+    UViewport *Viewport;
+    unsigned __int64 CacheId;
 };
+#pragma pack(pop)
 
 // This array clears 16-byte elements and reserves four entries after the viewport pass.
 class UnnamedPlaneArray_68dc0 : public FArray {
@@ -66,9 +76,13 @@ public:
     UnnamedPlaneArray_68dc0 RenderEntries;
     BYTE unk_8c[0xa0 - 0x8c];
     INT SizeX, SizeY;
-    BYTE unk_a8[0xe4 - 0xa8];
-    FRenderTarget RenderTarget;
-    BYTE unk_e8[0x140 - 0xe8];
+    BYTE unk_a8[0xb8 - 0xa8];
+    INT ColorBytes;
+    BYTE unk_bc[0xe4 - 0xbc];
+    FViewportRenderTarget RenderTarget;
+    BYTE unk_f4[0x130 - 0xf4];
+    DOUBLE CurrentTime;
+    BYTE unk_138[0x140 - 0x138];
     FRenderInterface *RI;
     BYTE unk_144[8];
     UBOOL Precaching;
