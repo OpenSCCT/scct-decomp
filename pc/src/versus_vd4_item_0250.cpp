@@ -7,7 +7,7 @@ typedef int INT;
 typedef long HRESULT;
 typedef DWORD UBOOL;
 
-struct GUID { DWORD Data1; unsigned short Data2, Data3; unsigned char Data4[8]; };
+#include "campaign_import_GUID.h"
 
 struct DDSCAPS2 { DWORD dwCaps, dwCaps2, dwCaps3, dwCaps4; };
 #define DDSCAPS_TEXTURE      0x00001000

@@ -6,7 +6,7 @@ typedef unsigned long DWORD;
 typedef int INT;
 typedef DWORD UBOOL;
 typedef float FLOAT;
-typedef long HRESULT;
+#include "d3dx_buffer.h"
 
 struct IDirect3DDevice8
 {
@@ -100,14 +100,6 @@ struct IDirect3DDevice8
     virtual long __stdcall CreatePixelShader(const DWORD *Function, DWORD *Handle);
 };
 
-struct ID3DXBuffer
-{
-    virtual long __stdcall QueryInterface(const void *Iid, void **Out);
-    virtual DWORD __stdcall AddRef();
-    virtual DWORD __stdcall Release();
-    virtual void *__stdcall GetBufferPointer();
-    virtual DWORD __stdcall GetBufferSize();
-};
 
 extern "C" HRESULT __stdcall D3DXAssembleShader(const void *SrcData, unsigned int SrcDataLen, DWORD Flags,
     ID3DXBuffer **Constants, ID3DXBuffer **CompiledShader, ID3DXBuffer **CompilationErrors);

@@ -141,3 +141,11 @@ class with a virtual destructor: its source is that class, not a C function (R12
   game used, and the Platform SDK's `unicows.lib` name every object, not only those some other
   program happened to link.
 - The archive's Xbox builds of the same years (x86, the same compiler family) were not compared.
+
+The Versus constructor for `CD3DXBuffer` at RVA `0x28d4ca` installs the vtable
+at RVA `0x2ec2b4`. Its first slot is the 71-byte `QueryInterface` at RVA
+`0x28d483`. That function compares against `IID_IUnknown` and the
+`ID3DXBuffer` GUID `932e6a7e-c68e-45dd-a7bf-53d19c86db1f`. The
+`CD3DXRenderToSurface` name in the cross-game signature table comes from
+the reference build. The next two slots implement reference counting, and
+the following two read the buffer pointer and size used by the shader callers.
