@@ -394,38 +394,6 @@ __declspec(noinline) UBOOL AActor::IsJoinedTo(const AActor *Other) const
     }
     return 0;
 }
-__declspec(noinline) void AActor::BeginTouch(AActor *Other, const FVector &HitLocation, const FVector &HitNormal)
-{
-    Escape(Other);
-    Escape(this);
-    FVector Flipped;
-    Flipped.X = -HitNormal.X;
-    Flipped.Y = -HitNormal.Y;
-    Flipped.Z = -HitNormal.Z;
-    Escape(&Flipped);
-    Escape((void *)&HitLocation);
-    Escape(Other);
-}
-__declspec(noinline) void AActor::EndTouch(AActor *Other, UBOOL NoNotifySelf)
-{
-    if (!NoNotifySelf)
-    {
-        for (INT i = 0; i < Touching.Num(); i++)
-            if (Touching(i) == Other)
-            {
-                eventUnTouch(Other);
-                break;
-            }
-    }
-    Touching.RemoveItem(Other);
-    for (INT j = 0; j < Other->Touching.Num(); j++)
-        if (Other->Touching(j) == this)
-        {
-            Other->eventUnTouch(this);
-            break;
-        }
-    Other->Touching.RemoveItem(this);
-}
 __declspec(noinline) void FMemStack::FreeChunks(FTaggedMemory *NewTopChunk)
 {
     while (TopChunk != NewTopChunk)

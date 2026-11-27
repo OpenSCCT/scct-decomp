@@ -4,7 +4,7 @@
 // 0x908b0 AVolume::GetPrimitive  (vtable slot 44 of AVolume and subclasses)
 //   Both follow UE2's GetPrimitive shape: the actor's own primitives, else the
 //   engine's shared cylinder (XLevel->Engine->Cylinder).
-// 0x908e0 AActor::TouchOneWay    (name not recovered; UE2-style helper)
+// 0x908e0 TouchTo                (shipped editor guard at VA 0x1149210c)
 // 0x909f0 AActor::BeginTouch     (reciprocal touch with the hit normal negated)
 // 0x90a40 AActor::EndTouch       (UE2 EndTouch: UnTouch both ways, RemoveItem)
 // 0x90b00 AActor::Serialize      (vtable slot 10; Super is UObject::Serialize)
@@ -21,9 +21,8 @@
 //   0x92420  operator<<(FArchive&, TArray<FUnnamedLink_90b00*>&)
 //   0x92aa0  AActor::eventTouch                    (this in ESI)
 //   0x10bd60 TArray<AActor*>::RemoveItem           (this in EDI)
-// TouchOneWay, BeginTouch and EndTouch still differ: the link gives them
-// other argument registers than retail, and EndTouch inlines the first
-// eventUnTouch that retail calls out of line (0x92a50).
+// TouchTo and BeginTouch use the actual SetCollision caller and initialized global allocator.
+// EndTouch is still incomplete in this link context.
 
 typedef unsigned short TCHAR;
 typedef int INT;
@@ -221,12 +220,14 @@ struct FVector
 {
     FLOAT X, Y, Z;
     FVector() {}
+    FVector(const FVector &V) : X(V.X), Y(V.Y), Z(V.Z) {}
     FVector(FLOAT InX, FLOAT InY, FLOAT InZ) : X(InX), Y(InY), Z(InZ) {}
     FVector operator-() const { return FVector(-X, -Y, -Z); }
 };
 
-struct FName
+class FName
 {
+public:
     INT Index;
     FName(EName N) : Index(N) {}
     INT GetIndex() const { return Index; }
@@ -347,7 +348,6 @@ public:
 
     UPrimitive *GetPrimitive();
     virtual void Serialize(FArchive &Ar);
-    UBOOL TouchOneWay(AActor *Other, const FVector &HitLocation, const FVector &HitNormal);
     __declspec(noinline) void BeginTouch(AActor *Other, const FVector &HitLocation, const FVector &HitNormal);
     void EndTouch(AActor *Other, UBOOL NoNotifySelf);
 
@@ -397,19 +397,19 @@ UPrimitive *AVolume::GetPrimitive()
     return XLevel->Engine ? XLevel->Engine->Cylinder : 0;
 }
 
-UBOOL AActor::TouchOneWay(AActor *Other, const FVector &HitLocation, const FVector &HitNormal)
+static UBOOL TouchTo(AActor *Actor, AActor *Other, const FVector &HitLocation, const FVector &HitNormal)
 {
-    if (Touching.ContainsItem(Other))
+    if (Actor->Touching.ContainsItem(Other))
         return 1;
-    Touching.AddItem(Other);
-    eventTouch(Other, HitLocation, HitNormal);
-    return Touching.ContainsItem(Other);
+    Actor->Touching.AddItem(Other);
+    Actor->eventTouch(Other, HitLocation, HitNormal);
+    return Actor->Touching.ContainsItem(Other);
 }
 
 void AActor::BeginTouch(AActor *Other, const FVector &HitLocation, const FVector &HitNormal)
 {
-    if (TouchOneWay(Other, HitLocation, HitNormal))
-        Other->TouchOneWay(this, HitLocation, -HitNormal);
+    if (TouchTo(this, Other, HitLocation, HitNormal))
+        TouchTo(Other, this, HitLocation, -HitNormal);
 }
 
 void AActor::EndTouch(AActor *Other, UBOOL NoNotifySelf)
