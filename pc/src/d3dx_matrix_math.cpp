@@ -189,3 +189,102 @@ D3DXPLANE *__stdcall c_D3DXPlaneNormalize(D3DXPLANE *out, const D3DXPLANE *plane
     }
     return out;
 }
+
+D3DXVECTOR2 *__stdcall c_D3DXVec2Normalize(D3DXVECTOR2 *out, const D3DXVECTOR2 *v)
+{
+    FLOAT lengthSq = v->x * v->x + v->y * v->y;
+    if (WithinEpsilon(lengthSq, 1.0f)) {
+        if (out != v)
+            *out = *v;
+    } else if (lengthSq > FLT_MIN) {
+        FLOAT scale = 1.0f / static_cast<FLOAT>(sqrt(lengthSq));
+        D3DXVECTOR2 scaled = { v->x * scale, v->y * scale };
+        *out = scaled;
+    } else {
+        out->x = 0.0f;
+        out->y = 0.0f;
+    }
+    return out;
+}
+
+D3DXVECTOR3 *__stdcall c_D3DXVec3Normalize(D3DXVECTOR3 *out, const D3DXVECTOR3 *v)
+{
+    FLOAT lengthSq = v->x * v->x + v->y * v->y + v->z * v->z;
+    if (WithinEpsilon(lengthSq, 1.0f)) {
+        if (out != v)
+            *out = *v;
+    } else if (lengthSq > FLT_MIN) {
+        FLOAT scale = 1.0f / static_cast<FLOAT>(sqrt(lengthSq));
+        D3DXVECTOR3 scaled = { v->x * scale, v->y * scale, v->z * scale };
+        *out = scaled;
+    } else {
+        out->x = 0.0f;
+        out->y = 0.0f;
+        out->z = 0.0f;
+    }
+    return out;
+}
+
+D3DXVECTOR4 *__stdcall c_D3DXVec4Normalize(D3DXVECTOR4 *out, const D3DXVECTOR4 *v)
+{
+    FLOAT lengthSq = v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
+    if (WithinEpsilon(lengthSq, 1.0f)) {
+        if (out != v)
+            *out = *v;
+    } else if (lengthSq > FLT_MIN) {
+        FLOAT scale = 1.0f / static_cast<FLOAT>(sqrt(lengthSq));
+        D3DXVECTOR4 scaled = { v->x * scale, v->y * scale, v->z * scale, v->w * scale };
+        *out = scaled;
+    } else {
+        out->x = 0.0f;
+        out->y = 0.0f;
+        out->z = 0.0f;
+        out->w = 0.0f;
+    }
+    return out;
+}
+
+D3DXQUATERNION *__stdcall c_D3DXQuaternionNormalize(D3DXQUATERNION *out, const D3DXQUATERNION *v)
+{
+    FLOAT lengthSq = v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
+    if (WithinEpsilon(lengthSq, 1.0f)) {
+        if (out != v)
+            *out = *v;
+    } else if (lengthSq > FLT_MIN) {
+        FLOAT scale = 1.0f / static_cast<FLOAT>(sqrt(lengthSq));
+        D3DXQUATERNION scaled = { v->x * scale, v->y * scale, v->z * scale, v->w * scale };
+        *out = scaled;
+    } else {
+        out->x = 0.0f;
+        out->y = 0.0f;
+        out->z = 0.0f;
+        out->w = 0.0f;
+    }
+    return out;
+}
+
+D3DXQUATERNION *__stdcall c_D3DXQuaternionInverse(D3DXQUATERNION *out, const D3DXQUATERNION *v)
+{
+    FLOAT lengthSq = v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w;
+    /* sqrt(FLT_MIN), represented by 0x20000000 in the coefficient pool. */
+    const FLOAT minInvertibleLengthSq = 1.0842021724855044e-19f;
+    if (lengthSq > minInvertibleLengthSq) {
+        out->x = -v->x;
+        out->y = -v->y;
+        out->z = -v->z;
+        out->w = v->w;
+        if (!WithinEpsilon(lengthSq, 1.0f)) {
+            FLOAT inv = 1.0f / lengthSq;
+            out->x *= inv;
+            out->y *= inv;
+            out->z *= inv;
+            out->w *= inv;
+        }
+    } else {
+        out->x = 0.0f;
+        out->y = 0.0f;
+        out->z = 0.0f;
+        out->w = 0.0f;
+    }
+    return out;
+}

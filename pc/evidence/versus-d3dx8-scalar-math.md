@@ -37,3 +37,25 @@ The archive's named `WithinEpsilon` call and its read-only float operands
 which jumps to the scalar body. Plane intersection calls the retail
 `MSVCR70!_finite` thunk at `0x2c351c`. Reflection calls the public plane
 normalization dispatcher and multiplies each normal component by `-2.0f`.
+
+## Vector and quaternion normalizations
+
+The same archive member and CodeView record cover the scalar functions below.
+Each complete named COMDAT independently links through its function receipt to the
+locked Versus image. The vector and quaternion normalization COMDATs at
+`0x288d9d` both agree with all 185 bytes at the shared retail entry.
+
+| Scalar function | File offset | Bytes | XP DDK `/O2` control bytes |
+| --- | ---: | ---: | ---: |
+| `c_D3DXVec2Normalize` | `0x2894c5` | 141 | 192 |
+| `c_D3DXVec3Normalize` | `0x2896f9` | 160 | 224 |
+| `c_D3DXVec4Normalize` | `0x288d9d` | 185 | 256 |
+| `c_D3DXQuaternionNormalize` | `0x288d9d` | 185 | 256 |
+| `c_D3DXQuaternionInverse` | `0x288e5c` | 180 | 208 |
+
+The three vector dimensions and quaternion normalization require `/Oi` with
+`/O1 /Gy` to generate the inline square root. Omitting `/Oi` introduces a
+library square-root call in these builds. Quaternion inversion instead uses
+the precomputed single-precision square root of `FLT_MIN` as its lower bound
+and takes the reciprocal of the squared length. Both the period DDK compiler
+and the recorded VC7.0 RTM compiler reproduce all five named implementations.
