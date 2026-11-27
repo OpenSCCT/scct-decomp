@@ -2285,6 +2285,98 @@
     }
   },
   {
+    "id": "versus-solid-color-texture-ctor",
+    "offset": 1124784,
+    "size": 87,
+    "inputs": [
+      "src/versus_shadow_bitmap_texture.cpp",
+      "src/versus_build.h",
+      "src/versus_shadow_bitmap_material.h",
+      "src/unreal_math.h",
+      "src/unreal_types.h",
+      "src/versus_canvas_materials.h",
+      "src/versus_material.h",
+      "src/unreal_object.h",
+      "src/unreal_name.h",
+      "src/versus_solid_color_texture.h"
+    ],
+    "rebuilt_symbol": "??0FSolidColorTexture@@QAE@UFColor@@@Z",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_shadow_bitmap_texture.obj src/versus_shadow_bitmap_texture.cpp",
+    "ltcg_link": {
+      "roots": [
+        "?GetRenderInterface@UShadowBitmapMaterial@@UAEPAVFRenderResource@@XZ"
+      ],
+      "stubs": [
+        "__allmul",
+        "__purecall"
+      ],
+      "rebuilt_offset": 1056,
+      "rebuilt_address": 268439584,
+      "symbols": {
+        "?GCacheCounter@@3_KA": 268447744,
+        "??_7FSolidColorTexture@@6B@": 268443648,
+        "__allmul": 268439776
+      },
+      "fields": [
+        [
+          7,
+          "abs",
+          "?GCacheCounter@@3_KA"
+        ],
+        [
+          14,
+          "abs",
+          "?GCacheCounter@@3_KA",
+          4
+        ],
+        [
+          29,
+          "abs",
+          "??_7FSolidColorTexture@@6B@"
+        ],
+        [
+          44,
+          "rel32",
+          "__allmul"
+        ],
+        [
+          64,
+          "abs",
+          "?GCacheCounter@@3_KA",
+          4
+        ],
+        [
+          71,
+          "abs",
+          "?GCacheCounter@@3_KA"
+        ]
+      ],
+      "interior_objects": {
+        "?GCacheCounter@@3_KA": 8
+      }
+    },
+    "identification": "The locked renderer constructs the same packed solid-color texture from its shadow material fallback at RVA 0xe38f0 and player flash overlay at RVA 0x116990. Its table at 0x10c03738 starts with the 64-bit CacheId and Revision accessors; slot 15 copies the texel at +4, corroborated by the shipped editor guard FSolidColorTexture::GetTextureData in UnRenderUtil.cpp. The 64-bit counter at 0x10c96930 is incremented in place and the result encodes resource kind 0xe0. The counter and cache-kind names describe their observed use.",
+    "link_bindings": {
+      "?GCacheCounter@@3_KA": {
+        "va": 281635120,
+        "basis": "One writable QWORD; both halves are loaded, incremented with carry, and stored by both texture and vertex-stream constructors."
+      },
+      "??_7FSolidColorTexture@@6B@": {
+        "va": 281032504,
+        "basis": "The constructor writes this table and the retail first two methods return the packed CacheId and Revision. The shipped editor identifies GetTextureData in its corresponding slot."
+      },
+      "__allmul": {
+        "va": 280509424,
+        "basis": "The named compiler 64-bit multiply helper, shared with the other cache-ID constructors."
+      }
+    },
+    "match": {
+      "bytes_sha256": "073dc51deb81e6bce7384ce35d5060ba5123cbec177ddb2372c5740a29afb86b",
+      "inputs_sha256": "5b8aa6096cba792bce73bc44afd5d8c8bcf28ff0ef51aaf9d9475e38b7bf2ef7"
+    }
+  },
+  {
     "id": "read-word-112a10",
     "offset": 1124880,
     "size": 4,

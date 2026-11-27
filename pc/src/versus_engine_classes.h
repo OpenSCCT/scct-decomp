@@ -913,13 +913,7 @@ public:
     BYTE unk_64[0x14];
 };
 
-// Engine.ShadowBitmapMaterial: 0x94 bytes, 37 virtual functions
-class UShadowBitmapMaterial : public UBitmapMaterial {
-public:
-    virtual ~UShadowBitmapMaterial();
-
-    BYTE unk_64[0x30];
-};
+#include "versus_shadow_bitmap_material.h"
 
 // Engine.Animation: 0x28 bytes, 22 virtual functions
 class UAnimation : public UObject {

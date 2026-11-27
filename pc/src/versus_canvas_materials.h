@@ -2,6 +2,8 @@
 #define VERSUS_CANVAS_MATERIALS_H
 #include "versus_material.h"
 
+class FRenderResource;
+
 // Engine.RenderedMaterial: 0x4c bytes, 35 virtual functions
 class URenderedMaterial : public UMaterial {
 public:
@@ -14,7 +16,7 @@ class UBitmapMaterial : public URenderedMaterial {
 public:
     static UClass PrivateStaticClass;
     virtual ~UBitmapMaterial();
-    virtual void VirtualSlot35();
+    virtual FRenderResource *GetRenderInterface();
     virtual void VirtualSlot36();
 
     BYTE unk_4c[0x18];
