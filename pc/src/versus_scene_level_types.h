@@ -47,11 +47,7 @@ public:
                                  AActor *SourceActor);
 };
 
-// Engine.Info: 0x2f8 bytes, 78 virtual functions
-class AInfo : public AActor {
-public:
-    virtual ~AInfo();
-};
+#include "versus_info.h"
 
 // Engine.ZoneInfo: 0x340 bytes, 78 virtual functions
 class AZoneInfo : public AInfo {

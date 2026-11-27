@@ -5,7 +5,9 @@
 #include "versus_build.h"
 #include "unreal_types.h"
 #include "unreal_math.h"
+#if !defined(VERSUS_ARRAYS_H)
 #include "unreal_containers.h"
+#endif
 
 enum EName {
 #define REGISTER_NAME(symbol, index, flags, text) NAME_##symbol = index,

@@ -2,12 +2,6 @@
 #include "versus_pawn_action_events.h"
 #include "versus_viewport_types.h"
 
-struct MgmMenuSystem {
-    BYTE UnknownBeforeViewport[0x38];
-    UViewport *Viewport;
-};
-extern MgmMenuSystem *GMgmMenuSystem;
-
 UViewport *GetMgmViewport()
 {
     return GMgmMenuSystem->Viewport;

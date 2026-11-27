@@ -354,33 +354,56 @@
     "size": 100,
     "offset": 17632,
     "inputs": [
-      "src/versus_array_growth.cpp",
-      "src/versus_static_mesh_arrays.h",
-      "src/versus_build.h",
+      "src/versus_player_hud_resources.cpp",
+      "src/versus_spy_hud.h",
+      "src/versus_arrays.h",
       "src/unreal_types.h",
-      "src/versus_array_storage.h"
+      "src/versus_mgm_hud_pages.h",
+      "src/versus_mgm.h",
+      "src/versus_build.h",
+      "src/versus_mgm_content.h",
+      "src/versus_mgm_keyframes.h",
+      "src/versus_mgm_interpolator.h",
+      "src/versus_mgm_bindings.h",
+      "src/versus_mgm_hud_context.h",
+      "src/versus_pawn_action_events.h",
+      "src/unreal_math.h",
+      "src/versus_hardcoded_names.inl",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_malloc.h",
+      "src/versus_array_growth.inl"
     ],
     "rebuilt_symbol": "?Add@FArray@@QAEHHH@Z",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
-    "build_command": "cl /nologo /O2 /G6 /Gy /c /Folocal/versus_array_growth.obj src/versus_array_growth.cpp",
+    "build_command": "cl /nologo /O2 /G6 /Gy /c /Folocal/versus_array_growth.obj src/versus_player_hud_resources.cpp",
     "identification": "FArray::Add(INT Count, INT ElementSize). The function returns the old count and grows the array with the FArray slack formula. It uses the shared FArray fields and the Malloc and Realloc virtual slots on GMalloc. Stock GetFrame calls it eleven times, including the 16-byte FQuat allocation at 0xba70d and 12-byte FVector allocation at 0xba725.",
     "link_bindings": {
       "?GMalloc@@3PAVFMalloc@@A": {
         "va": 281492464,
-        "basis": "Engine allocator object used in all three array methods. Slots 0, 1 and 2 allocate, resize and release storage."
+        "basis": "Versus FArray::Add calls Malloc or Realloc on this same global allocator with the corresponding wide tag."
       },
-      "??_C@_1BI@EOMAHLKO@?$AAF?$AAA?$AAr?$AAr?$AAa?$AAy?$AA?3?$AA?3?$AAA?$AAd?$AAd?$AA?$AA@": {
+      "?FArrayAddTag@@3QBGB": {
         "va": 281086368,
-        "basis": "UTF-16 allocator tag 'FArray::Add' passed to the Steam Versus heap."
+        "basis": "The complete read-only UTF-16 allocator tag FArray::Add is also passed to Malloc by the independently measured FArray::Add."
       },
-      "??_C@_1O@PFKPDBEB@?$AAF?$AAA?$AAr?$AAr?$AAa?$AAy?$AA?$AA@": {
+      "?FArrayTag@@3QBGB": {
         "va": 281086324,
-        "basis": "UTF-16 allocator tag 'FArray' passed to the Steam Versus heap."
+        "basis": "The complete read-only UTF-16 allocator tag FArray is also passed to Realloc by the independently measured FArray::Add."
       }
     },
     "match": {
       "bytes_sha256": "258157ba0fa642b4e75877e7101ae42f8a29336414fffa72746f964e04d08131",
-      "inputs_sha256": "4cc027f9682c43f361a09f6ebb355f7ef2ceb1131cd66e720b146f8404da250a"
+      "inputs_sha256": "06a95f3965a55c833225bb5a7e5c8dd78515dffe27ba497a4de70659e52bd458"
+    },
+    "coff_readonly_strings": {
+      "?FArrayAddTag@@3QBGB": {
+        "utf16": 24
+      },
+      "?FArrayTag@@3QBGB": {
+        "utf16": 14
+      }
     }
   },
   {
@@ -8733,7 +8756,9 @@
       "src/versus_arrays.h",
       "src/versus_persistent_data_types.h",
       "src/versus_shadow_bitmap_material.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1USubsystem@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8768,7 +8793,7 @@
     },
     "match": {
       "bytes_sha256": "eb210d15720e2237355de5433a7385d15d4be45fb32f70c37705634881446697",
-      "inputs_sha256": "73e35c64977f97f7d81b170784e917538ed924763349cefa98c3dfc838ea8579"
+      "inputs_sha256": "19b5cc4c025cc4e68cfbf8027ca9a770c31cfcee4b78452bc0ffe18d9054c4ba"
     }
   },
   {
@@ -8873,7 +8898,9 @@
       "src/versus_arrays.h",
       "src/versus_persistent_data_types.h",
       "src/versus_shadow_bitmap_material.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1UField@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -8908,7 +8935,7 @@
     },
     "match": {
       "bytes_sha256": "702b7a5a3cee788712a16e6aea102ac0aca24ac4d759c254eec3550e0a9dfa55",
-      "inputs_sha256": "6b60490086456aec75a8ac3487cbbd80e2ab3da7ab25e685ff8965caa067a593"
+      "inputs_sha256": "f3599a435bac595041a7cb5d9c3ac317b70da37981382ebbff9ca18ac2788b11"
     }
   },
   {
@@ -9132,7 +9159,9 @@
       "src/versus_shadow_bitmap_material.h",
       "src/versus_gui_list_types.h",
       "src/versus_script_delegate.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1UState@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9158,7 +9187,7 @@
     "identification": "UState::~UState at RVA 0xce10 of the Versus executable. It installs the vtable at RVA 0x30d8c0 (34 slots), runs the inlined UObject::ConditionalDestroy (Destroy is slot 9) and calls the UStruct destructor at RVA 0xcd20. Name: the UClass registration at RVA 0x40025 registers Core.State (hardcoded name table), 0x88 bytes, with the placement constructor at RVA 0x3ebc0, which installs this vtable.",
     "match": {
       "bytes_sha256": "9cddcefa5d02207d5171a42dbe1de97dbd55a0a496f9874567e8ca093dd42061",
-      "inputs_sha256": "872ab88ebb9e6858e0cfd7f008c1e2672c5bdb6152d7f9a5ec7972e97608148c"
+      "inputs_sha256": "1a79c07dd70a161920904d33fa9d28b2e260d1e66b70b0e9bc741935017f356e"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9237,7 +9266,9 @@
       "src/versus_shadow_bitmap_material.h",
       "src/versus_gui_list_types.h",
       "src/versus_script_delegate.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1UClass@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9283,7 +9314,7 @@
     "identification": "UClass::~UClass at RVA 0xceb0 of the Versus executable. It installs the vtable at RVA 0x30d838 (34 slots), runs the inlined UObject::ConditionalDestroy (Destroy is slot 9), destroys the members at 0xf8 (TArray<UnkType_4>, destructor RVA 0x1ef20), 0xec (TArray<UnkType_4>, destructor RVA 0x1ef20), 0xe0 (TArray<UnkType_4>, destructor RVA 0x1ef20), 0xd4 (TArray<UnkType_C>, destructor RVA 0x86750), 0xc8 (FString, destructor RVA 0x48b0), 0xac (TArray<BYTE>, destructor RVA 0xf250), 0xa0 (TArray<UnkType_4>, destructor RVA 0x1ef20), 0x94 (TArray<UnkType_8>, destructor RVA 0xf330) and calls the UState destructor at RVA 0xce10. Name: the UClass registration at RVA 0x4007d registers Core.Class (hardcoded name table), 0x114 bytes, with the placement constructor at RVA 0x3ec10, which installs this vtable.",
     "match": {
       "bytes_sha256": "129c9b0a7d16b69f7a8992cfb936b639054ec22cd3b43382f9b036d9b7819cda",
-      "inputs_sha256": "60d3becd150a6027781f2d714b3100c721126526d30d084f3dddecc7d943f6b0"
+      "inputs_sha256": "7c2609965687885c609cb8bcdae3a231927b9c7e249d1b0e52bc83fb9ffcedee"
     },
     "recipe_evidence": {
       "compiler": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9450,7 +9481,9 @@
       "src/versus_arrays.h",
       "src/versus_persistent_data_types.h",
       "src/versus_shadow_bitmap_material.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1UProperty@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9485,7 +9518,7 @@
     },
     "match": {
       "bytes_sha256": "10f97c1893176becc51c64f6b1c4079787231a49b9fe75253d922184fe1e71c6",
-      "inputs_sha256": "c22248d2cb696ea587a7d08a2ea7c245643fa97fce4f8dbd4e915d66b628af44"
+      "inputs_sha256": "a1841d180af6c1c8aa3d6cab1ea1979467781cda66026f4ba204cdcaaf374aad"
     }
   },
   {
@@ -9556,7 +9589,9 @@
       "src/versus_arrays.h",
       "src/versus_persistent_data_types.h",
       "src/versus_shadow_bitmap_material.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1UIntProperty@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9591,7 +9626,7 @@
     },
     "match": {
       "bytes_sha256": "04e86d3f7861ef537665b4113e2d05dd9abc84cee3ea9ffc35dfda4f4a19cda7",
-      "inputs_sha256": "e9dd7e8038fbec0744ac79d764383507f877b5edcd1e4354d883d8f84749fb36"
+      "inputs_sha256": "773e9e2801bc6e9129c8ba8f5d0e72aff0363fa932586cb922a5046d3ebf700f"
     }
   },
   {
@@ -9746,7 +9781,9 @@
       "src/versus_arrays.h",
       "src/versus_persistent_data_types.h",
       "src/versus_shadow_bitmap_material.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1UBoolProperty@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9781,7 +9818,7 @@
     },
     "match": {
       "bytes_sha256": "388e1b1fd944d1c43300bedb5ffdd1d51b2f688140aab0819c2304d14986aeef",
-      "inputs_sha256": "104ce7913a1168b3bfa3de66fcd58789cb147d932d386dff9b349d63d5324f1e"
+      "inputs_sha256": "319551186f2d7fec8f84876095451d003d03e35cd571b6755262d88ce16338e3"
     }
   },
   {
@@ -9936,7 +9973,9 @@
       "src/versus_arrays.h",
       "src/versus_persistent_data_types.h",
       "src/versus_shadow_bitmap_material.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1UStrProperty@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -9971,7 +10010,7 @@
     },
     "match": {
       "bytes_sha256": "dbb32c60bfdf1809736038ea2a8665ce37b3ad8937600ad5a870758c953be469",
-      "inputs_sha256": "df7a649d1a4e34720624bebc81088de8bf7e04245b0b7e152428e2d48d5879c7"
+      "inputs_sha256": "2ba56dbca2a62f98220808dc4beb99d190f2c2407a55885ac3e4af8a5ac22848"
     }
   },
   {
@@ -10183,7 +10222,9 @@
       "src/versus_arrays.h",
       "src/versus_persistent_data_types.h",
       "src/versus_shadow_bitmap_material.h",
-      "src/versus_scene_level_types.h"
+      "src/versus_scene_level_types.h",
+      "src/versus_game_replication_info.h",
+      "src/versus_info.h"
     ],
     "rebuilt_symbol": "??1UArrayProperty@@UAE@XZ",
     "toolchain": "Microsoft C/C++ 13.10.3052 for x86",
@@ -10218,7 +10259,7 @@
     },
     "match": {
       "bytes_sha256": "85f4a6198bd665dca71268433b9dff8f217b27b00573f52b85267a04543e01ef",
-      "inputs_sha256": "209f203bdcd7d38335ab2af500af4898500bc3f52f0d13b6f788adfa15fa74b1"
+      "inputs_sha256": "e23860809b49c207c37e423d7775deb5ff17e005743a305187a0ad36f3b5295a"
     }
   },
   {

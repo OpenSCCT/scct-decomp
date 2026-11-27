@@ -16,6 +16,7 @@ from link_interior_objects import resolve_interior_objects
 from link_vtable_exports import resolve_vtable_exports, vtable_export_args
 from link_writable_strings import check_writable_strings
 from link_case_selectors import check_case_selectors
+from link_coff_strings import coff_string_spec, link_coff_strings
 from link_x86 import link_function
 from link_coff_rtti_vtables import check_rtti_spec, link_rtti_function
 from manifests import load_target, save_receipt
@@ -149,6 +150,8 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
             raise ValueError("original compiler and flag evidence is empty")
         fingerprints[relative] = fingerprint
     recipe = {k: v for k, v in unit.items() if k != "match"}
+    if "coff_private_strings" in unit or "coff_readonly_strings" in unit:
+        coff_string_spec(unit)
     if "coff_rtti_vtable" in unit:
         check_rtti_spec(unit)
     if "coff_switch_tail" in unit:
@@ -156,6 +159,8 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
     if "link_bindings" in unit:
         linker = Path(__file__).with_name("link_image.py" if "ltcg_link" in unit else "link_x86.py")
         validators = [linker]
+        if "coff_private_strings" in unit or "coff_readonly_strings" in unit:
+            validators.append(linker.with_name("link_coff_strings.py"))
         if "coff_rtti_vtable" in unit:
             validators.append(linker.with_name("link_coff_rtti_vtables.py"))
         if "coff_switch_tail" in unit:
@@ -271,6 +276,8 @@ def verify(target, original):
 
 def built_unit_bytes(target, unit, output, original=None):
     """Obtain the complete function at its specified position in the linked image."""
+    if "coff_private_strings" in unit or "coff_readonly_strings" in unit:
+        coff_string_spec(unit)
     if "coff_rtti_vtable" in unit:
         check_rtti_spec(unit)
         if original is None:
@@ -322,7 +329,9 @@ def built_unit_bytes(target, unit, output, original=None):
                 if not tail or address % alignment or end + tail > section["offset"] + section["size"]:
                     raise ValueError("COFF alignment extends beyond the code section or has invalid bounds")
                 length = unit["size"] + tail
-                if "coff_rtti_vtable" in unit:
+                if "coff_private_strings" in unit or "coff_readonly_strings" in unit:
+                    contribution = link_coff_strings(output, unit, length, address, original, **readers)
+                elif "coff_rtti_vtable" in unit:
                     contribution = link_rtti_function(output, unit, length, address, original, **readers)
                 elif "link_bindings" in unit:
                     contribution = link_function(output, unit["rebuilt_symbol"], length, address,
@@ -340,6 +349,8 @@ def built_unit_bytes(target, unit, output, original=None):
         for s in target["image"]["executable_sections"]:
             if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
                 address = s["address"] + a - s["offset"]
+                if "coff_private_strings" in unit or "coff_readonly_strings" in unit:
+                    return link_coff_strings(output, unit, unit["size"], address, original, **readers)
                 if "coff_switch_tail" in unit:
                     return link_switch_tail(output, unit, address, original, s["offset"] + s["size"], **readers)
                 if "coff_rtti_vtable" in unit:

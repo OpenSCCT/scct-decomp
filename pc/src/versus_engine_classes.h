@@ -170,11 +170,7 @@ public:
     BYTE                   unk_314[0x14];
 };
 
-// Engine.ReplicationInfo: 0x2f8 bytes, 78 virtual functions
-class AReplicationInfo : public AInfo {
-public:
-    virtual ~AReplicationInfo();
-};
+#include "versus_game_replication_info.h"
 
 // Engine.PlayerReplicationInfo: 0x450 bytes, 78 virtual functions
 class APlayerReplicationInfo : public AReplicationInfo {
@@ -207,22 +203,6 @@ public:
     virtual ~AInternetInfo();
 };
 
-// Engine.GameReplicationInfo: 0x3c0 bytes, 78 virtual functions
-class AGameReplicationInfo : public AReplicationInfo {
-public:
-    virtual ~AGameReplicationInfo();
-
-    FString               unk_2f8;
-    FString               unk_304;
-    BYTE                  unk_310[0x68];
-    FString               unk_378;
-    FString               unk_384;
-    FString               unk_390;
-    FString               unk_39c;
-    BYTE                  unk_3a8[0x4];
-    TArrayLtcg<UnkType_4> unk_3ac;
-    BYTE                  unk_3b8[0x8];
-};
 
 // Engine.LevelSummary: 0x50 bytes, 22 virtual functions
 class ULevelSummary : public UObject {
