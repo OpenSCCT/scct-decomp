@@ -23,7 +23,7 @@ The table gives a byte count for each group. [Progress report](reports/progress.
 | Build and program | Verified bytes | Candidate bytes | Measured code |
 | --- | ---: | ---: | ---: |
 | Steam 252084 · Campaign and co-op | 1,180,131 | 37,090 | 8,082,506 bytes |
-| Steam 252084 · Versus | 477,149 | 65,829 | 2,991,392 bytes |
+| Steam 252084 · Versus | 477,333 | 65,829 | 2,991,392 bytes |
 | PAL 1.01 · Disc boot | 0 | 0 | Unmeasured |
 | PAL 1.01 · Offline program | 0 | 0 | Unmeasured |
 | PAL 1.01 · Online program | 0 | 8 | Unmeasured |
@@ -44,7 +44,7 @@ The project profile specifies how to correct these declarations and which record
 | Build and program | Bytes matched | Verified | Verified under the rules | `MATCH-PENDING` |
 | --- | ---: | ---: | ---: | ---: |
 | Steam 252084 · Campaign and co-op | 1,217,221 | 1,180,131 | 646,144 | 551,104 |
-| Steam 252084 · Versus | 542,978 | 477,149 | 97,670 | 419,085 |
+| Steam 252084 · Versus | 543,162 | 477,333 | 97,670 | 419,269 |
 | PAL 1.01 · Online program | 8 | 0 | 0 | 0 |
 <!-- rules:end -->
 

@@ -1135,7 +1135,15 @@ extern struct StaticRecord exit_object_3c9e8c;
 extern const float factor_2ff1a4;
 extern float product_3b7858;
 extern unsigned char storage_3a7020[];
-extern unsigned char storage_3cac00[];
+#ifdef __cplusplus
+extern "C" {
+#endif
+// The Versus startup routine binds the zero-vector pointer to this storage.
+extern struct FVector storage_3cac00;
+extern const struct FVector *selected_3cacc0;
+#ifdef __cplusplus
+}
+#endif
 extern unsigned char storage_3cac0c[];
 extern unsigned char storage_3cac18[];
 extern unsigned char storage_3cac24[];
@@ -1146,7 +1154,6 @@ extern void *selected_3cabf4;
 extern void *selected_3cabf8;
 extern void *selected_3cacb8;
 extern void *selected_3cacbc;
-extern void *selected_3cacc0;
 extern void *selected_3cacc4;
 extern struct StaticRecord static_frame_3be700;
 extern struct StaticRecord static_frame_3be818;

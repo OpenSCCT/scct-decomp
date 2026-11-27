@@ -7,6 +7,7 @@
 
 #ifdef SCCT_VERSUS
 #include "versus_ltcg.h"
+#include "unreal_math.h"
 
 // Engine.Actor: 0x2f8 bytes, 78 virtual functions
 class AActor : public UObject {
@@ -69,13 +70,18 @@ public:
     virtual void VirtualSlot76();
     virtual void VirtualSlot77();
 
-    BYTE                  unk_28[0xe4 - 0x28];
+    BYTE                  unk_28[0x80 - 0x28];
+    FVector               Location;
+    BYTE                  unk_8c[0xe4 - 0x8c];
     DWORD                 unk_e4;       // observed 32-bit scalar access; meaning unknown
     BYTE                  unk_e8[0x104 - 0xe8];
     void                 *unk_104;
     BYTE                  unk_108[0x138 - 0x108];
     TArrayLtcg<UnkType_8> unk_138;
-    BYTE                  unk_144[0x80];
+    BYTE                  unk_144[0x1a0 - 0x144];
+    class ALevelInfo     *Level;
+    class ULevel         *XLevel;
+    BYTE                  unk_1a8[0x1c4 - 0x1a8];
     TArray<UnkType_4>     unk_1c4;
     BYTE                  unk_1d0[0x4];
     void                 *unk_1d4;      // observed pointer access; pointee unknown
@@ -104,6 +110,7 @@ public:
     void SetCollision(UBOOL NewCollideActors, UBOOL NewBlockActors, UBOOL NewBlockPlayers);
     void SetDrawType(INT NewDrawType);
     DECLARE_NATIVE(execCheckSignature)
+    void eventBulletWentTru(AActor *Instigator, FVector HitLocation, FVector HitNormal, FVector Momentum);
 };
 
 #else // Campaign

@@ -11,6 +11,16 @@
 #include "versus_ipdrv_classes.h"
 #include "versus_ltcg.h"
 
+// Native registration gives SBase.SPlayerController a size of 0xc70.
+class ASPlayerController : public APlayerController {
+public:
+    BYTE  unk_604[0xb10 - 0x604];
+    FLOAT unk_b10;              // CheckGEForWallJump reads this trace parameter.
+    BYTE  unk_b14[0xc70 - 0xb14];
+
+    DECLARE_NATIVE(execCheckCeilingForLadder)
+};
+
 // SBase.SBasicGamePlayObject: 0x344 bytes, 78 virtual functions
 class ASBasicGamePlayObject : public AActor {
 public:

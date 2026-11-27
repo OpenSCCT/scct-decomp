@@ -12,6 +12,47 @@
 #include "versus_core_classes.h"
 #include "versus_ltcg.h"
 
+struct FCheckResult;
+class FMemStack;
+class ALevelInfo;
+class UModel;
+
+template<class T> class TTransArray : public TArray<T> {
+public:
+    UObject *Owner;
+
+    const T &operator()(INT Index) const { return ((const T *)Data)[Index]; }
+};
+
+// Engine.LevelBase uses UObject as its primary base and FNetworkNotify as its
+// secondary interface; its registration gives a total size of 0x13c.
+class FNetworkNotify {
+public:
+    virtual INT NotifyAcceptingConnection() = 0;
+};
+
+class ULevelBase : public UObject, public FNetworkNotify {
+public:
+    virtual INT NotifyAcceptingConnection();
+    TTransArray<AActor *> Actors;
+    BYTE unk_3c[0x13c - 0x3c];
+};
+
+// Engine.Level derives from LevelBase and is 0x4af0 bytes in the registration.
+class ULevel : public ULevelBase {
+public:
+    UModel *Model;
+    BYTE unk_140[0x4af0 - 0x140];
+
+    ALevelInfo *GetLevelInfo() const;
+
+    UBOOL SingleLineCheck(FCheckResult &Hit, AActor *SourceActor, const FVector &End,
+                          const FVector &Start, DWORD TraceFlags, const FVector &Extent);
+    FCheckResult *MultiLineCheck(FMemStack &Mem, FVector End, const FVector &Start,
+                                 const FVector &Extent, ALevelInfo *LevelInfo, DWORD TraceFlags,
+                                 AActor *SourceActor);
+};
+
 // Engine.SImpactManager: 0x554 bytes, 78 virtual functions
 class ASImpactManager : public AActor {
 public:
@@ -1251,5 +1292,10 @@ public:
     TArray<FString> unk_4c;
     BYTE            unk_58[0x24];
 };
+
+inline ALevelInfo *ULevel::GetLevelInfo() const
+{
+    return static_cast<ALevelInfo *>(Actors(0));
+}
 
 #endif // VERSUS_ENGINE_CLASSES_H

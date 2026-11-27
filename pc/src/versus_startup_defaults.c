@@ -12,7 +12,7 @@ void __cdecl initialize_2d8600(void)
 
 void __cdecl initialize_2d8640(void)
 {
-    selected_3cacc0 = storage_3cac00;
+    selected_3cacc0 = &storage_3cac00;
 }
 
 void __cdecl initialize_2d8650(void)
