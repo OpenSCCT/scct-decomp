@@ -1,9 +1,10 @@
+from pathlib import Path
 import struct
 import unittest
 
 from images import file_pe_data, inspect
 from link_image import link_arguments, place_function, stub_object
-from progress import built_unit_bytes
+from progress import built_unit_bytes, compare_unit
 
 BASE = 0x10000000
 
@@ -156,9 +157,10 @@ class WritableStringTests(unittest.TestCase):
     def code(va):
         return b"\x68" + struct.pack("<I", va) + b"\xc3"
 
-    def place(self, *, linked_text=None, retail_text=None, linked_va=None, retail_flags=0xc0000040):
+    def place(self, *, linked_text=None, retail_text=None, linked_va=None, linked_flags=0x40000040,
+              retail_flags=0xc0000040):
         rebuilt = image(self.code(self.linked if linked_va is None else linked_va),
-                        self.value if linked_text is None else linked_text)
+                        self.value if linked_text is None else linked_text, data_flags=linked_flags)
         retail = image(self.code(self.original), b"\x00" * 4 + (self.value if retail_text is None else retail_text),
                        data_flags=retail_flags)
         unit = {"offset": 0x200, "size": 6, "ltcg_link": self.link, "link_bindings": self.bindings}
@@ -203,10 +205,68 @@ class WritableStringTests(unittest.TestCase):
             with self.subTest(flags=flags), self.assertRaisesRegex(ValueError, "file-backed writable data section"):
                 self.place(retail_flags=flags)
 
+    def use_ascii(self):
+        self.value = b"Ab\0"
+        self.link["writable_strings"][self.symbol] = {"ascii": len(self.value)}
+
+    def test_ascii_bytes_at_odd_addresses(self):
+        self.use_ascii()
+        self.link["symbols"][self.symbol] = self.linked + 1
+        self.bindings[self.symbol]["va"] = self.original + 1
+        self.assertEqual(self.place(linked_text=b"x" + self.value, retail_text=b"y" + self.value,
+                                    linked_va=self.linked + 1), self.code(self.original + 1))
+
+    def test_ascii_mutation_and_shift_on_either_side(self):
+        self.use_ascii()
+        for key in ("linked_text", "retail_text"):
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, "differs from retail"):
+                self.place(**{key: b"Ax\0"})
+        with self.assertRaisesRegex(ValueError, "does not refer"):
+            self.place(linked_va=self.linked + 1)
+        self.link["symbols"][self.symbol] += 1
+        with self.assertRaisesRegex(ValueError, "differs from retail"):
+            self.place(linked_va=self.linked + 1)
+        self.link["symbols"][self.symbol] = self.linked
+        self.bindings[self.symbol]["va"] += 1
+        with self.assertRaisesRegex(ValueError, "differs from retail"):
+            self.place()
+
+    def test_ascii_requires_a_complete_file_backed_terminated_object(self):
+        self.use_ascii()
+        for value in (b"abc", b"a\0b", b"a\xff\0"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                self.place(linked_text=value, retail_text=value)
+        for flags in (0x40000040, 0xc0000080, 0xe0000040):
+            with self.subTest(retail_flags=flags), self.assertRaisesRegex(ValueError, "file-backed writable"):
+                self.place(retail_flags=flags)
+        for flags in (0xc0000080, 0xe0000040):
+            with self.subTest(linked_flags=flags), self.assertRaisesRegex(ValueError, "file-backed"):
+                self.place(linked_flags=flags)
+        for spec in ({"ascii": 0}, {"ascii": True}, {"ascii": 1.5}, {"utf8": 3}, {"ascii": 3, "size": 3}):
+            self.link["writable_strings"][self.symbol] = spec
+            with self.subTest(spec=spec), self.assertRaises(ValueError):
+                self.place()
+
+    def test_ascii_pointer_to_a_different_copy_fails_the_retail_code_comparison(self):
+        self.use_ascii()
+        retail = image(self.code(self.original), b"\0" * 4 + self.value * 2, data_flags=0xc0000040)
+        rebuilt = image(self.code(self.linked), self.value)
+        self.bindings[self.symbol]["va"] += len(self.value)
+        unit = {"id": "ascii-pointer", "offset": 0x200, "size": 6,
+                "ltcg_link": self.link, "link_bindings": self.bindings}
+        with self.assertRaisesRegex(ValueError, "compiler output differs from retail"):
+            compare_unit(Path("."), {"image": inspect(retail)}, unit, retail, rebuilt)
+
     def test_distinct_objects_with_equal_spelling_cannot_share_an_address(self):
+        self.check_distinct_objects(self.value, len(self.value))
+
+    def test_ascii_object_cannot_overlap_the_first_code_unit_of_a_wide_object(self):
+        self.check_distinct_objects(b"N\0", {"ascii": 2})
+
+    def check_distinct_objects(self, other_text, other_spec):
         other = "?NameText_NoneAgain@@3QBGB"
         self.link["fields"].append([6, "abs", other])
-        self.link["writable_strings"][other] = len(self.value)
+        self.link["writable_strings"][other] = other_spec
         for pooled_linked, pooled_retail in ((False, False), (True, False), (False, True)):
             with self.subTest(pooled_linked=pooled_linked, pooled_retail=pooled_retail):
                 linked = self.linked if pooled_linked else self.linked + len(self.value)
@@ -215,8 +275,8 @@ class WritableStringTests(unittest.TestCase):
                 self.bindings[other] = {"va": original, "basis": "second registration"}
                 code = self.code(self.linked)[:-1] + self.code(linked)
                 expected = self.code(self.original)[:-1] + self.code(original)
-                rebuilt = image(code, self.value * 2)
-                retail = image(expected, b"\0" * 4 + self.value * 2, data_flags=0xc0000040)
+                rebuilt = image(code, self.value + other_text)
+                retail = image(expected, b"\0" * 4 + self.value + other_text, data_flags=0xc0000040)
                 unit = {"offset": 0x200, "size": len(code), "ltcg_link": self.link, "link_bindings": self.bindings}
                 target = {"image": inspect(retail)}
                 if pooled_linked or pooled_retail:
