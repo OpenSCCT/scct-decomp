@@ -2,7 +2,8 @@
 // Bone rotation helpers: each takes a bone FCoords, rotates it about an
 // axis in its transposed (inverse-rotation) frame and writes the three axes
 // back, plus the dispatcher at 0xbe620 that picks which rotations to apply.
-// Class and member names are neutral (evidence too thin for Unreal names).
+// USkeletalMeshInstance::GetFrame calls the dispatcher once for each bone.
+// The helper names and the names of the two rotation axes describe their operations.
 typedef int INT;
 typedef float FLOAT;
 
@@ -59,7 +60,7 @@ inline FVector FVector::TransformVectorBy(const FCoords &Coords) const
 }
 
 // RVA 0x92c40 (restated so the LTCG link gives it its retail register form).
-__declspec(noinline) FCoords FCoords::Transpose() const
+FCoords FCoords::Transpose() const
 {
     return FCoords
     (
@@ -72,7 +73,7 @@ __declspec(noinline) FCoords FCoords::Transpose() const
 
 // RVA 0x50920 (restated, item 0205). The callers here only match with Axis
 // before Angle in the parameter list (the argument evaluation order shows it).
-__declspec(noinline) FCoords &FCoords::RotateAxis_50920(const FVector &Axis, FLOAT Angle)
+FCoords &FCoords::RotateAxis_50920(const FVector &Axis, FLOAT Angle)
 {
     FLOAT A = Angle - (INT)(Angle * (1.f / (2.f * PI))) * (2.f * PI);
     FLOAT C = appCos(Angle);
@@ -96,9 +97,11 @@ __declspec(noinline) FCoords &FCoords::RotateAxis_50920(const FVector &Axis, FLO
     return *this;
 }
 
-// Neutral name: the owner of a bone coordinate array (0xb4), two rotation
+// The mesh instance keeps a bone coordinate array at 0xb4, two rotation
 // axes (0x338, 0x344) and a block of angle parameters (0x2e0-0x304).
-class UnnamedBoneOwner_be310
+class UMesh;
+
+class USkeletalMeshInstance
 {
 public:
     virtual void Slot00(); virtual void Slot01(); virtual void Slot02(); virtual void Slot03();
@@ -109,10 +112,10 @@ public:
     virtual void Slot20(); virtual void Slot21(); virtual void Slot22(); virtual void Slot23();
     virtual void Slot24(); virtual void Slot25(); virtual void Slot26(); virtual void Slot27();
     virtual void Slot28(); virtual void Slot29(); virtual void Slot30(); virtual void Slot31();
-    virtual void Slot32();  // vtable +0x80
+    virtual UMesh *GetMesh();  // vtable +0x80
 
     char Pad0[0xb4 - 4];
-    FCoords *Coords;        // 0xb4
+    FCoords *BonePose;        // 0xb4
     char Pad1[0x2e0 - 0xb8];
     FLOAT Param2E0;         // 0x2e0
     FLOAT Param2E4;         // 0x2e4
@@ -130,39 +133,39 @@ public:
 
     void SetAxes(INT Index, const FCoords &C)
     {
-        Coords[Index].XAxis = C.XAxis;
-        Coords[Index].YAxis = C.YAxis;
-        Coords[Index].ZAxis = C.ZAxis;
+        BonePose[Index].XAxis = C.XAxis;
+        BonePose[Index].YAxis = C.YAxis;
+        BonePose[Index].ZAxis = C.ZAxis;
     }
-    void RotateA(INT Index, FLOAT Angle);
-    void RotateUnitZ(INT Index, FLOAT Angle);
-    void RotateAB(INT Index, FLOAT AngleA, FLOAT AngleZ);
-    void RotateB(INT Index, FLOAT Angle);
-    void ApplyRotations(INT Index);
+    void RotateAboutFirstAxis(INT Index, FLOAT Angle);
+    void RotateAboutUnitZ(INT Index, FLOAT Angle);
+    void RotateAboutAxisAndZ(INT Index, FLOAT AngleA, FLOAT AngleZ);
+    void RotateAboutSecondAxis(INT Index, FLOAT Angle);
+    void ApplyBoneRotations(INT Index);
 };
 
 // RVA 0xbe310 (LTCG: Index in EAX, this and Angle on the stack).
-__declspec(noinline) void UnnamedBoneOwner_be310::RotateA(INT Index, FLOAT Angle)
+void USkeletalMeshInstance::RotateAboutFirstAxis(INT Index, FLOAT Angle)
 {
-    FCoords C = Coords[Index].Transpose();
+    FCoords C = BonePose[Index].Transpose();
     C.RotateAxis_50920(Axis338, Angle);
     C = C.Transpose();
     SetAxes(Index, C);
 }
 
 // RVA 0xbe3d0
-__declspec(noinline) void UnnamedBoneOwner_be310::RotateUnitZ(INT Index, FLOAT Angle)
+void USkeletalMeshInstance::RotateAboutUnitZ(INT Index, FLOAT Angle)
 {
-    FCoords C = Coords[Index].Transpose();
+    FCoords C = BonePose[Index].Transpose();
     C.RotateAxis_50920(GMath_UnitZ, Angle);
     C = C.Transpose();
     SetAxes(Index, C);
 }
 
 // RVA 0xbe490
-__declspec(noinline) void UnnamedBoneOwner_be310::RotateAB(INT Index, FLOAT AngleA, FLOAT AngleZ)
+void USkeletalMeshInstance::RotateAboutAxisAndZ(INT Index, FLOAT AngleA, FLOAT AngleZ)
 {
-    FCoords C = Coords[Index].Transpose();
+    FCoords C = BonePose[Index].Transpose();
     C.RotateAxis_50920(Axis338, AngleA);
     C.RotateAxis_50920(GMath_UnitZ, AngleZ);
     C = C.Transpose();
@@ -170,58 +173,55 @@ __declspec(noinline) void UnnamedBoneOwner_be310::RotateAB(INT Index, FLOAT Angl
 }
 
 // RVA 0xbe560
-__declspec(noinline) void UnnamedBoneOwner_be310::RotateB(INT Index, FLOAT Angle)
+void USkeletalMeshInstance::RotateAboutSecondAxis(INT Index, FLOAT Angle)
 {
-    FCoords C = Coords[Index].Transpose();
+    FCoords C = BonePose[Index].Transpose();
     C.RotateAxis_50920(Axis344, Angle);
     C = C.Transpose();
     SetAxes(Index, C);
 }
 
 // RVA 0xbe620 (LTCG: this in ESI, Index in EDI).
-__declspec(noinline) void UnnamedBoneOwner_be310::ApplyRotations(INT Index)
+void USkeletalMeshInstance::ApplyBoneRotations(INT Index)
 {
-    Slot32();
+    GetMesh();
     switch (Index)
     {
     case 4:
         if (Param300 != 0.f || Param304 != 0.f)
-            RotateAB(Index, Param304, Param300);
+            RotateAboutAxisAndZ(Index, Param304, Param300);
         // fall through
     case 5:
         if (Param2E8 != 0.f)
-            RotateA(Index, Param2E8 * 0.5f);
+            RotateAboutFirstAxis(Index, Param2E8 * 0.5f);
         break;
     case 6:
         if (Param2E0 != 0.f || Param2E4 != 0.f)
-            RotateAB(Index, Param2E4, Param2E0);
+            RotateAboutAxisAndZ(Index, Param2E4, Param2E0);
         else if (Param2EC != 0.f)
-            RotateB(Index, Param2EC);
+            RotateAboutSecondAxis(Index, Param2EC);
         else if (Param2F0 != 0.f || Param2F4 != 0.f)
-            RotateAB(Index, Param2F4 * 0.5f, Param2F0 * 0.5f);
+            RotateAboutAxisAndZ(Index, Param2F4 * 0.5f, Param2F0 * 0.5f);
         else if (Param2F8 != 0.f || Param2FC != 0.f)
-            RotateAB(Index, Param2FC * 0.5f, Param2F8 * 0.5f);
+            RotateAboutAxisAndZ(Index, Param2FC * 0.5f, Param2F8 * 0.5f);
         break;
     case 21:
         if (Param2F0 != 0.f || Param2F4 != 0.f)
-            RotateAB(Index, Param2F4, Param2F0);
+            RotateAboutAxisAndZ(Index, Param2F4, Param2F0);
         break;
     case 23:
         if (Param2F8 != 0.f || Param2FC != 0.f)
-            RotateAB(Index, Param2FC, Param2F8 * 0.33333f);
+            RotateAboutAxisAndZ(Index, Param2FC, Param2F8 * 0.33333f);
         break;
     case 24:
         if (Param2F8 != 0.f)
-            RotateUnitZ(Index, Param2F8 * 0.66666f);
+            RotateAboutUnitZ(Index, Param2F8 * 0.66666f);
         break;
     }
 }
 
 // Scaffolding for the link, not part of the unit.
-void Escape(void *);
-void Driver_be620(UnnamedBoneOwner_be310 *O, INT Index)
+void Driver_be620(USkeletalMeshInstance *O, INT Index)
 {
-    Escape((void *)&GMath_Zero);
-    Escape((void *)&GMath_UnitZ);
-    O->ApplyRotations(Index);
+    O->ApplyBoneRotations(Index);
 }

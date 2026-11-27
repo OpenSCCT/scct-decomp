@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from images import coff_symbol_offset, file_pe_data, initialized_pe_data, inspect, readonly_pe_data, span
 from link_image import place_function
 from link_writable_strings import check_writable_strings
+from link_case_selectors import check_case_selectors
 from link_x86 import link_function
 from manifests import load_target, save_receipt
 
@@ -149,6 +150,8 @@ def inputs_digest(folder, unit, image_hash, file_cache=None, callees=()):
         validators = [linker]
         if "writable_strings" in unit.get("ltcg_link", {}):
             validators.append(linker.with_name("link_writable_strings.py"))
+        if "case_selectors" in unit.get("ltcg_link", {}):
+            validators.append(linker.with_name("link_case_selectors.py"))
         for validator in validators:
             if validator not in file_cache:
                 file_cache[validator] = hashlib.sha256(validator.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
@@ -265,7 +268,10 @@ def built_unit_bytes(target, unit, output, original=None):
             if s["code"] and s["offset"] <= a < b <= s["offset"] + s["size"]:
                 if "writable_strings" in unit["ltcg_link"]:
                     check_writable_strings(output, original, unit["ltcg_link"], unit["link_bindings"])
-                return place_function(output, unit["size"], s["address"] + a - s["offset"], unit["ltcg_link"],
+                address = s["address"] + a - s["offset"]
+                if "case_selectors" in unit["ltcg_link"]:
+                    check_case_selectors(output, original, unit["size"], address, unit["ltcg_link"], unit["link_bindings"])
+                return place_function(output, unit["size"], address, unit["ltcg_link"],
                                       unit["link_bindings"],
                                       read_constant=lambda va, size: readonly_pe_data(original, va, size),
                                       read_table=lambda va, size: file_pe_data(original, va, size))

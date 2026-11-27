@@ -198,6 +198,13 @@ retail value by accident. The audit links the DLL again, re-derives the field
 list from the DLL's base relocations and from rel32 branches that leave the
 function, and checks the symbol names against a `/MAP` of the same link.
 
+For a VC7 switch that uses a byte lookup to select a jump-table entry,
+`ltcg_link.case_selectors` maps the byte-table symbol to its jump-table symbol.
+Record the jump-table entry count in `ltcg_link.tables`. The verifier reads
+the range check and indexed jump in both images, compares every selector byte,
+and checks each jump destination relative to the function. Tables after the
+function contribute zero additional matched bytes.
+
 A unit can name other units in `ltcg_callees`, by unit ID, so that a call from it to a helper
 resolves to the helper's real code instead of a stub. This is needed when the helper takes `this`
 or an argument in a register (for example `this` in ESI and the argument in EDI): the link chooses
