@@ -5,12 +5,7 @@
 // 0xedef0/0xedf80/0xee010/0xee0a0: UnrealScript eventXxx thunks, /GL
 //          (this in ESI). Event names not recovered; EName indices kept.
 // 0xee0c0: FString::FString(const ANSICHAR*), with ANSI_TO_TCHAR expanded.
-typedef unsigned short TCHAR;
-typedef char ANSICHAR;
-typedef int INT;
-typedef unsigned long DWORD;
-typedef DWORD UBOOL;
-typedef unsigned char BYTE;
+#include "versus_ansi_fstring.h"
 
 enum EName {
     NAME_Unnamed_B19 = 0xb19,
@@ -25,12 +20,6 @@ public:
     FName(EName N) : Index(N) {}
     FName(const FName &Other) : Index(Other.Index) {}
 };
-
-class FMalloc {
-public:
-    virtual void *Malloc(DWORD Count, const TCHAR *Tag);
-};
-extern FMalloc *GMalloc;
 
 void *appMemcpy(void *Dest, const void *Src, INT Count);
 
@@ -53,37 +42,6 @@ inline TCHAR *winToUNICODE(TCHAR *Dest, const ANSICHAR *Src, INT Len)
 }
 #define appAlloca(size) ((size) == 0 ? 0 : _alloca(((size) + 7) & ~7))
 #define ANSI_TO_TCHAR(str) winToUNICODE((TCHAR *)appAlloca(winGetSizeUNICODE(str) * sizeof(TCHAR)), str, winGetSizeUNICODE(str))
-
-class FArray {
-public:
-    void *Data;
-    INT ArrayNum;
-    INT ArrayMax;
-    FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
-    FArray(INT InNum, INT ElementSize) : ArrayNum(InNum), ArrayMax(InNum)
-    {
-        if (ArrayNum == 0)
-            Data = 0;
-        else
-            Data = GMalloc->Malloc(ArrayNum * ElementSize, L"Farray::protectedcstor");
-    }
-    ~FArray();
-};
-
-template<class T> class TArray : public FArray {
-public:
-    TArray() {}
-    TArray(INT InNum) : FArray(InNum, sizeof(T)) {}
-    T &operator()(INT i) { return ((T *)Data)[i]; }
-};
-
-class FString : public TArray<TCHAR> {
-public:
-    FString() {}
-    FString(const ANSICHAR *In);
-    ~FString();
-    FString &operator=(const FString &Other);
-};
 
 // RVA 0xee0c0.
 FString::FString(const ANSICHAR *In)
