@@ -4,22 +4,24 @@
 #include "versus_build.h"
 #include "versus_native_class_init.h"
 
+class UPackageMap;
+
 enum ECppProperty { EC_CppProperty };
 
 class UProperty : public UField {
 public:
     virtual ~UProperty();
-    virtual void VirtualSlot27();
+    virtual void CleanupDestroyed(BYTE *Data);
     virtual INT Link(FArchive &Ar, UProperty *Prev);
-    virtual void VirtualSlot29();
-    virtual void VirtualSlot30();
-    virtual void VirtualSlot31();
-    virtual void VirtualSlot32();
-    virtual void VirtualSlot33();
+    virtual UBOOL Identical(const void *A, const void *B) const;
+    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
+    virtual UBOOL NetSerializeItem(FArchive &Ar, UPackageMap *Map, void *Data) const;
+    virtual void ExportTextItem(TCHAR *Text, BYTE *Value, BYTE *Default, INT PortFlags) const;
+    virtual const TCHAR *ImportText(const TCHAR *Buffer, BYTE *Data, INT PortFlags) const;
     virtual void VirtualSlot34();
-    virtual void VirtualSlot35();
-    virtual void VirtualSlot36();
-    virtual void VirtualSlot37();
+    virtual void CopySingleValue(void *Dest, void *Src, UObject *SuperObject);
+    virtual void CopyCompleteValue(void *Dest, void *Src, UObject *SuperObject);
+    virtual void DestroyValue(void *Dest);
     virtual void VirtualSlot38();
     virtual void VirtualSlot39();
 
@@ -33,6 +35,11 @@ public:
     UProperty *NextRef;
     BYTE unk_50[8];
 
+    UBOOL Matches(const void *A, const void *B, INT ArrayIndex) const
+    {
+        INT FieldOffset = Offset + ArrayIndex * ElementSize;
+        return Identical((const BYTE *)A + FieldOffset, B ? (const BYTE *)B + FieldOffset : 0);
+    }
     UProperty() : UField(0), ArrayDim(1), NextRef(0) {}
     UProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags);
 };
@@ -47,6 +54,11 @@ public:
 
 class UIntProperty : public UProperty {
 public:
+    virtual UBOOL Identical(const void *A, const void *B) const;
+    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
+    virtual UBOOL NetSerializeItem(FArchive &Ar, UPackageMap *Map, void *Data) const;
+    virtual void ExportTextItem(TCHAR *Text, BYTE *Value, BYTE *Default, INT PortFlags) const;
+    virtual const TCHAR *ImportText(const TCHAR *Buffer, BYTE *Data, INT PortFlags) const;
     DECLARE_NATIVE_PROPERTY(UIntProperty);
     virtual INT Link(FArchive &Ar, UProperty *Prev);
 };
@@ -57,11 +69,17 @@ public:
 };
 class UFloatProperty : public UProperty {
 public:
+    virtual UBOOL Identical(const void *A, const void *B) const;
+    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
+    virtual UBOOL NetSerializeItem(FArchive &Ar, UPackageMap *Map, void *Data) const;
+    virtual void ExportTextItem(TCHAR *Text, BYTE *Value, BYTE *Default, INT PortFlags) const;
+    virtual const TCHAR *ImportText(const TCHAR *Buffer, BYTE *Data, INT PortFlags) const;
     DECLARE_NATIVE_PROPERTY(UFloatProperty);
     virtual INT Link(FArchive &Ar, UProperty *Prev);
 };
 class UStrProperty : public UProperty {
 public:
+    virtual void CopySingleValue(void *Dest, void *Src, UObject *SuperObject);
     UStrProperty() {}
     DECLARE_NATIVE_PROPERTY(UStrProperty);
 };
@@ -69,11 +87,14 @@ public:
 class UArrayProperty : public UProperty {
 public:
     UProperty *Inner;
+    virtual void CopyCompleteValue(void *Dest, void *Src, UObject *SuperObject);
+    virtual void DestroyValue(void *Dest);
     DECLARE_NATIVE_PROPERTY(UArrayProperty);
 };
 
 class UNameProperty : public UProperty {
 public:
+    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
     virtual INT Link(FArchive &Ar, UProperty *Prev);
     DECLARE_NATIVE_PROPERTY(UNameProperty);
 };
@@ -90,6 +111,7 @@ public:
 };
 class UByteProperty : public UProperty {
 public:
+    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
     virtual INT Link(FArchive &Ar, UProperty *Prev);
     UEnum *Enum;
     static UClass PrivateStaticClass;
@@ -102,6 +124,10 @@ public:
 
 class UObjectProperty : public UProperty {
 public:
+    virtual void CleanupDestroyed(BYTE *Data);
+    virtual UBOOL Identical(const void *A, const void *B) const;
+    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
+    virtual void ExportTextItem(TCHAR *Text, BYTE *Value, BYTE *Default, INT PortFlags) const;
     static UClass PrivateStaticClass;
     UClass *PropertyClass;
 
@@ -118,6 +144,9 @@ class UStructProperty : public UProperty {
 public:
     static UClass PrivateStaticClass;
     UStruct *Struct;
+    virtual UBOOL Identical(const void *A, const void *B) const;
+    virtual void SerializeItem(FArchive &Ar, void *Value, INT MaxReadBytes) const;
+    virtual void DestroyValue(void *Dest);
 
     void *operator new(unsigned int, UObject *Outer, FName Name, DWORD Flags = 0) {
         return StaticAllocateObject(&PrivateStaticClass, Outer, Name, Flags);
@@ -125,6 +154,13 @@ public:
     virtual ~UStructProperty();
     UStructProperty(ECppProperty, INT InOffset, FName InCategory, DWORD InFlags, UStruct *InStruct)
         : UProperty(EC_CppProperty, InOffset, InCategory, InFlags), Struct(InStruct) {}
+};
+
+class UFixedArrayProperty : public UProperty {
+public:
+    UProperty *Inner;
+    INT Count;
+    virtual UBOOL Identical(const void *A, const void *B) const;
 };
 
 #undef DECLARE_NATIVE_PROPERTY

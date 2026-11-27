@@ -97,51 +97,39 @@
     "offset": 243168,
     "size": 78,
     "inputs": [
-      "src/versus_vd4_item_0126.cpp"
+      "src/versus_array_property_copy.cpp",
+      "src/versus_build.h",
+      "src/versus_native_properties.h",
+      "src/versus_native_class_init.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_name.h",
+      "src/unreal_types.h"
     ],
     "rebuilt_symbol": "?Add@FSArray@@QAEHHH@Z",
     "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
-    "build_command": "cl /nologo /O2 /Ob1 /Gy /GL /c /Folocal/versus_vd4_item_0126_vc70_ltcg_o2ob1gygl.obj src/versus_vd4_item_0126.cpp",
-    "identification": "Complete Versus function at RVA 0x3b5e0. Direct call at RVA 0x53e32 in the retail function at RVA 0x53e20.",
-    "link_bindings": {
-      "?GMalloc@@3PAVFMalloc@@A": {
-        "va": 281492464,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?Tag_FSArray_Add@@3QBGB": {
-        "va": 281495776,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      },
-      "?Tag_FSArray@@3QBGB": {
-        "va": 281481352,
-        "basis": "Retail function, table, global or constant referenced by the complete function."
-      }
-    },
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_array_property_copy.obj src/versus_array_property_copy.cpp",
+    "identification": "The compact array grows to exactly Count times its element stride. A new allocation carries the FSArray::Add tag, and an existing allocation uses the FSArray tag. Both writable retail UTF-16 strings are compared against complete source-defined objects. The real UArrayProperty copy method emits the retail FSArray calling convention; its previous stand-alone driver is unnecessary.",
     "ltcg_link": {
       "roots": [
-        "?Driver_3b5e0@@YAXPAVFSArray@@HH0@Z"
+        "?CopyCompleteValue@UArrayProperty@@UAEXPAX0PAVUObject@@@Z",
+        "?DestroyValue@UArrayProperty@@UAEXPAX@Z"
       ],
       "stubs": [
-        "??0FString@@QAE@PBG@Z",
-        "??1FString@@QAE@XZ",
-        "?EmptyString@@3QBGB",
-        "?Escape@@YAXPAX@Z",
-        "?FArray_Realloc@@YAXPAVFString@@H@Z",
-        "?FString_Empty@@YAXAAVFString@@H@Z",
-        "?FString_SerializeIndex@@YAXAAVFArchive@@AAH@Z",
+        "?Add@FArray@@QAEHHH@Z",
+        "?AddZeroed@FArray@@QAGHHH@Z",
+        "?AddZeroed@FSArray@@QAGHHH@Z",
+        "?Empty@FArray@@QAEXHH@Z",
         "?GMalloc@@3PAVFMalloc@@A",
-        "?GNames@@3PAPAUFNameEntry@@A",
-        "?Tag_FSArray@@3QBGB",
-        "?Tag_FSArray_Add@@3QBGB",
-        "?Tag_NameEntry@@3QBGB",
-        "?Use@@YAXH@Z",
-        "?Use@@YAXPAX@Z",
-        "?appStrncpy@@YAPAGPAGPBGH@Z",
-        "__imp__wcscpy",
-        "__imp__wcslen"
+        "?PrivateStaticClass@UClass@@2V1@A",
+        "?appMemcpy@@YAXPAXPBXH@Z"
       ],
       "rebuilt_offset": 1024,
       "rebuilt_address": 268439552,
+      "symbols": {
+        "?GMalloc@@3PAVFMalloc@@A": 268440212,
+        "?FSArrayAddTag@@3QBGB": 268443648,
+        "?FSArrayTag@@3QBGB": 268443676
+      },
       "fields": [
         [
           24,
@@ -151,7 +139,7 @@
         [
           31,
           "abs",
-          "?Tag_FSArray_Add@@3QBGB"
+          "?FSArrayAddTag@@3QBGB"
         ],
         [
           54,
@@ -161,18 +149,31 @@
         [
           62,
           "abs",
-          "?Tag_FSArray@@3QBGB"
+          "?FSArrayTag@@3QBGB"
         ]
       ],
-      "symbols": {
-        "?GMalloc@@3PAVFMalloc@@A": 268439783,
-        "?Tag_FSArray_Add@@3QBGB": 268439786,
-        "?Tag_FSArray@@3QBGB": 268439785
+      "writable_strings": {
+        "?FSArrayAddTag@@3QBGB": 26,
+        "?FSArrayTag@@3QBGB": 16
+      }
+    },
+    "link_bindings": {
+      "?GMalloc@@3PAVFMalloc@@A": {
+        "va": 281492464,
+        "basis": "The shared allocator at RVA 0x373bf0 is used for compact-array creation, reallocation and release."
+      },
+      "?FSArrayAddTag@@3QBGB": {
+        "va": 281495776,
+        "basis": "The recovered FSArray::Add implementation references the complete writable retail FSArray::Add allocation tag."
+      },
+      "?FSArrayTag@@3QBGB": {
+        "va": 281481352,
+        "basis": "The recovered FSArray::Add implementation references the complete writable retail FSArray allocation tag."
       }
     },
     "match": {
       "bytes_sha256": "e4843b2f4503be1d0618da533145a04d36ec2d0d500d1db02cc015655ebe8550",
-      "inputs_sha256": "5bd5d3e27d46d7aafb7d6994004745db883bae2b74fea66f361c1b25aaaa3911"
+      "inputs_sha256": "81eed1a149157d1ac6d7858f880fbd920fa723e2875392ab86287856f0e4700e"
     }
   },
   {
@@ -742,7 +743,7 @@
     },
     "match": {
       "bytes_sha256": "03d9deff5660cae9f6b4644d907f6458ebd072ac75a880d4c74b2d1c48b5104b",
-      "inputs_sha256": "2db1337e8b9d69639b4be51bec8de8fd6dd794c129ea60df14f5152fb1eb8c52"
+      "inputs_sha256": "e4b99695549aa135b0858843ec963c83e82117d1c8caaf7890c44c786890bfe6"
     }
   },
   {
@@ -1300,7 +1301,7 @@
     },
     "match": {
       "bytes_sha256": "1f9bf6f60aa479891884e2730a1a4f6f99975d53642193ea4ef2caff1209b50e",
-      "inputs_sha256": "d5af316474f8cdd2355ec407510e7f65a82720d6eca19fa3e10447be5059e1d6"
+      "inputs_sha256": "21a41f87128fec99b0e5d363150c026b0c6fc483ef2ec0dd0565564afc2185ef"
     }
   },
   {

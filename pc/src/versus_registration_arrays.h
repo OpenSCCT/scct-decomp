@@ -23,6 +23,7 @@ public:
     FArray() : Data(0), ArrayNum(0), ArrayMax(0) {}
     void Empty(INT ElementSize, INT Slack);
     INT Add(INT Count, INT ElementSize);
+    INT __stdcall AddZeroed(INT ElementSize, INT Count);
 };
 
 template<class T> class TArray : public FArray {
@@ -63,6 +64,7 @@ public:
 class FString : public TArray<TCHAR> {
 public:
     ~FString();
+    FString &operator=(const FString &Other);
 };
 
 #endif

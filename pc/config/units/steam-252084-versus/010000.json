@@ -8002,7 +8002,7 @@
     "identification": "The shipped editor names UObject::ProcessRegistrants in the guard referenced at VA 0x10fa9116 and calls its separately named UObject::ConditionalRegister in the per-object loop. Both executables count and drain the same pending list through the temporarily reused export-index field. The editor asserts i!=GObjRegistrants.Num() after the list search in ConditionalRegister and checks !GAutoRegister after draining it. The outer recursion counter name is descriptive. VC7.0 13.00.9466 and VC7.1 13.10.3052 both reproduce the complete function without LTCG. The VC7.0 COFF alignment bytes after the return are outside the measured body.",
     "match": {
       "bytes_sha256": "2e43b5feca18557f07bd450a4f723b9efdb165260c313ef465109a33d529c112",
-      "inputs_sha256": "604bc21ba02204984d55f9155701ccf8c734e4fd91b8f5df2a1f67f25026876c"
+      "inputs_sha256": "59227b04729b5eb6ccd103db2d385c3060cd59de90fb58ea36439b2f4c8ce5c2"
     }
   },
   {
@@ -9163,7 +9163,8 @@
         "??1UEnum@@UAE@XZ",
         "?Add@FArray@@QAEHHH@Z",
         "?PrivateStaticClass@UByteProperty@@2VUClass@@A",
-        "?PrivateStaticClass@UEnum@@2VUClass@@A"
+        "?PrivateStaticClass@UEnum@@2VUClass@@A",
+        "?SerializeItem@UByteProperty@@UBEXAAVFArchive@@PAXH@Z"
       ],
       "rebuilt_offset": 1024,
       "rebuilt_address": 268439552,
@@ -9187,7 +9188,7 @@
     },
     "match": {
       "bytes_sha256": "0b8204cd6bb0cd1d893d93c4957f4af5e530adcd094d3a947947ab97438361bd",
-      "inputs_sha256": "2be99d8c7fd02e43d6291571d9998ac3429775211c4499a6777e16d21fa726de"
+      "inputs_sha256": "4503fa333945162d1f006c285b2d5a2b09fd6cc479d3c76ce588ee55137f06d3"
     },
     "ltcg_callees": [
       "versus-native-uintproperty-constructor"
@@ -11136,6 +11137,40 @@
         "/GL"
       ],
       "basis": "evidence/versus-vc70-switches.md"
+    }
+  },
+  {
+    "id": "versus-property-field-iterator-advance",
+    "offset": 129104,
+    "size": 84,
+    "inputs": [
+      "src/versus_struct_property_fields.cpp",
+      "src/versus_native_properties.h",
+      "src/versus_native_class_init.h",
+      "src/versus_registration_arrays.h",
+      "src/versus_name.h",
+      "src/unreal_types.h",
+      "src/versus_build.h",
+      "src/versus_archive.h"
+    ],
+    "rebuilt_symbol": "?IterateToNext@?$TFieldIterator@VUProperty@@@@QAEXXZ",
+    "toolchain": "Microsoft C/C++ 13.00.9466 for x86",
+    "build_command": "cl /nologo /O2 /Gy /GL /c /Folocal/versus_struct_property_fields.obj src/versus_struct_property_fields.cpp",
+    "identification": "TFieldIterator<UProperty>::IterateToNext scans the current fields for CLASS_IsAUProperty (0x8000), then visits the inheritance superclass and its children. UStructProperty::Identical calls this specialization both on initial construction and on increment, passing the iterator in ESI. The matching VC7.1 control reproduces these bytes.",
+    "ltcg_link": {
+      "roots": [
+        "?Identical@UStructProperty@@UBEKPBX0@Z"
+      ],
+      "stubs": [],
+      "symbols": {},
+      "fields": [],
+      "rebuilt_offset": 1024,
+      "rebuilt_address": 268439552
+    },
+    "link_bindings": {},
+    "match": {
+      "bytes_sha256": "0f273629ee1fc3154329295e5a47b32cd4c4aee4141dbb8ba38393857c1c2423",
+      "inputs_sha256": "071b24999e2d51b20a17cf6c24b68328134d219bdaaca4d21f83050ee1452611"
     }
   },
   {

@@ -81,6 +81,7 @@ public:
         FName Group, FName ObjectName, UBOOL ExactClass);
     void LoadConfig(UBOOL Propagate = 0, UClass *InClass = 0, const TCHAR *Filename = 0);
     UClass *GetClass() const { return Class; }
+    UBOOL IsA(UClass *Base) const;
     static TArray<UObject *> GObjRegistrants;
     static void ProcessRegistrants();
     void ConditionalRegister();
@@ -120,6 +121,16 @@ struct FSArray {
     INT Num;
 
     FSArray() : Data(0), Num(0) {}
+    INT Add(INT Count, INT ElementSize);
+    INT __stdcall AddZeroed(INT ElementSize, INT Count);
+    void Empty()
+    {
+        Num = 0;
+        if (Data) {
+            GMalloc->Free(Data);
+            Data = 0;
+        }
+    }
 };
 
 class UStruct : public UField {
@@ -128,7 +139,7 @@ public:
     virtual UStruct *GetInheritanceSuper();
     virtual void Link(FArchive &Ar, UBOOL Props);
     virtual void SerializeBin(FArchive &Ar, BYTE *Data, INT MaxReadBytes);
-    virtual void VirtualSlot30();
+    virtual void SerializeTaggedProperties(FArchive &Ar, BYTE *Data, UClass *DefaultsClass);
     virtual void DestroyStructData(BYTE *Data);
     virtual void VirtualSlot32();
     virtual void VirtualSlot33();
@@ -219,5 +230,13 @@ public:
                     StaticConstructorType InStaticConstructor);
 };
 #pragma pack(pop)
+
+inline UBOOL UObject::IsA(UClass *Base) const
+{
+    for (UClass *Type = Class; Type; Type = static_cast<UClass *>(Type->SuperField))
+        if (Type == Base)
+            return 1;
+    return Base == 0;
+}
 
 #endif
