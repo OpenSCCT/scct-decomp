@@ -6,6 +6,8 @@
 #endif
 
 class MgmArea;
+class MgmChild;
+class USound;
 class MgmPackage;
 class ASPlayerController;
 
@@ -25,6 +27,9 @@ public:
     virtual INT ScreenQuery9(INT, INT);
     virtual bool ScreenEvent10(INT, INT, INT);
     virtual void ScreenEvent11(INT);
+
+    void PlaySound(USound *Sound);
+    MgmChild *FindChild(const FString &Name);
 
     INT RefCount;
     BYTE Unknown08;

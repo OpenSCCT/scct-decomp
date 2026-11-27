@@ -5,5 +5,6 @@
 
 class FName;
 const TCHAR *LocalizeMgm(FName Name);
+const TCHAR *LocalizeMgm(FName Key, FName Section);
 
 #endif

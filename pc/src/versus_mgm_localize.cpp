@@ -10,3 +10,8 @@ const TCHAR *LocalizeMgm(FName Name)
 {
     return Localize(GMgmLocalizationSection, FName_Names(Name.Index)->Name, GMgmLocalizationPackage);
 }
+
+const TCHAR *LocalizeMgm(FName Key, FName Section)
+{
+    return Localize(FName_Names(Section.Index)->Name, FName_Names(Key.Index)->Name, L"MagmaDynamic");
+}
